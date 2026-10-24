@@ -173,6 +173,7 @@ private:
     bool glow_timer_started_{};
     bool purge_required_{};
     bool restart_inhibit_{};
+    bool previous_reset_request_{};
     bool reset_pending_{};
     bool reset_qualified_{};
     bool heartbeat_level_{};

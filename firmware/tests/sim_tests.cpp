@@ -442,11 +442,20 @@ void test_manual_reset_no_autostart() {
     check(s.state() == State::LOCKOUT, "reset while start held must be refused");
     s.in.heat_enable = false;
     s.tick();
-    check(s.state() == State::LOCKOUT && !s.out.sw_trip,
-          "qualified held reset must release software trip but stay locked");
+    check(s.state() == State::LOCKOUT,
+          "releasing START during a held RESET must not synthesize a reset press");
     s.in.reset_request = false;
     s.tick();
-    check(s.state() == State::WAIT_COOLDOWN, "release after qualified reset may clear corrected fault");
+    check(s.state() == State::LOCKOUT,
+          "release after a RESET press blocked by START must not clear lockout");
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "a separate RESET press after START release may qualify");
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "release after the separate qualified RESET press may clear corrected fault");
     expect_safe(s.out);
     s.advance(5);
     check(s.state() == State::WAIT_COOLDOWN, "reset must not autostart");
@@ -469,6 +478,61 @@ void test_set_dominant_latch_reset_handshake() {
     s.tick();
     check(s.state() == State::WAIT_COOLDOWN, "release after SAFETY_OK completes reset");
     expect_safe(s.out);
+}
+
+void test_reset_release_cannot_qualify_safety() {
+    Sim s(test_config(), FAULT_BROWNOUT_RESET);
+    s.in.safety_ok = false;
+    s.tick();
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT, "RESET press with open safety starts but cannot qualify reset");
+
+    s.in.reset_request = false;
+    s.in.safety_ok = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "SAFETY_OK first observed on RESET release must not clear lockout");
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "new RESET hold must observe SAFETY_OK before release");
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "release after SAFETY_OK was observed while held must clear lockout");
+}
+
+void test_reset_blocker_cancels_qualification() {
+    Sim s(test_config(), FAULT_BROWNOUT_RESET);
+    s.tick();
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "healthy held RESET may qualify but must remain locked until release");
+
+    s.in.local_ui_ok = false;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "a current blocker must cancel the qualified RESET cycle");
+    s.in.local_ui_ok = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "removing a blocker while RESET remains held must not requalify without a new press");
+
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "release of the cancelled RESET cycle must not clear lockout");
+    s.in.reset_request = true;
+    s.tick();
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "a new qualified RESET cycle after blocker recovery must clear lockout");
 }
 
 void test_coupled_hardware_latch_reset_protocol() {
@@ -719,6 +783,8 @@ int main() {
         {"hot_start_is_inhibited", test_hot_start_is_inhibited},
         {"manual_reset_no_autostart", test_manual_reset_no_autostart},
         {"set_dominant_latch_reset_handshake", test_set_dominant_latch_reset_handshake},
+        {"reset_release_cannot_qualify_safety", test_reset_release_cannot_qualify_safety},
+        {"reset_blocker_cancels_qualification", test_reset_blocker_cancels_qualification},
         {"coupled_hardware_latch_reset_protocol", test_coupled_hardware_latch_reset_protocol},
         {"watchdog_only_when_healthy", test_watchdog_only_when_healthy},
         {"watchdog_falling_edges_with_loop_jitter", test_watchdog_falling_edges_with_loop_jitter},

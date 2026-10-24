@@ -42,8 +42,8 @@
       "A current fault keeps ARM_READY LOW or SW_TRIP HIGH, so asynchronous clear dominates RESET.",
       "When only the open safety latch remains, firmware stays in LOCKOUT with safe outputs, ARM_READY HIGH and SW_TRIP LOW before the physical RESET edge.",
       "The separate hardware RESET contact clocks the latch before the debounced GPIO6 request is processed.",
-      "Firmware observes SAFETY_OK HIGH while RESET is held and clears software lockout only after RESET release.",
-      "RESET held through boot or a fault cannot re-arm without release and a new physical edge; START remains a separate later action."
+      "Firmware must observe SAFETY_OK HIGH in a control-loop pass while RESET remains held; the release pass cannot newly qualify that RESET cycle.",
+      "A current blocker cancels the RESET qualification. RESET held through boot or a blocker cannot re-arm after recovery without release and a new physical edge; START remains a separate later action."
     ]
   },
   "watchdog_contract": {

@@ -1,3 +1,3 @@
 cmake_minimum_required(VERSION 3.16)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(sirokko_26201_controller VERSION 0.1.1)
+project(sirokko_26201_controller VERSION 0.1.2)

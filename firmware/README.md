@@ -6,8 +6,8 @@ This is an uncommissioned bench build, not authorization for fired operation. A 
 
 Verification performed for this snapshot:
 
-- host simulation: 31/31 tests passed, including the coupled asynchronous latch trace and watchdog falling-edge budget;
+- host simulation: 33/33 tests passed, including RESET hold/release qualification, blocker cancellation, the coupled asynchronous latch trace, and the watchdog falling-edge budget;
 - clean official `espressif/idf:v5.5.2` container build passed;
 - ESP32-S3 image checksum and validation hash passed.
 
-The current 0.1.1 bench artifacts and manifest are under `release/firmware/0.1.1/`. The original 0.1.0 artifact set remains unchanged under `release/firmware/`.
+The current 0.1.2 bench artifacts and manifest are under `release/firmware/0.1.2/`. The 0.1.0 and 0.1.1 artifact sets remain unchanged.

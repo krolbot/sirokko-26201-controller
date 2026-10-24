@@ -366,6 +366,7 @@ Outputs Machine::tick(const Inputs& in) {
     }
 
     const uint32_t input_faults = current_input_faults(in);
+    const bool reset_pressed = in.reset_request && !previous_reset_request_;
     const uint32_t immediate = input_faults &
         (FAULT_CONFIG | FAULT_SAFETY_OPEN | FAULT_LOCAL_UI | FAULT_EXHAUST_OVERTEMP | FAULT_AIR_OVERTEMP);
     if (immediate != FAULT_NONE) trip(immediate, in.now_ms);
@@ -382,7 +383,7 @@ Outputs Machine::tick(const Inputs& in) {
     } else if (state_ == State::LOCKOUT) {
         const uint32_t reset_blockers = input_faults & ~FAULT_SAFETY_OPEN;
         const bool reset_conditions = reset_blockers == FAULT_NONE && !in.heat_enable && !in.stop_active;
-        if (!reset_pending_ && in.reset_request && reset_conditions) {
+        if (!reset_pending_ && reset_pressed && reset_conditions) {
             reset_pending_ = true;
             reset_qualified_ = false;
         }
@@ -390,7 +391,7 @@ Outputs Machine::tick(const Inputs& in) {
             if (!reset_conditions) {
                 reset_pending_ = false;
                 reset_qualified_ = false;
-            } else if (in.safety_ok) {
+            } else if (in.reset_request && in.safety_ok) {
                 reset_qualified_ = true;
             }
             if (!in.reset_request) {
@@ -436,6 +437,7 @@ Outputs Machine::tick(const Inputs& in) {
 
     update_heartbeat(in, outputs_.arm_ready);
     outputs_.watchdog_heartbeat = heartbeat_level_;
+    previous_reset_request_ = in.reset_request;
     return outputs_;
 }
 
