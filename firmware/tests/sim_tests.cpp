@@ -825,6 +825,94 @@ void test_coupled_hardware_latch_reset_protocol() {
           "a new firmware RESET press after release must complete exactly one reset cycle");
 }
 
+void test_coupled_hardware_latch_debounced_reset_protocol() {
+    Sim s;
+    HardwareSafetyLatch latch;
+    DebouncedActiveLowButton reset_button(5);
+    reset_button.update(true, s.in.now_ms);
+    coupled_tick(s, latch);
+    for (uint32_t i = 0; i < s.config.recovery_purge_min_ms; ++i) {
+        ++s.in.now_ms;
+        coupled_tick(s, latch);
+    }
+    check(s.state() == State::LOCKOUT && s.out.arm_ready && !s.out.sw_trip,
+          "completed recovery must pre-arm only the MCU half of physical RESET");
+    const uint32_t reset_start = s.in.now_ms;
+    s.in.now_ms = reset_start + 1;
+    latch.reset_rising_edge(s.out);
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(latch.allow_latch && !s.in.reset_request,
+          "hardware RESET must precede the debounced firmware request");
+    s.in.now_ms = reset_start + 2;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = reset_start + 3;
+    latch.reset_rising_edge(s.out);
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = reset_start + 8;
+    check(reset_button.update(false, s.in.now_ms), "debounced RESET press must be observed once");
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(s.state() == State::LOCKOUT && s.in.safety_ok,
+          "firmware must observe restored SAFETY_OK while RESET is held");
+    s.in.now_ms = reset_start + 12;
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = reset_start + 13;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = reset_start + 18;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(s.state() == State::WAIT_COOLDOWN, "debounced RESET release must complete the handshake");
+    expect_safe(s.out);
+    latch.watchdog_ok = false;
+    coupled_tick(s, latch);
+    check(s.state() == State::LOCKOUT && !latch.allow_latch,
+          "watchdog clear must dominate the armed latch");
+    latch.reset_rising_edge(s.out);
+    check(!latch.allow_latch, "RESET must not override an active watchdog clear");
+
+    Sim held;
+    HardwareSafetyLatch held_latch;
+    DebouncedActiveLowButton held_button(5);
+    held_button.update(false, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    for (uint32_t i = 0; i < held.config.recovery_purge_min_ms; ++i) {
+        ++held.in.now_ms;
+        held_button.update(false, held.in.now_ms);
+        held.in.reset_request = held_button.pressed();
+        coupled_tick(held, held_latch);
+    }
+    check(held.state() == State::LOCKOUT && !held_latch.allow_latch && !held.in.reset_request,
+          "RESET held through boot/recovery must not arm either reset path");
+    const uint32_t held_start = held.in.now_ms;
+    for (const uint32_t offset : {1u, 6u, 7u, 12u, 13u, 18u}) {
+        held.in.now_ms = held_start + offset;
+        const bool released = offset <= 6 || offset >= 13;
+        if (offset == 7) held_latch.reset_rising_edge(held.out);
+        held_button.update(released, held.in.now_ms);
+        held.in.reset_request = held_button.pressed();
+        coupled_tick(held, held_latch);
+        if (offset == 6) {
+            check(held.state() == State::LOCKOUT && !held_latch.allow_latch,
+                  "releasing a boot-held RESET must not synthesize a hardware edge");
+        }
+    }
+    check(held.state() == State::WAIT_COOLDOWN,
+          "a new debounced press after release must complete exactly one reset cycle");
+    expect_safe(held.out);
+}
+
 void test_watchdog_only_when_healthy() {
     Sim s;
     s.boot_wait();
@@ -992,6 +1080,7 @@ int main() {
         {"reset_release_cannot_qualify_safety", test_reset_release_cannot_qualify_safety},
         {"reset_blocker_cancels_qualification", test_reset_blocker_cancels_qualification},
         {"coupled_hardware_latch_reset_protocol", test_coupled_hardware_latch_reset_protocol},
+        {"coupled_hardware_latch_debounced_reset_protocol", test_coupled_hardware_latch_debounced_reset_protocol},
         {"watchdog_only_when_healthy", test_watchdog_only_when_healthy},
         {"watchdog_falling_edges_with_loop_jitter", test_watchdog_falling_edges_with_loop_jitter},
         {"purge_needs_cold_and_minimum_time", test_purge_needs_cold_and_minimum_time},
