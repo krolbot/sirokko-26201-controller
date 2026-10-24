@@ -19,6 +19,9 @@ public:
 
     void append_fault(uint32_t uptime_ms, sirokko::State state, uint32_t faults);
     void print_faults() const;
+    bool load_latched_faults(uint32_t* faults) const;
+    bool save_latched_faults(uint32_t faults) const;
+    bool clear_latched_faults() const;
     uint32_t boot_count() const { return boot_count_; }
 
 private:

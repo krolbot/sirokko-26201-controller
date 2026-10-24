@@ -55,8 +55,8 @@ uint32_t config_digest(const sirokko::Config& c, bool include_acceptance) {
 #define HASH_FIELD(field) hash_value(hash, c.field)
     HASH_FIELD(schema_version);
     if (include_acceptance) HASH_FIELD(commissioning_accepted);
-    HASH_FIELD(revision);
     HASH_FIELD(boot_self_test_timeout_ms);
+    HASH_FIELD(recovery_purge_min_ms);
     HASH_FIELD(prepurge_ms);
     HASH_FIELD(preheat_ms);
     HASH_FIELD(spinup_ms);
@@ -86,6 +86,8 @@ uint32_t config_digest(const sirokko::Config& c, bool include_acceptance) {
     HASH_FIELD(high_to_low_delta_milli_c);
     HASH_FIELD(low_to_high_delta_milli_c);
     HASH_FIELD(stop_delta_milli_c);
+    HASH_FIELD(pwm_frequency_hz);
+    HASH_FIELD(recovery_purge_pwm_permille);
     HASH_FIELD(low_pwm_permille);
 #undef HASH_FIELD
     return hash;
@@ -147,8 +149,7 @@ sirokko::Config CommissioningStore::load_config(bool* integrity_ok) {
         }
     }
     sirokko::Config blank{};
-    blank.schema_version = 1;
-    blank.revision = sirokko::Revision::A;
+    blank.schema_version = sirokko::kConfigSchemaVersion;
     blank.commissioning_accepted = false;
     return blank;
 }
@@ -171,13 +172,6 @@ uint32_t CommissioningStore::candidate_token(const sirokko::Config& config) cons
 }
 
 bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const char* value) const {
-    if (std::strcmp(key, "revision") == 0) {
-        if (std::strcmp(value, "a") == 0 || std::strcmp(value, "A") == 0) c.revision = sirokko::Revision::A;
-        else if (std::strcmp(value, "b") == 0 || std::strcmp(value, "B") == 0) c.revision = sirokko::Revision::B;
-        else return false;
-        c.commissioning_accepted = false;
-        return true;
-    }
 #define SET_U32(field) \
     if (std::strcmp(key, #field) == 0) { \
         uint32_t parsed{}; \
@@ -195,6 +189,7 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
         return true; \
     }
     SET_U32(boot_self_test_timeout_ms)
+    SET_U32(recovery_purge_min_ms)
     SET_U32(prepurge_ms)
     SET_U32(preheat_ms)
     SET_U32(spinup_ms)
@@ -224,10 +219,16 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
     SET_I32(high_to_low_delta_milli_c)
     SET_I32(low_to_high_delta_milli_c)
     SET_I32(stop_delta_milli_c)
-    if (std::strcmp(key, "low_pwm_permille") == 0) {
+    SET_U32(pwm_frequency_hz)
+    if (std::strcmp(key, "recovery_purge_pwm_permille") == 0 ||
+        std::strcmp(key, "low_pwm_permille") == 0) {
         uint32_t parsed{};
         if (!parse_unsigned(value, &parsed) || parsed > UINT16_MAX) return false;
-        c.low_pwm_permille = static_cast<uint16_t>(parsed);
+        if (std::strcmp(key, "recovery_purge_pwm_permille") == 0) {
+            c.recovery_purge_pwm_permille = static_cast<uint16_t>(parsed);
+        } else {
+            c.low_pwm_permille = static_cast<uint16_t>(parsed);
+        }
         c.commissioning_accepted = false;
         return true;
     }
@@ -237,12 +238,12 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
 }
 
 void CommissioningStore::print_config(const sirokko::Config& c) const {
-    std::printf("schema_version=%" PRIu32 " accepted=%u revision=%c token=%08" PRIX32 "\n",
-                c.schema_version, c.commissioning_accepted,
-                c.revision == sirokko::Revision::A ? 'A' : 'B', candidate_token(c));
+    std::printf("schema_version=%" PRIu32 " accepted=%u drive=PWM token=%08" PRIX32 "\n",
+                c.schema_version, c.commissioning_accepted, candidate_token(c));
 #define PRINT_U32(field) std::printf(#field "=%" PRIu32 "\n", c.field)
 #define PRINT_I32(field) std::printf(#field "=%" PRId32 "\n", c.field)
     PRINT_U32(boot_self_test_timeout_ms);
+    PRINT_U32(recovery_purge_min_ms);
     PRINT_U32(prepurge_ms);
     PRINT_U32(preheat_ms);
     PRINT_U32(spinup_ms);
@@ -272,6 +273,8 @@ void CommissioningStore::print_config(const sirokko::Config& c) const {
     PRINT_I32(high_to_low_delta_milli_c);
     PRINT_I32(low_to_high_delta_milli_c);
     PRINT_I32(stop_delta_milli_c);
+    PRINT_U32(pwm_frequency_hz);
+    std::printf("recovery_purge_pwm_permille=%u\n", c.recovery_purge_pwm_permille);
     std::printf("low_pwm_permille=%u\n", c.low_pwm_permille);
 #undef PRINT_U32
 #undef PRINT_I32
@@ -338,4 +341,32 @@ void CommissioningStore::print_faults() const {
                     record.boot_count, record.uptime_ms,
                     sirokko::state_name(static_cast<sirokko::State>(record.state)), record.faults);
     }
+}
+
+bool CommissioningStore::load_latched_faults(uint32_t* faults) const {
+    if (!faults) return false;
+    *faults = 0;
+    nvs_handle_t handle{};
+    if (!open_nvs(&handle, NVS_READONLY)) return false;
+    const esp_err_t error = nvs_get_u32(handle, "latched", faults);
+    nvs_close(handle);
+    return error == ESP_OK || error == ESP_ERR_NVS_NOT_FOUND;
+}
+
+bool CommissioningStore::save_latched_faults(uint32_t faults) const {
+    if (faults == 0) return false;
+    nvs_handle_t handle{};
+    if (!open_nvs(&handle)) return false;
+    const bool ok = nvs_set_u32(handle, "latched", faults) == ESP_OK && nvs_commit(handle) == ESP_OK;
+    nvs_close(handle);
+    return ok;
+}
+
+bool CommissioningStore::clear_latched_faults() const {
+    nvs_handle_t handle{};
+    if (!open_nvs(&handle)) return false;
+    const esp_err_t erase = nvs_erase_key(handle, "latched");
+    const bool ok = (erase == ESP_OK || erase == ESP_ERR_NVS_NOT_FOUND) && nvs_commit(handle) == ESP_OK;
+    nvs_close(handle);
+    return ok;
 }

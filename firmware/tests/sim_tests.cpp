@@ -1,5 +1,7 @@
 #include "sirokko/control.hpp"
 #include "sirokko/button.hpp"
+#include "board.hpp"
+#include "local_display.hpp"
 
 #include <cstdint>
 #include <functional>
@@ -17,12 +19,12 @@ void check(bool condition, const char* message) {
     if (!condition) throw std::runtime_error(message);
 }
 
-Config test_config(Revision revision = Revision::A) {
+Config test_config() {
     Config c{};
-    c.schema_version = 1;
+    c.schema_version = kConfigSchemaVersion;
     c.commissioning_accepted = true;
-    c.revision = revision;
     c.boot_self_test_timeout_ms = 50;
+    c.recovery_purge_min_ms = 25;
     c.prepurge_ms = 30;
     c.preheat_ms = 40;
     c.spinup_ms = 20;
@@ -52,6 +54,8 @@ Config test_config(Revision revision = Revision::A) {
     c.high_to_low_delta_milli_c = -500;
     c.low_to_high_delta_milli_c = -1500;
     c.stop_delta_milli_c = 500;
+    c.pwm_frequency_hz = 10000;
+    c.recovery_purge_pwm_permille = 650;
     c.low_pwm_permille = 420;
     return c;
 }
@@ -103,7 +107,14 @@ struct Sim {
 
     void boot_wait() {
         tick();
-        check(state() == State::WAIT_COOLDOWN, "healthy boot must reach wait");
+        check(state() == State::RECOVERY_PURGE, "every boot must enter recovery purge");
+        check(!out.fuel_command && !out.fuel_permit && !out.glow_command,
+              "recovery purge must keep fuel and glow off");
+        check(out.fan_request && out.speed_permille == config.recovery_purge_pwm_permille,
+              "valid recovery profile must command configured PWM purge");
+        advance(config.recovery_purge_min_ms);
+        check(state() == State::WAIT_COOLDOWN, "cold completed recovery must reach wait");
+        check(machine.status(in.now_ms).recovery_complete, "completed recovery must be explicit");
     }
 
     void start_to(State target) {
@@ -122,15 +133,97 @@ struct Sim {
     }
 };
 
+struct HardwareSafetyLatch {
+    bool power_good{true};
+    bool watchdog_ok{true};
+    bool stop_ok{true};
+    bool thermal_ok{true};
+    bool allow_latch{};
+
+    bool clear_ok(const Outputs& out) const {
+        return power_good && watchdog_ok && stop_ok && thermal_ok && out.arm_ready && !out.sw_trip;
+    }
+
+    void settle(const Outputs& out) {
+        if (!clear_ok(out)) allow_latch = false;
+    }
+
+    void reset_rising_edge(const Outputs& out, bool start_released = true) {
+        settle(out);
+        if (clear_ok(out)) {
+            allow_latch = out.arm_ready && !out.fuel_command && !out.fuel_permit &&
+                          !out.glow_command && start_released;
+        }
+    }
+
+    bool safety_ok(const Outputs& out) {
+        settle(out);
+        return allow_latch && clear_ok(out);
+    }
+};
+
+void coupled_tick(Sim& sim, HardwareSafetyLatch& latch) {
+    sim.in.safety_ok = latch.safety_ok(sim.out);
+    sim.tick();
+    latch.settle(sim.out);
+}
+
 void expect_safe(const Outputs& out) {
     check(!out.fuel_command, "fuel command must be off");
     check(!out.fuel_permit, "fuel permit must be off");
     check(!out.glow_command, "glow must be off");
 }
 
+void drive_to_state(Sim& s, State target) {
+    switch (target) {
+        case State::BOOT_SELF_TEST:
+            break;
+        case State::RECOVERY_PURGE:
+            s.tick();
+            break;
+        case State::WAIT_COOLDOWN:
+            s.boot_wait();
+            break;
+        case State::PREPURGE:
+        case State::PREHEAT:
+        case State::SPINUP:
+        case State::IGNITION_TRIAL:
+            s.start_to(target);
+            break;
+        case State::FLAME_CONFIRM:
+            s.start_to(State::IGNITION_TRIAL);
+            s.in.exhaust.milli_c = 100000;
+            s.until(State::FLAME_CONFIRM);
+            break;
+        case State::RUN_HIGH:
+            s.reach_run_high();
+            break;
+        case State::RUN_LOW:
+            s.reach_run_high();
+            s.in.room.milli_c = 20000;
+            s.advance(s.config.stage_min_ms);
+            break;
+        case State::POST_PURGE:
+            s.reach_run_high();
+            s.in.stop_active = true;
+            s.tick();
+            break;
+        case State::LOCKOUT:
+            s.boot_wait();
+            s.in.exhaust.quality = SensorQuality::TIMEOUT;
+            s.tick();
+            break;
+    }
+    check(s.state() == target, "test setup must reach requested source state");
+}
+
 void test_config_validation() {
     Config c = test_config();
     check(validate_config(c) == CONFIG_OK, "known complete config must validate");
+    c.schema_version = 1;
+    check(validate_config(c) & CONFIG_SCHEMA,
+          "legacy schema, including the removed two-speed profile, must be rejected");
+    c = test_config();
     c.commissioning_accepted = false;
     check(validate_config(c) & CONFIG_NOT_ACCEPTED, "unaccepted config must fail closed");
     c = test_config();
@@ -146,6 +239,21 @@ void test_config_validation() {
     c.flame_rise_milli_c = std::numeric_limits<int32_t>::max();
     check(validate_config(c) & CONFIG_FLAME_CRITERIA,
           "unbounded flame-rise arithmetic must fail validation");
+    check(heartbeat_worst_case_falling_edge_ms(20) == 80,
+          "heartbeat budget must include two toggles, 20 ms loop quantization and jitter");
+    c = test_config();
+    c.heartbeat_toggle_ms = 21;
+    check(validate_config(c) & CONFIG_WATCHDOG_TIMING,
+          "profile exceeding the 100 ms falling-edge budget must fail");
+    c.heartbeat_toggle_ms = 100;
+    check(validate_config(c) & CONFIG_WATCHDOG_TIMING,
+          "profile slower than the 170 ms watchdog minimum must fail");
+    c = test_config();
+    c.recovery_purge_pwm_permille = 0;
+    check(validate_config(c) & CONFIG_PWM, "recovery purge requires an explicit PWM duty");
+    c = test_config();
+    c.pwm_frequency_hz = kPwmMaximumFrequencyHz + 1;
+    check(validate_config(c) & CONFIG_PWM, "unsupported PWM frequency must fail closed");
 }
 
 void test_uncommissioned_image_is_locked() {
@@ -153,9 +261,110 @@ void test_uncommissioned_image_is_locked() {
     c.commissioning_accepted = false;
     Sim s(c);
     s.tick();
-    check(s.state() == State::LOCKOUT, "uncommissioned image must lock out");
+    check(s.state() == State::RECOVERY_PURGE,
+          "uncommissioned image must remain explicitly blocked in recovery");
     check(s.faults() & FAULT_CONFIG, "config fault must be reported");
     expect_safe(s.out);
+    check(!s.out.fan_request && !s.machine.status(s.in.now_ms).recovery_complete,
+          "invalid config cannot fabricate a verified purge command or completion");
+}
+
+void test_recovery_purge_after_power_loss_from_every_state() {
+    const State source_states[] = {
+        State::BOOT_SELF_TEST, State::RECOVERY_PURGE, State::WAIT_COOLDOWN,
+        State::PREPURGE,       State::PREHEAT,       State::SPINUP,
+        State::IGNITION_TRIAL, State::FLAME_CONFIRM, State::RUN_HIGH,
+        State::RUN_LOW,        State::POST_PURGE,    State::LOCKOUT,
+    };
+
+    for (const State source_state : source_states) {
+        Sim source;
+        drive_to_state(source, source_state);
+        Sim restarted(source.config, source.faults());
+        restarted.in.heat_enable = true;
+        restarted.in.reset_request = true;
+        restarted.tick();
+        check(restarted.state() == State::RECOVERY_PURGE,
+              "power loss from every source state must restart in recovery purge");
+        expect_safe(restarted.out);
+        check(restarted.out.fan_request &&
+                  restarted.out.speed_permille == restarted.config.recovery_purge_pwm_permille,
+              "recovery purge must use the commissioned PWM-only output");
+        check(restarted.machine.status(restarted.in.now_ms).state_age_ms == 0 &&
+                  !restarted.machine.status(restarted.in.now_ms).recovery_complete,
+              "reboot must restart purge timing and completion state");
+        restarted.advance(restarted.config.recovery_purge_min_ms - 1);
+        check(restarted.state() == State::RECOVERY_PURGE,
+              "START and RESET cannot bypass the minimum recovery time");
+        restarted.advance(1);
+        check(restarted.state() == (source.faults() == 0 ? State::WAIT_COOLDOWN : State::LOCKOUT),
+              "completed cold purge must route clean boots to WAIT and latched faults to LOCKOUT");
+        expect_safe(restarted.out);
+    }
+}
+
+void test_repeated_power_loss_restarts_recovery_timer() {
+    Sim first;
+    first.tick();
+    first.advance(first.config.recovery_purge_min_ms / 2);
+    check(first.state() == State::RECOVERY_PURGE,
+          "first partial recovery must still be in progress");
+
+    Sim second(first.config, first.faults());
+    second.tick();
+    check(second.machine.status(second.in.now_ms).state_age_ms == 0,
+          "a second power loss must not retain elapsed purge time");
+    second.advance(second.config.recovery_purge_min_ms - 1);
+    check(second.state() == State::RECOVERY_PURGE,
+          "second boot must satisfy its own complete purge minimum");
+    second.advance(1);
+    check(second.state() == State::WAIT_COOLDOWN, "second complete cold purge may finish");
+}
+
+void test_recovery_blockers_and_request_edges() {
+    Sim s;
+    s.in.stop_active = true;
+    s.in.heat_enable = true;
+    s.in.reset_request = true;
+    s.tick();
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::RECOVERY_PURGE && !s.machine.status(s.in.now_ms).recovery_complete,
+          "STOP must block recovery completion without disabling fuel-safe purge");
+    expect_safe(s.out);
+    check(s.out.fan_request, "STOP during recovery must not suppress purge airflow");
+
+    s.in.stop_active = false;
+    s.in.exhaust.quality = SensorQuality::TIMEOUT;
+    s.advance(s.config.boot_self_test_timeout_ms);
+    check(s.state() == State::RECOVERY_PURGE && !s.machine.status(s.in.now_ms).recovery_complete,
+          "sensor error must not be reported as completed cooling");
+    s.in.exhaust.quality = SensorQuality::OK;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "restored sensing may finish purge but the sensor fault remains latched");
+    expect_safe(s.out);
+}
+
+void test_latched_fault_survives_reboot_until_qualified_reset() {
+    Sim failed;
+    failed.boot_wait();
+    failed.in.exhaust.quality = SensorQuality::TIMEOUT;
+    failed.tick();
+    const uint32_t persisted_faults = failed.faults();
+    check(persisted_faults & FAULT_EXHAUST_SENSOR, "source fault must latch");
+
+    Sim restarted(test_config(), persisted_faults);
+    restarted.tick();
+    restarted.advance(restarted.config.recovery_purge_min_ms);
+    check(restarted.state() == State::LOCKOUT &&
+              (restarted.faults() & FAULT_EXHAUST_SENSOR),
+          "persisted fault must survive a power cycle");
+    restarted.in.reset_request = true;
+    restarted.tick();
+    restarted.in.reset_request = false;
+    restarted.tick();
+    check(restarted.state() == State::WAIT_COOLDOWN && restarted.faults() == FAULT_NONE,
+          "only a qualified RESET may clear the persisted logical fault");
 }
 
 void test_cold_start_sequence_and_fuel_gate() {
@@ -167,7 +376,8 @@ void test_cold_start_sequence_and_fuel_gate() {
     expect_safe(s.out);
     s.until(State::PREHEAT);
     check(s.out.glow_command && s.out.fan_request, "preheat must keep the fan running");
-    check(s.out.speed_permille == 1, "Rev A preheat must select the low-speed winding");
+    check(s.out.speed_permille == s.config.low_pwm_permille,
+          "preheat must use the commissioned PWM duty");
     check(!s.out.fuel_command && !s.out.fuel_permit, "preheat has no fuel");
     for (uint32_t elapsed = 0; elapsed + 1 < s.config.preheat_ms; ++elapsed) {
         s.advance(1);
@@ -186,19 +396,17 @@ void test_cold_start_sequence_and_fuel_gate() {
 }
 
 void test_glow_always_implies_fan_during_startup() {
-    for (Revision revision : {Revision::A, Revision::B}) {
-        Sim s(test_config(revision));
-        s.boot_wait();
-        s.in.heat_enable = true;
-        const uint32_t startup_budget = s.config.prepurge_ms + s.config.preheat_ms +
-                                        s.config.spinup_ms + s.config.ignition_window_ms;
-        for (uint32_t i = 0; i < startup_budget; ++i) {
-            s.tick();
-            check(!(s.out.glow_command && !s.out.fan_request),
-                  "startup must reject forbidden G=1,M=0 output vector");
-            ++s.in.now_ms;
-            if (s.state() == State::IGNITION_TRIAL) break;
-        }
+    Sim s;
+    s.boot_wait();
+    s.in.heat_enable = true;
+    const uint32_t startup_budget = s.config.prepurge_ms + s.config.preheat_ms +
+                                    s.config.spinup_ms + s.config.ignition_window_ms;
+    for (uint32_t i = 0; i < startup_budget; ++i) {
+        s.tick();
+        check(!(s.out.glow_command && !s.out.fan_request),
+              "startup must reject forbidden G=1,M=0 output vector");
+        ++s.in.now_ms;
+        if (s.state() == State::IGNITION_TRIAL) break;
     }
 }
 
@@ -244,23 +452,14 @@ void test_flame_loss_latches() {
     expect_safe(s.out);
 }
 
-void test_revision_a_low_speed() {
-    Sim s(test_config(Revision::A));
+void test_pwm_low_speed() {
+    Sim s;
     s.reach_run_high();
     s.in.room.milli_c = 20000;
     s.advance(s.config.stage_min_ms);
-    check(s.state() == State::RUN_LOW, "room regulation must select low");
-    check(s.out.speed_permille == 1, "Rev A low selector must energize");
+    check(s.state() == State::RUN_LOW, "PWM profile must enter low power");
+    check(s.out.speed_permille == s.config.low_pwm_permille, "low power must use accepted PWM");
     check(s.out.fuel_command && !s.out.glow_command, "speed change keeps fuel and no re-glow");
-}
-
-void test_revision_b_pwm() {
-    Sim s(test_config(Revision::B));
-    s.reach_run_high();
-    s.in.room.milli_c = 20000;
-    s.advance(s.config.stage_min_ms);
-    check(s.state() == State::RUN_LOW, "Rev B must enter low power");
-    check(s.out.speed_permille == s.config.low_pwm_permille, "Rev B must use accepted PWM");
 }
 
 void test_room_stop_and_purge() {
@@ -334,11 +533,19 @@ void test_self_test_wait_and_timeout() {
     Sim s;
     s.in.room.quality = SensorQuality::MISSING;
     s.tick();
-    check(s.state() == State::BOOT_SELF_TEST, "boot may wait bounded time for first conversion");
+    check(s.state() == State::RECOVERY_PURGE,
+          "recovery may wait bounded time for the first complete sensor set");
     s.advance(s.config.boot_self_test_timeout_ms);
-    check(s.state() == State::LOCKOUT, "self-test must time out");
+    check(s.state() == State::RECOVERY_PURGE,
+          "invalid sensors must not be reported as a completed recovery purge");
     check(s.faults() & FAULT_SELF_TEST_TIMEOUT, "self-test reason expected");
     expect_safe(s.out);
+    check(s.out.fan_request && !s.machine.status(s.in.now_ms).recovery_complete,
+          "sensor failure keeps fuel blocked and purge requested");
+    s.in.room.quality = SensorQuality::OK;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "restored sensors may finish cooling but the latched sensor fault still requires RESET");
 }
 
 void test_safety_input_fail_closed() {
@@ -346,7 +553,10 @@ void test_safety_input_fail_closed() {
     s.in.safety_ok = false;
     s.in.heat_enable = true;
     s.tick();
-    check(s.state() == State::LOCKOUT, "missing safety must lock out immediately");
+    check(s.state() == State::RECOVERY_PURGE && s.out.fan_request,
+          "open fuel latch must not prevent recovery purge");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::LOCKOUT, "missing safety must require manual reset after purge");
     check(s.faults() & FAULT_SAFETY_OPEN, "safety reason expected");
     expect_safe(s.out);
 }
@@ -359,6 +569,49 @@ void test_local_ui_failure_fails_closed() {
     check(s.state() == State::LOCKOUT, "loss of mandatory local display must lock out");
     check(s.faults() & FAULT_LOCAL_UI, "local UI fault reason expected");
     expect_safe(s.out);
+}
+
+void test_detected_display_init_failure_preserves_recovery_purge() {
+    Sim s(test_config(), local_display_startup_fault(false));
+    s.tick();
+    check(s.state() == State::RECOVERY_PURGE,
+          "detected display init failure must not skip boot recovery purge");
+    check(s.faults() & FAULT_LOCAL_UI, "display init failure must latch the local UI fault");
+    expect_safe(s.out);
+    check(s.out.fan_request && s.out.speed_permille == s.config.recovery_purge_pwm_permille,
+          "display init failure must not suppress the required fuel-safe purge");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::LOCKOUT,
+          "detected display init failure must lock out after recovery completes");
+    expect_safe(s.out);
+}
+
+void test_display_transfer_failure_during_recovery_preserves_purge() {
+    Sim s;
+    s.tick();
+    s.in.local_ui_ok = false;
+    s.tick();
+    check(s.state() == State::RECOVERY_PURGE,
+          "display transfer failure during recovery must not interrupt purge");
+    check(s.faults() & FAULT_LOCAL_UI, "display transfer failure must latch the local UI fault");
+    expect_safe(s.out);
+    check(s.out.fan_request && s.out.speed_permille == s.config.recovery_purge_pwm_permille,
+          "display transfer failure must leave the commissioned purge airflow active");
+}
+
+void test_shared_spi_display_contract() {
+    check(board::kSpiMosi == 11 && board::kSpiSclk == 12 && board::kSpiMiso == 13,
+          "shared SPI pins must remain on the released sensor bus");
+    check(board::kTftCs == 47 && board::kTftDc == 48 && board::kTftReset == -1,
+          "TFT control pins and EN-bound reset contract must remain exact");
+    check(board::shared_spi_chip_selects_are_distinct(),
+          "TFT and both MAX31856 devices require independent chip selects");
+    check(board::kMaxSpiMode == 1 && board::kTftSpiMode == 0,
+          "each shared-bus device must retain its own SPI mode");
+    check(board::kMaxSpiClockHz == 5'000'000 && board::kTftSpiClockHz == 20'000'000,
+          "shared-bus clocks must remain at the selected conservative values");
+    check(board::kTftBandTransferBudgetUs < kControlLoopPeriodMs * 1000u,
+          "one bounded TFT band must fit inside a control-loop period");
 }
 
 void test_overtemperature_boundaries() {
@@ -383,26 +636,51 @@ void test_hot_start_is_inhibited() {
     s.in.hot_air.milli_c = 70000;
     s.in.heat_enable = true;
     s.tick();
-    check(s.state() == State::WAIT_COOLDOWN, "hot unit must not start");
+    check(s.state() == State::RECOVERY_PURGE, "hot unit must remain in recovery purge");
     check(s.out.fan_request && !s.out.fuel_command && !s.out.glow_command,
-          "hot request may cool but never fuel or glow");
+          "hot recovery may cool but never fuel or glow");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::RECOVERY_PURGE, "minimum time alone cannot finish hot recovery");
+    s.in.exhaust.milli_c = 20000;
+    s.in.hot_air.milli_c = 20000;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN, "cold plus minimum time completes recovery");
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "a request held through recovery must not auto-start");
+    s.in.heat_enable = false;
+    s.tick();
+    s.in.heat_enable = true;
+    s.tick();
+    check(s.state() == State::PREPURGE, "release and new START may begin a new cycle");
 }
 
 void test_manual_reset_no_autostart() {
     Sim s(test_config(), FAULT_BROWNOUT_RESET);
     s.in.heat_enable = true;
     s.tick();
-    check(s.state() == State::LOCKOUT, "brownout starts locked");
+    check(s.state() == State::RECOVERY_PURGE, "brownout must purge before lockout handling");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::LOCKOUT, "latched brownout requires reset after purge");
     s.in.reset_request = true;
     s.tick();
     check(s.state() == State::LOCKOUT, "reset while start held must be refused");
     s.in.heat_enable = false;
     s.tick();
-    check(s.state() == State::LOCKOUT && !s.out.sw_trip,
-          "qualified held reset must release software trip but stay locked");
+    check(s.state() == State::LOCKOUT,
+          "releasing START during a held RESET must not synthesize a reset press");
     s.in.reset_request = false;
     s.tick();
-    check(s.state() == State::WAIT_COOLDOWN, "release after qualified reset may clear corrected fault");
+    check(s.state() == State::LOCKOUT,
+          "release after a RESET press blocked by START must not clear lockout");
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "a separate RESET press after START release may qualify");
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "release after the separate qualified RESET press may clear corrected fault");
     expect_safe(s.out);
     s.advance(5);
     check(s.state() == State::WAIT_COOLDOWN, "reset must not autostart");
@@ -412,12 +690,13 @@ void test_set_dominant_latch_reset_handshake() {
     Sim s;
     s.in.safety_ok = false;
     s.tick();
-    check(s.state() == State::LOCKOUT && s.out.arm_ready && s.out.sw_trip,
-          "healthy MCU side must advertise reset readiness while latch remains tripped");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::LOCKOUT && s.out.arm_ready && !s.out.sw_trip,
+          "healthy MCU side must pre-arm the physical RESET interface while latch remains tripped");
     s.in.reset_request = true;
     s.tick();
     check(!s.out.sw_trip && s.state() == State::LOCKOUT,
-          "held qualified reset deasserts software SET but does not clear state");
+          "held qualified reset keeps software SET released but does not clear state");
     s.in.safety_ok = true;
     s.tick();
     check(s.state() == State::LOCKOUT, "safety restoration must be observed while reset is held");
@@ -425,6 +704,125 @@ void test_set_dominant_latch_reset_handshake() {
     s.tick();
     check(s.state() == State::WAIT_COOLDOWN, "release after SAFETY_OK completes reset");
     expect_safe(s.out);
+}
+
+void test_reset_release_cannot_qualify_safety() {
+    Sim s(test_config(), FAULT_BROWNOUT_RESET);
+    s.in.safety_ok = false;
+    s.tick();
+    s.advance(s.config.recovery_purge_min_ms);
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT, "RESET press with open safety starts but cannot qualify reset");
+
+    s.in.reset_request = false;
+    s.in.safety_ok = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "SAFETY_OK first observed on RESET release must not clear lockout");
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "new RESET hold must observe SAFETY_OK before release");
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "release after SAFETY_OK was observed while held must clear lockout");
+}
+
+void test_reset_blocker_cancels_qualification() {
+    Sim s(test_config(), FAULT_BROWNOUT_RESET);
+    s.tick();
+    s.advance(s.config.recovery_purge_min_ms);
+
+    s.in.reset_request = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "healthy held RESET may qualify but must remain locked until release");
+
+    s.in.local_ui_ok = false;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "a current blocker must cancel the qualified RESET cycle");
+    s.in.local_ui_ok = true;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "removing a blocker while RESET remains held must not requalify without a new press");
+
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::LOCKOUT,
+          "release of the cancelled RESET cycle must not clear lockout");
+    s.in.reset_request = true;
+    s.tick();
+    s.in.reset_request = false;
+    s.tick();
+    check(s.state() == State::WAIT_COOLDOWN,
+          "a new qualified RESET cycle after blocker recovery must clear lockout");
+}
+
+void test_coupled_hardware_latch_reset_protocol() {
+    Sim s;
+    HardwareSafetyLatch latch;
+    coupled_tick(s, latch);
+    check(s.state() == State::RECOVERY_PURGE && s.out.fan_request,
+          "open hardware latch must not suppress the reset-recovery purge");
+    for (uint32_t i = 0; i < s.config.recovery_purge_min_ms; ++i) {
+        ++s.in.now_ms;
+        coupled_tick(s, latch);
+    }
+    check(s.state() == State::LOCKOUT, "open hardware latch must lock after recovery purge");
+    expect_safe(s.out);
+    check(s.out.arm_ready && !s.out.sw_trip,
+          "software trip must release before the asynchronous physical RESET edge");
+
+    latch.reset_rising_edge(s.out);
+    coupled_tick(s, latch);
+    check(latch.allow_latch && s.in.safety_ok,
+          "qualified hardware RESET must restore SAFETY_OK before firmware RESET");
+    s.in.reset_request = true;
+    coupled_tick(s, latch);
+    check(s.state() == State::LOCKOUT,
+          "firmware RESET must remain locked while the request is held");
+    s.in.reset_request = false;
+    coupled_tick(s, latch);
+    check(s.state() == State::WAIT_COOLDOWN, "RESET release must complete the reset handshake");
+    expect_safe(s.out);
+
+    latch.thermal_ok = false;
+    latch.reset_rising_edge(s.out);
+    coupled_tick(s, latch);
+    check(!latch.allow_latch && s.state() == State::LOCKOUT,
+          "a simultaneous fault must dominate a RESET edge");
+    expect_safe(s.out);
+
+    Sim held;
+    HardwareSafetyLatch held_latch;
+    held.in.reset_request = true;
+    coupled_tick(held, held_latch);
+    for (uint32_t i = 0; i < held.config.recovery_purge_min_ms; ++i) {
+        ++held.in.now_ms;
+        coupled_tick(held, held_latch);
+    }
+    check(held.state() == State::LOCKOUT, "boot-held RESET still reaches post-recovery lockout");
+    check(held.out.arm_ready && !held.out.sw_trip,
+          "firmware may pre-arm only its half of the edge-qualified reset path");
+    check(!held_latch.allow_latch, "boot-held RESET must not synthesize a hardware reset edge");
+    held.in.reset_request = false;
+    coupled_tick(held, held_latch);
+    check(held.state() == State::LOCKOUT,
+          "releasing a boot-held RESET must not synthesize a reset cycle");
+    held_latch.reset_rising_edge(held.out);
+    coupled_tick(held, held_latch);
+    check(held.in.safety_ok, "new hardware RESET after release may restore SAFETY_OK");
+    held.in.reset_request = true;
+    coupled_tick(held, held_latch);
+    held.in.reset_request = false;
+    coupled_tick(held, held_latch);
+    check(held.state() == State::WAIT_COOLDOWN,
+          "a new firmware RESET press after release must complete exactly one reset cycle");
 }
 
 void test_watchdog_only_when_healthy() {
@@ -436,6 +834,36 @@ void test_watchdog_only_when_healthy() {
     s.in.exhaust.quality = SensorQuality::TIMEOUT;
     s.tick();
     check(!s.out.watchdog_heartbeat, "unhealthy core must stop heartbeat");
+}
+
+void test_watchdog_falling_edges_with_loop_jitter() {
+    Config config = test_config();
+    config.heartbeat_toggle_ms = 20;
+    Sim s(config);
+    s.boot_wait();
+
+    bool previous = s.out.watchdog_heartbeat;
+    uint32_t previous_falling_ms = s.in.now_ms;
+    uint32_t maximum_interval_ms = 0;
+    uint32_t falling_edges = 0;
+    for (int i = 0; i < 8; ++i) {
+        s.in.now_ms += kControlLoopPeriodMs + kControlLoopJitterBudgetMs;
+        s.tick();
+        if (previous && !s.out.watchdog_heartbeat) {
+            const uint32_t interval = s.in.now_ms - previous_falling_ms;
+            if (falling_edges > 0 && interval > maximum_interval_ms) maximum_interval_ms = interval;
+            previous_falling_ms = s.in.now_ms;
+            ++falling_edges;
+        }
+        previous = s.out.watchdog_heartbeat;
+    }
+
+    check(falling_edges >= 2, "jitter trace must contain repeated watchdog falling edges");
+    check(maximum_interval_ms == heartbeat_worst_case_falling_edge_ms(config.heartbeat_toggle_ms),
+          "trace must reach the calculated worst-case falling-edge interval");
+    check(maximum_interval_ms <= kHeartbeatMaximumFallingEdgeMs &&
+              maximum_interval_ms < kWatchdogMinimumTimeoutMs,
+          "worst-case heartbeat trace must remain inside both watchdog limits");
 }
 
 void test_purge_needs_cold_and_minimum_time() {
@@ -494,7 +922,10 @@ void test_setpoint_out_of_range_locks() {
     Sim s;
     s.in.setpoint_milli_c = s.config.setpoint_max_milli_c + 1;
     s.tick();
-    check(s.state() == State::LOCKOUT, "invalid runtime setpoint must fail closed");
+    check(s.state() == State::RECOVERY_PURGE,
+          "invalid startup setpoint must remain fuel-safe during recovery");
+    s.advance(s.config.recovery_purge_min_ms);
+    check(s.state() == State::LOCKOUT, "invalid runtime setpoint must fail closed after purge");
     check(s.faults() & FAULT_CONFIG, "setpoint config reason expected");
 }
 
@@ -528,14 +959,20 @@ int main() {
     const std::vector<std::pair<const char*, std::function<void()>>> tests = {
         {"config_validation", test_config_validation},
         {"uncommissioned_image_is_locked", test_uncommissioned_image_is_locked},
+        {"recovery_purge_after_power_loss_from_every_state",
+         test_recovery_purge_after_power_loss_from_every_state},
+        {"repeated_power_loss_restarts_recovery_timer",
+         test_repeated_power_loss_restarts_recovery_timer},
+        {"recovery_blockers_and_request_edges", test_recovery_blockers_and_request_edges},
+        {"latched_fault_survives_reboot_until_qualified_reset",
+         test_latched_fault_survives_reboot_until_qualified_reset},
         {"cold_start_sequence_and_fuel_gate", test_cold_start_sequence_and_fuel_gate},
         {"glow_always_implies_fan_during_startup", test_glow_always_implies_fan_during_startup},
         {"ignition_timeout_latches", test_ignition_timeout_latches},
         {"flame_confirmation_after_glow_off", test_flame_confirmation_after_glow_off},
         {"confirmation_drop_latches", test_confirmation_drop_latches},
         {"flame_loss_latches", test_flame_loss_latches},
-        {"revision_a_low_speed", test_revision_a_low_speed},
-        {"revision_b_pwm", test_revision_b_pwm},
+        {"pwm_low_speed", test_pwm_low_speed},
         {"room_stop_and_purge", test_room_stop_and_purge},
         {"stop_from_every_active_state", test_stop_from_every_active_state},
         {"sensor_failure_matrix", test_sensor_failure_matrix},
@@ -543,11 +980,20 @@ int main() {
         {"self_test_wait_and_timeout", test_self_test_wait_and_timeout},
         {"safety_input_fail_closed", test_safety_input_fail_closed},
         {"local_ui_failure_fails_closed", test_local_ui_failure_fails_closed},
+        {"detected_display_init_failure_preserves_recovery_purge",
+         test_detected_display_init_failure_preserves_recovery_purge},
+        {"display_transfer_failure_during_recovery_preserves_purge",
+         test_display_transfer_failure_during_recovery_preserves_purge},
+        {"shared_spi_display_contract", test_shared_spi_display_contract},
         {"overtemperature_boundaries", test_overtemperature_boundaries},
         {"hot_start_is_inhibited", test_hot_start_is_inhibited},
         {"manual_reset_no_autostart", test_manual_reset_no_autostart},
         {"set_dominant_latch_reset_handshake", test_set_dominant_latch_reset_handshake},
+        {"reset_release_cannot_qualify_safety", test_reset_release_cannot_qualify_safety},
+        {"reset_blocker_cancels_qualification", test_reset_blocker_cancels_qualification},
+        {"coupled_hardware_latch_reset_protocol", test_coupled_hardware_latch_reset_protocol},
         {"watchdog_only_when_healthy", test_watchdog_only_when_healthy},
+        {"watchdog_falling_edges_with_loop_jitter", test_watchdog_falling_edges_with_loop_jitter},
         {"purge_needs_cold_and_minimum_time", test_purge_needs_cold_and_minimum_time},
         {"restart_inhibit", test_restart_inhibit},
         {"timer_wraparound", test_timer_wraparound},

@@ -1,0 +1,52 @@
+{
+  "artifact": "sirokko-26201-controller",
+  "version": "0.1.3-draft",
+  "built_at_utc": "2026-10-24T14:34:59Z",
+  "status": "bench-only-uncommissioned",
+  "target": "ESP32-S3-DevKitC-1-N8R8 v1.1",
+  "idf_version": "5.5.2",
+  "flash": {
+    "chip": "esp32s3",
+    "mode": "dio",
+    "frequency": "80m",
+    "size": "8MB",
+    "before": "default_reset",
+    "after": "hard_reset"
+  },
+  "files": [
+    {
+      "offset": "0x0",
+      "file": "bootloader.bin",
+      "size_bytes": 21328,
+      "sha256": "61944ce7c8471c86d78025f99777b2feb76566c6b0a9fbacb16096310675f501"
+    },
+    {
+      "offset": "0x8000",
+      "file": "partition-table.bin",
+      "size_bytes": 3072,
+      "sha256": "b849d812a0d8488c4cac852c8267bd7200433810808f3918d7f02d1acf3afe8c"
+    },
+    {
+      "offset": "0x10000",
+      "file": "sirokko-26201-controller-draft-0.1.3.bin",
+      "size_bytes": 347312,
+      "sha256": "7c152c71991ff79b6d910e28e28dea7186cac500f2e7f2d612f3fc455cf92957",
+      "esp_image_validation_hash": "fe73c7780bc720944bd33ea1b9c3a5081a2eab16cbf46fd97f1e71564bb83bb6"
+    }
+  ],
+  "verified": {
+    "clean_container_build": true,
+    "host_tests": "36/36 passed",
+    "esp_image_checksum": "valid",
+    "esp_image_validation_hash": "valid"
+  },
+  "safety": [
+    "The image requires an explicitly accepted PWM-only schema-2 configuration; fresh or schema-1 NVS fails closed with FAULT_CONFIG.",
+    "Every boot/reset enters RECOVERY_PURGE with fuel and glow off; completion requires the commissioned minimum time, fresh valid sensors, inactive STOP and cold thresholds.",
+    "Latched software faults persist in NVS across power loss and clear only after a qualified manual RESET exits LOCKOUT.",
+    "No verified 220/24V presence input exists; an ESP32 kept alive by USB cannot detect mains loss/return, so the recovery guarantee begins on actual MCU boot/reset.",
+    "The reset protocol was host-tested against the asynchronous DRAFT-02 hardware latch model; physical timing and debounce still require a bench.",
+    "The watchdog validator budgets 80 ms between falling edges against the 170 ms minimum timeout, but GPIO and RTOS timing still require oscilloscope verification.",
+    "This artifact is for bench verification only and is not authorization for fired operation."
+  ]
+}
