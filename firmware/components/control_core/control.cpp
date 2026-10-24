@@ -2,12 +2,14 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <limits>
 
 namespace sirokko {
 namespace {
 
 constexpr uint32_t kSchemaVersion = 1;
 constexpr uint32_t kMaxDurationMs = 24u * 60u * 60u * 1000u;
+static_assert(kHeartbeatMaximumFallingEdgeMs < kWatchdogMinimumTimeoutMs);
 
 bool is_timed_state(State state) {
     return state == State::PREPURGE || state == State::PREHEAT || state == State::SPINUP ||
@@ -26,6 +28,18 @@ bool is_glow_state(State state) {
 
 }  // namespace
 
+uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms) {
+    if (toggle_ms == 0) return std::numeric_limits<uint32_t>::max();
+    const uint64_t quantized_toggle =
+        ((static_cast<uint64_t>(toggle_ms) + kControlLoopPeriodMs - 1) /
+         kControlLoopPeriodMs) * kControlLoopPeriodMs;
+    const uint64_t falling_edge_interval =
+        2 * (quantized_toggle + kControlLoopJitterBudgetMs);
+    return falling_edge_interval > std::numeric_limits<uint32_t>::max()
+               ? std::numeric_limits<uint32_t>::max()
+               : static_cast<uint32_t>(falling_edge_interval);
+}
+
 uint32_t validate_config(const Config& c, bool require_acceptance) {
     uint32_t errors = CONFIG_OK;
     if (c.schema_version != kSchemaVersion) errors |= CONFIG_SCHEMA;
@@ -39,6 +53,10 @@ uint32_t validate_config(const Config& c, bool require_acceptance) {
     };
     for (const uint32_t duration : durations) {
         if (duration == 0 || duration > kMaxDurationMs) errors |= CONFIG_DURATION;
+    }
+    if (heartbeat_worst_case_falling_edge_ms(c.heartbeat_toggle_ms) >
+        kHeartbeatMaximumFallingEdgeMs) {
+        errors |= CONFIG_WATCHDOG_TIMING;
     }
     const uint64_t worst_glow = static_cast<uint64_t>(c.preheat_ms) + c.spinup_ms + c.ignition_window_ms;
     if (c.glow_max_ms < worst_glow) errors |= CONFIG_GLOW_BUDGET;
@@ -322,7 +340,9 @@ Outputs Machine::make_outputs(const Inputs& in) {
     const bool lockout_reset_ready = state_ == State::LOCKOUT && !in.heat_enable && !in.stop_active;
     out.arm_ready = readiness_faults == FAULT_NONE && state_ != State::BOOT_SELF_TEST &&
                     (state_ != State::LOCKOUT || lockout_reset_ready);
-    if (state_ == State::LOCKOUT && reset_pending_) out.sw_trip = false;
+    // The hardware RESET edge is asynchronous and arrives before the debounced GPIO request.
+    // Release /CLR first; the hardware latch still cannot re-arm without a new physical edge.
+    if (state_ == State::LOCKOUT && out.arm_ready) out.sw_trip = false;
     return out;
 }
 

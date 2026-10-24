@@ -9,6 +9,8 @@
 - Состояния: `BOOT_SELF_TEST`, `WAIT_COOLDOWN`, `PREPURGE`, `PREHEAT`, `SPINUP`, `IGNITION_TRIAL`, `FLAME_CONFIRM`, `RUN_HIGH`, `RUN_LOW`, `POST_PURGE`, `LOCKOUT`.
 - Два последовательных разрешения топлива: `FUEL_CMD` и `FUEL_PERMIT`.
 - Fail-safe STOP, аппаратный `SAFETY_OK`, `ARM_READY`, `SW_TRIP` и heartbeat внешнего watchdog.
+- RESET согласован с асинхронной DRAFT-02 защёлкой: при готовности к ручному сбросу `SW_TRIP` снимается до физического фронта; удержание при boot/аварии не создаёт самовзвод.
+- Heartbeat формируется проходами основного автомата; валидатор учитывает два переключения на один спад, цикл 20 мс и запас задержки 20 мс, не принимая интервал спадов более 100 мс.
 - Обязательный обдув во всём `PREHEAT`; вектор `GLOW_CMD=1, FAN_CMD=0` запрещён инвариантом ядра и тестом.
 - Active-low START/RESET/SET с программным debounce. Удержание START/RESET при включении игнорируется до подтверждённого отпускания.
 - OLED показывает `Tset`, `Troom`, `Texh`, `Tair`, состояние и маску причины блокировки; Wi-Fi не нужен.
@@ -25,6 +27,8 @@
 ```sh
 bash tests/run_host_tests.sh
 ```
+
+Текущий результат: 31/31, включая связанную временную модель физической защёлки и проверку худшего интервала спада heartbeat.
 
 ## Сборка ESP-IDF 5.5.2
 
@@ -46,7 +50,7 @@ docker run --rm -v "$PWD:/project" -w /project espressif/idf:v5.5.2 \
 - `build/partition_table/partition-table.bin` — адрес `0x8000`;
 - `build/sirokko_26201_controller.bin` — адрес `0x10000`.
 
-Готовый стендовый комплект находится в `release/firmware/`; контрольные суммы и параметры записи — в `release/firmware/manifest.json`.
+Актуальный стендовый комплект 0.1.1 находится в `release/firmware/0.1.1/`; контрольные суммы и параметры записи — в его `manifest.json`. Исходный комплект 0.1.0 сохранён без перезаписи в `release/firmware/`.
 
 ## Границы готовности
 

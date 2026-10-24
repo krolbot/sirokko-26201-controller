@@ -122,6 +122,41 @@ struct Sim {
     }
 };
 
+struct HardwareSafetyLatch {
+    bool power_good{true};
+    bool watchdog_ok{true};
+    bool stop_ok{true};
+    bool thermal_ok{true};
+    bool allow_latch{};
+
+    bool clear_ok(const Outputs& out) const {
+        return power_good && watchdog_ok && stop_ok && thermal_ok && out.arm_ready && !out.sw_trip;
+    }
+
+    void settle(const Outputs& out) {
+        if (!clear_ok(out)) allow_latch = false;
+    }
+
+    void reset_rising_edge(const Outputs& out, bool start_released = true) {
+        settle(out);
+        if (clear_ok(out)) {
+            allow_latch = out.arm_ready && !out.fuel_command && !out.fuel_permit &&
+                          !out.glow_command && start_released;
+        }
+    }
+
+    bool safety_ok(const Outputs& out) {
+        settle(out);
+        return allow_latch && clear_ok(out);
+    }
+};
+
+void coupled_tick(Sim& sim, HardwareSafetyLatch& latch) {
+    sim.in.safety_ok = latch.safety_ok(sim.out);
+    sim.tick();
+    latch.settle(sim.out);
+}
+
 void expect_safe(const Outputs& out) {
     check(!out.fuel_command, "fuel command must be off");
     check(!out.fuel_permit, "fuel permit must be off");
@@ -146,6 +181,15 @@ void test_config_validation() {
     c.flame_rise_milli_c = std::numeric_limits<int32_t>::max();
     check(validate_config(c) & CONFIG_FLAME_CRITERIA,
           "unbounded flame-rise arithmetic must fail validation");
+    check(heartbeat_worst_case_falling_edge_ms(20) == 80,
+          "heartbeat budget must include two toggles, 20 ms loop quantization and jitter");
+    c = test_config();
+    c.heartbeat_toggle_ms = 21;
+    check(validate_config(c) & CONFIG_WATCHDOG_TIMING,
+          "profile exceeding the 100 ms falling-edge budget must fail");
+    c.heartbeat_toggle_ms = 100;
+    check(validate_config(c) & CONFIG_WATCHDOG_TIMING,
+          "profile slower than the 170 ms watchdog minimum must fail");
 }
 
 void test_uncommissioned_image_is_locked() {
@@ -412,12 +456,12 @@ void test_set_dominant_latch_reset_handshake() {
     Sim s;
     s.in.safety_ok = false;
     s.tick();
-    check(s.state() == State::LOCKOUT && s.out.arm_ready && s.out.sw_trip,
-          "healthy MCU side must advertise reset readiness while latch remains tripped");
+    check(s.state() == State::LOCKOUT && s.out.arm_ready && !s.out.sw_trip,
+          "healthy MCU side must pre-arm the physical RESET interface while latch remains tripped");
     s.in.reset_request = true;
     s.tick();
     check(!s.out.sw_trip && s.state() == State::LOCKOUT,
-          "held qualified reset deasserts software SET but does not clear state");
+          "held qualified reset keeps software SET released but does not clear state");
     s.in.safety_ok = true;
     s.tick();
     check(s.state() == State::LOCKOUT, "safety restoration must be observed while reset is held");
@@ -425,6 +469,104 @@ void test_set_dominant_latch_reset_handshake() {
     s.tick();
     check(s.state() == State::WAIT_COOLDOWN, "release after SAFETY_OK completes reset");
     expect_safe(s.out);
+}
+
+void test_coupled_hardware_latch_reset_protocol() {
+    Sim s;
+    HardwareSafetyLatch latch;
+    DebouncedActiveLowButton reset_button(5);
+    reset_button.update(true, s.in.now_ms);
+    coupled_tick(s, latch);
+    check(s.state() == State::LOCKOUT, "open hardware latch must lock the controller");
+    expect_safe(s.out);
+    check(s.out.arm_ready && !s.out.sw_trip,
+          "software trip must release before the asynchronous physical RESET edge");
+
+    s.in.now_ms = 1;
+    latch.reset_rising_edge(s.out);
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(latch.allow_latch && !s.in.reset_request,
+          "hardware RESET must precede the debounced firmware request");
+    s.in.now_ms = 2;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = 3;
+    latch.reset_rising_edge(s.out);
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = 8;
+    check(reset_button.update(false, s.in.now_ms), "debounced RESET press must be observed once");
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(s.state() == State::LOCKOUT && s.in.safety_ok,
+          "firmware must observe restored SAFETY_OK while RESET is held");
+    s.in.now_ms = 12;
+    reset_button.update(false, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = 13;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    s.in.now_ms = 18;
+    reset_button.update(true, s.in.now_ms);
+    s.in.reset_request = reset_button.pressed();
+    coupled_tick(s, latch);
+    check(s.state() == State::WAIT_COOLDOWN, "RESET release must complete the reset handshake");
+    expect_safe(s.out);
+
+    latch.thermal_ok = false;
+    latch.reset_rising_edge(s.out);
+    coupled_tick(s, latch);
+    check(!latch.allow_latch && s.state() == State::LOCKOUT,
+          "a simultaneous fault must dominate a RESET edge");
+    expect_safe(s.out);
+
+    Sim held;
+    HardwareSafetyLatch held_latch;
+    DebouncedActiveLowButton held_button(5);
+    held_button.update(false, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    check(!held_latch.allow_latch && !held.in.reset_request,
+          "RESET held through boot must not arm either reset path");
+    held.in.now_ms = 10;
+    held_button.update(false, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    held.in.now_ms = 11;
+    held_button.update(true, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    held.in.now_ms = 16;
+    held_button.update(true, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    check(held.state() == State::LOCKOUT && !held_latch.allow_latch,
+          "releasing a boot-held RESET must not synthesize a hardware edge");
+    held.in.now_ms = 17;
+    held_latch.reset_rising_edge(held.out);
+    held_button.update(false, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    held.in.now_ms = 22;
+    held_button.update(false, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    held.in.now_ms = 23;
+    held_button.update(true, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    held.in.now_ms = 28;
+    held_button.update(true, held.in.now_ms);
+    held.in.reset_request = held_button.pressed();
+    coupled_tick(held, held_latch);
+    check(held.state() == State::WAIT_COOLDOWN,
+          "a new press after release must complete exactly one reset cycle");
 }
 
 void test_watchdog_only_when_healthy() {
@@ -436,6 +578,36 @@ void test_watchdog_only_when_healthy() {
     s.in.exhaust.quality = SensorQuality::TIMEOUT;
     s.tick();
     check(!s.out.watchdog_heartbeat, "unhealthy core must stop heartbeat");
+}
+
+void test_watchdog_falling_edges_with_loop_jitter() {
+    Config config = test_config();
+    config.heartbeat_toggle_ms = 20;
+    Sim s(config);
+    s.boot_wait();
+
+    bool previous = s.out.watchdog_heartbeat;
+    uint32_t previous_falling_ms = s.in.now_ms;
+    uint32_t maximum_interval_ms = 0;
+    uint32_t falling_edges = 0;
+    for (int i = 0; i < 8; ++i) {
+        s.in.now_ms += kControlLoopPeriodMs + kControlLoopJitterBudgetMs;
+        s.tick();
+        if (previous && !s.out.watchdog_heartbeat) {
+            const uint32_t interval = s.in.now_ms - previous_falling_ms;
+            if (falling_edges > 0 && interval > maximum_interval_ms) maximum_interval_ms = interval;
+            previous_falling_ms = s.in.now_ms;
+            ++falling_edges;
+        }
+        previous = s.out.watchdog_heartbeat;
+    }
+
+    check(falling_edges >= 2, "jitter trace must contain repeated watchdog falling edges");
+    check(maximum_interval_ms == heartbeat_worst_case_falling_edge_ms(config.heartbeat_toggle_ms),
+          "trace must reach the calculated worst-case falling-edge interval");
+    check(maximum_interval_ms <= kHeartbeatMaximumFallingEdgeMs &&
+              maximum_interval_ms < kWatchdogMinimumTimeoutMs,
+          "worst-case heartbeat trace must remain inside both watchdog limits");
 }
 
 void test_purge_needs_cold_and_minimum_time() {
@@ -547,7 +719,9 @@ int main() {
         {"hot_start_is_inhibited", test_hot_start_is_inhibited},
         {"manual_reset_no_autostart", test_manual_reset_no_autostart},
         {"set_dominant_latch_reset_handshake", test_set_dominant_latch_reset_handshake},
+        {"coupled_hardware_latch_reset_protocol", test_coupled_hardware_latch_reset_protocol},
         {"watchdog_only_when_healthy", test_watchdog_only_when_healthy},
+        {"watchdog_falling_edges_with_loop_jitter", test_watchdog_falling_edges_with_loop_jitter},
         {"purge_needs_cold_and_minimum_time", test_purge_needs_cold_and_minimum_time},
         {"restart_inhibit", test_restart_inhibit},
         {"timer_wraparound", test_timer_wraparound},

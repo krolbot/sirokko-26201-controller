@@ -4,6 +4,11 @@
 
 namespace sirokko {
 
+inline constexpr uint32_t kControlLoopPeriodMs = 20;
+inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
+inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
+inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
+
 enum class Revision : uint8_t { A = 0, B = 1 };
 
 enum class State : uint8_t {
@@ -88,8 +93,10 @@ enum ConfigError : uint32_t {
     CONFIG_SETPOINT = 1u << 7,
     CONFIG_REGULATOR_ORDER = 1u << 8,
     CONFIG_PWM = 1u << 9,
+    CONFIG_WATCHDOG_TIMING = 1u << 10,
 };
 
+uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms);
 uint32_t validate_config(const Config& config, bool require_acceptance = true);
 
 struct Inputs {

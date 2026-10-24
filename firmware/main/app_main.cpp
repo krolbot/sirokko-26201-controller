@@ -23,7 +23,6 @@
 
 namespace {
 constexpr char kTag[] = "sirokko";
-constexpr uint32_t kLoopMs = 20;
 constexpr int32_t kSetpointStepMilliC = 500;
 
 constexpr gpio_num_t kSafetyOk = GPIO_NUM_5;
@@ -327,6 +326,7 @@ extern "C" void app_main() {
              g_store.boot_count(), config_integrity, sirokko::validate_config(g_config),
              sensors_initialized, display_initialized);
 
+    TickType_t last_wake = xTaskGetTickCount();
     while (true) {
         const uint32_t now = uptime_ms();
         sensors.poll(now);
@@ -389,6 +389,6 @@ extern "C" void app_main() {
                           stop_active, display.healthy()};
             xSemaphoreGive(g_snapshot_mutex);
         }
-        vTaskDelay(pdMS_TO_TICKS(kLoopMs));
+        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(sirokko::kControlLoopPeriodMs));
     }
 }
