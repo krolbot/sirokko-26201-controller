@@ -2053,7 +2053,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical"
 		(at 185.42 88.9 0)
 		(effects
 			(font
@@ -2172,7 +2172,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical"
 		(at 256.54 88.9 0)
 		(effects
 			(font
@@ -2291,7 +2291,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal"
 		(at 88.9 63.5 0)
 		(effects
 			(font
@@ -2365,7 +2365,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal"
 		(at 88.9 109.22 0)
 		(effects
 			(font
@@ -2439,7 +2439,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3_1x03_P5.00mm_Horizontal"
 		(at 88.9 154.94 0)
 		(effects
 			(font
@@ -2501,7 +2501,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal"
 		(at 88.9 193.04 0)
 		(effects
 			(font
@@ -2560,7 +2560,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal"
 		(at 363.22 63.5 0)
 		(effects
 			(font
@@ -2631,7 +2631,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal"
 		(at 363.22 109.22 0)
 		(effects
 			(font
@@ -2705,7 +2705,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal"
 		(at 363.22 154.94 0)
 		(effects
 			(font
@@ -2770,7 +2770,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 30.48 218.44 0)
 		(effects
 			(font
@@ -2829,7 +2829,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 60.96 218.44 0)
 		(effects
 			(font
@@ -2888,7 +2888,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 91.44 218.44 0)
 		(effects
 			(font
@@ -2947,7 +2947,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 121.92 218.44 0)
 		(effects
 			(font
@@ -3006,7 +3006,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 152.4 218.44 0)
 		(effects
 			(font
@@ -3065,7 +3065,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 182.88 218.44 0)
 		(effects
 			(font
@@ -3124,7 +3124,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 213.36 218.44 0)
 		(effects
 			(font
@@ -3183,7 +3183,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 243.84 218.44 0)
 		(effects
 			(font
@@ -3242,7 +3242,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 274.32 218.44 0)
 		(effects
 			(font
@@ -3301,7 +3301,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 304.8 218.44 0)
 		(effects
 			(font
@@ -3360,7 +3360,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 335.28 218.44 0)
 		(effects
 			(font
@@ -3419,7 +3419,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
 		(at 365.76 218.44 0)
 		(effects
 			(font
@@ -3452,132 +3452,534 @@
 		)
 	)
 )
+	(symbol
+	(lib_name "Connector_Generic:Conn_01x06")
+	(lib_id "Connector_Generic:Conn_01x06")
+	(at 363.22 190.5 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "f4808b21-4fdf-47ad-8ad2-72d898b870fb")
+	(property "Reference" "J23"
+		(at 363.22 186.69 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "LOCAL_PANEL_ADAFRUIT_938_BUTTONS"
+		(at 363.22 194.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal"
+		(at 363.22 190.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 363.22 190.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "91356ac0-7b4a-440e-b10a-68f0e3d67a84")
+)
+	(pin "2"
+	(uuid "ece7734e-058c-49f8-a804-780174f4590a")
+)
+	(pin "3"
+	(uuid "2e60230e-b180-446c-b6f6-0df65d52cca0")
+)
+	(pin "4"
+	(uuid "89331c06-6dbd-4869-aafd-e4ab930a70b0")
+)
+	(pin "5"
+	(uuid "5785b5c5-24e3-4524-a0e0-50066736ee86")
+)
+	(pin "6"
+	(uuid "d0a77a7b-9e87-4c90-b257-4380b333bb07")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "J23")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 30.48 248.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "1788067b-b535-41e2-9753-2bb27905d5da")
+	(property "Reference" "R13"
+		(at 30.48 245.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "10k"
+		(at 30.48 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+		(at 30.48 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 30.48 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "979049b2-9c9d-4217-8c9e-14a89b7898ef")
+)
+	(pin "2"
+	(uuid "72c66d79-a9fd-4efa-b83c-f9b9ba11a1b3")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "R13")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 60.96 248.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "da63f8a5-a700-4404-aad1-f792138f8d71")
+	(property "Reference" "R14"
+		(at 60.96 245.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "10k"
+		(at 60.96 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+		(at 60.96 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 60.96 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "0a88e44e-ed9f-47ce-8e86-f12447a33d22")
+)
+	(pin "2"
+	(uuid "6ca84d93-5e8f-443f-97c4-fe1deb274e08")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "R14")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 91.44 248.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "0b54a463-ad62-4cec-8082-c3a360beb226")
+	(property "Reference" "R15"
+		(at 91.44 245.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "10k"
+		(at 91.44 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+		(at 91.44 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 91.44 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "e15efa1c-eb77-4d47-86a6-586f8ab14e3c")
+)
+	(pin "2"
+	(uuid "77e13b5b-0d0c-4f19-9af3-a6f8faf4423a")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "R15")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 121.92 248.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "ee9765ef-01d6-4977-a2ca-b791c85d106f")
+	(property "Reference" "R16"
+		(at 121.92 245.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "10k"
+		(at 121.92 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+		(at 121.92 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 121.92 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "af0838dd-c682-4d41-b7fb-6038c71b1a50")
+)
+	(pin "2"
+	(uuid "4446917e-a3bd-4465-9da5-670670bf741b")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "R16")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 152.4 248.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "1d7ec2e5-be2b-477a-847d-5bb6f36a3cdf")
+	(property "Reference" "R17"
+		(at 152.4 245.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "10k"
+		(at 152.4 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+		(at 152.4 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 152.4 248.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "579ec5cd-d12e-4658-91a3-05a261f72de3")
+)
+	(pin "2"
+	(uuid "834499c3-44bb-420b-82b4-c5864b685021")
+)
+	(instances
+		(project "Sirokko26201_control"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "R17")
+				(unit 1)
+			)
+		)
+	)
+)
 	(symbol_instances
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/f1729915-8f3b-4b4d-9a9a-ae2c20dbdb7b"
 			(reference "J1")
 			(unit 1)
 			(value "DEVKITC1_J1")
-			(footprint "")
+			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/44950968-bd88-40bb-bcfc-58b2d6784441"
 			(reference "J3")
 			(unit 1)
 			(value "DEVKITC1_J3")
-			(footprint "")
+			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/fbd13cff-cdbf-416d-8a3f-55f68c061bef"
 			(reference "J10")
 			(unit 1)
 			(value "MAX31856_EXHAUST_HARNESS")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/97ac4586-e97e-479c-98d6-e0894d1b524c"
 			(reference "J11")
 			(unit 1)
 			(value "MAX31856_AIR_HARNESS")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/6e642070-51ff-43c3-a8b9-070d479707ee"
 			(reference "J12")
 			(unit 1)
 			(value "ROOM_DS18B20_HARNESS")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3_1x03_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/8a74a372-9cb8-490f-84b6-6869d4f667d0"
 			(reference "J13")
 			(unit 1)
 			(value "5V_LOGIC_INPUT_ONLY")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/d0f5faf3-fc33-4448-9bcf-6d4206dfe5e1"
 			(reference "J20")
 			(unit 1)
 			(value "DRIVER_LOGIC_3V3_ONLY")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/233980fe-d106-4418-a252-be8ec581efc1"
 			(reference "J21")
 			(unit 1)
 			(value "SAFETY_INTERFACE_3V3_ONLY")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/7c467c45-837f-45e1-9fae-c58de277a980"
 			(reference "J22")
 			(unit 1)
 			(value "PANEL_DRY_CONTACTS_3V3")
-			(footprint "")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/caf3f208-0cf8-4849-acea-534d677e6cff"
 			(reference "R1")
 			(unit 1)
 			(value "4k7")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/342ecc54-4441-4b82-aff0-fdd3ba2e3fe4"
 			(reference "R2")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/1f9e53ea-9be4-40f7-92ed-dbb6a9229c59"
 			(reference "R3")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/5974576d-88a1-4781-8d75-1de981db8bb1"
 			(reference "R4")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/556a9e5f-aad7-45a0-ada8-f90cf8df5ea7"
 			(reference "R5")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/8b17b2f0-1f0c-42e6-8233-f5f41ba83a38"
 			(reference "R6")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/40ced585-50cc-48e5-a3ac-4cf77c739728"
 			(reference "R7")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/014feeef-edb3-4bb7-9ec1-06587134a72a"
 			(reference "R8")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/52ff0b3d-fb2b-42bc-8f05-97210e936cac"
 			(reference "R9")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/98b8b39b-ff49-4fdd-a6f4-21dd07307aa3"
 			(reference "R10")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/8ef3d665-5480-47b5-b554-cbad7a15e7f4"
 			(reference "R11")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/842ee416-24ac-43be-b402-35a88c0a2a03"
 			(reference "R12")
 			(unit 1)
 			(value "10k")
-			(footprint "")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/f4808b21-4fdf-47ad-8ad2-72d898b870fb"
+			(reference "J23")
+			(unit 1)
+			(value "LOCAL_PANEL_ADAFRUIT_938_BUTTONS")
+			(footprint "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/1788067b-b535-41e2-9753-2bb27905d5da"
+			(reference "R13")
+			(unit 1)
+			(value "10k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/da63f8a5-a700-4404-aad1-f792138f8d71"
+			(reference "R14")
+			(unit 1)
+			(value "10k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/0b54a463-ad62-4cec-8082-c3a360beb226"
+			(reference "R15")
+			(unit 1)
+			(value "10k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/ee9765ef-01d6-4977-a2ca-b791c85d106f"
+			(reference "R16")
+			(unit 1)
+			(value "10k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/1d7ec2e5-be2b-477a-847d-5bb6f36a3cdf"
+			(reference "R17")
+			(unit 1)
+			(value "10k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 )
 	(wire
@@ -4450,6 +4852,206 @@
 	)
 	(uuid "02e06a98-1d58-49a2-9766-f70e703483cf")
 )
+	(wire
+	(pts
+		(xy 30.48 245.11) (xy 30.48 242.57)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f05473b2-9fd8-4e21-94ef-ea28b2b3075a")
+)
+	(wire
+	(pts
+		(xy 60.96 245.11) (xy 60.96 242.57)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a30d5eec-10a8-45ad-ba05-3f2c7e7a5aa1")
+)
+	(wire
+	(pts
+		(xy 91.44 245.11) (xy 91.44 242.57)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a7eadf15-4a86-466d-adda-aca0010db0e2")
+)
+	(wire
+	(pts
+		(xy 121.92 245.11) (xy 121.92 242.57)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "c20730f8-12d1-40a9-9f0d-4a43d35cf5f0")
+)
+	(wire
+	(pts
+		(xy 152.4 245.11) (xy 152.4 242.57)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9cdae73d-c74a-4b46-9cc3-0b9aa3781bfa")
+)
+	(wire
+	(pts
+		(xy 358.14 187.96) (xy 355.6 187.96)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "b4cd234e-5c1a-4fec-9b56-d2718b1de550")
+)
+	(wire
+	(pts
+		(xy 358.14 185.42) (xy 355.6 185.42)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9af763ec-f255-47d1-ac4e-4160bb49f318")
+)
+	(wire
+	(pts
+		(xy 30.48 252.73) (xy 30.48 255.27)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "09c1d42f-ed13-4f8b-99a5-8ea224712310")
+)
+	(wire
+	(pts
+		(xy 60.96 252.73) (xy 60.96 255.27)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "822af97f-05f7-4869-a843-c72437c5a742")
+)
+	(wire
+	(pts
+		(xy 91.44 252.73) (xy 91.44 255.27)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "3bba1cd9-d467-475e-98bf-1d57809e3de5")
+)
+	(wire
+	(pts
+		(xy 251.46 83.82) (xy 248.92 83.82)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "eaa0add8-cc54-4ca6-b392-f1b880059048")
+)
+	(wire
+	(pts
+		(xy 358.14 195.58) (xy 355.6 195.58)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a6abe240-65c4-444f-b9aa-6f1d1557b16c")
+)
+	(wire
+	(pts
+		(xy 121.92 252.73) (xy 121.92 255.27)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "cd7fbb1b-5537-4339-987f-dbc8b7b747f5")
+)
+	(wire
+	(pts
+		(xy 251.46 81.28) (xy 248.92 81.28)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "ff275648-d8e8-4286-840f-703d02fdbe2a")
+)
+	(wire
+	(pts
+		(xy 358.14 198.12) (xy 355.6 198.12)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "0c4c6492-9504-4160-a880-b1141fff46d8")
+)
+	(wire
+	(pts
+		(xy 152.4 252.73) (xy 152.4 255.27)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "62c95248-e288-4aca-ae7e-daca4eb3493d")
+)
+	(wire
+	(pts
+		(xy 251.46 104.14) (xy 248.92 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "cf7d9fdf-5c05-451d-b6a0-ef764e1aec4c")
+)
+	(wire
+	(pts
+		(xy 358.14 190.5) (xy 355.6 190.5)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a57424cf-5934-458d-9f0f-3bc99d2aec5a")
+)
+	(wire
+	(pts
+		(xy 251.46 101.6) (xy 248.92 101.6)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "3419b4d5-03f7-4890-aaf7-25e896fc1396")
+)
+	(wire
+	(pts
+		(xy 358.14 193.04) (xy 355.6 193.04)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "80ed6dda-0617-45b8-8735-bbec2dbd3ab9")
+)
 	(label "GND"
 	(at 175.26 116.84 180)
 	(effects
@@ -5233,6 +5835,186 @@
 	)
 	(uuid "a957b0dd-41e8-44e8-b877-a766e4a3e2cd")
 )
+	(label "+3V3"
+	(at 30.48 242.57 90)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "773830dc-cdca-4c31-bcb2-3c838849302e")
+)
+	(label "+3V3"
+	(at 60.96 242.57 90)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "541d22cc-3b74-4b3b-931b-0bdf32c40483")
+)
+	(label "+3V3"
+	(at 91.44 242.57 90)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "d9023b3b-2331-4d2c-901d-36f26902f017")
+)
+	(label "+3V3"
+	(at 121.92 242.57 90)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "f65b53eb-273e-46ee-833e-c8ff676d9661")
+)
+	(label "+3V3"
+	(at 152.4 242.57 90)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "c350928d-431e-47f5-9300-315bd182738e")
+)
+	(label "+3V3"
+	(at 355.6 187.96 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "0ee0cf2d-ba6f-4656-adae-44712ea013c4")
+)
+	(label "GND"
+	(at 355.6 185.42 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "724b7443-6d14-4a05-929c-c36896212cfe")
+)
+	(label "RESET_REQUEST"
+	(at 30.48 255.27 270)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "f555eef7-52d8-43cc-bd11-4cc990a925e9")
+)
+	(label "START_REQUEST"
+	(at 60.96 255.27 270)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "4727d503-d119-4e96-be02-bc368aa0471c")
+)
+	(label "STOP_STATUS"
+	(at 91.44 255.27 270)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "a9753672-1b62-482c-8496-3841e20a3629")
+)
+	(label "SET_UP_REQUEST"
+	(at 248.92 83.82 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "3607b013-d3b1-44b7-886a-8f417f5015c7")
+)
+	(label "SET_UP_REQUEST"
+	(at 355.6 195.58 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "f3589312-92e2-4f9c-a098-72859e872392")
+)
+	(label "SET_UP_REQUEST"
+	(at 121.92 255.27 270)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "87931836-d640-4a94-8d74-8e4bee59dc8c")
+)
+	(label "SET_DOWN_REQUEST"
+	(at 248.92 81.28 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "ae63da0b-597f-44d1-bc3e-4287f8fb4fe5")
+)
+	(label "SET_DOWN_REQUEST"
+	(at 355.6 198.12 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "ee082736-b8f1-4ff4-bf09-da0bc2627753")
+)
+	(label "SET_DOWN_REQUEST"
+	(at 152.4 255.27 270)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "6ec4018a-fb25-4075-9ea8-b4465aeec29d")
+)
+	(label "PANEL_SDA"
+	(at 248.92 104.14 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "31c10821-cc4f-4926-94b8-ad07abcd1bc3")
+)
+	(label "PANEL_SDA"
+	(at 355.6 190.5 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "2b5bca63-3932-4308-8459-efc608bb9e10")
+)
+	(label "PANEL_SCL"
+	(at 248.92 101.6 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "b2180566-78ef-4537-b55e-403fb0ccedb8")
+)
+	(label "PANEL_SCL"
+	(at 355.6 193.04 180)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "73675924-26fb-4c19-91ca-a40bcbcdfe08")
+)
 	(no_connect
 	(at 180.34 68.58)
 	(uuid "9336b434-473d-463b-b90a-eb4aad26100e")
@@ -5252,14 +6034,6 @@
 	(no_connect
 	(at 251.46 68.58)
 	(uuid "9cec8265-7e75-491a-bfa5-2e2f55b66e8a")
-)
-	(no_connect
-	(at 251.46 81.28)
-	(uuid "d465a073-3b5c-4c74-bd3f-ecfc5e5a20e8")
-)
-	(no_connect
-	(at 251.46 83.82)
-	(uuid "4823a23f-b176-42b0-804e-5a6c26b4c401")
 )
 	(no_connect
 	(at 251.46 86.36)
@@ -5284,14 +6058,6 @@
 	(no_connect
 	(at 251.46 99.06)
 	(uuid "bf3ec425-86f9-4e27-8930-61b0ed30616a")
-)
-	(no_connect
-	(at 251.46 101.6)
-	(uuid "625af1e3-dbb2-47e6-877b-72c392f4890a")
-)
-	(no_connect
-	(at 251.46 104.14)
-	(uuid "2eabe018-9126-49f8-baf8-7e54b7e49497")
 )
 	(no_connect
 	(at 251.46 109.22)
