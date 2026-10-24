@@ -1,0 +1,16 @@
+build/
+build-host/
+managed_components/
+sdkconfig
+sdkconfig.old
+.vscode/
+.idea/
+*.swp
+*.tmp
+.env
+.env.*
+*.pem
+*.key
+secrets/
+nvs*.bin
+commissioning*.json
