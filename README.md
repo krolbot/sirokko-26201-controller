@@ -1,9 +1,13 @@
 # Sirokko 262.01 controller
 
-Public DRAFT-01 snapshot of the controller-interface design and bench firmware for a Sirokko 262.01 heater retrofit. Russian documentation: [README_RU.md](README_RU.md).
+Hardware WIP checkpoint: recovered main PCB and matching native project sources for KiCad 10.0.6. Russian documentation: [README_RU.md](README_RU.md).
 
-This repository is not a finished burner controller. It contains the editable KiCad interface schematic, its PDF/netlist/ERC exports, project design documents, and an uncommissioned ESP-IDF bench firmware with host tests and checksum-pinned binaries. It does not contain a released PCB, Gerbers, a manufacturing BOM, physically verified firmware, or proof of combustion safety.
+This is not a released burner controller. `hardware/kicad/` contains the recovered working PCB, main schematic, local libraries and separate draft sheets. The input-protection candidate in `hardware/candidates/input-protection/` is not integrated into that PCB.
 
-Do not connect 24 V loads, the glow plug, motor, fuel-clutch coil, or a live burner directly to the published logic interfaces. Independent hardware interlocks and verified power stages are still required.
+The checkpoint has 88 footprints, 123 track segments, 32 vias and 3 copper zones. ERC reports no violations under the recorded project settings; DRC still reports 4 library-footprint warnings and 182 unconnected items. A separate schematic-parity check reports 7 warnings. See [hardware/WIP_CHECKPOINT.md](hardware/WIP_CHECKPOINT.md) for results, limitations and the next commit/push procedure.
 
-No license is granted by this repository at this stage. Third-party manuals and scans are not redistributed; the design documents contain source links only.
+The PDF/netlist/ERC files directly under `renders/` and `verification/` are historical DRAFT-01 exports, not exports of the current PCB. Firmware is unchanged from the branch baseline; later firmware work is separate. No manufacturing package, physically verified firmware or proof of combustion safety is supplied.
+
+Do not connect loads or operate a burner from this unfinished design. Independent interlocks, qualified power stages and bench/combustion testing remain required.
+
+No license is granted at this stage. Third-party manuals and scans are not redistributed; source documents are linked only.
