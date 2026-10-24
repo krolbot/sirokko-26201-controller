@@ -1,0 +1,37 @@
+{
+  "snapshot": "DRAFT-01",
+  "verified_at": "2026-10-24T10:16:13Z",
+  "tool": "KiCad 10.0.6",
+  "schematic": {
+    "path": "hardware/kicad/Sirokko26201_control.kicad_sch",
+    "sha256": "64d183d19a689b32a420b57fa8508b2b05a944b5eb6cdd604491d3c597cecc42",
+    "page_size": "A3",
+    "components": 21,
+    "wires": 87,
+    "labels": 87,
+    "intentional_no_connects": 17
+  },
+  "project": {
+    "path": "hardware/kicad/Sirokko26201_control.kicad_pro",
+    "sha256": "74bd353b6ac4711b8a682c44cf321fa3b2bc1273ba733428501bc35beccfef56"
+  },
+  "pdf": {
+    "path": "renders/Sirokko26201_control.pdf",
+    "sha256": "1d72ca3716ffaa2fcff9a767444cf0cf4e3344860005c1ea5b73df9be4db8a93"
+  },
+  "erc": {
+    "path": "verification/Sirokko26201_control-strict-erc.json",
+    "sha256": "ad036dfb83fa36a2a04fd900a815885da99faa2b183735a985e6d2b264865b2e",
+    "violations": 0,
+    "exit_code": 0
+  },
+  "netlist": {
+    "path": "verification/Sirokko26201_control.xml",
+    "sha256": "663a81f675c57fb42f98da4d898b8513a640358742bf5254b5382a9e15191f18"
+  },
+  "pcb_present": false,
+  "firmware_present": false,
+  "manufacturing_release_present": false,
+  "physical_test_performed": false,
+  "combustion_safety_validated": false
+}

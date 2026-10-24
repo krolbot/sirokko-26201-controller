@@ -1,0 +1,44 @@
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Device-local provisioning and commissioning data
+**/nvs*.bin
+**/commissioning*.json
+**/commissioning*.yaml
+**/commissioning*.yml
+**/wifi*.json
+**/wifi*.yaml
+**/wifi*.yml
+
+# Build output and caches
+build/
+dist/
+out/
+.cache/
+**/.pio/
+**/managed_components/
+**/sdkconfig
+**/sdkconfig.old
+
+# KiCad local state and backups
+*.kicad_prl
+*-backups/
+*.kicad_sch-bak
+*.lck
+~*.lck
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
