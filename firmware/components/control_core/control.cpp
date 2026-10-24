@@ -2,12 +2,13 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <limits>
 
 namespace sirokko {
 namespace {
 
-constexpr uint32_t kSchemaVersion = 1;
 constexpr uint32_t kMaxDurationMs = 24u * 60u * 60u * 1000u;
+static_assert(kHeartbeatMaximumFallingEdgeMs < kWatchdogMinimumTimeoutMs);
 
 bool is_timed_state(State state) {
     return state == State::PREPURGE || state == State::PREHEAT || state == State::SPINUP ||
@@ -26,19 +27,35 @@ bool is_glow_state(State state) {
 
 }  // namespace
 
+uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms) {
+    if (toggle_ms == 0) return std::numeric_limits<uint32_t>::max();
+    const uint64_t quantized_toggle =
+        ((static_cast<uint64_t>(toggle_ms) + kControlLoopPeriodMs - 1) /
+         kControlLoopPeriodMs) * kControlLoopPeriodMs;
+    const uint64_t falling_edge_interval =
+        2 * (quantized_toggle + kControlLoopJitterBudgetMs);
+    return falling_edge_interval > std::numeric_limits<uint32_t>::max()
+               ? std::numeric_limits<uint32_t>::max()
+               : static_cast<uint32_t>(falling_edge_interval);
+}
+
 uint32_t validate_config(const Config& c, bool require_acceptance) {
     uint32_t errors = CONFIG_OK;
-    if (c.schema_version != kSchemaVersion) errors |= CONFIG_SCHEMA;
+    if (c.schema_version != kConfigSchemaVersion) errors |= CONFIG_SCHEMA;
     if (require_acceptance && !c.commissioning_accepted) errors |= CONFIG_NOT_ACCEPTED;
 
     const uint32_t durations[] = {
-        c.boot_self_test_timeout_ms, c.prepurge_ms,      c.preheat_ms,
+        c.boot_self_test_timeout_ms, c.recovery_purge_min_ms, c.prepurge_ms, c.preheat_ms,
         c.spinup_ms,                 c.ignition_window_ms, c.flame_confirm_ms,
         c.postpurge_min_ms,          c.stage_min_ms,     c.restart_inhibit_ms,
         c.glow_max_ms,               c.sensor_stale_ms,  c.heartbeat_toggle_ms,
     };
     for (const uint32_t duration : durations) {
         if (duration == 0 || duration > kMaxDurationMs) errors |= CONFIG_DURATION;
+    }
+    if (heartbeat_worst_case_falling_edge_ms(c.heartbeat_toggle_ms) >
+        kHeartbeatMaximumFallingEdgeMs) {
+        errors |= CONFIG_WATCHDOG_TIMING;
     }
     const uint64_t worst_glow = static_cast<uint64_t>(c.preheat_ms) + c.spinup_ms + c.ignition_window_ms;
     if (c.glow_max_ms < worst_glow) errors |= CONFIG_GLOW_BUDGET;
@@ -76,7 +93,11 @@ uint32_t validate_config(const Config& c, bool require_acceptance) {
           c.high_to_low_delta_milli_c < c.stop_delta_milli_c)) {
         errors |= CONFIG_REGULATOR_ORDER;
     }
-    if (c.low_pwm_permille == 0 || c.low_pwm_permille >= 1000) errors |= CONFIG_PWM;
+    if (c.pwm_frequency_hz == 0 || c.pwm_frequency_hz > kPwmMaximumFrequencyHz ||
+        c.recovery_purge_pwm_permille == 0 || c.recovery_purge_pwm_permille > 1000 ||
+        c.low_pwm_permille == 0 || c.low_pwm_permille >= 1000) {
+        errors |= CONFIG_PWM;
+    }
     return errors;
 }
 
@@ -168,14 +189,31 @@ void Machine::run_state(const Inputs& in) {
 
     switch (state_) {
         case State::BOOT_SELF_TEST:
-            transition(State::WAIT_COOLDOWN, in.now_ms);
+            transition(State::RECOVERY_PURGE, in.now_ms);
+            break;
+
+        case State::RECOVERY_PURGE:
+            if (!in.heat_enable) start_release_seen_ = true;
+            if (validate_config(config_) == CONFIG_OK && !in.stop_active &&
+                sample_ok(in.exhaust, in.now_ms) && sample_ok(in.hot_air, in.now_ms) &&
+                sample_ok(in.room, in.now_ms) &&
+                elapsed(in.now_ms, state_entered_ms_) >= config_.recovery_purge_min_ms &&
+                cold(in)) {
+                recovery_complete_ = true;
+                if (faults_ != FAULT_NONE || current_input_faults(in) != FAULT_NONE) {
+                    transition(State::LOCKOUT, in.now_ms);
+                } else {
+                    transition(State::WAIT_COOLDOWN, in.now_ms);
+                }
+            }
             break;
 
         case State::WAIT_COOLDOWN:
+            if (!in.heat_enable) start_release_seen_ = true;
             if (restart_inhibit_ && elapsed(in.now_ms, restart_started_ms_) >= config_.restart_inhibit_ms) {
                 restart_inhibit_ = false;
             }
-            if (in.heat_enable && !in.stop_active && !restart_inhibit_ && cold(in) &&
+            if (start_release_seen_ && in.heat_enable && !in.stop_active && !restart_inhibit_ && cold(in) &&
                 static_cast<int64_t>(in.room.milli_c) <=
                     static_cast<int64_t>(in.setpoint_milli_c) + config_.start_delta_milli_c) {
                 transition(State::PREPURGE, in.now_ms);
@@ -263,6 +301,13 @@ void Machine::run_state(const Inputs& in) {
 Outputs Machine::make_outputs(const Inputs& in) {
     Outputs out{};
     switch (state_) {
+        case State::RECOVERY_PURGE:
+            if (validate_config(config_) == CONFIG_OK) {
+                out.fan_request = true;
+                out.speed_permille = config_.recovery_purge_pwm_permille;
+            }
+            out.sw_trip = true;
+            break;
         case State::WAIT_COOLDOWN:
             out.fan_request = !cold(in);
             out.speed_permille = out.fan_request ? 1000 : 0;
@@ -274,8 +319,7 @@ Outputs Machine::make_outputs(const Inputs& in) {
         case State::PREHEAT:
             out.glow_command = true;
             out.fan_request = true;
-            // REV-A selects the fixed low winding; REV-B uses the commissioned low PWM.
-            out.speed_permille = config_.revision == Revision::A ? 1 : config_.low_pwm_permille;
+            out.speed_permille = config_.low_pwm_permille;
             break;
         case State::SPINUP:
             out.glow_command = true;
@@ -300,7 +344,7 @@ Outputs Machine::make_outputs(const Inputs& in) {
             out.fan_request = true;
             out.fuel_command = true;
             out.fuel_permit = true;
-            out.speed_permille = config_.revision == Revision::A ? 1 : config_.low_pwm_permille;
+            out.speed_permille = config_.low_pwm_permille;
             break;
         case State::POST_PURGE:
             out.fan_request = true;
@@ -320,9 +364,12 @@ Outputs Machine::make_outputs(const Inputs& in) {
 
     const uint32_t readiness_faults = current_input_faults(in) & ~FAULT_SAFETY_OPEN;
     const bool lockout_reset_ready = state_ == State::LOCKOUT && !in.heat_enable && !in.stop_active;
-    out.arm_ready = readiness_faults == FAULT_NONE && state_ != State::BOOT_SELF_TEST &&
+    out.arm_ready = recovery_complete_ && readiness_faults == FAULT_NONE &&
+                    state_ != State::BOOT_SELF_TEST && state_ != State::RECOVERY_PURGE &&
                     (state_ != State::LOCKOUT || lockout_reset_ready);
-    if (state_ == State::LOCKOUT && reset_pending_) out.sw_trip = false;
+    // The hardware RESET edge is asynchronous and arrives before the debounced GPIO request.
+    // Release /CLR first; the hardware latch still cannot re-arm without a new physical edge.
+    if (state_ == State::LOCKOUT && out.arm_ready) out.sw_trip = false;
     return out;
 }
 
@@ -346,23 +393,30 @@ Outputs Machine::tick(const Inputs& in) {
     }
 
     const uint32_t input_faults = current_input_faults(in);
+    const bool reset_pressed = in.reset_request && !previous_reset_request_;
     const uint32_t immediate = input_faults &
         (FAULT_CONFIG | FAULT_SAFETY_OPEN | FAULT_LOCAL_UI | FAULT_EXHAUST_OVERTEMP | FAULT_AIR_OVERTEMP);
-    if (immediate != FAULT_NONE) trip(immediate, in.now_ms);
-    if (faults_ != FAULT_NONE && state_ != State::LOCKOUT) trip(faults_, in.now_ms);
+    if (state_ != State::BOOT_SELF_TEST && state_ != State::RECOVERY_PURGE) {
+        if (immediate != FAULT_NONE) trip(immediate, in.now_ms);
+        if (faults_ != FAULT_NONE && state_ != State::LOCKOUT) trip(faults_, in.now_ms);
+    }
 
     if (state_ == State::BOOT_SELF_TEST) {
+        faults_ |= immediate;
+        run_state(in);
+    } else if (state_ == State::RECOVERY_PURGE) {
+        faults_ |= immediate;
         const uint32_t sensor_faults = input_faults &
             (FAULT_EXHAUST_SENSOR | FAULT_AIR_SENSOR | FAULT_ROOM_SENSOR);
-        if (sensor_faults == FAULT_NONE) {
-            run_state(in);
-        } else if (elapsed(in.now_ms, state_entered_ms_) >= config_.boot_self_test_timeout_ms) {
-            trip(sensor_faults | FAULT_SELF_TEST_TIMEOUT, in.now_ms);
+        if (sensor_faults != FAULT_NONE &&
+            elapsed(in.now_ms, state_entered_ms_) >= config_.boot_self_test_timeout_ms) {
+            faults_ |= sensor_faults | FAULT_SELF_TEST_TIMEOUT;
         }
+        run_state(in);
     } else if (state_ == State::LOCKOUT) {
         const uint32_t reset_blockers = input_faults & ~FAULT_SAFETY_OPEN;
         const bool reset_conditions = reset_blockers == FAULT_NONE && !in.heat_enable && !in.stop_active;
-        if (!reset_pending_ && in.reset_request && reset_conditions) {
+        if (!reset_pending_ && reset_pressed && reset_conditions) {
             reset_pending_ = true;
             reset_qualified_ = false;
         }
@@ -370,7 +424,7 @@ Outputs Machine::tick(const Inputs& in) {
             if (!reset_conditions) {
                 reset_pending_ = false;
                 reset_qualified_ = false;
-            } else if (in.safety_ok) {
+            } else if (in.reset_request && in.safety_ok) {
                 reset_qualified_ = true;
             }
             if (!in.reset_request) {
@@ -416,6 +470,7 @@ Outputs Machine::tick(const Inputs& in) {
 
     update_heartbeat(in, outputs_.arm_ready);
     outputs_.watchdog_heartbeat = heartbeat_level_;
+    previous_reset_request_ = in.reset_request;
     return outputs_;
 }
 
@@ -426,6 +481,7 @@ Status Machine::status(uint32_t now_ms) const {
     result.state_age_ms = initialized_ ? elapsed(now_ms, state_entered_ms_) : 0;
     result.ignition_baseline_milli_c = ignition_baseline_milli_c_;
     result.commissioning_ready = validate_config(config_) == CONFIG_OK;
+    result.recovery_complete = recovery_complete_;
     result.outputs = outputs_;
     return result;
 }
@@ -433,6 +489,7 @@ Status Machine::status(uint32_t now_ms) const {
 const char* state_name(State state) {
     switch (state) {
         case State::BOOT_SELF_TEST: return "BOOT_SELF_TEST";
+        case State::RECOVERY_PURGE: return "RECOVERY_PURGE";
         case State::WAIT_COOLDOWN: return "WAIT_COOLDOWN";
         case State::PREPURGE: return "PREPURGE";
         case State::PREHEAT: return "PREHEAT";

@@ -5,6 +5,7 @@
 #include <cstring>
 #include <new>
 
+#include "board.hpp"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "ds18b20.h"
@@ -16,14 +17,14 @@
 namespace {
 constexpr char kTag[] = "sensors";
 constexpr spi_host_device_t kSpiHost = SPI2_HOST;
-constexpr gpio_num_t kMosi = GPIO_NUM_11;
-constexpr gpio_num_t kSck = GPIO_NUM_12;
-constexpr gpio_num_t kMiso = GPIO_NUM_13;
-constexpr gpio_num_t kExhaustCs = GPIO_NUM_10;
-constexpr gpio_num_t kAirCs = GPIO_NUM_9;
-constexpr gpio_num_t kExhaustDrdy = GPIO_NUM_1;
-constexpr gpio_num_t kAirDrdy = GPIO_NUM_2;
-constexpr gpio_num_t kRoomDq = GPIO_NUM_4;
+constexpr gpio_num_t kMosi = static_cast<gpio_num_t>(sirokko::board::kSpiMosi);
+constexpr gpio_num_t kSck = static_cast<gpio_num_t>(sirokko::board::kSpiSclk);
+constexpr gpio_num_t kMiso = static_cast<gpio_num_t>(sirokko::board::kSpiMiso);
+constexpr gpio_num_t kExhaustCs = static_cast<gpio_num_t>(sirokko::board::kMaxExhaustCs);
+constexpr gpio_num_t kAirCs = static_cast<gpio_num_t>(sirokko::board::kMaxAirCs);
+constexpr gpio_num_t kExhaustDrdy = static_cast<gpio_num_t>(sirokko::board::kMaxExhaustDrdy);
+constexpr gpio_num_t kAirDrdy = static_cast<gpio_num_t>(sirokko::board::kMaxAirDrdy);
+constexpr gpio_num_t kRoomDq = static_cast<gpio_num_t>(sirokko::board::kRoomDq);
 
 class Max31856 {
 public:
@@ -40,8 +41,8 @@ public:
         device.command_bits = 0;
         device.address_bits = 0;
         device.dummy_bits = 0;
-        device.mode = 1;
-        device.clock_speed_hz = 5 * 1000 * 1000;
+        device.mode = sirokko::board::kMaxSpiMode;
+        device.clock_speed_hz = sirokko::board::kMaxSpiClockHz;
         device.spics_io_num = chip_select;
         device.queue_size = 1;
         if (spi_bus_add_device(kSpiHost, &device, &handle_) != ESP_OK) return false;
@@ -210,13 +211,29 @@ bool SensorSuite::begin() {
     impl_ = new (std::nothrow) Impl{};
     if (!impl_) return false;
 
+    // Keep every slave deselected before the shared SPI bus and its device drivers take ownership.
+    gpio_config_t chip_selects{};
+    chip_selects.pin_bit_mask = (1ULL << sirokko::board::kMaxExhaustCs) |
+                                (1ULL << sirokko::board::kMaxAirCs) |
+                                (1ULL << sirokko::board::kTftCs) |
+                                (1ULL << sirokko::board::kTftDc);
+    chip_selects.mode = GPIO_MODE_OUTPUT;
+    chip_selects.pull_up_en = GPIO_PULLUP_DISABLE;
+    chip_selects.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    chip_selects.intr_type = GPIO_INTR_DISABLE;
+    if (gpio_config(&chip_selects) != ESP_OK) return false;
+    gpio_set_level(kExhaustCs, 1);
+    gpio_set_level(kAirCs, 1);
+    gpio_set_level(static_cast<gpio_num_t>(sirokko::board::kTftCs), 1);
+    gpio_set_level(static_cast<gpio_num_t>(sirokko::board::kTftDc), 0);
+
     spi_bus_config_t bus{};
     bus.mosi_io_num = kMosi;
     bus.miso_io_num = kMiso;
     bus.sclk_io_num = kSck;
     bus.quadwp_io_num = -1;
     bus.quadhd_io_num = -1;
-    bus.max_transfer_sz = 8;
+    bus.max_transfer_sz = sirokko::board::kTftBandBytes;
     if (spi_bus_initialize(kSpiHost, &bus, SPI_DMA_CH_AUTO) != ESP_OK) {
         ESP_LOGE(kTag, "SPI bus initialization failed");
         return false;

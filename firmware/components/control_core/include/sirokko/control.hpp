@@ -4,10 +4,16 @@
 
 namespace sirokko {
 
-enum class Revision : uint8_t { A = 0, B = 1 };
+inline constexpr uint32_t kControlLoopPeriodMs = 20;
+inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
+inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
+inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
+inline constexpr uint32_t kConfigSchemaVersion = 2;
+inline constexpr uint32_t kPwmMaximumFrequencyHz = 78125;
 
 enum class State : uint8_t {
     BOOT_SELF_TEST,
+    RECOVERY_PURGE,
     WAIT_COOLDOWN,
     PREPURGE,
     PREHEAT,
@@ -39,9 +45,9 @@ struct SensorSample {
 struct Config {
     uint32_t schema_version{};
     bool commissioning_accepted{};
-    Revision revision{Revision::A};
 
     uint32_t boot_self_test_timeout_ms{};
+    uint32_t recovery_purge_min_ms{};
     uint32_t prepurge_ms{};
     uint32_t preheat_ms{};
     uint32_t spinup_ms{};
@@ -73,6 +79,8 @@ struct Config {
     int32_t high_to_low_delta_milli_c{};
     int32_t low_to_high_delta_milli_c{};
     int32_t stop_delta_milli_c{};
+    uint32_t pwm_frequency_hz{};
+    uint16_t recovery_purge_pwm_permille{};
     uint16_t low_pwm_permille{};
 };
 
@@ -88,8 +96,10 @@ enum ConfigError : uint32_t {
     CONFIG_SETPOINT = 1u << 7,
     CONFIG_REGULATOR_ORDER = 1u << 8,
     CONFIG_PWM = 1u << 9,
+    CONFIG_WATCHDOG_TIMING = 1u << 10,
 };
 
+uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms);
 uint32_t validate_config(const Config& config, bool require_acceptance = true);
 
 struct Inputs {
@@ -132,8 +142,7 @@ struct Outputs {
     bool arm_ready{};
     bool sw_trip{};
     bool watchdog_heartbeat{};
-    // Rev A: 0 means de-energized full-speed selector, 1 means low-speed selector.
-    // Rev B: 0..1000 is PWM duty. Purge and high state always request 1000.
+    // GPIO17 is always PWM. 0..1000 is duty; no discrete/two-speed interpretation exists.
     uint16_t speed_permille{};
 };
 
@@ -143,6 +152,7 @@ struct Status {
     uint32_t state_age_ms{};
     int32_t ignition_baseline_milli_c{};
     bool commissioning_ready{};
+    bool recovery_complete{};
     Outputs outputs{};
 };
 
@@ -166,8 +176,11 @@ private:
     bool glow_timer_started_{};
     bool purge_required_{};
     bool restart_inhibit_{};
+    bool previous_reset_request_{};
     bool reset_pending_{};
     bool reset_qualified_{};
+    bool recovery_complete_{};
+    bool start_release_seen_{};
     bool heartbeat_level_{};
     Outputs outputs_{};
 

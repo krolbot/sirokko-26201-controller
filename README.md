@@ -1,13 +1,33 @@
 # Sirokko 262.01 controller
 
-Hardware WIP checkpoint: recovered main PCB and matching native project sources for KiCad 10.0.6. Russian documentation: [README_RU.md](README_RU.md).
+> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main combines the recovered hardware WIP snapshot and `0.1.4-draft` firmware. It is not a finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
 
-This is not a released burner controller. `hardware/kicad/` contains the recovered working PCB, main schematic, local libraries and separate draft sheets. The input-protection candidate in `hardware/candidates/input-protection/` is not integrated into that PCB.
+## Published in main
 
-The checkpoint has 88 footprints, 123 track segments, 32 vias and 3 copper zones. ERC reports no violations under the recorded project settings; DRC still reports 4 library-footprint warnings and 182 unconnected items. A separate schematic-parity check reports 7 warnings. See [hardware/WIP_CHECKPOINT.md](hardware/WIP_CHECKPOINT.md) for results, limitations and the next commit/push procedure.
+- `hardware/kicad/` — recovered main PCB, matching native KiCad 10.0.6 schematic, project, local libraries and separate draft sheets;
+- `hardware/candidates/input-protection/` — a separate input-protection candidate, not integrated into the main PCB;
+- `firmware/` — ESP-IDF 5.5.2 sources, host tests, I/O contract and the `0.1.4-draft` flashing set;
+- `docs/` — functional requirements, including the selected power-return behavior;
+- `verification/wip-2026-10-25/` — recorded hardware checks. Earlier DRAFT-01/DRAFT-02 exports are historical, not evidence for the current PCB.
 
-The PDF/netlist/ERC files directly under `renders/` and `verification/` are historical DRAFT-01 exports, not exports of the current PCB. Firmware is unchanged from the branch baseline; later firmware work is separate. No manufacturing package, physically verified firmware or proof of combustion safety is supplied.
+The recovered PCB has 88 footprints, 123 track segments, 32 vias and 3 copper zones. Recorded ERC reports no violations under the saved project settings; DRC still reports 4 library-footprint warnings and 182 unconnected items. The schematic-parity check reports 7 warnings. See [hardware/WIP_CHECKPOINT.md](hardware/WIP_CHECKPOINT.md) for checks, limitations and the main-only commit/push procedure.
 
-Do not connect loads or operate a burner from this unfinished design. Independent interlocks, qualified power stages and bench/combustion testing remain required.
+## Firmware verification
+
+The published `0.1.4-draft` set passed 39/39 host tests and a clean ESP-IDF 5.5.2 build. Checksums and the build log are included in `firmware/release/firmware/0.1.4/`.
+
+No physical ESP32, TFT, sensor, power stage, load or burner test has been performed. Building or flashing the image does not authorize fired operation.
+
+## Selected power-return behavior
+
+A complete loss of 24 V de-energizes the controller and loads. When power returns, the ESP32 boots and enters `RECOVERY_PURGE` with fuel and glow off. After the purge it waits for a new `START`; it does not resume interrupted operation automatically.
+
+A separate 24 V monitor, TPS3808, extra `EN` reset path, `MAIN_POWER_OK` and GPIO43 assignment are excluded. USB is a service interface, not a backup supply. Existing STOP, watchdog, hardware latch, fuel-safety and cooling requirements remain in force. Separate draft sheets are retained as work history, not approved production nodes.
+
+## Missing production work
+
+Routing, schematic/PCB parity, power-stage qualification, Gerber, Drill, CPL, orderable BOM, physical testing and fired-operation approval remain incomplete. Do not connect loads or operate a burner from this unfinished design. See [docs/STATUS_RU.md](docs/STATUS_RU.md).
+
+## License
 
 No license is granted at this stage. Third-party manuals and scans are not redistributed; source documents are linked only.
