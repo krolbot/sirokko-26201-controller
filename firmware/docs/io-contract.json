@@ -29,7 +29,7 @@
     {"name":"GLOW_CMD","gpio":14,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
     {"name":"FUEL_CMD","gpio":15,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
     {"name":"FAN_CMD","gpio":16,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
-    {"name":"SPEED_CMD","gpio":17,"direction":"output","active":"PWM or static level","frequency_hz":"commissioned 77..20000; APB 80MHz, 10-bit resolution, checked divider and LEDC API result","duty_permille":"0 static LOW; 1..800 active PWM; 1000 static HIGH; 801..999 rejected","boot_rule":"LOW/Hi-Z until a valid accepted schema-2 profile is loaded"},
+    {"name":"SPEED_CMD","gpio":17,"direction":"output","active":"PWM or static level","frequency_hz":"commissioned 77..20000; APB 80MHz, 10-bit resolution, checked divider and LEDC API result","duty_permille":"0 static LOW; 1..800 active PWM; 1000 static HIGH; 801..999 rejected","boot_rule":"LOW/Hi-Z until a valid accepted schema-3 profile is loaded"},
     {"name":"WATCHDOG_HEARTBEAT","gpio":18,"direction":"output","active":"falling-edge service; toggled by completed control-loop passes","boot_rule":"stopped until healthy"},
     {"name":"FUEL_PERMIT","gpio":21,"direction":"output","active":"high","external_bias":"10k pull-down","boot_rule":"LOW/Hi-Z = off"},
     {"name":"SET_UP","gpio":39,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V"},
@@ -47,8 +47,11 @@
     "spi": {
       "host": "SPI2",
       "mode": 0,
-      "clock_hz": 20000000,
-      "max_update": "one 240x40 RGB565 band per transaction cycle",
+      "clock_hz": 10000000,
+      "cs_setup_cycles": 1,
+      "cs_hold_cycles": 1,
+      "timing_source": "ST7789V v1.3 2014/03 section 7.4.3 Table6: write cycle >=66ns; CS setup/hold >=15ns; CS high >=40ns; DC/data setup/hold >=10ns; rise/fall <=15ns. Physical waveform not qualified.",
+      "max_update": "one 240x20 RGB565 band; 16 bands/frame; one shared geometry in display_geometry.hpp",
       "calculated_wire_time_us": 7680,
       "budget_us_including_command_margin": 8180,
       "serialization": "ESP-IDF SPI master serializes TFT and MAX31856 transactions; each device owns a separate CS and device configuration"
@@ -120,7 +123,7 @@
     "profiles": "low_pwm_permille=1..800; recovery_purge_pwm_permille=1..800 or 1000; maximum-speed machine states retain 1000 static DC",
     "frequency_validation": "Fixed APB 80MHz/10bit, 18-bit divider with 8 fractional bits: divider=round((80000000<<8)/(Hz*1024)), 256..262143. Thus 1..76Hz is unachievable in this selected configuration and rejected as CONFIG_PWM, not silently adjusted.",
     "configuration_changes": "set/accept/revoke only while fan, fuel, permit and glow are OFF; serialized with the control/output pass. Any mutation attempt inhibits START until reboot. Runtime configuration remains immutable until reboot.",
-    "old_nvs": "Digest-valid schema-2 profiles outside current limits lose in-memory acceptance, retain original values, report CONFIG_PWM and cannot START. Correct, validate, accept token, reboot, then qualified RESET for retained faults.",
+    "old_nvs": "Digest-valid schema-3 profiles outside current limits lose in-memory acceptance, retain original values, report CONFIG_PWM and cannot START. Correct, validate, accept token, reboot, then qualified RESET for retained faults.",
     "output_failure": "Latched FAULT_OUTPUT; fuel, fuel permit, glow, ARM_READY and heartbeat LOW; SW_TRIP HIGH. Try LEDC stop LOW and independently detach GPIO17 to GPIO output LOW. Repeat shutdown on subsequent passes, never replay old HIGH/PWM; reboot required. Failed shutdown API results are recorded; software is not proof against a physically failed MCU/GPIO.",
     "normal_stop_or_thermal_fault": "Fuel OFF first; required fan post-purge remains at 1000 static HIGH until the existing machine commands zero. Only output-subsystem failure forces immediate motor OFF.",
     "bench_required": "Measure actual frequency/duty for 1..800; no recurring LOW dips at 1000 including repeated DC and PWM/DC transitions; GPIO17 LOW on actual command zero and injected adapter failure; preserve fuel-OFF-before-post-purge ordering. No physical measurement performed by host tests."

@@ -163,14 +163,18 @@ void draw_text(uint16_t* pixels, int x, int y, const char* text, uint16_t color)
     }
 }
 
-void clear_band(uint16_t* pixels, uint16_t background) {
+struct BandCanvas { uint16_t* pixels; bool second_line; };
+
+void clear_band(BandCanvas canvas, uint16_t background) {
     const uint16_t wire_background = wire_color(background);
-    for (int i = 0; i < kUiWidth * kUiBandRows; ++i) pixels[i] = wire_background;
+    for (int i = 0; i < kUiWidth * kUiBandRows; ++i) canvas.pixels[i] = wire_background;
 }
 
-void draw_lines(uint16_t* pixels, const char* first, const char* second, uint16_t foreground) {
-    draw_text(pixels, 0, 3, first, foreground);
-    draw_text(pixels, 0, 22, second, foreground);
+void draw_lines(BandCanvas canvas, const char* first, const char* second, uint16_t foreground) {
+    // Two independent 20-row DMA strips make each existing two-line text section.
+    // No hidden 40-row staging buffer and no global renderer state.
+    draw_text(canvas.pixels, 0, canvas.second_line ? 2 : 3,
+              canvas.second_line ? second : first, foreground);
 }
 
 bool elapsed_at_least(uint32_t now_ms, uint32_t since_ms, uint32_t duration_ms) {
@@ -318,7 +322,7 @@ const char* start_label(StartBlock b) {
     }
     return "ЗАПРЕЩЁН";
 }
-void render_home(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     uint16_t background = kBlack;
@@ -391,7 +395,7 @@ void render_home(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, foreground);
 }
 
-void render_settings(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_settings(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     uint16_t background = kBlack;
@@ -423,7 +427,7 @@ void render_settings(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, foreground);
 }
 
-void render_edit(uint16_t* pixels, uint8_t band, const UiFrame& frame, UiPage page) {
+void render_edit(BandCanvas pixels, uint8_t band, const UiFrame& frame, UiPage page) {
     char first[96]{};
     char second[96]{};
 
@@ -476,7 +480,7 @@ void render_edit(uint16_t* pixels, uint8_t band, const UiFrame& frame, UiPage pa
     draw_lines(pixels, first, second, kWhite);
 }
 
-void render_diagnostics(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_diagnostics(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     switch (band) {
@@ -522,7 +526,7 @@ void render_diagnostics(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, kWhite);
 }
 
-void render_profile(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_profile(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     switch (band) {
@@ -570,7 +574,7 @@ void render_profile(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, kWhite);
 }
 
-void render_counters(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_counters(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     char duration[32]{};
@@ -617,7 +621,7 @@ void render_counters(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, kWhite);
 }
 
-void render_reset_counters(uint16_t* pixels, uint8_t band) {
+void render_reset_counters(BandCanvas pixels, uint8_t band) {
     char first[96]{};
     char second[96]{};
     uint16_t foreground = kYellow;
@@ -639,7 +643,7 @@ void render_reset_counters(uint16_t* pixels, uint8_t band) {
     draw_lines(pixels, first, second, foreground);
 }
 
-void render_version(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
+void render_version(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
     switch (band) {
@@ -848,17 +852,19 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
 
 void render_ui_band(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     if (!pixels || band >= kUiHeight / kUiBandRows) return;
+    const BandCanvas canvas{pixels, (band % 2u) != 0};
+    const uint8_t section = band / 2u;
     switch (frame.page) {
-        case UiPage::HOME: render_home(pixels, band, frame); break;
-        case UiPage::SETTINGS: render_settings(pixels, band, frame); break;
+        case UiPage::HOME: render_home(canvas, section, frame); break;
+        case UiPage::SETTINGS: render_settings(canvas, section, frame); break;
         case UiPage::SETPOINT:
         case UiPage::HYSTERESIS:
-        case UiPage::ROOM_OFFSET: render_edit(pixels, band, frame, frame.page); break;
-        case UiPage::DIAGNOSTICS: render_diagnostics(pixels, band, frame); break;
-        case UiPage::PROFILE: render_profile(pixels, band, frame); break;
-        case UiPage::COUNTERS: render_counters(pixels, band, frame); break;
-        case UiPage::RESET_COUNTERS: render_reset_counters(pixels, band); break;
-        case UiPage::VERSION: render_version(pixels, band, frame); break;
+        case UiPage::ROOM_OFFSET: render_edit(canvas, section, frame, frame.page); break;
+        case UiPage::DIAGNOSTICS: render_diagnostics(canvas, section, frame); break;
+        case UiPage::PROFILE: render_profile(canvas, section, frame); break;
+        case UiPage::COUNTERS: render_counters(canvas, section, frame); break;
+        case UiPage::RESET_COUNTERS: render_reset_counters(canvas, section); break;
+        case UiPage::VERSION: render_version(canvas, section, frame); break;
     }
 }
 

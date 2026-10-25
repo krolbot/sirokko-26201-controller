@@ -51,7 +51,7 @@ inline int esp_partition_read(const esp_partition_t*,uint32_t offset,void* data,
     if(offset+n>net_fake::image.size()) return ESP_FAIL;
     std::memcpy(data,net_fake::image.data()+offset,n); return ESP_OK;
 }
-struct esp_app_desc_t { char version[32]="0.1.6-DRAFT"; char project_name[32]="sirokko_26201_controller"; };
+struct esp_app_desc_t { char version[32]="0.1.7-DRAFT"; char project_name[32]="sirokko_26201_controller"; };
 inline esp_app_desc_t current_desc, incoming_desc;
 inline const esp_app_desc_t* esp_app_get_description() { return &current_desc; }
 struct esp_http_client_config_t { const char* url{}; const char* cert_pem{}; int timeout_ms{}; bool keep_alive_enable{},disable_auto_redirect{},skip_cert_common_name_check{}; };

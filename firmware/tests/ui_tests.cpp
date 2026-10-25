@@ -221,13 +221,14 @@ void test_renderer_wire_format_and_pages() {
     render_ui_band(pixels.data(), 0, ui);
     check(pixels.back() == wire(0x0010), "HOME title band must use big-endian RGB565 dark blue");
     check(has_non_background(pixels, 0x0010, 3, 16), "first 2x text row must paint glyph pixels");
-    check(has_non_background(pixels, 0x0010, 22, 35), "second 2x text row must paint glyph pixels");
+    render_ui_band(pixels.data(), 1, ui);
+    check(has_non_background(pixels, 0x0010, 2, 15), "second physical strip must paint the second text line");
 
     for (UiPage page : {UiPage::SETTINGS, UiPage::SETPOINT, UiPage::HYSTERESIS,
                         UiPage::ROOM_OFFSET, UiPage::DIAGNOSTICS, UiPage::PROFILE,
                         UiPage::COUNTERS, UiPage::RESET_COUNTERS, UiPage::VERSION}) {
         ui.page = page;
-        for (uint8_t band = 0; band < 8; ++band) {
+        for (uint8_t band = 0; band < kUiBandCount; ++band) {
             pixels.fill(0xaaaa);
             render_ui_band(pixels.data(), band, ui);
             check(pixels[0] != 0xaaaa || pixels.back() != 0xaaaa,
@@ -236,7 +237,7 @@ void test_renderer_wire_format_and_pages() {
     }
 
     pixels.fill(0xaaaa);
-    render_ui_band(pixels.data(), 8, ui);
+    render_ui_band(pixels.data(), kUiBandCount, ui);
     check(pixels.front() == 0xaaaa && pixels.back() == 0xaaaa,
           "out-of-range bands must not write the caller buffer");
     check(std::string(ui_state_label(State::RUN_LOW)) == "РАБОТА НИЗКАЯ",

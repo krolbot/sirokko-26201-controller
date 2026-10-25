@@ -31,7 +31,7 @@ class ServiceArtifactsTests(unittest.TestCase):
         cls.image.write_bytes(b'NOT AN ESP IMAGE: OFFLINE SIGNATURE FIXTURE\n' * 64)
         cls.telemetry = cls.directory / 'telemetry.json'
         cls.telemetry.write_text(json.dumps(dict(board='ESP32-S3-DevKitC-1-N8R8-v1.1',
-            version='0.1.6-DRAFT', nonce='0123456789abcdef0123456789abcdef', uptime_ms=10000, last_sequence=0)))
+            version='0.1.7-DRAFT', nonce='0123456789abcdef0123456789abcdef', uptime_ms=10000, last_sequence=0)))
 
     @classmethod
     def tearDownClass(cls):
@@ -44,7 +44,7 @@ class ServiceArtifactsTests(unittest.TestCase):
 
     def test_signed_request_is_accepted_by_production_parser_and_RSA(self):
         signed = self.directory / 'signed.json'
-        self.run_tool('sign', '--image', self.image, '--version', '0.1.7-DRAFT',
+        self.run_tool('sign', '--image', self.image, '--version', '0.1.8-DRAFT',
                       '--url', 'https://updates.example.test/image.bin', '--key', self.key, '--output', signed)
         request = self.directory / 'request.json'
         self.run_tool('request', '--operation', 'update', '--telemetry', self.telemetry,
@@ -60,7 +60,7 @@ class ServiceArtifactsTests(unittest.TestCase):
     def test_private_file_and_no_overwrite(self):
         os.chmod(self.key, 0o644)
         try:
-            self.run_tool('sign', '--image', self.image, '--version', '0.1.7-DRAFT',
+            self.run_tool('sign', '--image', self.image, '--version', '0.1.8-DRAFT',
                 '--url', 'https://updates.example.test/image.bin', '--key', self.key, '--output', self.directory/'bad-key.json', ok=False)
         finally:
             os.chmod(self.key, 0o600)
@@ -70,7 +70,7 @@ class ServiceArtifactsTests(unittest.TestCase):
 
     def test_invalid_version_HTTP_and_sequence(self):
         for suffix, version, url in [('version', '0.1.7', 'https://updates.example.test/image.bin'),
-                                     ('http', '0.1.7-DRAFT', 'http://updates.example.test/image.bin')]:
+                                     ('http', '0.1.8-DRAFT', 'http://updates.example.test/image.bin')]:
             self.run_tool('sign', '--image', self.image, '--version', version, '--url', url,
                           '--key', self.key, '--output', self.directory/(suffix+'.json'), ok=False)
         self.run_tool('request', '--operation', 'stop', '--telemetry', self.telemetry,

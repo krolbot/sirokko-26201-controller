@@ -1,4 +1,4 @@
-# Сервис Wi-Fi / MQTT / OTA — 0.1.6-DRAFT
+# Сервис Wi-Fi / MQTT / OTA — 0.1.7-DRAFT
 
 Реализация подготовлена для будущего доступа, отдельно разрешённого владельцем. Плата не подключена, действующие ключи/брокер/туннель сейчас не настроены. Это не отчёт об успешной аппаратной OTA. Не создавались серверы, публичные порты или облачные службы. Локальное управление не зависит от сети или календарных часов.
 
@@ -66,7 +66,7 @@ ESP32-S3-DevKitC-1-N8R8-v1.1
 
 ```sh
 python3 tools/service_artifacts.py sign --image /путь/новый.bin \
-  --version 0.1.7-DRAFT --url https://разрешённый-сервер/новый.bin \
+  --version 0.1.8-DRAFT --url https://разрешённый-сервер/новый.bin \
   --key /защищённый/ключ.pem --output /путь/signed-image.json
 python3 tools/service_artifacts.py request --operation update \
   --telemetry /путь/свежая-telemetry.json --manifest /путь/signed-image.json \

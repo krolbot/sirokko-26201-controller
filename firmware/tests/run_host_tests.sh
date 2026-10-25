@@ -5,7 +5,7 @@ mkdir -p build-host
 flags=(-std=c++20 -Wall -Wextra -Werror -pedantic -O2 -Icomponents/control_core/include -Imain -Itests -Itests/stubs)
 common=(components/control_core/control.cpp components/control_core/button.cpp components/control_core/operator.cpp
   components/control_core/service.cpp components/control_core/ui.cpp main/output_driver.cpp main/commissioning.cpp tests/idf_stubs.cpp)
-for suite in sim feature runtime; do
+for suite in sim feature runtime display; do
   g++ "${flags[@]}" "${common[@]}" "tests/${suite}_tests.cpp" -o "build-host/${suite}_tests"
   "build-host/${suite}_tests"
 done

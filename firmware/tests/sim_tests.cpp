@@ -615,7 +615,7 @@ void test_shared_spi_display_contract() {
           "TFT and both MAX31856 devices require independent chip selects");
     check(board::kMaxSpiMode == 1 && board::kTftSpiMode == 0,
           "each shared-bus device must retain its own SPI mode");
-    check(board::kMaxSpiClockHz == 5'000'000 && board::kTftSpiClockHz == 20'000'000,
+    check(board::kMaxSpiClockHz == 5'000'000 && board::kTftSpiClockHz == 10'000'000,
           "shared-bus clocks must remain at the selected conservative values");
     check(board::kTftBandTransferBudgetUs < kControlLoopPeriodMs * 1000u,
           "one bounded TFT band must fit inside a control-loop period");

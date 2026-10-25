@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include "sirokko/display_geometry.hpp"
 
 namespace sirokko::board {
 
@@ -20,11 +21,14 @@ inline constexpr int kTftReset = -1;  // The module RST follows the DevKit EN/CH
 inline constexpr int kMaxSpiMode = 1;
 inline constexpr int kTftSpiMode = 0;
 inline constexpr uint32_t kMaxSpiClockHz = 5'000'000;
-inline constexpr uint32_t kTftSpiClockHz = 20'000'000;
-inline constexpr int kTftWidth = 240;
-inline constexpr int kTftHeight = 320;
-inline constexpr int kTftBandRows = 40;
-inline constexpr int kTftBandCount = kTftHeight / kTftBandRows;
+inline constexpr uint32_t kTftSpiClockHz = 10'000'000;
+// ST7789V v1.3 §7.4.3 Table 6: write cycle >=66ns, CS setup/hold >=15ns.
+inline constexpr uint8_t kTftCsPreCycles = 1;
+inline constexpr uint8_t kTftCsPostCycles = 1;
+inline constexpr int kTftWidth = sirokko::kUiWidth;
+inline constexpr int kTftHeight = sirokko::kUiHeight;
+inline constexpr int kTftBandRows = sirokko::kUiBandRows;
+inline constexpr int kTftBandCount = sirokko::kUiBandCount;
 inline constexpr size_t kTftBandBytes =
     static_cast<size_t>(kTftWidth) * kTftBandRows * sizeof(uint16_t);
 inline constexpr uint32_t kTftBandWireTimeUs = static_cast<uint32_t>(
@@ -37,6 +41,11 @@ inline constexpr bool shared_spi_chip_selects_are_distinct() {
            kMaxExhaustCs != kMaxAirCs;
 }
 
+static_assert(kTftSpiClockHz <= 10'000'000);
+static_assert(1'000'000'000ULL / kTftSpiClockHz >= 66);
+static_assert(kTftCsPreCycles * 1'000'000'000ULL / kTftSpiClockHz >= 15);
+static_assert(kTftCsPostCycles * 1'000'000'000ULL / kTftSpiClockHz >= 15);
+static_assert(kTftBandBytes == 9600 && kTftBandWireTimeUs == 7680);
 static_assert(kTftHeight % kTftBandRows == 0);
 static_assert(shared_spi_chip_selects_are_distinct());
 

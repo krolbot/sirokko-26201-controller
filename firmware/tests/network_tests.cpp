@@ -33,13 +33,13 @@ void reset() {
     net_fake::begin_error=net_fake::perform_error=net_fake::finish_error=0;
     net_fake::begin_calls=net_fake::lease_calls=net_fake::releases=net_fake::stops=0;
     net_fake::lease_result=sirokko::ServiceResult::OK; net_fake::image.assign(2048,0x5a); net_fake::replies.clear();
-    fake_partition.size=0x300000; incoming_desc={}; std::strcpy(incoming_desc.version,"0.1.7-DRAFT");
+    fake_partition.size=0x300000; incoming_desc={}; std::strcpy(incoming_desc.version,"0.1.8-DRAFT");
     g_mqtt=reinterpret_cast<void*>(1); g_connected.store(true); g_wifi_up.store(true); g_last_sequence=0;
     std::strcpy(g_nonce,"0123456789abcdef0123456789abcdef"); std::strcpy(g_command_topic,"test/service/request");
     static FakeQueue queue{sizeof(UpdateJob),1,{}}; queue.data.clear(); g_jobs=&queue;
 }
 UpdateJob job() {
-    UpdateJob j{}; std::strcpy(j.version,"0.1.7-DRAFT"); std::strcpy(j.url,"https://updates.example.test/image.bin");
+    UpdateJob j{}; std::strcpy(j.version,"0.1.8-DRAFT"); std::strcpy(j.url,"https://updates.example.test/image.bin");
     j.size=net_fake::image.size(); j.sequence=1; j.issued_ms=10000; j.ttl_ms=30000; std::strcpy(j.nonce,g_nonce);
     unsigned char hash[32]{}; SHA256(net_fake::image.data(),net_fake::image.size(),hash);
     for(size_t i=0;i<32;++i) std::snprintf(j.hash+2*i,3,"%02x",hash[i]);
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
         {"oversize_and_expired_do_not_write",[]{auto j=job(); sign(j); fake_partition.size=j.size-1; run_update(j); check_reply("OVERSIZE"); require(!net_fake::lease_calls,"oversize lease"); reset(); j=job(); sign(j); j.issued_ms=0; j.ttl_ms=10; run_update(j); check_reply("EXPIRED"); require(!net_fake::lease_calls,"expired lease");}},
         {"TLS_failure_releases_lease_without_boot_selection",[]{auto j=job(); sign(j); net_fake::begin_error=-1; run_update(j); check_reply("IO"); require(net_fake::tls_verified && !net_fake::finished && !net_fake::lease && net_fake::releases==1,"TLS error leaves old app");}},
         {"truncated_disconnect_and_OTA_error_abort",[]{auto j=job(); sign(j); net_fake::perform_error=-1; run_update(j); require(net_fake::aborted && !net_fake::finished && !net_fake::lease,"truncated image selected"); reset(); j=job(); sign(j); net_fake::perform_error=ESP_ERR_HTTPS_OTA_IN_PROGRESS; g_wifi_up.store(false); run_update(j); require(net_fake::aborted && !net_fake::finished,"network loss selected image");}},
-        {"wrong_image_version_and_project_abort",[]{auto j=job(); sign(j); std::strcpy(incoming_desc.version,"0.1.8-DRAFT"); run_update(j); check_reply("TARGET"); require(net_fake::aborted && !net_fake::finished,"wrong image version"); reset(); j=job(); sign(j); std::strcpy(incoming_desc.project_name,"other-board"); run_update(j); require(net_fake::aborted && !net_fake::finished,"wrong target project");}},
+        {"wrong_image_version_and_project_abort",[]{auto j=job(); sign(j); std::strcpy(incoming_desc.version,"0.1.9-DRAFT"); run_update(j); check_reply("TARGET"); require(net_fake::aborted && !net_fake::finished,"wrong image version"); reset(); j=job(); sign(j); std::strcpy(incoming_desc.project_name,"other-board"); run_update(j); require(net_fake::aborted && !net_fake::finished,"wrong target project");}},
         {"full_image_hash_checked_before_finish",[]{auto j=job(); sign(j); net_fake::image[100]^=1; run_update(j); check_reply("HASH"); require(net_fake::aborted && !net_fake::finished && !net_fake::lease,"hash mismatch booted");}},
         {"valid_signed_OTA_keeps_exclusive_lease_through_restart",[]{auto j=job(); sign(j); run_update(j); check_reply("REBOOTING"); require(net_fake::finished && net_fake::restarted && net_fake::lease && !net_fake::releases && net_fake::tls_verified,"successful OTA invariant");}},
         {"strict_JSON_duplicate_trailing_NUL_and_wrong_nonce",[]{
@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
             run_update(queued); check_reply("REPLAY"); require(!net_fake::lease_calls,"old connection queued update survived");
         }},
         {"wrong_target_version_and_disconnected_auth_failure",[]{
-            auto j=job(); std::strcpy(j.version,"0.1.6-DRAFT"); receive(update_packet(j)); check_reply("INVALID");
+            auto j=job(); std::strcpy(j.version,"0.1.7-DRAFT"); receive(update_packet(j)); check_reply("INVALID");
             reset(); auto p=update_packet(job()); p.replace(p.find("esp32s3"),7,"esp32c3"); receive(p); check_reply("INVALID");
             reset(); p=packet(); esp_mqtt_event_t e{}; e.topic=g_command_topic; e.topic_len=std::strlen(g_command_topic); e.data=p.data(); e.data_len=e.total_data_len=p.size();
             g_connected.store(false); mqtt_event(nullptr,nullptr,MQTT_EVENT_DATA,&e); require(!net_fake::stops,"unconnected/unauthenticated client delivered command");
@@ -144,8 +144,8 @@ int main(int argc, char** argv) {
             char tiny[8]{}; require(!format_telemetry(tiny,sizeof(tiny),f,g_nonce),"truncated telemetry reported valid");
         }},
         {"version_hash_key_and_config_validation",[]{
-            require(version_number("0.1.7-DRAFT")>version_number("0.1.6-DRAFT"),"version ordering");
-            require(version_number("0.1.7-DRAFT\n")<0 && version_number("x")<0,"invalid versions");
+            require(version_number("0.1.8-DRAFT")>version_number("0.1.7-DRAFT"),"version ordering");
+            require(version_number("0.1.8-DRAFT\n")<0 && version_number("x")<0,"invalid versions");
             require(!hex_hash("ffff") && hex_hash(std::string(64,'f').c_str()),"hash format");
             g_network.schema=1; std::strcpy(g_network.ssid,"bench"); std::strcpy(g_network.username,"device"); std::strcpy(g_network.password,"test-only");
             std::strcpy(g_network.broker,"mqtts://example.test"); require(config_valid(g_network),"valid TLS config");

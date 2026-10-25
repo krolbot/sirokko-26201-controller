@@ -1,5 +1,8 @@
 #include "local_display.hpp"
 #include <algorithm>
+#ifdef SIROKKO_DISPLAY_HOST_TEST
+#include "display_test_api.hpp"
+#else
 #include "driver/spi_master.h"
 #include "esp_heap_caps.h"
 #include "esp_lcd_io_spi.h"
@@ -9,6 +12,7 @@
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#endif
 
 namespace {
 constexpr spi_host_device_t kSpiHost = SPI2_HOST;
@@ -26,6 +30,8 @@ bool LocalDisplay::begin() {
     cfg.dc_gpio_num = sirokko::board::kTftDc;
     cfg.spi_mode = sirokko::board::kTftSpiMode;
     cfg.pclk_hz = sirokko::board::kTftSpiClockHz;
+    cfg.cs_ena_pretrans = sirokko::board::kTftCsPreCycles;
+    cfg.cs_ena_posttrans = sirokko::board::kTftCsPostCycles;
     cfg.trans_queue_depth = 1;
     cfg.on_color_trans_done = on_done;
     cfg.user_ctx = &transfer_in_progress_;
@@ -77,7 +83,7 @@ bool LocalDisplay::render(const sirokko::UiFrame& frame) {
         if (esp_timer_get_time() - transfer_started_us_ > kTransferTimeoutUs) { healthy_.store(false); return false; }
         return true;
     }
-    // Freeze a coherent frame for all eight bands, not eight incompatible snapshots.
+    // Freeze a coherent frame for all physical DMA strips.
     if (next_band_ == 0) frame_ = frame;
     sirokko::render_ui_band(pixels_, next_band_, frame_);
     if (!submit_band(next_band_)) return false;

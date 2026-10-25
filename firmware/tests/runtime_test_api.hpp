@@ -46,7 +46,7 @@ inline int esp_task_wdt_reset() { ++rt_fake::wdt_resets; return ESP_OK; }
 inline void esp_restart() { throw rt_fake::Restart{}; }
 constexpr int ESP_RST_BROWNOUT=1;
 inline int esp_reset_reason() { return 0; }
-struct esp_app_desc_t { const char* version="0.1.6-DRAFT"; };
+struct esp_app_desc_t { const char* version="0.1.7-DRAFT"; };
 inline const esp_app_desc_t* esp_app_get_description() { static esp_app_desc_t d; return &d; }
 struct esp_partition_t {};
 using esp_ota_img_states_t=int;

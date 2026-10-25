@@ -1,5 +1,6 @@
 #pragma once
 #include "sirokko/operator.hpp"
+#include "sirokko/display_geometry.hpp"
 
 namespace sirokko {
 enum class UiPage : uint8_t { HOME, SETTINGS, SETPOINT, HYSTERESIS, ROOM_OFFSET, DIAGNOSTICS, PROFILE, COUNTERS, RESET_COUNTERS, VERSION };
@@ -58,9 +59,6 @@ struct UiFrame {
     UiPage page{UiPage::HOME};
     uint8_t selection{};
 };
-inline constexpr int kUiWidth = 240;
-inline constexpr int kUiHeight = 320;
-inline constexpr int kUiBandRows = 40;
 // Same big-endian RGB565 bands go to esp_lcd and host images; no independent mock UI.
 void render_ui_band(uint16_t* pixels, uint8_t band, const UiFrame&);
 const char* ui_state_label(State);

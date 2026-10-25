@@ -36,7 +36,7 @@ UiFrame example_frame() {
     frame.boot_id = 7;
     frame.session_id = 3;
     frame.profile_token = CommissioningStore{}.candidate_token(frame.config);
-    std::strcpy(frame.firmware_version,"0.1.6-DRAFT");
+    std::strcpy(frame.firmware_version,"0.1.7-DRAFT");
     frame.exhaust_fault = 0;
     frame.hot_air_fault = 0;
     frame.safety_ok = true;
