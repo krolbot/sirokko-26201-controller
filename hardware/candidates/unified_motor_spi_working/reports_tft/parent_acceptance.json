@@ -1,0 +1,222 @@
+{
+  "pcb_sha256": "4ac41af2f83d0c53cac73a4c7db6cbd73e49b66876ef0643448b14ee49347384",
+  "all_pads_preserved": 426,
+  "footprints": 112,
+  "tracks": 215,
+  "vias": 55,
+  "baseline_unconnected": 225,
+  "unconnected": 220,
+  "violations": {
+    "lib_footprint_mismatch": 4
+  },
+  "verified_groups": [
+    [
+      [
+        "U9",
+        "12"
+      ],
+      [
+        "U10",
+        "12"
+      ],
+      [
+        "J1",
+        "17"
+      ],
+      [
+        "J26",
+        "4"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "10"
+      ],
+      [
+        "U10",
+        "10"
+      ],
+      [
+        "J1",
+        "18"
+      ],
+      [
+        "J26",
+        "5"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "11"
+      ],
+      [
+        "U10",
+        "11"
+      ],
+      [
+        "J1",
+        "19"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "9"
+      ],
+      [
+        "J1",
+        "16"
+      ],
+      [
+        "R2",
+        "2"
+      ]
+    ],
+    [
+      [
+        "U10",
+        "9"
+      ],
+      [
+        "J1",
+        "15"
+      ],
+      [
+        "R3",
+        "2"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "7"
+      ],
+      [
+        "J3",
+        "4"
+      ]
+    ],
+    [
+      [
+        "U10",
+        "7"
+      ],
+      [
+        "J3",
+        "5"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "1"
+      ],
+      [
+        "U9",
+        "14"
+      ],
+      [
+        "C9",
+        "2"
+      ],
+      [
+        "C10",
+        "2"
+      ],
+      [
+        "C13",
+        "2"
+      ]
+    ],
+    [
+      [
+        "J26",
+        "2"
+      ],
+      [
+        "J3",
+        "16"
+      ]
+    ],
+    [
+      [
+        "J26",
+        "1"
+      ],
+      [
+        "R24",
+        "1"
+      ],
+      [
+        "J3",
+        "17"
+      ]
+    ],
+    [
+      [
+        "J26",
+        "3"
+      ],
+      [
+        "R23",
+        "2"
+      ]
+    ],
+    [
+      [
+        "J26",
+        "6"
+      ],
+      [
+        "R24",
+        "2"
+      ]
+    ]
+  ],
+  "ignored_checks_unchanged": true,
+  "new_tracks_width_mm": 0.25,
+  "local_power_width_mm": 0.4,
+  "via_mm": [
+    0.6,
+    0.3
+  ],
+  "unique_reference_pin_keys": 410,
+  "unconnected_delta_by_net": [
+    {
+      "net": [
+        "/TFT_RESET_N"
+      ],
+      "before": 1,
+      "after": 0
+    },
+    {
+      "net": [
+        "/TFT_CS"
+      ],
+      "before": 2,
+      "after": 0
+    },
+    {
+      "net": [
+        "/TFT_DC"
+      ],
+      "before": 1,
+      "after": 0
+    },
+    {
+      "net": [
+        "/+3V3"
+      ],
+      "before": 55,
+      "after": 54
+    }
+  ],
+  "ground_pads_tested": 96,
+  "ground_directed_pairs_preserved": 324,
+  "pin_net_entries_matching_unchanged_root_netlist": 402,
+  "baseline_native_sha256": "c07f85759c0d576fd15368ce58ce58a5ecfc62815af4000639d3d0de3641aadc",
+  "all_426_pad_geometries_and_nets_match_exact_unified_baseline": true,
+  "kicad_native_build_version": "10.0.7-10.0.7~ubuntu26.04.1"
+}

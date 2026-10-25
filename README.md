@@ -4,14 +4,14 @@
 
 ## Current requirements and status
 
-The [unified motor + SPI working directory](hardware/candidates/unified_motor_spi_working/README_RU.md) is the source for continued routing of the common PCB. Earlier canonical files and separate candidates remain unchanged historical snapshots, not parallel active sources. This baseline has 194 segments / 52 vias, 225 unconnected items, 4 library warnings and 5 ignored DRC checks; it is not a finished board.
+The [unified motor + SPI working directory](hardware/candidates/unified_motor_spi_working/README_RU.md) is the source for continued routing of the common PCB. Earlier canonical files and separate candidates remain unchanged historical snapshots, not parallel active sources. The current TFT continuation has 215 segments / 55 vias, 220 unconnected items, 4 library warnings and 5 ignored DRC checks; the recorded DRC exit code is 5, not an overall PASS. The 194/52 motor + SPI baseline is preserved in commit [7ede3fca5f8371e4e3ec7252b4ba637994532fc2](https://github.com/krolbot/sirokko-26201-controller/commit/7ede3fca5f8371e4e3ec7252b4ba637994532fc2), with its historical reports and images retained separately. TFT power/ground/reset, power routing and physical qualification remain incomplete.
 
 - [Requirements register](docs/REQUIREMENTS_RU.md) — all requirements, superseded decisions and acceptance criteria.
 - [Current state and work plan](docs/CURRENT_STATE_RU.md) — published evidence, unfinished work and physical-test limits.
 - [RTC and timer reference research](docs/RTC_TIMER_REFERENCE_RU.md) — pinned sources, battery-holder/RTC candidates and adaptation limits.
 - [CR2032 holder selection](docs/CR_HOLDER_SELECTION_RU.md) — Keystone 1060 candidate, catalog/footprint geometry and polarity comparison, and remaining checks; not integrated, not FOR_ORDER.
 
-These documents take precedence over historical requirements below. Four on-board buttons with combined START/STOP and a battery-backed RTC are new requirements, not verified features of the [0.1.7 bench kit](firmware/release/build-kits/0.1.7-esp32s3/). Earlier five-button, no-RTC and network-prohibition requirements are superseded; Wi-Fi/MQTT/OTA are required, without authorizing infrastructure deployment or calendar ignition. Firmware test figures in the current-state document are read from the published manifest, not rerun for this documentation update.
+These documents take precedence over historical requirements below. Four on-board buttons with combined START/STOP and a battery-backed RTC are new requirements, not verified features of the [0.1.7 bench kit](firmware/release/build-kits/0.1.7-esp32s3/). Earlier five-button, no-RTC and network-prohibition requirements are superseded; Wi-Fi/MQTT/OTA are required, without authorizing infrastructure deployment or calendar ignition. The current-state document distinguishes manifest evidence from the engineer's independent 0.1.7 host-test run. No firmware tests, target build or physical tests were rerun for this publication.
 
 The sections below preserve the earlier recovered-hardware/0.1.5 checkpoint; use the current-state document for later snapshots.
 
