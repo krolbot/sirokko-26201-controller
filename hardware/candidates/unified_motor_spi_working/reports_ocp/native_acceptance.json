@@ -1,0 +1,578 @@
+{
+  "source_pcb_sha256": "33507d9b0016aea8b67559de0c549982e71815fffcf7a3cfd1b721f4380a77c3",
+  "pcb_sha256": "86c973e73e17565c24f6c908bf0e75305ec458bd3af6be961cba1d411dbcded2",
+  "footprints": 112,
+  "pads": 426,
+  "intentional_placements_mm_deg": {
+    "U9003": [
+      161,
+      164,
+      180
+    ],
+    "C9005": [
+      156.5,
+      164.95,
+      180
+    ],
+    "R9005": [
+      163,
+      168,
+      0
+    ],
+    "R9006": [
+      167,
+      168,
+      0
+    ],
+    "R9007": [
+      155.5,
+      168,
+      0
+    ],
+    "R9008": [
+      151.5,
+      160,
+      0
+    ]
+  },
+  "intentional_reference_positions_mm": {
+    "U9003": [
+      156.7,
+      162.0
+    ],
+    "C9005": [
+      155.5,
+      166.5
+    ],
+    "R9005": [
+      165.3,
+      172.3
+    ],
+    "R9006": [
+      168,
+      170.5
+    ],
+    "R9007": [
+      155.5,
+      170.5
+    ],
+    "R9008": [
+      151.5,
+      157.5
+    ],
+    "U9002": [
+      157.5,
+      160.5
+    ],
+    "C9004": [
+      171,
+      160.8
+    ]
+  },
+  "value_change": {
+    "U9003": [
+      "LMV331M5X/NOPB",
+      "TLV9020DBVR"
+    ]
+  },
+  "old_copper_objects_preserved": 418,
+  "new_segments": 35,
+  "segments": 375,
+  "vias": 80,
+  "old_relations_without_self": 1716,
+  "new_relations_without_self": 1800,
+  "old_relations_preserved": true,
+  "new_tracks": [
+    {
+      "uuid": "5d81df7a-241d-4e62-b079-5552c96050fd",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT",
+      "layer": 0,
+      "start": [
+        162.475,
+        157.905
+      ],
+      "end": [
+        162.475,
+        160.5
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "0dacae56-807b-40f9-90e6-7ec8747460a1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT",
+      "layer": 0,
+      "start": [
+        162.475,
+        160.5
+      ],
+      "end": [
+        162.1375,
+        160.8375
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "dff9d244-55cd-4b8f-8e07-e9b931a9af53",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT",
+      "layer": 0,
+      "start": [
+        162.1375,
+        160.8375
+      ],
+      "end": [
+        162.1375,
+        163.05
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "25d183c9-f16c-43d0-8ffd-85cae0c904f4",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        162.1375,
+        164.95
+      ],
+      "end": [
+        163.825,
+        166.6375
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "1b1e756d-41ac-4b31-9a45-44dccc07b8d8",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        163.825,
+        166.6375
+      ],
+      "end": [
+        163.825,
+        168.0
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "ba392233-a57a-401f-8cdf-eeebae2316f7",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        163.825,
+        168.0
+      ],
+      "end": [
+        166.175,
+        168.0
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "2d4cfff8-568b-42b1-9672-cbcf7f27f593",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        156.325,
+        168.0
+      ],
+      "end": [
+        156.325,
+        169.8
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "c44b3e88-c028-4b91-bd3b-3acbbc72756d",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        156.325,
+        169.8
+      ],
+      "end": [
+        165.1,
+        169.8
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "9098fc11-7693-4ac8-8ab0-27031abf06a5",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+      "layer": 0,
+      "start": [
+        165.1,
+        169.8
+      ],
+      "end": [
+        165.1,
+        168
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "7b45a5a8-4b06-4758-a8e4-4ce1e09c122d",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+      "layer": 0,
+      "start": [
+        159.8625,
+        163.05
+      ],
+      "end": [
+        153,
+        163.05
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "29faa40a-2763-4fb5-a521-c6c2921caaff",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+      "layer": 0,
+      "start": [
+        153,
+        163.05
+      ],
+      "end": [
+        153,
+        160
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "aed3186a-ea7c-4298-a041-76f6545375d4",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+      "layer": 0,
+      "start": [
+        153,
+        160
+      ],
+      "end": [
+        152.325,
+        160.0
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "09a56579-8f07-4af7-a262-dfefc179d948",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+      "layer": 0,
+      "start": [
+        154.675,
+        168.0
+      ],
+      "end": [
+        153,
+        168
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "4a032366-1008-4df6-a19b-6e93944d7394",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+      "layer": 0,
+      "start": [
+        153,
+        168
+      ],
+      "end": [
+        153,
+        163.05
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "f506cc48-5a2b-43d1-8f18-ced8ccdbc6c8",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        150.675,
+        160.0
+      ],
+      "end": [
+        150.675,
+        159
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "d3bfce88-c4b9-4100-91ac-21e7a7b78acd",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        150.675,
+        159
+      ],
+      "end": [
+        160.5,
+        159
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "353bdb67-9f84-459a-8f43-6c401b50447e",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        160.5,
+        159
+      ],
+      "end": [
+        160.5,
+        156.635
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "ce27ebaa-13ad-4cf7-9d3a-7673b72b2ce2",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        160.5,
+        156.635
+      ],
+      "end": [
+        162.475,
+        156.635
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "5732232e-1259-4c76-8b33-bf87652c826a",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        165.025,
+        156.635
+      ],
+      "end": [
+        165.025,
+        158.7
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "8837f09e-5f8b-4fa6-90bf-1c749d7dc313",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        165.025,
+        158.7
+      ],
+      "end": [
+        164,
+        158.7
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "bd027a24-4527-4a9d-bbf5-7115d00f3234",
+      "net": "/+3V3",
+      "layer": 2,
+      "start": [
+        164,
+        158.7
+      ],
+      "end": [
+        164,
+        161.9
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "59e2b7b1-5926-4255-8a59-8ebfafb45664",
+      "net": "/+3V3",
+      "layer": 2,
+      "start": [
+        164,
+        161.9
+      ],
+      "end": [
+        160,
+        165.9
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "962130b8-f8d6-46aa-be0b-00d34b8cbb21",
+      "net": "/+3V3",
+      "layer": 2,
+      "start": [
+        160,
+        165.9
+      ],
+      "end": [
+        160,
+        166.1
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "61221974-263d-4d71-840b-9101660e0b42",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        160,
+        166.1
+      ],
+      "end": [
+        159.8625,
+        165.9625
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "c94a4767-3bab-4d29-a7c1-8069413dc43b",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        159.8625,
+        165.9625
+      ],
+      "end": [
+        159.8625,
+        164.95
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "52d4d27f-c1e9-403c-b0b4-a131e6757731",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        159.8625,
+        164.95
+      ],
+      "end": [
+        157.275,
+        164.95
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "1a798526-50b9-4aa9-8cfc-aeb26636e65b",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        160,
+        166.1
+      ],
+      "end": [
+        160,
+        167
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "4e7b9304-a23e-49a9-ae27-c009bdff798f",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        160,
+        167
+      ],
+      "end": [
+        162.175,
+        167
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "e61955ae-4ede-48f4-b86f-49a77afd1b8e",
+      "net": "/+3V3",
+      "layer": 0,
+      "start": [
+        162.175,
+        167
+      ],
+      "end": [
+        162.175,
+        168.0
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "e179200e-1599-477a-9828-2090ce3a3947",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        166.575,
+        156.635
+      ],
+      "end": [
+        168,
+        156.635
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "e377b33c-9a2b-4729-9880-59fd33ef44ac",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        168,
+        156.635
+      ],
+      "end": [
+        168,
+        168
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "3d7fa944-a2ba-4ab9-9a9f-801964b453d5",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        168,
+        168
+      ],
+      "end": [
+        167.825,
+        168.0
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "4cd6e0fc-e455-4452-9716-190367137148",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        155.725,
+        164.95
+      ],
+      "end": [
+        155.725,
+        164
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "c93243a5-1392-4fa6-9171-063a2697b2cc",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        155.725,
+        164
+      ],
+      "end": [
+        162.1375,
+        164.0
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "bc46791b-181d-4415-9dbe-3dad77c9ba68",
+      "net": "/GND",
+      "layer": 0,
+      "start": [
+        162.1375,
+        164.0
+      ],
+      "end": [
+        168,
+        164
+      ],
+      "width_mm": 0.4
+    }
+  ],
+  "status": "DRAFT NOT FOR ORDER; native checks do not qualify physical OCP/timing/thermal/PWM noise"
+}

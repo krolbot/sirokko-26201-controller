@@ -1,0 +1,7 @@
+{
+  "wrong_comparator_input_pin_assignment_detected": true,
+  "short_violations_count": 2,
+  "wrong_pinmap_component_TLV9021DBVR_rejected": true,
+  "canonical_pcb_not_mutated": true,
+  "warning": "Negative DRC belongs to deliberately wrong disposable PCB, not the candidate; this is no physical comparator test."
+}

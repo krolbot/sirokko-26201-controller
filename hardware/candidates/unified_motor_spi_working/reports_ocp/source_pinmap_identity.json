@@ -1,0 +1,42 @@
+{
+  "pcb_sha256": "86c973e73e17565c24f6c908bf0e75305ec458bd3af6be961cba1d411dbcded2",
+  "schematic_components": 108,
+  "board_footprints": 112,
+  "board_only_mechanical_holes": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "schematic_pin_net_entries": 402,
+  "all_component_values_schematic_pcb_equal": true,
+  "all_assigned_schematic_pins_match_board_pads": true,
+  "u9003_manufacturer_pin_net_contract": {
+    "1": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH",
+    "2": "/GND",
+    "3": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT",
+    "4": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+    "5": "/+3V3"
+  },
+  "unchanged_dependencies": [
+    "motor_pwm_DRAFT.kicad_sch",
+    "relay_level_shift_REVB.kicad_sch",
+    "power_return_reset_DRAFT.kicad_sch",
+    "fp-lib-table",
+    "Sirokko_D101_STPS5H100B.kicad_sym",
+    "Sirokko26201_control_motor_candidate.kicad_pro",
+    "logic_power_24_5_DRAFT.kicad_sch",
+    "Sirokko26201_control_motor_candidate.kicad_sch",
+    "motor_pwm_REBUILD.kicad_sym",
+    "Sirokko_Safety.kicad_sym",
+    "sym-lib-table",
+    "Sirokko_thermal.kicad_sym",
+    "Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod",
+    "Sirokko_Power.pretty/WSLP2726.kicad_mod",
+    "Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod",
+    "Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod"
+  ],
+  "non_target_schematic_bytes_unchanged_after_reversing_explicit_edits": true,
+  "other_symbol_library_bytes_preserved": true,
+  "source": "TI SNOSDA3H p3, fig4-1/table4-1; TLV9020, not TLV9021"
+}

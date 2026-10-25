@@ -1,0 +1,21 @@
+{
+  "pcb_sha256": "86c973e73e17565c24f6c908bf0e75305ec458bd3af6be961cba1d411dbcded2",
+  "top_bottom_full_board_views_reviewed": true,
+  "ocp_detail_all_target_reference_fields_readable_unclipped": true,
+  "schema_u9003_reference_value_readable": true,
+  "old_LMV331_note_removed": true,
+  "schematic_pdf_page_count": 3,
+  "schematic_pdf_is_provisional": true,
+  "remaining_layout_defects": [
+    "Existing dense reference/net-label overlap on root sheet",
+    "Old DC/DC note extends outside sheet and several old labels overlap",
+    "Old motor annotations overlap parts of CURRENT INTERFACE note; other divider/D9001 labels remain crowded"
+  ],
+  "not_confirmed_by_visual": [
+    "nets/connectivity",
+    "board electrical function",
+    "production release",
+    "true dimensions from raster"
+  ],
+  "note": "The intermediate crop was corrected for the plot-origin offset; final viewport includes all requested OCP reference fields. SVG changes only page bounds/viewport, not copper."
+}

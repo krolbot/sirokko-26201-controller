@@ -5,6 +5,213 @@
 	(uuid "12e9809a-9b85-41ac-bad7-512b7fd65dde")
 	(paper "A4")
 	(lib_symbols
+	(symbol "Sirokko_Power:TLV9020DBVR"
+		(pin_names
+			(offset 0.127)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "U"
+			(at 1.27 5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TLV9020DBVR"
+			(at 3.81 -5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 0 2.54 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tlv9021.pdf"
+			(at 0 5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Rail-to-rail fault-tolerant open-drain comparator; TI TLV9020DBVR; pin map verified"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "single comparator"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "SOT?23* *SC?70*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "TLV9020DBVR_0_1"
+			(polyline
+				(pts
+					(xy -5.08 5.08) (xy 5.08 0) (xy -5.08 -5.08) (xy -5.08 5.08)
+				)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+			(polyline
+				(pts
+					(xy 3.302 -0.508) (xy 2.794 -0.508) (xy 3.302 0) (xy 2.794 0.508) (xy 2.286 0) (xy 2.794 -0.508)
+					(xy 2.286 -0.508)
+				)
+				(stroke
+					(width 0.127)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "TLV9020DBVR_1_1"
+			(pin input line
+				(at -7.62 2.54 0)
+				(length 2.54)
+				(name "+"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -2.54 -7.62 90)
+				(length 3.81)
+				(name "V-"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -7.62 -2.54 0)
+				(length 2.54)
+				(name "-"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin open_collector line
+				(at 7.62 0 180)
+				(length 2.54)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -2.54 7.62 270)
+				(length 3.81)
+				(name "V+"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+
+
 		(symbol "LTC7001IMSE_PBF"
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3403,8 +3610,8 @@
 	)
 )
 	(symbol
-	(lib_name "Comparator:LMV331")
-	(lib_id "Comparator:LMV331")
+	(lib_name "Sirokko_Power:TLV9020DBVR")
+	(lib_id "Sirokko_Power:TLV9020DBVR")
 	(at 149.86 119.38 0)
 	(unit 1)
 	(exclude_from_sim no)
@@ -3413,15 +3620,15 @@
 	(dnp no)
 	(uuid "073291da-2994-41c0-916f-93d4dbf79ea8")
 	(property "Reference" "U9003"
-		(at 149.86 115.57 0)
+		(at 155 110 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
 	)
-	(property "Value" "LMV331M5X/NOPB"
-		(at 149.86 123.19 0)
+	(property "Value" "TLV9020DBVR"
+		(at 155 112.5 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3437,7 +3644,7 @@
 			(hide yes)
 		)
 	)
-	(property "Datasheet" "~"
+	(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tlv9021.pdf"
 		(at 149.86 119.38 0)
 		(effects
 			(font
@@ -6388,21 +6595,23 @@
 	)
 	(uuid "c4f04438-9010-4845-9b14-56b8eee2c4a0")
 )
-	(text "QUALIFIED LOGIC: INP = ((FAN_CMD AND PWM_SPEED_CMD) OR FAN_EMERG_3V3) AND OCP_OK. R9002=100k pulls INP low. Loss of +3V3 drives gates Hi-Z; R9002 forces LTC7001 INP=LOW even with VIN/VDRV alive. OCP_OK is LMV331 open collector: overcurrent pulls LOW and therefore turns OFF both PWM and emergency command."
+	(text "LOGIC CONTRACT - DRAFT, not bench qualified.\nINP = ((FAN_CMD AND PWM_SPEED_CMD) OR FAN_EMERG_3V3) AND OCP_OK.\nR9002=100k pulls INP LOW when +3V3/gates are off; VIN/VDRV may remain.\nU9003 TLV9020DBVR: open-drain OUT4; IN+1, IN-3, V-2, V+5.\nOvercurrent pulls OCP_OK LOW and inhibits both PWM and emergency command.\nVerify physical shutdown timing and current decay on a safe bench."
 	(at 25.4 25.4 0)
 	(effects
 		(font
 			(size 1.27 1.27)
 		)
+		(justify left)
 	)
 	(uuid "7a0cedfe-3bea-4986-9b14-cd6ceedee7a6")
 )
-	(text "CURRENT INTERFACE: design continuous limit 15 A; comparator trip/release corridor 19.11…22.42 A for +3V3=3.135…3.465 V and 1% resistors. This is hardware turn-off, not a current regulator. External branch fuse/wiring/connector must be selected for the 15 A continuous interface; motor L/I/start profile remains a commissioning measurement."
+	(text "CURRENT INTERFACE - DRAFT: 15 A continuous design limit, not measured motor current.\nLogic design range +3V3=3.135...3.465 V; 3.0...3.6 V is an additional stress calculation.\nNominal ideal OCP at 3.3 V: trip 21.081 A, reset 20.471 A. These are NOT qualified limits.\nSee OCP_TLV9020_REVIEW_RU.md and ocp_threshold_model.json for assumptions.\nCoordinate branch fuse, wiring, connector, MOSFET SOA and actual motor startup before release."
 	(at 25.4 38.1 0)
 	(effects
 		(font
 			(size 1.27 1.27)
 		)
+		(justify left)
 	)
 	(uuid "9d37620e-4da2-486a-9884-2b2cd289474b")
 )

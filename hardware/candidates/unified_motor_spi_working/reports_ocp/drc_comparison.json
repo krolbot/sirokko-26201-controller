@@ -1,0 +1,10 @@
+{
+  "baseline_exit": 5,
+  "candidate_exit": 5,
+  "baseline_unconnected": 180,
+  "candidate_unconnected": 167,
+  "violations_exactly_identical": true,
+  "ignored_checks_identical": true,
+  "included_severities_identical": true,
+  "new_short_clearance_mask_courtyard": 0
+}
