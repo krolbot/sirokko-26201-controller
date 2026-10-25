@@ -1,8 +1,19 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main combines the recovered hardware WIP snapshot and `0.1.5-DRAFT` firmware. It is not a finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
+> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main contains separate hardware WIP snapshots and `0.1.7-DRAFT` bench firmware. They are not one finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
 
-## Published in main
+## Current requirements and status
+
+- [Requirements register](docs/REQUIREMENTS_RU.md) — all requirements, superseded decisions and acceptance criteria.
+- [Current state and work plan](docs/CURRENT_STATE_RU.md) — published evidence, unfinished work and physical-test limits.
+- [RTC and timer reference research](docs/RTC_TIMER_REFERENCE_RU.md) — pinned sources, battery-holder/RTC candidates and adaptation limits.
+- [CR2032 holder selection](docs/CR_HOLDER_SELECTION_RU.md) — Keystone 1060 candidate, catalog/footprint geometry and polarity comparison, and remaining checks; not integrated, not FOR_ORDER.
+
+These documents take precedence over historical requirements below. Four on-board buttons with combined START/STOP and a battery-backed RTC are new requirements, not verified features of the [0.1.7 bench kit](firmware/release/build-kits/0.1.7-esp32s3/). Earlier five-button, no-RTC and network-prohibition requirements are superseded; Wi-Fi/MQTT/OTA are required, without authorizing infrastructure deployment or calendar ignition. Firmware test figures in the current-state document are read from the published manifest, not rerun for this documentation update.
+
+The sections below preserve the earlier recovered-hardware/0.1.5 checkpoint; use the current-state document for later snapshots.
+
+## Historical hardware checkpoint
 
 - `hardware/kicad/` — recovered main PCB, matching native KiCad 10.0.6 schematic, project, local libraries and separate draft sheets;
 - `hardware/candidates/input-protection/` — a separate input-protection candidate, not integrated into the main PCB;
@@ -13,9 +24,9 @@
 
 The recovered PCB has 88 footprints, 123 track segments, 32 vias and 3 copper zones. Recorded ERC reports no violations under the saved project settings; DRC still reports 4 library-footprint warnings and 182 unconnected items. The schematic-parity check reports 7 warnings. See [hardware/WIP_CHECKPOINT.md](hardware/WIP_CHECKPOINT.md) for checks, limitations and the main-only commit/push procedure.
 
-## Firmware verification
+## Historical firmware verification (0.1.5)
 
-The `0.1.5-DRAFT` motor/output change passes 50/50 host tests (all 40 actual baseline tests plus 10 new boundary/fault-injection groups). GPIO17 now distinguishes constant LOW, PWM 1..800 and constant HIGH 1000; maximum switching frequency is 20kHz, and old unqualified NVS profiles cannot START. Normal STOP/thermal post-purge remains intact. See the [current ESP32-S3 build kit](firmware/release/build-kits/0.1.5-esp32s3/) for target-build logs, images and reproducibility. The [older 0.1.4 kit](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md) remains unchanged historical DRAFT evidence.
+The `0.1.5-DRAFT` motor/output change passes 50/50 host tests (all 40 actual baseline tests plus 10 new boundary/fault-injection groups). GPIO17 now distinguishes constant LOW, PWM 1..800 and constant HIGH 1000; maximum switching frequency is 20kHz, and old unqualified NVS profiles cannot START. Normal STOP/thermal post-purge remains intact. See the [historical ESP32-S3 0.1.5 build kit](firmware/release/build-kits/0.1.5-esp32s3/) for target-build logs, images and reproducibility. The [older 0.1.4 kit](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md) remains unchanged historical DRAFT evidence.
 
 No physical ESP32, TFT, sensor, power stage, load or burner test has been performed. Building or flashing the image does not authorize fired operation.
 
@@ -27,7 +38,7 @@ A separate 24 V monitor, TPS3808, extra `EN` reset path, `MAIN_POWER_OK` and GPI
 
 ## Missing production work
 
-Routing, schematic/PCB parity, power-stage qualification, Gerber, Drill, CPL, orderable BOM, physical testing and fired-operation approval remain incomplete. Do not connect loads or operate a burner from this unfinished design. See [docs/STATUS_RU.md](docs/STATUS_RU.md).
+Routing, schematic/PCB parity, power-stage qualification, Gerber, Drill, CPL, orderable BOM, physical testing and fired-operation approval remain incomplete. Do not connect loads or operate a burner from this unfinished design. See [docs/CURRENT_STATE_RU.md](docs/CURRENT_STATE_RU.md).
 
 ## License
 
