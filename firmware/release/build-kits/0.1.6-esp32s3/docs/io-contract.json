@@ -1,0 +1,128 @@
+{
+  "contract_id": "sirokko-26201-controller-io-draft-05",
+  "status": "hardware-draft-for-firmware-build-and-bench-test",
+  "target": "ESP32-S3-DevKitC-1-N8R8 v1.1",
+  "logic_voltage_v": 3.3,
+  "notes": [
+    "The controller drives power stages on the common PCB; heater load current must remain in the power section and must not flow through ESP32 logic.",
+    "START_REQUEST, RESET_REQUEST, SET_UP and SET_DOWN are active-low dry-contact inputs with external 10 kOhm pull-ups to 3.3 V.",
+    "STOP_STATUS is fail-safe: LOW means the normally-closed circuit is healthy; HIGH means STOP or an open wire.",
+    "No firmware build or host test constitutes authorization for fired operation. Commissioning values must be measured and explicitly accepted.",
+    "GPIO17 uses one motor channel: 0=constant LOW, 1..800=PWM, 1000=constant HIGH. 801..999 is rejected, never clamped. Schema-1 board-revision and two-speed profiles remain rejected.",
+    "A separate 220/24V presence input, TPS3808 and extra EN reset path are excluded. Normal power loss de-energizes the MCU; recovery restarts on the actual boot/reset after 24V returns. MAIN_POWER_OK and GPIO43 are not used.",
+    "The SSD1306/I2C panel is removed. ST7789V and both MAX31856 devices share SPI2 with independent chip selects and per-device mode/clock settings.",
+    "The selected seven-pin ST7789V module is write-only: no MISO/TE/presence feedback is available, so firmware can detect driver or transfer errors but cannot prove that an unplugged glass/module received pixels."
+  ],
+  "signals": [
+    {"name":"MAX31856_EXHAUST_DRDY","gpio":1,"direction":"input","active":"low","external_bias":"module-defined"},
+    {"name":"MAX31856_AIR_DRDY","gpio":2,"direction":"input","active":"low","external_bias":"module-defined"},
+    {"name":"DS18B20_ROOM_DQ","gpio":4,"direction":"bidirectional","active":"onewire","external_bias":"4.7k pull-up to 3.3V"},
+    {"name":"SAFETY_OK","gpio":5,"direction":"input","active":"high","external_bias":"10k pull-down to GND","fail_safe":"LOW/Hi-Z/open = inhibit"},
+    {"name":"RESET_REQUEST","gpio":6,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V","boot_rule":"ignored until a debounced release has been observed"},
+    {"name":"START_REQUEST","gpio":7,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V","boot_rule":"ignored until a debounced release has been observed"},
+    {"name":"STOP_STATUS","gpio":8,"direction":"input","active":"high-fault","external_bias":"10k pull-up to 3.3V plus normally-closed contact to ground","fail_safe":"LOW = normal; HIGH/open = STOP"},
+    {"name":"MAX31856_AIR_CS","gpio":9,"direction":"output","active":"low"},
+    {"name":"MAX31856_EXHAUST_CS","gpio":10,"direction":"output","active":"low"},
+    {"name":"SPI_MOSI","gpio":11,"direction":"output","bus":"SPI2","shared_devices":["MAX31856_EXHAUST","MAX31856_AIR","ST7789V"]},
+    {"name":"SPI_SCK","gpio":12,"direction":"output","bus":"SPI2","shared_devices":["MAX31856_EXHAUST","MAX31856_AIR","ST7789V"]},
+    {"name":"SPI_MISO","gpio":13,"direction":"input","bus":"SPI2","shared_devices":["MAX31856_EXHAUST","MAX31856_AIR"],"note":"ST7789V has no MISO connection"},
+    {"name":"GLOW_CMD","gpio":14,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
+    {"name":"FUEL_CMD","gpio":15,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
+    {"name":"FAN_CMD","gpio":16,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
+    {"name":"SPEED_CMD","gpio":17,"direction":"output","active":"PWM or static level","frequency_hz":"commissioned 77..20000; APB 80MHz, 10-bit resolution, checked divider and LEDC API result","duty_permille":"0 static LOW; 1..800 active PWM; 1000 static HIGH; 801..999 rejected","boot_rule":"LOW/Hi-Z until a valid accepted schema-2 profile is loaded"},
+    {"name":"WATCHDOG_HEARTBEAT","gpio":18,"direction":"output","active":"falling-edge service; toggled by completed control-loop passes","boot_rule":"stopped until healthy"},
+    {"name":"FUEL_PERMIT","gpio":21,"direction":"output","active":"high","external_bias":"10k pull-down","boot_rule":"LOW/Hi-Z = off"},
+    {"name":"SET_UP","gpio":39,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V"},
+    {"name":"SET_DOWN","gpio":40,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V"},
+    {"name":"ARM_READY","gpio":41,"direction":"output","active":"high","external_bias":"10k pull-down","boot_rule":"LOW/Hi-Z = not ready"},
+    {"name":"SW_TRIP","gpio":42,"direction":"output","active":"high","external_bias":"10k pull-down","boot_rule":"LOW/Hi-Z does not set latch; external watchdog handles MCU loss"},
+    {"name":"TFT_CS","gpio":47,"direction":"output","active":"low","bus":"SPI2","device":"GMT020-02-7P ST7789V 240x320","external_bias":"pull-up to 3.3V; Hi-Z = deselected"},
+    {"name":"TFT_DC","gpio":48,"direction":"output","bus":"SPI2","device":"GMT020-02-7P ST7789V 240x320"}
+  ],
+  "display_contract": {
+    "module": "GMT020-02-7P VER1.3, ST7789V, 240x320, seven-pin write-only 4-wire SPI",
+    "mounting": "removable socket on the main PCB; not a remote panel",
+    "supply": "+3V3 only for this design; SPI logic is 3.3V",
+    "reset": "TFT_RESET_N follows DevKit EN/CHIP_PU; no separate reset GPIO. ESP-IDF ST7789 software reset and initialization run on every MCU boot, including esp_restart().",
+    "spi": {
+      "host": "SPI2",
+      "mode": 0,
+      "clock_hz": 20000000,
+      "max_update": "one 240x40 RGB565 band per transaction cycle",
+      "calculated_wire_time_us": 7680,
+      "budget_us_including_command_margin": 8180,
+      "serialization": "ESP-IDF SPI master serializes TFT and MAX31856 transactions; each device owns a separate CS and device configuration"
+    },
+    "local_ui_fault": "Detected initialization, queue or transfer failure latches FAULT_LOCAL_UI, keeps fuel/glow inhibited, and does not suppress required RECOVERY_PURGE airflow.",
+    "physical_absence_limit": "Because the module exposes no readback or presence signal, an electrically absent panel can still accept write calls at the SPI driver level. Physical presence/image/colors/orientation require bench inspection."
+  },
+  "reset_contract": {
+    "hardware_clear": "PG_OK AND WD_OK AND STOP_OK AND THERMAL_OK AND ARM_READY AND NOT(SW_TRIP)",
+    "hardware_data": "ARM_READY AND NOT(FUEL_CMD) AND NOT(FUEL_PERMIT) AND NOT(GLOW_CMD) AND START_RELEASED",
+    "protocol": [
+      "A current fault keeps ARM_READY LOW or SW_TRIP HIGH, so asynchronous clear dominates RESET.",
+      "When only the open safety latch remains, firmware stays in LOCKOUT with safe outputs, ARM_READY HIGH and SW_TRIP LOW before the physical RESET edge.",
+      "The separate hardware RESET contact clocks the latch before the debounced GPIO6 request is processed.",
+      "Firmware must observe SAFETY_OK HIGH in a control-loop pass while RESET remains held; the release pass cannot newly qualify that RESET cycle.",
+      "A current blocker cancels the RESET qualification. RESET held through boot or a blocker cannot re-arm after recovery without release and a new physical edge; START remains a separate later action."
+    ]
+  },
+  "recovery_purge_contract": {
+    "state": "RECOVERY_PURGE",
+    "entry": "every MCU boot/reset, regardless of the state before power loss",
+    "outputs": "FUEL_CMD LOW, FUEL_PERMIT LOW, GLOW_CMD LOW, ARM_READY LOW, SW_TRIP HIGH; accepted PWM profile commands FAN_CMD and SPEED_CMD",
+    "completion": "recovery_purge_min_ms elapsed from this boot AND all temperature samples valid/fresh AND STOP inactive AND exhaust/air at or below commissioned cool thresholds",
+    "blocked_config": "invalid, unaccepted or schema-1 config keeps fan and SPEED_CMD off and cannot report recovery complete",
+    "request_policy": "START and RESET are ignored until recovery completion; a held START requires release and a new press",
+    "power_loss_policy": "a repeated power loss discards elapsed recovery time and starts the full interval again"
+  },
+  "watchdog_contract": {
+    "device": "TPS3431",
+    "datasheet_basis": "TI SNVSB66A revision October 2021, section 6.6",
+    "setting": "SET1=VDD; EN=VDD; CWD=10kohm to VDD",
+    "supersedes_draft_01": "Do not fit the earlier 10nF CWD capacitor; DRAFT-02 uses the fixed 200ms preset selected by the 10kohm pull-up.",
+    "timeout_ms_min_typ_max": [170, 200, 230],
+    "servicing_edge": "falling",
+    "control_loop_period_ms": 20,
+    "allowed_loop_jitter_ms": 20,
+    "falling_edge_worst_case_formula": "2 * (ceil(heartbeat_toggle_ms / 20) * 20 + 20)",
+    "maximum_accepted_falling_edge_interval_ms": 100,
+    "recommended_heartbeat_toggle_ms": 20,
+    "recommended_worst_case_falling_edge_interval_ms": 80,
+    "autonomous_pwm_or_timer_heartbeat": false,
+    "bench_measurement_required": true
+  },
+  "fuel_permit_conditions": [
+    "output adapter is healthy and no candidate configuration mutation awaits reboot",
+    "state is IGNITION_TRIAL, FLAME_CONFIRM, RUN_HIGH or RUN_LOW",
+    "SAFETY_OK is HIGH",
+    "ARM_READY is HIGH",
+    "STOP_STATUS is LOW",
+    "watchdog heartbeat is serviced by the main state machine",
+    "both MAX31856 channels and the DS18B20 sample are valid and fresh",
+    "no latched software fault exists",
+    "fan command is active and the timed preparation states completed"
+  ],
+  "startup_invariants": [
+    "Every boot/reset enters RECOVERY_PURGE before WAIT_COOLDOWN or LOCKOUT",
+    "FUEL_CMD and FUEL_PERMIT are both off before IGNITION_TRIAL",
+    "PREHEAT always commands glow and fan together; GLOW_CMD=HIGH with FAN_CMD=LOW is forbidden",
+    "fan operation continues through PREHEAT after PREPURGE",
+    "external independent post-purge is not bypassed by firmware"
+  ],
+  "latched_fault_persistence": "The software fault mask is stored in NVS, restored on every boot, and cleared only after a qualified manual RESET exits LOCKOUT.",
+  "motor_output_contract": {
+    "status": "DRAFT / BENCH ONLY; not a power-stage qualification or combustion approval",
+    "hardware_basis": "LTC7001 + IRFB4110 candidate; motor_gate_supply_qualification.md firmware restriction, lines 31..37",
+    "static_levels": "ESP-IDF 5.5.2 ESP32-S3 ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 0 or 1); no recurring PWM edges",
+    "resume_pwm": "stage fresh duty with ledc_set_duty, then ledc_update_duty re-enables signal output; check each result",
+    "requested_vs_physical": "1..800 maps to round(requested_permille*1024/1000) ticks per 1024-tick period; 1000 never maps to 1023 ticks. CLI applied_speed is successful command bookkeeping, not electrical GPIO feedback.",
+    "profiles": "low_pwm_permille=1..800; recovery_purge_pwm_permille=1..800 or 1000; maximum-speed machine states retain 1000 static DC",
+    "frequency_validation": "Fixed APB 80MHz/10bit, 18-bit divider with 8 fractional bits: divider=round((80000000<<8)/(Hz*1024)), 256..262143. Thus 1..76Hz is unachievable in this selected configuration and rejected as CONFIG_PWM, not silently adjusted.",
+    "configuration_changes": "set/accept/revoke only while fan, fuel, permit and glow are OFF; serialized with the control/output pass. Any mutation attempt inhibits START until reboot. Runtime configuration remains immutable until reboot.",
+    "old_nvs": "Digest-valid schema-2 profiles outside current limits lose in-memory acceptance, retain original values, report CONFIG_PWM and cannot START. Correct, validate, accept token, reboot, then qualified RESET for retained faults.",
+    "output_failure": "Latched FAULT_OUTPUT; fuel, fuel permit, glow, ARM_READY and heartbeat LOW; SW_TRIP HIGH. Try LEDC stop LOW and independently detach GPIO17 to GPIO output LOW. Repeat shutdown on subsequent passes, never replay old HIGH/PWM; reboot required. Failed shutdown API results are recorded; software is not proof against a physically failed MCU/GPIO.",
+    "normal_stop_or_thermal_fault": "Fuel OFF first; required fan post-purge remains at 1000 static HIGH until the existing machine commands zero. Only output-subsystem failure forces immediate motor OFF.",
+    "bench_required": "Measure actual frequency/duty for 1..800; no recurring LOW dips at 1000 including repeated DC and PWM/DC transitions; GPIO17 LOW on actual command zero and injected adapter failure; preserve fuel-OFF-before-post-purge ordering. No physical measurement performed by host tests."
+  }
+}
