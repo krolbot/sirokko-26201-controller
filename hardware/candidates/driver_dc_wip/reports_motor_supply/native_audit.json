@@ -1,0 +1,14 @@
+{
+  "pads_unchanged": 426,
+  "prior_relations_preserved": 3262,
+  "new_directed_relations": 658,
+  "prior_copper_unchanged": 541,
+  "new_copper_objects": 38,
+  "U9004_U9005_U9006_supply_ground_connected": true,
+  "kelvin_isolation_preserved": true,
+  "segments": 478,
+  "vias": 101,
+  "unconnected": 138,
+  "pcb_sha256": "4d68439d53e6104dd3eee8208f30ccadeaa985a560704f6fc6ad94e137c92d6d",
+  "remaining": "LM317 input rail, bootstrap, gate drive, motor power and UI unfinished; NOT FOR ORDER"
+}
