@@ -1,0 +1,385 @@
+{
+  "pcb": "Sirokko26201_control_spi_MOSI_partial_GNDrepaired.kicad_pcb",
+  "kicad": "10.0.7",
+  "groups": {
+    "GND": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U9.1",
+        "U9.14",
+        "C9.2",
+        "C10.2",
+        "C13.2"
+      ]
+    },
+    "SCK": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U9.10",
+        "U10.10",
+        "J1.18",
+        "J26.5"
+      ]
+    },
+    "MISO": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U9.11",
+        "U10.11",
+        "J1.19"
+      ]
+    },
+    "EXH_DRDY": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U9.7",
+        "J3.4"
+      ]
+    },
+    "AIR_DRDY": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U10.7",
+        "J3.5"
+      ]
+    },
+    "MOSI_partial": {
+      "all_target_pads_in_common": true,
+      "target_pads": [
+        "U9.12",
+        "J26.4"
+      ]
+    },
+    "MOSI_unrouted": {
+      "all_target_pads_in_common": false,
+      "target_pads": [
+        "U10.12",
+        "J1.17"
+      ]
+    }
+  },
+  "individual_components": {
+    "GND": {
+      "U9.1": {
+        "target_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "all_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "tracks": 2,
+        "vias": 0,
+        "zones": 1
+      },
+      "U9.14": {
+        "target_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "all_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "tracks": 2,
+        "vias": 0,
+        "zones": 1
+      },
+      "C9.2": {
+        "target_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "all_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "tracks": 2,
+        "vias": 0,
+        "zones": 1
+      },
+      "C10.2": {
+        "target_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "all_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "tracks": 2,
+        "vias": 0,
+        "zones": 1
+      },
+      "C13.2": {
+        "target_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "all_pads_in_component": [
+          "C10.2",
+          "C13.2",
+          "C9.2",
+          "U9.1",
+          "U9.14"
+        ],
+        "tracks": 2,
+        "vias": 0,
+        "zones": 1
+      }
+    },
+    "SCK": {
+      "U9.10": {
+        "target_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "all_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "tracks": 21,
+        "vias": 0,
+        "zones": 0
+      },
+      "U10.10": {
+        "target_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "all_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "tracks": 21,
+        "vias": 0,
+        "zones": 0
+      },
+      "J1.18": {
+        "target_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "all_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "tracks": 21,
+        "vias": 0,
+        "zones": 0
+      },
+      "J26.5": {
+        "target_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "all_pads_in_component": [
+          "J1.18",
+          "J26.5",
+          "U10.10",
+          "U9.10"
+        ],
+        "tracks": 21,
+        "vias": 0,
+        "zones": 0
+      }
+    },
+    "MISO": {
+      "U9.11": {
+        "target_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "all_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "tracks": 17,
+        "vias": 0,
+        "zones": 0
+      },
+      "U10.11": {
+        "target_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "all_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "tracks": 17,
+        "vias": 0,
+        "zones": 0
+      },
+      "J1.19": {
+        "target_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "all_pads_in_component": [
+          "J1.19",
+          "U10.11",
+          "U9.11"
+        ],
+        "tracks": 17,
+        "vias": 0,
+        "zones": 0
+      }
+    },
+    "EXH_DRDY": {
+      "U9.7": {
+        "target_pads_in_component": [
+          "J3.4",
+          "U9.7"
+        ],
+        "all_pads_in_component": [
+          "J3.4",
+          "U9.7"
+        ],
+        "tracks": 10,
+        "vias": 0,
+        "zones": 0
+      },
+      "J3.4": {
+        "target_pads_in_component": [
+          "J3.4",
+          "U9.7"
+        ],
+        "all_pads_in_component": [
+          "J3.4",
+          "U9.7"
+        ],
+        "tracks": 10,
+        "vias": 0,
+        "zones": 0
+      }
+    },
+    "AIR_DRDY": {
+      "U10.7": {
+        "target_pads_in_component": [
+          "J3.5",
+          "U10.7"
+        ],
+        "all_pads_in_component": [
+          "J3.5",
+          "U10.7"
+        ],
+        "tracks": 3,
+        "vias": 0,
+        "zones": 0
+      },
+      "J3.5": {
+        "target_pads_in_component": [
+          "J3.5",
+          "U10.7"
+        ],
+        "all_pads_in_component": [
+          "J3.5",
+          "U10.7"
+        ],
+        "tracks": 3,
+        "vias": 0,
+        "zones": 0
+      }
+    },
+    "MOSI_partial": {
+      "U9.12": {
+        "target_pads_in_component": [
+          "J26.4",
+          "U9.12"
+        ],
+        "all_pads_in_component": [
+          "J26.4",
+          "U9.12"
+        ],
+        "tracks": 9,
+        "vias": 0,
+        "zones": 0
+      },
+      "J26.4": {
+        "target_pads_in_component": [
+          "J26.4",
+          "U9.12"
+        ],
+        "all_pads_in_component": [
+          "J26.4",
+          "U9.12"
+        ],
+        "tracks": 9,
+        "vias": 0,
+        "zones": 0
+      }
+    },
+    "MOSI_unrouted": {
+      "U10.12": {
+        "target_pads_in_component": [
+          "U10.12"
+        ],
+        "all_pads_in_component": [
+          "U10.12"
+        ],
+        "tracks": 0,
+        "vias": 0,
+        "zones": 0
+      },
+      "J1.17": {
+        "target_pads_in_component": [
+          "J1.17"
+        ],
+        "all_pads_in_component": [
+          "J1.17"
+        ],
+        "tracks": 0,
+        "vias": 0,
+        "zones": 0
+      }
+    }
+  }
+}
