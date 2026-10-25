@@ -22,4 +22,18 @@ private:
     bool release_seen_{};
 };
 
+enum class StartStopContext : uint8_t { BLOCKED, START, STOP };
+enum class ButtonGesture : uint8_t { NONE, SHORT, LONG };
+
+// Gesture qualifier only: the existing Machine remains the sole heater state machine.
+class StartStopButton {
+public:
+    ButtonGesture update(bool raw_high, uint32_t now_ms, StartStopContext context);
+private:
+    DebouncedActiveLowButton button_{30};
+    StartStopContext context_{StartStopContext::BLOCKED};
+    uint32_t pressed_since_{}, released_since_{};
+    bool initialized_{}, released_{}, release_timing_{}, active_{}, consumed_{};
+};
+
 }  // namespace sirokko

@@ -48,7 +48,7 @@ uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms) {
 
 uint32_t validate_config(const Config& c, bool require_acceptance) {
     uint32_t errors = CONFIG_OK;
-    if (c.schema_version != kConfigSchemaVersion) errors |= CONFIG_SCHEMA;
+    if (c.schema_version != kConfigSchemaVersion || c.hardware_contract_id != kHardwareContractId) errors |= CONFIG_SCHEMA;
     if (require_acceptance && !c.commissioning_accepted) errors |= CONFIG_NOT_ACCEPTED;
     if (c.profile_revision == 0) errors |= CONFIG_SCHEMA;
 
@@ -375,7 +375,7 @@ Outputs Machine::make_outputs(const Inputs& in) {
     }
 
     const uint32_t readiness_faults = current_input_faults(in) & ~FAULT_SAFETY_OPEN;
-    const bool lockout_reset_ready = state_ == State::LOCKOUT && !in.heat_enable && !in.stop_active;
+    const bool lockout_reset_ready = state_ == State::LOCKOUT && !out.fan_request && !in.heat_enable && !in.stop_active;
     out.arm_ready = recovery_complete_ && readiness_faults == FAULT_NONE &&
                     !in.maintenance_inhibit &&
                     state_ != State::BOOT_SELF_TEST && state_ != State::RECOVERY_PURGE &&
@@ -429,7 +429,11 @@ Outputs Machine::tick(const Inputs& in) {
         run_state(in);
     } else if (state_ == State::LOCKOUT) {
         const uint32_t reset_blockers = input_faults & ~FAULT_SAFETY_OPEN;
-        const bool reset_conditions = reset_blockers == FAULT_NONE && !in.heat_enable && !in.stop_active;
+        const bool purge_done = !purge_required_ ||
+            (elapsed(in.now_ms, purge_started_ms_) >= config_.postpurge_min_ms && cold(in));
+        const bool reset_conditions = reset_blockers == FAULT_NONE && recovery_complete_ && purge_done &&
+            outputs_.arm_ready && in.arm_applied && !in.maintenance_inhibit &&
+            !in.start_pressed && !in.heat_enable && !in.stop_active;
         if (!reset_pending_ && reset_pressed && reset_conditions) {
             reset_pending_ = true;
             reset_qualified_ = false;

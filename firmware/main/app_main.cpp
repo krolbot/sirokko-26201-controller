@@ -23,7 +23,7 @@
 
 namespace {
 constexpr gpio_num_t kSafety = GPIO_NUM_5, kReset = GPIO_NUM_6, kStart = GPIO_NUM_7,
-                     kStop = GPIO_NUM_8, kUp = GPIO_NUM_39, kDown = GPIO_NUM_40;
+                     kUp = GPIO_NUM_39, kDown = GPIO_NUM_40;
 CommissioningStore g_store;
 sirokko::Config g_config{}; // Candidate; only the USB task may edit. Machine receives an immutable copy.
 OutputDriver g_outputs;
@@ -72,10 +72,12 @@ void control_task(void*) {
     sirokko::CommandHistory history = g_initial_history;
     sirokko::LocalMenu menu;
     sirokko::OperatorSettings settings = g_initial_settings;
-    sirokko::DebouncedActiveLowButton start, reset, up, down;
+    sirokko::StartStopButton start;
+    sirokko::DebouncedActiveLowButton reset, up, down;
     sirokko::ServiceLease ota_lease;
     bool local_lease{};
     bool heat{};
+    bool reset_released_ready{};
     SensorFrame sensors{};
     sirokko::Outputs previous{};
     TickType_t wake = xTaskGetTickCount();
@@ -83,35 +85,53 @@ void control_task(void*) {
     while (true) {
         xQueueReceive(g_sensor_queue, &sensors, 0);
         const uint32_t now = ms(); // Timestamp after the coherent sensor copy: never age a future sample.
-        const bool stopped = gpio_get_level(kStop) != 0;
-        const bool start_event = start.update(gpio_get_level(kStart) != 0, now);
-        reset.update(gpio_get_level(kReset) != 0, now);
+        const bool start_high = gpio_get_level(kStart) != 0;
+        const bool reset_high = gpio_get_level(kReset) != 0;
+        reset.update(reset_high, now);
         const bool u = up.update(gpio_get_level(kUp) != 0, now);
         const bool d = down.update(gpio_get_level(kDown) != 0, now);
         const bool remote_stop = g_remote_stop.exchange(false);
         const auto before = machine.status(now);
-        if (stopped || remote_stop || before.state == sirokko::State::LOCKOUT ||
+        if (remote_stop || before.state == sirokko::State::LOCKOUT ||
             before.state == sirokko::State::POST_PURGE) heat = false;
         auto lease_state = g_lease_state.load();
         if (lease_state == LeaseState::RELEASE) {
             ota_lease.release(); local_lease = false;
             g_lease_state.store(LeaseState::IDLE);
         }
-        // Every START is an edge-local decision, never a queued/delayed ignition request.
-        if (start_event && !g_ota_pending.load() && previous.arm_ready && !stopped && !remote_stop &&
-            !local_lease && !ota_lease.held() && before.state == sirokko::State::WAIT_COOLDOWN) heat = true;
+        auto context = sirokko::StartStopContext::BLOCKED;
+        const bool inhibited = remote_stop || !reset_high || reset.pressed() || g_ota_pending.load() ||
+            local_lease || ota_lease.held() || lease_state == LeaseState::REQUESTED ||
+            before.faults != sirokko::FAULT_NONE;
+        if (!inhibited && g_outputs.arm_applied()) {
+            if (before.state == sirokko::State::WAIT_COOLDOWN && before.start_block == sirokko::StartBlock::NONE)
+                context = sirokko::StartStopContext::START;
+            else if (before.state >= sirokko::State::PREPURGE && before.state <= sirokko::State::RUN_LOW)
+                context = sirokko::StartStopContext::STOP;
+        }
+        const auto gesture = start.update(start_high, now, context);
+        const bool start_event = gesture == sirokko::ButtonGesture::LONG && context == sirokko::StartStopContext::START;
+        const bool local_stop = gesture == sirokko::ButtonGesture::LONG && context == sirokko::StartStopContext::STOP;
+        if (start_event) heat = true;
+        if (local_stop) heat = false;
         sirokko::OperatorSettings requested{};
         if (xQueueReceive(g_setting_queue, &requested, 0) == pdTRUE && sirokko::operator_settings_valid(requested, config)) {
             settings = requested; g_settings_revision.fetch_add(1);
         }
-        const auto action = menu.tick({u, d, up.pressed(), down.pressed(), stopped || remote_stop}, now, settings, config);
+        const auto action = menu.tick({u, d, up.pressed(), down.pressed(), local_stop || remote_stop,
+            gesture == sirokko::ButtonGesture::SHORT}, now, settings, config);
         if (action.settings_changed) g_settings_revision.fetch_add(1);
         if (action.reset_counters) { history.reset_counters(); g_settings_revision.fetch_add(1); }
         sirokko::Inputs in{};
         in.now_ms = now;
         in.heat_enable = heat;
-        in.stop_active = stopped || remote_stop;
-        in.reset_request = reset.pressed(); // Only the physical RESET can participate in latch qualification.
+        in.stop_active = remote_stop;
+        in.start_pressed = !start_high;
+        in.arm_applied = g_outputs.arm_applied();
+        if (!in.arm_applied || !previous.arm_ready || local_lease || ota_lease.held()) reset_released_ready = false;
+        else if (reset_high && reset.release_seen() && !reset.pressed()) reset_released_ready = true;
+        // A RESET held before hardware ARM readiness cannot become a new edge later.
+        in.reset_request = reset.pressed() && reset_released_ready;
         in.safety_ok = gpio_get_level(kSafety) != 0;
         in.local_ui_ok = g_display.healthy() && static_cast<uint32_t>(now - g_display_progress.load()) <= 250;
         in.output_ok = g_outputs.healthy();
@@ -131,7 +151,7 @@ void control_task(void*) {
         }
         // Do not acknowledge yet: the other CPU must not start writing flash until GPIO OFF
         // and ARM inhibit have actually been applied successfully below.
-        in.maintenance_inhibit = local_lease || ota_lease.held();
+        in.maintenance_inhibit = local_lease || ota_lease.held() || g_ota_pending.load();
         auto outputs = machine.tick(in);
         if (ota_lease.held()) {
             outputs.fuel_command = outputs.fuel_permit = outputs.glow_command = false;
@@ -140,8 +160,9 @@ void control_task(void*) {
         }
         if (!g_outputs.apply(outputs)) {
             in.output_ok = false;
-            outputs = machine.tick(in);
+            machine.tick(in);
         }
+        outputs = g_outputs.applied();
         auto status = machine.status(now);
         status.outputs = outputs;
         g_current_faults.store(status.faults);
@@ -165,7 +186,7 @@ void control_task(void*) {
         if (status.state == sirokko::State::WAIT_COOLDOWN || status.state == sirokko::State::POST_PURGE) heat = false;
         previous = outputs;
         history.observe(status, static_cast<uint64_t>(esp_timer_get_time() / 1000ULL),
-                        stopped ? sirokko::StopReason::LOCAL_STOP : remote_stop ? sirokko::StopReason::REMOTE_STOP : sirokko::StopReason::NONE);
+                        local_stop ? sirokko::StopReason::LOCAL_STOP : remote_stop ? sirokko::StopReason::REMOTE_STOP : sirokko::StopReason::NONE);
         if (xSemaphoreTake(g_snapshot_mutex, 0) == pdTRUE) {
             g_frame = {};
             std::snprintf(g_frame.firmware_version, sizeof(g_frame.firmware_version), "%s", esp_app_get_description()->version);
@@ -179,7 +200,7 @@ void control_task(void*) {
             g_frame.settings_revision = g_settings_revision.load();
             g_frame.settings_saved = g_frame.settings_revision == g_saved_revision.load() && g_settings_ok.load();
             g_frame.exhaust_fault = sensors.exhaust_fault; g_frame.hot_air_fault = sensors.air_fault;
-            g_frame.safety_ok = in.safety_ok; g_frame.stop_active = stopped;
+            g_frame.safety_ok = in.safety_ok; g_frame.stop_active = remote_stop;
             g_frame.settings_ok = g_settings_ok.load(); g_frame.storage_ok = g_storage_ok.load();
             g_frame.network_configured = service_network_configured(); g_frame.network_connected = service_network_connected();
             g_frame.update_active = ota_lease.held(); g_frame.page = menu.page(); g_frame.selection = menu.selection();
@@ -252,6 +273,7 @@ void help() {
         "settings save (explicit local recovery of operator record; stopped outputs only)\n"
         "config show|validate|token|revoke|set <field> <integer>|accept <8hex>\n"
         "config changes revoke acceptance and require reboot; profile_revision and run_low_qualified need measured engineering approval\n"
+        "DANGER: draft-06 GPIO8 OD is incompatible with legacy NC STOP wiring. Manual new wiring check and explicit hardware_contract_id=6 required; BENCH ONLY.\n"
         "network import <base64 JSON> (local USB only, stopped outputs, reboot required; NEVER paste credentials into chat)\n"
         "No software START/RESET, direct fuel/glow or safety bypass. GPIO17 0=LOW,1..800=PWM,1000=static HIGH.\n");
 }
@@ -448,7 +470,7 @@ extern "C" void app_main() {
     g_storage_ok.store(g_records_ok);
     g_startup_faults = faults;
     gpio_config_t input{};
-    input.pin_bit_mask = (1ULL << kSafety) | (1ULL << kReset) | (1ULL << kStart) | (1ULL << kStop) | (1ULL << kUp) | (1ULL << kDown);
+    input.pin_bit_mask = (1ULL << kSafety) | (1ULL << kReset) | (1ULL << kStart) | (1ULL << kUp) | (1ULL << kDown);
     input.mode = GPIO_MODE_INPUT; input.intr_type = GPIO_INTR_DISABLE;
     g_inputs_ok = gpio_config(&input) == ESP_OK;
     const bool output_ok = g_outputs.initialize(g_config);

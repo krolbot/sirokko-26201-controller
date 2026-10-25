@@ -35,7 +35,7 @@ void prepare(bool accepted=true) {
     g_initial_settings={1,20000,1000,0}; g_initial_counters={}; g_frame={}; g_history_snapshot={};
     g_initial_history.begin(g_store.boot_count(),g_initial_counters);
     g_lease_state.store(LeaseState::IDLE); g_lease_result.store(ServiceResult::BUSY);
-    fake_idf::levels[5]=1; fake_idf::levels[6]=fake_idf::levels[7]=fake_idf::levels[39]=fake_idf::levels[40]=1; fake_idf::levels[8]=0;
+    fake_idf::levels[5]=1; fake_idf::levels[6]=fake_idf::levels[7]=fake_idf::levels[39]=fake_idf::levels[40]=1;
 }
 void run(const std::function<void()>& inspect,bool display_progress=true,bool refresh=true) {
     auto feed=[&] {
@@ -44,7 +44,7 @@ void run(const std::function<void()>& inspect,bool display_progress=true,bool re
         xQueueOverwrite(g_sensor_queue,&s);
     };
     feed();
-    const uint32_t deadline=ms()+5000;
+    const uint32_t deadline=ms()+12000;
     rt_fake::tick=[&] { if(ms()>deadline) throw std::runtime_error("control test timeout"); if(display_progress) g_display_progress.store(ms()); inspect(); if(refresh && !sensor_freeze) feed(); };
     try { control_task(nullptr); } catch(const rt_fake::Done&) {}
     rt_fake::tick={}; fake_idf::observer={};
@@ -56,7 +56,7 @@ void stop_matrix() {
         run([&] {
             auto state=g_frame.status.state;
             if(stop_sent) { check(off(g_frame.status.outputs),"STOP did not remove fuel/glow in same control pass"); check(state==State::POST_PURGE || state==State::WAIT_COOLDOWN,"STOP state"); throw rt_fake::Done{}; }
-            if(state==target && (target!=State::WAIT_COOLDOWN || ms()>=100)) { fake_idf::levels[8]=1; stop_sent=true; }
+            if(state==target && (target!=State::WAIT_COOLDOWN || ms()>=100)) { runtime_remote_stop(); stop_sent=true; }
             else if(state==State::WAIT_COOLDOWN && ms()>=100) fake_idf::levels[7]=0;
             else if(state!=State::WAIT_COOLDOWN) fake_idf::levels[7]=1;
         });
@@ -69,7 +69,7 @@ void start_in_menu_stop_priority() {
         if(stop_sent) { check(off(g_frame.status.outputs) && g_frame.page==UiPage::HOME,"STOP priority in menu"); throw rt_fake::Done{}; }
         if(ms()>=100 && !menu_seen) fake_idf::levels[39]=fake_idf::levels[40]=0;
         if(g_frame.page==UiPage::SETTINGS) { menu_seen=true; fake_idf::levels[39]=fake_idf::levels[40]=1; fake_idf::levels[7]=0; }
-        if(g_frame.status.state==State::PREPURGE) { started=true; fake_idf::levels[8]=1; stop_sent=true; }
+        if(g_frame.status.state==State::PREPURGE) { started=true; runtime_remote_stop(); stop_sent=true; }
     });
     check(menu_seen && started,"START was swallowed by settings");
 }
@@ -123,7 +123,8 @@ void UI_or_sensor_stall_fails_closed() {
             if(g_frame.status.state==State::WAIT_COOLDOWN && ms()>=100) fake_idf::levels[7]=0;
             if(g_frame.status.state==State::PREPURGE) started=true;
             if(g_frame.status.state==State::RUN_HIGH && !stalled_ui) sensor_freeze=true;
-            if(ms()>1500) { check(started && g_frame.status.state==State::LOCKOUT && off(g_frame.status.outputs),"stalled peripheral blocked fuel OFF"); check(g_frame.status.faults & (stalled_ui?FAULT_LOCAL_UI:FAULT_ROOM_SENSOR),"stall fault reason"); throw rt_fake::Done{}; }
+            if(stalled_ui && !started) g_display_progress.store(ms());
+            if(ms()>6000) { check(started && g_frame.status.state==State::LOCKOUT && off(g_frame.status.outputs),"stalled peripheral blocked fuel OFF"); check(g_frame.status.faults & (stalled_ui?FAULT_LOCAL_UI:FAULT_ROOM_SENSOR),"stall fault reason"); throw rt_fake::Done{}; }
         },!stalled_ui,true);
     }
 }
@@ -163,9 +164,11 @@ void health(bool healthy,bool stalled=false) {
     else check(rt_fake::rollback_marks==1 && !rt_fake::valid_marks && g_ota_pending.load(),"unhealthy image did not roll back");
 }
 }
-int main() {
+int runtime_suite_main() {
     const std::vector<std::pair<const char*,std::function<void()>>> tests={
-        {"real_control_task_STOP_each_ignition_stage",stop_matrix},{"real_menu_keeps_START_and_STOP_independent",start_in_menu_stop_priority},
+        // DRAFT-06 removes the NC GPIO8 input. Preserve immediate remote STOP coverage;
+        // physical long-STOP stage and GPIO8 pad-failure matrices live in four_button_tests.
+        {"real_control_task_REMOTE_STOP_each_ignition_stage",stop_matrix},{"real_menu_keeps_long_START_and_remote_STOP_independent",start_in_menu_stop_priority},
         {"GPIO_OFF_ack_before_flash_and_START_race",physical_OFF_ack_and_held_START},{"uncommissioned_profile_local_USB_repair",local_repair_but_no_OTA_on_invalid_profile},
         {"GPIO_failure_rejects_flash_ack",failed_GPIO_never_grants_OTA},{"lease_timeout_never_reuses_previous_OK",request_timeout_never_returns_stale_OK},
         {"stalled_UI_and_sensor_keep_control_alive",UI_or_sensor_stall_fails_closed},{"real_storage_preserves_bad_records_and_latches_write_error",storage_integrity_and_write_failure},
@@ -178,3 +181,6 @@ int main() {
     std::cout<<"RESULT "<<passed<<'/'<<tests.size()<<" passed (real app tasks; injected scheduler/peripherals/otadata)\n";
     return passed==tests.size()?0:1;
 }
+#ifndef SIROKKO_FOUR_BUTTON_HOST_TEST
+int main() { return runtime_suite_main(); }
+#endif

@@ -2,7 +2,7 @@
 #include <cstring>
 
 namespace fake_idf {
-void reset() { levels.clear(); nvs.clear(); trace.clear(); failing_call.clear(); persistent_failure=false; connected=running=false; idle=staged=active=frequency=0; }
+void reset() { levels.clear(); forced_pad.clear(); modes.clear(); nvs.clear(); trace.clear(); failing_call.clear(); persistent_failure=false; connected=running=false; idle=staged=active=frequency=0; }
 bool call(const std::string& name) {
     if (observer) observer(name);
     trace.push_back(name);
@@ -12,7 +12,15 @@ bool call(const std::string& name) {
 }
 }
 using namespace fake_idf;
-esp_err_t gpio_config(const gpio_config_t*) { return call("gpio_config") ? ESP_OK : ESP_FAIL; }
+esp_err_t gpio_config(const gpio_config_t* c) {
+    if (!call("gpio_config")) return ESP_FAIL;
+    for (int pin=0; pin<64; ++pin) if (c->pin_bit_mask & (1ULL<<pin)) modes[pin]=c->mode;
+    return ESP_OK;
+}
+int gpio_get_level(gpio_num_t pin) {
+    call("gpio_read:"+std::to_string(pin));
+    return forced_pad.count(pin) ? forced_pad[pin] : levels[pin];
+}
 esp_err_t gpio_set_level(gpio_num_t pin, uint32_t value) {
     if (!call("gpio_level:"+std::to_string(pin)+":"+std::to_string(value))) return ESP_FAIL;
     levels[pin]=value; return ESP_OK;

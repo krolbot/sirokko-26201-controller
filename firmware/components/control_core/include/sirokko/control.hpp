@@ -8,7 +8,9 @@ inline constexpr uint32_t kControlLoopPeriodMs = 20;
 inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
 inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
 inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
-inline constexpr uint32_t kConfigSchemaVersion = 3;
+inline constexpr uint32_t kConfigSchemaVersion = 4;
+inline constexpr uint32_t kHardwareContractId = 6;
+inline constexpr char kHardwareContractName[] = "sirokko-26201-controller-io-draft-06";
 inline constexpr uint32_t kPwmMaximumFrequencyHz = 20000;
 inline constexpr uint32_t kPwmClockHz = 80000000;
 inline constexpr uint32_t kPwmResolutionBits = 10;
@@ -58,6 +60,7 @@ struct SensorSample {
 
 struct Config {
     uint32_t schema_version{};
+    uint32_t hardware_contract_id{}; // Explicit local acceptance; never infer the physical PCB revision.
     bool commissioning_accepted{};
 
     uint32_t boot_self_test_timeout_ms{};
@@ -120,10 +123,12 @@ uint32_t validate_config(const Config& config, bool require_acceptance = true);
 
 struct Inputs {
     uint32_t now_ms{};
-    // Latched automatic-heat enable produced by the debounced local START/STOP adapter.
+    // Heat request from a qualified local long START, never a restored RUN state.
     bool heat_enable{};
     bool stop_active{};
     bool reset_request{};
+    bool start_pressed{}; // Physical level, independent of the heat request / long-press event.
+    bool arm_applied{}; // Adapter has confirmed GPIO8 LOW on a preceding control pass.
     bool safety_ok{};
     bool local_ui_ok{true};
     bool output_ok{true};

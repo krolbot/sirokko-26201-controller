@@ -39,6 +39,7 @@ uint32_t config_digest(const sirokko::Config& c, bool include_acceptance) {
     uint32_t hash = 2166136261u;
 #define HASH_FIELD(field) hash_value(hash, c.field)
     HASH_FIELD(schema_version);
+    HASH_FIELD(hardware_contract_id);
     if (include_acceptance) HASH_FIELD(commissioning_accepted);
     HASH_FIELD(boot_self_test_timeout_ms);
     HASH_FIELD(recovery_purge_min_ms);
@@ -192,6 +193,7 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
         return true; \
     }
     SET_U32(boot_self_test_timeout_ms)
+    SET_U32(hardware_contract_id)
     SET_U32(profile_revision)
     if (std::strcmp(key, "run_low_qualified") == 0) {
         uint32_t parsed{};
@@ -262,6 +264,9 @@ void CommissioningStore::print_config(const sirokko::Config& c) const {
 #define PRINT_U32(field) std::printf(#field "=%" PRIu32 "\n", c.field)
 #define PRINT_I32(field) std::printf(#field "=%" PRId32 "\n", c.field)
     PRINT_U32(boot_self_test_timeout_ms);
+    std::printf("hardware_contract=%s (required id=%lu; manual wiring check, BENCH ONLY)\n",
+                sirokko::kHardwareContractName, static_cast<unsigned long>(sirokko::kHardwareContractId));
+    PRINT_U32(hardware_contract_id);
     PRINT_U32(profile_revision);
     std::printf("run_low_qualified=%u\n", c.run_low_qualified);
     PRINT_U32(recovery_purge_min_ms);

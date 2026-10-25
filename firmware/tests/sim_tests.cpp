@@ -27,6 +27,7 @@ void check(bool condition, const char* message) {
 Config test_config() {
     Config c{};
     c.schema_version = kConfigSchemaVersion;
+    c.hardware_contract_id = kHardwareContractId;
     c.profile_revision = 1;
     c.run_low_qualified = true;
     c.commissioning_accepted = true;
@@ -78,6 +79,7 @@ struct Sim {
         : config(c), machine(config, startup_faults) {
         in.now_ms = start_time;
         in.safety_ok = true;
+        in.arm_applied = true; // Core-only fixture; actual OD adapter tested separately.
         in.setpoint_milli_c = config.setpoint_default_milli_c;
         in.exhaust = {20000, start_time, SensorQuality::OK};
         in.hot_air = {20000, start_time, SensorQuality::OK};
@@ -1137,6 +1139,9 @@ void test_real_adapter_runtime_errors() {
             OutputDriver driver;
             check(driver.initialize(test_config()), "init");
             check(driver.apply(commanded_speed(source)), "source");
+            Outputs armed = commanded_speed(source);
+            armed.arm_ready = true;
+            check(driver.apply(armed) && driver.apply(armed) && driver.arm_applied(), "draft-06 OD settle before injected load command");
             fake_idf::failing_call = call;
             uint16_t target = std::string(call) == "stop:1" ? 1000 : std::string(call) == "stop:0" ? 0 : 800;
             // Ensure stop:1 is actually issued when starting in DC.
@@ -1197,7 +1202,8 @@ void test_legacy_accepted_nvs_out_of_range() {
     for (int field : {0, 1, 2, 3}) {
         fake_idf::reset();
         CommissioningStore store;
-        // Construct the actual old schema-2 blob with a valid legacy digest, not a core mock.
+        // Digest-valid current-layout invalid profiles must still reject, without clamping.
+        // Actual draft-05/schema-3 bytes are separately tested in four_button_tests.cpp.
         struct Stored { uint32_t magic; Config config; uint32_t digest; } stored{};
         stored.magic = 0x5349524f;
         stored.config = test_config();
@@ -1211,6 +1217,7 @@ void test_legacy_accepted_nvs_out_of_range() {
             for (size_t i=0; i<size; ++i) hash = (hash ^ bytes[i]) * 16777619u;
         };
         feed(&stored.config.schema_version, sizeof(stored.config.schema_version));
+        feed(&stored.config.hardware_contract_id, sizeof(stored.config.hardware_contract_id));
         feed(&stored.config.commissioning_accepted, sizeof(stored.config.commissioning_accepted));
         feed(&stored.config.boot_self_test_timeout_ms,
              offsetof(Config, low_pwm_permille) + sizeof(stored.config.low_pwm_permille) - offsetof(Config, boot_self_test_timeout_ms));

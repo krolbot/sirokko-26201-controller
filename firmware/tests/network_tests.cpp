@@ -47,7 +47,7 @@ UpdateJob job() {
 }
 void sign(UpdateJob& j) {
     char data[512]{};
-    int n=std::snprintf(data,sizeof(data),"SIROKKO-OTA-1\nesp32s3\n%s\n3\n%s\n%u\n%s\n%s\n",kBoard,j.version,j.size,j.hash,j.url);
+    int n=std::snprintf(data,sizeof(data),"SIROKKO-OTA-1\nesp32s3\n%s\n%lu\n%s\n%u\n%s\n%s\n",kBoard,static_cast<unsigned long>(sirokko::kConfigSchemaVersion),j.version,j.size,j.hash,j.url);
     EVP_MD_CTX* ctx=EVP_MD_CTX_new(); size_t size=sizeof(j.signature);
     require(EVP_DigestSignInit(ctx,nullptr,EVP_sha256(),nullptr,key)==1 &&
             EVP_DigestSign(ctx,j.signature,&size,reinterpret_cast<unsigned char*>(data),n)==1 && size==sizeof(j.signature),"sign test manifest");
@@ -60,7 +60,7 @@ std::string update_packet(UpdateJob j) {
     sign(j); unsigned char signature[513]{};
     EVP_EncodeBlock(signature,j.signature,sizeof(j.signature));
     auto p=packet("update"); p.pop_back();
-    return p+",\"schema\":3,\"target\":\"esp32s3\",\"board\":\""+kBoard+"\",\"version\":\""+j.version+
+    return p+",\"schema\":"+std::to_string(sirokko::kConfigSchemaVersion)+",\"target\":\"esp32s3\",\"board\":\""+kBoard+"\",\"version\":\""+j.version+
         "\",\"url\":\""+j.url+"\",\"sha256\":\""+j.hash+"\",\"size\":"+std::to_string(j.size)+
         ",\"signature\":\""+reinterpret_cast<char*>(signature)+"\"}";
 }

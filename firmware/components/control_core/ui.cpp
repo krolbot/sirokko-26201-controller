@@ -464,7 +464,7 @@ void render_edit(BandCanvas pixels, uint8_t band, const UiFrame& frame, UiPage p
             break;
         case 3:
             std::snprintf(first, sizeof(first), "UP+DN: НАЗАД");
-            std::snprintf(second, sizeof(second), "СТОП: ГЛАВНАЯ");
+            std::snprintf(second, sizeof(second), "КОРОТКО: ГЛАВНАЯ");
             break;
         case 4:
             std::snprintf(first, sizeof(first), "%s", frame.settings_saved ? "NVS: СОХРАНЕНО" : "NVS: НЕ СОХРАНЕНО");
@@ -516,7 +516,7 @@ void render_diagnostics(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
                           yes_no(frame.safety_ok));
             break;
         case 7:
-            std::snprintf(first, sizeof(first), "СТОП: НАЗАД");
+            std::snprintf(first, sizeof(first), "КОРОТКО: ГЛАВНАЯ");
             std::snprintf(second, sizeof(second), "BENCH ONLY");
             break;
         default:
@@ -564,7 +564,7 @@ void render_profile(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             std::snprintf(second, sizeof(second), "НАСТР:%s", yes_no(frame.settings_ok));
             break;
         case 7:
-            std::snprintf(first, sizeof(first), "СТОП: НАЗАД");
+            std::snprintf(first, sizeof(first), "КОРОТКО: ГЛАВНАЯ");
             std::snprintf(second, sizeof(second), "BENCH ONLY");
             break;
         default:
@@ -609,7 +609,7 @@ void render_counters(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             break;
         case 6:
             std::snprintf(first, sizeof(first), "UP+DN: СБРОС");
-            std::snprintf(second, sizeof(second), "СТОП: НАЗАД");
+            std::snprintf(second, sizeof(second), "КОРОТКО: ГЛАВНАЯ");
             break;
         case 7:
             std::snprintf(first, sizeof(first), "BENCH ONLY");
@@ -637,7 +637,7 @@ void render_reset_counters(BandCanvas pixels, uint8_t band) {
         std::snprintf(second, sizeof(second), "АВАРИЯ ОСТАЁТСЯ");
     } else if (band == 7) {
         std::snprintf(first, sizeof(first), "UP ИЛИ DN: ОТМЕНА");
-        std::snprintf(second, sizeof(second), "СТОП: ГЛАВНАЯ");
+        std::snprintf(second, sizeof(second), "КОРОТКО: ГЛАВНАЯ");
     }
     clear_band(pixels, kDarkRed);
     draw_lines(pixels, first, second, foreground);
@@ -668,7 +668,7 @@ void render_version(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             std::snprintf(second, sizeof(second), "UP+DN: НАЗАД");
             break;
         case 7:
-            std::snprintf(first, sizeof(first), "СТОП: ГЛАВНАЯ");
+            std::snprintf(first, sizeof(first), "КОРОТКО: ГЛАВНАЯ");
             break;
         default:
             break;
@@ -738,6 +738,15 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
         selection_ = 0;
         last_activity_ = now_ms;
         chord_since_ = std::numeric_limits<uint32_t>::max();
+        chord_active_ = keys.up_held || keys.down_held;
+        chord_fired_ = chord_active_;
+        return action;
+    }
+
+    if (keys.mode_short) {
+        page_ = page_ == UiPage::HOME ? UiPage::SETTINGS : UiPage::HOME;
+        selection_ = 0;
+        last_activity_ = now_ms;
         chord_active_ = keys.up_held || keys.down_held;
         chord_fired_ = chord_active_;
         return action;

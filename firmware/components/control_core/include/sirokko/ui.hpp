@@ -10,12 +10,13 @@ struct UiKeys {
     bool up_held{};
     bool down_held{};
     bool stop{};
+    bool mode_short{}; // UI only; never a heat/reset request.
 };
 struct UiAction {
     bool settings_changed{};
     bool reset_counters{};
 };
-// START/RESET are deliberately absent; the control adapter always handles them independently.
+// Long START/STOP and RESET stay in the control adapter; only short UI mode arrives here.
 class LocalMenu {
 public:
     UiAction tick(const UiKeys&, uint32_t now_ms, OperatorSettings&, const Config&);

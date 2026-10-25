@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 BOARD = 'ESP32-S3-DevKitC-1-N8R8-v1.1'
-SCHEMA = 3
+SCHEMA = 4
 
 
 def version(value: str) -> tuple[int, int, int]:

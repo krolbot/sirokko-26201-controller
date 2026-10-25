@@ -7,6 +7,7 @@
 
 namespace {
 constexpr gpio_num_t kGlow = GPIO_NUM_14;
+constexpr gpio_num_t kMcuStopN = GPIO_NUM_8;
 constexpr gpio_num_t kFuel = GPIO_NUM_15;
 constexpr gpio_num_t kFan = GPIO_NUM_16;
 constexpr gpio_num_t kSpeed = GPIO_NUM_17;
@@ -18,6 +19,9 @@ constexpr gpio_num_t kSoftwareTrip = GPIO_NUM_42;
 
 bool OutputDriver::fail(esp_err_t error) {
     ready_ = false;
+    arm_applied_ = stop_low_requested_ = false;
+    applied_ = {};
+    applied_.sw_trip = true;
     applied_speed_ = 0;
     // Do not short-circuit shutdown: attempt every independent inhibit on every failed pass.
     esp_err_t shutdown = ESP_OK;
@@ -25,6 +29,7 @@ bool OutputDriver::fail(esp_err_t error) {
         shutdown |= gpio_set_level(pin, 0);
     }
     shutdown |= gpio_set_level(kSoftwareTrip, 1);
+    shutdown |= gpio_set_level(kMcuStopN, 1); // Release OD, never push-pull HIGH.
     if (channel_configured_) shutdown |= ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 0);
     // Disconnect GPIO17 from the LEDC matrix even if ledc_stop itself failed.
     shutdown |= gpio_reset_pin(kSpeed);
@@ -49,12 +54,24 @@ bool OutputDriver::initialize(const sirokko::Config& config) {
     pins.pull_up_en = GPIO_PULLUP_DISABLE;
     pins.pull_down_en = GPIO_PULLDOWN_DISABLE;
     pins.intr_type = GPIO_INTR_DISABLE;
-    esp_err_t error = gpio_config(&pins);
+    // Stage safe levels before enabling any output, including active-HIGH SW_TRIP.
+    esp_err_t error = ESP_OK;
+    for (auto pin : {kFuel, kFuelPermit, kGlow, kFan, kSpeed, kWatchdog, kArmReady})
+        error |= gpio_set_level(pin, 0);
+    error |= gpio_set_level(kSoftwareTrip, 1);
     if (error != ESP_OK) return fail(error);
-    for (auto pin : {kFuel, kFuelPermit, kGlow, kFan, kSpeed, kWatchdog, kArmReady, kSoftwareTrip}) {
-        error = gpio_set_level(pin, 0);
-        if (error != ESP_OK) return fail(error);
-    }
+    error = gpio_config(&pins);
+    if (error != ESP_OK) return fail(error);
+    error = gpio_set_level(kMcuStopN, 1); // Preload released before enabling OD; no LOW pulse.
+    if (error != ESP_OK) return fail(error);
+    gpio_config_t stop{};
+    stop.pin_bit_mask = 1ULL << kMcuStopN;
+    stop.mode = GPIO_MODE_INPUT_OUTPUT_OD;
+    stop.pull_up_en = GPIO_PULLUP_DISABLE; // External R15; reading must be the actual input pad.
+    stop.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    stop.intr_type = GPIO_INTR_DISABLE;
+    error = gpio_config(&stop);
+    if (error != ESP_OK || gpio_get_level(kMcuStopN) != 1) return fail(ESP_FAIL);
     if (sirokko::validate_config(config) != sirokko::CONFIG_OK) return fail(ESP_ERR_INVALID_ARG);
     ledc_timer_config_t timer{};
     timer.speed_mode = LEDC_LOW_SPEED_MODE;
@@ -107,22 +124,54 @@ bool OutputDriver::set_speed(uint16_t permille) {
 
 bool OutputDriver::apply(const sirokko::Outputs& out) {
     if (!ready_) return fail(ESP_ERR_INVALID_STATE);
+    sirokko::Outputs next = out;
+    if (!out.arm_ready || out.sw_trip) {
+        // Remove independent enables before releasing GPIO8. HIGH here is intentional inhibit.
+        esp_err_t inhibit = ESP_OK;
+        for (auto pin : {kFuel, kFuelPermit, kGlow, kArmReady, kWatchdog}) inhibit |= gpio_set_level(pin, 0);
+        inhibit |= gpio_set_level(kSoftwareTrip, 1);
+        inhibit |= gpio_set_level(kMcuStopN, 1);
+        stop_low_requested_ = arm_applied_ = false;
+        if (inhibit != ESP_OK || gpio_get_level(kMcuStopN) != 1) return fail(ESP_FAIL);
+        next.fuel_command = next.fuel_permit = next.glow_command = false;
+        next.arm_ready = next.watchdog_heartbeat = false;
+        next.sw_trip = true;
+    } else if (!stop_low_requested_) {
+        // First pass: request LOW while every independent enable is still inhibited.
+        esp_err_t inhibit = ESP_OK;
+        for (auto pin : {kFuel, kFuelPermit, kGlow, kArmReady, kWatchdog}) inhibit |= gpio_set_level(pin, 0);
+        inhibit |= gpio_set_level(kSoftwareTrip, 1);
+        if (inhibit != ESP_OK) return fail(inhibit);
+        if (gpio_set_level(kMcuStopN, 0) != ESP_OK) return fail(ESP_FAIL);
+        stop_low_requested_ = true;
+        next.fuel_command = next.fuel_permit = next.glow_command = false;
+        next.arm_ready = next.watchdog_heartbeat = false;
+        next.sw_trip = true;
+    } else {
+        // A later control pass must freshly observe the real pad; never reuse a cached LOW.
+        if (gpio_get_level(kMcuStopN) != 0) return fail(ESP_FAIL);
+        arm_applied_ = true;
+    }
     esp_err_t error = ESP_OK;
-    if (!out.fuel_command || !out.fuel_permit) {
+    if (!next.fuel_command || !next.fuel_permit) {
         error |= gpio_set_level(kFuel, 0);
         error |= gpio_set_level(kFuelPermit, 0);
     }
     if (error != ESP_OK) return fail(error);
-    if (!set_speed(out.speed_permille)) return false;
-    error |= gpio_set_level(kGlow, out.glow_command ? 1 : 0);
-    error |= gpio_set_level(kFan, out.fan_request ? 1 : 0);
-    error |= gpio_set_level(kArmReady, out.arm_ready ? 1 : 0);
-    error |= gpio_set_level(kSoftwareTrip, out.sw_trip ? 1 : 0);
-    error |= gpio_set_level(kWatchdog, out.watchdog_heartbeat ? 1 : 0);
+    if (!next.glow_command && gpio_set_level(kGlow, 0) != ESP_OK) return fail(ESP_FAIL);
+    if (!set_speed(next.speed_permille)) return false;
+    error |= gpio_set_level(kGlow, next.glow_command ? 1 : 0);
+    error |= gpio_set_level(kFan, next.fan_request ? 1 : 0);
+    error |= gpio_set_level(kArmReady, next.arm_ready ? 1 : 0);
+    error |= gpio_set_level(kSoftwareTrip, next.sw_trip ? 1 : 0);
     if (error != ESP_OK) return fail(error);
-    if (out.fuel_command && out.fuel_permit && out.fan_request && out.arm_ready) {
+    if (next.fuel_command && next.fuel_permit && next.fan_request && next.arm_ready) {
         error = gpio_set_level(kFuelPermit, 1);
         if (error == ESP_OK) error = gpio_set_level(kFuel, 1);
     }
-    return error == ESP_OK ? true : fail(error);
+    if (error != ESP_OK) return fail(error);
+    // Heartbeat is last: it must not certify an incomplete output pass.
+    if (gpio_set_level(kWatchdog, next.watchdog_heartbeat ? 1 : 0) != ESP_OK) return fail(ESP_FAIL);
+    applied_ = next;
+    return true;
 }
