@@ -15159,7 +15159,7 @@
 			)
 		)
 	)
-	(footprint "WSLP2726"
+	(footprint "Sirokko_Power:WSLP2726"
 		(layer "F.Cu")
 		(uuid "a3f32624-63ea-428f-bf8d-239e3e9eb09d")
 		(at 160 145 -90)
