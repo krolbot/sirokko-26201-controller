@@ -1,0 +1,16 @@
+{
+  "pads_unchanged_except_R9004": 424,
+  "D9002_MPN": "MBR1100G",
+  "D9002_footprint": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+  "prior_relations_preserved": 3940,
+  "new_directed_relations": 10,
+  "prior_copper_unchanged": 593,
+  "new_copper_objects": 15,
+  "U9004_U9005_U9006_supply_ground_connected": true,
+  "kelvin_isolation_preserved": true,
+  "segments": 506,
+  "vias": 102,
+  "unconnected": 129,
+  "pcb_sha256": "f0fb4c959ce5b824055a80d55c0739e01e55b9932ab5edd13eb9ccdfb36de67e",
+  "remaining": "Bootstrap, gate and LM317 input DC connectivity present; motor power copper and dynamic/thermal qualification unfinished; NOT FOR ORDER"
+}
