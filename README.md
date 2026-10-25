@@ -4,6 +4,8 @@
 
 ## Current requirements and status
 
+The [unified motor + SPI working directory](hardware/candidates/unified_motor_spi_working/README_RU.md) is the source for continued routing of the common PCB. Earlier canonical files and separate candidates remain unchanged historical snapshots, not parallel active sources. This baseline has 194 segments / 52 vias, 225 unconnected items, 4 library warnings and 5 ignored DRC checks; it is not a finished board.
+
 - [Requirements register](docs/REQUIREMENTS_RU.md) — all requirements, superseded decisions and acceptance criteria.
 - [Current state and work plan](docs/CURRENT_STATE_RU.md) — published evidence, unfinished work and physical-test limits.
 - [RTC and timer reference research](docs/RTC_TIMER_REFERENCE_RU.md) — pinned sources, battery-holder/RTC candidates and adaptation limits.
