@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Sirokko_Safety")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Safety.kicad_sym")(options "")(descr ""))
+  (lib (name "Sirokko_Power")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Power.kicad_sym")(options "")(descr ""))
+  (lib (name "Sirokko_thermal")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_thermal.kicad_sym")(options "")(descr ""))
+)
