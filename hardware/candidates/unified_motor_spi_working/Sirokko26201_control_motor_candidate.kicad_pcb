@@ -9003,11 +9003,11 @@
 	(footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 		(layer "F.Cu")
 		(uuid "67a4991f-8aa8-4b0c-8a0f-283124341371")
-		(at 155 165)
+		(at 160 156)
 		(descr "SOIC, 8 Pin (JEDEC MS-012AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_8.pdf)")
 		(tags "SOIC SO")
 		(property "Reference" "U9002"
-			(at 0 -3.4 0)
+			(at 0 4.5 0)
 			(layer "F.SilkS")
 			(uuid "36060e44-af80-4288-a8ee-905d6d096657")
 			(effects
@@ -15166,7 +15166,7 @@
 		(descr "Vishay WSLP2726, document 30179 rev 29-Jun-2026. Four-pad Kelvin land pattern: two 5.71x2.69 power pads and two 0.89x2.69 sense subpads; a=5.71, b=2.69, c=d=0.89, w=7.62 mm.")
 		(tags "Vishay WSLP2726 2mOhm Kelvin current-sense 5W")
 		(property "Reference" "R9001"
-			(at 0 -4.55 270)
+			(at -5 0 0)
 			(layer "F.SilkS")
 			(uuid "444df357-8d5f-4ffa-8f4b-de0ec66d4503")
 			(effects
@@ -22964,11 +22964,11 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "ed6a252b-af3c-4474-b99f-22011518e316")
-		(at 100 169)
+		(at 165.8 156.635)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C9004"
-			(at 0 -1.43 0)
+			(at 0.2 2.165 0)
 			(layer "F.SilkS")
 			(uuid "89654c6c-88c6-4f9a-b71a-d9e6f2689806")
 			(effects
@@ -25640,6 +25640,14 @@
 		(uuid "c3ce2dbe-3473-43b0-9fc5-a4e7ad035d9e")
 	)
 	(segment
+		(start 162.475 156.635)
+		(end 165.025 156.635)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/+3V3")
+		(uuid "02b569e3-81a5-4b6e-b1ab-ad7381a3c767")
+	)
+	(segment
 		(start 36 61.19)
 		(end 36 65)
 		(width 0.4)
@@ -26218,6 +26226,14 @@
 		(uuid "d315a084-48aa-4dae-b2c4-3c24975c3f6f")
 	)
 	(segment
+		(start 166.575 156.635)
+		(end 166.575 155.365)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "0d57222e-2e39-4a0c-a571-397a43dafb98")
+	)
+	(segment
 		(start 38.975 61.19)
 		(end 39.7 60.465)
 		(width 0.4)
@@ -26330,6 +26346,14 @@
 		(uuid "4f5f9a00-0a6d-4c5e-b3ea-0f6b41851210")
 	)
 	(segment
+		(start 157.525 156.635)
+		(end 157.525 157.905)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "503c65bb-a337-484d-8faf-eefe0c04a4a6")
+	)
+	(segment
 		(start 78 64)
 		(end 78 79.8)
 		(width 0.4)
@@ -26418,6 +26442,14 @@
 		(uuid "6a009d8d-204e-4490-8886-e30ad2e1df0a")
 	)
 	(segment
+		(start 166.575 155.365)
+		(end 162.475 155.365)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "72ad9995-07c9-4242-833f-46c1de969c71")
+	)
+	(segment
 		(start 143.04 45.72)
 		(end 143.04 43.525)
 		(width 0.8)
@@ -26442,6 +26474,14 @@
 		(uuid "8722a60a-7f71-4666-bcb2-fbe21d606c10")
 	)
 	(segment
+		(start 157.525 155.365)
+		(end 162.475 155.365)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "883ab689-e222-4ff5-ad1f-f2f2a758356c")
+	)
+	(segment
 		(start 71 79.8)
 		(end 71 75)
 		(width 0.4)
@@ -26464,6 +26504,14 @@
 		(layer "F.Cu")
 		(net "/GND")
 		(uuid "943e5415-4a7b-42be-96d2-21c96ed2cf34")
+	)
+	(segment
+		(start 157.525 155.365)
+		(end 157.525 156.635)
+		(width 0.4)
+		(layer "F.Cu")
+		(net "/GND")
+		(uuid "99232c5b-fec3-4369-91dd-f93029b9b957")
 	)
 	(segment
 		(start 29.525 68.81)
@@ -29048,6 +29096,70 @@
 		(uuid "a5fe40af-7332-40bd-84fa-7f972488703f")
 	)
 	(segment
+		(start 157.525 153.525)
+		(end 157.525 154.095)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS")
+		(uuid "1612e865-a416-4564-b02c-62e8f3d13cac")
+	)
+	(segment
+		(start 157.535 148.295)
+		(end 159.7 150.46)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS")
+		(uuid "3257e33c-b154-4cfa-ba82-c1cceac14967")
+	)
+	(segment
+		(start 159.7 151.35)
+		(end 157.525 153.525)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS")
+		(uuid "76b5b34e-49e3-4679-bdd2-20cb35d70fcd")
+	)
+	(segment
+		(start 159.7 150.46)
+		(end 159.7 151.35)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS")
+		(uuid "7c311563-ade3-4251-91ed-0df8eac7506a")
+	)
+	(segment
+		(start 162.475 153.525)
+		(end 162.475 154.095)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI")
+		(uuid "83a1790a-d39b-4d54-95d2-cc1f4ac5e908")
+	)
+	(segment
+		(start 160.3 151.35)
+		(end 162.475 153.525)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI")
+		(uuid "8ad46653-88d7-46a8-a9f5-a2397bddb7ae")
+	)
+	(segment
+		(start 160.3 150.46)
+		(end 160.3 151.35)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI")
+		(uuid "cd60c698-0c15-4026-a0b1-36ebc25b7eb1")
+	)
+	(segment
+		(start 162.465 148.295)
+		(end 160.3 150.46)
+		(width 0.25)
+		(layer "F.Cu")
+		(net "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI")
+		(uuid "e5450a0c-f6ee-4845-b8d1-bc6c27409d99")
+	)
+	(segment
 		(start 24 29.7)
 		(end 24 31.5)
 		(width 0.25)
@@ -29668,6 +29780,37 @@
 				(xy 26.1245 34.254386) (xy 26.1245 35.5005) (xy 26.104815 35.567539) (xy 26.052011 35.613294) (xy 26.0005 35.6245)
 				(xy 18.124 35.6245) (xy 18.056961 35.604815) (xy 18.011206 35.552011) (xy 18 35.5005) (xy 18 26.124)
 				(xy 18.019685 26.056961) (xy 18.072489 26.011206) (xy 18.124 26) (xy 39.876 26)
+			)
+		)
+	)
+	(zone
+		(layer "F.Cu")
+		(uuid "c6a62bde-f586-40e6-9e70-1aeda5fac23e")
+		(name "R9001_KELVIN_NO_ZONE_COPPER")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.25)
+		(keepout
+			(tracks allowed)
+			(vias allowed)
+			(pads allowed)
+			(copperpour not_allowed)
+			(footprints allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy 155.9 147.6) (xy 164.1 147.6) (xy 164.1 154.6) (xy 155.9 154.6)
 			)
 		)
 	)

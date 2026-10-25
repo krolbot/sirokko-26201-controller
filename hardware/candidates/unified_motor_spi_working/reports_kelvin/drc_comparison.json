@@ -1,0 +1,36 @@
+{
+  "kicad_version": "10.0.7",
+  "baseline_exit": 5,
+  "candidate_exit": 5,
+  "baseline_unconnected": 187,
+  "candidate_unconnected": 180,
+  "same_violation_signatures": true,
+  "baseline_violations": 4,
+  "candidate_violations": 4,
+  "ignored_checks": [
+    {
+      "description": "Footprint has no courtyard defined",
+      "key": "missing_courtyard"
+    },
+    {
+      "description": "Track endpoint not centered on via",
+      "key": "track_not_centered_on_via"
+    },
+    {
+      "description": "Tuning profile track geometries",
+      "key": "tuning_profile_track_geometries"
+    },
+    {
+      "description": "Footprint doesn't match symbol's footprint filters",
+      "key": "footprint_filters_mismatch"
+    },
+    {
+      "description": "Footprint component type doesn't match footprint pads",
+      "key": "footprint_type_mismatch"
+    }
+  ],
+  "same_included_severities": true,
+  "new_short_clearance_mask_courtyard": 0,
+  "pcb_sha256": "33507d9b0016aea8b67559de0c549982e71815fffcf7a3cfd1b721f4380a77c3",
+  "ERC_repeated": false
+}

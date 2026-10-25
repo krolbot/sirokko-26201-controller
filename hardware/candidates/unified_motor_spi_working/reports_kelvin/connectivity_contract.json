@@ -1,0 +1,15 @@
+{
+  "expected_new_directed_relations": 26,
+  "actual_new_directed_relations": 26,
+  "exact_equality": true,
+  "OUT_still_unrouted": true,
+  "only_planned_four_local_groups_connected": true,
+  "pad_net_continuity_source": "native GetConnectedItems, excluding self",
+  "edge_stroke_bounding_box_mm": {
+    "x": 9.975,
+    "y": 9.975,
+    "width": 180.05,
+    "height": 170.05
+  },
+  "board_thickness_mm": 1.6
+}

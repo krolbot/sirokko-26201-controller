@@ -1,0 +1,256 @@
+{
+  "source_sha256": "16fb8b91b237cc5b8a74330a8a52e572c38a4675f1eff987e5bc96fe1383f182",
+  "pcb_sha256": "33507d9b0016aea8b67559de0c549982e71815fffcf7a3cfd1b721f4380a77c3",
+  "footprints": 112,
+  "pads": 426,
+  "intentional_translations_mm": {
+    "U9002": [
+      5,
+      -9
+    ],
+    "C9004": [
+      65.8,
+      -12.365
+    ]
+  },
+  "intentional_reference_text_positions_mm": {
+    "R9001": [
+      160,
+      140
+    ],
+    "U9002": [
+      160,
+      160.5
+    ],
+    "C9004": [
+      166,
+      158.8
+    ]
+  },
+  "reference_text_angles_deg": 0,
+  "old_copper_objects_preserved": 404,
+  "new_segments": 14,
+  "segments": 340,
+  "vias": 78,
+  "old_directed_pad_relations": 1690,
+  "new_directed_pad_relations": 1716,
+  "old_relations_preserved": true,
+  "sense_exclusivity": [
+    {
+      "small_pad_uuid": "ae3178ec-3c51-4ecf-8ef4-f67da4f18ae8",
+      "input_pad_uuid": "8f0dff3c-19f3-4c79-9dd1-c1754aff3272",
+      "input_pin": "8",
+      "connected_pad_count": 2
+    },
+    {
+      "small_pad_uuid": "7ef2a41f-5d61-439b-92d0-f649681db3ab",
+      "input_pad_uuid": "f5864f31-1f6e-48ef-afb6-8f49b56a1207",
+      "input_pin": "1",
+      "connected_pad_count": 2
+    }
+  ],
+  "sense_lengths_mm": {
+    "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI": 7.597686860699217,
+    "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS": 7.597686860699217
+  },
+  "sense_min_parallel_edge_gap_mm": 0.35,
+  "zone_fill_keepout": {
+    "uuid": "c6a62bde-f586-40e6-9e70-1aeda5fac23e",
+    "layer": "F.Cu",
+    "name": "R9001_KELVIN_NO_ZONE_COPPER",
+    "bounds_mm": [
+      155.9,
+      147.6,
+      164.1,
+      154.6
+    ],
+    "tracks_allowed": true,
+    "pads_allowed": true,
+    "limitations": "future tracks can still violate Kelvin separation; repeat exclusive-pad audit at every power routing change"
+  },
+  "new_tracks": [
+    {
+      "uuid": "3257e33c-b154-4cfa-ba82-c1cceac14967",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+      "start": [
+        157.535,
+        148.295
+      ],
+      "end": [
+        159.7,
+        150.46
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "7c311563-ade3-4251-91ed-0df8eac7506a",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+      "start": [
+        159.7,
+        150.46
+      ],
+      "end": [
+        159.7,
+        151.35
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "76b5b34e-49e3-4679-bdd2-20cb35d70fcd",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+      "start": [
+        159.7,
+        151.35
+      ],
+      "end": [
+        157.525,
+        153.525
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "1612e865-a416-4564-b02c-62e8f3d13cac",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+      "start": [
+        157.525,
+        153.525
+      ],
+      "end": [
+        157.525,
+        154.095
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "e5450a0c-f6ee-4845-b8d1-bc6c27409d99",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "start": [
+        162.465,
+        148.295
+      ],
+      "end": [
+        160.3,
+        150.46
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "cd60c698-0c15-4026-a0b1-36ebc25b7eb1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "start": [
+        160.3,
+        150.46
+      ],
+      "end": [
+        160.3,
+        151.35
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "8ad46653-88d7-46a8-a9f5-a2397bddb7ae",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "start": [
+        160.3,
+        151.35
+      ],
+      "end": [
+        162.475,
+        153.525
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "83a1790a-d39b-4d54-95d2-cc1f4ac5e908",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "start": [
+        162.475,
+        153.525
+      ],
+      "end": [
+        162.475,
+        154.095
+      ],
+      "width_mm": 0.25
+    },
+    {
+      "uuid": "02b569e3-81a5-4b6e-b1ab-ad7381a3c767",
+      "net": "/+3V3",
+      "start": [
+        162.475,
+        156.635
+      ],
+      "end": [
+        165.025,
+        156.635
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "0d57222e-2e39-4a0c-a571-397a43dafb98",
+      "net": "/GND",
+      "start": [
+        166.575,
+        156.635
+      ],
+      "end": [
+        166.575,
+        155.365
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "72ad9995-07c9-4242-833f-46c1de969c71",
+      "net": "/GND",
+      "start": [
+        166.575,
+        155.365
+      ],
+      "end": [
+        162.475,
+        155.365
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "99232c5b-fec3-4369-91dd-f93029b9b957",
+      "net": "/GND",
+      "start": [
+        157.525,
+        155.365
+      ],
+      "end": [
+        157.525,
+        156.635
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "503c65bb-a337-484d-8faf-eefe0c04a4a6",
+      "net": "/GND",
+      "start": [
+        157.525,
+        156.635
+      ],
+      "end": [
+        157.525,
+        157.905
+      ],
+      "width_mm": 0.4
+    },
+    {
+      "uuid": "883ab689-e222-4ff5-ad1f-f2f2a758356c",
+      "net": "/GND",
+      "start": [
+        157.525,
+        155.365
+      ],
+      "end": [
+        162.475,
+        155.365
+      ],
+      "width_mm": 0.4
+    }
+  ],
+  "status": "DRAFT NOT FOR ORDER; no current/thermal/EMC/physical qualification"
+}
