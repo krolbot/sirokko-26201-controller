@@ -1,0 +1,1963 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "7e488e11-3cd2-4866-9bc6-6626d57490b3")
+	(paper "A4")
+	(lib_symbols
+		(symbol "PWR_PORT_2_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_PORT_2_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "PWR_PORT_2_G_0_1"
+			(rectangle
+				(start -2.54 -5.08)
+				(end 2.54 5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "PWR_PORT_2_G_1_1"
+			(pin passive line
+				(at -5.08 -2.54 0)
+				(length 2.54)
+				(name "+"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 2.54 0)
+				(length 2.54)
+				(name "-"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "FUSE_2_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "F"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "FUSE_2_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "FUSE_2_G_0_1"
+			(rectangle
+				(start -2.54 -2.54)
+				(end 2.54 2.54)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "FUSE_2_G_1_1"
+			(pin passive line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "IN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 5.08 0 180)
+				(length 2.54)
+				(name "OUT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "TVS_BIDIR_2_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "D"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TVS_BIDIR_2_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/SMCJxxCA.pdf"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "TVS_BIDIR_2_G_0_1"
+			(rectangle
+				(start -2.54 -2.54)
+				(end 2.54 2.54)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "TVS_BIDIR_2_G_1_1"
+			(pin passive line
+				(at 0 -5.08 270)
+				(length 2.54)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 5.08 90)
+				(length 2.54)
+				(name "~"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "LM74700_Q1_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM74700_Q1_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "LM74700_Q1_G_0_1"
+			(rectangle
+				(start -5.08 -5.08)
+				(end 5.08 5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "LM74700_Q1_G_1_1"
+			(pin passive line
+				(at -7.62 -2.54 0)
+				(length 2.54)
+				(name "VCAP"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -7.62 0 0)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -7.62 2.54 0)
+				(length 2.54)
+				(name "EN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 7.62 2.54 180)
+				(length 2.54)
+				(name "CATHODE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 7.62 0 180)
+				(length 2.54)
+				(name "GATE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 7.62 -2.54 180)
+				(length 2.54)
+				(name "ANODE"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "NMOS_DGS_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "Q"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NMOS_DGS_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.infineon.com/dgdl/Infineon-IPB017N10N5LF-DataSheet-v02_03-EN.pdf"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "NMOS_DGS_G_0_1"
+			(rectangle
+				(start -5.08 -5.08)
+				(end 5.08 5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "NMOS_DGS_G_1_1"
+			(pin input line
+				(at -7.62 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 7.62 90)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "CAP_2_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "C"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CAP_2_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "CAP_2_G_0_1"
+			(rectangle
+				(start -2.54 -2.54)
+				(end 2.54 2.54)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "CAP_2_G_1_1"
+			(pin passive line
+				(at 0 -5.08 270)
+				(length 2.54)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 5.08 90)
+				(length 2.54)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "PWR_PORT_2_G_PWR"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_PORT_2_G_PWR"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "PWR_PORT_2_G_PWR_0_1"
+			(rectangle
+				(start -2.54 -5.08)
+				(end 2.54 5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "PWR_PORT_2_G_PWR_1_1"
+			(pin power_out line
+				(at -5.08 -2.54 0)
+				(length 2.54)
+				(name "+"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at -5.08 2.54 0)
+				(length 2.54)
+				(name "-"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "NMOS_IPB017N10N5LF_G"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "Q"
+			(at 0 -1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NMOS_IPB017N10N5LF_G"
+			(at 0 1.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.infineon.com/dgdl/Infineon-IPB017N10N5LF-DataSheet-v02_03-EN.pdf"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "NMOS_IPB017N10N5LF_G_0_1"
+			(rectangle
+				(start -5.08 -5.08)
+				(end 5.08 5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "NMOS_IPB017N10N5LF_G_1_1"
+			(pin input line
+				(at -7.62 0 0)
+				(length 2.54)
+				(name "G"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -2.54 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 0 7.62 90)
+				(length 2.54)
+				(name "D"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 2.54 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 5.08 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 7.62 -7.62 270)
+				(length 2.54)
+				(name "S"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	))
+	(symbol
+	(lib_name "FUSE_2_G")
+	(lib_id "input_protection_CANDIDATE:FUSE_2_G")
+	(at 76.2 99.06 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "10107178-c9ef-414c-8786-c28d25541314")
+	(property "Reference" "F1"
+		(at 76.2 95.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "MINI 30A* 58V DC"
+		(at 76.2 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Sirokko_Input:Keystone_3568_MINI_Blade_DRAFT"
+		(at 76.2 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "https://static.chipdip.ru/lib/211/DOC012211849.pdf"
+		(at 76.2 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "0997030.WXN"
+	(id 0)
+	(at 76.2 99.06 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Littelfuse" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Holder_Manufacturer" "Keystone Electronics" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Holder_MPN" "3568" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Fuse_MPN" "0997030.WXN" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Fuse_Rating" "30 A preliminary; 58 VDC; interrupting 1000 A @ 58 VDC" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Holder_Rating" "30 A @ 500 VAC catalog rating; not a DC load-break switch" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Holder_Datasheet" "https://static.chipdip.ru/lib/237/DOC011237511.pdf" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Assembly" "F1 fuse function: removable MINI insert plus two-terminal PCB holder; pads 1/1 and 2/2" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Qualification" "DRAFT - NOT RELEASED; holder thermal and time-current coordination pending" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(property "Service" "F1 MINI 58V DC / replace power OFF; 32V fuse is not equivalent" (at 76.2 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	(pin "1"
+	(uuid "abf10568-abc4-4eba-b931-bbf91ee51cd5")
+)
+	(pin "2"
+	(uuid "7d81fbc6-9dcc-45a2-9679-f1c67438085c")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "F1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "TVS_BIDIR_2_G")
+	(lib_id "input_protection_CANDIDATE:TVS_BIDIR_2_G")
+	(at 88.9 114.3 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "116a3869-8044-4e7d-8e91-c3b9a50417f1")
+	(property "Reference" "D1"
+		(at 88.9 110.49 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "SMCJ28CA; bidirectional TVS; VRWM +/-28V"
+		(at 88.9 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 88.9 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 88.9 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "SMCJ28CA"
+	(id 0)
+	(at 88.9 114.3 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "a987b0f0-abc7-453e-b99b-fdab8d5e790e")
+)
+	(pin "2"
+	(uuid "9f36b792-8a48-4610-a3d7-30cde9f87eb6")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "D1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "LM74700_Q1_G")
+	(lib_id "input_protection_CANDIDATE:LM74700_Q1_G")
+	(at 114.3 101.6 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "dc0cabbc-aa3c-40f1-9447-b9c8337c3698")
+	(property "Reference" "U1"
+		(at 114.3 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "LM74700QDBVRQ1"
+		(at 114.3 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 114.3 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 114.3 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "LM74700QDBVRQ1"
+	(id 0)
+	(at 114.3 101.6 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "bef33f59-aed4-4d27-89e5-8fd972609a1b")
+)
+	(pin "2"
+	(uuid "8954995f-a1e6-4665-87fa-5a28af40feeb")
+)
+	(pin "3"
+	(uuid "b7211931-b4e5-4cdd-ae49-e4eb3e5b03c2")
+)
+	(pin "4"
+	(uuid "eacb45d3-a41f-4126-9b8f-5c717665b260")
+)
+	(pin "5"
+	(uuid "fa0ad843-e520-4953-ad30-939f55b29656")
+)
+	(pin "6"
+	(uuid "825f0437-ef65-4960-aabd-28529d197851")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "U1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "CAP_2_G")
+	(lib_id "input_protection_CANDIDATE:CAP_2_G")
+	(at 121.92 121.92 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "c7042fda-66db-4c5e-ba8a-93a3788e0ced")
+	(property "Reference" "C1"
+		(at 121.92 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "220nF 50V C0G 5%; VCAP-ANODE"
+		(at 121.92 125.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Sirokko_Input:Murata_GRM31C5C1H224JE02L_Reflow"
+		(at 121.92 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 121.92 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "GRM31C5C1H224JE02L"
+	(id 0)
+	(at 121.92 121.92 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Qualification" "DRAFT; initial Cmin 208.373nF at +25..+125C; cold Table A checked; Murata reflow lands and isolated DRC checked; physical fit, soldering and startup bench pending"
+	(id 1)
+	(at 121.92 121.92 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "3c50f8a7-962a-43c4-b4ec-cdc936c275a3")
+)
+	(pin "2"
+	(uuid "94066e3c-b5ca-4697-9ca9-dff57c7bd5c5")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "C1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "PWR_PORT_2_G")
+	(lib_id "input_protection_CANDIDATE:PWR_PORT_2_G")
+	(at 165.1 101.6 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "4166aad2-c7d6-445f-a9c4-914c3684519b")
+	(property "Reference" "J2"
+		(at 165.1 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "MKDS 5 HV/2-9.52-Z SZS; protected output"
+		(at 165.1 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 165.1 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 165.1 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "e0eaf349-9aae-479d-b2a4-d620fbe789e0")
+)
+	(pin "2"
+	(uuid "149e268f-8cd3-4066-a628-2f9350c925eb")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "J2")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "PWR_PORT_2_G_PWR")
+	(lib_id "input_protection_CANDIDATE:PWR_PORT_2_G_PWR")
+	(at 50.8 101.6 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "6b227e2d-e282-4ce5-8eb2-5892fd13495b")
+	(property "Reference" "J1"
+		(at 50.8 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "MKDS 5 HV/2-9.52-Z SZS; input"
+		(at 50.8 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 50.8 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 50.8 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "0f52f462-87fd-4d86-9470-648dc6b65de1")
+)
+	(pin "2"
+	(uuid "ea5d02c7-fd0a-4bc3-bd7f-7d7e77715ce6")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "J1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "NMOS_IPB017N10N5LF_G")
+	(lib_id "input_protection_CANDIDATE:NMOS_IPB017N10N5LF_G")
+	(at 139.7 101.6 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "12cb9843-469c-44a0-8b2f-e3110d182b96")
+	(property "Reference" "Q1"
+		(at 139.7 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "IPB017N10N5LF; 100V N-MOSFET"
+		(at 139.7 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 139.7 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 139.7 101.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "IPB017N10N5LF"
+	(id 0)
+	(at 139.7 101.6 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "a839f3c1-ab44-4709-ac16-22078deefa20")
+)
+	(pin "2"
+	(uuid "9529a4c5-df22-4543-b8f3-c1b2f10534cd")
+)
+	(pin "3"
+	(uuid "8afb2f35-e108-43bc-9a7e-c74aa29359ce")
+)
+	(pin "4"
+	(uuid "659515aa-117a-47eb-9c65-1aba94287bc0")
+)
+	(pin "5"
+	(uuid "13a5561e-a987-427d-9b83-a3accb5c21bc")
+)
+	(pin "6"
+	(uuid "8b05ad32-a5f0-43a2-ba5d-b5246704e629")
+)
+	(pin "7"
+	(uuid "fcfe33c8-9f06-4305-ae99-6af8ea75f511")
+)
+	(instances
+		(project "input_protection_MINI_DRAFT"
+			(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3"
+				(reference "Q1")
+				(unit 1)
+			)
+		)
+	)
+)
+	(wire
+	(pts
+		(xy 45.72 104.14) (xy 60.96 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9c3b61d6-a9e5-4597-a5d3-bec39ecdb189")
+)
+	(wire
+	(pts
+		(xy 60.96 104.14) (xy 60.96 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "2bb920e0-3285-407e-af9f-911bf9426a18")
+)
+	(wire
+	(pts
+		(xy 60.96 99.06) (xy 71.12 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "96432feb-52f7-4e94-8a1f-9866ba64af05")
+)
+	(wire
+	(pts
+		(xy 81.28 99.06) (xy 81.28 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "3e6fed65-a916-4f41-9afe-738d89c1e4ca")
+)
+	(wire
+	(pts
+		(xy 81.28 88.9) (xy 88.9 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "7f0641ac-fc3e-40f9-8f0f-298db43968a8")
+)
+	(wire
+	(pts
+		(xy 88.9 88.9) (xy 101.6 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9bc91abc-e109-47a3-b22c-8a570a9eddbe")
+)
+	(wire
+	(pts
+		(xy 101.6 88.9) (xy 129.54 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "ab282974-8409-414e-ae8e-d077866958bc")
+)
+	(wire
+	(pts
+		(xy 129.54 88.9) (xy 147.32 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f9052b02-2b66-4750-a849-1e507af249a3")
+)
+	(wire
+	(pts
+		(xy 147.32 88.9) (xy 147.32 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a770dc0b-ed1d-421e-a207-29e02c6f1b33")
+)
+	(wire
+	(pts
+		(xy 147.32 109.22) (xy 144.78 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "ae858df6-389f-44f0-a939-917f939b0cf7")
+)
+	(wire
+	(pts
+		(xy 144.78 109.22) (xy 142.24 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "c7074e0e-ab4b-4e8c-8a5d-6a8dab041ea9")
+)
+	(wire
+	(pts
+		(xy 142.24 109.22) (xy 139.7 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "6b80b29c-1005-4c2d-bb2d-5201dbfe05b4")
+)
+	(wire
+	(pts
+		(xy 121.92 104.14) (xy 129.54 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f1e027c8-dc4f-4392-abb2-3fc85b966393")
+)
+	(wire
+	(pts
+		(xy 129.54 104.14) (xy 129.54 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "d2ad5060-877e-448e-a288-8ac0a42643b6")
+)
+	(wire
+	(pts
+		(xy 106.68 99.06) (xy 101.6 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "6d526027-a6ff-4e56-a032-3dfc5ec1d054")
+)
+	(wire
+	(pts
+		(xy 101.6 99.06) (xy 101.6 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "eaa81944-bccb-4a9f-b5b9-a5f789d46c8e")
+)
+	(wire
+	(pts
+		(xy 121.92 116.84) (xy 129.54 116.84)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "888ea46c-d445-4560-b0cb-e345831dbe85")
+)
+	(wire
+	(pts
+		(xy 129.54 116.84) (xy 129.54 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "2099a7c8-8b7e-40f8-be80-000d6cc9428a")
+)
+	(wire
+	(pts
+		(xy 106.68 104.14) (xy 106.68 127)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "47545caf-1fe0-4a48-b421-c0e21a56e8a0")
+)
+	(wire
+	(pts
+		(xy 106.68 127) (xy 121.92 127)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "559a3ef6-4314-4d20-8aa1-74921e580a6b")
+)
+	(wire
+	(pts
+		(xy 45.72 139.7) (xy 88.9 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "2e29cedd-daf8-4463-a304-5cb9796bfd17")
+)
+	(wire
+	(pts
+		(xy 88.9 139.7) (xy 99.06 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f48781cb-f1c5-467c-860e-718d14e24748")
+)
+	(wire
+	(pts
+		(xy 99.06 139.7) (xy 167.64 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "27a0e37e-73dd-4522-9014-6469c060850a")
+)
+	(wire
+	(pts
+		(xy 167.64 139.7) (xy 167.64 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "21590a67-754f-4982-ac6f-db1af0767ac3")
+)
+	(wire
+	(pts
+		(xy 167.64 99.06) (xy 160.02 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "236adc60-3308-4968-953d-8d4d5b173b5c")
+)
+	(wire
+	(pts
+		(xy 88.9 119.38) (xy 88.9 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f737769c-3fd3-4552-b49b-d508d6553cf8")
+)
+	(wire
+	(pts
+		(xy 106.68 101.6) (xy 99.06 101.6)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f524005a-6c16-4472-88e4-0bf7346cf12a")
+)
+	(wire
+	(pts
+		(xy 99.06 101.6) (xy 99.06 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "5d435a29-752b-41f3-b4ab-1a08cf4987d6")
+)
+	(wire
+	(pts
+		(xy 88.9 109.22) (xy 88.9 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "373d414f-e8c4-4a29-9e68-e850649cc0ad")
+)
+	(wire
+	(pts
+		(xy 121.92 99.06) (xy 121.92 93.98)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "86ac58d4-6bee-4038-a127-6939cd8b3992")
+)
+	(wire
+	(pts
+		(xy 121.92 93.98) (xy 139.7 93.98)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9609704b-f529-457a-8c8b-87075509a526")
+)
+	(wire
+	(pts
+		(xy 139.7 93.98) (xy 154.94 93.98)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "56f4b6fa-965f-4429-b16d-0c30750be47f")
+)
+	(wire
+	(pts
+		(xy 154.94 93.98) (xy 154.94 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a3607e63-1ba5-4df5-862e-138d4929f272")
+)
+	(wire
+	(pts
+		(xy 154.94 104.14) (xy 160.02 104.14)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "fdb72231-0779-423b-a3ba-67a257e8cb9b")
+)
+	(wire
+	(pts
+		(xy 121.92 101.6) (xy 132.08 101.6)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "0b598052-cd8f-410f-a99e-aea89dcf69a4")
+)
+	(wire
+	(pts
+		(xy 45.72 99.06) (xy 40.64 99.06)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "2edaecdc-b58e-4435-a295-a2618b5833fb")
+)
+	(wire
+	(pts
+		(xy 40.64 99.06) (xy 40.64 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "7a72d7e6-7e1f-4398-93e6-9d24a20792ec")
+)
+	(wire
+	(pts
+		(xy 40.64 139.7) (xy 45.72 139.7)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "087c8a1d-807f-40b3-a4c4-cb6d3bb6d744")
+)
+	(wire
+	(pts
+		(xy 134.62 109.22) (xy 137.16 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "65ae1eec-0e9b-4f68-8ce9-5d53c078d742")
+)
+	(wire
+	(pts
+		(xy 137.16 109.22) (xy 139.7 109.22)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "307275a7-a487-4c15-a51b-a2b10ad89e02")
+)
+	(junction
+	(at 45.72 104.14)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "2099b72d-e775-4007-862d-566579e8cfd0")
+)
+	(junction
+	(at 129.54 104.14)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "fb1b16f0-30f1-49f2-949f-4a969b24cb23")
+)
+	(junction
+	(at 129.54 88.9)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "dc602919-6f8a-434a-8228-f38f59506729")
+)
+	(junction
+	(at 101.6 88.9)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "2f3f996e-b581-4990-9a3b-bf8ba02a9623")
+)
+	(junction
+	(at 88.9 139.7)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "c13c8820-b094-4849-94dd-e3a34347f9d0")
+)
+	(junction
+	(at 99.06 139.7)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "661b14c0-4650-45e7-ad2d-96d61c1bad1b")
+)
+	(junction
+	(at 88.9 88.9)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "c75fd241-9216-4fa3-924b-d0f3b40c9344")
+)
+	(junction
+	(at 139.7 93.98)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "0ecaa23e-0b4c-49b7-914f-86ed7d303df0")
+)
+	(junction
+	(at 147.32 109.22)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "d7b4285a-c9b0-4331-90d4-0ed7575573d6")
+)
+	(junction
+	(at 137.16 109.22)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "7c1914e7-40b5-449e-9106-807ea3a72587")
+)
+	(junction
+	(at 142.24 109.22)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "c3b80495-62db-4675-a3bd-033856c9b497")
+)
+	(junction
+	(at 144.78 109.22)
+	(diameter 0)
+	(color 0 0 0 0)
+	(uuid "d413212f-306e-4146-926e-05233b8ec029")
+)
+	(label "VIN_PSU_24V"
+		(at 45.72 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "523e9d20-9a76-41f2-a282-df0865169cc7")
+	)
+	(label "VIN_FUSED"
+		(at 81.28 88.9 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c4087767-91ff-43d3-8930-bf24d2b1dda6")
+	)
+	(label "GND_IN"
+		(at 45.72 139.7 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6d6d770b-c8b0-4bd6-8577-3651338c07a1")
+	)
+	(label "V24_PROTECTED_CANDIDATE"
+		(at 154.94 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56013984-4378-4792-91be-eba89afbe70f")
+	)
+	(label "VCAP_LOCAL"
+		(at 106.68 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "14214933-990b-449d-a0c1-ab03ac4197f2")
+	)
+	(text "DRAFT - NOT RELEASED\nF1: Keystone 3568 holder + Littelfuse 0997030.WXN removable MINI fuse\n*30 A preliminary; thermal/time-current qualification pending\nC1: Murata GRM31C5C1H224JE02L, 220nF 50V C0G 5%\nC1 reflow lands checked; physical fit, soldering and startup bench pending\nF1 MINI 58V DC / replace power OFF; no 32V substitution" (at 40.64 65 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "657becb8-8797-4cd4-b194-693a30e60129"))
+	(symbol_instances
+		(path "/7e488e11-3cd2-4866-9bc6-6626d57490b3/c7042fda-66db-4c5e-ba8a-93a3788e0ced"
+			(reference "C1")
+			(unit 1)
+			(value "220nF 50V C0G 5%; VCAP-ANODE")
+			(footprint "Sirokko_Input:Murata_GRM31C5C1H224JE02L_Reflow")
+		)
+)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

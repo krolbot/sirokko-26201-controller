@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>native/input_protection_MINI_DRAFT.kicad_sch</source>
+    <date>2026-10-25T12:17:30</date>
+    <tool>Eeschema 10.0.7-10.0.7~ubuntu26.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>input_protection_MINI_DRAFT.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>220nF 50V C0G 5%; VCAP-ANODE</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">GRM31C5C1H224JE02L</field>
+        <field name="Qualification">DRAFT; calculated initial Cmin 208.373nF at +25..+125C; cold Table A, footprint and startup bench pending</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="CAP_2_G" description=""/>
+      <property name="MPN" value="GRM31C5C1H224JE02L"/>
+      <property name="Qualification" value="DRAFT; calculated initial Cmin 208.373nF at +25..+125C; cold Table A, footprint and startup bench pending"/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c7042fda-66db-4c5e-ba8a-93a3788e0ced</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D1">
+      <value>SMCJ28CA; bidirectional TVS; VRWM +/-28V</value>
+      <fields>
+        <field name="MPN">SMCJ28CA</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="TVS_BIDIR_2_G" description=""/>
+      <property name="MPN" value="SMCJ28CA"/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>116a3869-8044-4e7d-8e91-c3b9a50417f1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="F1">
+      <value>MINI 30A* 58V DC</value>
+      <footprint>Sirokko_Input:Keystone_3568_MINI_Blade_DRAFT</footprint>
+      <datasheet>https://static.chipdip.ru/lib/211/DOC012211849.pdf</datasheet>
+      <fields>
+        <field name="MPN">0997030.WXN</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Holder_Manufacturer">Keystone Electronics</field>
+        <field name="Holder_MPN">3568</field>
+        <field name="Fuse_MPN">0997030.WXN</field>
+        <field name="Fuse_Rating">30 A preliminary; 58 VDC; interrupting 1000 A @ 58 VDC</field>
+        <field name="Holder_Rating">30 A @ 500 VAC catalog rating; not a DC load-break switch</field>
+        <field name="Holder_Datasheet">https://static.chipdip.ru/lib/237/DOC011237511.pdf</field>
+        <field name="Assembly">F1 fuse function: removable MINI insert plus two-terminal PCB holder; pads 1/1 and 2/2</field>
+        <field name="Qualification">DRAFT - NOT RELEASED; holder thermal and time-current coordination pending</field>
+        <field name="Service">F1 MINI 58V DC / replace power OFF; 32V fuse is not equivalent</field>
+        <field name="Footprint">Sirokko_Input:Keystone_3568_MINI_Blade_DRAFT</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/211/DOC012211849.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="FUSE_2_G" description=""/>
+      <property name="MPN" value="0997030.WXN"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Holder_Manufacturer" value="Keystone Electronics"/>
+      <property name="Holder_MPN" value="3568"/>
+      <property name="Fuse_MPN" value="0997030.WXN"/>
+      <property name="Fuse_Rating" value="30 A preliminary; 58 VDC; interrupting 1000 A @ 58 VDC"/>
+      <property name="Holder_Rating" value="30 A @ 500 VAC catalog rating; not a DC load-break switch"/>
+      <property name="Holder_Datasheet" value="https://static.chipdip.ru/lib/237/DOC011237511.pdf"/>
+      <property name="Assembly" value="F1 fuse function: removable MINI insert plus two-terminal PCB holder; pads 1/1 and 2/2"/>
+      <property name="Qualification" value="DRAFT - NOT RELEASED; holder thermal and time-current coordination pending"/>
+      <property name="Service" value="F1 MINI 58V DC / replace power OFF; 32V fuse is not equivalent"/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>10107178-c9ef-414c-8786-c28d25541314</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J1">
+      <value>MKDS 5 HV/2-9.52-Z SZS; input</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="PWR_PORT_2_G_PWR" description=""/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6b227e2d-e282-4ce5-8eb2-5892fd13495b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J2">
+      <value>MKDS 5 HV/2-9.52-Z SZS; protected output</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="PWR_PORT_2_G" description=""/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4166aad2-c7d6-445f-a9c4-914c3684519b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q1">
+      <value>IPB017N10N5LF; 100V N-MOSFET</value>
+      <fields>
+        <field name="MPN">IPB017N10N5LF</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="NMOS_IPB017N10N5LF_G" description=""/>
+      <property name="MPN" value="IPB017N10N5LF"/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>12cb9843-469c-44a0-8b2f-e3110d182b96</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>LM74700QDBVRQ1</value>
+      <fields>
+        <field name="MPN">LM74700QDBVRQ1</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="LM74700_Q1_G" description=""/>
+      <property name="MPN" value="LM74700QDBVRQ1"/>
+      <property name="Sheetname" value="input_protection_MINI_DRAFT"/>
+      <property name="Sheetfile" value="input_protection_MINI_DRAFT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dc0cabbc-aa3c-40f1-9447-b9c8337c3698</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="3"/>
+            <pin num="2"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="" part="CAP_2_G">
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CAP_2_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="FUSE_2_G">
+      <fields>
+        <field name="Reference">F</field>
+        <field name="Value">FUSE_2_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="passive"/>
+        <pin num="2" name="OUT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="LM74700_Q1_G">
+      <docs>https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM74700_Q1_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VCAP" type="passive"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="CATHODE" type="input"/>
+        <pin num="5" name="GATE" type="output"/>
+        <pin num="6" name="ANODE" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="NMOS_IPB017N10N5LF_G">
+      <docs>https://www.infineon.com/dgdl/Infineon-IPB017N10N5LF-DataSheet-v02_03-EN.pdf</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">NMOS_IPB017N10N5LF_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.infineon.com/dgdl/Infineon-IPB017N10N5LF-DataSheet-v02_03-EN.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+        <pin num="4" name="D" type="passive"/>
+        <pin num="5" name="S" type="passive"/>
+        <pin num="6" name="S" type="passive"/>
+        <pin num="7" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="PWR_PORT_2_G">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">PWR_PORT_2_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="PWR_PORT_2_G_PWR">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">PWR_PORT_2_G_PWR</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="power_out"/>
+        <pin num="2" name="-" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="TVS_BIDIR_2_G">
+      <docs>https://www.diodes.com/assets/Datasheets/SMCJxxCA.pdf</docs>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">TVS_BIDIR_2_G</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.diodes.com/assets/Datasheets/SMCJxxCA.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries/>
+  <nets>
+    <net code="1" name="/GND_IN" class="Default">
+      <node ref="D1" pin="1" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="-_2" pintype="power_out"/>
+      <node ref="J2" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="2" name="/V24_PROTECTED_CANDIDATE" class="Default">
+      <node ref="J2" pin="1" pinfunction="+_1" pintype="passive"/>
+      <node ref="Q1" pin="4" pinfunction="D_4" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="CATHODE_4" pintype="input"/>
+    </net>
+    <net code="3" name="/VCAP_LOCAL" class="Default">
+      <node ref="C1" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="VCAP_1" pintype="passive"/>
+    </net>
+    <net code="4" name="/VIN_FUSED" class="Default">
+      <node ref="C1" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="D1" pin="2" pintype="passive"/>
+      <node ref="F1" pin="2" pinfunction="OUT_2" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q1" pin="5" pinfunction="S_5" pintype="passive"/>
+      <node ref="Q1" pin="6" pinfunction="S_6" pintype="passive"/>
+      <node ref="Q1" pin="7" pinfunction="S_7" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="EN_3" pintype="input"/>
+      <node ref="U1" pin="6" pinfunction="ANODE_6" pintype="input"/>
+    </net>
+    <net code="5" name="/VIN_PSU_24V" class="Default">
+      <node ref="F1" pin="1" pinfunction="IN_1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="+_1" pintype="power_out"/>
+    </net>
+    <net code="6" name="Net-(Q1-G)" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="U1" pin="5" pinfunction="GATE_5" pintype="output"/>
+    </net>
+  </nets>
+</export>

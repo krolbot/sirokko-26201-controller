@@ -1,0 +1,100 @@
+[
+  {
+    "args": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "netlist",
+      "--format",
+      "kicadxml",
+      "-o",
+      "reports/after.xml",
+      "native/input_protection_MINI_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--severity-all",
+      "--exit-code-violations",
+      "-o",
+      "reports/after-erc.json",
+      "native/input_protection_MINI_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Found 0 violations\nSaved ERC Report to reports/after-erc.json\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "bom",
+      "--fields",
+      "Reference,Value,MPN,Footprint,Qualification,QUANTITY",
+      "--labels",
+      "Reference,Value,MPN,Footprint,Qualification,Qty",
+      "-o",
+      "reports/bom.csv",
+      "native/input_protection_MINI_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Wrote bill of materials to 'reports/bom.csv'.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "pdf",
+      "-o",
+      "reports/input_protection_MINI_DRAFT.pdf",
+      "native/input_protection_MINI_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to 'reports/input_protection_MINI_DRAFT.pdf'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "svg",
+      "-o",
+      "reports/schematic",
+      "native/input_protection_MINI_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to 'reports/schematic/input_protection_MINI_DRAFT.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--format",
+      "json",
+      "--severity-all",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--exit-code-violations",
+      "-o",
+      "reports/candidate-parity-drc.json",
+      "native/input_protection_MINI_DRAFT.kicad_pcb"
+    ],
+    "exit_code": 5,
+    "stdout": "Found 0 violations\nFound 2 unconnected items\nFound 6 schematic parity issues\nSaved DRC Report to reports/candidate-parity-drc.json\n",
+    "stderr": ""
+  }
+]
