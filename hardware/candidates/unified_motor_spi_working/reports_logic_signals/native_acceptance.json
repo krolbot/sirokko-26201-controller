@@ -1,0 +1,56 @@
+{
+  "status": "PASS_INCREMENTAL_ONLY_NOT_FOR_ORDER",
+  "pcb_sha256": "7909618e35f90b1962de26ec3bfbad5404450b556a8a20c98116fc5d83f94579",
+  "pads_preserved": 426,
+  "footprints_preserved": 112,
+  "old_copper_preserved": 387,
+  "new_copper_objects": 17,
+  "directed_pad_relations_before": 2112,
+  "directed_pad_relations_after": 2116,
+  "target_groups": [
+    [
+      [
+        "U3",
+        "11"
+      ],
+      [
+        "U4",
+        "8"
+      ]
+    ],
+    [
+      [
+        "U3",
+        "13"
+      ],
+      [
+        "U5",
+        "8"
+      ]
+    ]
+  ],
+  "drc_violations_identical": true,
+  "ignored_checks_identical": true,
+  "unconnected_before": 189,
+  "unconnected_after": 187,
+  "unchanged_files": [
+    "motor_pwm_DRAFT.kicad_sch",
+    "relay_level_shift_REVB.kicad_sch",
+    "motor_pwm_REBUILD.kicad_sch",
+    "power_return_reset_DRAFT.kicad_sch",
+    "fp-lib-table",
+    "Sirokko_D101_STPS5H100B.kicad_sym",
+    "Sirokko26201_control_motor_candidate.kicad_pro",
+    "logic_power_24_5_DRAFT.kicad_sch",
+    "Sirokko26201_control_motor_candidate.kicad_sch",
+    "motor_pwm_REBUILD.kicad_sym",
+    "Sirokko_Safety.kicad_sym",
+    "sym-lib-table",
+    "Sirokko_Power.kicad_sym",
+    "Sirokko_thermal.kicad_sym",
+    "Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod",
+    "Sirokko_Power.pretty/WSLP2726.kicad_mod",
+    "Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod",
+    "Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod"
+  ]
+}

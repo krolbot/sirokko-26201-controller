@@ -1,0 +1,12 @@
+{
+  "baseline": {
+    "exit_code": 5,
+    "stdout": "Found 4 violations\nFound 189 unconnected items\nSaved DRC Report to /projects/exports/sirokko_logic_signals_candidate_v1/reports_logic_signals/baseline_drc.json\n",
+    "stderr": ""
+  },
+  "candidate": {
+    "exit_code": 5,
+    "stdout": "Found 4 violations\nFound 187 unconnected items\nSaved DRC Report to /projects/exports/sirokko_logic_signals_candidate_v1/reports_logic_signals/candidate_drc.json\n",
+    "stderr": ""
+  }
+}
