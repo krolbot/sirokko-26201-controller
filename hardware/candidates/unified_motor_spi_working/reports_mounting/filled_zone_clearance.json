@@ -1,0 +1,62 @@
+[
+  {
+    "hole": "H4",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 169.064902
+  },
+  {
+    "hole": "H4",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 195.29685
+  },
+  {
+    "hole": "H4",
+    "layer": "B.Cu",
+    "filled_zone_clearance_mm": 98.086733
+  },
+  {
+    "hole": "H2",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 103.181894
+  },
+  {
+    "hole": "H2",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 142.131992
+  },
+  {
+    "hole": "H2",
+    "layer": "B.Cu",
+    "filled_zone_clearance_mm": 20.420758
+  },
+  {
+    "hole": "H3",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 139.317764
+  },
+  {
+    "hole": "H3",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 134.000057
+  },
+  {
+    "hole": "H3",
+    "layer": "B.Cu",
+    "filled_zone_clearance_mm": 140.068747
+  },
+  {
+    "hole": "H1",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 39.764649
+  },
+  {
+    "hole": "H1",
+    "layer": "F.Cu",
+    "filled_zone_clearance_mm": 6.001281
+  },
+  {
+    "hole": "H1",
+    "layer": "B.Cu",
+    "filled_zone_clearance_mm": 102.004781
+  }
+]

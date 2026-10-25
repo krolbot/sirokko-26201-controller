@@ -1,0 +1,11 @@
+{
+  "added_route_inside_H1_reserved_area_detected": true,
+  "observed_types": [
+    "hole_clearance",
+    "items_not_allowed",
+    "lib_footprint_issues",
+    "lib_footprint_mismatch",
+    "track_dangling"
+  ],
+  "working_pcb_unchanged": true
+}

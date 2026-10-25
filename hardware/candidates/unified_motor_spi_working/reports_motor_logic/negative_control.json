@@ -1,0 +1,6 @@
+{
+  "mutation": "U9005.2 incorrectly assigned GND on separate board copy",
+  "exit_code": 5,
+  "shorting_items": 1,
+  "working_pcb_unchanged": true
+}
