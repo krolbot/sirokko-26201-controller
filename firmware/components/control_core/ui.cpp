@@ -414,8 +414,8 @@ void render_settings(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
             case 2: format_temperature(second, sizeof(second), "", frame.settings.room_offset_milli_c); break;
             case 3: std::snprintf(second, sizeof(second), "RAW DS И MAX"); break;
             case 4: std::snprintf(second, sizeof(second), "ГЕЙТ И ШИМ"); break;
-            case 5: std::snprintf(second, sizeof(second), "ХОРДА:СБРОС"); break;
-            case 6: std::snprintf(second, sizeof(second), "0.1.6-DRAFT"); break;
+            case 5: std::snprintf(second, sizeof(second), "UP+DN:СБРОС"); break;
+            case 6: std::snprintf(second, sizeof(second), "%s", frame.firmware_version); break;
             default: break;
         }
     }
@@ -459,7 +459,7 @@ void render_edit(uint16_t* pixels, uint8_t band, const UiFrame& frame, UiPage pa
             format_temperature(second, sizeof(second), "МАКС ", maximum);
             break;
         case 3:
-            std::snprintf(first, sizeof(first), "ХОРДА: НАЗАД");
+            std::snprintf(first, sizeof(first), "UP+DN: НАЗАД");
             std::snprintf(second, sizeof(second), "СТОП: ГЛАВНАЯ");
             break;
         case 4:
@@ -604,7 +604,7 @@ void render_counters(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
             std::snprintf(second, sizeof(second), "СЕАНС:%lu", static_cast<unsigned long>(frame.session_id));
             break;
         case 6:
-            std::snprintf(first, sizeof(first), "ХОРДА: СБРОС");
+            std::snprintf(first, sizeof(first), "UP+DN: СБРОС");
             std::snprintf(second, sizeof(second), "СТОП: НАЗАД");
             break;
         case 7:
@@ -626,8 +626,8 @@ void render_reset_counters(uint16_t* pixels, uint8_t band) {
         std::snprintf(second, sizeof(second), "ОТПУСТИТЕ КЛАВИШИ");
     } else if (band == 1) {
         foreground = kWhite;
-        std::snprintf(first, sizeof(first), "НОВАЯ ХОРДА 2 С");
-        std::snprintf(second, sizeof(second), "UP+DOWN УДЕРЖ.");
+        std::snprintf(first, sizeof(first), "УДЕРЖИВАЙТЕ СНОВА");
+        std::snprintf(second, sizeof(second), "UP+DN: 2 С");
     } else if (band == 2) {
         std::snprintf(first, sizeof(first), "ТОЛЬКО СЧЁТЧИКИ");
         std::snprintf(second, sizeof(second), "АВАРИЯ ОСТАЁТСЯ");
@@ -661,7 +661,7 @@ void render_version(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
             break;
         case 4:
             std::snprintf(first, sizeof(first), "ОБНОВЛ:%s", yes_no(frame.update_active));
-            std::snprintf(second, sizeof(second), "ХОРДА: НАЗАД");
+            std::snprintf(second, sizeof(second), "UP+DN: НАЗАД");
             break;
         case 7:
             std::snprintf(first, sizeof(first), "СТОП: ГЛАВНАЯ");

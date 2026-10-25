@@ -26,3 +26,4 @@ cc -O2 -I"$cjson" -c "$cjson/cJSON.c" -o build-host/cJSON.o
 g++ "${flags[@]}" -Wno-unused-variable -I"$cjson" tests/network_tests.cpp build-host/cJSON.o \
   components/control_core/service.cpp components/control_core/control.cpp -lcrypto -o build-host/network_tests
 build-host/network_tests
+python3 tests/service_artifacts_tests.py

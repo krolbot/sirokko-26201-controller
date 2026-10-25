@@ -57,7 +57,7 @@ char g_reply_topic[96]{};
 char g_availability_topic[96]{};
 char g_nonce[33]{}; // Accessed by the MQTT event loop; copied into queued jobs.
 portMUX_TYPE g_nonce_lock = portMUX_INITIALIZER_UNLOCKED;
-uint32_t g_last_sequence{};
+std::atomic<uint32_t> g_last_sequence{};
 QueueHandle_t g_jobs{};
 struct UpdateJob {
     char version[32];
@@ -317,7 +317,7 @@ bool format_telemetry(char* payload, size_t capacity, const sirokko::UiFrame& f,
     const auto& s=f.status; const auto& o=s.outputs;
     const int n=std::snprintf(payload,capacity,
         "{\"version\":\"%s\",\"board\":\"%s\",\"nonce\":\"%s\",\"uptime_ms\":%lu,\"boot\":%lu,\"session\":%lu,"
-        "\"state\":\"%s\",\"faults\":%lu,\"start_block\":%u,\"config_schema\":%lu,\"profile_revision\":%lu,\"run_low_qualified\":%u,"
+        "\"last_sequence\":%lu,\"state\":\"%s\",\"faults\":%lu,\"start_block\":%u,\"config_schema\":%lu,\"profile_revision\":%lu,\"run_low_qualified\":%u,"
         "\"setpoint_mC\":%ld,\"hysteresis_mC\":%ld,\"room_offset_mC\":%ld,\"settings_saved\":%u,"
         "\"room_raw_mC\":%ld,\"room_mC\":%ld,\"room_q\":%u,\"room_age_ms\":%lu,"
         "\"exh_mC\":%ld,\"exh_q\":%u,\"exh_fault\":%u,\"exh_age_ms\":%lu,\"air_mC\":%ld,\"air_q\":%u,\"air_fault\":%u,\"air_age_ms\":%lu,"
@@ -325,7 +325,7 @@ bool format_telemetry(char* payload, size_t capacity, const sirokko::UiFrame& f,
         "\"stage_remaining_ms\":%lu,\"update_active\":%u,\"command_starts\":\"%llu\",\"failed_ignitions\":\"%llu\",\"command_run_ms\":\"%llu\",\"command_glow_ms\":\"%llu\"}",
         esp_app_get_description()->version,kBoard,nonce,static_cast<unsigned long>(f.now_ms),
         static_cast<unsigned long>(f.boot_id),static_cast<unsigned long>(f.session_id),
-        sirokko::state_name(s.state),static_cast<unsigned long>(s.faults),static_cast<unsigned>(s.start_block),
+        static_cast<unsigned long>(g_last_sequence.load()),sirokko::state_name(s.state),static_cast<unsigned long>(s.faults),static_cast<unsigned>(s.start_block),
         static_cast<unsigned long>(f.config.schema_version),static_cast<unsigned long>(f.config.profile_revision),static_cast<unsigned>(f.config.run_low_qualified),
         static_cast<long>(f.settings.setpoint_milli_c),static_cast<long>(f.settings.hysteresis_milli_c),static_cast<long>(f.settings.room_offset_milli_c),static_cast<unsigned>(f.settings_saved),
         static_cast<long>(f.raw_room.milli_c),static_cast<long>(f.room.milli_c),static_cast<unsigned>(f.room.quality),static_cast<unsigned long>(f.now_ms-f.raw_room.sample_ms),

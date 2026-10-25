@@ -2,6 +2,7 @@
 #include "../main/service_network.cpp"
 #include <iostream>
 #include <functional>
+#include <fstream>
 
 bool runtime_snapshot(sirokko::UiFrame*) { return false; }
 bool runtime_flash_safe() { return net_fake::lease; }
@@ -72,7 +73,19 @@ void check_reply(const char* code) {
     require(!net_fake::replies.empty() && net_fake::replies.back().find(code)!=std::string::npos,"expected service reply");
 }
 }
-int main() {
+int main(int argc, char** argv) {
+    if (argc==4 && std::strcmp(argv[1],"--verify-request")==0) {
+        std::ifstream public_file(argv[3]), packet_file(argv[2]);
+        std::string public_key((std::istreambuf_iterator<char>(public_file)),{});
+        std::string request((std::istreambuf_iterator<char>(packet_file)),{});
+        if (public_key.empty() || public_key.size()>=sizeof(g_network.update_public_key)) return 2;
+        std::strcpy(g_network.update_public_key,public_key.c_str()); reset(); receive(request);
+        if (g_jobs->data.size()!=1) return 3;
+        UpdateJob parsed{}; std::memcpy(&parsed,g_jobs->data.front().data(),sizeof(parsed));
+        if (!signed_manifest(parsed)) return 4;
+        std::cout<<"VERIFIED service_artifacts request by production parser + RSA manifest verifier\n";
+        return 0;
+    }
     setup_key();
     std::vector<std::pair<const char*,std::function<void()>>> cases={
         {"retained_replay_expiry_and_forbidden_commands",[]{
