@@ -1,0 +1,17 @@
+{
+  "prior_pads_unchanged": 426,
+  "added_pads": 4,
+  "D9002_MPN": "MBR1100G",
+  "D9002_footprint": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+  "prior_relations_preserved": 3950,
+  "new_directed_relations": 340,
+  "prior_copper_unchanged": 608,
+  "new_copper_objects": 14,
+  "U9004_U9005_U9006_supply_ground_connected": true,
+  "kelvin_isolation_preserved": true,
+  "segments": 518,
+  "vias": 104,
+  "unconnected": 129,
+  "pcb_sha256": "36451197140c6f6ad361705286d190531bd79aa5e2208d58b87c3426fafea885",
+  "remaining": "C9011/C9012 local 100nF supply bypass physically connected; return inductance/PI/EMI unqualified; motor power and UI unfinished; NOT FOR ORDER"
+}
