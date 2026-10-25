@@ -1,0 +1,254 @@
+{
+  "artifact": "sirokko-26201-controller-0.1.5-esp32s3-build-kit",
+  "version": "0.1.5-DRAFT",
+  "status": "DRAFT / BENCH ONLY / UNCOMMISSIONED",
+  "generated_at_utc": "2026-10-25T09:54:05.209293+00:00",
+  "source": {
+    "upstream_base": "1b7fe340893a352fa465a8873657419995a9014a",
+    "identity": "source/source-identity.json",
+    "source_files": 36,
+    "archive": {
+      "file": "source/sirokko-26201-controller-0.1.5-firmware-source.tar.gz",
+      "size_bytes": 113960,
+      "sha256": "5dc57b6ba40f00d0b275323a3642bc5fa5a7e6dd7d415084feaf19d9ef59a51a"
+    },
+    "note": "Exact firmware working-tree snapshot, before final source+kit WIP commit; excludes historical release artifacts and hardware. Final Git publication is verified separately."
+  },
+  "build": {
+    "idf_version": null,
+    "project_version": "0.1.5-DRAFT",
+    "target": "esp32s3",
+    "official_image": "espressif/idf@sha256:05cbfc42ed2e987b8026722c15bf1d8523d3e4fd1b4ac04d2e4056f5e0918b99",
+    "environment": "isolated Lab Docker, cpus 2, memory 4g, cap-drop ALL; official Component Registry outbound access, no published ports, host SDK or service changes",
+    "command": "idf.py --no-ccache reconfigure && cmake --build build --parallel 2",
+    "exit_code": 0,
+    "dependencies": "exact unchanged managed-components archive from 0.1.4; normal Component Manager enabled; fresh final lock in build-config",
+    "warnings": [
+      "CMake Warning at /opt/esp/idf/tools/cmake/build.cmake:627 (message):",
+      "  WARNING: The following Kconfig variables were used in \"if\" clauses, but not",
+      "CMake Warning at /opt/esp/idf/tools/cmake/project.cmake:753 (message):"
+    ]
+  },
+  "hardware_target": {
+    "board": "ESP32-S3-DevKitC-1-N8R8 v1.1",
+    "flash": {
+      "flash_mode": "dio",
+      "flash_size": "8MB",
+      "flash_freq": "80m"
+    },
+    "psram_mode": "octal",
+    "psram_frequency_mhz": 80,
+    "psram_boot_init": true,
+    "physical_memory_probe_performed": false
+  },
+  "firmware": [
+    {
+      "file": "firmware/bootloader/bootloader.bin",
+      "size_bytes": 21328,
+      "sha256": "b991f8f190333484124ff59227cbf3fdb2c07d1d7f666c4f5c846349c57abc1e",
+      "offset": "0x0"
+    },
+    {
+      "file": "firmware/sirokko_26201_controller.bin",
+      "size_bytes": 347472,
+      "sha256": "c82bc29d9b8ad1745aebda95d7f80632276e5bd4d6bdaa850e777832ecab5730",
+      "offset": "0x10000"
+    },
+    {
+      "file": "firmware/partition_table/partition-table.bin",
+      "size_bytes": 3072,
+      "sha256": "b849d812a0d8488c4cac852c8267bd7200433810808f3918d7f02d1acf3afe8c",
+      "offset": "0x8000"
+    }
+  ],
+  "verification": {
+    "baseline_host_tests": "40/40",
+    "host_tests": "50/50",
+    "host_tests_exit_code": 0,
+    "clean_target_build_exit_code": 0,
+    "image_validation_exit_code": 0,
+    "real_output_driver_compiled_for_target": true,
+    "target_stubs_used": false,
+    "physical_flash_performed": false,
+    "physical_gpio_measured": false,
+    "RTOS_CLI_timing_measured": false,
+    "hardware_qualified": false,
+    "production_ready": false
+  },
+  "motor_output": {
+    "frequency_input_hz": [
+      77,
+      20000
+    ],
+    "normal_pwm_input_permille": [
+      1,
+      800
+    ],
+    "static_LOW_input": 0,
+    "static_HIGH_input": 1000,
+    "rejected_permille": [
+      801,
+      999
+    ],
+    "api_for_static": "ledc_stop with idle level 0/1",
+    "normal_stop_and_thermal_purge": "fuel OFF first, fan full DC until actual command 0",
+    "output_failure": "latched OFF including GPIO17 matrix disconnect; reboot required"
+  },
+  "payload_files": [
+    {
+      "file": "README_RU.md",
+      "size_bytes": 9022,
+      "sha256": "64a0a73ba07ead92bccd42e2f73e36add554955807bc56f24440f3228bbf37eb"
+    },
+    {
+      "file": "VERIFICATION_RU.md",
+      "size_bytes": 9707,
+      "sha256": "e983fc9dba704ba28a24387fc9165322e3bac94ab879aecdbe32e59d9dacdd16"
+    },
+    {
+      "file": "build-config/dependencies.lock",
+      "size_bytes": 706,
+      "sha256": "96b21b4d3bf8ec39d8c7deccdd1093650ef183ea34102d12c299edb7b8c77457"
+    },
+    {
+      "file": "build-config/managed-components.tar.gz",
+      "size_bytes": 41181,
+      "sha256": "6671bdcec0b3c68e736bb62ec2552f1931559d9571e0d6e36803ccac1d56e276"
+    },
+    {
+      "file": "build-config/sdkconfig",
+      "size_bytes": 74463,
+      "sha256": "9c9b4c8aac24c5c0c015f9ca5d4b6d4264fdb655503e1c0a4bff2d433fc69697"
+    },
+    {
+      "file": "build-config/sdkconfig.defaults",
+      "size_bytes": 703,
+      "sha256": "67e1630657b664de51815dfe1382515bde3403019c92315b7cc6b24d3085d1e5"
+    },
+    {
+      "file": "build-config/sdkconfig.json",
+      "size_bytes": 57273,
+      "sha256": "8ca57065ecd42f5f43cac6e5ca0e79c1992a499fa1ef89df8637c3a5ed688e3e"
+    },
+    {
+      "file": "debug/compile_commands.json",
+      "size_bytes": 4573560,
+      "sha256": "63ca98a857acf4857ecfad908f3c3031969ac635a114755e390e34419ffb17fa"
+    },
+    {
+      "file": "debug/project_description.json",
+      "size_bytes": 179981,
+      "sha256": "f41d64cc5c5a8225193dec8a5f1000c26913b0fc69f44cd8e775b56428ee2773"
+    },
+    {
+      "file": "debug/sirokko_26201_controller.elf",
+      "size_bytes": 5560960,
+      "sha256": "24c96fd048ef69d1a08b02673d0880ea62c09e23e57e50ac11f181fa24779c94"
+    },
+    {
+      "file": "debug/sirokko_26201_controller.map",
+      "size_bytes": 3553938,
+      "sha256": "ad73d37e1425f2e3358032ce35de6ed1bc9e6096d1aa97244dbf3ed4c6a897fa"
+    },
+    {
+      "file": "firmware/bootloader/bootloader.bin",
+      "size_bytes": 21328,
+      "sha256": "b991f8f190333484124ff59227cbf3fdb2c07d1d7f666c4f5c846349c57abc1e"
+    },
+    {
+      "file": "firmware/flash_args",
+      "size_bytes": 161,
+      "sha256": "52dd2fe97adf090a965c3474265054f592f2e0f97ee2aaf816893458f8a86268"
+    },
+    {
+      "file": "firmware/flasher_args.json",
+      "size_bytes": 939,
+      "sha256": "a802eaa5502093d4464195fcdb52a3a33cc32c0c1a5a2c7b4f64e2f75fe0a1cd"
+    },
+    {
+      "file": "firmware/partition_table/partition-table.bin",
+      "size_bytes": 3072,
+      "sha256": "b849d812a0d8488c4cac852c8267bd7200433810808f3918d7f02d1acf3afe8c"
+    },
+    {
+      "file": "firmware/sirokko_26201_controller.bin",
+      "size_bytes": 347472,
+      "sha256": "c82bc29d9b8ad1745aebda95d7f80632276e5bd4d6bdaa850e777832ecab5730"
+    },
+    {
+      "file": "logs/baseline-host.log",
+      "size_bytes": 1492,
+      "sha256": "b9ddc5441b04d03adb9fc684fd8b1080cc7f300057d179902fd715d3f2ac91db"
+    },
+    {
+      "file": "logs/dependency-checksums.log",
+      "size_bytes": 119,
+      "sha256": "c916cb5f36b60ad72f00937bb49e3d9cc8ce81c3ca0b3f1af48ade258838ec23"
+    },
+    {
+      "file": "logs/esp-image-info.log",
+      "size_bytes": 1944,
+      "sha256": "90f620f36f99a5e02c6ee38e31892cc49525057decc62a52af845566c20c746a"
+    },
+    {
+      "file": "logs/esp-image-info.status",
+      "size_bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "logs/host-tests.log",
+      "size_bytes": 3316,
+      "sha256": "a37879ed384972595302ea521ab53c5f7c7f64aac23a386f2d9dc43ea01326b4"
+    },
+    {
+      "file": "logs/host-tests.status",
+      "size_bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "logs/idf-clean-build.log",
+      "size_bytes": 138939,
+      "sha256": "cc4cd501635ddd099af157e901867aab24941047426e4e568b7a5307ed86b34f"
+    },
+    {
+      "file": "logs/idf-clean-build.status",
+      "size_bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "file": "logs/image-digest.json",
+      "size_bytes": 90,
+      "sha256": "05858d71b3b4135ad50a7aa00b4f615897e33c59c5a5af43c1e122b06543db27"
+    },
+    {
+      "file": "logs/pwm-calculations.json",
+      "size_bytes": 303,
+      "sha256": "99f2e50dba25e17b6f7fc13fb5f357a2896cf0d7cc3e8921afe562105cbd9352"
+    },
+    {
+      "file": "logs/target-first-attempt.log",
+      "size_bytes": 699,
+      "sha256": "9e5c2122c4669e837df442c5e3cce57c6022ada627e9edf24272d30eefe12af9"
+    },
+    {
+      "file": "logs/target-local-components-attempt.log",
+      "size_bytes": 138923,
+      "sha256": "702bb1b0a1870d25901ee7491f262df60c3217845dfe598d929c171e18eb8ab9"
+    },
+    {
+      "file": "logs/target-offline-manager-attempt.log",
+      "size_bytes": 2526,
+      "sha256": "8f5f8c0e19205a319231100b85a2f228c45643a4f7d7bd2cf0147910f4f9d3f7"
+    },
+    {
+      "file": "source/sirokko-26201-controller-0.1.5-firmware-source.tar.gz",
+      "size_bytes": 113960,
+      "sha256": "5dc57b6ba40f00d0b275323a3642bc5fa5a7e6dd7d415084feaf19d9ef59a51a"
+    },
+    {
+      "file": "source/source-identity.json",
+      "size_bytes": 4333,
+      "sha256": "a1dd606a8b3150fa51e42d71e843fd1387afc26dc16e66fbe7724935a57aa223"
+    }
+  ]
+}

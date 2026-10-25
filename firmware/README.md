@@ -8,10 +8,12 @@ A separate 220/24 V presence input, TPS3808, and an extra `EN` reset path are ex
 
 Verification performed for this source snapshot:
 
-- host simulation: 39/39 tests passed, including the original safety suite plus detected TFT initialization/transfer failures and the shared-SPI timing/pin contract;
-- clean official `espressif/idf:v5.5.2` container build passed;
-- ESP32-S3 image checksum and validation hash passed.
+- current host tests: 50/50 passed, including all 40 tests found in the actual main baseline and 10 motor/output/NVS/CLI boundary and failure-injection groups;
+- real production adapter sources `output_driver.cpp` and `commissioning.cpp` are compiled against host IDF API stubs; this is not electrical hardware feedback;
+- target build evidence and flashing images are recorded separately in the versioned build kit.
 
 The selected local UI is now the removable GMT020-02-7P ST7789V 240x320 TFT. It shares SPI2 MOSI/SCK with both MAX31856 devices while retaining independent chip selects, mode and clock settings. The TFT has no MISO/TE/presence signal, so software can detect driver/transfer failures but cannot prove that an unplugged physical panel received pixels.
 
-The current 0.1.4 bench artifacts, logs and manifest are under `release/firmware/0.1.4/`. The 0.1.0–0.1.3 artifact sets remain unchanged.
+Version 0.1.5-DRAFT restricts the LTC7001 motor candidate to 77..20000 Hz for the selected APB 80MHz/10bit configuration; requested 0 is constant LOW, 1..800 is PWM and 1000 is constant HIGH via `ledc_stop(..., 1)`. Duty 801..999 is rejected at configuration, CLI acceptance and output boundaries. High-speed machine states are not clamped. A failing output API latches the adapter OFF until reboot, inhibits fuel/glow/permit/ARM/heartbeat, asserts SW_TRIP, and independently detaches GPIO17 from LEDC. Normal STOP and thermal-fault post-purge remain unchanged.
+
+The current reproducible bench set is `release/build-kits/0.1.5-esp32s3/`. Earlier 0.1.4 and older artifacts remain unchanged and must not be used as evidence for this version.

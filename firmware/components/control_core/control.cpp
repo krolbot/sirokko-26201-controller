@@ -93,9 +93,9 @@ uint32_t validate_config(const Config& c, bool require_acceptance) {
           c.high_to_low_delta_milli_c < c.stop_delta_milli_c)) {
         errors |= CONFIG_REGULATOR_ORDER;
     }
-    if (c.pwm_frequency_hz == 0 || c.pwm_frequency_hz > kPwmMaximumFrequencyHz ||
-        c.recovery_purge_pwm_permille == 0 || c.recovery_purge_pwm_permille > 1000 ||
-        c.low_pwm_permille == 0 || c.low_pwm_permille >= 1000) {
+    if (!pwm_frequency_supported(c.pwm_frequency_hz) ||
+        c.recovery_purge_pwm_permille == 0 || !speed_supported(c.recovery_purge_pwm_permille) ||
+        c.low_pwm_permille == 0 || c.low_pwm_permille > kPwmMaximumPermille) {
         errors |= CONFIG_PWM;
     }
     return errors;
@@ -117,13 +117,14 @@ bool Machine::sample_ok(const SensorSample& sample, uint32_t now) const {
 
 uint32_t Machine::current_input_faults(const Inputs& in) const {
     uint32_t faults = FAULT_NONE;
-    if (validate_config(config_) != CONFIG_OK ||
+    if (!in.configuration_ok || validate_config(config_) != CONFIG_OK ||
         in.setpoint_milli_c < config_.setpoint_min_milli_c ||
         in.setpoint_milli_c > config_.setpoint_max_milli_c) {
         faults |= FAULT_CONFIG;
     }
     if (!in.safety_ok) faults |= FAULT_SAFETY_OPEN;
     if (!in.local_ui_ok) faults |= FAULT_LOCAL_UI;
+    if (!in.output_ok) faults |= FAULT_OUTPUT;
     if (!sample_ok(in.exhaust, in.now_ms)) faults |= FAULT_EXHAUST_SENSOR;
     if (!sample_ok(in.hot_air, in.now_ms)) faults |= FAULT_AIR_SENSOR;
     if (!sample_ok(in.room, in.now_ms)) faults |= FAULT_ROOM_SENSOR;
@@ -395,7 +396,8 @@ Outputs Machine::tick(const Inputs& in) {
     const uint32_t input_faults = current_input_faults(in);
     const bool reset_pressed = in.reset_request && !previous_reset_request_;
     const uint32_t immediate = input_faults &
-        (FAULT_CONFIG | FAULT_SAFETY_OPEN | FAULT_LOCAL_UI | FAULT_EXHAUST_OVERTEMP | FAULT_AIR_OVERTEMP);
+        (FAULT_CONFIG | FAULT_SAFETY_OPEN | FAULT_LOCAL_UI | FAULT_OUTPUT |
+         FAULT_EXHAUST_OVERTEMP | FAULT_AIR_OVERTEMP);
     if (state_ != State::BOOT_SELF_TEST && state_ != State::RECOVERY_PURGE) {
         if (immediate != FAULT_NONE) trip(immediate, in.now_ms);
         if (faults_ != FAULT_NONE && state_ != State::LOCKOUT) trip(faults_, in.now_ms);

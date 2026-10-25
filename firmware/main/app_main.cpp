@@ -9,7 +9,7 @@
 
 #include "commissioning.hpp"
 #include "driver/gpio.h"
-#include "driver/ledc.h"
+#include "output_driver.hpp"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
@@ -31,14 +31,7 @@ constexpr gpio_num_t kStartRequest = GPIO_NUM_7;
 constexpr gpio_num_t kStopStatus = GPIO_NUM_8;
 constexpr gpio_num_t kSetUp = GPIO_NUM_39;
 constexpr gpio_num_t kSetDown = GPIO_NUM_40;
-constexpr gpio_num_t kGlow = GPIO_NUM_14;
-constexpr gpio_num_t kFuel = GPIO_NUM_15;
-constexpr gpio_num_t kFan = GPIO_NUM_16;
-constexpr gpio_num_t kSpeed = GPIO_NUM_17;
-constexpr gpio_num_t kWatchdog = GPIO_NUM_18;
-constexpr gpio_num_t kFuelPermit = GPIO_NUM_21;
-constexpr gpio_num_t kArmReady = GPIO_NUM_41;
-constexpr gpio_num_t kSoftwareTrip = GPIO_NUM_42;
+
 
 struct RuntimeSnapshot {
     sirokko::Status status{};
@@ -51,6 +44,8 @@ struct RuntimeSnapshot {
     bool heat_enabled{};
     bool stop_active{};
     bool display_ok{};
+    bool output_ok{};
+    uint16_t applied_speed{};
 };
 
 CommissioningStore g_store;
@@ -60,36 +55,15 @@ SemaphoreHandle_t g_snapshot_mutex{};
 RuntimeSnapshot g_snapshot{};
 std::atomic<int32_t> g_setpoint_milli_c{};
 std::atomic<bool> g_cli_reset{};
-bool g_pwm_ready{};
+OutputDriver g_outputs;
+bool g_config_changed{};  // Protected by g_config_mutex; any edit inhibits START until reboot.
+bool g_config_edit_safe{};  // Published under the same mutex as each control/output pass.
 
 uint32_t uptime_ms() {
     return static_cast<uint32_t>(esp_timer_get_time() / 1000ULL);
 }
 
-bool fail_pwm_initialization() {
-    g_pwm_ready = false;
-    gpio_reset_pin(kSpeed);
-    gpio_set_direction(kSpeed, GPIO_MODE_OUTPUT);
-    gpio_set_level(kSpeed, 0);
-    return false;
-}
-
-bool configure_gpio(const sirokko::Config& config) {
-    const uint64_t output_mask = (1ULL << kGlow) | (1ULL << kFuel) | (1ULL << kFan) |
-                                 (1ULL << kWatchdog) | (1ULL << kFuelPermit) |
-                                 (1ULL << kArmReady) | (1ULL << kSoftwareTrip) | (1ULL << kSpeed);
-    gpio_config_t outputs{};
-    outputs.pin_bit_mask = output_mask;
-    outputs.mode = GPIO_MODE_OUTPUT;
-    outputs.pull_up_en = GPIO_PULLUP_DISABLE;
-    outputs.pull_down_en = GPIO_PULLDOWN_DISABLE;
-    outputs.intr_type = GPIO_INTR_DISABLE;
-    gpio_config(&outputs);
-    for (const gpio_num_t pin : {kGlow, kFuel, kFan, kWatchdog, kFuelPermit,
-                                 kArmReady, kSoftwareTrip, kSpeed}) {
-        gpio_set_level(pin, 0);
-    }
-
+bool configure_inputs() {
     const uint64_t input_mask = (1ULL << kSafetyOk) | (1ULL << kResetRequest) |
                                 (1ULL << kStartRequest) | (1ULL << kStopStatus) |
                                 (1ULL << kSetUp) | (1ULL << kSetDown);
@@ -99,56 +73,7 @@ bool configure_gpio(const sirokko::Config& config) {
     inputs.pull_up_en = GPIO_PULLUP_DISABLE;
     inputs.pull_down_en = GPIO_PULLDOWN_DISABLE;
     inputs.intr_type = GPIO_INTR_DISABLE;
-    gpio_config(&inputs);
-
-    g_pwm_ready = false;
-    if (sirokko::validate_config(config) == sirokko::CONFIG_OK) {
-        ledc_timer_config_t timer{};
-        timer.speed_mode = LEDC_LOW_SPEED_MODE;
-        timer.duty_resolution = LEDC_TIMER_10_BIT;
-        timer.timer_num = LEDC_TIMER_0;
-        timer.freq_hz = config.pwm_frequency_hz;
-        timer.clk_cfg = LEDC_AUTO_CLK;
-        if (ledc_timer_config(&timer) != ESP_OK) return fail_pwm_initialization();
-        ledc_channel_config_t channel{};
-        channel.gpio_num = kSpeed;
-        channel.speed_mode = LEDC_LOW_SPEED_MODE;
-        channel.channel = LEDC_CHANNEL_0;
-        channel.intr_type = LEDC_INTR_DISABLE;
-        channel.timer_sel = LEDC_TIMER_0;
-        channel.duty = 0;
-        channel.hpoint = 0;
-        if (ledc_channel_config(&channel) != ESP_OK) return fail_pwm_initialization();
-        g_pwm_ready = true;
-    }
-    return g_pwm_ready;
-}
-
-void set_speed(uint16_t permille) {
-    if (!g_pwm_ready) {
-        gpio_set_level(kSpeed, 0);
-        return;
-    }
-    const uint32_t duty = (static_cast<uint32_t>(permille) * 1023u) / 1000u;
-    ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty);
-    ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
-}
-
-void apply_outputs(const sirokko::Outputs& out) {
-    if (!out.fuel_command || !out.fuel_permit) {
-        gpio_set_level(kFuel, 0);
-        gpio_set_level(kFuelPermit, 0);
-    }
-    gpio_set_level(kGlow, out.glow_command ? 1 : 0);
-    set_speed(out.speed_permille);
-    gpio_set_level(kFan, out.fan_request ? 1 : 0);
-    gpio_set_level(kArmReady, out.arm_ready ? 1 : 0);
-    gpio_set_level(kSoftwareTrip, out.sw_trip ? 1 : 0);
-    gpio_set_level(kWatchdog, out.watchdog_heartbeat ? 1 : 0);
-    if (out.fuel_command && out.fuel_permit && out.fan_request && out.arm_ready) {
-        gpio_set_level(kFuelPermit, 1);
-        gpio_set_level(kFuel, 1);
-    }
+    return gpio_config(&inputs) == ESP_OK;
 }
 
 bool parse_celsius(const char* text, int32_t* milli_c) {
@@ -182,9 +107,9 @@ void print_status() {
                 snapshot.hot_air.milli_c, static_cast<unsigned>(snapshot.hot_air.quality),
                 snapshot.hot_air_status);
     const auto& out = snapshot.status.outputs;
-    std::printf("G=%u F=%u M=%u permit=%u speed=%u heartbeat=%u\n",
+    std::printf("G=%u F=%u M=%u permit=%u requested_speed=%u heartbeat=%u output_ok=%u applied_speed=%u\n",
                 out.glow_command, out.fuel_command, out.fan_request, out.fuel_permit,
-                out.speed_permille, out.watchdog_heartbeat);
+                out.speed_permille, out.watchdog_heartbeat, snapshot.output_ok, snapshot.applied_speed);
 }
 
 void print_help() {
@@ -195,7 +120,8 @@ void print_help() {
         "  reset                         (bench only; physical RESET is required for latch)\n"
         "  config show | config validate | config token | config revoke\n"
         "  config set <field> <integer>  (temperatures are milli-C, durations are ms)\n"
-        "  GPIO17 drive profile is fixed to PWM; schema-1 revision configs are rejected\n"
+        "  GPIO17: 0=LOW, 1..800=PWM, 1000=static HIGH; frequency <=20000Hz and LEDC-achievable\n"
+        "  edit/accept/revoke only with fan, fuel and glow OFF; changes require reboot\n"
         "  config accept <8-hex-token>   (then reboot)\n");
 }
 
@@ -244,6 +170,15 @@ void cli_task(void*) {
                 continue;
             }
             if (xSemaphoreTake(g_config_mutex, pdMS_TO_TICKS(500)) != pdTRUE) continue;
+            const bool mutation = std::strcmp(action, "set") == 0 ||
+                                  std::strcmp(action, "accept") == 0 ||
+                                  std::strcmp(action, "revoke") == 0;
+            if (mutation && !g_config_edit_safe) {
+                std::printf("config rejected: wait for completed purge and safe outputs\n");
+                xSemaphoreGive(g_config_mutex);
+                continue;
+            }
+            if (mutation) g_config_changed = true;
             if (std::strcmp(action, "show") == 0) {
                 g_store.print_config(g_config);
             } else if (std::strcmp(action, "validate") == 0) {
@@ -272,18 +207,9 @@ void cli_task(void*) {
                 const unsigned long token = token_text ? std::strtoul(token_text, &end, 16) : 0;
                 const bool token_valid = token_text && end && *end == '\0' && token <= UINT32_MAX &&
                                          static_cast<uint32_t>(token) == g_store.candidate_token(g_config);
-                if (!token_valid || sirokko::validate_config(g_config, false) != sirokko::CONFIG_OK) {
+                if (!token_valid || !g_store.accept_config(g_config, static_cast<uint32_t>(token))) {
                     std::printf("accept rejected: token mismatch or invalid candidate\n");
-                } else {
-                    g_config.commissioning_accepted = true;
-                    if (sirokko::validate_config(g_config) == sirokko::CONFIG_OK &&
-                        g_store.save_config(g_config)) {
-                        std::printf("accepted; reboot required\n");
-                    } else {
-                        g_config.commissioning_accepted = false;
-                        std::printf("accept save failed\n");
-                    }
-                }
+                } else std::printf("accepted; reboot required\n");
             } else {
                 std::printf("unknown config action\n");
             }
@@ -309,7 +235,8 @@ extern "C" void app_main() {
     bool config_integrity{};
     g_config = g_store.load_config(&config_integrity);
     g_setpoint_milli_c.store(g_store.load_setpoint(g_config));
-    const bool pwm_initialized = configure_gpio(g_config);
+    const bool inputs_initialized = configure_inputs();
+    const bool pwm_initialized = g_outputs.initialize(g_config);
     if (!pwm_initialized && sirokko::validate_config(g_config) == sirokko::CONFIG_OK) {
         g_config.commissioning_accepted = false;
     }
@@ -318,8 +245,9 @@ extern "C" void app_main() {
         recovery_outputs.fan_request = true;
         recovery_outputs.speed_permille = g_config.recovery_purge_pwm_permille;
         recovery_outputs.sw_trip = true;
-        apply_outputs(recovery_outputs);
+        g_outputs.apply(recovery_outputs);
     }
+    const sirokko::Config runtime_config = g_config;
 
     SensorSuite sensors;
     const bool sensors_initialized = sensors.begin();
@@ -330,11 +258,11 @@ extern "C" void app_main() {
     const bool persisted_faults_integrity = g_store.load_latched_faults(&persisted_faults);
     uint32_t startup_faults = persisted_faults;
     if (esp_reset_reason() == ESP_RST_BROWNOUT) startup_faults |= sirokko::FAULT_BROWNOUT_RESET;
-    if (!config_integrity || !persisted_faults_integrity || !pwm_initialized) {
+    if (!config_integrity || !persisted_faults_integrity || !pwm_initialized || !inputs_initialized) {
         startup_faults |= sirokko::FAULT_CONFIG;
     }
     startup_faults |= local_display_startup_fault(display_initialized);
-    sirokko::Machine machine(g_config, startup_faults);
+    sirokko::Machine machine(runtime_config, startup_faults);
 
     sirokko::DebouncedActiveLowButton start_button;
     sirokko::DebouncedActiveLowButton reset_button;
@@ -373,7 +301,7 @@ extern "C" void app_main() {
         if (up_event || down_event) {
             const int32_t delta = up_event ? kSetpointStepMilliC : -kSetpointStepMilliC;
             const int64_t candidate = static_cast<int64_t>(setpoint) + delta;
-            if (candidate >= g_config.setpoint_min_milli_c && candidate <= g_config.setpoint_max_milli_c &&
+            if (candidate >= runtime_config.setpoint_min_milli_c && candidate <= runtime_config.setpoint_max_milli_c &&
                 g_store.save_setpoint(static_cast<int32_t>(candidate))) {
                 setpoint = static_cast<int32_t>(candidate);
                 g_setpoint_milli_c.store(setpoint);
@@ -392,9 +320,23 @@ extern "C" void app_main() {
         inputs.hot_air = sensors.hot_air();
         inputs.room = sensors.room();
 
-        const sirokko::Outputs outputs = machine.tick(inputs);
+        // Serialize CLI edits with the decision and physical output pass: no START/edit race.
+        if (xSemaphoreTake(g_config_mutex, pdMS_TO_TICKS(20)) != pdTRUE) {
+            // No heartbeat service on a stalled pass; independent hardware watchdog remains authoritative.
+            vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(sirokko::kControlLoopPeriodMs));
+            continue;
+        }
+        inputs.configuration_ok = !g_config_changed && inputs_initialized;
+        inputs.output_ok = g_outputs.healthy();
+        sirokko::Outputs outputs = machine.tick(inputs);
+        if (!g_outputs.apply(outputs)) {
+            inputs.output_ok = false;
+            outputs = machine.tick(inputs);  // Latch and persist FAULT_OUTPUT in this same pass.
+        }
         const sirokko::Status status = machine.status(now);
-        apply_outputs(outputs);
+        g_config_edit_safe = !outputs.fan_request && !outputs.fuel_command &&
+                             !outputs.fuel_permit && !outputs.glow_command && outputs.speed_permille == 0;
+        xSemaphoreGive(g_config_mutex);
         last_outputs = outputs;
 
         if (status.faults != 0 && status.faults != last_persisted_faults) {
@@ -426,7 +368,7 @@ extern "C" void app_main() {
         if (xSemaphoreTake(g_snapshot_mutex, 0) == pdTRUE) {
             g_snapshot = {status, inputs.exhaust, inputs.hot_air, inputs.room, setpoint,
                           sensors.exhaust_status(), sensors.hot_air_status(), heat_enabled,
-                          stop_active, display.healthy()};
+                          stop_active, display.healthy(), g_outputs.healthy(), g_outputs.applied_speed()};
             xSemaphoreGive(g_snapshot_mutex);
         }
         vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(sirokko::kControlLoopPeriodMs));

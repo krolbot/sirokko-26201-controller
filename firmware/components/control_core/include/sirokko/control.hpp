@@ -9,7 +9,21 @@ inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
 inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
 inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
 inline constexpr uint32_t kConfigSchemaVersion = 2;
-inline constexpr uint32_t kPwmMaximumFrequencyHz = 78125;
+inline constexpr uint32_t kPwmMaximumFrequencyHz = 20000;
+inline constexpr uint32_t kPwmClockHz = 80000000;
+inline constexpr uint32_t kPwmResolutionBits = 10;
+inline constexpr uint16_t kPwmMaximumPermille = 800;
+// ESP-IDF 5.5.2: 18-bit divider with 8 fractional bits, APB clock, 10-bit duty.
+inline constexpr bool pwm_frequency_supported(uint32_t hz) {
+    if (hz == 0 || hz > kPwmMaximumFrequencyHz) return false;
+    const uint64_t precision = 1u << kPwmResolutionBits;
+    const uint64_t divider = ((static_cast<uint64_t>(kPwmClockHz) << 8) + hz * precision / 2) /
+                             (hz * precision);
+    return divider >= 256 && divider <= 0x3ffff;
+}
+inline constexpr bool speed_supported(uint16_t permille) {
+    return permille <= kPwmMaximumPermille || permille == 1000;
+}
 
 enum class State : uint8_t {
     BOOT_SELF_TEST,
@@ -110,6 +124,8 @@ struct Inputs {
     bool reset_request{};
     bool safety_ok{};
     bool local_ui_ok{true};
+    bool output_ok{true};
+    bool configuration_ok{true};
     int32_t setpoint_milli_c{};
     SensorSample exhaust{};
     SensorSample hot_air{};
@@ -132,6 +148,7 @@ enum Fault : uint32_t {
     FAULT_INTERNAL_INVARIANT = 1u << 11,
     FAULT_SELF_TEST_TIMEOUT = 1u << 12,
     FAULT_LOCAL_UI = 1u << 13,
+    FAULT_OUTPUT = 1u << 14,
 };
 
 struct Outputs {
@@ -142,7 +159,7 @@ struct Outputs {
     bool arm_ready{};
     bool sw_trip{};
     bool watchdog_heartbeat{};
-    // GPIO17 is always PWM. 0..1000 is duty; no discrete/two-speed interpretation exists.
+    // Requested speed: 0=static LOW, 1..800=PWM, 1000=static HIGH; 801..999 forbidden.
     uint16_t speed_permille{};
 };
 

@@ -2,6 +2,11 @@
 #include "sirokko/button.hpp"
 #include "board.hpp"
 #include "local_display.hpp"
+#include "output_driver.hpp"
+#include "commissioning.hpp"
+#include "idf_stubs.hpp"
+#include <algorithm>
+#include <cstring>
 
 #include <cstdint>
 #include <functional>
@@ -1041,10 +1046,239 @@ void test_active_low_button_rejects_bounce_and_wraps() {
     check(button.update(false, 5u), "debounce elapsed must survive wrap");
 }
 
+void test_pwm_hardware_boundaries() {
+    for (uint32_t hz : {0u, 1u, 76u, 77u, 20000u, 20001u, 78125u}) {
+        Config c = test_config();
+        c.pwm_frequency_hz = hz;
+        const bool expected = hz == 77 || hz == 20000;
+        check(((validate_config(c) & CONFIG_PWM) == 0) == expected, "frequency boundary");
+    }
+    for (uint16_t duty : {0, 1, 800, 801, 999, 1000, 1001}) {
+        Config c = test_config();
+        c.low_pwm_permille = duty;
+        check(((validate_config(c) & CONFIG_PWM) == 0) == (duty == 1 || duty == 800), "low boundary");
+        c = test_config();
+        c.recovery_purge_pwm_permille = duty;
+        check(((validate_config(c) & CONFIG_PWM) == 0) == (duty == 1 || duty == 800 || duty == 1000), "recovery boundary");
+        check(speed_supported(duty) == (duty <= 800 || duty == 1000), "output boundary incl OFF");
+    }
+}
+
+void check_physical_off() {
+    check(!fake_idf::connected || (!fake_idf::running && fake_idf::idle == 0), "GPIO17 must not retain PWM/HIGH");
+    for (int pin : {14, 15, 16, 18, 21, 41}) check(fake_idf::levels[pin] == 0, "dangerous outputs off");
+    check(fake_idf::levels[42] == 1, "software trip asserted");
+}
+
+Outputs commanded_speed(uint16_t duty) {
+    Outputs out{};
+    out.speed_permille = duty;
+    out.fan_request = duty != 0;
+    return out;
+}
+
+void test_real_adapter_off_pwm_dc_pwm_off() {
+    fake_idf::reset();
+    OutputDriver driver;
+    check(driver.initialize(test_config()), "adapter init");
+    for (uint16_t duty : {0, 1, 800, 1000, 1000, 1, 800, 0}) {
+        fake_idf::trace.clear();
+        check(driver.apply(commanded_speed(duty)), "transition must succeed");
+        check(driver.applied_speed() == duty, "requested versus applied speed");
+        if (duty == 0 || duty == 1000) {
+            check(!fake_idf::running && fake_idf::idle == (duty == 1000 ? 1u : 0u), "static is not a PWM counter maximum");
+            check(std::find(fake_idf::trace.begin(), fake_idf::trace.end(), "update") == fake_idf::trace.end(), "no periodic restart in DC");
+        } else {
+            const uint32_t expected = (duty * 1024u + 500u) / 1000u;
+            check(fake_idf::running && fake_idf::active == expected, "1024 physical ticks per period, rounded duty");
+            check(fake_idf::active < 1024, "no counter overflow");
+        }
+    }
+}
+
+void test_real_adapter_rejects_unqualified_commands() {
+    for (uint16_t duty : {801, 999, 1001}) {
+        fake_idf::reset();
+        OutputDriver driver;
+        check(driver.initialize(test_config()), "init");
+        check(driver.apply(commanded_speed(1000)), "precondition DC");
+        check(!driver.apply(commanded_speed(duty)), "no output-layer bypass");
+        check_physical_off();
+        check(!driver.apply(commanded_speed(1000)), "failure latched, no stale retry");
+        check_physical_off();
+    }
+}
+
+void test_real_adapter_initialization_errors() {
+    for (const char* call : {"gpio_config", "gpio_level:14:0", "timer", "channel", "frequency", "stop:0"}) {
+        fake_idf::reset();
+        fake_idf::failing_call = call;
+        OutputDriver driver;
+        check(!driver.initialize(test_config()), "injected initialization must fail");
+        check(!driver.healthy(), "failure latched");
+        check_physical_off();
+        check(!driver.initialize(test_config()), "no implicit reinitialization after fault");
+        check(!driver.apply(commanded_speed(1000)), "no stale command after init failure");
+        check_physical_off();
+    }
+}
+
+void test_real_adapter_runtime_errors() {
+    for (uint16_t source : {420, 1000}) {
+        for (const char* call : {"stop:1", "stop:0", "duty:819", "update", "gpio_level:14:1", "gpio_level:21:1"}) {
+            fake_idf::reset();
+            OutputDriver driver;
+            check(driver.initialize(test_config()), "init");
+            check(driver.apply(commanded_speed(source)), "source");
+            fake_idf::failing_call = call;
+            uint16_t target = std::string(call) == "stop:1" ? 1000 : std::string(call) == "stop:0" ? 0 : 800;
+            // Ensure stop:1 is actually issued when starting in DC.
+            if (source == 1000 && target == 1000) {
+                fake_idf::failing_call.clear();
+                check(driver.apply(commanded_speed(420)), "transition setup");
+                fake_idf::failing_call = call;
+            }
+            Outputs out = commanded_speed(target);
+            out.glow_command = out.fuel_command = out.fuel_permit = out.arm_ready = true;
+            check(!driver.apply(out), "injected runtime failure must propagate");
+            check_physical_off();
+            check(!driver.healthy() && driver.applied_speed() == 0, "fault status versus requested command");
+            check(!driver.apply(out), "repeated command cannot restore HIGH or PWM");
+            check_physical_off();
+        }
+    }
+}
+
+void test_real_adapter_stop_failure_detaches_gpio() {
+    fake_idf::reset();
+    OutputDriver driver;
+    check(driver.initialize(test_config()), "init");
+    check(driver.apply(commanded_speed(1000)), "source DC");
+    fake_idf::failing_call = "stop:0";
+    fake_idf::persistent_failure = true;
+    check(!driver.apply(commanded_speed(0)), "stop failure");
+    check(!fake_idf::connected && fake_idf::levels[17] == 0, "GPIO disconnect overrides persistent LEDC stop failure");
+    check(!driver.apply(commanded_speed(800)), "repeated failure stays inhibited");
+    check_physical_off();
+}
+
+void test_cli_store_validation_and_token_bypass() {
+    fake_idf::reset();
+    CommissioningStore store;
+    Config c = test_config();
+    for (const char* value : {"0", "1", "76", "20001", "78125", "4294967296"}) {
+        check(!store.set_field(c, "pwm_frequency_hz", value), "CLI rejects unsupported frequency");
+    }
+    for (const char* value : {"0", "801", "999", "1001", "65537", "-1"}) {
+        check(!store.set_field(c, "recovery_purge_pwm_permille", value), "CLI rejects recovery bypass");
+        check(!store.set_field(c, "low_pwm_permille", value), "CLI rejects low bypass");
+    }
+    check(!store.set_field(c, "low_pwm_permille", "1000"), "low cannot be static ON");
+    check(store.set_field(c, "recovery_purge_pwm_permille", "1000"), "recovery may be true DC");
+    check(!c.commissioning_accepted, "edit revokes acceptance");
+    check(store.accept_config(c, store.candidate_token(c)), "valid candidate accepted");
+    const uint32_t stale = store.candidate_token(c);
+    check(store.set_field(c, "pwm_frequency_hz", "20000"), "upper boundary");
+    check(!store.accept_config(c, stale), "old token cannot commit changed profile");
+    c.low_pwm_permille = 999;
+    check(!store.accept_config(c, store.candidate_token(c)), "matching token cannot bypass validator");
+    c.commissioning_accepted = true;
+    check(!store.save_config(c), "direct accepted NVS write cannot bypass validator");
+}
+
+void test_legacy_accepted_nvs_out_of_range() {
+    for (int field : {0, 1, 2, 3}) {
+        fake_idf::reset();
+        CommissioningStore store;
+        // Construct the actual old schema-2 blob with a valid legacy digest, not a core mock.
+        struct Stored { uint32_t magic; Config config; uint32_t digest; } stored{};
+        stored.magic = 0x5349524f;
+        stored.config = test_config();
+        if (field == 0) stored.config.pwm_frequency_hz = 78125;
+        if (field == 1) stored.config.low_pwm_permille = 801;
+        if (field == 2) stored.config.recovery_purge_pwm_permille = 999;
+        if (field == 3) stored.config.schema_version = 1;
+        uint32_t hash = 2166136261u;
+        auto feed = [&](const void* ptr, size_t size) {
+            const auto* bytes = static_cast<const uint8_t*>(ptr);
+            for (size_t i=0; i<size; ++i) hash = (hash ^ bytes[i]) * 16777619u;
+        };
+        feed(&stored.config.schema_version, sizeof(stored.config.schema_version));
+        feed(&stored.config.commissioning_accepted, sizeof(stored.config.commissioning_accepted));
+        feed(&stored.config.boot_self_test_timeout_ms,
+             offsetof(Config, low_pwm_permille) + sizeof(stored.config.low_pwm_permille) - offsetof(Config, boot_self_test_timeout_ms));
+        stored.digest = hash;
+        nvs_set_blob(1, "config", &stored, sizeof(stored));
+        bool integrity{};
+        Config loaded = store.load_config(&integrity);
+        check(integrity, "old checksum must actually verify");
+        check(!loaded.commissioning_accepted, "invalid old acceptance revoked");
+        check(loaded.pwm_frequency_hz == stored.config.pwm_frequency_hz &&
+              loaded.low_pwm_permille == stored.config.low_pwm_permille &&
+              loaded.recovery_purge_pwm_permille == stored.config.recovery_purge_pwm_permille, "no hidden clamping");
+        check(!store.accept_config(loaded, store.candidate_token(loaded)), "cannot reaccept invalid NVS");
+        Sim s(loaded);
+        s.in.heat_enable = true;
+        s.advance(200);
+        expect_safe(s.out);
+        check(!s.out.arm_ready && !s.out.fan_request, "old accepted profile cannot START or purge");
+    }
+}
+
+void test_output_fault_and_config_edit_latch() {
+    for (bool pwm : {false, true}) {
+        Sim s;
+        drive_to_state(s, pwm ? State::RUN_LOW : State::RUN_HIGH);
+        s.in.output_ok = false;
+        s.tick();
+        check(s.faults() & FAULT_OUTPUT, "runtime output fault latched");
+        expect_safe(s.out);
+        check(!s.out.arm_ready && !s.out.watchdog_heartbeat, "no permit or heartbeat after output failure");
+    }
+    Sim s;
+    s.boot_wait();
+    s.in.configuration_ok = false;
+    s.in.heat_enable = true;
+    s.tick();
+    check(s.faults() & FAULT_CONFIG, "edited candidate inhibits START until reboot");
+    expect_safe(s.out);
+}
+
+void test_static_recovery_and_unchanged_purge() {
+    Config c = test_config();
+    c.recovery_purge_pwm_permille = 1000;
+    Sim s(c);
+    s.boot_wait();
+    for (State state : {State::PREPURGE, State::SPINUP, State::IGNITION_TRIAL, State::FLAME_CONFIRM,
+                        State::RUN_HIGH, State::POST_PURGE}) {
+        Sim active(c);
+        drive_to_state(active, state);
+        check(active.out.speed_permille == 1000, "high states not clamped to 800");
+    }
+    for (State state : {State::RUN_LOW, State::RUN_HIGH}) {
+        Sim active(c);
+        drive_to_state(active, state);
+        active.in.hot_air.milli_c = c.air_overtemp_milli_c;
+        active.tick();
+        expect_safe(active.out);
+        check(active.out.fan_request && active.out.speed_permille == 1000, "thermal fault retains full post-purge, not universal fan-OFF");
+    }
+}
+
 }  // namespace
 
 int main() {
     const std::vector<std::pair<const char*, std::function<void()>>> tests = {
+        {"pwm_hardware_boundaries", test_pwm_hardware_boundaries},
+        {"real_adapter_off_pwm_dc_pwm_off", test_real_adapter_off_pwm_dc_pwm_off},
+        {"real_adapter_rejects_unqualified_commands", test_real_adapter_rejects_unqualified_commands},
+        {"real_adapter_initialization_errors", test_real_adapter_initialization_errors},
+        {"real_adapter_runtime_errors", test_real_adapter_runtime_errors},
+        {"real_adapter_stop_failure_detaches_gpio", test_real_adapter_stop_failure_detaches_gpio},
+        {"cli_store_validation_and_token_bypass", test_cli_store_validation_and_token_bypass},
+        {"legacy_accepted_nvs_out_of_range", test_legacy_accepted_nvs_out_of_range},
+        {"output_fault_and_config_edit_latch", test_output_fault_and_config_edit_latch},
+        {"static_recovery_and_unchanged_purge", test_static_recovery_and_unchanged_purge},
         {"config_validation", test_config_validation},
         {"uncommissioned_image_is_locked", test_uncommissioned_image_is_locked},
         {"recovery_purge_after_power_loss_from_every_state",

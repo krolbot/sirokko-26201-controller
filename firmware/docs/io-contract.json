@@ -1,5 +1,5 @@
 {
-  "contract_id": "sirokko-26201-controller-io-draft-04",
+  "contract_id": "sirokko-26201-controller-io-draft-05",
   "status": "hardware-draft-for-firmware-build-and-bench-test",
   "target": "ESP32-S3-DevKitC-1-N8R8 v1.1",
   "logic_voltage_v": 3.3,
@@ -8,7 +8,7 @@
     "START_REQUEST, RESET_REQUEST, SET_UP and SET_DOWN are active-low dry-contact inputs with external 10 kOhm pull-ups to 3.3 V.",
     "STOP_STATUS is fail-safe: LOW means the normally-closed circuit is healthy; HIGH means STOP or an open wire.",
     "No firmware build or host test constitutes authorization for fired operation. Commissioning values must be measured and explicitly accepted.",
-    "GPIO17 is PWM-only. Schema-1 board-revision and two-speed profiles are rejected rather than migrated.",
+    "GPIO17 uses one motor channel: 0=constant LOW, 1..800=PWM, 1000=constant HIGH. 801..999 is rejected, never clamped. Schema-1 board-revision and two-speed profiles remain rejected.",
     "A separate 220/24V presence input, TPS3808 and extra EN reset path are excluded. Normal power loss de-energizes the MCU; recovery restarts on the actual boot/reset after 24V returns. MAIN_POWER_OK and GPIO43 are not used.",
     "The SSD1306/I2C panel is removed. ST7789V and both MAX31856 devices share SPI2 with independent chip selects and per-device mode/clock settings.",
     "The selected seven-pin ST7789V module is write-only: no MISO/TE/presence feedback is available, so firmware can detect driver or transfer errors but cannot prove that an unplugged glass/module received pixels."
@@ -29,7 +29,7 @@
     {"name":"GLOW_CMD","gpio":14,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
     {"name":"FUEL_CMD","gpio":15,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
     {"name":"FAN_CMD","gpio":16,"direction":"output","active":"high","boot_rule":"LOW/Hi-Z = off"},
-    {"name":"SPEED_CMD","gpio":17,"direction":"output","active":"pwm","frequency_hz":"commissioned 1..78125","duty_permille":"commissioned 1..1000 when active","boot_rule":"LOW/Hi-Z until an accepted schema-2 profile is loaded"},
+    {"name":"SPEED_CMD","gpio":17,"direction":"output","active":"PWM or static level","frequency_hz":"commissioned 77..20000; APB 80MHz, 10-bit resolution, checked divider and LEDC API result","duty_permille":"0 static LOW; 1..800 active PWM; 1000 static HIGH; 801..999 rejected","boot_rule":"LOW/Hi-Z until a valid accepted schema-2 profile is loaded"},
     {"name":"WATCHDOG_HEARTBEAT","gpio":18,"direction":"output","active":"falling-edge service; toggled by completed control-loop passes","boot_rule":"stopped until healthy"},
     {"name":"FUEL_PERMIT","gpio":21,"direction":"output","active":"high","external_bias":"10k pull-down","boot_rule":"LOW/Hi-Z = off"},
     {"name":"SET_UP","gpio":39,"direction":"input","active":"low","external_bias":"10k pull-up to 3.3V"},
@@ -93,6 +93,7 @@
     "bench_measurement_required": true
   },
   "fuel_permit_conditions": [
+    "output adapter is healthy and no candidate configuration mutation awaits reboot",
     "state is IGNITION_TRIAL, FLAME_CONFIRM, RUN_HIGH or RUN_LOW",
     "SAFETY_OK is HIGH",
     "ARM_READY is HIGH",
@@ -109,5 +110,19 @@
     "fan operation continues through PREHEAT after PREPURGE",
     "external independent post-purge is not bypassed by firmware"
   ],
-  "latched_fault_persistence": "The software fault mask is stored in NVS, restored on every boot, and cleared only after a qualified manual RESET exits LOCKOUT."
+  "latched_fault_persistence": "The software fault mask is stored in NVS, restored on every boot, and cleared only after a qualified manual RESET exits LOCKOUT.",
+  "motor_output_contract": {
+    "status": "DRAFT / BENCH ONLY; not a power-stage qualification or combustion approval",
+    "hardware_basis": "LTC7001 + IRFB4110 candidate; motor_gate_supply_qualification.md firmware restriction, lines 31..37",
+    "static_levels": "ESP-IDF 5.5.2 ESP32-S3 ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 0 or 1); no recurring PWM edges",
+    "resume_pwm": "stage fresh duty with ledc_set_duty, then ledc_update_duty re-enables signal output; check each result",
+    "requested_vs_physical": "1..800 maps to round(requested_permille*1024/1000) ticks per 1024-tick period; 1000 never maps to 1023 ticks. CLI applied_speed is successful command bookkeeping, not electrical GPIO feedback.",
+    "profiles": "low_pwm_permille=1..800; recovery_purge_pwm_permille=1..800 or 1000; maximum-speed machine states retain 1000 static DC",
+    "frequency_validation": "Fixed APB 80MHz/10bit, 18-bit divider with 8 fractional bits: divider=round((80000000<<8)/(Hz*1024)), 256..262143. Thus 1..76Hz is unachievable in this selected configuration and rejected as CONFIG_PWM, not silently adjusted.",
+    "configuration_changes": "set/accept/revoke only while fan, fuel, permit and glow are OFF; serialized with the control/output pass. Any mutation attempt inhibits START until reboot. Runtime configuration remains immutable until reboot.",
+    "old_nvs": "Digest-valid schema-2 profiles outside current limits lose in-memory acceptance, retain original values, report CONFIG_PWM and cannot START. Correct, validate, accept token, reboot, then qualified RESET for retained faults.",
+    "output_failure": "Latched FAULT_OUTPUT; fuel, fuel permit, glow, ARM_READY and heartbeat LOW; SW_TRIP HIGH. Try LEDC stop LOW and independently detach GPIO17 to GPIO output LOW. Repeat shutdown on subsequent passes, never replay old HIGH/PWM; reboot required. Failed shutdown API results are recorded; software is not proof against a physically failed MCU/GPIO.",
+    "normal_stop_or_thermal_fault": "Fuel OFF first; required fan post-purge remains at 1000 static HIGH until the existing machine commands zero. Only output-subsystem failure forces immediate motor OFF.",
+    "bench_required": "Measure actual frequency/duty for 1..800; no recurring LOW dips at 1000 including repeated DC and PWM/DC transitions; GPIO17 LOW on actual command zero and injected adapter failure; preserve fuel-OFF-before-post-purge ordering. No physical measurement performed by host tests."
+  }
 }

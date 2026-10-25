@@ -145,6 +145,11 @@ sirokko::Config CommissioningStore::load_config(bool* integrity_ok) {
         if (error == ESP_OK && size == sizeof(stored) && stored.magic == kConfigMagic &&
             stored.digest == config_digest(stored.config, true)) {
             if (integrity_ok) *integrity_ok = true;
+            if (sirokko::validate_config(stored.config, false) != sirokko::CONFIG_OK) {
+                stored.config.commissioning_accepted = false;
+                std::printf("NVS profile rejected; CONFIG_PWM=%u. Correct parameters, validate, accept and reboot. No clamping.\n",
+                            (sirokko::validate_config(stored.config, false) & sirokko::CONFIG_PWM) != 0);
+            }
             return stored.config;
         }
     }
@@ -155,6 +160,7 @@ sirokko::Config CommissioningStore::load_config(bool* integrity_ok) {
 }
 
 bool CommissioningStore::save_config(const sirokko::Config& config) {
+    if (config.commissioning_accepted && sirokko::validate_config(config) != sirokko::CONFIG_OK) return false;
     StoredConfig stored{};
     stored.magic = kConfigMagic;
     stored.config = config;
@@ -169,6 +175,16 @@ bool CommissioningStore::save_config(const sirokko::Config& config) {
 
 uint32_t CommissioningStore::candidate_token(const sirokko::Config& config) const {
     return config_digest(config, false);
+}
+
+bool CommissioningStore::accept_config(sirokko::Config& config, uint32_t token) {
+    if (token != candidate_token(config) ||
+        sirokko::validate_config(config, false) != sirokko::CONFIG_OK) return false;
+    sirokko::Config accepted = config;
+    accepted.commissioning_accepted = true;
+    if (!save_config(accepted)) return false;
+    config = accepted;
+    return true;
 }
 
 bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const char* value) const {
@@ -219,11 +235,19 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
     SET_I32(high_to_low_delta_milli_c)
     SET_I32(low_to_high_delta_milli_c)
     SET_I32(stop_delta_milli_c)
-    SET_U32(pwm_frequency_hz)
+    if (std::strcmp(key, "pwm_frequency_hz") == 0) {
+        uint32_t parsed{};
+        if (!parse_unsigned(value, &parsed) || !sirokko::pwm_frequency_supported(parsed)) return false;
+        c.pwm_frequency_hz = parsed;
+        c.commissioning_accepted = false;
+        return true;
+    }
     if (std::strcmp(key, "recovery_purge_pwm_permille") == 0 ||
         std::strcmp(key, "low_pwm_permille") == 0) {
         uint32_t parsed{};
-        if (!parse_unsigned(value, &parsed) || parsed > UINT16_MAX) return false;
+        if (!parse_unsigned(value, &parsed) || parsed == 0 || parsed > 1000 ||
+            !sirokko::speed_supported(static_cast<uint16_t>(parsed)) ||
+            (std::strcmp(key, "low_pwm_permille") == 0 && parsed > sirokko::kPwmMaximumPermille)) return false;
         if (std::strcmp(key, "recovery_purge_pwm_permille") == 0) {
             c.recovery_purge_pwm_permille = static_cast<uint16_t>(parsed);
         } else {

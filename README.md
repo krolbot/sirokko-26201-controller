@@ -1,13 +1,13 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main combines the recovered hardware WIP snapshot and `0.1.4-draft` firmware. It is not a finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
+> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main combines the recovered hardware WIP snapshot and `0.1.5-DRAFT` firmware. It is not a finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
 
 ## Published in main
 
 - `hardware/kicad/` — recovered main PCB, matching native KiCad 10.0.6 schematic, project, local libraries and separate draft sheets;
 - `hardware/candidates/input-protection/` — a separate input-protection candidate, not integrated into the main PCB;
 - [SPI recovered WIP candidate](hardware/candidates/spi_recovered/) — only `/TC_AIR_CS` is completed; 130 track segments, 35 vias, 181 unconnected items and the same 4 library warnings. It does not replace the canonical PCB; remaining SPI and power routing is unfinished. The candidate README includes both copper layers;
-- `firmware/` — ESP-IDF 5.5.2 sources, host tests, I/O contract and the `0.1.4-draft` flashing set;
+- `firmware/` — ESP-IDF 5.5.2 sources, host tests, I/O contract and versioned bench flashing sets;
 - `docs/` — functional requirements, including the selected power-return behavior;
 - `verification/wip-2026-10-25/` — recorded hardware checks. Earlier DRAFT-01/DRAFT-02 exports are historical, not evidence for the current PCB.
 
@@ -15,7 +15,7 @@ The recovered PCB has 88 footprints, 123 track segments, 32 vias and 3 copper zo
 
 ## Firmware verification
 
-The published `0.1.4-draft` set passed 39/39 host tests and a clean ESP-IDF 5.5.2 build. Checksums and the build log are included in `firmware/release/firmware/0.1.4/`. The [separate ESP32-S3 build kit](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md) preserves the completed build, locked configuration, source archive, flashing instructions and third-party license notices; DRAFT / BENCH ONLY.
+The `0.1.5-DRAFT` motor/output change passes 50/50 host tests (all 40 actual baseline tests plus 10 new boundary/fault-injection groups). GPIO17 now distinguishes constant LOW, PWM 1..800 and constant HIGH 1000; maximum switching frequency is 20kHz, and old unqualified NVS profiles cannot START. Normal STOP/thermal post-purge remains intact. See the [current ESP32-S3 build kit](firmware/release/build-kits/0.1.5-esp32s3/) for target-build logs, images and reproducibility. The [older 0.1.4 kit](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md) remains unchanged historical DRAFT evidence.
 
 No physical ESP32, TFT, sensor, power stage, load or burner test has been performed. Building or flashing the image does not authorize fired operation.
 
