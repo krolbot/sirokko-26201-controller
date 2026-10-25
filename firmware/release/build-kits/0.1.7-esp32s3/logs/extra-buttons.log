@@ -1,0 +1,11 @@
+PASS supplementary START+RESET BOOT_SELF_TEST
+PASS supplementary START+RESET RECOVERY_PURGE
+PASS supplementary START+RESET PREPURGE
+PASS supplementary START+RESET PREHEAT
+PASS supplementary START+RESET SPINUP
+PASS supplementary START+RESET IGNITION_TRIAL
+PASS supplementary START+RESET FLAME_CONFIRM
+PASS supplementary START+RESET RUN_HIGH
+PASS supplementary START+RESET RUN_LOW
+PASS supplementary START+RESET POST_PURGE
+SUPPLEMENTARY RESULT 10/10 stage comparisons; injected inputs, no physical board
