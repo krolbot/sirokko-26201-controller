@@ -302,6 +302,22 @@ bool adjust_bounded(int32_t& value, int32_t step, int32_t minimum, int32_t maxim
     return true;
 }
 
+const char* start_label(StartBlock b) {
+    switch (b) {
+        case StartBlock::NONE: return "ГОТОВ";
+        case StartBlock::PROFILE: return "ПРОФИЛЬ/NVS";
+        case StartBlock::FAULT: return "АВАРИЯ";
+        case StartBlock::RECOVERY: return "ВОССТАНОВЛЕНИЕ";
+        case StartBlock::ACTIVE: return "ЭТАП АКТИВЕН";
+        case StartBlock::SERVICE: return "ОБСЛУЖИВАНИЕ";
+        case StartBlock::STOP: return "СТОП";
+        case StartBlock::SAFETY: return "ЗАЩИТА/RESET";
+        case StartBlock::RESTART_DELAY: return "ПАУЗА ПУСКА";
+        case StartBlock::HOT: return "ОХЛАЖДЕНИЕ";
+        case StartBlock::ROOM: return "КОМНАТА ТЕПЛАЯ";
+    }
+    return "ЗАПРЕЩЁН";
+}
 void render_home(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
@@ -351,10 +367,8 @@ void render_home(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
             break;
         }
         case 5: {
-            const bool service_gate = frame.safety_ok && frame.settings_ok && frame.storage_ok &&
-                                      frame.status.commissioning_ready;
             std::snprintf(first, sizeof(first), "НАКАЛ КОМ:%s", yes_no(frame.status.outputs.glow_command));
-            std::snprintf(second, sizeof(second), "СЕРВИС:%s", service_gate ? "ГОТОВ" : "ЗАКР");
+            std::snprintf(second, sizeof(second), "ПУСК:%s", start_label(frame.status.start_block));
             break;
         }
         case 6:
@@ -447,6 +461,10 @@ void render_edit(uint16_t* pixels, uint8_t band, const UiFrame& frame, UiPage pa
         case 3:
             std::snprintf(first, sizeof(first), "ХОРДА: НАЗАД");
             std::snprintf(second, sizeof(second), "СТОП: ГЛАВНАЯ");
+            break;
+        case 4:
+            std::snprintf(first, sizeof(first), "%s", frame.settings_saved ? "NVS: СОХРАНЕНО" : "NVS: НЕ СОХРАНЕНО");
+            std::snprintf(second, sizeof(second), "%s", frame.settings_saved ? "" : "ПОСЛЕ ОСТАНОВКИ");
             break;
         case 7:
             std::snprintf(first, sizeof(first), "BENCH ONLY");
@@ -607,12 +625,12 @@ void render_reset_counters(uint16_t* pixels, uint8_t band) {
         std::snprintf(first, sizeof(first), "СБРОС СЧЕТЧИКОВ");
         std::snprintf(second, sizeof(second), "ОТПУСТИТЕ КЛАВИШИ");
     } else if (band == 1) {
-        foreground = kRed;
+        foreground = kWhite;
         std::snprintf(first, sizeof(first), "НОВАЯ ХОРДА 2 С");
         std::snprintf(second, sizeof(second), "UP+DOWN УДЕРЖ.");
     } else if (band == 2) {
-        std::snprintf(first, sizeof(first), "ОДИН РАЗ ПОСЛЕ");
-        std::snprintf(second, sizeof(second), "СБРОС: СЧЕТЧИКИ");
+        std::snprintf(first, sizeof(first), "ТОЛЬКО СЧЁТЧИКИ");
+        std::snprintf(second, sizeof(second), "АВАРИЯ ОСТАЁТСЯ");
     } else if (band == 7) {
         std::snprintf(first, sizeof(first), "UP ИЛИ DN: ОТМЕНА");
         std::snprintf(second, sizeof(second), "СТОП: ГЛАВНАЯ");
@@ -627,7 +645,7 @@ void render_version(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     switch (band) {
         case 0:
             std::snprintf(first, sizeof(first), "СИРОККО UI");
-            std::snprintf(second, sizeof(second), "0.1.6-DRAFT");
+            std::snprintf(second, sizeof(second), "%s", frame.firmware_version[0] ? frame.firmware_version : "ВЕРСИЯ НЕИЗВЕСТНА");
             break;
         case 1:
             std::snprintf(first, sizeof(first), "BENCH ONLY");
@@ -700,9 +718,8 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
     UiAction action{};
     const bool both_held = keys.up_held && keys.down_held;
 
-    // The fixed private state has no explicit initialization bit. UINT32_MAX is an inactive
-    // sentinel, so the all-zero constructor state can reject a chord held at the first poll.
-    if (chord_since_ == 0 && last_activity_ == 0 && !chord_active_ && !chord_fired_) {
+    if (!initialized_) {
+        initialized_ = true;
         chord_since_ = std::numeric_limits<uint32_t>::max();
         last_activity_ = now_ms;
         if (both_held) {

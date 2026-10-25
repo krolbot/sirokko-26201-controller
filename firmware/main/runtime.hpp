@@ -6,6 +6,8 @@ enum class FlashPurpose : uint8_t { LOCAL_SETTINGS, OTA };
 bool runtime_snapshot(sirokko::UiFrame*);
 void runtime_remote_stop();
 sirokko::ServiceResult runtime_acquire_flash(FlashPurpose);
+bool runtime_flash_safe();
+bool runtime_checkpoint();
 void runtime_release_flash();
 uint32_t runtime_control_passes();
 

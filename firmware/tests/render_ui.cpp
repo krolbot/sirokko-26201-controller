@@ -1,3 +1,6 @@
+#define main baseline_main
+#include "sim_tests.cpp"
+#undef main
 #include "sirokko/ui.hpp"
 
 #include <array>
@@ -14,38 +17,28 @@ using namespace sirokko;
 namespace {
 
 Config profile() {
-    Config config{};
-    config.commissioning_accepted = true;
-    config.sensor_stale_ms = 2000;
-    config.setpoint_min_milli_c = 5000;
-    config.setpoint_max_milli_c = 35000;
-    config.setpoint_default_milli_c = 20000;
-    config.pwm_frequency_hz = 10000;
-    config.low_pwm_permille = 420;
-    config.recovery_purge_pwm_permille = 650;
+    Config config=test_config(); // Simulation only, never a measured Sirokko profile.
     return config;
 }
 
 UiFrame example_frame() {
+    Sim sim(profile()); sim.reach_run_high(); sim.in.room.milli_c=20000; sim.advance(sim.config.stage_min_ms);
     UiFrame frame{};
-    frame.now_ms = 90'000;
-    frame.config = profile();
-    frame.settings = {kOperatorSchema, 21000, 2000, -300};
-    frame.raw_room = {20400, 89'500, SensorQuality::OK};
-    frame.room = {20100, 89'500, SensorQuality::OK};
-    frame.exhaust = {183400, 89'000, SensorQuality::OK};
-    frame.hot_air = {64200, 88'000, SensorQuality::CRC_ERROR};
-    frame.status.state = State::RUN_LOW;
-    frame.status.commissioning_ready = true;
-    frame.status.outputs = {false, true, true, true, true, false, true, 420};
+    frame.now_ms = sim.in.now_ms;
+    frame.config = sim.config;
+    frame.settings = {kOperatorSchema, 20000, 1000, -300};
+    frame.raw_room = {20300, frame.now_ms, SensorQuality::OK};
+    frame.room = sim.in.room; frame.exhaust=sim.in.exhaust; frame.hot_air=sim.in.hot_air;
+    frame.status=sim.machine.status(frame.now_ms);
     frame.counters = {14, 2, 9'000'000, 310'000};
     frame.last_event.to = State::RUN_LOW;
-    frame.last_event.reason = StopReason::THERMOSTAT;
+    frame.last_event.reason = StopReason::NONE;
     frame.boot_id = 7;
     frame.session_id = 3;
-    frame.profile_token = 0xa1b2c3d4;
-    frame.exhaust_fault = 0x04;
-    frame.hot_air_fault = 0x20;
+    frame.profile_token = CommissioningStore{}.candidate_token(frame.config);
+    std::strcpy(frame.firmware_version,"0.1.6-DRAFT");
+    frame.exhaust_fault = 0;
+    frame.hot_air_fault = 0;
     frame.safety_ok = true;
     frame.settings_ok = true;
     frame.storage_ok = true;
@@ -120,6 +113,12 @@ int main(int argc, char** argv) {
         render_example(directory, "counters", frame, UiPage::COUNTERS);
         render_example(directory, "reset_counters", frame, UiPage::RESET_COUNTERS);
         render_example(directory, "version", frame, UiPage::VERSION);
+        Sim failure(profile()); failure.reach_run_high(); failure.in.hot_air.quality=SensorQuality::HARDWARE_FAULT; failure.tick();
+        auto fault=frame; fault.now_ms=failure.in.now_ms; fault.status=failure.machine.status(fault.now_ms);
+        fault.room=failure.in.room; fault.raw_room=fault.room; fault.raw_room.milli_c-=fault.settings.room_offset_milli_c;
+        fault.exhaust=failure.in.exhaust; fault.hot_air=failure.in.hot_air; fault.hot_air_fault=0x20;
+        render_example(directory, "fault", fault, UiPage::HOME);
+        render_example(directory, "diagnostics_fault", fault, UiPage::DIAGNOSTICS);
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "render_ui: " << error.what() << '\n';

@@ -167,7 +167,10 @@ struct Outputs {
     uint16_t speed_permille{};
 };
 
+enum class StartBlock : uint8_t { NONE, PROFILE, FAULT, RECOVERY, ACTIVE, SERVICE, STOP, SAFETY, RESTART_DELAY, HOT, ROOM };
+
 struct Status {
+    StartBlock start_block{StartBlock::RECOVERY};
     State state{State::BOOT_SELF_TEST};
     uint32_t faults{FAULT_NONE};
     uint32_t state_age_ms{};
@@ -206,6 +209,7 @@ private:
     bool start_release_seen_{};
     bool previous_heat_enable_{};
     bool heartbeat_level_{};
+    StartBlock start_block_{StartBlock::RECOVERY};
     Outputs outputs_{};
 
     static uint32_t elapsed(uint32_t now, uint32_t since);

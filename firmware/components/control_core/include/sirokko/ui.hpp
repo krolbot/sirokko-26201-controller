@@ -27,8 +27,10 @@ private:
     uint32_t last_activity_{};
     bool chord_active_{};
     bool chord_fired_{};
+    bool initialized_{};
 };
 struct UiFrame {
+    char firmware_version[32]{};
     Status status{};
     Config config{};
     OperatorSettings settings{};
@@ -49,6 +51,7 @@ struct UiFrame {
     bool stop_active{};
     bool settings_ok{};
     bool storage_ok{};
+    bool settings_saved{true};
     bool network_configured{};
     bool network_connected{};
     bool update_active{};

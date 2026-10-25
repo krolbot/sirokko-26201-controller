@@ -38,6 +38,18 @@ void CommandHistory::begin(uint32_t boot_id, const CommandCounters& restored) {
     boot_id_ = boot_id;
     counters_ = restored;
 }
+bool CommandHistory::restore_events(const EventRecord* events, size_t count) {
+    if (count > kEventCapacity || (count && !events)) return false;
+    for (size_t i = 0; i < count; ++i) {
+        const auto& e = events[i];
+        if (static_cast<unsigned>(e.from) > static_cast<unsigned>(State::LOCKOUT) ||
+            static_cast<unsigned>(e.to) > static_cast<unsigned>(State::LOCKOUT) ||
+            static_cast<unsigned>(e.reason) > static_cast<unsigned>(StopReason::BOOT) || e.boot_id == 0) return false;
+    }
+    for (size_t i = 0; i < count; ++i) events_[i] = events[i];
+    count_ = count; next_ = count % kEventCapacity;
+    return true;
+}
 void CommandHistory::observe(const Status& s, uint64_t now, StopReason reason) {
     if (initialized_) {
         const uint64_t dt = now >= previous_ms_ ? now - previous_ms_ : 0;
@@ -50,7 +62,7 @@ void CommandHistory::observe(const Status& s, uint64_t now, StopReason reason) {
             counters_.starts = saturated_add(counters_.starts, 1);
             if (session_id_ != UINT32_MAX) ++session_id_;
         }
-        if ((s.faults & FAULT_IGNITION_NOT_PROVEN) && !(previous_.faults & FAULT_IGNITION_NOT_PROVEN)) {
+        if (initialized_ && (s.faults & FAULT_IGNITION_NOT_PROVEN) && !(previous_.faults & FAULT_IGNITION_NOT_PROVEN)) {
             counters_.failed_ignitions = saturated_add(counters_.failed_ignitions, 1);
         }
         if (!initialized_) reason = StopReason::BOOT;

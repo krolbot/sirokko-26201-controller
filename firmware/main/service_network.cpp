@@ -5,6 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <string_view>
 #include "cJSON.h"
 #ifdef SIROKKO_NETWORK_HOST_TEST
 #include "network_test_api.hpp"
@@ -67,7 +68,15 @@ struct UpdateJob {
     uint32_t sequence;
     uint32_t issued_ms;
     uint32_t ttl_ms;
+    char nonce[33];
 };
+bool session_current(const UpdateJob& job) {
+    char nonce[33]{};
+    portENTER_CRITICAL(&g_nonce_lock);
+    std::memcpy(nonce, g_nonce, sizeof(nonce));
+    portEXIT_CRITICAL(&g_nonce_lock);
+    return g_connected.load() && std::strcmp(job.nonce, nonce) == 0;
+}
 uint32_t now_ms() { return static_cast<uint32_t>(esp_timer_get_time() / 1000ULL); }
 bool text(const cJSON* root, const char* key, char* dst, size_t capacity) {
     const auto* v = cJSON_GetObjectItemCaseSensitive(root, key);
@@ -81,6 +90,39 @@ bool integer(const cJSON* root, const char* key, uint32_t* out) {
         static_cast<double>(static_cast<uint32_t>(v->valuedouble)) != v->valuedouble) return false;
     *out = static_cast<uint32_t>(v->valuedouble);
     return true;
+}
+cJSON* parse_flat_object(const char* data, size_t size) {
+    // Every service field is scalar. Bound nesting before cJSON recursion can consume
+    // the small MQTT task stack; braces inside quoted PEM/URLs are not structural.
+    const std::string_view bytes(data, size);
+    if (bytes.find('\0') != std::string_view::npos || bytes.find("\\u0000") != std::string_view::npos) return nullptr;
+    bool quoted{}, escaped{};
+    unsigned depth{};
+    for (char c : bytes) {
+        if (quoted) {
+            if (escaped) escaped=false;
+            else if (c=='\\') escaped=true;
+            else if (c=='"') quoted=false;
+        } else if (c=='"') quoted=true;
+        else if (c=='{' && ++depth>1) return nullptr;
+        else if (c=='}') { if (!depth) return nullptr; --depth; }
+        else if (c=='[' || c==']') return nullptr;
+    }
+    if (quoted || depth) return nullptr;
+    const char* end{};
+    cJSON* root=cJSON_ParseWithLengthOpts(data,size,&end,false);
+    if (!root) return nullptr;
+    while (end<data+size && (*end==' ' || *end=='\r' || *end=='\n' || *end=='\t')) ++end;
+    bool unique=cJSON_IsObject(root) && end==data+size;
+    unsigned fields{};
+    for (const auto* item=root->child; unique && item; item=item->next) {
+        if (++fields>20 || !item->string) { unique=false; break; }
+        for (const auto* other=item->next; other; other=other->next) {
+            if (!other->string || std::strcmp(item->string,other->string)==0) { unique=false; break; }
+        }
+    }
+    if (!unique) { cJSON_Delete(root); return nullptr; }
+    return root;
 }
 bool config_valid(const NetworkConfig& c) {
     if (c.schema != 1 || !c.ssid[0] || !c.username[0] || !c.password[0] ||
@@ -100,11 +142,17 @@ void reply(uint32_t seq, const char* code) {
     if (g_mqtt && g_connected.load()) esp_mqtt_client_enqueue(g_mqtt, g_reply_topic, payload, 0, 1, 0, true);
 }
 int version_number(const char* s) {
-    unsigned major{}, minor{}, patch{};
-    int used{};
-    if (std::sscanf(s, "%u.%u.%u-DRAFT%n", &major, &minor, &patch, &used) != 3 ||
-        used <= 0 || s[used] != 0 || major > 99 || minor > 99 || patch > 99) return -1;
-    return static_cast<int>(major * 10000 + minor * 100 + patch);
+    unsigned value{};
+    for (unsigned part = 0; part < 3; ++part) {
+        unsigned n{}, digits{};
+        while (*s >= '0' && *s <= '9') {
+            if (++digits > 2) return -1;
+            n = n * 10 + static_cast<unsigned>(*s++ - '0');
+        }
+        if (!digits || (part < 2 && *s++ != '.')) return -1;
+        value = value * 100 + n;
+    }
+    return std::strcmp(s, "-DRAFT") == 0 ? static_cast<int>(value) : -1;
 }
 bool hex_hash(const char* s) {
     if (std::strlen(s) != 64) return false;
@@ -113,8 +161,8 @@ bool hex_hash(const char* s) {
 }
 bool signed_manifest(const UpdateJob& job) {
     char canonical[512]{};
-    const int n = std::snprintf(canonical, sizeof(canonical), "SIROKKO-OTA-1\nesp32s3\n%s\n3\n%s\n%lu\n%s\n%s\n",
-                               kBoard, job.version, static_cast<unsigned long>(job.size), job.hash, job.url);
+    const int n = std::snprintf(canonical, sizeof(canonical), "SIROKKO-OTA-1\nesp32s3\n%s\n%lu\n%s\n%lu\n%s\n%s\n",
+                               kBoard, static_cast<unsigned long>(sirokko::kConfigSchemaVersion), job.version, static_cast<unsigned long>(job.size), job.hash, job.url);
     if (n <= 0 || static_cast<size_t>(n) >= sizeof(canonical)) return false;
     unsigned char digest[32]{};
     if (mbedtls_sha256(reinterpret_cast<const unsigned char*>(canonical), n, digest, 0) != 0) return false;
@@ -145,12 +193,17 @@ bool partition_hash(const esp_partition_t* partition, uint32_t size, const char*
 }
 void update(const UpdateJob& job) {
     using sirokko::ServiceResult;
+    if (!session_current(job)) { reply(job.sequence, "REPLAY"); return; }
     if (static_cast<uint32_t>(now_ms() - job.issued_ms) > job.ttl_ms) { reply(job.sequence, "EXPIRED"); return; }
     const auto* next = esp_ota_get_next_update_partition(nullptr);
     if (!next || job.size > next->size) { reply(job.sequence, "OVERSIZE"); return; }
     if (!signed_manifest(job)) { reply(job.sequence, "SIGNATURE"); return; }
     const auto result = runtime_acquire_flash(FlashPurpose::OTA);
     if (result != ServiceResult::OK) { reply(job.sequence, sirokko::service_result_name(result)); return; }
+    if (!runtime_flash_safe() || !session_current(job) || static_cast<uint32_t>(now_ms() - job.issued_ms) > job.ttl_ms) {
+        reply(job.sequence, "EXPIRED"); runtime_release_flash(); return;
+    }
+    if (!runtime_checkpoint()) { reply(job.sequence, "IO"); runtime_release_flash(); return; }
     // The control task has applied and checked OFF GPIO commands, dropped ARM and excludes all STARTs.
     esp_http_client_config_t http{};
     http.url = job.url;
@@ -177,10 +230,12 @@ void update(const UpdateJob& job) {
                 error = esp_https_ota_perform(handle);
                 vTaskDelay(pdMS_TO_TICKS(1));
             } while (error == ESP_ERR_HTTPS_OTA_IN_PROGRESS &&
-                     esp_timer_get_time() - started < 300'000'000 && g_wifi_up.load());
-            if (error == ESP_OK && esp_https_ota_is_complete_data_received(handle) &&
+                     esp_timer_get_time() - started < 300'000'000 && g_wifi_up.load() && session_current(job) && runtime_flash_safe());
+            if (error == ESP_OK && g_wifi_up.load() && session_current(job) && runtime_flash_safe() && esp_https_ota_is_complete_data_received(handle) &&
                 esp_https_ota_get_image_len_read(handle) == static_cast<int>(job.size)) {
                 if (!partition_hash(next, job.size, job.hash)) code = "HASH";
+                else if (!runtime_flash_safe() || !session_current(job)) code = "BUSY";
+                else if (!runtime_checkpoint()) code = "IO";
                 else {
                     error = esp_https_ota_finish(handle); // IDF validates image/chip then selects next boot slot.
                     handle = nullptr;
@@ -201,7 +256,7 @@ void accept_packet(const esp_mqtt_event_t& e) {
     if (e.retain || e.data_len <= 0 || e.data_len != e.total_data_len || e.current_data_offset != 0 ||
         static_cast<size_t>(e.data_len) >= kMaxPacket || e.topic_len != static_cast<int>(std::strlen(g_command_topic)) ||
         std::memcmp(e.topic, g_command_topic, e.topic_len) != 0) return;
-    cJSON* root = cJSON_ParseWithLength(e.data, e.data_len);
+    cJSON* root = parse_flat_object(e.data, e.data_len);
     if (!root) return;
     char nonce[33]{}, op[16]{};
     uint32_t seq{}, issued{}, ttl{};
@@ -232,7 +287,7 @@ void accept_packet(const esp_mqtt_event_t& e) {
              text(root, "signature", signature, sizeof(signature)) &&
              mbedtls_base64_decode(job.signature, sizeof(job.signature), &decoded,
                 reinterpret_cast<const unsigned char*>(signature), std::strlen(signature)) == 0 && decoded == sizeof(job.signature);
-        job.sequence = seq; job.issued_ms = issued; job.ttl_ms = ttl;
+        job.sequence = seq; job.issued_ms = issued; job.ttl_ms = ttl; std::strcpy(job.nonce, nonce);
         if (!ok) reply(seq, "INVALID");
         else if (xQueueSend(g_jobs, &job, 0) != pdTRUE) reply(seq, "BUSY");
         else reply(seq, "VALIDATING");
@@ -257,6 +312,30 @@ void mqtt_event(void*, esp_event_base_t, int32_t id, void* data) {
         std::memset(g_nonce, 0, sizeof(g_nonce));
         portEXIT_CRITICAL(&g_nonce_lock);
     } else if (id == MQTT_EVENT_DATA && g_connected.load()) accept_packet(*e);
+}
+bool format_telemetry(char* payload, size_t capacity, const sirokko::UiFrame& f, const char* nonce) {
+    const auto& s=f.status; const auto& o=s.outputs;
+    const int n=std::snprintf(payload,capacity,
+        "{\"version\":\"%s\",\"board\":\"%s\",\"nonce\":\"%s\",\"uptime_ms\":%lu,\"boot\":%lu,\"session\":%lu,"
+        "\"state\":\"%s\",\"faults\":%lu,\"start_block\":%u,\"config_schema\":%lu,\"profile_revision\":%lu,\"run_low_qualified\":%u,"
+        "\"setpoint_mC\":%ld,\"hysteresis_mC\":%ld,\"room_offset_mC\":%ld,\"settings_saved\":%u,"
+        "\"room_raw_mC\":%ld,\"room_mC\":%ld,\"room_q\":%u,\"room_age_ms\":%lu,"
+        "\"exh_mC\":%ld,\"exh_q\":%u,\"exh_fault\":%u,\"exh_age_ms\":%lu,\"air_mC\":%ld,\"air_q\":%u,\"air_fault\":%u,\"air_age_ms\":%lu,"
+        "\"fan_command_permille\":%u,\"fuel_command\":%u,\"glow_command\":%u,\"permit_command\":%u,\"safety_ok\":%u,\"storage_ok\":%u,"
+        "\"stage_remaining_ms\":%lu,\"update_active\":%u,\"command_starts\":\"%llu\",\"failed_ignitions\":\"%llu\",\"command_run_ms\":\"%llu\",\"command_glow_ms\":\"%llu\"}",
+        esp_app_get_description()->version,kBoard,nonce,static_cast<unsigned long>(f.now_ms),
+        static_cast<unsigned long>(f.boot_id),static_cast<unsigned long>(f.session_id),
+        sirokko::state_name(s.state),static_cast<unsigned long>(s.faults),static_cast<unsigned>(s.start_block),
+        static_cast<unsigned long>(f.config.schema_version),static_cast<unsigned long>(f.config.profile_revision),static_cast<unsigned>(f.config.run_low_qualified),
+        static_cast<long>(f.settings.setpoint_milli_c),static_cast<long>(f.settings.hysteresis_milli_c),static_cast<long>(f.settings.room_offset_milli_c),static_cast<unsigned>(f.settings_saved),
+        static_cast<long>(f.raw_room.milli_c),static_cast<long>(f.room.milli_c),static_cast<unsigned>(f.room.quality),static_cast<unsigned long>(f.now_ms-f.raw_room.sample_ms),
+        static_cast<long>(f.exhaust.milli_c),static_cast<unsigned>(f.exhaust.quality),static_cast<unsigned>(f.exhaust_fault),static_cast<unsigned long>(f.now_ms-f.exhaust.sample_ms),
+        static_cast<long>(f.hot_air.milli_c),static_cast<unsigned>(f.hot_air.quality),static_cast<unsigned>(f.hot_air_fault),static_cast<unsigned long>(f.now_ms-f.hot_air.sample_ms),
+        static_cast<unsigned>(o.speed_permille),static_cast<unsigned>(o.fuel_command),static_cast<unsigned>(o.glow_command),static_cast<unsigned>(o.fuel_permit),static_cast<unsigned>(f.safety_ok),static_cast<unsigned>(f.storage_ok),
+        static_cast<unsigned long>(s.stage_remaining_ms),static_cast<unsigned>(f.update_active),
+        static_cast<unsigned long long>(f.counters.starts),static_cast<unsigned long long>(f.counters.failed_ignitions),
+        static_cast<unsigned long long>(f.counters.run_ms),static_cast<unsigned long long>(f.counters.glow_ms));
+    return n>0 && static_cast<size_t>(n)<capacity;
 }
 #ifndef SIROKKO_NETWORK_HOST_TEST
 void wifi_event(void*, esp_event_base_t base, int32_t id, void*) {
@@ -308,22 +387,9 @@ void network_task(void*) {
             portENTER_CRITICAL(&g_nonce_lock);
             std::memcpy(nonce, g_nonce, sizeof(nonce));
             portEXIT_CRITICAL(&g_nonce_lock);
-            char payload[1024]{};
-            const auto& s = frame.status;
-            std::snprintf(payload, sizeof(payload),
-                "{\"version\":\"%s\",\"board\":\"%s\",\"nonce\":\"%s\",\"uptime_ms\":%lu,\"boot\":%lu,\"session\":%lu,"
-                "\"state\":\"%s\",\"faults\":%lu,\"room_raw_mC\":%ld,\"room_mC\":%ld,\"room_q\":%u,\"room_age_ms\":%lu,"
-                "\"exh_mC\":%ld,\"exh_q\":%u,\"exh_fault\":%u,\"air_mC\":%ld,\"air_q\":%u,\"air_fault\":%u,"
-                "\"fan_command_permille\":%u,\"fuel_command\":%u,\"glow_command\":%u,\"permit_command\":%u,\"safety_ok\":%u,\"storage_ok\":%u}",
-                esp_app_get_description()->version, kBoard, nonce, static_cast<unsigned long>(frame.now_ms),
-                static_cast<unsigned long>(frame.boot_id), static_cast<unsigned long>(frame.session_id),
-                sirokko::state_name(s.state), static_cast<unsigned long>(s.faults), static_cast<long>(frame.raw_room.milli_c),
-                static_cast<long>(frame.room.milli_c), static_cast<unsigned>(frame.room.quality),
-                static_cast<unsigned long>(frame.now_ms - frame.raw_room.sample_ms), static_cast<long>(frame.exhaust.milli_c),
-                static_cast<unsigned>(frame.exhaust.quality), frame.exhaust_fault, static_cast<long>(frame.hot_air.milli_c),
-                static_cast<unsigned>(frame.hot_air.quality), frame.hot_air_fault, s.outputs.speed_permille,
-                s.outputs.fuel_command, s.outputs.glow_command, s.outputs.fuel_permit, frame.safety_ok, frame.storage_ok);
-            esp_mqtt_client_enqueue(g_mqtt, g_telemetry_topic, payload, 0, 0, 0, false);
+            char payload[1536]{};
+            if (format_telemetry(payload, sizeof(payload), frame, nonce))
+                esp_mqtt_client_enqueue(g_mqtt, g_telemetry_topic, payload, 0, 0, 0, false);
         }
     }
 }
@@ -341,7 +407,7 @@ bool service_network_import(const char* encoded) {
     cJSON* root{};
     bool ok = mbedtls_base64_decode(decoded, 12000, &size,
                 reinterpret_cast<const unsigned char*>(encoded), n) == 0;
-    if (ok) root = cJSON_ParseWithLength(reinterpret_cast<const char*>(decoded), size);
+    if (ok) root = parse_flat_object(reinterpret_cast<const char*>(decoded), size);
     NetworkConfig candidate{};
     candidate.schema = 1;
     ok = root && text(root, "ssid", candidate.ssid, sizeof(candidate.ssid)) &&
@@ -351,7 +417,12 @@ bool service_network_import(const char* encoded) {
          text(root, "password", candidate.password, sizeof(candidate.password)) &&
          text(root, "ca", candidate.ca, sizeof(candidate.ca)) &&
          text(root, "update_public_key", candidate.update_public_key, sizeof(candidate.update_public_key)) && config_valid(candidate);
-    if (root) cJSON_Delete(root);
+    if (root) {
+        for (auto* item = root->child; item; item = item->next) {
+            if (cJSON_IsString(item) && item->valuestring) mbedtls_platform_zeroize(item->valuestring, std::strlen(item->valuestring));
+        }
+        cJSON_Delete(root);
+    }
     mbedtls_platform_zeroize(decoded, 12001);
     std::free(decoded);
     nvs_handle_t h{};

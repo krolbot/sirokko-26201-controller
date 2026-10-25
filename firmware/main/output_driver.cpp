@@ -30,6 +30,7 @@ bool OutputDriver::fail(esp_err_t error) {
     shutdown |= gpio_reset_pin(kSpeed);
     shutdown |= gpio_set_level(kSpeed, 0);
     shutdown |= gpio_set_direction(kSpeed, GPIO_MODE_OUTPUT);
+    shutdown_applied_ = shutdown == ESP_OK;
     if (!failure_reported_) {
         ESP_LOGE("outputs", "latched failure=%d shutdown=%d; reboot required", error, shutdown);
         failure_reported_ = true;

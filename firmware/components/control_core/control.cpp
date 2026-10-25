@@ -486,12 +486,24 @@ Outputs Machine::tick(const Inputs& in) {
     outputs_.watchdog_heartbeat = heartbeat_level_;
     previous_reset_request_ = in.reset_request;
     previous_heat_enable_ = in.heat_enable;
+    start_block_ = StartBlock::NONE;
+    if (!in.configuration_ok || validate_config(config_) != CONFIG_OK) start_block_ = StartBlock::PROFILE;
+    else if (faults_ != FAULT_NONE) start_block_ = StartBlock::FAULT;
+    else if (!recovery_complete_) start_block_ = StartBlock::RECOVERY;
+    else if (in.maintenance_inhibit) start_block_ = StartBlock::SERVICE;
+    else if (state_ != State::WAIT_COOLDOWN) start_block_ = StartBlock::ACTIVE;
+    else if (in.stop_active) start_block_ = StartBlock::STOP;
+    else if (!in.safety_ok) start_block_ = StartBlock::SAFETY;
+    else if (restart_inhibit_) start_block_ = StartBlock::RESTART_DELAY;
+    else if (!cold(in)) start_block_ = StartBlock::HOT;
+    else if (static_cast<int64_t>(in.room.milli_c) > room_boundary(config_, in, config_.start_delta_milli_c)) start_block_ = StartBlock::ROOM;
     return outputs_;
 }
 
 Status Machine::status(uint32_t now_ms) const {
     Status result{};
     result.state = state_;
+    result.start_block = start_block_;
     result.faults = faults_;
     result.state_age_ms = initialized_ ? elapsed(now_ms, state_entered_ms_) : 0;
     uint32_t duration{};

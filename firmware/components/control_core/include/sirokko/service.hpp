@@ -7,6 +7,7 @@ enum class ServiceResult : uint8_t { OK, BUSY, CONFIG, SENSOR, HOT, OUTPUT, REPL
 class ServiceLease {
 public:
     ServiceResult acquire(const Status&, const Inputs&, const Config&, bool output_healthy);
+    static ServiceResult eligible(const Status&, const Inputs&, const Config&, bool output_healthy);
     void release() { held_ = false; }
     bool held() const { return held_; }
 private:

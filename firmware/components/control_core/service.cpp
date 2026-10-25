@@ -1,7 +1,7 @@
 #include "sirokko/service.hpp"
 namespace sirokko {
-ServiceResult ServiceLease::acquire(const Status& s, const Inputs& in, const Config& c, bool healthy) {
-    if (held_ || in.heat_enable || in.stop_active || (s.state != State::WAIT_COOLDOWN && s.state != State::LOCKOUT) ||
+ServiceResult ServiceLease::eligible(const Status& s, const Inputs& in, const Config& c, bool healthy) {
+    if (in.heat_enable || in.stop_active || (s.state != State::WAIT_COOLDOWN && s.state != State::LOCKOUT) ||
         !s.recovery_complete) return ServiceResult::BUSY;
     if (validate_config(c) != CONFIG_OK || !in.configuration_ok) return ServiceResult::CONFIG;
     if (!healthy) return ServiceResult::OUTPUT;
@@ -13,8 +13,13 @@ ServiceResult ServiceLease::acquire(const Status& s, const Inputs& in, const Con
     if (in.exhaust.milli_c > c.cool_exhaust_milli_c || in.hot_air.milli_c > c.cool_air_milli_c) return ServiceResult::HOT;
     const auto& o = s.outputs;
     if (o.fuel_command || o.fuel_permit || o.glow_command || o.fan_request || o.speed_permille) return ServiceResult::OUTPUT;
-    held_ = true;
     return ServiceResult::OK;
+}
+ServiceResult ServiceLease::acquire(const Status& s, const Inputs& in, const Config& c, bool healthy) {
+    if (held_) return ServiceResult::BUSY;
+    const auto result = eligible(s, in, c, healthy);
+    held_ = result == ServiceResult::OK;
+    return result;
 }
 const char* service_result_name(ServiceResult r) {
     switch (r) {

@@ -4,6 +4,8 @@
 #include <functional>
 
 bool runtime_snapshot(sirokko::UiFrame*) { return false; }
+bool runtime_flash_safe() { return net_fake::lease; }
+bool runtime_checkpoint() { return net_fake::lease; }
 void runtime_remote_stop() { ++net_fake::stops; }
 uint32_t runtime_control_passes() { return 0; }
 sirokko::ServiceResult runtime_acquire_flash(FlashPurpose) {
@@ -37,7 +39,7 @@ void reset() {
 }
 UpdateJob job() {
     UpdateJob j{}; std::strcpy(j.version,"0.1.7-DRAFT"); std::strcpy(j.url,"https://updates.example.test/image.bin");
-    j.size=net_fake::image.size(); j.sequence=1; j.issued_ms=10000; j.ttl_ms=30000;
+    j.size=net_fake::image.size(); j.sequence=1; j.issued_ms=10000; j.ttl_ms=30000; std::strcpy(j.nonce,g_nonce);
     unsigned char hash[32]{}; SHA256(net_fake::image.data(),net_fake::image.size(),hash);
     for(size_t i=0;i<32;++i) std::snprintf(j.hash+2*i,3,"%02x",hash[i]);
     return j;
@@ -52,6 +54,14 @@ void sign(UpdateJob& j) {
 }
 std::string packet(const std::string& operation="stop",uint32_t seq=1) {
     return "{\"op\":\""+operation+"\",\"nonce\":\""+g_nonce+"\",\"seq\":"+std::to_string(seq)+",\"uptime_ms\":10000,\"ttl_ms\":30000}";
+}
+std::string update_packet(UpdateJob j) {
+    sign(j); unsigned char signature[513]{};
+    EVP_EncodeBlock(signature,j.signature,sizeof(j.signature));
+    auto p=packet("update"); p.pop_back();
+    return p+",\"schema\":3,\"target\":\"esp32s3\",\"board\":\""+kBoard+"\",\"version\":\""+j.version+
+        "\",\"url\":\""+j.url+"\",\"sha256\":\""+j.hash+"\",\"size\":"+std::to_string(j.size)+
+        ",\"signature\":\""+reinterpret_cast<char*>(signature)+"\"}";
 }
 void receive(std::string p,bool retained=false) {
     esp_mqtt_event_t e{}; e.retain=retained; e.data=p.data(); e.topic=g_command_topic;
@@ -70,7 +80,8 @@ int main() {
             receive(packet()); require(net_fake::stops==1,"fresh STOP");
             receive(packet()); require(net_fake::stops==1,"replay STOP");
             receive(packet("start",2)); check_reply("FORBIDDEN");
-            for(const char* op:{"reset","fuel","glow","config"}) receive(packet(op,++g_last_sequence+1));
+            uint32_t seq=3;
+            for(const char* op:{"reset","fuel","glow","config"}) receive(packet(op,seq++));
             require(net_fake::stops==1,"forbidden output controls");
             net_fake::time_us+=31'000'000; receive(packet("stop",99)); require(net_fake::stops==1,"expired STOP");
         }},
@@ -88,6 +99,37 @@ int main() {
         {"wrong_image_version_and_project_abort",[]{auto j=job(); sign(j); std::strcpy(incoming_desc.version,"0.1.8-DRAFT"); run_update(j); check_reply("TARGET"); require(net_fake::aborted && !net_fake::finished,"wrong image version"); reset(); j=job(); sign(j); std::strcpy(incoming_desc.project_name,"other-board"); run_update(j); require(net_fake::aborted && !net_fake::finished,"wrong target project");}},
         {"full_image_hash_checked_before_finish",[]{auto j=job(); sign(j); net_fake::image[100]^=1; run_update(j); check_reply("HASH"); require(net_fake::aborted && !net_fake::finished && !net_fake::lease,"hash mismatch booted");}},
         {"valid_signed_OTA_keeps_exclusive_lease_through_restart",[]{auto j=job(); sign(j); run_update(j); check_reply("REBOOTING"); require(net_fake::finished && net_fake::restarted && net_fake::lease && !net_fake::releases && net_fake::tls_verified,"successful OTA invariant");}},
+        {"strict_JSON_duplicate_trailing_NUL_and_wrong_nonce",[]{
+            auto p=packet(); receive(p+"garbage"); p.pop_back(); receive(p+",\"op\":\"start\"}");
+            p=packet(); p.insert(p.find("0123456789abcdef"),"bad"); receive(p);
+            p=packet(); p.insert(p.find("stop")+4,"\\u0000"); receive(p);
+            p=packet(); p.push_back('\0'); receive(p); require(!net_fake::stops,"malformed request executed");
+        }},
+        {"signed_packet_real_parser_queue_and_old_connection",[]{
+            auto p=update_packet(job()); receive(p); check_reply("VALIDATING"); require(g_jobs->data.size()==1,"real update parse/queue");
+            UpdateJob queued{}; std::memcpy(&queued,g_jobs->data.front().data(),sizeof(queued)); require(signed_manifest(queued),"manifest changed in parser");
+            mqtt_event(nullptr,nullptr,MQTT_EVENT_DISCONNECTED,nullptr); mqtt_event(nullptr,nullptr,MQTT_EVENT_CONNECTED,nullptr);
+            run_update(queued); check_reply("REPLAY"); require(!net_fake::lease_calls,"old connection queued update survived");
+        }},
+        {"wrong_target_version_and_disconnected_auth_failure",[]{
+            auto j=job(); std::strcpy(j.version,"0.1.6-DRAFT"); receive(update_packet(j)); check_reply("INVALID");
+            reset(); auto p=update_packet(job()); p.replace(p.find("esp32s3"),7,"esp32c3"); receive(p); check_reply("INVALID");
+            reset(); p=packet(); esp_mqtt_event_t e{}; e.topic=g_command_topic; e.topic_len=std::strlen(g_command_topic); e.data=p.data(); e.data_len=e.total_data_len=p.size();
+            g_connected.store(false); mqtt_event(nullptr,nullptr,MQTT_EVENT_DATA,&e); require(!net_fake::stops,"unconnected/unauthenticated client delivered command");
+        }},
+        {"native_finish_error_keeps_old_boot_and_releases_lease",[]{auto j=job(); sign(j); net_fake::finish_error=-1; run_update(j); check_reply("IO"); require(net_fake::finished && !net_fake::restarted && !net_fake::lease,"failed native image validation restarted");}},
+        {"bounded_flat_JSON_and_worst_case_telemetry",[]{
+            auto nested=std::string(800,'[')+std::string(800,']'); require(!parse_flat_object(nested.data(),nested.size()),"recursive stack exhaustion");
+            const char flat[]="{\"value\":\"quoted { brackets [] and \\\"escaped\\\"\"}";
+            auto* parsed=parse_flat_object(flat,sizeof(flat)-1); require(parsed,"flat JSON string handling"); cJSON_Delete(parsed);
+            sirokko::UiFrame f{}; f.counters={UINT64_MAX,UINT64_MAX,UINT64_MAX,UINT64_MAX};
+            f.now_ms=f.boot_id=f.session_id=f.status.faults=f.config.profile_revision=UINT32_MAX;
+            f.raw_room.milli_c=f.room.milli_c=f.exhaust.milli_c=f.hot_air.milli_c=INT32_MIN;
+            char out[1536]{}; require(format_telemetry(out,sizeof(out),f,g_nonce),"full telemetry overflow");
+            parsed=cJSON_Parse(out); require(parsed,"invalid telemetry JSON");
+            require(std::strcmp(cJSON_GetObjectItemCaseSensitive(parsed,"command_run_ms")->valuestring,"18446744073709551615")==0,"64bit telemetry precision"); cJSON_Delete(parsed);
+            char tiny[8]{}; require(!format_telemetry(tiny,sizeof(tiny),f,g_nonce),"truncated telemetry reported valid");
+        }},
         {"version_hash_key_and_config_validation",[]{
             require(version_number("0.1.7-DRAFT")>version_number("0.1.6-DRAFT"),"version ordering");
             require(version_number("0.1.7-DRAFT\n")<0 && version_number("x")<0,"invalid versions");

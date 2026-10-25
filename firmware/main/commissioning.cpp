@@ -14,26 +14,11 @@
 namespace {
 constexpr char kNamespace[] = "sirokko";
 constexpr uint32_t kConfigMagic = 0x5349524Fu;  // SIRO
-constexpr uint32_t kJournalMagic = 0x464C4F47u; // FLOG
 
 struct StoredConfig {
     uint32_t magic;
     sirokko::Config config;
     uint32_t digest;
-};
-
-struct FaultRecord {
-    uint32_t boot_count;
-    uint32_t uptime_ms;
-    uint32_t state;
-    uint32_t faults;
-};
-
-struct FaultJournal {
-    uint32_t magic;
-    uint32_t next;
-    uint32_t count;
-    FaultRecord records[8];
 };
 
 void hash_bytes(uint32_t& hash, const void* data, size_t size) {
@@ -125,8 +110,10 @@ bool CommissioningStore::begin() {
 
     nvs_handle_t handle{};
     if (!open_nvs(&handle)) return false;
-    nvs_get_u32(handle, "boot_count", &boot_count_);
-    if (boot_count_ == UINT32_MAX) { nvs_close(handle); return false; }
+    const auto boot_error = nvs_get_u32(handle, "boot_count", &boot_count_);
+    if ((boot_error != ESP_OK && boot_error != ESP_ERR_NVS_NOT_FOUND) || boot_count_ == UINT32_MAX) {
+        nvs_close(handle); return false;
+    }
     ++boot_count_;
     const bool ok = nvs_set_u32(handle, "boot_count", boot_count_) == ESP_OK &&
                     nvs_commit(handle) == ESP_OK;
@@ -377,6 +364,11 @@ bool CommissioningStore::save_history(const sirokko::CommandHistory& history) co
     for (size_t i = 0; i < history.count(); ++i) saved.events[i] = history.event(i);
     return write_record("history_v1", saved);
 }
+bool CommissioningStore::load_history(sirokko::CommandHistory* history) const {
+    SavedHistory saved{};
+    const auto error = read_record("history_v1", &saved);
+    return error == ESP_ERR_NVS_NOT_FOUND || (error == ESP_OK && history->restore_events(saved.events, saved.count));
+}
 void CommissioningStore::print_history() const {
     SavedHistory saved{};
     if (read_record("history_v1", &saved) != ESP_OK || saved.count > sirokko::kEventCapacity) {
@@ -393,47 +385,6 @@ void CommissioningStore::print_history() const {
                     static_cast<unsigned long>(e.boot_id), static_cast<unsigned long>(e.session_id),
                     static_cast<unsigned long long>(e.uptime_ms), sirokko::state_name(e.from),
                     sirokko::state_name(e.to), static_cast<unsigned>(e.reason), static_cast<unsigned long>(e.faults));
-    }
-}
-
-void CommissioningStore::append_fault(uint32_t uptime_ms, sirokko::State state, uint32_t faults) {
-    FaultJournal journal{};
-    size_t size = sizeof(journal);
-    nvs_handle_t handle{};
-    if (!open_nvs(&handle)) return;
-    if (nvs_get_blob(handle, "fault_log", &journal, &size) != ESP_OK ||
-        size != sizeof(journal) || journal.magic != kJournalMagic || journal.next >= 8 || journal.count > 8) {
-        journal = {};
-        journal.magic = kJournalMagic;
-    }
-    journal.records[journal.next] = {boot_count_, uptime_ms, static_cast<uint32_t>(state), faults};
-    journal.next = (journal.next + 1) % 8;
-    if (journal.count < 8) ++journal.count;
-    nvs_set_blob(handle, "fault_log", &journal, sizeof(journal));
-    nvs_commit(handle);
-    nvs_close(handle);
-}
-
-void CommissioningStore::print_faults() const {
-    FaultJournal journal{};
-    size_t size = sizeof(journal);
-    nvs_handle_t handle{};
-    if (!open_nvs(&handle, NVS_READONLY)) {
-        std::printf("fault journal unavailable\n");
-        return;
-    }
-    const esp_err_t error = nvs_get_blob(handle, "fault_log", &journal, &size);
-    nvs_close(handle);
-    if (error != ESP_OK || size != sizeof(journal) || journal.magic != kJournalMagic || journal.next >= 8 || journal.count > 8) {
-        std::printf("fault journal empty\n");
-        return;
-    }
-    for (uint32_t i = 0; i < journal.count; ++i) {
-        const uint32_t index = (journal.next + 8 - journal.count + i) % 8;
-        const auto& record = journal.records[index];
-        std::printf("boot=%" PRIu32 " uptime_ms=%" PRIu32 " state=%s faults=%08" PRIX32 "\n",
-                    record.boot_count, record.uptime_ms,
-                    sirokko::state_name(static_cast<sirokko::State>(record.state)), record.faults);
     }
 }
 

@@ -32,16 +32,18 @@ LocalDisplay g_display;
 QueueHandle_t g_sensor_queue{}, g_setting_queue{};
 SemaphoreHandle_t g_snapshot_mutex{}, g_service_mutex{};
 sirokko::UiFrame g_frame{};
-sirokko::CommandHistory g_history_snapshot{};
+sirokko::CommandHistory g_history_snapshot{}, g_initial_history{};
 sirokko::OperatorSettings g_initial_settings{};
 sirokko::CommandCounters g_initial_counters{};
-std::atomic<bool> g_storage_ok{true}, g_settings_ok{}, g_config_changed{}, g_remote_stop{};
-std::atomic<uint32_t> g_display_progress{}, g_passes{}, g_settings_revision{};
+std::atomic<bool> g_storage_ok{true}, g_settings_ok{}, g_config_changed{}, g_remote_stop{}, g_ota_pending{};
+std::atomic<uint32_t> g_display_progress{}, g_passes{}, g_control_progress{}, g_settings_revision{}, g_saved_revision{};
 uint32_t g_startup_faults{};
-bool g_inputs_ok{}, g_config_integrity{};
+bool g_inputs_ok{}, g_config_integrity{}, g_records_ok{};
 struct SensorFrame { sirokko::SensorSample room, exhaust, air; uint8_t exhaust_fault, air_fault; };
 enum class LeaseState : uint8_t { IDLE, REQUESTED, GRANTED, REJECTED, RELEASE };
 std::atomic<LeaseState> g_lease_state{LeaseState::IDLE};
+std::atomic<uint32_t> g_current_faults{};
+std::atomic<bool> g_flash_outputs_safe{};
 std::atomic<FlashPurpose> g_lease_purpose{FlashPurpose::LOCAL_SETTINGS};
 std::atomic<sirokko::ServiceResult> g_lease_result{sirokko::ServiceResult::BUSY};
 uint32_t ms() { return static_cast<uint32_t>(esp_timer_get_time() / 1000ULL); }
@@ -67,8 +69,7 @@ void display_task(void*) {
 void control_task(void*) {
     const sirokko::Config config = g_config;
     sirokko::Machine machine(config, g_startup_faults);
-    sirokko::CommandHistory history;
-    history.begin(g_store.boot_count(), g_initial_counters);
+    sirokko::CommandHistory history = g_initial_history;
     sirokko::LocalMenu menu;
     sirokko::OperatorSettings settings = g_initial_settings;
     sirokko::DebouncedActiveLowButton start, reset, up, down;
@@ -80,8 +81,8 @@ void control_task(void*) {
     TickType_t wake = xTaskGetTickCount();
     esp_task_wdt_add(nullptr);
     while (true) {
-        const uint32_t now = ms();
         xQueueReceive(g_sensor_queue, &sensors, 0);
+        const uint32_t now = ms(); // Timestamp after the coherent sensor copy: never age a future sample.
         const bool stopped = gpio_get_level(kStop) != 0;
         const bool start_event = start.update(gpio_get_level(kStart) != 0, now);
         reset.update(gpio_get_level(kReset) != 0, now);
@@ -97,7 +98,7 @@ void control_task(void*) {
             g_lease_state.store(LeaseState::IDLE);
         }
         // Every START is an edge-local decision, never a queued/delayed ignition request.
-        if (start_event && previous.arm_ready && !stopped && !remote_stop &&
+        if (start_event && !g_ota_pending.load() && previous.arm_ready && !stopped && !remote_stop &&
             !local_lease && !ota_lease.held() && before.state == sirokko::State::WAIT_COOLDOWN) heat = true;
         sirokko::OperatorSettings requested{};
         if (xQueueReceive(g_setting_queue, &requested, 0) == pdTRUE && sirokko::operator_settings_valid(requested, config)) {
@@ -120,21 +121,16 @@ void control_task(void*) {
         in.exhaust = sensors.exhaust;
         in.hot_air = sensors.air;
         in.room = sirokko::calibrated_room(sensors.room, settings.room_offset_milli_c, now, config.sensor_stale_ms);
-        if (lease_state == LeaseState::REQUESTED) {
-            sirokko::ServiceResult result = sirokko::ServiceResult::BUSY;
-            if (!start_event && !heat) {
-                if (g_lease_purpose.load() == FlashPurpose::OTA) result = ota_lease.acquire(before, in, config, g_outputs.healthy());
-                else if (off(before.outputs) && !before.outputs.fan_request && before.outputs.speed_permille == 0) {
-                    local_lease = true;
-                    result = sirokko::ServiceResult::OK;
-                }
-            }
-            g_lease_result.store(result);
-            LeaseState expected = LeaseState::REQUESTED;
-            if (!g_lease_state.compare_exchange_strong(expected, result == sirokko::ServiceResult::OK ? LeaseState::GRANTED : LeaseState::REJECTED)) {
-                local_lease = false; ota_lease.release(); // Caller timed out/cancelled; never orphan a lease.
+        sirokko::ServiceResult lease_result = sirokko::ServiceResult::BUSY;
+        if (lease_state == LeaseState::REQUESTED && !start_event && !heat) {
+            if (g_lease_purpose.load() == FlashPurpose::OTA) lease_result = ota_lease.acquire(before, in, config, g_outputs.healthy());
+            else if (off(before.outputs) && !before.outputs.fan_request && before.outputs.speed_permille == 0) {
+                local_lease = true;
+                lease_result = sirokko::ServiceResult::OK;
             }
         }
+        // Do not acknowledge yet: the other CPU must not start writing flash until GPIO OFF
+        // and ARM inhibit have actually been applied successfully below.
         in.maintenance_inhibit = local_lease || ota_lease.held();
         auto outputs = machine.tick(in);
         if (ota_lease.held()) {
@@ -148,12 +144,31 @@ void control_task(void*) {
         }
         auto status = machine.status(now);
         status.outputs = outputs;
+        g_current_faults.store(status.faults);
+        g_flash_outputs_safe.store(ota_lease.held() && !outputs.arm_ready &&
+            sirokko::ServiceLease::eligible(status, in, config, g_outputs.healthy()) == sirokko::ServiceResult::OK);
+        if (lease_state == LeaseState::REQUESTED) {
+            if (lease_result == sirokko::ServiceResult::OK &&
+                ((!g_outputs.healthy() && (g_lease_purpose.load() == FlashPurpose::OTA || !g_outputs.shutdown_applied())) ||
+                 !off(outputs) || outputs.fan_request || outputs.speed_permille != 0 || outputs.arm_ready)) {
+                lease_result = sirokko::ServiceResult::OUTPUT;
+            }
+            g_lease_result.store(lease_result);
+            LeaseState expected = LeaseState::REQUESTED;
+            const bool acknowledged = g_lease_state.compare_exchange_strong(expected,
+                lease_result == sirokko::ServiceResult::OK ? LeaseState::GRANTED : LeaseState::REJECTED);
+            if (!acknowledged || lease_result != sirokko::ServiceResult::OK) {
+                local_lease = false; ota_lease.release(); // Cancellation and failed OFF cannot orphan a lease.
+            }
+        }
+        if (g_ota_pending.load()) status.start_block = sirokko::StartBlock::SERVICE;
         if (status.state == sirokko::State::WAIT_COOLDOWN || status.state == sirokko::State::POST_PURGE) heat = false;
         previous = outputs;
         history.observe(status, static_cast<uint64_t>(esp_timer_get_time() / 1000ULL),
                         stopped ? sirokko::StopReason::LOCAL_STOP : remote_stop ? sirokko::StopReason::REMOTE_STOP : sirokko::StopReason::NONE);
         if (xSemaphoreTake(g_snapshot_mutex, 0) == pdTRUE) {
             g_frame = {};
+            std::snprintf(g_frame.firmware_version, sizeof(g_frame.firmware_version), "%s", esp_app_get_description()->version);
             g_frame.status = status; g_frame.config = config; g_frame.settings = settings;
             g_frame.raw_room = sensors.room; g_frame.room = in.room;
             g_frame.exhaust = in.exhaust; g_frame.hot_air = in.hot_air;
@@ -162,6 +177,7 @@ void control_task(void*) {
             g_frame.now_ms = now; g_frame.boot_id = g_store.boot_count(); g_frame.session_id = history.session_id();
             g_frame.profile_token = g_store.candidate_token(config);
             g_frame.settings_revision = g_settings_revision.load();
+            g_frame.settings_saved = g_frame.settings_revision == g_saved_revision.load() && g_settings_ok.load();
             g_frame.exhaust_fault = sensors.exhaust_fault; g_frame.hot_air_fault = sensors.air_fault;
             g_frame.safety_ok = in.safety_ok; g_frame.stop_active = stopped;
             g_frame.settings_ok = g_settings_ok.load(); g_frame.storage_ok = g_storage_ok.load();
@@ -170,6 +186,7 @@ void control_task(void*) {
             g_history_snapshot = history;
             xSemaphoreGive(g_snapshot_mutex);
         }
+        g_control_progress.store(now);
         g_passes.fetch_add(1);
         esp_task_wdt_reset();
         vTaskDelayUntil(&wake, pdMS_TO_TICKS(sirokko::kControlLoopPeriodMs));
@@ -178,16 +195,21 @@ void control_task(void*) {
 void storage_task(void*) {
     uint32_t persisted_faults{};
     g_store.load_latched_faults(&persisted_faults);
-    uint32_t persisted_revision = g_settings_revision.load();
+    uint32_t persisted_revision = g_saved_revision.load();
     uint32_t last_snapshot = ms(), last_attempt = 0;
+    sirokko::EventRecord persisted_event{};
     while (true) {
         vTaskDelay(pdMS_TO_TICKS(500));
+        if (!g_records_ok) continue; // Preserve corrupt/newer critical records for explicit USB recovery.
         sirokko::UiFrame f{};
         if (!runtime_snapshot(&f)) continue;
         const uint32_t revision = f.settings_revision;
         const bool fault_change = f.status.faults != persisted_faults;
         const bool rare_snapshot = static_cast<uint32_t>(ms() - last_snapshot) >= 900000;
-        if (!fault_change && revision == persisted_revision && !rare_snapshot) continue;
+        const bool new_event = f.last_event.boot_id != persisted_event.boot_id ||
+            f.last_event.uptime_ms != persisted_event.uptime_ms || f.last_event.to != persisted_event.to ||
+            f.last_event.faults != persisted_event.faults;
+        if (!fault_change && revision == persisted_revision && !rare_snapshot && !new_event) continue;
         if (static_cast<uint32_t>(ms() - last_attempt) < (g_storage_ok.load() ? 5000u : 60000u)) continue;
         last_attempt = ms();
         // No flash write while ignition, RUN or required fan purge is active. Hardware watchdog is never serviced by this worker.
@@ -196,11 +218,12 @@ void storage_task(void*) {
         if (xSemaphoreTake(g_snapshot_mutex, pdMS_TO_TICKS(50)) != pdTRUE) { runtime_release_flash(); continue; }
         f = g_frame; history = g_history_snapshot;
         xSemaphoreGive(g_snapshot_mutex);
+        const uint32_t saved_revision = f.settings_revision;
         bool ok = true;
-        if (fault_change) ok = f.status.faults ? g_store.save_latched_faults(f.status.faults) : g_store.clear_latched_faults();
-        if (ok && g_settings_ok.load() && revision != persisted_revision) ok = g_store.save_operator_settings(f.settings, f.config);
+        if (f.status.faults != persisted_faults) ok = f.status.faults ? g_store.save_latched_faults(f.status.faults) : g_store.clear_latched_faults();
+        if (ok && g_settings_ok.load() && saved_revision != persisted_revision) ok = g_store.save_operator_settings(f.settings, f.config);
         if (ok) ok = g_store.save_counters(f.counters) && g_store.save_history(history);
-        if (ok) { persisted_faults = f.status.faults; persisted_revision = revision; last_snapshot = ms(); }
+        if (ok) { persisted_faults = f.status.faults; persisted_revision = saved_revision; g_saved_revision.store(saved_revision); persisted_event = f.last_event; last_snapshot = ms(); }
         else g_storage_ok.store(false);
         runtime_release_flash();
     }
@@ -224,8 +247,9 @@ void print_status() {
         o.speed_permille, o.fuel_command, o.glow_command, o.fuel_permit, f.safety_ok, f.storage_ok, f.settings_ok);
 }
 void help() {
-    std::printf("status | history | counters | help | reboot\n"
+    std::printf("status | history [saved] | counters | help | reboot\n"
         "settings setpoint|hysteresis|offset <integer milli-C> (RAM; deferred safe NVS snapshot)\n"
+        "settings save (explicit local recovery of operator record; stopped outputs only)\n"
         "config show|validate|token|revoke|set <field> <integer>|accept <8hex>\n"
         "config changes revoke acceptance and require reboot; profile_revision and run_low_qualified need measured engineering approval\n"
         "network import <base64 JSON> (local USB only, stopped outputs, reboot required; NEVER paste credentials into chat)\n"
@@ -243,6 +267,8 @@ void cli_task(void*) {
         if (std::strcmp(command, "status") == 0) print_status();
         else if (std::strcmp(command, "help") == 0) help();
         else if (std::strcmp(command, "history") == 0) {
+            const auto* source = ::strtok_r(nullptr, " ", &save);
+            if (source && std::strcmp(source, "saved") == 0) { g_store.print_history(); continue; }
             sirokko::CommandHistory h;
             if (xSemaphoreTake(g_snapshot_mutex, pdMS_TO_TICKS(50)) == pdTRUE) {
                 h = g_history_snapshot; xSemaphoreGive(g_snapshot_mutex);
@@ -262,6 +288,17 @@ void cli_task(void*) {
         } else if (std::strcmp(command, "settings") == 0) {
             const auto* key = ::strtok_r(nullptr, " ", &save);
             const auto* value = ::strtok_r(nullptr, " ", &save);
+            if (key && std::strcmp(key, "save") == 0) {
+                bool ok{};
+                sirokko::UiFrame current{};
+                if (runtime_acquire_flash(FlashPurpose::LOCAL_SETTINGS) == sirokko::ServiceResult::OK) {
+                    ok = runtime_snapshot(&current) && g_store.save_operator_settings(current.settings, current.config);
+                    if (ok) { g_settings_ok.store(true); g_saved_revision.store(current.settings_revision); }
+                    else g_storage_ok.store(false);
+                    runtime_release_flash();
+                }
+                std::printf("settings=%s\n", ok ? "SAVED" : "REJECTED_OR_BUSY"); continue;
+            }
             sirokko::UiFrame f{};
             char* end{};
             const long long n = value ? std::strtoll(value, &end, 10) : INT64_MAX;
@@ -318,19 +355,31 @@ void health_task(void*) {
     esp_ota_img_states_t state{};
     if (esp_ota_get_state_partition(running, &state) != ESP_OK || state != ESP_OTA_IMG_PENDING_VERIFY) { vTaskDelete(nullptr); return; }
     const uint32_t first_pass = runtime_control_passes(), started = ms();
+    uint32_t previous_pass = first_pass;
     while (true) {
         vTaskDelay(pdMS_TO_TICKS(500));
         sirokko::UiFrame f{};
         if (!runtime_snapshot(&f)) continue;
+        const uint32_t passes = runtime_control_passes();
+        const bool progressing = passes != previous_pass && ms() - f.now_ms <= 100;
+        previous_pass = passes;
         const bool fresh = f.room.quality == sirokko::SensorQuality::OK && f.exhaust.quality == sirokko::SensorQuality::OK &&
             f.hot_air.quality == sirokko::SensorQuality::OK && ms() - f.room.sample_ms <= f.config.sensor_stale_ms &&
             ms() - f.exhaust.sample_ms <= f.config.sensor_stale_ms && ms() - f.hot_air.sample_ms <= f.config.sensor_stale_ms;
-        if (ms() - started >= 5000 && runtime_control_passes() - first_pass >= 200 && g_display.healthy() && fresh &&
-            g_storage_ok.load() && g_settings_ok.load() && g_config_integrity && g_outputs.healthy()) {
-            esp_ota_mark_app_valid_cancel_rollback(); vTaskDelete(nullptr); return;
-        }
-        if (ms() - started >= 60000 && off(f.status.outputs) && !f.status.outputs.fan_request) {
-            esp_ota_mark_app_invalid_rollback_and_reboot(); // Existing NVS fault/profile records are never erased.
+        const bool healthy = progressing && ms() - started >= 5000 && passes - first_pass >= 200 &&
+            g_display.healthy() && fresh && g_storage_ok.load() && g_settings_ok.load() && g_config_integrity && g_outputs.healthy();
+        // Both otadata writes require the same exclusive, physically-inhibited command path.
+        // The first manual START is consumed/rejected until this health decision completes.
+        if ((healthy || ms() - started >= 60000) && off(f.status.outputs) && !f.status.outputs.fan_request &&
+            runtime_acquire_flash(FlashPurpose::LOCAL_SETTINGS) == sirokko::ServiceResult::OK) {
+            if (healthy) {
+                const bool marked = esp_ota_mark_app_valid_cancel_rollback() == ESP_OK;
+                runtime_release_flash();
+                if (marked) { g_ota_pending.store(false); vTaskDelete(nullptr); return; }
+            } else {
+                esp_ota_mark_app_invalid_rollback_and_reboot(); // Never erase NVS fault/profile records.
+                runtime_release_flash(); // If no valid rollback image exists, remain safely inhibited.
+            }
         }
     }
 }
@@ -339,20 +388,42 @@ bool runtime_snapshot(sirokko::UiFrame* frame) {
     if (!g_snapshot_mutex || xSemaphoreTake(g_snapshot_mutex, 0) != pdTRUE) return false;
     *frame = g_frame; xSemaphoreGive(g_snapshot_mutex); return true;
 }
+bool runtime_flash_safe() {
+    return g_lease_state.load() == LeaseState::GRANTED && g_flash_outputs_safe.load() &&
+           static_cast<uint32_t>(ms() - g_control_progress.load()) <= 100;
+}
+bool runtime_checkpoint() {
+    if (!runtime_flash_safe() || g_lease_purpose.load() != FlashPurpose::OTA || !g_records_ok) return false;
+    sirokko::UiFrame frame{}; sirokko::CommandHistory history;
+    if (xSemaphoreTake(g_snapshot_mutex, pdMS_TO_TICKS(50)) != pdTRUE) return false;
+    frame=g_frame; history=g_history_snapshot; xSemaphoreGive(g_snapshot_mutex);
+    uint32_t persisted{};
+    bool ok=g_store.load_latched_faults(&persisted);
+    const uint32_t faults=persisted | g_current_faults.load(); // Never clear an unflushed fault/reset at update time.
+    if (ok && faults!=persisted) ok=g_store.save_latched_faults(faults);
+    if (ok) ok=g_store.save_counters(frame.counters) && g_store.save_history(history);
+    if (ok) ok=g_settings_ok.load() && g_store.save_operator_settings(frame.settings,frame.config);
+    if (ok) g_saved_revision.store(frame.settings_revision);
+    else g_storage_ok.store(false);
+    return ok;
+}
 void runtime_remote_stop() { g_remote_stop.store(true); }
 uint32_t runtime_control_passes() { return g_passes.load(); }
 sirokko::ServiceResult runtime_acquire_flash(FlashPurpose purpose) {
     if (xSemaphoreTake(g_service_mutex, pdMS_TO_TICKS(50)) != pdTRUE) return sirokko::ServiceResult::BUSY;
     if (g_lease_state.load() != LeaseState::IDLE) { xSemaphoreGive(g_service_mutex); return sirokko::ServiceResult::BUSY; }
-    g_lease_purpose.store(purpose); g_lease_state.store(LeaseState::REQUESTED);
+    g_lease_purpose.store(purpose); g_lease_result.store(sirokko::ServiceResult::BUSY);
+    g_lease_state.store(LeaseState::REQUESTED);
     const uint32_t started = ms();
     while (g_lease_state.load() == LeaseState::REQUESTED && static_cast<uint32_t>(ms() - started) < 1000) vTaskDelay(pdMS_TO_TICKS(5));
-    if (g_lease_state.load() == LeaseState::GRANTED) return sirokko::ServiceResult::OK;
     LeaseState expected = LeaseState::REQUESTED;
-    g_lease_state.compare_exchange_strong(expected, LeaseState::IDLE);
-    if (g_lease_state.load() == LeaseState::GRANTED) return sirokko::ServiceResult::OK;
+    if (g_lease_state.compare_exchange_strong(expected, LeaseState::IDLE)) {
+        xSemaphoreGive(g_service_mutex); return sirokko::ServiceResult::BUSY; // No physical-OFF acknowledgment.
+    }
+    if (expected == LeaseState::GRANTED) return sirokko::ServiceResult::OK;
     const auto result = g_lease_result.load();
-    g_lease_state.store(LeaseState::IDLE); xSemaphoreGive(g_service_mutex); return result;
+    g_lease_state.store(LeaseState::IDLE); xSemaphoreGive(g_service_mutex);
+    return result == sirokko::ServiceResult::OK ? sirokko::ServiceResult::BUSY : result;
 }
 void runtime_release_flash() { g_lease_state.store(LeaseState::RELEASE); xSemaphoreGive(g_service_mutex); }
 extern "C" void app_main() {
@@ -361,19 +432,27 @@ extern "C" void app_main() {
     if (!g_snapshot_mutex || !g_service_mutex || !g_sensor_queue || !g_setting_queue || !g_store.begin()) {
         ESP_LOGE("sirokko", "startup storage/queue failure; hardware outputs remain inhibited"); return;
     }
+    const auto* running_partition = esp_ota_get_running_partition();
+    esp_ota_img_states_t boot_state{};
+    g_ota_pending.store(running_partition && esp_ota_get_state_partition(running_partition, &boot_state) == ESP_OK &&
+                        boot_state == ESP_OTA_IMG_PENDING_VERIFY);
     g_config = g_store.load_config(&g_config_integrity);
     bool settings_ok{};
     g_initial_settings = g_store.load_operator_settings(g_config, &settings_ok); g_settings_ok.store(settings_ok);
     const bool counters_ok = g_store.load_counters(&g_initial_counters);
+    g_initial_history.begin(g_store.boot_count(), g_initial_counters);
+    const bool history_ok = g_store.load_history(&g_initial_history);
     uint32_t faults{};
     const bool faults_ok = g_store.load_latched_faults(&faults);
+    g_records_ok = counters_ok && history_ok && faults_ok;
+    g_storage_ok.store(g_records_ok);
     g_startup_faults = faults;
     gpio_config_t input{};
     input.pin_bit_mask = (1ULL << kSafety) | (1ULL << kReset) | (1ULL << kStart) | (1ULL << kStop) | (1ULL << kUp) | (1ULL << kDown);
     input.mode = GPIO_MODE_INPUT; input.intr_type = GPIO_INTR_DISABLE;
     g_inputs_ok = gpio_config(&input) == ESP_OK;
     const bool output_ok = g_outputs.initialize(g_config);
-    if (!g_inputs_ok || !g_config_integrity || !settings_ok || !counters_ok || !faults_ok || !output_ok) g_startup_faults |= sirokko::FAULT_CONFIG;
+    if (!g_inputs_ok || !g_config_integrity || !settings_ok || !counters_ok || !history_ok || !faults_ok || !output_ok) g_startup_faults |= sirokko::FAULT_CONFIG;
     if (esp_reset_reason() == ESP_RST_BROWNOUT) g_startup_faults |= sirokko::FAULT_BROWNOUT_RESET;
     if (output_ok) {
         sirokko::Outputs recovery{}; recovery.fan_request = true; recovery.speed_permille = g_config.recovery_purge_pwm_permille; recovery.sw_trip = true;

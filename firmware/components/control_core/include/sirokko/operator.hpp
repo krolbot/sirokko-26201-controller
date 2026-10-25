@@ -43,6 +43,7 @@ inline constexpr size_t kEventCapacity = 24;
 class CommandHistory {
 public:
     void begin(uint32_t boot_id, const CommandCounters& restored = {});
+    bool restore_events(const EventRecord*, size_t count);
     void observe(const Status&, uint64_t now_ms, StopReason reason = StopReason::NONE);
     void reset_counters();
     const CommandCounters& counters() const { return counters_; }

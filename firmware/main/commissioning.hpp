@@ -20,10 +20,9 @@ public:
     bool load_counters(sirokko::CommandCounters*) const;
     bool save_counters(const sirokko::CommandCounters&) const;
     bool save_history(const sirokko::CommandHistory&) const;
+    bool load_history(sirokko::CommandHistory*) const;
     void print_history() const;
 
-    void append_fault(uint32_t uptime_ms, sirokko::State state, uint32_t faults);
-    void print_faults() const;
     bool load_latched_faults(uint32_t* faults) const;
     bool save_latched_faults(uint32_t faults) const;
     bool clear_latched_faults() const;

@@ -4,6 +4,7 @@
 namespace fake_idf {
 void reset() { levels.clear(); nvs.clear(); trace.clear(); failing_call.clear(); persistent_failure=false; connected=running=false; idle=staged=active=frequency=0; }
 bool call(const std::string& name) {
+    if (observer) observer(name);
     trace.push_back(name);
     if (name != failing_call) return true;
     if (!persistent_failure) failing_call.clear();
@@ -49,13 +50,19 @@ void nvs_close(nvs_handle_t) {}
 esp_err_t nvs_commit(nvs_handle_t) { return call("commit") ? ESP_OK : ESP_FAIL; }
 esp_err_t nvs_get_blob(nvs_handle_t, const char* key, void* out, size_t* size) {
     auto it=nvs.find(key);
-    if(it==nvs.end() || *size < it->second.size()) return ESP_ERR_NVS_NOT_FOUND;
+    if(it==nvs.end()) return ESP_ERR_NVS_NOT_FOUND;
+    if(*size < it->second.size()) { *size=it->second.size(); return ESP_ERR_NVS_INVALID_LENGTH; }
     *size=it->second.size(); std::memcpy(out,it->second.data(),*size); return ESP_OK;
 }
 esp_err_t nvs_set_blob(nvs_handle_t, const char* key, const void* data, size_t size) {
     const auto* bytes=static_cast<const uint8_t*>(data); nvs[key]={bytes,bytes+size}; return ESP_OK;
 }
-esp_err_t nvs_get_u32(nvs_handle_t h,const char* k,uint32_t* v) { size_t s=sizeof(*v); return nvs_get_blob(h,k,v,&s); }
+esp_err_t nvs_get_u32(nvs_handle_t h,const char* k,uint32_t* v) {
+    uint32_t value{}; size_t s=sizeof(value); const auto e=nvs_get_blob(h,k,&value,&s);
+    if(e!=ESP_OK) return e;
+    if(s!=sizeof(value)) return ESP_ERR_NVS_INVALID_LENGTH;
+    *v=value; return ESP_OK;
+}
 esp_err_t nvs_set_u32(nvs_handle_t h,const char* k,uint32_t v) { return nvs_set_blob(h,k,&v,sizeof(v)); }
 esp_err_t nvs_get_i32(nvs_handle_t h,const char* k,int32_t* v) { size_t s=sizeof(*v); return nvs_get_blob(h,k,v,&s); }
 esp_err_t nvs_set_i32(nvs_handle_t h,const char* k,int32_t v) { return nvs_set_blob(h,k,&v,sizeof(v)); }

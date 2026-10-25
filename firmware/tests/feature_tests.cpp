@@ -86,6 +86,16 @@ void legacy_schema_preserved() {
     check(!integrity && !c.commissioning_accepted && fake_idf::nvs["config"]==original,"legacy blob preserved but never accepted");
     fake_idf::nvs["boot_count"]=std::vector<uint8_t>(4,0xff); check(!store.begin(),"boot ID never wraps and reuses identity");
 }
+void history_restoration() {
+    fake_idf::reset(); CommissioningStore store; check(store.begin(),"history store");
+    CommandHistory first; first.begin(7); Status s{}; s.state=State::IGNITION_TRIAL; first.observe(s,20);
+    s.state=State::LOCKOUT; s.faults=FAULT_IGNITION_NOT_PROVEN; first.observe(s,30); check(first.counters().failed_ignitions==1,"first failure");
+    check(store.save_history(first),"history save");
+    CommandHistory reboot; reboot.begin(8,first.counters()); check(store.load_history(&reboot),"restore ring"); reboot.observe(s,0);
+    check(reboot.count()==3 && reboot.event(0).boot_id==7 && reboot.event(2).boot_id==8 && reboot.counters().failed_ignitions==1,"boot restored failure counted twice or history lost");
+    auto& history_blob=fake_idf::nvs["history_v1"]; history_blob[history_blob.size()/2]^=1; auto saved=history_blob;
+    check(!store.load_history(&reboot) && saved==fake_idf::nvs["history_v1"],"corrupt history overwritten");
+}
 void countdown() {
     Sim s; s.start_to(State::PREHEAT); auto status=s.machine.status(s.in.now_ms);
     check(status.stage_timed && status.stage_remaining_ms==s.config.preheat_ms,"remaining stage time");
@@ -98,7 +108,7 @@ int main() {
         {"low_combustion_requires_explicit_qualification",qualification},{"room_noise_keeps_continuous_clutch",noisy_room},
         {"thermostat_stop_never_auto_reignites",no_thermostat_restart},{"OTA_lease_all_machine_states_and_START_race",service_states},
         {"command_counters_ring_wrap_saturation_reset",counters_history},{"real_NVS_operator_counters_corruption",persisted_operator},
-        {"legacy_NVS_and_boot_identity_fail_closed",legacy_schema_preserved},{"real_stage_countdown",countdown}
+        {"legacy_NVS_and_boot_identity_fail_closed",legacy_schema_preserved},{"history_across_reboot_without_duplicate_failures",history_restoration},{"real_stage_countdown",countdown}
     };
     size_t passed{};
     for(const auto& [name,test]:tests) try { test(); ++passed; std::cout<<"PASS "<<name<<'\n'; } catch(const std::exception& e) { std::cerr<<"FAIL "<<name<<": "<<e.what()<<'\n'; }
