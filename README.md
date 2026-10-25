@@ -15,7 +15,7 @@ The recovered PCB has 88 footprints, 123 track segments, 32 vias and 3 copper zo
 
 ## Firmware verification
 
-The published `0.1.4-draft` set passed 39/39 host tests and a clean ESP-IDF 5.5.2 build. Checksums and the build log are included in `firmware/release/firmware/0.1.4/`.
+The published `0.1.4-draft` set passed 39/39 host tests and a clean ESP-IDF 5.5.2 build. Checksums and the build log are included in `firmware/release/firmware/0.1.4/`. The [separate ESP32-S3 build kit](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md) preserves the completed build, locked configuration, source archive, flashing instructions and third-party license notices; DRAFT / BENCH ONLY.
 
 No physical ESP32, TFT, sensor, power stage, load or burner test has been performed. Building or flashing the image does not authorize fired operation.
 
@@ -31,4 +31,4 @@ Routing, schematic/PCB parity, power-stage qualification, Gerber, Drill, CPL, or
 
 ## License
 
-No license is granted at this stage. Third-party manuals and scans are not redistributed; source documents are linked only.
+No license is granted for the project's own code at this stage. Bundled third-party components retain their own licenses; see the [build-kit publication notes](firmware/release/build-kits/0.1.4-esp32s3/PUBLICATION_RU.md). Third-party manuals and scans are not redistributed; source documents are linked only.
