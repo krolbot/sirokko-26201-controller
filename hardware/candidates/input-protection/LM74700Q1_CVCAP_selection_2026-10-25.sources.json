@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.ti.com/lit/ds/symlink/lm74700-q1.pdf",
+      "title": "",
+      "accessed": "2026-10-25"
+    },
+    {
+      "id": 2,
+      "url": "https://static.chipdip.ru/lib/078/DOC037078859.pdf",
+      "title": "",
+      "accessed": "2026-10-25"
+    },
+    {
+      "id": 3,
+      "url": "https://www.chipdip.ru/product/grm31c5c1h224je02l-mnogosloynyy-keramicheskiy-murata-9000864912",
+      "title": "",
+      "accessed": "2026-10-25"
+    },
+    {
+      "id": 4,
+      "url": "https://www.murata.com/en-us/support/faqs/capacitor/ceramiccapacitor/char/0005",
+      "title": "",
+      "accessed": "2026-10-25"
+    },
+    {
+      "id": 5,
+      "url": "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM31C5C1H224JE02-01A-EN_PDF_CERAMICCAPACITORSMD",
+      "title": "",
+      "accessed": "2026-10-25"
+    }
+  ]
+}
