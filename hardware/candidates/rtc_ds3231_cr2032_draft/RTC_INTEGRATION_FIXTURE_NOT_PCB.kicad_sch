@@ -1,0 +1,801 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "dd36df4e-0bff-4afe-9c4d-c5036400457f")
+	(paper "A4")
+	(lib_symbols
+		(symbol "power:PWR_FLAG"
+		(power global)
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 0)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "#FLG"
+			(at 0 1.905 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 0 3.81 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "flag power"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "PWR_FLAG_0_0"
+			(pin power_out line
+				(at 0 0 90)
+				(length 0)
+				(name ""
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(symbol "PWR_FLAG_0_1"
+			(polyline
+				(pts
+					(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+		(symbol "Connector_Generic:Conn_01x04"
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "J"
+			(at 0 5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 0 -7.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "connector"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Connector*:*_1x??_*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Conn_01x04_1_1"
+			(rectangle
+				(start -1.27 3.81)
+				(end 1.27 -6.35)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+			(rectangle
+				(start -1.27 2.667)
+				(end 0 2.413)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 0.127)
+				(end 0 -0.127)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -2.413)
+				(end 0 -2.667)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -4.953)
+				(end 0 -5.207)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin passive line
+				(at -5.08 2.54 0)
+				(length 3.81)
+				(name "Pin_1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 0 0)
+				(length 3.81)
+				(name "Pin_2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -2.54 0)
+				(length 3.81)
+				(name "Pin_3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -5.08 0)
+				(length 3.81)
+				(name "Pin_4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	))
+	(sheet
+		(at 127.0 50.8)
+		(size 50.8 20.32)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "fa8a8f89-4b2b-4c16-ac36-5aae038e5927")
+		(property "Sheetname" "RTC_DRAFT_NOT_FOR_ORDER"
+			(at 127.0 50.0884 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "RTC_DS3231_CR2032_DRAFT.kicad_sch"
+			(at 127.0 71.7046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "+3V3" input
+			(at 127.0 53.34 180)
+			(uuid "5294887c-f5cb-4431-acfd-9137bb807a12")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GND" passive
+			(at 127.0 55.88 180)
+			(uuid "3f3f10ca-de3c-4c10-aa53-69422099a9ee")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "RTC_SDA" bidirectional
+			(at 127.0 58.42 180)
+			(uuid "b8b3b0a5-8327-4ed8-9ec1-aeef1779f863")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "RTC_SCL" input
+			(at 127.0 60.96 180)
+			(uuid "7f31b9a3-08c8-408d-b457-4669b5798e62")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "RTC_INTEGRATION_FIXTURE_NOT_PCB"
+				(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(symbol_instances
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/f29a38ef-16fc-428e-bffb-6538b5a18fc8"
+			(reference "U9201")
+			(unit 1)
+			(value "DS3231SN+")
+			(footprint "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/89f193fb-5e00-4c31-adfa-48f7e9877ca6"
+			(reference "C9201")
+			(unit 1)
+			(value "100nF 16V X7R")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/f8ce15b7-0dfe-4741-94e3-9dfb991008b0"
+			(reference "C9202")
+			(unit 1)
+			(value "100nF 16V X7R low leakage")
+			(footprint "Capacitor_SMD:C_0805_2012Metric")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/f6d3dd1a-dadd-4ab4-bdeb-e3400a063ef7"
+			(reference "BT9201")
+			(unit 1)
+			(value "CR2032 HOLDER KEYSTONE 1060")
+			(footprint "Battery:BatteryHolder_Keystone_1060_1x2032")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/edfa6dec-da37-4d95-83f8-54db468ece4a"
+			(reference "R9201")
+			(unit 1)
+			(value "4.7k 1%")
+			(footprint "Resistor_SMD:R_0805_2012Metric")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/bd776b3d-a9c4-472b-9032-a373447ee7b4"
+			(reference "R9202")
+			(unit 1)
+			(value "4.7k 1%")
+			(footprint "Resistor_SMD:R_0805_2012Metric")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/63383e95-6682-4fdd-a3b0-064e57d1ecd3"
+			(reference "#FLG9201")
+			(unit 1)
+			(value "PWR_FLAG")
+			(footprint "")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/907acb60-6d8c-46c0-9bae-8495b015f74b"
+			(reference "#FLG9202")
+			(unit 1)
+			(value "PWR_FLAG")
+			(footprint "")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/fa8a8f89-4b2b-4c16-ac36-5aae038e5927/e599cc09-eee7-4489-9b51-9508ba68c5f4"
+			(reference "#FLG9203")
+			(unit 1)
+			(value "PWR_FLAG")
+			(footprint "")
+		)
+		(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f/9732da63-24fc-40e4-9e42-4c6fea60e22f"
+			(reference "J9201")
+			(unit 1)
+			(value "FIXTURE_ONLY_3V3_GND_SDA_SCL")
+			(footprint "")
+		)
+)
+	(symbol
+	(lib_name "power:PWR_FLAG")
+	(lib_id "power:PWR_FLAG")
+	(at 40.64 30.48 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "63383e95-6682-4fdd-a3b0-064e57d1ecd3")
+	(property "Reference" "#FLG9201"
+		(at 55.88 26.67 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Value" "PWR_FLAG"
+		(at 55.88 29.21 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at 76.2 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 76.2 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "8b5dae25-46ce-4f75-9342-ca511e0eb601")
+)
+	(instances
+		(project "RTC_INTEGRATION_FIXTURE_NOT_PCB"
+			(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f"
+				(reference "#FLG9201")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "power:PWR_FLAG")
+	(lib_id "power:PWR_FLAG")
+	(at 40.64 43.18 180)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "907acb60-6d8c-46c0-9bae-8495b015f74b")
+	(property "Reference" "#FLG9202"
+		(at 55.88 39.37 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Value" "PWR_FLAG"
+		(at 55.88 41.91 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at 76.2 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 76.2 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "b8c17758-38ba-4d09-8112-b06c64978b98")
+)
+	(instances
+		(project "RTC_INTEGRATION_FIXTURE_NOT_PCB"
+			(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f"
+				(reference "#FLG9202")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Connector_Generic:Conn_01x04")
+	(lib_id "Connector_Generic:Conn_01x04")
+	(at 50.8 55.88 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "9732da63-24fc-40e4-9e42-4c6fea60e22f")
+	(property "Reference" "J9201"
+		(at 55.88 53.34 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Value" "TEST ONLY"
+		(at 55.88 57.15 0)
+		(effects
+			(font
+				(size 1 1)
+			) (justify left)
+		)
+	)
+	(property "Footprint" ""
+		(at 50.8 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 50.8 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "d369c239-abf4-4fc3-8d57-313f591fa59f")
+)
+	(pin "2"
+	(uuid "7e762755-92a6-4e2b-b5f4-6a1de2d8e6bd")
+)
+	(pin "3"
+	(uuid "9ff660e8-9ad7-4fb9-b9f3-52692ba8e588")
+)
+	(pin "4"
+	(uuid "ba0c1a09-d495-421a-86e2-936aad198a68")
+)
+	(instances
+		(project "RTC_INTEGRATION_FIXTURE_NOT_PCB"
+			(path "/dd36df4e-0bff-4afe-9c4d-c5036400457f"
+				(reference "J9201")
+				(unit 1)
+			)
+		)
+	)
+)
+	(label "+3V3"
+		(at 101.6 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8afa5956-a022-4a5c-a541-6a541355f088")
+	)
+	(label "GND"
+		(at 101.6 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "412b7fa7-d2d5-4cd4-b91c-39e913de5388")
+	)
+	(label "RTC_SDA"
+		(at 101.6 58.42 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ebedb3f0-dad7-4ed0-8008-3a3146f9b049")
+	)
+	(label "RTC_SCL"
+		(at 101.6 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2fbdda50-0b3d-406e-a0b1-f427adc827ed")
+	)
+	(label "+3V3"
+		(at 43.18 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e3793df4-b43d-45c2-9280-31a678db18de")
+	)
+	(label "GND"
+		(at 43.18 55.88 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0a6711fb-57c3-4768-9dd3-581b59e92086")
+	)
+	(label "RTC_SDA"
+		(at 43.18 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "109abe34-37d6-49ed-9e10-d5f5566d54ae")
+	)
+	(label "RTC_SCL"
+		(at 43.18 60.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fba6cef2-904c-4266-bcb5-c080f93bd6c3")
+	)
+	(wire
+	(pts
+		(xy 45.72 53.34) (xy 43.18 53.34)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "48f7ec1c-6991-4e58-899a-6fdec596fa10")
+)
+	(wire
+	(pts
+		(xy 45.72 55.88) (xy 43.18 55.88)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f4f05407-5095-4372-a597-86acb4aeb1a9")
+)
+	(wire
+	(pts
+		(xy 45.72 58.42) (xy 43.18 58.42)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "b85515cf-a8d6-43eb-8588-6ec8134c3540")
+)
+	(wire
+	(pts
+		(xy 45.72 60.96) (xy 43.18 60.96)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "a70fa556-cded-4976-ba3c-1380b9e4ea25")
+)
+	(text "TEST FIXTURE ONLY - NOT THE CONTROLLER PCB\nJ9201 emulates external +3V3 / GND / MCU I2C. Do NOT F8 this fixture into main PCB.\nPWR_FLAGs here declare an externally provided supply and return, not extra circuits.\nLeaf VBAT PWR_FLAG declares the real CR2032 source (Device:Battery_Cell has passive pins).\nThis ERC test does not verify power-off leakage, I2C electrical timing, or firmware.\nOnly RTC_DS3231_CR2032_DRAFT leaf is intended for later controlled integration."
+	(at 25.4 96.52 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		) (justify left top)
+	)
+	(uuid "24a4cbc2-5530-4695-b6b6-247ee1eb19c5")
+)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+(wire (pts (xy 101.6 53.34) (xy 127 53.34)) (stroke (width 0) (type default)) (uuid "14faa36b-3e10-4956-8419-f867bea4889d"))
+(wire (pts (xy 101.6 55.88) (xy 127 55.88)) (stroke (width 0) (type default)) (uuid "05261c64-634b-40b7-be52-3d23dbaaa490"))
+(wire (pts (xy 101.6 58.42) (xy 127 58.42)) (stroke (width 0) (type default)) (uuid "ffb40fbe-4983-4a49-9173-8284718c0636"))
+(wire (pts (xy 101.6 60.96) (xy 127 60.96)) (stroke (width 0) (type default)) (uuid "5bda5e57-4307-409a-9ec8-89c590673988"))
+(label "+3V3" (at 40.64 30.48 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "622783e0-735b-4968-8bdf-12b7f6de9ef8"))
+(label "GND" (at 40.64 43.18 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "85f732b2-4e42-4edb-8970-d290ed074625"))
+)
