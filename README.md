@@ -6,6 +6,7 @@
 
 - `hardware/kicad/` — recovered main PCB, matching native KiCad 10.0.6 schematic, project, local libraries and separate draft sheets;
 - `hardware/candidates/input-protection/` — a separate input-protection candidate, not integrated into the main PCB;
+- [SPI recovered WIP candidate](hardware/candidates/spi_recovered/) — only `/TC_AIR_CS` is completed; 130 track segments, 35 vias, 181 unconnected items and the same 4 library warnings. It does not replace the canonical PCB; remaining SPI and power routing is unfinished. The candidate README includes both copper layers;
 - `firmware/` — ESP-IDF 5.5.2 sources, host tests, I/O contract and the `0.1.4-draft` flashing set;
 - `docs/` — functional requirements, including the selected power-return behavior;
 - `verification/wip-2026-10-25/` — recorded hardware checks. Earlier DRAFT-01/DRAFT-02 exports are historical, not evidence for the current PCB.
