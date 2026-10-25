@@ -25,6 +25,13 @@ bool is_glow_state(State state) {
     return state == State::PREHEAT || state == State::SPINUP || state == State::IGNITION_TRIAL;
 }
 
+int64_t room_boundary(const Config& c, const Inputs& in, int32_t delta) {
+    const int64_t span = static_cast<int64_t>(c.stop_delta_milli_c) - c.start_delta_milli_c;
+    const int64_t center = (static_cast<int64_t>(c.stop_delta_milli_c) + c.start_delta_milli_c) / 2;
+    return static_cast<int64_t>(in.setpoint_milli_c) +
+           (static_cast<int64_t>(delta) - center) * in.hysteresis_milli_c / (span > 0 ? span : 1);
+}
+
 }  // namespace
 
 uint32_t heartbeat_worst_case_falling_edge_ms(uint32_t toggle_ms) {
@@ -43,6 +50,7 @@ uint32_t validate_config(const Config& c, bool require_acceptance) {
     uint32_t errors = CONFIG_OK;
     if (c.schema_version != kConfigSchemaVersion) errors |= CONFIG_SCHEMA;
     if (require_acceptance && !c.commissioning_accepted) errors |= CONFIG_NOT_ACCEPTED;
+    if (c.profile_revision == 0) errors |= CONFIG_SCHEMA;
 
     const uint32_t durations[] = {
         c.boot_self_test_timeout_ms, c.recovery_purge_min_ms, c.prepurge_ms, c.preheat_ms,
@@ -119,7 +127,8 @@ uint32_t Machine::current_input_faults(const Inputs& in) const {
     uint32_t faults = FAULT_NONE;
     if (!in.configuration_ok || validate_config(config_) != CONFIG_OK ||
         in.setpoint_milli_c < config_.setpoint_min_milli_c ||
-        in.setpoint_milli_c > config_.setpoint_max_milli_c) {
+        in.setpoint_milli_c > config_.setpoint_max_milli_c ||
+        in.hysteresis_milli_c < 500 || in.hysteresis_milli_c > 10000) {
         faults |= FAULT_CONFIG;
     }
     if (!in.safety_ok) faults |= FAULT_SAFETY_OPEN;
@@ -160,6 +169,9 @@ bool Machine::state_may_need_purge(State state) const {
 void Machine::transition(State state, uint32_t now) {
     state_ = state;
     state_entered_ms_ = now;
+    if (state == State::PREPURGE || state == State::POST_PURGE || state == State::LOCKOUT) {
+        start_release_seen_ = false;
+    }
     if (state == State::PREHEAT) {
         glow_started_ms_ = now;
         glow_timer_started_ = true;
@@ -214,9 +226,10 @@ void Machine::run_state(const Inputs& in) {
             if (restart_inhibit_ && elapsed(in.now_ms, restart_started_ms_) >= config_.restart_inhibit_ms) {
                 restart_inhibit_ = false;
             }
-            if (start_release_seen_ && in.heat_enable && !in.stop_active && !restart_inhibit_ && cold(in) &&
+            if (start_release_seen_ && !previous_heat_enable_ && in.heat_enable && !in.stop_active &&
+                !in.maintenance_inhibit && !restart_inhibit_ && cold(in) &&
                 static_cast<int64_t>(in.room.milli_c) <=
-                    static_cast<int64_t>(in.setpoint_milli_c) + config_.start_delta_milli_c) {
+                    room_boundary(config_, in, config_.start_delta_milli_c)) {
                 transition(State::PREPURGE, in.now_ms);
             }
             break;
@@ -261,12 +274,11 @@ void Machine::run_state(const Inputs& in) {
             if (in.exhaust.milli_c < config_.flame_hold_exhaust_milli_c) {
                 trip(FAULT_FLAME_LOST, in.now_ms);
             } else if (static_cast<int64_t>(in.room.milli_c) >=
-                       static_cast<int64_t>(in.setpoint_milli_c) + config_.stop_delta_milli_c) {
+                       room_boundary(config_, in, config_.stop_delta_milli_c)) {
                 transition(State::POST_PURGE, in.now_ms);
-            } else if (elapsed(in.now_ms, state_entered_ms_) >= config_.stage_min_ms &&
+            } else if (config_.run_low_qualified && elapsed(in.now_ms, state_entered_ms_) >= config_.stage_min_ms &&
                        static_cast<int64_t>(in.room.milli_c) >=
-                           static_cast<int64_t>(in.setpoint_milli_c) +
-                               config_.high_to_low_delta_milli_c) {
+                           room_boundary(config_, in, config_.high_to_low_delta_milli_c)) {
                 transition(State::RUN_LOW, in.now_ms);
             }
             break;
@@ -275,12 +287,11 @@ void Machine::run_state(const Inputs& in) {
             if (in.exhaust.milli_c < config_.flame_hold_exhaust_milli_c) {
                 trip(FAULT_FLAME_LOST, in.now_ms);
             } else if (static_cast<int64_t>(in.room.milli_c) >=
-                       static_cast<int64_t>(in.setpoint_milli_c) + config_.stop_delta_milli_c) {
+                       room_boundary(config_, in, config_.stop_delta_milli_c)) {
                 transition(State::POST_PURGE, in.now_ms);
             } else if (elapsed(in.now_ms, state_entered_ms_) >= config_.stage_min_ms &&
                        static_cast<int64_t>(in.room.milli_c) <=
-                           static_cast<int64_t>(in.setpoint_milli_c) +
-                               config_.low_to_high_delta_milli_c) {
+                           room_boundary(config_, in, config_.low_to_high_delta_milli_c)) {
                 transition(State::RUN_HIGH, in.now_ms);
             }
             break;
@@ -366,6 +377,7 @@ Outputs Machine::make_outputs(const Inputs& in) {
     const uint32_t readiness_faults = current_input_faults(in) & ~FAULT_SAFETY_OPEN;
     const bool lockout_reset_ready = state_ == State::LOCKOUT && !in.heat_enable && !in.stop_active;
     out.arm_ready = recovery_complete_ && readiness_faults == FAULT_NONE &&
+                    !in.maintenance_inhibit &&
                     state_ != State::BOOT_SELF_TEST && state_ != State::RECOVERY_PURGE &&
                     (state_ != State::LOCKOUT || lockout_reset_ready);
     // The hardware RESET edge is asynchronous and arrives before the debounced GPIO request.
@@ -473,6 +485,7 @@ Outputs Machine::tick(const Inputs& in) {
     update_heartbeat(in, outputs_.arm_ready);
     outputs_.watchdog_heartbeat = heartbeat_level_;
     previous_reset_request_ = in.reset_request;
+    previous_heat_enable_ = in.heat_enable;
     return outputs_;
 }
 
@@ -481,6 +494,19 @@ Status Machine::status(uint32_t now_ms) const {
     result.state = state_;
     result.faults = faults_;
     result.state_age_ms = initialized_ ? elapsed(now_ms, state_entered_ms_) : 0;
+    uint32_t duration{};
+    switch (state_) {
+        case State::RECOVERY_PURGE: duration = config_.recovery_purge_min_ms; break;
+        case State::PREPURGE: duration = config_.prepurge_ms; break;
+        case State::PREHEAT: duration = config_.preheat_ms; break;
+        case State::SPINUP: duration = config_.spinup_ms; break;
+        case State::IGNITION_TRIAL: duration = config_.ignition_window_ms; break;
+        case State::FLAME_CONFIRM: duration = config_.flame_confirm_ms; break;
+        case State::POST_PURGE: duration = config_.postpurge_min_ms; break;
+        default: break;
+    }
+    result.stage_timed = duration != 0;
+    result.stage_remaining_ms = duration > result.state_age_ms ? duration - result.state_age_ms : 0;
     result.ignition_baseline_milli_c = ignition_baseline_milli_c_;
     result.commissioning_ready = validate_config(config_) == CONFIG_OK;
     result.recovery_complete = recovery_complete_;

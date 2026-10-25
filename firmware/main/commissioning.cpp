@@ -89,6 +89,8 @@ uint32_t config_digest(const sirokko::Config& c, bool include_acceptance) {
     HASH_FIELD(pwm_frequency_hz);
     HASH_FIELD(recovery_purge_pwm_permille);
     HASH_FIELD(low_pwm_permille);
+    HASH_FIELD(profile_revision);
+    HASH_FIELD(run_low_qualified);
 #undef HASH_FIELD
     return hash;
 }
@@ -97,7 +99,7 @@ bool parse_unsigned(const char* text, uint32_t* output) {
     errno = 0;
     char* end{};
     const unsigned long long parsed = std::strtoull(text, &end, 10);
-    if (errno != 0 || !end || *end != '\0' || parsed > UINT32_MAX) return false;
+    if (errno != 0 || !end || end == text || *end != '\0' || text[0] == '-' || parsed > UINT32_MAX) return false;
     *output = static_cast<uint32_t>(parsed);
     return true;
 }
@@ -106,7 +108,7 @@ bool parse_signed(const char* text, int32_t* output) {
     errno = 0;
     char* end{};
     const long long parsed = std::strtoll(text, &end, 10);
-    if (errno != 0 || !end || *end != '\0' || parsed < INT32_MIN || parsed > INT32_MAX) return false;
+    if (errno != 0 || !end || end == text || *end != '\0' || parsed < INT32_MIN || parsed > INT32_MAX) return false;
     *output = static_cast<int32_t>(parsed);
     return true;
 }
@@ -117,16 +119,14 @@ bool open_nvs(nvs_handle_t* handle, nvs_open_mode_t mode = NVS_READWRITE) {
 }  // namespace
 
 bool CommissioningStore::begin() {
-    esp_err_t error = nvs_flash_init();
-    if (error == ESP_ERR_NVS_NO_FREE_PAGES || error == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        if (nvs_flash_erase() != ESP_OK) return false;
-        error = nvs_flash_init();
-    }
+    // Do not erase critical records to hide full, corrupt or newer-schema NVS.
+    const esp_err_t error = nvs_flash_init();
     if (error != ESP_OK) return false;
 
     nvs_handle_t handle{};
     if (!open_nvs(&handle)) return false;
     nvs_get_u32(handle, "boot_count", &boot_count_);
+    if (boot_count_ == UINT32_MAX) { nvs_close(handle); return false; }
     ++boot_count_;
     const bool ok = nvs_set_u32(handle, "boot_count", boot_count_) == ESP_OK &&
                     nvs_commit(handle) == ESP_OK;
@@ -205,6 +205,14 @@ bool CommissioningStore::set_field(sirokko::Config& c, const char* key, const ch
         return true; \
     }
     SET_U32(boot_self_test_timeout_ms)
+    SET_U32(profile_revision)
+    if (std::strcmp(key, "run_low_qualified") == 0) {
+        uint32_t parsed{};
+        if (!parse_unsigned(value, &parsed) || parsed > 1) return false;
+        c.run_low_qualified = parsed != 0;
+        c.commissioning_accepted = false;
+        return true;
+    }
     SET_U32(recovery_purge_min_ms)
     SET_U32(prepurge_ms)
     SET_U32(preheat_ms)
@@ -267,6 +275,8 @@ void CommissioningStore::print_config(const sirokko::Config& c) const {
 #define PRINT_U32(field) std::printf(#field "=%" PRIu32 "\n", c.field)
 #define PRINT_I32(field) std::printf(#field "=%" PRId32 "\n", c.field)
     PRINT_U32(boot_self_test_timeout_ms);
+    PRINT_U32(profile_revision);
+    std::printf("run_low_qualified=%u\n", c.run_low_qualified);
     PRINT_U32(recovery_purge_min_ms);
     PRINT_U32(prepurge_ms);
     PRINT_U32(preheat_ms);
@@ -304,26 +314,86 @@ void CommissioningStore::print_config(const sirokko::Config& c) const {
 #undef PRINT_I32
 }
 
-int32_t CommissioningStore::load_setpoint(const sirokko::Config& config) {
-    int32_t setpoint = config.setpoint_default_milli_c;
-    nvs_handle_t handle{};
-    if (open_nvs(&handle, NVS_READONLY)) {
-        int32_t stored{};
-        if (nvs_get_i32(handle, "tset_mC", &stored) == ESP_OK &&
-            stored >= config.setpoint_min_milli_c && stored <= config.setpoint_max_milli_c) {
-            setpoint = stored;
-        }
-        nvs_close(handle);
-    }
-    return setpoint;
+namespace {
+template <typename T> struct StoredRecord {
+    uint32_t schema;
+    T data;
+    uint32_t digest;
+};
+template <typename T> bool write_record(const char* key, const T& data) {
+    StoredRecord<T> record{};
+    record.schema = 1;
+    record.data = data;
+    uint32_t hash = 2166136261u;
+    hash_bytes(hash, &record, offsetof(StoredRecord<T>, digest));
+    record.digest = hash;
+    nvs_handle_t h{};
+    if (!open_nvs(&h)) return false;
+    const bool ok = nvs_set_blob(h, key, &record, sizeof(record)) == ESP_OK && nvs_commit(h) == ESP_OK;
+    nvs_close(h);
+    return ok;
+}
+// NOT_FOUND is distinct from a corrupt/unknown-schema record; neither is automatically erased.
+template <typename T> esp_err_t read_record(const char* key, T* data) {
+    StoredRecord<T> record{};
+    nvs_handle_t h{};
+    if (!open_nvs(&h, NVS_READONLY)) return ESP_FAIL;
+    size_t size = sizeof(record);
+    const esp_err_t error = nvs_get_blob(h, key, &record, &size);
+    nvs_close(h);
+    if (error != ESP_OK) return error;
+    uint32_t hash = 2166136261u;
+    hash_bytes(hash, &record, offsetof(StoredRecord<T>, digest));
+    if (size != sizeof(record) || record.schema != 1 || hash != record.digest) return ESP_FAIL;
+    *data = record.data;
+    return ESP_OK;
+}
+struct SavedHistory {
+    uint32_t count;
+    sirokko::EventRecord events[sirokko::kEventCapacity];
+};
 }
 
-bool CommissioningStore::save_setpoint(int32_t milli_c) {
-    nvs_handle_t handle{};
-    if (!open_nvs(&handle)) return false;
-    const bool ok = nvs_set_i32(handle, "tset_mC", milli_c) == ESP_OK && nvs_commit(handle) == ESP_OK;
-    nvs_close(handle);
-    return ok;
+sirokko::OperatorSettings CommissioningStore::load_operator_settings(const sirokko::Config& c, bool* ok) const {
+    sirokko::OperatorSettings settings{};
+    settings.setpoint_milli_c = c.setpoint_default_milli_c;
+    const auto error = read_record("operator_v1", &settings);
+    *ok = (error == ESP_OK || error == ESP_ERR_NVS_NOT_FOUND) && sirokko::operator_settings_valid(settings, c);
+    return settings;
+}
+bool CommissioningStore::save_operator_settings(const sirokko::OperatorSettings& s, const sirokko::Config& c) const {
+    return sirokko::operator_settings_valid(s, c) && write_record("operator_v1", s);
+}
+bool CommissioningStore::load_counters(sirokko::CommandCounters* counters) const {
+    const auto error = read_record("counters_v1", counters);
+    return error == ESP_OK || error == ESP_ERR_NVS_NOT_FOUND;
+}
+bool CommissioningStore::save_counters(const sirokko::CommandCounters& counters) const {
+    return write_record("counters_v1", counters);
+}
+bool CommissioningStore::save_history(const sirokko::CommandHistory& history) const {
+    SavedHistory saved{};
+    saved.count = history.count();
+    for (size_t i = 0; i < history.count(); ++i) saved.events[i] = history.event(i);
+    return write_record("history_v1", saved);
+}
+void CommissioningStore::print_history() const {
+    SavedHistory saved{};
+    if (read_record("history_v1", &saved) != ESP_OK || saved.count > sirokko::kEventCapacity) {
+        std::printf("history unavailable or invalid\n");
+        return;
+    }
+    for (uint32_t i = 0; i < saved.count; ++i) {
+        const auto& e = saved.events[i];
+        if (static_cast<unsigned>(e.from) > static_cast<unsigned>(sirokko::State::LOCKOUT) ||
+            static_cast<unsigned>(e.to) > static_cast<unsigned>(sirokko::State::LOCKOUT)) {
+            std::printf("history invalid state\n"); return;
+        }
+        std::printf("boot=%lu session=%lu uptime_ms=%llu %s->%s reason=%u faults=%08lX\n",
+                    static_cast<unsigned long>(e.boot_id), static_cast<unsigned long>(e.session_id),
+                    static_cast<unsigned long long>(e.uptime_ms), sirokko::state_name(e.from),
+                    sirokko::state_name(e.to), static_cast<unsigned>(e.reason), static_cast<unsigned long>(e.faults));
+    }
 }
 
 void CommissioningStore::append_fault(uint32_t uptime_ms, sirokko::State state, uint32_t faults) {
@@ -332,7 +402,7 @@ void CommissioningStore::append_fault(uint32_t uptime_ms, sirokko::State state, 
     nvs_handle_t handle{};
     if (!open_nvs(&handle)) return;
     if (nvs_get_blob(handle, "fault_log", &journal, &size) != ESP_OK ||
-        size != sizeof(journal) || journal.magic != kJournalMagic) {
+        size != sizeof(journal) || journal.magic != kJournalMagic || journal.next >= 8 || journal.count > 8) {
         journal = {};
         journal.magic = kJournalMagic;
     }
@@ -354,7 +424,7 @@ void CommissioningStore::print_faults() const {
     }
     const esp_err_t error = nvs_get_blob(handle, "fault_log", &journal, &size);
     nvs_close(handle);
-    if (error != ESP_OK || size != sizeof(journal) || journal.magic != kJournalMagic) {
+    if (error != ESP_OK || size != sizeof(journal) || journal.magic != kJournalMagic || journal.next >= 8 || journal.count > 8) {
         std::printf("fault journal empty\n");
         return;
     }

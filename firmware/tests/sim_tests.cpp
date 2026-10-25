@@ -27,6 +27,8 @@ void check(bool condition, const char* message) {
 Config test_config() {
     Config c{};
     c.schema_version = kConfigSchemaVersion;
+    c.profile_revision = 1;
+    c.run_low_qualified = true;
     c.commissioning_accepted = true;
     c.boot_self_test_timeout_ms = 50;
     c.recovery_purge_min_ms = 25;
@@ -990,7 +992,12 @@ void test_restart_inhibit() {
     s.tick();
     check(s.state() == State::WAIT_COOLDOWN, "restart inhibit must block immediate start");
     s.advance(s.config.restart_inhibit_ms);
-    check(s.state() == State::PREPURGE, "accepted request may start after inhibit");
+    check(s.state() == State::WAIT_COOLDOWN, "blocked START must not become a delayed automatic restart");
+    s.in.heat_enable = false;
+    s.tick();
+    s.in.heat_enable = true;
+    s.tick();
+    check(s.state() == State::PREPURGE, "new manual START after inhibit may start");
 }
 
 void test_timer_wraparound() {
@@ -1207,6 +1214,8 @@ void test_legacy_accepted_nvs_out_of_range() {
         feed(&stored.config.commissioning_accepted, sizeof(stored.config.commissioning_accepted));
         feed(&stored.config.boot_self_test_timeout_ms,
              offsetof(Config, low_pwm_permille) + sizeof(stored.config.low_pwm_permille) - offsetof(Config, boot_self_test_timeout_ms));
+        feed(&stored.config.profile_revision, sizeof(stored.config.profile_revision));
+        feed(&stored.config.run_low_qualified, sizeof(stored.config.run_low_qualified));
         stored.digest = hash;
         nvs_set_blob(1, "config", &stored, sizeof(stored));
         bool integrity{};

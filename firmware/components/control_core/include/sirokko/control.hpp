@@ -8,7 +8,7 @@ inline constexpr uint32_t kControlLoopPeriodMs = 20;
 inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
 inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
 inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
-inline constexpr uint32_t kConfigSchemaVersion = 2;
+inline constexpr uint32_t kConfigSchemaVersion = 3;
 inline constexpr uint32_t kPwmMaximumFrequencyHz = 20000;
 inline constexpr uint32_t kPwmClockHz = 80000000;
 inline constexpr uint32_t kPwmResolutionBits = 10;
@@ -96,6 +96,8 @@ struct Config {
     uint32_t pwm_frequency_hz{};
     uint16_t recovery_purge_pwm_permille{};
     uint16_t low_pwm_permille{};
+    uint32_t profile_revision{};
+    bool run_low_qualified{}; // Measured combustion qualification, not electrical PWM capability.
 };
 
 enum ConfigError : uint32_t {
@@ -127,6 +129,8 @@ struct Inputs {
     bool output_ok{true};
     bool configuration_ok{true};
     int32_t setpoint_milli_c{};
+    int32_t hysteresis_milli_c{1000};
+    bool maintenance_inhibit{};
     SensorSample exhaust{};
     SensorSample hot_air{};
     SensorSample room{};
@@ -167,6 +171,8 @@ struct Status {
     State state{State::BOOT_SELF_TEST};
     uint32_t faults{FAULT_NONE};
     uint32_t state_age_ms{};
+    uint32_t stage_remaining_ms{};
+    bool stage_timed{};
     int32_t ignition_baseline_milli_c{};
     bool commissioning_ready{};
     bool recovery_complete{};
@@ -198,6 +204,7 @@ private:
     bool reset_qualified_{};
     bool recovery_complete_{};
     bool start_release_seen_{};
+    bool previous_heat_enable_{};
     bool heartbeat_level_{};
     Outputs outputs_{};
 

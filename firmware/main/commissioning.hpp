@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 
-#include "sirokko/control.hpp"
+#include "sirokko/operator.hpp"
 
 class CommissioningStore {
 public:
@@ -15,8 +15,12 @@ public:
     bool set_field(sirokko::Config& config, const char* key, const char* value) const;
     void print_config(const sirokko::Config& config) const;
 
-    int32_t load_setpoint(const sirokko::Config& config);
-    bool save_setpoint(int32_t milli_c);
+    sirokko::OperatorSettings load_operator_settings(const sirokko::Config&, bool* integrity_ok) const;
+    bool save_operator_settings(const sirokko::OperatorSettings&, const sirokko::Config&) const;
+    bool load_counters(sirokko::CommandCounters*) const;
+    bool save_counters(const sirokko::CommandCounters&) const;
+    bool save_history(const sirokko::CommandHistory&) const;
+    void print_history() const;
 
     void append_fault(uint32_t uptime_ms, sirokko::State state, uint32_t faults);
     void print_faults() const;
