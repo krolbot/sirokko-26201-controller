@@ -1,0 +1,30 @@
+{
+  "assumptions": {
+    "rail_V": [
+      3.0,
+      3.6
+    ],
+    "pullup_ohm": 10000,
+    "resistor_tolerance_fraction": 0.05,
+    "load": "steady_state_resistive_one_closed_contact"
+  },
+  "I_min_A": 0.00028571428571428574,
+  "I_max_A": 0.00037894736842105265,
+  "I_required_30pct_A": 0.0004926315789473684,
+  "S_max_VA": 0.0013642105263157896,
+  "S_required_25pct_VA": 0.001705263157894737,
+  "U_required_30pct_V": 4.680000000000001,
+  "rating_source": "NKK BB C12 + Electrical Ratings Z33",
+  "minimum_current_A": 0.0001,
+  "maximum_current_A": 0.1,
+  "maximum_V": 28.0,
+  "maximum_VA": 0.4,
+  "range_check_pass": true,
+  "contact_check": {
+    "cases": 8,
+    "valid_BBM_cases": 6,
+    "rejected_MBB_negative_cases": 2,
+    "scope": "static_contacts_with_valid_supply_and_pullups_not_firmware_not_physical",
+    "passed": true
+  }
+}
