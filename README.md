@@ -1,6 +1,6 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main contains separate hardware WIP snapshots and `0.1.7-DRAFT` bench firmware. They are not one finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
+> **DRAFT / BENCH ONLY / NOT FOR ORDER.** Main contains separate hardware WIP snapshots and `0.1.8-DRAFT` bench firmware. They are not one finished burner controller or a PCB manufacturing release. Russian documentation: [README_RU.md](README_RU.md).
 
 ## Current requirements and status
 
@@ -11,7 +11,7 @@ The [unified motor + SPI working directory](hardware/candidates/unified_motor_sp
 - [RTC and timer reference research](docs/RTC_TIMER_REFERENCE_RU.md) — pinned sources, battery-holder/RTC candidates and adaptation limits.
 - [CR2032 holder selection](docs/CR_HOLDER_SELECTION_RU.md) — Keystone 1060 candidate, catalog/footprint geometry and polarity comparison, and remaining checks; not integrated, not FOR_ORDER.
 
-These documents take precedence over historical requirements below. Four on-board buttons with combined START/STOP and a battery-backed RTC are new requirements, not verified features of the [0.1.7 bench kit](firmware/release/build-kits/0.1.7-esp32s3/). Earlier five-button, no-RTC and network-prohibition requirements are superseded; Wi-Fi/MQTT/OTA are required, without authorizing infrastructure deployment or calendar ignition. The current-state document distinguishes manifest evidence from the engineer's independent 0.1.7 host-test run. No firmware tests, target build or physical tests were rerun for this publication.
+These documents take precedence over historical requirements below. Four on-board buttons with combined START/STOP and a battery-backed RTC are new requirements, not verified features of the [0.1.7 bench kit](firmware/release/build-kits/0.1.7-esp32s3/). Earlier five-button, no-RTC and network-prohibition requirements are superseded; Wi-Fi/MQTT/OTA are required, without authorizing infrastructure deployment or calendar ignition. The [0.1.8 DRAFT-06 kit](firmware/release/build-kits/0.1.8-esp32s3/) implements the four-button firmware and GPIO8 open-drain contract: real ESP-IDF target build exit 0, host 110/110 C++ + 4/4 Python, with separate RESET-skew models. It is dangerously incompatible with the existing external NC STOP wiring: do not flash the current PCB. Buttons/RTC remain physically unintegrated; NKK BB25AB-FA is only a functional RESET candidate, with ChipDip/footprint/full qualification HOLD. No physical tests or fired operation were authorized.
 
 The sections below preserve the earlier recovered-hardware/0.1.5 checkpoint; use the current-state document for later snapshots.
 
