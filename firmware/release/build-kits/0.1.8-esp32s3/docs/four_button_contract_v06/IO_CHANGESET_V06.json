@@ -1,0 +1,73 @@
+{
+  "contract_id": "sirokko-26201-controller-io-draft-06",
+  "status": "ENGINEERING_SPEC_NOT_INTEGRATED_NOT_FOR_ORDER_BENCH_ONLY",
+  "supersedes": "sirokko-26201-controller-io-draft-05",
+  "target": "ESP32-S3-DevKitC-1-N8R8 v1.1",
+  "physical_gpio_source": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html#j1",
+  "board_change_required": true,
+  "automatic_hardware_revision_detection": false,
+  "legacy_nc_stop_hardware_supported": false,
+  "user_buttons": {
+    "START_STOP": {
+      "gpio": 7,
+      "header": "J1.7",
+      "contact": "NO_TO_GND",
+      "direction": "input",
+      "external_pullup_ohm": 10000
+    },
+    "SET_UP": {
+      "gpio": 39,
+      "header": "J3.9",
+      "contact": "NO_TO_GND",
+      "direction": "input"
+    },
+    "SET_DOWN": {
+      "gpio": 40,
+      "header": "J3.8",
+      "contact": "NO_TO_GND",
+      "direction": "input"
+    },
+    "RESET": {
+      "gpio": 6,
+      "header": "J1.6",
+      "mcu_contact": "separate_NO_TO_GND",
+      "hardware_pole": "isolated_SPDT_BBM_GND_NC_NO_TO_U2_13_AND_U2_10",
+      "exact_switch_mpn": "HOLD"
+    }
+  },
+  "repurposed_signal": {
+    "previous_name": "STOP_STATUS",
+    "new_name": "MCU_STOP_N",
+    "gpio": 8,
+    "header": "J1.12",
+    "previous_direction": "input",
+    "new_direction": "input_output_open_drain",
+    "external_pullup_ohm": 10000,
+    "released": "inhibit",
+    "drive_low": "only_qualified_arm_condition",
+    "input_readback_required": true,
+    "external_nc_contact_or_ground_jumper_forbidden": true,
+    "output_pad_stuck_low_alone_must_not_enable_fuel": true,
+    "remove_legacy_interface": "J22"
+  },
+  "gesture": {
+    "debounce_ms": 30,
+    "long_press_ms": 1500,
+    "clock": "monotonic",
+    "one_long_per_press": true,
+    "short_after_long": false,
+    "short_action": "UI_MODE_ONLY",
+    "blocked_gesture_is_queued": false,
+    "held_boot_requires_release": true,
+    "long_during_purge_or_ota_cannot_bypass": true
+  },
+  "gpio8_powerup_glitch": {
+    "datasheet": "ESP32-S3 v2.2 section 2.2",
+    "type": "LOW",
+    "typ_ns": 60,
+    "boolean_model_proves_analog_timing": false
+  },
+  "other_gpio_assignments": "unchanged_from_draft_05",
+  "firmware_migration": "old_accepted_profiles_do_not_auto_enable_new_hardware_contract",
+  "reset_and_gpio8_bringup": "See FOUR_BUTTON_CONTRACT_V06_RU.md; recovery must not wait for own inhibit output LOW"
+}

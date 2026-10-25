@@ -1,0 +1,175 @@
+{
+  "commit": "3ef88c6cbd13ba83593f9e24cf222d2f79f0906b",
+  "files": {
+    "docs/CURRENT_STATE_RU.md": {
+      "sha256": "f8705606c82180da81cb39f1b96b58a1e1b484e995fdd78f194a85aa84bfdc30",
+      "bytes": 32998,
+      "blob": "da2183aea0f72854cc36db77f50bc01a5ec34258"
+    },
+    "firmware/CMakeLists.txt": {
+      "sha256": "f927e4a0ad6d6dd90dcd48629dbc14b0a2e02cd5e8c0675cb6394acd3f71b200",
+      "bytes": 135,
+      "blob": "fc6f0e44dba4a23ded6e550b63a8457b47393e15"
+    },
+    "firmware/README.md": {
+      "sha256": "4b9e6cfa717d200b598dd36102068a3e85e4a8205452ee8bb5d2de01806f3cd6",
+      "bytes": 2433,
+      "blob": "b15c16fe47bb86e15ae277eee8b7b02b491fb6b5"
+    },
+    "firmware/README_RU.md": {
+      "sha256": "7129674306c570884ba5c38beca93eeb3af535ffede797ca1c0114213d01de00",
+      "bytes": 11451,
+      "blob": "9cbc04e2bbb3516cf3516a559ab6c02e53321883"
+    },
+    "firmware/components/control_core/button.cpp": {
+      "sha256": "be4451644bc6eb64318c78861c544a589b7c4e5ef134f72803f98a8b1b31fa30",
+      "bytes": 2335,
+      "blob": "96f09f00d81422953a5a6273181f6bae79bb0d86"
+    },
+    "firmware/components/control_core/control.cpp": {
+      "sha256": "c1c9529cb67ab34a91a5aaab65f2cc950ddd1fa7ccfe9ed0c624bf3b098b6bb7",
+      "bytes": 23516,
+      "blob": "2a5e5d0381b837b103f182920bc650935a6f93d8"
+    },
+    "firmware/components/control_core/include/sirokko/button.hpp": {
+      "sha256": "e485be8348f629366e2509db9bd8f0edfcb8fa6779d637ecd2ad45adddd00a01",
+      "bytes": 1235,
+      "blob": "d490c0940ca5b377e727ca49e300412075e5bd0d"
+    },
+    "firmware/components/control_core/include/sirokko/control.hpp": {
+      "sha256": "cd9fb901df74944476d614944dac73b87850d670809b06501c847a3f40087a27",
+      "bytes": 7487,
+      "blob": "25a278ac1eaee582f7a9419683ba6cd61640147f"
+    },
+    "firmware/components/control_core/include/sirokko/ui.hpp": {
+      "sha256": "fd64ea040edcaecc741090b74e4dd8041f2ce9f7ce0a6b9861c30f1f7fdaccc0",
+      "bytes": 2026,
+      "blob": "e4fa1cd9643e8f3e019a97e5884726705090a840"
+    },
+    "firmware/components/control_core/ui.cpp": {
+      "sha256": "dafa86d854ac9118377b7fd8fb6f8a752dc41f7956a4903a6c438b52031e7043",
+      "bytes": 38680,
+      "blob": "8aaf598df17ab20512727ed00387c99a43356834"
+    },
+    "firmware/docs/commissioning_ru.md": {
+      "sha256": "961d7f9bf695256b8bbba562e8c326a929f339b3ed9078cf52384bd05dcfa3f7",
+      "bytes": 22754,
+      "blob": "85ba54a76cbe04996fbcaeef9a1fd1d7539b24b2"
+    },
+    "firmware/docs/io-contract.json": {
+      "sha256": "15ecd3fcbd41a52855773a4a9b6805d6be95745636bd032a86fac8dca16b1e94",
+      "bytes": 14020,
+      "blob": "e62f7e01284aba3be1c687278d9351d9324ee10b"
+    },
+    "firmware/docs/operator_ui_ru.md": {
+      "sha256": "6aebdbff292e49bd62440e5f500f40f68e3e66ef2f741ba137a985456e598856",
+      "bytes": 9576,
+      "blob": "ef1cb20f590beb7012e802c232478b179345fa5f"
+    },
+    "firmware/docs/service_network_ru.md": {
+      "sha256": "a15b6585a276ddaed0ab449240cb199ae96e5209a1c601bbb97d325671095278",
+      "bytes": 18099,
+      "blob": "5fdc18a2675a41317a569a1733d68b82ef8cb6d8"
+    },
+    "firmware/docs/ui_buttons_ru.md": {
+      "sha256": "13b850119fd5c3c8a8b4b8c5f8333436c94cc9e8a2d0e8985a1490ded42b0435",
+      "bytes": 6103,
+      "blob": "8551cbf9db30d6f03b8190a9617d1549537bdf69"
+    },
+    "firmware/main/app_main.cpp": {
+      "sha256": "8b5202e583d5804b9ab63af513357ea112f85440b27f223528af0b35cf23431f",
+      "bytes": 31258,
+      "blob": "4828e34e16ed3567b4fc78df49dde3defe85590d"
+    },
+    "firmware/main/commissioning.cpp": {
+      "sha256": "5f65f3e4a71b8f12168856c33cef2e50aff3362099fcb9676d7a63f3af8946ff",
+      "bytes": 16184,
+      "blob": "05e67900bc32882693ac3185e378515eeb3cfe49"
+    },
+    "firmware/main/output_driver.cpp": {
+      "sha256": "03410b853f592b2db69e26833ad837b9aceadb0330b25f5e00228750d4037c92",
+      "bytes": 8146,
+      "blob": "0affcd121c300ee6ad636cc14d3aa57ad1cacb7f"
+    },
+    "firmware/main/output_driver.hpp": {
+      "sha256": "9a33c7747441b57844f94dab913727b3d17f707169fdeda52a10c04c80ac1335",
+      "bytes": 1091,
+      "blob": "95cb67dce74304b31d91909894b55329e2df1ac9"
+    },
+    "firmware/tests/fixtures/README.md": {
+      "sha256": "106ca15428975f7e20cb00c6d50e48b091e4df958920ad4d7c65d2932f5d00fb",
+      "bytes": 1209,
+      "blob": "08abb35eebdaf1aac1e12f7c5510a0a35635ed70"
+    },
+    "firmware/tests/fixtures/accepted-draft05-config.bin": {
+      "sha256": "df12509df84ca282529a917899c0e5b00ef66849bfffe291a9afbc94f7453081",
+      "bytes": 156,
+      "blob": "8249b5f83af1508994be1219cca2279ae4239e94"
+    },
+    "firmware/tests/fixtures/make_draft05_fixture.cpp": {
+      "sha256": "e23669637847100b3c5042803c7f18e9bb07c96d4dec752878df271746b2569c",
+      "bytes": 719,
+      "blob": "60e6e20dc36264fc88555d9c9043fcb085d85600"
+    },
+    "firmware/tests/four_button_tests.cpp": {
+      "sha256": "fdce0ce0d86b828fedb5311fe71d2f76776678e47cace27826622b657d009304",
+      "bytes": 15666,
+      "blob": "0ecc2a479b96d8e9b75a6a6f99d8ac620ff69411"
+    },
+    "firmware/tests/idf_stubs.cpp": {
+      "sha256": "6f2f9e0732e46c08d27209eba519235d2e9264a0ec81639fad3f1a74311b7577",
+      "bytes": 3893,
+      "blob": "eedeaea9af35adcdd1df9c214fea7edba1444f58"
+    },
+    "firmware/tests/idf_stubs.hpp": {
+      "sha256": "be1aa7a0caa34f153f5ad323c191ccf418f382fdb5cd875c36dcc5ca696f9cbf",
+      "bytes": 3092,
+      "blob": "4d0261db6424ad13a4e214d6d2606bf03e8c3725"
+    },
+    "firmware/tests/network_tests.cpp": {
+      "sha256": "4a4c676739a63929aa0a101a2e27070fc2a605d5f7b49f964d8e7d4999ca8e23",
+      "bytes": 13662,
+      "blob": "bd0d345763535213587112388a255477610a9b8f"
+    },
+    "firmware/tests/render_ui.cpp": {
+      "sha256": "a0ac80913ea1890ace269be0907424de4ae7de0616bedba4058ae1cefaa6adb9",
+      "bytes": 5260,
+      "blob": "360551b286c4d35357c9adbd7d9013f972e17a17"
+    },
+    "firmware/tests/run_host_tests.sh": {
+      "sha256": "bee117387ab7ea04781e2ba69f0748098eac8da3be971452aa1303c30c193f2c",
+      "bytes": 1660,
+      "blob": "2cf3153a297cbb66bc9c4b1b664f13db41dc753d"
+    },
+    "firmware/tests/runtime_test_api.hpp": {
+      "sha256": "ec5ea2a6aa29307a96c4ad305dc0f26582d27588b514a60b28e255fa3c1d9b3c",
+      "bytes": 3269,
+      "blob": "b9b8a0681e0bdeefea6b842d02a342a9d94907b5"
+    },
+    "firmware/tests/runtime_tests.cpp": {
+      "sha256": "f4326dcba004c9a50c6687d7aa203f3aaaba5ddd18233d89de8e6249fa727412",
+      "bytes": 13273,
+      "blob": "bb574913e774fca9d4487748277d0d4590b1d6bf"
+    },
+    "firmware/tests/sim_tests.cpp": {
+      "sha256": "fbc4c9d965b7c3e6364a95c3978fecb85842b4d8ee4398fff9c4d569e404faea",
+      "bytes": 58085,
+      "blob": "7eb63d4c6f371e2f5bceb15c289304e47d80a49e"
+    },
+    "firmware/tools/service_artifacts.py": {
+      "sha256": "238315932085948470a204625417bece132d950917dd9fcadba9a637c36516d1",
+      "bytes": 6703,
+      "blob": "e9d3cf82058b7bc069b6f663490cb383c141c217"
+    },
+    "firmware/version.txt": {
+      "sha256": "24246f964586b1e325155852b50692d7e3a30abaac7106343bbaf4b395f99e96",
+      "bytes": 12,
+      "blob": "b543e18c1dfc39dfc32251965e67859bd51ab6ff"
+    },
+    "hardware/candidates/unified_motor_spi_working/SHA256SUMS": {
+      "sha256": "665fb5273a67cecf9ce0002274c9e73d3ef06641d8140e9ab06e59a18f05c5c6",
+      "bytes": 4166,
+      "blob": "606d63800a3a5aaab2f1f9bb6041dad387bad10e"
+    }
+  }
+}

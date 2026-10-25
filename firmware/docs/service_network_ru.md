@@ -57,7 +57,7 @@ Reconnect меняет криптографически случайный nonce
 SIROKKO-OTA-1
 esp32s3
 ESP32-S3-DevKitC-1-N8R8-v1.1
-3
+4
 <version>
 <decimal size>
 <lowercase sha256>

@@ -1,0 +1,40 @@
+{
+  "commit": "60586ca46fe6003d696adda87089bcf24249f2ab",
+  "files": {
+    "docs/CURRENT_STATE_RU.md": {
+      "sha256": "ecd64b7c9b4754cb6cfa83901893dfc4211d3c34125299ffb6ab5fb0fb1ecd56",
+      "bytes": 31884,
+      "blob": "421d2d78ae8ba192453744e39c25c057a0580d9f"
+    },
+    "docs/four_button_contract_v06/BOOLEAN_MODEL_4096.csv": {
+      "sha256": "3adaead6c326eb999b3e26710efed0d13fed0f9c52d013391669843e0887409c",
+      "bytes": 127140,
+      "blob": "be67606421176425365c3cbe22cb963640318d89"
+    },
+    "docs/four_button_contract_v06/FOUR_BUTTON_CONTRACT_V06_RU.md": {
+      "sha256": "de9b748e5818eefa189be93b33f84255293adc093934102ba7f02629dcf5fe41",
+      "bytes": 18050,
+      "blob": "8adb2e43367ef2b3477d9abdbbeb8fe8299e0eeb"
+    },
+    "docs/four_button_contract_v06/IO_CHANGESET_V06.json": {
+      "sha256": "394b60fef0c8111f9cf60daed49b7a2d824ba8ad306a849a3caaed209ba26c71",
+      "bytes": 2417,
+      "blob": "d0a323284a98043715fb886b45900597d47392b4"
+    },
+    "docs/four_button_contract_v06/MODEL_RESULT.json": {
+      "sha256": "2db8618167808dc8f26ee510634688da286c36f1b187d44ae8c4f5711e425a0d",
+      "bytes": 554,
+      "blob": "0999c5615910a5cd4a1b74e5a0faf556dc1c9f99"
+    },
+    "docs/four_button_contract_v06/SHA256SUMS": {
+      "sha256": "e4eec2e354e5dd83487755a6a9bdeaadc9a2320085f6a07d8e3675dd87d44acb",
+      "bytes": 447,
+      "blob": "8e54208baf838627732cb9a5267994cdb77dd276"
+    },
+    "hardware/candidates/unified_motor_spi_working/SHA256SUMS": {
+      "sha256": "f50ab085e2a6e43d8277daca11f7099a9eca33759e58682e32f4ed2d951dde40",
+      "bytes": 4166,
+      "blob": "68c1d008ba83017f91288473a20ecb0c10b18fe0"
+    }
+  }
+}

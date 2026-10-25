@@ -1,0 +1,35 @@
+{
+  "commit": "c0969efb6de806dac5845e2701c98f2ecd88140c",
+  "files": {
+    "docs/CURRENT_STATE_RU.md": {
+      "sha256": "2f3963255df106f87af0bdf6eb0fc0c0d987efab7a4d5fa3d124b843e8892971",
+      "bytes": 33992,
+      "blob": "07a276413e7f03246c1da9e50e4c0e14071efe4e"
+    },
+    "docs/four_button_contract_v06/RESET_NKK_BB25AB_QUALIFICATION_RU.md": {
+      "sha256": "2ff3d37847f014fe8b446fe0554c469886fc8abed55679d03d0c8a7299a80288",
+      "bytes": 12826,
+      "blob": "5f78c6f5bfbde8b2cf9e11fd884fbf3b5a20ff65"
+    },
+    "docs/four_button_contract_v06/RESET_NKK_CONTACT_CHECK.csv": {
+      "sha256": "9a05291ebdf033a8405f22996d21ec9b9c8bc2241702dda79d7c0fbcc66f92ee",
+      "bytes": 416,
+      "blob": "c45132315f8d869a09acd704256f7f4b71be6110"
+    },
+    "docs/four_button_contract_v06/RESET_NKK_CONTACT_CHECK.json": {
+      "sha256": "3d732f7f1ffe499bb5cd6ac5382392a7ff70eed7d60459abc26edbaf2de25531",
+      "bytes": 841,
+      "blob": "a1e28da056d0dc9e0bbfb1f5906f5738a718b344"
+    },
+    "docs/four_button_contract_v06/SHA256SUMS": {
+      "sha256": "cc31622e7d6bb9676afe1a3e0a3242f5edc4c277cb9e60dd3fe89a59eda6ab47",
+      "bytes": 739,
+      "blob": "f2a6e1b89f8d399c262d93c040425a8a867d116e"
+    },
+    "hardware/candidates/unified_motor_spi_working/SHA256SUMS": {
+      "sha256": "13bb6330882bd4874958bb79e6f7bae258ac19a817a6903156b4128c094e3846",
+      "bytes": 4166,
+      "blob": "1bc37c4b480f4d2393a433bdb302fb677cbe3d16"
+    }
+  }
+}
