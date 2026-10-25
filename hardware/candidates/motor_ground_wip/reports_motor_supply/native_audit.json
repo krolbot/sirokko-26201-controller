@@ -1,0 +1,10 @@
+{
+  "pads_unchanged": 426,
+  "prior_relations_preserved": 1836,
+  "new_directed_relations": 496,
+  "prior_copper_unchanged": 487,
+  "new_copper_objects": 8,
+  "ground_group_connected_to_J1_22": true,
+  "kelvin_isolation_preserved": true,
+  "pcb_sha256": "6651e4b40539e35c0010fe537dc7e369629b1714d9b16528dca7eb0887dccf44"
+}
