@@ -1,0 +1,17 @@
+{
+  "prior_pads_unchanged": 430,
+  "added_pads": 0,
+  "D9002_MPN": "MBR1100G",
+  "D9002_footprint": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+  "prior_relations_preserved": 7100,
+  "new_directed_relations": 278,
+  "prior_copper_unchanged": 735,
+  "new_copper_objects": 5,
+  "U9004_U9005_U9006_supply_ground_connected": true,
+  "kelvin_isolation_preserved": true,
+  "segments": 602,
+  "vias": 138,
+  "unconnected": 101,
+  "pcb_sha256": "47115f1aba5da7750868eea82077660aacf4eec57b6bd902e33bd0369316dfc5",
+  "remaining": "U9/U10 supply, ground, connector T+/T-, SPI, CS and DRDY-to-J3 verified; measurement/CJC/noise not qualified; UI/motor power unfinished; NOT FOR ORDER"
+}
