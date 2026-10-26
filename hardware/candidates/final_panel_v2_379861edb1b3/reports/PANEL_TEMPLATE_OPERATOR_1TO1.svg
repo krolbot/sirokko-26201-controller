@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="235mm" height="170mm" viewBox="0 0 235 170">
+  <defs>
+    <style>
+      .board{fill:none;stroke:#111;stroke-width:0.35}
+      .module{fill:#d8eefb;fill-opacity:.45;stroke:#006699;stroke-width:.35}
+      .approx{fill:none;stroke:#d97706;stroke-width:.30;stroke-dasharray:2,1}
+      .cut{fill:#fee2e2;stroke:#b91c1c;stroke-width:.35}
+      .hole{fill:white;stroke:#111;stroke-width:.30}
+      .socket{fill:#ddd;stroke:#333;stroke-width:.20}
+      .datum{fill:none;stroke:#555;stroke-width:.20;stroke-dasharray:1,1}
+      text{font-family:DejaVu Sans,Arial,sans-serif;font-size:3px;fill:#111}
+      .small{font-size:2.4px}
+      .warning{font-size:2.6px;fill:#b45309;font-weight:bold}
+      .title{font-size:4px;font-weight:bold}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="235" height="170" fill="white"/>
+  <!-- Operator-side 1:1 view. U=245-Xpcb; V=Ypcb-10. -->
+  <rect class="board" x="0" y="0" width="235" height="170"/>
+  <text class="title" x="90" y="7">SIROKKO — операторская сторона, шаблон 1:1, печать 100%</text>
+  <text class="small" x="4" y="30">Габарит PCB 235×170 мм. Вид со стороны оператора; зеркально к F-side KiCad.</text>
+
+  <!-- Main board supports H1-H6, transformed from CAD. -->
+  <g aria-label="main-board supports">
+    <circle class="hole" cx="227" cy="10" r="1.6"/><text x="220" y="16">H1 Ø3.2</text>
+    <circle class="hole" cx="63" cy="10" r="1.6"/><text x="56" y="20">H2 Ø3.2</text>
+    <circle class="hole" cx="227" cy="162" r="1.6"/><text x="218" y="158">H3 Ø3.2</text>
+    <circle class="hole" cx="63" cy="162" r="1.6"/><text x="54" y="158">H4 Ø3.2</text>
+    <circle class="hole" cx="7" cy="10" r="1.6"/><circle class="datum" cx="7" cy="10" r="3.5"/><text x="11" y="24">H5 Ø3.2; R3.5 keepout</text>
+    <circle class="hole" cx="7" cy="162" r="1.6"/><circle class="datum" cx="7" cy="162" r="3.5"/><text x="11" y="164">H6 Ø3.2; R3.5 keepout</text>
+  </g>
+
+  <!-- GMT020-02-7P module and four M2-support clearances. -->
+  <rect class="module" x="158" y="115" width="62" height="37.25"/>
+  <text class="small" x="160" y="108">GMT020-02-7P — PCB 62.00×37.25</text>
+  <circle class="hole" cx="160" cy="119.75" r="1.35"/>
+  <circle class="hole" cx="218" cy="119.75" r="1.35"/>
+  <circle class="hole" cx="160" cy="147.75" r="1.35"/>
+  <circle class="hole" cx="218" cy="147.75" r="1.35"/>
+  <text class="small" x="185" y="156">4× Ø2.70 / M2 support</text>
+  <rect class="approx" x="168.6" y="118.325" width="40.8" height="30.6"/>
+  <text class="warning" x="160" y="160">A.A. 40.8×30.6 — ПОЗИЦИЯ НЕ БАЗИРОВАНА</text>
+  <text class="warning" x="160" y="164">ОКНО TFT — HOLD</text>
+
+  <!-- Direct 1x7 socket, pad centers. -->
+  <g aria-label="J26 socket pad centers">
+    <circle class="socket" cx="160.8" cy="126.29" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="128.83" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="131.37" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="133.91" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="136.45" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="138.99" r="0.85"/>
+    <circle class="socket" cx="160.8" cy="141.53" r="0.85"/>
+    <text class="small" x="162.5" y="126.8">J26.1 CS</text>
+    <text class="small" x="162.5" y="142.2">J26.7 GND</text>
+  </g>
+
+  <!-- Recommended enclosure openings; centers are released, TFT window is not. -->
+  <circle class="cut" cx="143" cy="118" r="3.25"/>
+  <line class="datum" x1="136" y1="118" x2="150" y2="118"/><line class="datum" x1="143" y1="111" x2="143" y2="125"/>
+  <text x="126" y="109">ENC J23: Ø6.5</text>
+  <text class="small" x="126" y="112.5">центр U143.0 / V118.0</text>
+
+  <rect class="cut" x="142.6" y="132.6" width="12.8" height="12.8" rx="0.5" ry="0.5"/>
+  <text x="108" y="132">ПУСК/СТОП J22: 12.8×12.8 R0.5</text>
+  <text class="small" x="108" y="135.5">центр U149.0 / V139.0</text>
+
+  <rect class="cut" x="146" y="147" width="6" height="12" rx="3" ry="3"/>
+  <text x="116" y="165">RESET J24: паз 6×12, ход вдоль V</text>
+  <text class="small" x="116" y="168">центр U149.0 / V153.0; физическая проверка обязательна</text>
+
+  <!-- Datum axes -->
+  <line class="datum" x1="4" y1="38" x2="24" y2="38"/><text class="small" x="4" y="42">U → вправо</text>
+  <line class="datum" x1="24" y1="38" x2="24" y2="58"/><text class="small" x="26" y="54">V ↓</text>
+  <text class="small" x="4" y="97">Красное — предлагаемый корпусной вырез.</text>
+  <text class="small" x="4" y="101">Синее — реальный габарит TFT PCB, не вырез.</text>
+  <text class="small" x="4" y="105">Оранжевый пунктир — только размер A.A.; координата окна HOLD.</text>
+  <text class="small" x="4" y="109">Печатать без «подогнать к странице»; контрольная длина нижней кромки =235 мм.</text>
+</svg>
