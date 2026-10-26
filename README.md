@@ -4,6 +4,16 @@
 
 ## Current requirements and status
 
+[REQ-029: right-hand control column](docs/UI_RIGHT_COLUMN_RU.md): TFT on the left; push rotary encoder, one combined START/STOP button and protection RESET on the right, top to bottom on one vertical axis. The accepted nominal distance is **60 mm from the right window edge to the axis**, with 30 mm vertical spacing. This is an assigned engineering dimension based on a hand-envelope model, not an anthropometric standard or a physical guarantee.
+
+- [1:1 SVG sketch](docs/Sirokko_UI_right_column_1to1.svg) and [preview PNG](docs/Sirokko_UI_right_column_1to1.png): required relative geometry, not a drilling template.
+- [Requirements register](docs/REQUIREMENTS_RU.md), [panel contract](docs/UX_PANEL_REQUIREMENTS_RU.md), [current state](docs/CURRENT_STATE_RU.md).
+- [Earlier UI centres](docs/UI_LAYOUT_CENTRES_RU.md) and [TFT/BL placement](docs/TFT_BL_PANEL_WINDOW_RU.md): historical absolute coordinates. The old B-side view with controls on the left and RESET off-axis is superseded; frozen candidates remain unchanged.
+
+**The dimension is accepted; the PCB has not yet been rearranged to match it. Do not continue general routing or firmware work before the unified layout is accepted.** This publication changes no CAD, schematics, libraries or firmware. The current register and panel contract override earlier button/RTC configurations and routing instructions below.
+
+## Earlier requirements and status (historical)
+
 The [unified motor + SPI working directory](hardware/candidates/unified_motor_spi_working/README_RU.md) is the source for continued routing of the common PCB. Earlier canonical files and separate candidates remain unchanged historical snapshots, not parallel active sources. The [current mounting and motor-logic WIP](docs/MOUNTING_AND_MOTOR_LOGIC_REVIEW_RU.md) has 405 segments / 82 vias, 158 unconnected items, 4 existing DRC violations and 5 ignored checks; the recorded DRC exit code is 5, not an overall PASS. Four mounting holes were moved and copper keepouts added; the board remains 180 × 170 mm. Local OCP-to-motor logic paths are routed, but common power and ground remain unfinished. OCP and Kelvin reports and images remain historical snapshots. The 194/52 motor + SPI baseline is preserved in commit [7ede3fca5f8371e4e3ec7252b4ba637994532fc2](https://github.com/krolbot/sirokko-26201-controller/commit/7ede3fca5f8371e4e3ec7252b4ba637994532fc2), with its historical reports and images retained separately. TFT supply connectivity is complete geometrically; the long EN route and 3.3 V budget are not qualified, and power routing and physical testing remain incomplete.
 
 - [Requirements register](docs/REQUIREMENTS_RU.md) — all requirements, superseded decisions and acceptance criteria.
