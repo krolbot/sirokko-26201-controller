@@ -1,0 +1,43 @@
+{
+  "verified_at_utc": "2026-10-26T11:54:30.456825+00:00",
+  "release_status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "continuation_status": "HOLD: TFT keepout mechanical acceptance withdrawn",
+  "source_hashes_before": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+    "Sirokko26201_control_motor_candidate-drc.json": "59f2678b4492c3e991d4b780228f2516d46ba87be1c13dc5089566ad84691761"
+  },
+  "source_hashes_after": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+    "Sirokko26201_control_motor_candidate-drc.json": "59f2678b4492c3e991d4b780228f2516d46ba87be1c13dc5089566ad84691761"
+  },
+  "copied_pcb_sha256": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+  "copied_full_drc_sha256": "59f2678b4492c3e991d4b780228f2516d46ba87be1c13dc5089566ad84691761",
+  "native_audit_status": "PASS",
+  "input_pcb_files_not_edited": true,
+  "drc": {
+    "baseline_unconnected": 84,
+    "current_unconnected": 82,
+    "warnings": 10,
+    "warnings_identical": true,
+    "ignored_checks_identical": true,
+    "included_severities_identical": true,
+    "full_drc_rerun_by_publisher": false
+  },
+  "tft_keepout": {
+    "count": 4,
+    "bounds_mm": [
+      7.2,
+      7.2
+    ],
+    "mh5_centers_covered_by_old_keepout_bboxes": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "coverage_count": 0,
+    "mechanical_acceptance": "WITHDRAWN"
+  },
+  "visual": "Full F.Cu and U7/C7 detail opened and inspected; target copper not cropped; overlapping WIP labels remain.",
+  "native_startup": "PROPERTY_ENUM assertions retained in NATIVE_STDERR.txt; not suppressed; server not modified."
+}

@@ -1,0 +1,80 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "baseline_pcb_sha256": "d015fbb1e4eea7caec96bf9dd34dcf0220e50bde06f0fbe3e7eed67ecfeaf3a3",
+  "before_drc": {
+    "warnings": 10,
+    "unconnected": 84
+  },
+  "after_drc": {
+    "warnings": 10,
+    "unconnected": 82
+  },
+  "warnings_identical": true,
+  "removed_segment_or_via_count": 0,
+  "added_segments": [
+    {
+      "drill": null,
+      "end_x": 35.225,
+      "end_y": 92.0,
+      "layer": "F.Cu",
+      "layers": null,
+      "net": 1,
+      "size": null,
+      "start_x": 32.9375,
+      "start_y": 92.0,
+      "type": "segment",
+      "width": 0.3,
+      "x": null,
+      "y": null
+    },
+    {
+      "drill": null,
+      "end_x": 36.775,
+      "end_y": 91.05,
+      "layer": "F.Cu",
+      "layers": null,
+      "net": 3,
+      "size": null,
+      "start_x": 31.0625,
+      "start_y": 91.05,
+      "type": "segment",
+      "width": 0.3,
+      "x": null,
+      "y": null
+    },
+    {
+      "drill": null,
+      "end_x": 36.775,
+      "end_y": 92.0,
+      "layer": "F.Cu",
+      "layers": null,
+      "net": 3,
+      "size": null,
+      "start_x": 36.775,
+      "start_y": 91.05,
+      "type": "segment",
+      "width": 0.3,
+      "x": null,
+      "y": null
+    }
+  ],
+  "final_segments": 753,
+  "final_vias": 179,
+  "local_connections": [
+    {
+      "from": "U7.3",
+      "to": "C7.1",
+      "net": "/+3V3",
+      "length_mm": 2.2875
+    },
+    {
+      "from": "U7.1",
+      "to": "C7.2",
+      "net": "/GND",
+      "length_mm": 6.6625
+    }
+  ],
+  "full_native_pairwise_audit": "not executed by coordinator; requested from sole publisher with exact current snapshot",
+  "electrically_complete": false,
+  "note": "U7 and C7 are locally interconnected only. Their connections to main +3V3 and GND remain open. Full-board production approval not claimed."
+}
