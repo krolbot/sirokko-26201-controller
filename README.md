@@ -10,7 +10,7 @@
 - [Requirements register](docs/REQUIREMENTS_RU.md), [panel contract](docs/UX_PANEL_REQUIREMENTS_RU.md), [current state](docs/CURRENT_STATE_RU.md).
 - [Earlier UI centres](docs/UI_LAYOUT_CENTRES_RU.md) and [TFT/BL placement](docs/TFT_BL_PANEL_WINDOW_RU.md): historical absolute coordinates. The old B-side view with controls on the left and RESET off-axis is superseded; frozen candidates remain unchanged.
 
-**The dimension is accepted; the PCB has not yet been rearranged to match it. Do not continue general routing or firmware work before the unified layout is accepted.** This publication changes no CAD, schematics, libraries or firmware. The current register and panel contract override earlier button/RTC configurations and routing instructions below.
+**The unified 2D layout is now accepted:** [immutable panel-v2 REQ-029 + YD-ESP32-S3 N16R8 snapshot](hardware/candidates/panel_v2_req029_yd_d015fbb1/README_RU.md), PCB SHA256 `d015fbb1e4eea7caec96bf9dd34dcf0220e50bde06f0fbe3e7eed67ecfeaf3a3`. This supersedes the earlier layout hold, not the electrical or manufacturing holds: 84 unconnected errors, 10 DRC warnings and unresolved power/height/RESET qualification remain. **DRAFT / NOT FOR ORDER / NO FIRE.** Further routing and a separate firmware update may proceed under the [engineering acceptance limits](hardware/candidates/panel_v2_req029_yd_d015fbb1/ENGINEERING_ACCEPTANCE_RU.txt); this publication changes no firmware and authorizes no flashing or physical operation. The current register and panel contract override earlier button/RTC configurations and routing instructions below.
 
 ## Earlier requirements and status (historical)
 

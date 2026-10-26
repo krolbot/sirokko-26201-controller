@@ -1,0 +1,57 @@
+{
+  "status": "PLACEMENT_ACCEPTED_FOR_CONTINUATION",
+  "release_status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "active_pcb": "/projects/exports/sirokko_final_panel_candidate_v2/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "pcb_sha256": "d015fbb1e4eea7caec96bf9dd34dcf0220e50bde06f0fbe3e7eed67ecfeaf3a3",
+  "kicad_version": "10.0.7",
+  "board": {
+    "size_mm": [235, 170],
+    "thickness_mm": 1.6,
+    "footprints": 124,
+    "traces": 750,
+    "vias": 179,
+    "nets": 107,
+    "zones": 14,
+    "copper_zones": 3,
+    "keepouts": 11
+  },
+  "req_029": {
+    "window_mm": [52, 36.5],
+    "window_center_native_mm": [161, 140],
+    "control_axis_native_x_mm": 75,
+    "window_edge_to_axis_mm": 60,
+    "window_center_to_axis_mm": 86,
+    "centers_native_mm": {
+      "encoder_J23": [75, 110],
+      "start_stop_J22_physical": [75, 140],
+      "reset_J24": [75, 170]
+    },
+    "pitch_y_mm": [30, 30]
+  },
+  "devkit": {
+    "model": "YD-ESP32-S3 N16R8 USB-C",
+    "header_centers_x_mm": [83, 105.86],
+    "header_pitch_mm": 22.86,
+    "bfab_bounds_mm": [80.46, 33.095, 108.4, 90.245],
+    "bfab_size_mm": [27.94, 57.15],
+    "documentary_pinmap": "44/44 functions checked; 33 assigned; 11 unused",
+    "assembly": ["OPEN RGB 0R", "OPEN IN-OUT", "OPEN USB-OTG"],
+    "power_qualification": "OPEN: D1-D3 exact MPN and guaranteed electrical limits unidentified"
+  },
+  "drc": {
+    "violations": 10,
+    "lib_footprint_mismatch": 2,
+    "track_dangling": 8,
+    "unconnected_errors": 84,
+    "ignored_project_checks": 5,
+    "nonmirrored_text_on_back_layer": 0
+  },
+  "verification": {
+    "parent_verify_script": "PASS",
+    "visual": "PASS_WITH_WIP_LABEL_OVERLAP",
+    "validate_board": "124 footprints, 0 origin/edge/keepout violations",
+    "electrically_complete": false,
+    "production_ready": false,
+    "fire_test_ready": false
+  }
+}
