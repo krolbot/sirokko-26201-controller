@@ -1,0 +1,73 @@
+{
+  "screen": {
+    "rear_offset_screen_mm": [
+      0,
+      3.4
+    ],
+    "panel_relative_rear_screen_mm": [
+      5.0,
+      8.6
+    ],
+    "fixed_front_min_margin_mm": 4.0
+  },
+  "body_max_mm": 9.3,
+  "bracket_bound_mm": 11.56,
+  "square_bound_mm": 11.56,
+  "rotated_bound_mm": 11.95639614222166,
+  "aperture_min_mm": 14,
+  "aperture_position_per_axis_mm": 0.2,
+  "angular_error_degrees": 2,
+  "axis_clearance_min_mm": 0.82180192888917,
+  "rounding_penalty_upper_mm": 0.20710678118654757,
+  "conservative_boundary_clearance_mm": 0.6146951477026225,
+  "own_required_clearance_mm": 0.5,
+  "passes_conditional_model": true,
+  "negative_case_6mm_rejects_body_even_at_smallest_width": true,
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "units": "mm, degrees",
+  "part": "NKK BB25AB-FA",
+  "sources": [
+    {
+      "url": "https://www.nkkswitches.eu/pdf/pushbutton_BB.pdf",
+      "pages": "C15, C16",
+      "sha256": "d1524d19e78dcc47542e6fc5febe9048972410c6efe8e6a5c51cc9cb105ef65f"
+    },
+    {
+      "url": "https://www.nkkswitches.eu/documents/products/support/safetyprecautions.pdf",
+      "page": "Z29 / physical 3",
+      "edition_metadata": "2018-07-24",
+      "sha256": "a20f5b11e4d6bb9af39e9a244aa0c57cbe743d5f687d9efb0db231444bfd7efa"
+    }
+  ],
+  "inputs": {
+    "panel_face_min": 8.4,
+    "panel_face_max": 8.6,
+    "body_axial_nominal": 13.1,
+    "general_tolerance_over6_through30": 0.5,
+    "pin_extension_nominal": 3.1,
+    "general_tolerance_through6": 0.3,
+    "body_transverse_nominal": 8.8,
+    "bracket_pin_span_nominal": 10.16,
+    "conservative_bracket_width_nominal": 0.6,
+    "aperture_side_min": 14.0,
+    "aperture_side_max": 14.2,
+    "aperture_corner_radius_max": 0.5,
+    "position_error_per_axis": 0.2,
+    "angular_error_max_degrees": 2.0,
+    "required_boundary_clearance": 0.5
+  },
+  "assumptions": [
+    "Conventional straight through-hole installation above an intact PCB; no body insertion into a board cutout",
+    "Symmetric transverse enclosing square from C16 about the switch axis; installation axis/orientation must still be checked against current footprint",
+    "NKK general tolerances used unless a part-specific tolerance supersedes them",
+    "14mm is an engineering-design aperture, not an NKK panel recommendation",
+    "Computed clearance is conditional on the stated total assembly position and angular errors",
+    "No claim of actual seating height, solder qualification, sealing or production assembly acceptance"
+  ],
+  "negative_case": {
+    "aperture_diameter": 6,
+    "body_min_width": 8.3,
+    "result": "REJECT: fixed body does not pass"
+  },
+  "scope": "Panel clearance calculation only; PCB/SCH/firmware untouched; general routing HOLD"
+}

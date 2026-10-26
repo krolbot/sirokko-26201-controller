@@ -1,0 +1,99 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE; parameter screening, not operating qualification",
+  "sources": {
+    "ltc7001": {
+      "URL": "https://static.chipdip.ru/lib/647/DOC027647254.pdf",
+      "sha256": "24d1065533b8db22be424e7b5c9698b0e9c9471e6058a8eff624d03acb2a2569"
+    },
+    "IRFB4110PbF": {
+      "URL": "https://static.chipdip.ru/lib/511/DOC011511075.pdf",
+      "sha256": "375f45dba4286f8ad374b47fa31541dad8842e3163366af0f1938bd53a613cf8"
+    },
+    "Murata": {
+      "URL": "https://static.chipdip.ru/lib/972/DOC031972125.pdf",
+      "sha256": "22e6a9d6557b3ba44221ec810fa1bc1c8a248225e1132100cd5e0a2866a55f70",
+      "printed_last_updated": "11/08/2020",
+      "pdf_status": "parses; Poppler reported flate errors; target DC-bias plot rendered and visually read; do not treat other missing graphics as evidence"
+    },
+    "MMBD1501A": {
+      "URL": "https://static.chipdip.ru/lib/030/DOC032030170.pdf",
+      "edition": "Rev2.6 April2016"
+    }
+  },
+  "conditions": {
+    "Q101": "IRFB4110PbF",
+    "Qg_typ_C": 1.5e-07,
+    "Qg_max_C": 2.1e-07,
+    "Qg_conditions": "TJ25C, VGS10V, VDS50V, ID75A; NOT a maximum at gate14V or full temperature",
+    "f_Hz": 20000,
+    "duty_max": 0.8,
+    "K_charge_engineering": 1.3
+  },
+  "screen": {
+    "period_s": 5e-05,
+    "off_time_s": 9.999999999999997e-06,
+    "Q_with_charge_reserve_C": 2.73e-07,
+    "Cb_strict_lower_limit_F": 2.73e-07,
+    "gate_average_current_A": 0.0042,
+    "reserved_charge_average_current_A": 0.0054600000000000004,
+    "required_average_recharge_during_off_A": 0.02730000000000001,
+    "internal_pump_typical_frequency_boundary_Hz": 71.42857142857143,
+    "nominal_1uF_droop_V": 0.21000000000000002
+  },
+  "Ceff_sensitivity": [
+    {
+      "Ceff_F": 1e-06,
+      "droop_at_datasheet_Qmax_V": 0.21000000000000002,
+      "droop_at_reserved_Q_V": 0.273,
+      "meets_assumed_1V_charge_screen": true
+    },
+    {
+      "Ceff_F": 5e-07,
+      "droop_at_datasheet_Qmax_V": 0.42000000000000004,
+      "droop_at_reserved_Q_V": 0.546,
+      "meets_assumed_1V_charge_screen": true
+    },
+    {
+      "Ceff_F": 3e-07,
+      "droop_at_datasheet_Qmax_V": 0.7000000000000001,
+      "droop_at_reserved_Q_V": 0.9100000000000001,
+      "meets_assumed_1V_charge_screen": true
+    },
+    {
+      "Ceff_F": 2e-07,
+      "droop_at_datasheet_Qmax_V": 1.05,
+      "droop_at_reserved_Q_V": 1.3650000000000002,
+      "meets_assumed_1V_charge_screen": false
+    }
+  ],
+  "pass_scope": "Only algebra/dimensions and published test-point screen; actual Ceff, Qg at operating gate voltage, charging peak, recovery and thermal are not qualified",
+  "capacitor_candidate": {
+    "MPN": "GRM21BR71H105KA12L",
+    "references": [
+      "C9007",
+      "C9008"
+    ],
+    "nominal_F": 1e-06,
+    "rated_V": 50,
+    "tolerance_fraction": 0.1,
+    "body_mm": [
+      2.0,
+      1.25,
+      1.25
+    ],
+    "body_tolerance_mm": 0.1,
+    "dielectric": "X7R",
+    "supplier_product": "9000059108",
+    "supplier_URL": "https://www.chipdip.ru/product/1-mkf-x7r-50v-10-0805-grm21br71h105ka12l-kondensator-murata-9000059108",
+    "status": "recommended exact design candidate, not installed; not production BOM",
+    "bias_retention_model": 0.8,
+    "temperature_retention_model": 0.85,
+    "aging_retention_design_allowance": 0.9,
+    "bias_model_basis": "approximate reading of typical 25C DC bias curve at15V, not guaranteed lot minimum",
+    "independent_multiplier_model_not_joint_manufacturer_guarantee": true,
+    "Ceff_screen_F": 5.508000000000001e-07,
+    "droop_reserved_datasheet_charge_V": 0.4956427015250544,
+    "Q_allowed_under_1V_and_30pct_charge_rule_C": 4.236923076923077e-07,
+    "screening_margin_over_test_point_requirement": 2.0175824175824175
+  }
+}
