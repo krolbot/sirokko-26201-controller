@@ -1,0 +1,17 @@
+{
+  "prior_pads_unchanged": 430,
+  "added_pads": 0,
+  "D9002_MPN": "MBR1100G",
+  "D9002_footprint": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+  "prior_relations_preserved": 8488,
+  "new_directed_relations": 508,
+  "prior_copper_unchanged": 759,
+  "new_copper_objects": 25,
+  "U9004_U9005_U9006_supply_ground_connected": true,
+  "kelvin_isolation_preserved": true,
+  "segments": 638,
+  "vias": 146,
+  "unconnected": 88,
+  "pcb_sha256": "7e05810a907e5afd6095d9c17f037959885c889236ed731f558cfe1d3b5d1e8f",
+  "remaining": "U8 and C8 physically connected to main +3V3/GND; STOP signals unchanged; excluded U7/C7 untouched; safety chain and production not complete; NOT FOR ORDER"
+}
