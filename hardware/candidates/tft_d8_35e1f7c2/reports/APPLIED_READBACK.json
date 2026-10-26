@@ -1,0 +1,20 @@
+{
+  "status": "APPLIED_ACTIVE_VERIFIED",
+  "utc": "2026-10-26T13:06:56.091423+00:00",
+  "source_sha256": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+  "active_sha256": "35e1f7c2b78096139211039d5aacf94b8e18675731f4f979ab42bc8446cd7084",
+  "candidate_sha256": "35e1f7c2b78096139211039d5aacf94b8e18675731f4f979ab42bc8446cd7084",
+  "backup_sha256": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+  "preserved_pairs": 5383,
+  "covered": 4,
+  "shorts": 0,
+  "new_errors": 0,
+  "new_warnings": 0,
+  "remaining_warnings": 10,
+  "unconnected": 82,
+  "drc_exit": 5,
+  "context_files_unchanged": 23,
+  "release_status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "routing_firmware_hold": true,
+  "independent_engineer_review_pending": true
+}

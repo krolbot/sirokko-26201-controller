@@ -1,0 +1,1119 @@
+{
+  "before": [
+    {
+      "from": "U9001.8",
+      "to": "Q101.3",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "planar_length_mm": 23.566396103067895,
+      "path": [
+        {
+          "uuid": "3c00d794-7015-4535-a08a-0827da57ae7f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            151.0
+          ],
+          "to_mm": [
+            136.6,
+            151.0
+          ],
+          "length_mm": 1.45
+        },
+        {
+          "uuid": "07c03c65-986a-455d-bb43-b37b91330e9f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.6,
+            151.0
+          ],
+          "to_mm": [
+            137.05,
+            151.45
+          ],
+          "length_mm": 0.6363961030678927
+        },
+        {
+          "uuid": "54386c1e-eb83-4d48-b18b-19b5b839adac",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.05,
+            151.45
+          ],
+          "to_mm": [
+            139.0,
+            151.45
+          ],
+          "length_mm": 1.95
+        },
+        {
+          "uuid": "7284451b-b130-4eec-b3e9-f9b98a01922d",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            139.0,
+            151.45
+          ],
+          "to_mm": [
+            141.0,
+            151.45
+          ],
+          "length_mm": 2.0
+        },
+        {
+          "uuid": "7b208c14-7542-49ec-8488-df44d88b446b",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "17f7f4f8-4dec-4973-b40c-a6c3af609efb",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            141.0,
+            151.45
+          ],
+          "to_mm": [
+            141.0,
+            148.0
+          ],
+          "length_mm": 3.45
+        },
+        {
+          "uuid": "32c87001-214d-4f37-8231-cdb3ae68fa54",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            141.0,
+            148.0
+          ],
+          "to_mm": [
+            152.08,
+            148.0
+          ],
+          "length_mm": 11.08
+        },
+        {
+          "uuid": "93b37954-e4e8-4e6c-829d-d2e21652fb29",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            152.08,
+            148.0
+          ],
+          "to_mm": [
+            152.08,
+            145.0
+          ],
+          "length_mm": 3.0
+        },
+        {
+          "PTH_pad": "Q101.3@e7da48b0-a212-4a75-875d-2cfb8435803d",
+          "length_mm": 0
+        }
+      ]
+    },
+    {
+      "from": "U9001.6",
+      "to": "Q101.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101",
+      "planar_length_mm": 24.67842712474619,
+      "path": [
+        {
+          "uuid": "a1c73ea3-b861-44f1-97c0-9d98e4fa0e14",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            152.0
+          ],
+          "to_mm": [
+            135.8,
+            152.0
+          ],
+          "length_mm": 0.65
+        },
+        {
+          "uuid": "82f4d6b9-f7b8-4dcc-8ca8-fbec0e610485",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.8,
+            152.0
+          ],
+          "to_mm": [
+            137.8,
+            154.0
+          ],
+          "length_mm": 2.82842712474619
+        },
+        {
+          "uuid": "f58ff6cb-6a16-4631-965f-b3d7701a1aed",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.8,
+            154.0
+          ],
+          "to_mm": [
+            137.8,
+            155.5
+          ],
+          "length_mm": 1.5
+        },
+        {
+          "uuid": "dff7b685-a13b-4657-922c-6053793df784",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.8,
+            155.5
+          ],
+          "to_mm": [
+            140.825,
+            155.5
+          ],
+          "length_mm": 3.025
+        },
+        {
+          "uuid": "40455510-c6a7-4c4d-a622-b4a9478952b7",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            140.825,
+            155.5
+          ],
+          "to_mm": [
+            140.825,
+            154.0
+          ],
+          "length_mm": 1.5
+        },
+        {
+          "uuid": "abb6c712-1c52-4649-8859-a30a1349bd09",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            140.825,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            154.0
+          ],
+          "length_mm": 2.175
+        },
+        {
+          "uuid": "d83fcd6d-720c-487b-acfa-cec1eedef7e6",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            145.0
+          ],
+          "length_mm": 9.0
+        },
+        {
+          "uuid": "6771526c-c2f5-4236-81b5-d54f77cc31ee",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            145.0
+          ],
+          "to_mm": [
+            147.0,
+            145.0
+          ],
+          "length_mm": 4.0
+        }
+      ]
+    },
+    {
+      "from": "U9001.7",
+      "to": "R9004.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/TGUP",
+      "planar_length_mm": 5.060533905932737,
+      "path": [
+        {
+          "uuid": "b4a28244-09e5-4641-b8a8-f540eebf7d79",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            151.5
+          ],
+          "to_mm": [
+            136.3,
+            151.5
+          ],
+          "length_mm": 1.15
+        },
+        {
+          "uuid": "80481c39-7529-4e89-bdaf-067cb4d09e16",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.3,
+            151.5
+          ],
+          "to_mm": [
+            138.8,
+            154.0
+          ],
+          "length_mm": 3.5355339059327373
+        },
+        {
+          "uuid": "1646c1db-6aa4-40ad-b29a-dcb34f6e14cc",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            138.8,
+            154.0
+          ],
+          "to_mm": [
+            139.175,
+            154.0
+          ],
+          "length_mm": 0.375
+        }
+      ]
+    },
+    {
+      "from": "R9004.2",
+      "to": "Q101.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101",
+      "planar_length_mm": 15.175,
+      "path": [
+        {
+          "uuid": "abb6c712-1c52-4649-8859-a30a1349bd09",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            140.825,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            154.0
+          ],
+          "length_mm": 2.175
+        },
+        {
+          "uuid": "d83fcd6d-720c-487b-acfa-cec1eedef7e6",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            145.0
+          ],
+          "length_mm": 9.0
+        },
+        {
+          "uuid": "6771526c-c2f5-4236-81b5-d54f77cc31ee",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            145.0
+          ],
+          "to_mm": [
+            147.0,
+            145.0
+          ],
+          "length_mm": 4.0
+        }
+      ]
+    },
+    {
+      "from": "U9001.9",
+      "to": "C9008.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/BST",
+      "planar_length_mm": 4.243502884254441,
+      "path": [
+        {
+          "uuid": "91f392b2-1112-420a-8de7-253393d35f6c",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            150.5
+          ],
+          "to_mm": [
+            136.5,
+            150.5
+          ],
+          "length_mm": 1.35
+        },
+        {
+          "uuid": "3bd98900-4468-40ce-9e77-d6e30af9a92b",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.5,
+            150.5
+          ],
+          "to_mm": [
+            137.45,
+            149.55
+          ],
+          "length_mm": 1.3435028842544403
+        },
+        {
+          "uuid": "de3e97fd-f875-40d1-a132-bbb33ccee4d9",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.45,
+            149.55
+          ],
+          "to_mm": [
+            139.0,
+            149.55
+          ],
+          "length_mm": 1.55
+        }
+      ]
+    },
+    {
+      "from": "U9001.8",
+      "to": "C9008.2",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "planar_length_mm": 4.036396103067893,
+      "path": [
+        {
+          "uuid": "3c00d794-7015-4535-a08a-0827da57ae7f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            151.0
+          ],
+          "to_mm": [
+            136.6,
+            151.0
+          ],
+          "length_mm": 1.45
+        },
+        {
+          "uuid": "07c03c65-986a-455d-bb43-b37b91330e9f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.6,
+            151.0
+          ],
+          "to_mm": [
+            137.05,
+            151.45
+          ],
+          "length_mm": 0.6363961030678927
+        },
+        {
+          "uuid": "54386c1e-eb83-4d48-b18b-19b5b839adac",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.05,
+            151.45
+          ],
+          "to_mm": [
+            139.0,
+            151.45
+          ],
+          "length_mm": 1.95
+        }
+      ]
+    },
+    {
+      "from": "C9007.1",
+      "to": "U9001.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V",
+      "planar_length_mm": 10.18492424049175,
+      "path": [
+        {
+          "uuid": "f12e7bdc-1954-4323-9e8e-155481d39601",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            125.05,
+            148.0
+          ],
+          "to_mm": [
+            125.05,
+            151.0
+          ],
+          "length_mm": 3.0
+        },
+        {
+          "uuid": "6a00757c-7b2d-4a8d-84f0-945b17a6f3cb",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            125.05,
+            148.0
+          ],
+          "to_mm": [
+            129.8,
+            148.0
+          ],
+          "length_mm": 4.75
+        },
+        {
+          "uuid": "888f0ba9-5759-45f4-b4f8-4d3f3f147334",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            129.8,
+            148.0
+          ],
+          "to_mm": [
+            130.85,
+            149.05
+          ],
+          "length_mm": 1.4849242404917498
+        },
+        {
+          "uuid": "033f4b17-c9bb-48dc-87b2-be736076cdc7",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            130.85,
+            149.05
+          ],
+          "to_mm": [
+            130.85,
+            150.0
+          ],
+          "length_mm": 0.95
+        }
+      ]
+    },
+    {
+      "from": "C9007.2",
+      "to": "U9001.3",
+      "net": "/GND",
+      "planar_length_mm": 3.9,
+      "path": [
+        {
+          "uuid": "6d6787b9-fca4-428e-b85d-e309014f0f8f",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            126.95,
+            151.0
+          ],
+          "to_mm": [
+            130.85,
+            151.0
+          ],
+          "length_mm": 3.9
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "from": "U9001.8",
+      "to": "Q101.3",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "planar_length_mm": 26.001067811865475,
+      "path": [
+        {
+          "uuid": "3c00d794-7015-4535-a08a-0827da57ae7f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            139.0
+          ],
+          "to_mm": [
+            136.6,
+            139.0
+          ],
+          "length_mm": 1.45
+        },
+        {
+          "uuid": "07c03c65-986a-455d-bb43-b37b91330e9f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.6,
+            139.0
+          ],
+          "to_mm": [
+            137.05,
+            139.45
+          ],
+          "length_mm": 0.6363961030678927
+        },
+        {
+          "uuid": "54386c1e-eb83-4d48-b18b-19b5b839adac",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.05,
+            139.45
+          ],
+          "to_mm": [
+            139.0,
+            139.45
+          ],
+          "length_mm": 1.95
+        },
+        {
+          "uuid": "7284451b-b130-4eec-b3e9-f9b98a01922d",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            139.0,
+            139.45
+          ],
+          "to_mm": [
+            141.0,
+            139.45
+          ],
+          "length_mm": 2.0
+        },
+        {
+          "uuid": "7b208c14-7542-49ec-8488-df44d88b446b",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "89f709b0-11ac-4570-ba11-df2bffc232d8",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            141.0,
+            139.45
+          ],
+          "to_mm": [
+            141.0,
+            143.45
+          ],
+          "length_mm": 4.0
+        },
+        {
+          "uuid": "aee97b53-5b1e-4769-b2b9-7c019d8d6fa3",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            141.0,
+            143.45
+          ],
+          "to_mm": [
+            145.55,
+            148.0
+          ],
+          "length_mm": 6.434671708797582
+        },
+        {
+          "uuid": "32c87001-214d-4f37-8231-cdb3ae68fa54",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            145.55,
+            148.0
+          ],
+          "to_mm": [
+            152.08,
+            148.0
+          ],
+          "length_mm": 6.53
+        },
+        {
+          "uuid": "93b37954-e4e8-4e6c-829d-d2e21652fb29",
+          "layer": "B.Cu",
+          "width_mm": 0.5,
+          "from_mm": [
+            152.08,
+            148.0
+          ],
+          "to_mm": [
+            152.08,
+            145.0
+          ],
+          "length_mm": 3.0
+        },
+        {
+          "PTH_pad": "Q101.3@e7da48b0-a212-4a75-875d-2cfb8435803d",
+          "length_mm": 0
+        }
+      ]
+    },
+    {
+      "from": "U9001.6",
+      "to": "Q101.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101",
+      "planar_length_mm": 15.67842712474619,
+      "path": [
+        {
+          "uuid": "a1c73ea3-b861-44f1-97c0-9d98e4fa0e14",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            140.0
+          ],
+          "to_mm": [
+            135.8,
+            140.0
+          ],
+          "length_mm": 0.65
+        },
+        {
+          "uuid": "02bbe438-acb9-4c22-acbd-e4517931abc3",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.8,
+            140.0
+          ],
+          "to_mm": [
+            136.5,
+            140.7
+          ],
+          "length_mm": 0.9899494936611665
+        },
+        {
+          "uuid": "7ef63eb5-7407-4ede-92de-ac3584378dbe",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "3556e870-d45e-41cb-8f2c-12894484a96a",
+          "layer": "B.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.5,
+            140.7
+          ],
+          "to_mm": [
+            137.8,
+            142.0
+          ],
+          "length_mm": 1.8384776310850235
+        },
+        {
+          "uuid": "a5a50ff9-8e31-4390-b20b-ace9fc36c8de",
+          "layer": "B.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.8,
+            142.0
+          ],
+          "to_mm": [
+            137.8,
+            143.0
+          ],
+          "length_mm": 1.0
+        },
+        {
+          "uuid": "d1ad1c8e-e6c7-4f35-b3fa-a6dd73e04162",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "7609b410-7dd1-4760-8891-70f6e1d027fa",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.8,
+            143.0
+          ],
+          "to_mm": [
+            143.0,
+            143.0
+          ],
+          "length_mm": 5.2
+        },
+        {
+          "uuid": "b9606b35-a80b-463a-9657-01d8ead013b3",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            143.0,
+            143.0
+          ],
+          "to_mm": [
+            143.0,
+            145.0
+          ],
+          "length_mm": 2.0
+        },
+        {
+          "uuid": "6771526c-c2f5-4236-81b5-d54f77cc31ee",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            145.0
+          ],
+          "to_mm": [
+            147.0,
+            145.0
+          ],
+          "length_mm": 4.0
+        }
+      ]
+    },
+    {
+      "from": "U9001.7",
+      "to": "R9004.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/TGUP",
+      "planar_length_mm": 17.060533905932736,
+      "path": [
+        {
+          "uuid": "b4a28244-09e5-4641-b8a8-f540eebf7d79",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            139.5
+          ],
+          "to_mm": [
+            136.3,
+            139.5
+          ],
+          "length_mm": 1.15
+        },
+        {
+          "uuid": "0e13ecd1-52f0-4b3f-85a1-b9f1559f87a0",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.3,
+            139.5
+          ],
+          "to_mm": [
+            137.5,
+            140.7
+          ],
+          "length_mm": 1.697056274847714
+        },
+        {
+          "uuid": "637e2891-0ddd-47e0-ace9-54ea9add3e4b",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "5238fb3c-6a04-4761-b702-afd66f73dfda",
+          "layer": "B.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.5,
+            140.7
+          ],
+          "to_mm": [
+            138.8,
+            142.0
+          ],
+          "length_mm": 1.8384776310850235
+        },
+        {
+          "uuid": "794914ae-5dba-40cf-b2fe-9445f975ad36",
+          "layer": "B.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            138.8,
+            142.0
+          ],
+          "to_mm": [
+            138.8,
+            152.8
+          ],
+          "length_mm": 10.8
+        },
+        {
+          "uuid": "3a6deb68-9450-4db6-8b13-55075fbeff66",
+          "via_diameter_mm": 0.6,
+          "drill_mm": 0.3,
+          "length_mm": 0
+        },
+        {
+          "uuid": "54c16314-b820-4bd2-bee1-ab7503340af2",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            138.8,
+            152.8
+          ],
+          "to_mm": [
+            138.8,
+            154.0
+          ],
+          "length_mm": 1.2
+        },
+        {
+          "uuid": "1646c1db-6aa4-40ad-b29a-dcb34f6e14cc",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            138.8,
+            154.0
+          ],
+          "to_mm": [
+            139.175,
+            154.0
+          ],
+          "length_mm": 0.375
+        }
+      ]
+    },
+    {
+      "from": "R9004.2",
+      "to": "Q101.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101",
+      "planar_length_mm": 15.175,
+      "path": [
+        {
+          "uuid": "abb6c712-1c52-4649-8859-a30a1349bd09",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            140.825,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            154.0
+          ],
+          "length_mm": 2.175
+        },
+        {
+          "uuid": "d83fcd6d-720c-487b-acfa-cec1eedef7e6",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            154.0
+          ],
+          "to_mm": [
+            143.0,
+            145.0
+          ],
+          "length_mm": 9.0
+        },
+        {
+          "uuid": "6771526c-c2f5-4236-81b5-d54f77cc31ee",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            143.0,
+            145.0
+          ],
+          "to_mm": [
+            147.0,
+            145.0
+          ],
+          "length_mm": 4.0
+        }
+      ]
+    },
+    {
+      "from": "U9001.9",
+      "to": "C9008.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/BST",
+      "planar_length_mm": 4.243502884254441,
+      "path": [
+        {
+          "uuid": "91f392b2-1112-420a-8de7-253393d35f6c",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            138.5
+          ],
+          "to_mm": [
+            136.5,
+            138.5
+          ],
+          "length_mm": 1.35
+        },
+        {
+          "uuid": "3bd98900-4468-40ce-9e77-d6e30af9a92b",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.5,
+            138.5
+          ],
+          "to_mm": [
+            137.45,
+            137.55
+          ],
+          "length_mm": 1.3435028842544403
+        },
+        {
+          "uuid": "de3e97fd-f875-40d1-a132-bbb33ccee4d9",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.45,
+            137.55
+          ],
+          "to_mm": [
+            139.0,
+            137.55
+          ],
+          "length_mm": 1.55
+        }
+      ]
+    },
+    {
+      "from": "U9001.8",
+      "to": "C9008.2",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+      "planar_length_mm": 4.036396103067893,
+      "path": [
+        {
+          "uuid": "3c00d794-7015-4535-a08a-0827da57ae7f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            135.15,
+            139.0
+          ],
+          "to_mm": [
+            136.6,
+            139.0
+          ],
+          "length_mm": 1.45
+        },
+        {
+          "uuid": "07c03c65-986a-455d-bb43-b37b91330e9f",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            136.6,
+            139.0
+          ],
+          "to_mm": [
+            137.05,
+            139.45
+          ],
+          "length_mm": 0.6363961030678927
+        },
+        {
+          "uuid": "54386c1e-eb83-4d48-b18b-19b5b839adac",
+          "layer": "F.Cu",
+          "width_mm": 0.2,
+          "from_mm": [
+            137.05,
+            139.45
+          ],
+          "to_mm": [
+            139.0,
+            139.45
+          ],
+          "length_mm": 1.95
+        }
+      ]
+    },
+    {
+      "from": "C9007.1",
+      "to": "U9001.1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V",
+      "planar_length_mm": 10.18492424049175,
+      "path": [
+        {
+          "uuid": "f12e7bdc-1954-4323-9e8e-155481d39601",
+          "layer": "F.Cu",
+          "width_mm": 0.4,
+          "from_mm": [
+            125.05,
+            136.0
+          ],
+          "to_mm": [
+            125.05,
+            139.0
+          ],
+          "length_mm": 3.0
+        },
+        {
+          "uuid": "6a00757c-7b2d-4a8d-84f0-945b17a6f3cb",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            125.05,
+            136.0
+          ],
+          "to_mm": [
+            129.8,
+            136.0
+          ],
+          "length_mm": 4.75
+        },
+        {
+          "uuid": "888f0ba9-5759-45f4-b4f8-4d3f3f147334",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            129.8,
+            136.0
+          ],
+          "to_mm": [
+            130.85,
+            137.05
+          ],
+          "length_mm": 1.4849242404917498
+        },
+        {
+          "uuid": "033f4b17-c9bb-48dc-87b2-be736076cdc7",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            130.85,
+            137.05
+          ],
+          "to_mm": [
+            130.85,
+            138.0
+          ],
+          "length_mm": 0.95
+        }
+      ]
+    },
+    {
+      "from": "C9007.2",
+      "to": "U9001.3",
+      "net": "/GND",
+      "planar_length_mm": 3.9,
+      "path": [
+        {
+          "uuid": "6d6787b9-fca4-428e-b85d-e309014f0f8f",
+          "layer": "F.Cu",
+          "width_mm": 0.25,
+          "from_mm": [
+            126.95,
+            139.0
+          ],
+          "to_mm": [
+            130.85,
+            139.0
+          ],
+          "length_mm": 3.9
+        }
+      ]
+    }
+  ],
+  "R9004_value": "10R gate turn-on damping",
+  "plane_under_EP": false,
+  "plane_note": "No GND filled-zone outline reaches U9001 in baseline or candidate; electrical layout acceptance remains open."
+}

@@ -1,0 +1,138 @@
+{
+  "holes": [
+    {
+      "uuid": "3f36fdf8-1d96-41b5-a2a9-35432b773ea3",
+      "center_mm": [
+        132.2,
+        154.2
+      ],
+      "drill_mm": [
+        2.7,
+        2.7
+      ]
+    },
+    {
+      "uuid": "2df0ce4b-17a6-4740-aa93-b402c3544c99",
+      "center_mm": [
+        190.2,
+        154.2
+      ],
+      "drill_mm": [
+        2.7,
+        2.7
+      ]
+    },
+    {
+      "uuid": "dd90198c-8ed6-4287-a636-7f10acb57238",
+      "center_mm": [
+        132.2,
+        126.2
+      ],
+      "drill_mm": [
+        2.7,
+        2.7
+      ]
+    },
+    {
+      "uuid": "ce948806-cf06-469b-b438-1a1469b5d954",
+      "center_mm": [
+        190.2,
+        126.2
+      ],
+      "drill_mm": [
+        2.7,
+        2.7
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "covered": true,
+      "convex": true,
+      "min_edge_distance_mm": 4.000001670185218,
+      "vertices": 64,
+      "center_mm": [
+        132.2,
+        126.2
+      ],
+      "uuid": "15d6bace-6a7c-432b-a18b-0f8e271f2a26",
+      "layers": [
+        "F.Cu",
+        "B.Cu"
+      ],
+      "flags": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "covered": true,
+      "convex": true,
+      "min_edge_distance_mm": 4.000001670185218,
+      "vertices": 64,
+      "center_mm": [
+        190.2,
+        126.2
+      ],
+      "uuid": "179b0f19-8491-47a5-97b6-9c9263df6209",
+      "layers": [
+        "F.Cu",
+        "B.Cu"
+      ],
+      "flags": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "covered": true,
+      "convex": true,
+      "min_edge_distance_mm": 4.000001670185218,
+      "vertices": 64,
+      "center_mm": [
+        132.2,
+        154.2
+      ],
+      "uuid": "f6abe52b-d071-4dfa-9bff-2ca3bf987bb0",
+      "layers": [
+        "F.Cu",
+        "B.Cu"
+      ],
+      "flags": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "covered": true,
+      "convex": true,
+      "min_edge_distance_mm": 4.000001670185218,
+      "vertices": 64,
+      "center_mm": [
+        190.2,
+        154.2
+      ],
+      "uuid": "c70ea191-e9c9-4543-9dde-a1a6b27c2e16",
+      "layers": [
+        "F.Cu",
+        "B.Cu"
+      ],
+      "flags": [
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "covered": 4,
+  "copper_collisions": [],
+  "old_center_keepouts": {
+    "(27, 129.75)": [],
+    "(85, 129.75)": [],
+    "(27, 157.75)": [],
+    "(85, 157.75)": []
+  }
+}

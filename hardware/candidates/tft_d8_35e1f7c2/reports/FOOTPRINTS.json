@@ -1,0 +1,2471 @@
+{
+  "R18": {
+    "position_mm": [
+      25.0,
+      110.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 26475000, 109275000), VECTOR2I( 26475000, 110725000), VECTOR2I( 23525000, 110725000), VECTOR2I( 23525000, 109275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          23.475,
+          109.225,
+          26.525,
+          110.775
+        ]
+      }
+    ]
+  },
+  "C6": {
+    "position_mm": [
+      56.2,
+      76.19
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 57675000, 75465000), VECTOR2I( 57675000, 76915000), VECTOR2I( 54725000, 76915000), VECTOR2I( 54725000, 75465000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          54.675,
+          75.415,
+          57.725,
+          76.965
+        ]
+      }
+    ]
+  },
+  "C102": {
+    "position_mm": [
+      120.5,
+      52.5
+    ],
+    "rotation": 0.0,
+    "value": "2.2uF 100V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 122795000, 50905000), VECTOR2I( 122795000, 54095000), VECTOR2I( 118205000, 54095000), VECTOR2I( 118205000, 50905000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          118.155,
+          50.855,
+          122.845,
+          54.145
+        ]
+      }
+    ]
+  },
+  "H6": {
+    "position_mm": [
+      238.0,
+      172.0
+    ],
+    "rotation": 0.0,
+    "value": "M3 SUPPORT",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 238372747, 168572683), VECTOR2I( 238741112, 168633074), VECTOR2I( 239100801, 168732941), VECTOR2I( 239447577, 168871109), VECTOR2I( 239777390, 169045965), VECTOR2I( 240086349, 169255445), VECTOR2I( 240370864, 169497114), VECTOR2I( 240627573, 169768118), VECTOR2I( 240853478, 170065291), VECTOR2I( 241045930, 170385149), VECTOR2I( 241202671, 170723939), VECTOR2I( 241321864, 171077688), VECTOR2I( 241402109, 171442248), VECTOR2I( 241442473, 171813387), VECTOR2I( 241444999, 172000000), VECTOR2I( 241442473, 172186612), VECTOR2I( 241402109, 172557751), VECTOR2I( 241321864, 172922311), VECTOR2I( 241202671, 173276060), VECTOR2I( 241045930, 173614850), VECTOR2I( 240853478, 173934708), VECTOR2I( 240627573, 174231881), VECTOR2I( 240370864, 174502885), VECTOR2I( 240086349, 174744554), VECTOR2I( 239777390, 174954034), VECTOR2I( 239447577, 175128890), VECTOR2I( 239100801, 175267058), VECTOR2I( 238741112, 175366925), VECTOR2I( 238372747, 175427316), VECTOR2I( 238000000, 175447526), VECTOR2I( 237627252, 175427316), VECTOR2I( 237258887, 175366925), VECTOR2I( 236899198, 175267058), VECTOR2I( 236552422, 175128890), VECTOR2I( 236222609, 174954034), VECTOR2I( 235913650, 174744554), VECTOR2I( 235629135, 174502885), VECTOR2I( 235372426, 174231881), VECTOR2I( 235146521, 173934708), VECTOR2I( 234954069, 173614850), VECTOR2I( 234797328, 173276060), VECTOR2I( 234678135, 172922311), VECTOR2I( 234597890, 172557751), VECTOR2I( 234557530, 172186641), VECTOR2I( 234557530, 171813358), VECTOR2I( 234597890, 171442248), VECTOR2I( 234678135, 171077688), VECTOR2I( 234797328, 170723939), VECTOR2I( 234954069, 170385149), VECTOR2I( 235146521, 170065291), VECTOR2I( 235372426, 169768118), VECTOR2I( 235629135, 169497114), VECTOR2I( 235913650, 169255445), VECTOR2I( 236222609, 169045965), VECTOR2I( 236552422, 168871109), VECTOR2I( 236899198, 168732941), VECTOR2I( 237258887, 168633074), VECTOR2I( 237627252, 168572683), VECTOR2I( 238000000, 168552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          234.50753,
+          168.502474,
+          241.494999,
+          175.497526
+        ]
+      }
+    ]
+  },
+  "R6": {
+    "position_mm": [
+      165.0,
+      90.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 88505000), VECTOR2I( 176205000, 91495000), VECTOR2I( 163955000, 91495000), VECTOR2I( 163955000, 88505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          88.455,
+          176.255,
+          91.545
+        ]
+      }
+    ]
+  },
+  "K1": {
+    "position_mm": [
+      216.0,
+      30.0
+    ],
+    "rotation": 0.0,
+    "value": "DZ85AB-5-PCB MECH HOLD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 230395000, 26355000), VECTOR2I( 230395000, 55145000), VECTOR2I( 201605000, 55145000), VECTOR2I( 201605000, 26355000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          201.555,
+          26.305,
+          230.445,
+          55.195
+        ]
+      }
+    ]
+  },
+  "C5": {
+    "position_mm": [
+      38.2,
+      61.19
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 39675000, 60465000), VECTOR2I( 39675000, 61915000), VECTOR2I( 36725000, 61915000), VECTOR2I( 36725000, 60465000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          36.675,
+          60.415,
+          39.725,
+          61.965
+        ]
+      }
+    ]
+  },
+  "C9": {
+    "position_mm": [
+      36.0,
+      34.5
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V BIAS",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 37475000, 33775000), VECTOR2I( 37475000, 35225000), VECTOR2I( 34525000, 35225000), VECTOR2I( 34525000, 33775000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          34.475,
+          33.725,
+          37.525,
+          35.275
+        ]
+      }
+    ]
+  },
+  "R12": {
+    "position_mm": [
+      165.0,
+      100.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 98505000), VECTOR2I( 176205000, 101495000), VECTOR2I( 163955000, 101495000), VECTOR2I( 163955000, 98505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          98.455,
+          176.255,
+          101.545
+        ]
+      }
+    ]
+  },
+  "C108": {
+    "position_mm": [
+      143.0,
+      64.0
+    ],
+    "rotation": 90.0,
+    "value": "820pF 50V C0G",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 143725000, 62525000), VECTOR2I( 143725000, 65475000), VECTOR2I( 142275000, 65475000), VECTOR2I( 142275000, 62525000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          142.225,
+          62.475,
+          143.775,
+          65.525
+        ]
+      }
+    ]
+  },
+  "C106": {
+    "position_mm": [
+      173.0,
+      45.0
+    ],
+    "rotation": 90.0,
+    "value": "47uF 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 174595000, 42705000), VECTOR2I( 174595000, 47295000), VECTOR2I( 171405000, 47295000), VECTOR2I( 171405000, 42705000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          171.355,
+          42.655,
+          174.645,
+          47.345
+        ]
+      }
+    ]
+  },
+  "U2": {
+    "position_mm": [
+      67.0,
+      75.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74HCS74D",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 69195000, 70425000), VECTOR2I( 69195000, 70645000), VECTOR2I( 70695000, 70645000), VECTOR2I( 70695000, 79355000), VECTOR2I( 69195000, 79355000), VECTOR2I( 69195000, 79575000), VECTOR2I( 64805000, 79575000), VECTOR2I( 64805000, 79355000), VECTOR2I( 63305000, 79355000), VECTOR2I( 63305000, 70645000), VECTOR2I( 64805000, 70645000), VECTOR2I( 64805000, 70425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          63.255,
+          70.375,
+          70.745,
+          79.625
+        ]
+      }
+    ]
+  },
+  "R106": {
+    "position_mm": [
+      143.0,
+      59.0
+    ],
+    "rotation": 0.0,
+    "value": "82k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 144475000, 58275000), VECTOR2I( 144475000, 59725000), VECTOR2I( 141525000, 59725000), VECTOR2I( 141525000, 58275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          141.475,
+          58.225,
+          144.525,
+          59.775
+        ]
+      }
+    ]
+  },
+  "R9003": {
+    "position_mm": [
+      123.0,
+      136.0
+    ],
+    "rotation": 0.0,
+    "value": "130k 1% (VCCUV ≈9.1V rising)",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 124475000, 135275000), VECTOR2I( 124475000, 136725000), VECTOR2I( 121525000, 136725000), VECTOR2I( 121525000, 135275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          121.475,
+          135.225,
+          124.525,
+          136.775
+        ]
+      }
+    ]
+  },
+  "TP101": {
+    "position_mm": [
+      168.0,
+      65.0
+    ],
+    "rotation": 0.0,
+    "value": "PGOOD_5V_NOT_GPIO",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 170145000, 63655000), VECTOR2I( 170145000, 66345000), VECTOR2I( 165855000, 66345000), VECTOR2I( 165855000, 63655000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          165.805,
+          63.605,
+          170.195,
+          66.395
+        ]
+      }
+    ]
+  },
+  "C11": {
+    "position_mm": [
+      40.0,
+      32.5
+    ],
+    "rotation": 0.0,
+    "value": "0.01uF X7R 16V T- filter",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 41475000, 31775000), VECTOR2I( 41475000, 33225000), VECTOR2I( 38525000, 33225000), VECTOR2I( 38525000, 31775000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          38.475,
+          31.725,
+          41.525,
+          33.275
+        ]
+      }
+    ]
+  },
+  "R85": {
+    "position_mm": [
+      100.0,
+      116.0
+    ],
+    "rotation": 0.0,
+    "value": "2.2k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 101645000, 115275000), VECTOR2I( 101645000, 116725000), VECTOR2I( 98355000, 116725000), VECTOR2I( 98355000, 115275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          98.305,
+          115.225,
+          101.695,
+          116.775
+        ]
+      }
+    ]
+  },
+  "R24": {
+    "position_mm": [
+      21.0,
+      75.8
+    ],
+    "rotation": 90.0,
+    "value": "10k TFT_CS_PULLUP",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 21725000, 74325000), VECTOR2I( 21725000, 77275000), VECTOR2I( 20275000, 77275000), VECTOR2I( 20275000, 74325000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          20.225,
+          74.275,
+          21.775,
+          77.325
+        ]
+      }
+    ]
+  },
+  "C9012": {
+    "position_mm": [
+      162.0,
+      171.0
+    ],
+    "rotation": 0.0,
+    "value": "100nF X7R 16V 10%; U9006 local bypass",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 163475000, 170275000), VECTOR2I( 163475000, 171725000), VECTOR2I( 160525000, 171725000), VECTOR2I( 160525000, 170275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          160.475,
+          170.225,
+          163.525,
+          171.775
+        ]
+      }
+    ]
+  },
+  "R9002": {
+    "position_mm": [
+      122.2,
+      138.0
+    ],
+    "rotation": 180.0,
+    "value": "100k 1% gate-command pull-down",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 123675000, 137275000), VECTOR2I( 123675000, 138725000), VECTOR2I( 120725000, 138725000), VECTOR2I( 120725000, 137275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          120.675,
+          137.225,
+          123.725,
+          138.775
+        ]
+      }
+    ]
+  },
+  "R102": {
+    "position_mm": [
+      174.0,
+      61.0
+    ],
+    "rotation": 90.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 174725000, 59525000), VECTOR2I( 174725000, 62475000), VECTOR2I( 173275000, 62475000), VECTOR2I( 173275000, 59525000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          173.225,
+          59.475,
+          174.775,
+          62.525
+        ]
+      }
+    ]
+  },
+  "C19": {
+    "position_mm": [
+      108.0,
+      116.0
+    ],
+    "rotation": 0.0,
+    "value": "10n ENC_A_FILTER",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 109645000, 115275000), VECTOR2I( 109645000, 116725000), VECTOR2I( 106355000, 116725000), VECTOR2I( 106355000, 115275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          106.305,
+          115.225,
+          109.695,
+          116.775
+        ]
+      }
+    ]
+  },
+  "U101": {
+    "position_mm": [
+      128.0,
+      50.0
+    ],
+    "rotation": 0.0,
+    "value": "LM5013DDAR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 131725000, 47305000), VECTOR2I( 131725000, 52695000), VECTOR2I( 124275000, 52695000), VECTOR2I( 124275000, 47305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          124.225,
+          47.255,
+          131.775,
+          52.745
+        ]
+      }
+    ]
+  },
+  "R101": {
+    "position_mm": [
+      170.0,
+      58.0
+    ],
+    "rotation": 0.0,
+    "value": "31.6k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 171475000, 57275000), VECTOR2I( 171475000, 58725000), VECTOR2I( 168525000, 58725000), VECTOR2I( 168525000, 57275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          168.475,
+          57.225,
+          171.525,
+          58.775
+        ]
+      }
+    ]
+  },
+  "H4": {
+    "position_mm": [
+      182.0,
+      172.0
+    ],
+    "rotation": 0.0,
+    "value": "M3",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 182372747, 168572683), VECTOR2I( 182741112, 168633074), VECTOR2I( 183100801, 168732941), VECTOR2I( 183447577, 168871109), VECTOR2I( 183777390, 169045965), VECTOR2I( 184086349, 169255445), VECTOR2I( 184370864, 169497114), VECTOR2I( 184627573, 169768118), VECTOR2I( 184853478, 170065291), VECTOR2I( 185045930, 170385149), VECTOR2I( 185202671, 170723939), VECTOR2I( 185321864, 171077688), VECTOR2I( 185402109, 171442248), VECTOR2I( 185442473, 171813387), VECTOR2I( 185444999, 172000000), VECTOR2I( 185442473, 172186612), VECTOR2I( 185402109, 172557751), VECTOR2I( 185321864, 172922311), VECTOR2I( 185202671, 173276060), VECTOR2I( 185045930, 173614850), VECTOR2I( 184853478, 173934708), VECTOR2I( 184627573, 174231881), VECTOR2I( 184370864, 174502885), VECTOR2I( 184086349, 174744554), VECTOR2I( 183777390, 174954034), VECTOR2I( 183447577, 175128890), VECTOR2I( 183100801, 175267058), VECTOR2I( 182741112, 175366925), VECTOR2I( 182372747, 175427316), VECTOR2I( 182000000, 175447526), VECTOR2I( 181627252, 175427316), VECTOR2I( 181258887, 175366925), VECTOR2I( 180899198, 175267058), VECTOR2I( 180552422, 175128890), VECTOR2I( 180222609, 174954034), VECTOR2I( 179913650, 174744554), VECTOR2I( 179629135, 174502885), VECTOR2I( 179372426, 174231881), VECTOR2I( 179146521, 173934708), VECTOR2I( 178954069, 173614850), VECTOR2I( 178797328, 173276060), VECTOR2I( 178678135, 172922311), VECTOR2I( 178597890, 172557751), VECTOR2I( 178557530, 172186641), VECTOR2I( 178557530, 171813358), VECTOR2I( 178597890, 171442248), VECTOR2I( 178678135, 171077688), VECTOR2I( 178797328, 170723939), VECTOR2I( 178954069, 170385149), VECTOR2I( 179146521, 170065291), VECTOR2I( 179372426, 169768118), VECTOR2I( 179629135, 169497114), VECTOR2I( 179913650, 169255445), VECTOR2I( 180222609, 169045965), VECTOR2I( 180552422, 168871109), VECTOR2I( 180899198, 168732941), VECTOR2I( 181258887, 168633074), VECTOR2I( 181627252, 168572683), VECTOR2I( 182000000, 168552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          178.50753,
+          168.502474,
+          185.494999,
+          175.497526
+        ]
+      }
+    ]
+  },
+  "R23": {
+    "position_mm": [
+      21.0,
+      80.9
+    ],
+    "rotation": 90.0,
+    "value": "33R TFT_RESET_SERIES",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 21725000, 79425000), VECTOR2I( 21725000, 82375000), VECTOR2I( 20275000, 82375000), VECTOR2I( 20275000, 79425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          20.225,
+          79.375,
+          21.775,
+          82.425
+        ]
+      }
+    ]
+  },
+  "U10": {
+    "position_mm": [
+      68.0,
+      31.0
+    ],
+    "rotation": 0.0,
+    "value": "MAX31856MUD+",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 70445000, 28255000), VECTOR2I( 70445000, 28605000), VECTOR2I( 71845000, 28605000), VECTOR2I( 71845000, 33395000), VECTOR2I( 70445000, 33395000), VECTOR2I( 70445000, 33745000), VECTOR2I( 65555000, 33745000), VECTOR2I( 65555000, 33395000), VECTOR2I( 64155000, 33395000), VECTOR2I( 64155000, 28605000), VECTOR2I( 65555000, 28605000), VECTOR2I( 65555000, 28255000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          64.105,
+          28.205,
+          71.895,
+          33.795
+        ]
+      }
+    ]
+  },
+  "J25": {
+    "position_mm": [
+      120.24,
+      174.0
+    ],
+    "rotation": 180.0,
+    "value": "THERMAL_AND_HW_ENABLE_3V3_ONLY",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 123275000, 168905000), VECTOR2I( 123275000, 179705000), VECTOR2I( 101965000, 179705000), VECTOR2I( 101965000, 168905000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          101.915,
+          168.855,
+          123.325,
+          179.755
+        ]
+      }
+    ]
+  },
+  "C3": {
+    "position_mm": [
+      56.2,
+      51.19
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 57675000, 50465000), VECTOR2I( 57675000, 51915000), VECTOR2I( 54725000, 51915000), VECTOR2I( 54725000, 50465000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          54.675,
+          50.415,
+          57.725,
+          51.965
+        ]
+      }
+    ]
+  },
+  "C101": {
+    "position_mm": [
+      120.5,
+      46.5
+    ],
+    "rotation": 0.0,
+    "value": "2.2uF 100V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 122795000, 44905000), VECTOR2I( 122795000, 48095000), VECTOR2I( 118205000, 48095000), VECTOR2I( 118205000, 44905000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          118.155,
+          44.855,
+          122.845,
+          48.145
+        ]
+      }
+    ]
+  },
+  "R8": {
+    "position_mm": [
+      145.0,
+      95.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156205000, 93505000), VECTOR2I( 156205000, 96495000), VECTOR2I( 143955000, 96495000), VECTOR2I( 143955000, 93505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          143.905,
+          93.455,
+          156.255,
+          96.545
+        ]
+      }
+    ]
+  },
+  "U1": {
+    "position_mm": [
+      30.0,
+      108.0
+    ],
+    "rotation": 0.0,
+    "value": "TPS3431SDRBR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 31945000, 106105000), VECTOR2I( 31945000, 109895000), VECTOR2I( 28055000, 109895000), VECTOR2I( 28055000, 106105000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          28.005,
+          106.055,
+          31.995,
+          109.945
+        ]
+      }
+    ]
+  },
+  "C7": {
+    "position_mm": [
+      36.0,
+      92.0
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 37475000, 91275000), VECTOR2I( 37475000, 92725000), VECTOR2I( 34525000, 92725000), VECTOR2I( 34525000, 91275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          34.475,
+          91.225,
+          37.525,
+          92.775
+        ]
+      }
+    ]
+  },
+  "R9008": {
+    "position_mm": [
+      151.5,
+      160.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1% OCP_OK pull-up",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 152975000, 159275000), VECTOR2I( 152975000, 160725000), VECTOR2I( 150025000, 160725000), VECTOR2I( 150025000, 159275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          149.975,
+          159.225,
+          153.025,
+          160.775
+        ]
+      }
+    ]
+  },
+  "H2": {
+    "position_mm": [
+      182.0,
+      20.0
+    ],
+    "rotation": 0.0,
+    "value": "M3",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 182372747, 16572683), VECTOR2I( 182741112, 16633074), VECTOR2I( 183100801, 16732941), VECTOR2I( 183447577, 16871109), VECTOR2I( 183777390, 17045965), VECTOR2I( 184086349, 17255445), VECTOR2I( 184370864, 17497114), VECTOR2I( 184627573, 17768118), VECTOR2I( 184853478, 18065291), VECTOR2I( 185045930, 18385149), VECTOR2I( 185202671, 18723939), VECTOR2I( 185321864, 19077688), VECTOR2I( 185402109, 19442248), VECTOR2I( 185442473, 19813387), VECTOR2I( 185444999, 20000000), VECTOR2I( 185442473, 20186612), VECTOR2I( 185402109, 20557751), VECTOR2I( 185321864, 20922311), VECTOR2I( 185202671, 21276060), VECTOR2I( 185045930, 21614850), VECTOR2I( 184853478, 21934708), VECTOR2I( 184627573, 22231881), VECTOR2I( 184370864, 22502885), VECTOR2I( 184086349, 22744554), VECTOR2I( 183777390, 22954034), VECTOR2I( 183447577, 23128890), VECTOR2I( 183100801, 23267058), VECTOR2I( 182741112, 23366925), VECTOR2I( 182372747, 23427316), VECTOR2I( 182000000, 23447526), VECTOR2I( 181627252, 23427316), VECTOR2I( 181258887, 23366925), VECTOR2I( 180899198, 23267058), VECTOR2I( 180552422, 23128890), VECTOR2I( 180222609, 22954034), VECTOR2I( 179913650, 22744554), VECTOR2I( 179629135, 22502885), VECTOR2I( 179372426, 22231881), VECTOR2I( 179146521, 21934708), VECTOR2I( 178954069, 21614850), VECTOR2I( 178797328, 21276060), VECTOR2I( 178678135, 20922311), VECTOR2I( 178597890, 20557751), VECTOR2I( 178557530, 20186641), VECTOR2I( 178557530, 19813358), VECTOR2I( 178597890, 19442248), VECTOR2I( 178678135, 19077688), VECTOR2I( 178797328, 18723939), VECTOR2I( 178954069, 18385149), VECTOR2I( 179146521, 18065291), VECTOR2I( 179372426, 17768118), VECTOR2I( 179629135, 17497114), VECTOR2I( 179913650, 17255445), VECTOR2I( 180222609, 17045965), VECTOR2I( 180552422, 16871109), VECTOR2I( 180899198, 16732941), VECTOR2I( 181258887, 16633074), VECTOR2I( 181627252, 16572683), VECTOR2I( 182000000, 16552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          178.50753,
+          16.502474,
+          185.494999,
+          23.497526
+        ]
+      }
+    ]
+  },
+  "R17": {
+    "position_mm": [
+      165.0,
+      110.0
+    ],
+    "rotation": 0.0,
+    "value": "2.2k ENC_B_PULLUP",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 108505000), VECTOR2I( 176205000, 111495000), VECTOR2I( 163955000, 111495000), VECTOR2I( 163955000, 108505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          108.455,
+          176.255,
+          111.545
+        ]
+      }
+    ]
+  },
+  "J11": {
+    "position_mm": [
+      66.0,
+      20.0
+    ],
+    "rotation": 0.0,
+    "value": "TC_K_AIR_T+_T-",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 74125000, 14295000), VECTOR2I( 74125000, 25095000), VECTOR2I( 62965000, 25095000), VECTOR2I( 62965000, 14295000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          62.915,
+          14.245,
+          74.175,
+          25.145
+        ]
+      }
+    ]
+  },
+  "U3": {
+    "position_mm": [
+      50.0,
+      55.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74HCS14D",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 52195000, 50425000), VECTOR2I( 52195000, 50645000), VECTOR2I( 53695000, 50645000), VECTOR2I( 53695000, 59355000), VECTOR2I( 52195000, 59355000), VECTOR2I( 52195000, 59575000), VECTOR2I( 47805000, 59575000), VECTOR2I( 47805000, 59355000), VECTOR2I( 46305000, 59355000), VECTOR2I( 46305000, 50645000), VECTOR2I( 47805000, 50645000), VECTOR2I( 47805000, 50425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          46.255,
+          50.375,
+          53.745,
+          59.625
+        ]
+      }
+    ]
+  },
+  "J10": {
+    "position_mm": [
+      28.0,
+      20.0
+    ],
+    "rotation": 0.0,
+    "value": "TC_K_EXHAUST_T+_T-",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 36125000, 14295000), VECTOR2I( 36125000, 25095000), VECTOR2I( 24965000, 25095000), VECTOR2I( 24965000, 14295000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          24.915,
+          14.245,
+          36.175,
+          25.145
+        ]
+      }
+    ]
+  },
+  "R9007": {
+    "position_mm": [
+      155.5,
+      168.0
+    ],
+    "rotation": 0.0,
+    "value": "1.00M 1% OCP hysteresis feedback",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156975000, 167275000), VECTOR2I( 156975000, 168725000), VECTOR2I( 154025000, 168725000), VECTOR2I( 154025000, 167275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          153.975,
+          167.225,
+          157.025,
+          168.775
+        ]
+      }
+    ]
+  },
+  "C105": {
+    "position_mm": [
+      168.0,
+      45.0
+    ],
+    "rotation": 90.0,
+    "value": "47uF 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 169595000, 42705000), VECTOR2I( 169595000, 47295000), VECTOR2I( 166405000, 47295000), VECTOR2I( 166405000, 42705000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          166.355,
+          42.655,
+          169.645,
+          47.345
+        ]
+      }
+    ]
+  },
+  "R15": {
+    "position_mm": [
+      165.0,
+      105.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 103505000), VECTOR2I( 176205000, 106495000), VECTOR2I( 163955000, 106495000), VECTOR2I( 163955000, 103505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          103.455,
+          176.255,
+          106.545
+        ]
+      }
+    ]
+  },
+  "K3": {
+    "position_mm": [
+      216.0,
+      130.0
+    ],
+    "rotation": 0.0,
+    "value": "DZ85AB-5-PCB MECH HOLD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 230395000, 126355000), VECTOR2I( 230395000, 155145000), VECTOR2I( 201605000, 155145000), VECTOR2I( 201605000, 126355000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          201.555,
+          126.305,
+          230.445,
+          155.195
+        ]
+      }
+    ]
+  },
+  "U9007": {
+    "position_mm": [
+      112.0,
+      150.0
+    ],
+    "rotation": 0.0,
+    "value": "LM317HVT/NOPB TO-220; TJ 0…125C",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 119785000, 146605000), VECTOR2I( 119785000, 151495000), VECTOR2I( 109295000, 151495000), VECTOR2I( 109295000, 146605000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          109.245,
+          146.555,
+          119.835,
+          151.545
+        ]
+      }
+    ]
+  },
+  "R4": {
+    "position_mm": [
+      125.0,
+      90.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 136205000, 88505000), VECTOR2I( 136205000, 91495000), VECTOR2I( 123955000, 91495000), VECTOR2I( 123955000, 88505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          123.905,
+          88.455,
+          136.255,
+          91.545
+        ]
+      }
+    ]
+  },
+  "R9006": {
+    "position_mm": [
+      167.0,
+      168.0
+    ],
+    "rotation": 0.0,
+    "value": "10.0k 1% OCP threshold low",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 168475000, 167275000), VECTOR2I( 168475000, 168725000), VECTOR2I( 165525000, 168725000), VECTOR2I( 165525000, 167275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          165.475,
+          167.225,
+          168.525,
+          168.775
+        ]
+      }
+    ]
+  },
+  "U7": {
+    "position_mm": [
+      32.0,
+      92.0
+    ],
+    "rotation": 0.0,
+    "value": "TPS3839G33DBZR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 32895000, 90305000), VECTOR2I( 32895000, 91455000), VECTOR2I( 33925000, 91455000), VECTOR2I( 33925000, 92545000), VECTOR2I( 32895000, 92545000), VECTOR2I( 32895000, 93695000), VECTOR2I( 31105000, 93695000), VECTOR2I( 31105000, 93495000), VECTOR2I( 30075000, 93495000), VECTOR2I( 30075000, 92395000), VECTOR2I( 31105000, 92395000), VECTOR2I( 31105000, 91605000), VECTOR2I( 30075000, 91605000), VECTOR2I( 30075000, 90505000), VECTOR2I( 31105000, 90505000), VECTOR2I( 31105000, 90305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          30.025,
+          90.255,
+          33.975,
+          93.745
+        ]
+      }
+    ]
+  },
+  "U9002": {
+    "position_mm": [
+      160.0,
+      156.0
+    ],
+    "rotation": 0.0,
+    "value": "INA240A1ID",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 162195000, 153305000), VECTOR2I( 162195000, 153545000), VECTOR2I( 163695000, 153545000), VECTOR2I( 163695000, 158455000), VECTOR2I( 162195000, 158455000), VECTOR2I( 162195000, 158695000), VECTOR2I( 157805000, 158695000), VECTOR2I( 157805000, 158455000), VECTOR2I( 156305000, 158455000), VECTOR2I( 156305000, 153545000), VECTOR2I( 157805000, 153545000), VECTOR2I( 157805000, 153305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          156.255,
+          153.255,
+          163.745,
+          158.745
+        ]
+      }
+    ]
+  },
+  "U5": {
+    "position_mm": [
+      32.0,
+      65.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74HCS30D",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 34195000, 60425000), VECTOR2I( 34195000, 60645000), VECTOR2I( 35695000, 60645000), VECTOR2I( 35695000, 69355000), VECTOR2I( 34195000, 69355000), VECTOR2I( 34195000, 69575000), VECTOR2I( 29805000, 69575000), VECTOR2I( 29805000, 69355000), VECTOR2I( 28305000, 69355000), VECTOR2I( 28305000, 60645000), VECTOR2I( 29805000, 60645000), VECTOR2I( 29805000, 60425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          28.255,
+          60.375,
+          35.745,
+          69.625
+        ]
+      }
+    ]
+  },
+  "C103": {
+    "position_mm": [
+      120.5,
+      57.5
+    ],
+    "rotation": 0.0,
+    "value": "22uF 100V BULK",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 122795000, 55905000), VECTOR2I( 122795000, 59095000), VECTOR2I( 118205000, 59095000), VECTOR2I( 118205000, 55905000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          118.155,
+          55.855,
+          122.845,
+          59.145
+        ]
+      }
+    ]
+  },
+  "U8": {
+    "position_mm": [
+      50.0,
+      100.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74LVC1G14DBVR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 51045000, 98305000), VECTOR2I( 51045000, 98505000), VECTOR2I( 52045000, 98505000), VECTOR2I( 52045000, 99605000), VECTOR2I( 51045000, 99605000), VECTOR2I( 51045000, 100395000), VECTOR2I( 52045000, 100395000), VECTOR2I( 52045000, 101495000), VECTOR2I( 51045000, 101495000), VECTOR2I( 51045000, 101695000), VECTOR2I( 48955000, 101695000), VECTOR2I( 48955000, 101495000), VECTOR2I( 47955000, 101495000), VECTOR2I( 47955000, 98505000), VECTOR2I( 48955000, 98505000), VECTOR2I( 48955000, 98305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          47.905,
+          98.255,
+          52.095,
+          101.745
+        ]
+      }
+    ]
+  },
+  "J12": {
+    "position_mm": [
+      16.0,
+      140.16
+    ],
+    "rotation": 90.0,
+    "value": "ROOM_DS18B20_HARNESS",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 21095000, 126955000), VECTOR2I( 21095000, 143195000), VECTOR2I( 10295000, 143195000), VECTOR2I( 10295000, 126955000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          10.245,
+          126.905,
+          21.145,
+          143.245
+        ]
+      }
+    ]
+  },
+  "J102": {
+    "position_mm": [
+      205.08,
+      174.0
+    ],
+    "rotation": 180.0,
+    "value": "MOTOR_24V_HIGH_SPEED; 125W_HEATER_NAMEPLATE_NOT_MOTOR_RATING",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 208115000, 168905000), VECTOR2I( 208115000, 179705000), VECTOR2I( 196955000, 179705000), VECTOR2I( 196955000, 168905000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          196.905,
+          168.855,
+          208.165,
+          179.755
+        ]
+      }
+    ]
+  },
+  "C4": {
+    "position_mm": [
+      38.2,
+      41.19
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 39675000, 40465000), VECTOR2I( 39675000, 41915000), VECTOR2I( 36725000, 41915000), VECTOR2I( 36725000, 40465000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          36.675,
+          40.415,
+          39.725,
+          41.965
+        ]
+      }
+    ]
+  },
+  "H5": {
+    "position_mm": [
+      238.0,
+      20.0
+    ],
+    "rotation": 0.0,
+    "value": "M3 SUPPORT",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 238372747, 16572683), VECTOR2I( 238741112, 16633074), VECTOR2I( 239100801, 16732941), VECTOR2I( 239447577, 16871109), VECTOR2I( 239777390, 17045965), VECTOR2I( 240086349, 17255445), VECTOR2I( 240370864, 17497114), VECTOR2I( 240627573, 17768118), VECTOR2I( 240853478, 18065291), VECTOR2I( 241045930, 18385149), VECTOR2I( 241202671, 18723939), VECTOR2I( 241321864, 19077688), VECTOR2I( 241402109, 19442248), VECTOR2I( 241442473, 19813387), VECTOR2I( 241444999, 20000000), VECTOR2I( 241442473, 20186612), VECTOR2I( 241402109, 20557751), VECTOR2I( 241321864, 20922311), VECTOR2I( 241202671, 21276060), VECTOR2I( 241045930, 21614850), VECTOR2I( 240853478, 21934708), VECTOR2I( 240627573, 22231881), VECTOR2I( 240370864, 22502885), VECTOR2I( 240086349, 22744554), VECTOR2I( 239777390, 22954034), VECTOR2I( 239447577, 23128890), VECTOR2I( 239100801, 23267058), VECTOR2I( 238741112, 23366925), VECTOR2I( 238372747, 23427316), VECTOR2I( 238000000, 23447526), VECTOR2I( 237627252, 23427316), VECTOR2I( 237258887, 23366925), VECTOR2I( 236899198, 23267058), VECTOR2I( 236552422, 23128890), VECTOR2I( 236222609, 22954034), VECTOR2I( 235913650, 22744554), VECTOR2I( 235629135, 22502885), VECTOR2I( 235372426, 22231881), VECTOR2I( 235146521, 21934708), VECTOR2I( 234954069, 21614850), VECTOR2I( 234797328, 21276060), VECTOR2I( 234678135, 20922311), VECTOR2I( 234597890, 20557751), VECTOR2I( 234557530, 20186641), VECTOR2I( 234557530, 19813358), VECTOR2I( 234597890, 19442248), VECTOR2I( 234678135, 19077688), VECTOR2I( 234797328, 18723939), VECTOR2I( 234954069, 18385149), VECTOR2I( 235146521, 18065291), VECTOR2I( 235372426, 17768118), VECTOR2I( 235629135, 17497114), VECTOR2I( 235913650, 17255445), VECTOR2I( 236222609, 17045965), VECTOR2I( 236552422, 16871109), VECTOR2I( 236899198, 16732941), VECTOR2I( 237258887, 16633074), VECTOR2I( 237627252, 16572683), VECTOR2I( 238000000, 16552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          234.50753,
+          16.502474,
+          241.494999,
+          23.497526
+        ]
+      }
+    ]
+  },
+  "C1": {
+    "position_mm": [
+      27.0,
+      104.0
+    ],
+    "rotation": 180.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 28475000, 103275000), VECTOR2I( 28475000, 104725000), VECTOR2I( 25525000, 104725000), VECTOR2I( 25525000, 103275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          25.475,
+          103.225,
+          28.525,
+          104.775
+        ]
+      }
+    ]
+  },
+  "C9007": {
+    "position_mm": [
+      126.0,
+      139.0
+    ],
+    "rotation": 0.0,
+    "value": "1uF X7R 25V; LTC7001 VCC local decoupling",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 127695000, 138025000), VECTOR2I( 127695000, 139975000), VECTOR2I( 124305000, 139975000), VECTOR2I( 124305000, 138025000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          124.255,
+          137.975,
+          127.745,
+          140.025
+        ]
+      }
+    ]
+  },
+  "R2": {
+    "position_mm": [
+      14.34,
+      46.43
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 25545000, 44935000), VECTOR2I( 25545000, 47925000), VECTOR2I( 13295000, 47925000), VECTOR2I( 13295000, 44935000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          13.245,
+          44.885,
+          25.595,
+          47.975
+        ]
+      }
+    ]
+  },
+  "R104": {
+    "position_mm": [
+      120.0,
+      68.0
+    ],
+    "rotation": 0.0,
+    "value": "100k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 121475000, 67275000), VECTOR2I( 121475000, 68725000), VECTOR2I( 118525000, 68725000), VECTOR2I( 118525000, 67275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          118.475,
+          67.225,
+          121.525,
+          68.775
+        ]
+      }
+    ]
+  },
+  "C10": {
+    "position_mm": [
+      36.0,
+      31.0
+    ],
+    "rotation": 0.0,
+    "value": "0.01uF X7R 16V T+ filter",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 37475000, 30275000), VECTOR2I( 37475000, 31725000), VECTOR2I( 34525000, 31725000), VECTOR2I( 34525000, 30275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          34.475,
+          30.225,
+          37.525,
+          31.775
+        ]
+      }
+    ]
+  },
+  "R103": {
+    "position_mm": [
+      121.5,
+      62.0
+    ],
+    "rotation": 90.0,
+    "value": "31.6k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 122225000, 60525000), VECTOR2I( 122225000, 63475000), VECTOR2I( 120775000, 63475000), VECTOR2I( 120775000, 60525000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          120.725,
+          60.475,
+          122.275,
+          63.525
+        ]
+      }
+    ]
+  },
+  "C8": {
+    "position_mm": [
+      54.0,
+      100.0
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 55475000, 99275000), VECTOR2I( 55475000, 100725000), VECTOR2I( 52525000, 100725000), VECTOR2I( 52525000, 99275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          52.475,
+          99.225,
+          55.525,
+          100.775
+        ]
+      }
+    ]
+  },
+  "R3": {
+    "position_mm": [
+      165.0,
+      85.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 83505000), VECTOR2I( 176205000, 86495000), VECTOR2I( 163955000, 86495000), VECTOR2I( 163955000, 83505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          83.455,
+          176.255,
+          86.545
+        ]
+      }
+    ]
+  },
+  "R9": {
+    "position_mm": [
+      165.0,
+      95.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 176205000, 93505000), VECTOR2I( 176205000, 96495000), VECTOR2I( 163955000, 96495000), VECTOR2I( 163955000, 93505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.905,
+          93.455,
+          176.255,
+          96.545
+        ]
+      }
+    ]
+  },
+  "R19": {
+    "position_mm": [
+      35.0,
+      106.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 36475000, 105275000), VECTOR2I( 36475000, 106725000), VECTOR2I( 33525000, 106725000), VECTOR2I( 33525000, 105275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          33.475,
+          105.225,
+          36.525,
+          106.775
+        ]
+      }
+    ]
+  },
+  "J13": {
+    "position_mm": [
+      16.0,
+      159.08
+    ],
+    "rotation": 90.0,
+    "value": "24V_LOGIC_INPUT_ONLY__DRAFT_NOT_FOR_ORDER",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 21095000, 150955000), VECTOR2I( 21095000, 162115000), VECTOR2I( 10295000, 162115000), VECTOR2I( 10295000, 150955000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          10.245,
+          150.905,
+          21.145,
+          162.165
+        ]
+      }
+    ]
+  },
+  "C13": {
+    "position_mm": [
+      22.5,
+      29.05
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V DVDD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 23975000, 28325000), VECTOR2I( 23975000, 29775000), VECTOR2I( 21025000, 29775000), VECTOR2I( 21025000, 28325000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          20.975,
+          28.275,
+          24.025,
+          29.825
+        ]
+      }
+    ]
+  },
+  "R9004": {
+    "position_mm": [
+      140.0,
+      154.0
+    ],
+    "rotation": 0.0,
+    "value": "10R gate turn-on damping",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 141475000, 153275000), VECTOR2I( 141475000, 154725000), VECTOR2I( 138525000, 154725000), VECTOR2I( 138525000, 153275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          138.475,
+          153.225,
+          141.525,
+          154.775
+        ]
+      }
+    ]
+  },
+  "R21": {
+    "position_mm": [
+      70.0,
+      101.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 71475000, 100275000), VECTOR2I( 71475000, 101725000), VECTOR2I( 68525000, 101725000), VECTOR2I( 68525000, 100275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          68.475,
+          100.225,
+          71.525,
+          101.775
+        ]
+      }
+    ]
+  },
+  "H3": {
+    "position_mm": [
+      18.0,
+      172.0
+    ],
+    "rotation": 0.0,
+    "value": "M3",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 18372747, 168572683), VECTOR2I( 18741112, 168633074), VECTOR2I( 19100801, 168732941), VECTOR2I( 19447577, 168871109), VECTOR2I( 19777390, 169045965), VECTOR2I( 20086349, 169255445), VECTOR2I( 20370864, 169497114), VECTOR2I( 20627573, 169768118), VECTOR2I( 20853478, 170065291), VECTOR2I( 21045930, 170385149), VECTOR2I( 21202671, 170723939), VECTOR2I( 21321864, 171077688), VECTOR2I( 21402109, 171442248), VECTOR2I( 21442473, 171813387), VECTOR2I( 21444999, 172000000), VECTOR2I( 21442473, 172186612), VECTOR2I( 21402109, 172557751), VECTOR2I( 21321864, 172922311), VECTOR2I( 21202671, 173276060), VECTOR2I( 21045930, 173614850), VECTOR2I( 20853478, 173934708), VECTOR2I( 20627573, 174231881), VECTOR2I( 20370864, 174502885), VECTOR2I( 20086349, 174744554), VECTOR2I( 19777390, 174954034), VECTOR2I( 19447577, 175128890), VECTOR2I( 19100801, 175267058), VECTOR2I( 18741112, 175366925), VECTOR2I( 18372747, 175427316), VECTOR2I( 18000000, 175447526), VECTOR2I( 17627252, 175427316), VECTOR2I( 17258887, 175366925), VECTOR2I( 16899198, 175267058), VECTOR2I( 16552422, 175128890), VECTOR2I( 16222609, 174954034), VECTOR2I( 15913650, 174744554), VECTOR2I( 15629135, 174502885), VECTOR2I( 15372426, 174231881), VECTOR2I( 15146521, 173934708), VECTOR2I( 14954069, 173614850), VECTOR2I( 14797328, 173276060), VECTOR2I( 14678135, 172922311), VECTOR2I( 14597890, 172557751), VECTOR2I( 14557530, 172186641), VECTOR2I( 14557530, 171813358), VECTOR2I( 14597890, 171442248), VECTOR2I( 14678135, 171077688), VECTOR2I( 14797328, 170723939), VECTOR2I( 14954069, 170385149), VECTOR2I( 15146521, 170065291), VECTOR2I( 15372426, 169768118), VECTOR2I( 15629135, 169497114), VECTOR2I( 15913650, 169255445), VECTOR2I( 16222609, 169045965), VECTOR2I( 16552422, 168871109), VECTOR2I( 16899198, 168732941), VECTOR2I( 17258887, 168633074), VECTOR2I( 17627252, 168572683), VECTOR2I( 18000000, 168552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          14.50753,
+          168.502474,
+          21.494999,
+          175.497526
+        ]
+      }
+    ]
+  },
+  "U9": {
+    "position_mm": [
+      30.0,
+      31.0
+    ],
+    "rotation": 180.0,
+    "value": "MAX31856MUD+",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 32445000, 28255000), VECTOR2I( 32445000, 28605000), VECTOR2I( 33845000, 28605000), VECTOR2I( 33845000, 33395000), VECTOR2I( 32445000, 33395000), VECTOR2I( 32445000, 33745000), VECTOR2I( 27555000, 33745000), VECTOR2I( 27555000, 33395000), VECTOR2I( 26155000, 33395000), VECTOR2I( 26155000, 28605000), VECTOR2I( 27555000, 28605000), VECTOR2I( 27555000, 28255000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          26.105,
+          28.205,
+          33.895,
+          33.795
+        ]
+      }
+    ]
+  },
+  "K2": {
+    "position_mm": [
+      216.0,
+      80.0
+    ],
+    "rotation": 0.0,
+    "value": "DZ85AB-5-PCB MECH HOLD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 230395000, 76355000), VECTOR2I( 230395000, 105145000), VECTOR2I( 201605000, 105145000), VECTOR2I( 201605000, 76355000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          201.555,
+          76.305,
+          230.445,
+          105.195
+        ]
+      }
+    ]
+  },
+  "R9001": {
+    "position_mm": [
+      160.0,
+      145.0
+    ],
+    "rotation": -90.0,
+    "value": "WSLP27262L000FEA; 2mOhm 1% 5W @70C",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 164115000, 140955000), VECTOR2I( 164115000, 149045000), VECTOR2I( 155885000, 149045000), VECTOR2I( 155885000, 140955000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          155.835,
+          140.905,
+          164.165,
+          149.095
+        ]
+      }
+    ]
+  },
+  "R9005": {
+    "position_mm": [
+      163.0,
+      168.0
+    ],
+    "rotation": 0.0,
+    "value": "30.1k 1% OCP threshold high",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 164475000, 167275000), VECTOR2I( 164475000, 168725000), VECTOR2I( 161525000, 168725000), VECTOR2I( 161525000, 167275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          161.475,
+          167.225,
+          164.525,
+          168.775
+        ]
+      }
+    ]
+  },
+  "R10": {
+    "position_mm": [
+      125.0,
+      100.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 136205000, 98505000), VECTOR2I( 136205000, 101495000), VECTOR2I( 123955000, 101495000), VECTOR2I( 123955000, 98505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          123.905,
+          98.455,
+          136.255,
+          101.545
+        ]
+      }
+    ]
+  },
+  "C15": {
+    "position_mm": [
+      57.5,
+      31.0
+    ],
+    "rotation": 0.0,
+    "value": "0.01uF X7R 16V T+ filter",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 58975000, 30275000), VECTOR2I( 58975000, 31725000), VECTOR2I( 56025000, 31725000), VECTOR2I( 56025000, 30275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          55.975,
+          30.225,
+          59.025,
+          31.775
+        ]
+      }
+    ]
+  },
+  "R9009": {
+    "position_mm": [
+      105.0,
+      158.0
+    ],
+    "rotation": 0.0,
+    "value": "75R 1% 0.125W; LM317 OUT→ADJ",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 106675000, 157055000), VECTOR2I( 106675000, 158945000), VECTOR2I( 103325000, 158945000), VECTOR2I( 103325000, 157055000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          103.275,
+          157.005,
+          106.725,
+          158.995
+        ]
+      }
+    ]
+  },
+  "C75": {
+    "position_mm": [
+      104.0,
+      116.0
+    ],
+    "rotation": 0.0,
+    "value": "10n",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 105645000, 115275000), VECTOR2I( 105645000, 116725000), VECTOR2I( 102355000, 116725000), VECTOR2I( 102355000, 115275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          102.305,
+          115.225,
+          105.695,
+          116.775
+        ]
+      }
+    ]
+  },
+  "C2": {
+    "position_mm": [
+      73.2,
+      71.19
+    ],
+    "rotation": 0.0,
+    "value": "100n 16V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 74675000, 70465000), VECTOR2I( 74675000, 71915000), VECTOR2I( 71725000, 71915000), VECTOR2I( 71725000, 70465000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          71.675,
+          70.415,
+          74.725,
+          71.965
+        ]
+      }
+    ]
+  },
+  "C9008": {
+    "position_mm": [
+      139.0,
+      138.5
+    ],
+    "rotation": -90.0,
+    "value": "1uF X7R 25V (BST-TS)",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 139975000, 136805000), VECTOR2I( 139975000, 140195000), VECTOR2I( 138025000, 140195000), VECTOR2I( 138025000, 136805000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          137.975,
+          136.755,
+          140.025,
+          140.245
+        ]
+      }
+    ]
+  },
+  "D101": {
+    "position_mm": [
+      138.0,
+      48.0
+    ],
+    "rotation": 180.0,
+    "value": "STPS5H100B-TR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 144385000, 44505000), VECTOR2I( 144385000, 51495000), VECTOR2I( 133295000, 51495000), VECTOR2I( 133295000, 44505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          133.245,
+          44.455,
+          144.435,
+          51.545
+        ]
+      }
+    ]
+  },
+  "R105": {
+    "position_mm": [
+      125.0,
+      68.0
+    ],
+    "rotation": 90.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 125725000, 66525000), VECTOR2I( 125725000, 69475000), VECTOR2I( 124275000, 69475000), VECTOR2I( 124275000, 66525000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          124.225,
+          66.475,
+          125.775,
+          69.525
+        ]
+      }
+    ]
+  },
+  "R7": {
+    "position_mm": [
+      125.0,
+      95.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 136205000, 93505000), VECTOR2I( 136205000, 96495000), VECTOR2I( 123955000, 96495000), VECTOR2I( 123955000, 93505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          123.905,
+          93.455,
+          136.255,
+          96.545
+        ]
+      }
+    ]
+  },
+  "U4": {
+    "position_mm": [
+      32.0,
+      45.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74HCS30D",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 34195000, 40425000), VECTOR2I( 34195000, 40645000), VECTOR2I( 35695000, 40645000), VECTOR2I( 35695000, 49355000), VECTOR2I( 34195000, 49355000), VECTOR2I( 34195000, 49575000), VECTOR2I( 29805000, 49575000), VECTOR2I( 29805000, 49355000), VECTOR2I( 28305000, 49355000), VECTOR2I( 28305000, 40645000), VECTOR2I( 29805000, 40645000), VECTOR2I( 29805000, 40425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          28.255,
+          40.375,
+          35.745,
+          49.625
+        ]
+      }
+    ]
+  },
+  "R1": {
+    "position_mm": [
+      125.0,
+      85.0
+    ],
+    "rotation": 0.0,
+    "value": "4k7",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 136205000, 83505000), VECTOR2I( 136205000, 86495000), VECTOR2I( 123955000, 86495000), VECTOR2I( 123955000, 83505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          123.905,
+          83.455,
+          136.255,
+          86.545
+        ]
+      }
+    ]
+  },
+  "C104": {
+    "position_mm": [
+      133.5,
+      54.0
+    ],
+    "rotation": 0.0,
+    "value": "2.2nF 50V X7R",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 134975000, 53275000), VECTOR2I( 134975000, 54725000), VECTOR2I( 132025000, 54725000), VECTOR2I( 132025000, 53275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          131.975,
+          53.225,
+          135.025,
+          54.775
+        ]
+      }
+    ]
+  },
+  "R13": {
+    "position_mm": [
+      125.0,
+      105.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 136205000, 103505000), VECTOR2I( 136205000, 106495000), VECTOR2I( 123955000, 106495000), VECTOR2I( 123955000, 103505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          123.905,
+          103.455,
+          136.255,
+          106.545
+        ]
+      }
+    ]
+  },
+  "R20": {
+    "position_mm": [
+      66.0,
+      98.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 67475000, 97275000), VECTOR2I( 67475000, 98725000), VECTOR2I( 64525000, 98725000), VECTOR2I( 64525000, 97275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          64.475,
+          97.225,
+          67.525,
+          98.775
+        ]
+      }
+    ]
+  },
+  "U9001": {
+    "position_mm": [
+      133.0,
+      139.0
+    ],
+    "rotation": 0.0,
+    "value": "LTC7001IMSE#PBF; MSOP-10 EP",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 134745000, 137255000), VECTOR2I( 134745000, 137605000), VECTOR2I( 136125000, 137605000), VECTOR2I( 136125000, 140395000), VECTOR2I( 134745000, 140395000), VECTOR2I( 134745000, 140745000), VECTOR2I( 131255000, 140745000), VECTOR2I( 131255000, 140395000), VECTOR2I( 129875000, 140395000), VECTOR2I( 129875000, 137605000), VECTOR2I( 131255000, 137605000), VECTOR2I( 131255000, 137255000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          129.825,
+          137.205,
+          136.175,
+          140.795
+        ]
+      }
+    ]
+  },
+  "C14": {
+    "position_mm": [
+      60.5,
+      28.5
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V BIAS",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 61975000, 27775000), VECTOR2I( 61975000, 29225000), VECTOR2I( 59025000, 29225000), VECTOR2I( 59025000, 27775000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          58.975,
+          27.725,
+          62.025,
+          29.275
+        ]
+      }
+    ]
+  },
+  "U9005": {
+    "position_mm": [
+      150.0,
+      174.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74LVC1G08DBVR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 151045000, 172305000), VECTOR2I( 151045000, 172505000), VECTOR2I( 152045000, 172505000), VECTOR2I( 152045000, 173605000), VECTOR2I( 151045000, 173605000), VECTOR2I( 151045000, 174395000), VECTOR2I( 152045000, 174395000), VECTOR2I( 152045000, 175495000), VECTOR2I( 151045000, 175495000), VECTOR2I( 151045000, 175695000), VECTOR2I( 148955000, 175695000), VECTOR2I( 148955000, 175495000), VECTOR2I( 147955000, 175495000), VECTOR2I( 147955000, 172505000), VECTOR2I( 148955000, 172505000), VECTOR2I( 148955000, 172305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          147.905,
+          172.255,
+          152.095,
+          175.745
+        ]
+      }
+    ]
+  },
+  "U9006": {
+    "position_mm": [
+      160.0,
+      174.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74LVC1G08DBVR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 161045000, 172305000), VECTOR2I( 161045000, 172505000), VECTOR2I( 162045000, 172505000), VECTOR2I( 162045000, 173605000), VECTOR2I( 161045000, 173605000), VECTOR2I( 161045000, 174395000), VECTOR2I( 162045000, 174395000), VECTOR2I( 162045000, 175495000), VECTOR2I( 161045000, 175495000), VECTOR2I( 161045000, 175695000), VECTOR2I( 158955000, 175695000), VECTOR2I( 158955000, 175495000), VECTOR2I( 157955000, 175495000), VECTOR2I( 157955000, 172505000), VECTOR2I( 158955000, 172505000), VECTOR2I( 158955000, 172305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          157.905,
+          172.255,
+          162.095,
+          175.745
+        ]
+      }
+    ]
+  },
+  "C16": {
+    "position_mm": [
+      60.5,
+      33.5
+    ],
+    "rotation": 0.0,
+    "value": "0.01uF X7R 16V T- filter",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 61975000, 32775000), VECTOR2I( 61975000, 34225000), VECTOR2I( 59025000, 34225000), VECTOR2I( 59025000, 32775000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          58.975,
+          32.725,
+          62.025,
+          34.275
+        ]
+      }
+    ]
+  },
+  "U9003": {
+    "position_mm": [
+      161.0,
+      164.0
+    ],
+    "rotation": 180.0,
+    "value": "TLV9020DBVR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 162045000, 162305000), VECTOR2I( 162045000, 162505000), VECTOR2I( 163045000, 162505000), VECTOR2I( 163045000, 165495000), VECTOR2I( 162045000, 165495000), VECTOR2I( 162045000, 165695000), VECTOR2I( 159955000, 165695000), VECTOR2I( 159955000, 165495000), VECTOR2I( 158955000, 165495000), VECTOR2I( 158955000, 164395000), VECTOR2I( 159955000, 164395000), VECTOR2I( 159955000, 163605000), VECTOR2I( 158955000, 163605000), VECTOR2I( 158955000, 162505000), VECTOR2I( 159955000, 162505000), VECTOR2I( 159955000, 162305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          158.905,
+          162.255,
+          163.095,
+          165.745
+        ]
+      }
+    ]
+  },
+  "R11": {
+    "position_mm": [
+      145.0,
+      100.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156205000, 98505000), VECTOR2I( 156205000, 101495000), VECTOR2I( 143955000, 101495000), VECTOR2I( 143955000, 98505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          143.905,
+          98.455,
+          156.255,
+          101.545
+        ]
+      }
+    ]
+  },
+  "C20": {
+    "position_mm": [
+      112.0,
+      116.0
+    ],
+    "rotation": 0.0,
+    "value": "10n ENC_B_FILTER",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 113645000, 115275000), VECTOR2I( 113645000, 116725000), VECTOR2I( 110355000, 116725000), VECTOR2I( 110355000, 115275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          110.305,
+          115.225,
+          113.695,
+          116.775
+        ]
+      }
+    ]
+  },
+  "R22": {
+    "position_mm": [
+      58.0,
+      105.0
+    ],
+    "rotation": 0.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 59475000, 104275000), VECTOR2I( 59475000, 105725000), VECTOR2I( 56525000, 105725000), VECTOR2I( 56525000, 104275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          56.475,
+          104.225,
+          59.525,
+          105.775
+        ]
+      }
+    ]
+  },
+  "Q101": {
+    "position_mm": [
+      147.0,
+      145.0
+    ],
+    "rotation": 0.0,
+    "value": "IRFB4110PBF (100V; RDS(on) @ VGS=10V)",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 154785000, 141605000), VECTOR2I( 154785000, 146495000), VECTOR2I( 144295000, 146495000), VECTOR2I( 144295000, 141605000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          144.245,
+          141.555,
+          154.835,
+          146.545
+        ]
+      }
+    ]
+  },
+  "D9002": {
+    "position_mm": [
+      141.0,
+      133.0
+    ],
+    "rotation": 180.0,
+    "value": "MBR1100G; 100V 1A Schottky bootstrap diode",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 142345000, 131405000), VECTOR2I( 142345000, 134595000), VECTOR2I( 129495000, 134595000), VECTOR2I( 129495000, 131405000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          129.445,
+          131.355,
+          142.395,
+          134.645
+        ]
+      }
+    ]
+  },
+  "C12": {
+    "position_mm": [
+      40.0,
+      28.8
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V AVDD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 41475000, 28075000), VECTOR2I( 41475000, 29525000), VECTOR2I( 38525000, 29525000), VECTOR2I( 38525000, 28075000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          38.475,
+          28.025,
+          41.525,
+          29.575
+        ]
+      }
+    ]
+  },
+  "C9005": {
+    "position_mm": [
+      156.5,
+      164.95
+    ],
+    "rotation": 180.0,
+    "value": "100nF X7R 16V",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 157975000, 164225000), VECTOR2I( 157975000, 165675000), VECTOR2I( 155025000, 165675000), VECTOR2I( 155025000, 164225000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          154.975,
+          164.175,
+          158.025,
+          165.725
+        ]
+      }
+    ]
+  },
+  "C107": {
+    "position_mm": [
+      148.0,
+      63.0
+    ],
+    "rotation": 0.0,
+    "value": "4.7nF 50V C0G",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 149475000, 62275000), VECTOR2I( 149475000, 63725000), VECTOR2I( 146525000, 63725000), VECTOR2I( 146525000, 62275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          146.475,
+          62.225,
+          149.525,
+          63.775
+        ]
+      }
+    ]
+  },
+  "R5": {
+    "position_mm": [
+      145.0,
+      90.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156205000, 88505000), VECTOR2I( 156205000, 91495000), VECTOR2I( 143955000, 91495000), VECTOR2I( 143955000, 88505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          143.905,
+          88.455,
+          156.255,
+          91.545
+        ]
+      }
+    ]
+  },
+  "U6": {
+    "position_mm": [
+      50.0,
+      80.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74HCS11D",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 52195000, 75425000), VECTOR2I( 52195000, 75645000), VECTOR2I( 53695000, 75645000), VECTOR2I( 53695000, 84355000), VECTOR2I( 52195000, 84355000), VECTOR2I( 52195000, 84575000), VECTOR2I( 47805000, 84575000), VECTOR2I( 47805000, 84355000), VECTOR2I( 46305000, 84355000), VECTOR2I( 46305000, 75645000), VECTOR2I( 47805000, 75645000), VECTOR2I( 47805000, 75425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          46.255,
+          75.375,
+          53.745,
+          84.625
+        ]
+      }
+    ]
+  },
+  "C9011": {
+    "position_mm": [
+      152.0,
+      171.0
+    ],
+    "rotation": 0.0,
+    "value": "100nF X7R 16V 10%; U9005 local bypass",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 153475000, 170275000), VECTOR2I( 153475000, 171725000), VECTOR2I( 150525000, 171725000), VECTOR2I( 150525000, 170275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          150.475,
+          170.225,
+          153.525,
+          171.775
+        ]
+      }
+    ]
+  },
+  "C9006": {
+    "position_mm": [
+      142.0,
+      171.0
+    ],
+    "rotation": 0.0,
+    "value": "100nF X7R 16V",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 143475000, 170275000), VECTOR2I( 143475000, 171725000), VECTOR2I( 140525000, 171725000), VECTOR2I( 140525000, 170275000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          140.475,
+          170.225,
+          143.525,
+          171.775
+        ]
+      }
+    ]
+  },
+  "C9004": {
+    "position_mm": [
+      165.8,
+      156.635
+    ],
+    "rotation": 0.0,
+    "value": "100nF X7R 16V",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 167275000, 155910000), VECTOR2I( 167275000, 157360000), VECTOR2I( 164325000, 157360000), VECTOR2I( 164325000, 155910000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          164.275,
+          155.86,
+          167.325,
+          157.41
+        ]
+      }
+    ]
+  },
+  "R9010": {
+    "position_mm": [
+      115.0,
+      160.0
+    ],
+    "rotation": 0.0,
+    "value": "681R 1% 0.5W; LM317 ADJ→GND",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 118175000, 158425000), VECTOR2I( 118175000, 161575000), VECTOR2I( 111825000, 161575000), VECTOR2I( 111825000, 158425000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          111.775,
+          158.375,
+          118.225,
+          161.625
+        ]
+      }
+    ]
+  },
+  "C18": {
+    "position_mm": [
+      74.0,
+      34.8
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V DVDD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 75475000, 34075000), VECTOR2I( 75475000, 35525000), VECTOR2I( 72525000, 35525000), VECTOR2I( 72525000, 34075000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          72.475,
+          34.025,
+          75.525,
+          35.575
+        ]
+      }
+    ]
+  },
+  "R14": {
+    "position_mm": [
+      145.0,
+      105.0
+    ],
+    "rotation": 0.0,
+    "value": "10k",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156205000, 103505000), VECTOR2I( 156205000, 106495000), VECTOR2I( 143955000, 106495000), VECTOR2I( 143955000, 103505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          143.905,
+          103.455,
+          156.255,
+          106.545
+        ]
+      }
+    ]
+  },
+  "R107": {
+    "position_mm": [
+      164.0,
+      62.0
+    ],
+    "rotation": 90.0,
+    "value": "10k 1%",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 164725000, 60525000), VECTOR2I( 164725000, 63475000), VECTOR2I( 163275000, 63475000), VECTOR2I( 163275000, 60525000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          163.225,
+          60.475,
+          164.775,
+          63.525
+        ]
+      }
+    ]
+  },
+  "C17": {
+    "position_mm": [
+      56.0,
+      35.5
+    ],
+    "rotation": 0.0,
+    "value": "0.1uF X7R 16V AVDD",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 57475000, 34775000), VECTOR2I( 57475000, 36225000), VECTOR2I( 54525000, 36225000), VECTOR2I( 54525000, 34775000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          54.475,
+          34.725,
+          57.525,
+          36.275
+        ]
+      }
+    ]
+  },
+  "L101": {
+    "position_mm": [
+      154.5,
+      50.0
+    ],
+    "rotation": 0.0,
+    "value": "33uH Isat>=10A",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 163195000, 41305000), VECTOR2I( 163195000, 43505000), VECTOR2I( 163995000, 43505000), VECTOR2I( 163995000, 56495000), VECTOR2I( 163195000, 56495000), VECTOR2I( 163195000, 58695000), VECTOR2I( 145805000, 58695000), VECTOR2I( 145805000, 56495000), VECTOR2I( 145005000, 56495000), VECTOR2I( 145005000, 43505000), VECTOR2I( 145805000, 43505000), VECTOR2I( 145805000, 41305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          144.955,
+          41.255,
+          164.045,
+          58.745
+        ]
+      }
+    ]
+  },
+  "H1": {
+    "position_mm": [
+      18.0,
+      20.0
+    ],
+    "rotation": 0.0,
+    "value": "M3",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 18372747, 16572683), VECTOR2I( 18741112, 16633074), VECTOR2I( 19100801, 16732941), VECTOR2I( 19447577, 16871109), VECTOR2I( 19777390, 17045965), VECTOR2I( 20086349, 17255445), VECTOR2I( 20370864, 17497114), VECTOR2I( 20627573, 17768118), VECTOR2I( 20853478, 18065291), VECTOR2I( 21045930, 18385149), VECTOR2I( 21202671, 18723939), VECTOR2I( 21321864, 19077688), VECTOR2I( 21402109, 19442248), VECTOR2I( 21442473, 19813387), VECTOR2I( 21444999, 20000000), VECTOR2I( 21442473, 20186612), VECTOR2I( 21402109, 20557751), VECTOR2I( 21321864, 20922311), VECTOR2I( 21202671, 21276060), VECTOR2I( 21045930, 21614850), VECTOR2I( 20853478, 21934708), VECTOR2I( 20627573, 22231881), VECTOR2I( 20370864, 22502885), VECTOR2I( 20086349, 22744554), VECTOR2I( 19777390, 22954034), VECTOR2I( 19447577, 23128890), VECTOR2I( 19100801, 23267058), VECTOR2I( 18741112, 23366925), VECTOR2I( 18372747, 23427316), VECTOR2I( 18000000, 23447526), VECTOR2I( 17627252, 23427316), VECTOR2I( 17258887, 23366925), VECTOR2I( 16899198, 23267058), VECTOR2I( 16552422, 23128890), VECTOR2I( 16222609, 22954034), VECTOR2I( 15913650, 22744554), VECTOR2I( 15629135, 22502885), VECTOR2I( 15372426, 22231881), VECTOR2I( 15146521, 21934708), VECTOR2I( 14954069, 21614850), VECTOR2I( 14797328, 21276060), VECTOR2I( 14678135, 20922311), VECTOR2I( 14597890, 20557751), VECTOR2I( 14557530, 20186641), VECTOR2I( 14557530, 19813358), VECTOR2I( 14597890, 19442248), VECTOR2I( 14678135, 19077688), VECTOR2I( 14797328, 18723939), VECTOR2I( 14954069, 18385149), VECTOR2I( 15146521, 18065291), VECTOR2I( 15372426, 17768118), VECTOR2I( 15629135, 17497114), VECTOR2I( 15913650, 17255445), VECTOR2I( 16222609, 17045965), VECTOR2I( 16552422, 16871109), VECTOR2I( 16899198, 16732941), VECTOR2I( 17258887, 16633074), VECTOR2I( 17627252, 16572683), VECTOR2I( 18000000, 16552474)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          14.50753,
+          16.502474,
+          21.494999,
+          23.497526
+        ]
+      }
+    ]
+  },
+  "U9004": {
+    "position_mm": [
+      140.0,
+      174.0
+    ],
+    "rotation": 0.0,
+    "value": "SN74LVC1G32DBVR",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 141045000, 172305000), VECTOR2I( 141045000, 172505000), VECTOR2I( 142045000, 172505000), VECTOR2I( 142045000, 173605000), VECTOR2I( 141045000, 173605000), VECTOR2I( 141045000, 174395000), VECTOR2I( 142045000, 174395000), VECTOR2I( 142045000, 175495000), VECTOR2I( 141045000, 175495000), VECTOR2I( 141045000, 175695000), VECTOR2I( 138955000, 175695000), VECTOR2I( 138955000, 175495000), VECTOR2I( 137955000, 175495000), VECTOR2I( 137955000, 172505000), VECTOR2I( 138955000, 172505000), VECTOR2I( 138955000, 172305000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          137.905,
+          172.255,
+          142.095,
+          175.745
+        ]
+      }
+    ]
+  },
+  "D9001": {
+    "position_mm": [
+      174.0,
+      156.0
+    ],
+    "rotation": 0.0,
+    "value": "STPS30H100CW; common cathode: K/pin2/tab -> MOTOR_POS; A1/pin1 + A2/pin3 -> GND",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 181785000, 152605000), VECTOR2I( 181785000, 157495000), VECTOR2I( 171295000, 157495000), VECTOR2I( 171295000, 152605000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          171.245,
+          152.555,
+          181.835,
+          157.545
+        ]
+      }
+    ]
+  },
+  "R16": {
+    "position_mm": [
+      145.0,
+      110.0
+    ],
+    "rotation": 0.0,
+    "value": "2.2k ENC_A_PULLUP",
+    "courtyards": [
+      {
+        "layer": "F.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 156205000, 108505000), VECTOR2I( 156205000, 111495000), VECTOR2I( 143955000, 111495000), VECTOR2I( 143955000, 108505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          143.905,
+          108.455,
+          156.255,
+          111.545
+        ]
+      }
+    ]
+  },
+  "MH5": {
+    "position_mm": [
+      161.2,
+      140.075
+    ],
+    "rotation": 90.0,
+    "value": "GMT020-02-7P DIRECT SOCKET + 4xM2 SUPPORT",
+    "courtyards": []
+  },
+  "J24": {
+    "position_mm": [
+      75.0,
+      170.0
+    ],
+    "rotation": 0.0,
+    "value": "RESET NKK BB25AB-FA",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 79895000, 164455000), VECTOR2I( 79895000, 175545000), VECTOR2I( 70105000, 175545000), VECTOR2I( 70105000, 164455000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          70.055,
+          164.405,
+          79.945,
+          175.595
+        ]
+      }
+    ]
+  },
+  "J23": {
+    "position_mm": [
+      75.0,
+      110.0
+    ],
+    "rotation": 0.0,
+    "value": "ENCODER EC11E15244G1",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 81495000, 101505000), VECTOR2I( 81495000, 118995000), VECTOR2I( 68505000, 118995000), VECTOR2I( 68505000, 101505000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          68.455,
+          101.455,
+          81.545,
+          119.045
+        ]
+      }
+    ]
+  },
+  "J22": {
+    "position_mm": [
+      68.75,
+      142.5
+    ],
+    "rotation": 0.0,
+    "value": "START_STOP B3F-4055 + B32-1380 RED",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 82745000, 132755000), VECTOR2I( 82745000, 147245000), VECTOR2I( 67255000, 147245000), VECTOR2I( 67255000, 132755000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          67.205,
+          132.705,
+          82.795,
+          147.295
+        ]
+      }
+    ]
+  },
+  "J3": {
+    "position_mm": [
+      83.0,
+      35.0
+    ],
+    "rotation": 180.0,
+    "value": "DEVKITC1_J3",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 84765000, 33235000), VECTOR2I( 84765000, 90105000), VECTOR2I( 81235000, 90105000), VECTOR2I( 81235000, 33235000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          81.185,
+          33.185,
+          84.815,
+          90.155
+        ]
+      }
+    ]
+  },
+  "J1": {
+    "position_mm": [
+      105.86,
+      35.0
+    ],
+    "rotation": 180.0,
+    "value": "DEVKITC1_J1",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 107625000, 33235000), VECTOR2I( 107625000, 90105000), VECTOR2I( 104095000, 90105000), VECTOR2I( 104095000, 33235000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          104.045,
+          33.185,
+          107.675,
+          90.155
+        ]
+      }
+    ]
+  },
+  "J26": {
+    "position_mm": [
+      189.4,
+      132.74
+    ],
+    "rotation": 180.0,
+    "value": "Connfly DS1023-1*7S21",
+    "courtyards": [
+      {
+        "layer": "B.Courtyard",
+        "outline": "SHAPE_LINE_CHAIN poly; \n{ auto tmp = SHAPE_LINE_CHAIN( { VECTOR2I( 191270000, 130575000), VECTOR2I( 191270000, 150145000), VECTOR2I( 187530000, 150145000), VECTOR2I( 187530000, 130575000)}, true );;\n poly.AddOutline(tmp); } \n",
+        "box_mm": [
+          187.48,
+          130.525,
+          191.32,
+          150.195
+        ]
+      }
+    ]
+  }
+}

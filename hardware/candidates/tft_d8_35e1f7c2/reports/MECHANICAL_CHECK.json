@@ -1,0 +1,13 @@
+{
+  "EP_direct_filled_plane_contacts": [],
+  "courtyard_R4_collisions": [],
+  "bounding_hull_R4_collisions": [],
+  "fab_shape_R4_collisions": [],
+  "pads_R4_collisions": [],
+  "copper_fill_R4_collisions": [],
+  "TFT_MH5_is_own_body_excluded": true,
+  "covered": 4,
+  "negative_covered": 3,
+  "candidate_sha256": "35e1f7c2b78096139211039d5aacf94b8e18675731f4f979ab42bc8446cd7084",
+  "active_sha256": "35e1f7c2b78096139211039d5aacf94b8e18675731f4f979ab42bc8446cd7084"
+}

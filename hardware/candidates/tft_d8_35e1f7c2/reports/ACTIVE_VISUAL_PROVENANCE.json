@@ -1,0 +1,10 @@
+{
+  "F": {
+    "candidate_vs_active_SVG_geometry_identical": true,
+    "active_svg_sha256": "e3d7dc96a46c589f82a35988780be00f1d57f2be4d7ed33ea9499f440578caae"
+  },
+  "B": {
+    "candidate_vs_active_SVG_geometry_identical": true,
+    "active_svg_sha256": "a006f04f12a8d5e353866961bb2251560abaea5136b3a2f6bf931bd60f154097"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "active_applied_verified": true,
+  "added_objects": {
+    "segment": 45,
+    "via": 5
+  },
+  "candidate_sha256": "35e1f7c2b78096139211039d5aacf94b8e18675731f4f979ab42bc8446cd7084",
+  "changed_footprints": [
+    "C9007",
+    "C9008",
+    "D9002",
+    "R9002",
+    "R9003",
+    "U9001"
+  ],
+  "changed_objects": {
+    "footprint": 6,
+    "segment": 30,
+    "via": 5,
+    "zone": 4
+  },
+  "context_files": 23,
+  "covered": 4,
+  "negative_covered": 3,
+  "new_errors": 0,
+  "new_warnings": 0,
+  "outside_scope_unchanged": true,
+  "preserved_pairs": 5383,
+  "release_status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "removed_segments": 22,
+  "source_sha256": "115e8ed2d2929598fa6529c871c49247c11173040c0df65da872fd5922b8aeec",
+  "status": "PASS_SCOPED_TFT_CORRECTION",
+  "unconnected": 82
+}
