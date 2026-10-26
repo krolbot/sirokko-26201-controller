@@ -3,7 +3,7 @@
 #include "sirokko/display_geometry.hpp"
 
 namespace sirokko {
-enum class UiPage : uint8_t { HOME, SETTINGS, SETPOINT, HYSTERESIS, ROOM_OFFSET, DIAGNOSTICS, PROFILE, COUNTERS, RESET_COUNTERS, VERSION };
+enum class UiPage : uint8_t { HOME, SETTINGS, SETPOINT, HYSTERESIS, ROOM_OFFSET, DIAGNOSTICS, PROFILE, COUNTERS, RESET_COUNTERS, VERSION, TIMER_HOURS, TIMER_MINUTES, TIMER_CONFIRM };
 struct UiKeys {
     bool up_press{};
     bool down_press{};
@@ -15,6 +15,8 @@ struct UiKeys {
 struct UiAction {
     bool settings_changed{};
     bool reset_counters{};
+    bool apply_duration{};
+    bool timer_applied{};
 };
 // Long START/STOP and RESET stay in the control adapter; only short UI mode arrives here.
 class LocalMenu {
@@ -22,7 +24,10 @@ public:
     UiAction tick(const UiKeys&, uint32_t now_ms, OperatorSettings&, const Config&);
     UiPage page() const { return page_; }
     uint8_t selection() const { return selection_; }
+    uint16_t staged_minutes() const { return staged_minutes_; }
+    bool editing_delay() const { return editing_delay_; }
 private:
+    void open_selected(const OperatorSettings&);
     UiPage page_{UiPage::HOME};
     uint8_t selection_{};
     uint32_t chord_since_{};
@@ -30,6 +35,8 @@ private:
     bool chord_active_{};
     bool chord_fired_{};
     bool initialized_{};
+    uint16_t staged_minutes_{};
+    bool editing_delay_{};
 };
 struct UiFrame {
     char firmware_version[32]{};
@@ -59,6 +66,8 @@ struct UiFrame {
     bool update_active{};
     UiPage page{UiPage::HOME};
     uint8_t selection{};
+    uint16_t staged_minutes{};
+    bool editing_delay{};
 };
 // Same big-endian RGB565 bands go to esp_lcd and host images; no independent mock UI.
 void render_ui_band(uint16_t* pixels, uint8_t band, const UiFrame&);

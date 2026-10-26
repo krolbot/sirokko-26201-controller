@@ -8,6 +8,7 @@
 #include <stdexcept>
 namespace rt_fake {
 inline uint64_t time_us{};
+inline uint32_t next_step_ms{}; // Accelerated monotonic time, one scheduler gap only; no wall-clock/RTC mock.
 inline std::function<void()> tick;
 inline std::function<void(uint32_t)> delay;
 inline unsigned valid_marks{}, rollback_marks{}, wdt_resets{};
@@ -23,7 +24,11 @@ constexpr int pdTRUE=1,pdPASS=1;
 #define pdMS_TO_TICKS(ms) (ms)
 inline TickType_t xTaskGetTickCount() { return rt_fake::time_us/1000; }
 inline void vTaskDelay(uint32_t ms) { rt_fake::time_us+=ms*1000ULL; if(rt_fake::delay) rt_fake::delay(ms); }
-inline void vTaskDelayUntil(TickType_t* t,uint32_t ms) { *t+=ms; rt_fake::time_us=static_cast<uint64_t>(*t)*1000; if(rt_fake::tick) rt_fake::tick(); }
+inline void vTaskDelayUntil(TickType_t* t,uint32_t ms) {
+    const uint32_t step = rt_fake::next_step_ms ? rt_fake::next_step_ms : ms;
+    rt_fake::next_step_ms = 0; *t += step; rt_fake::time_us += static_cast<uint64_t>(step)*1000;
+    if(rt_fake::tick) rt_fake::tick();
+}
 inline void vTaskDelete(void*) { throw rt_fake::Done{}; }
 inline int xTaskCreate(void(*)(void*),const char*,unsigned,void*,int,void*) { return pdPASS; }
 inline int xTaskCreatePinnedToCore(void(*)(void*),const char*,unsigned,void*,int,void*,int) { return pdPASS; }
@@ -46,7 +51,7 @@ inline int esp_task_wdt_reset() { ++rt_fake::wdt_resets; return ESP_OK; }
 inline void esp_restart() { throw rt_fake::Restart{}; }
 constexpr int ESP_RST_BROWNOUT=1;
 inline int esp_reset_reason() { return 0; }
-struct esp_app_desc_t { const char* version="0.1.8-DRAFT"; };
+struct esp_app_desc_t { const char* version="0.1.9-DRAFT"; };
 inline const esp_app_desc_t* esp_app_get_description() { static esp_app_desc_t d; return &d; }
 struct esp_partition_t {};
 using esp_ota_img_states_t=int;

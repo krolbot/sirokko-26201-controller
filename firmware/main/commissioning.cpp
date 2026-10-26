@@ -349,12 +349,23 @@ struct SavedHistory {
 sirokko::OperatorSettings CommissioningStore::load_operator_settings(const sirokko::Config& c, bool* ok) const {
     sirokko::OperatorSettings settings{};
     settings.setpoint_milli_c = c.setpoint_default_milli_c;
-    const auto error = read_record("operator_v1", &settings);
+    auto error = read_record("operator_v2", &settings);
+    if (error == ESP_ERR_NVS_NOT_FOUND) {
+        struct LegacySettings { uint32_t schema; int32_t setpoint, hysteresis, offset; } legacy{};
+        error = read_record("operator_v1", &legacy);
+        if (error == ESP_OK) {
+            settings.setpoint_milli_c = legacy.setpoint;
+            settings.hysteresis_milli_c = legacy.hysteresis;
+            settings.room_offset_milli_c = legacy.offset;
+            if (legacy.schema != 1) error = ESP_FAIL;
+        }
+        // Old settings are read/validated without overwriting them. New timers default OFF.
+    }
     *ok = (error == ESP_OK || error == ESP_ERR_NVS_NOT_FOUND) && sirokko::operator_settings_valid(settings, c);
     return settings;
 }
 bool CommissioningStore::save_operator_settings(const sirokko::OperatorSettings& s, const sirokko::Config& c) const {
-    return sirokko::operator_settings_valid(s, c) && write_record("operator_v1", s);
+    return sirokko::operator_settings_valid(s, c) && write_record("operator_v2", s);
 }
 bool CommissioningStore::load_counters(sirokko::CommandCounters* counters) const {
     const auto error = read_record("counters_v1", counters);

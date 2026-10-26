@@ -128,7 +128,8 @@ uint32_t Machine::current_input_faults(const Inputs& in) const {
     if (!in.configuration_ok || validate_config(config_) != CONFIG_OK ||
         in.setpoint_milli_c < config_.setpoint_min_milli_c ||
         in.setpoint_milli_c > config_.setpoint_max_milli_c ||
-        in.hysteresis_milli_c < 500 || in.hysteresis_milli_c > 10000) {
+        in.hysteresis_milli_c < 500 || in.hysteresis_milli_c > 10000 ||
+        in.duration_minutes > kTimerMaximumMinutes || in.delay_minutes > kTimerMaximumMinutes) {
         faults |= FAULT_CONFIG;
     }
     if (!in.safety_ok) faults |= FAULT_SAFETY_OPEN;
@@ -398,7 +399,26 @@ void Machine::update_heartbeat(const Inputs& in, bool healthy) {
     }
 }
 
-Outputs Machine::tick(const Inputs& in) {
+StartBlock Machine::start_block(const Inputs& in) const {
+    if (!in.configuration_ok || validate_config(config_) != CONFIG_OK) return StartBlock::PROFILE;
+    if (faults_ != FAULT_NONE || current_input_faults(in) != FAULT_NONE) return StartBlock::FAULT;
+    if (!recovery_complete_) return StartBlock::RECOVERY;
+    if (in.maintenance_inhibit || in.service_requested) return StartBlock::SERVICE;
+    if (in.stop_active) return StartBlock::STOP;
+    if (in.cancel_delayed_start || in.reset_request) return StartBlock::RESET;
+    if (state_ != State::WAIT_COOLDOWN) return StartBlock::ACTIVE;
+
+    if (restart_inhibit_ && elapsed(in.now_ms, restart_started_ms_) < config_.restart_inhibit_ms) return StartBlock::RESTART_DELAY;
+    if (!cold(in)) return StartBlock::HOT;
+    if (static_cast<int64_t>(in.room.milli_c) > room_boundary(config_, in, config_.start_delta_milli_c)) return StartBlock::ROOM;
+    return StartBlock::NONE;
+}
+
+Outputs Machine::tick(const Inputs& raw) {
+    Inputs in = raw; // Delayed expiry uses the same fresh START path, not a parallel safety machine.
+    const State before = state_;
+    const bool new_arm = in.arm_delayed_start && !previous_delay_arm_;
+    previous_delay_arm_ = in.arm_delayed_start;
     if (!initialized_) {
         initialized_ = true;
         state_entered_ms_ = in.now_ms;
@@ -406,6 +426,31 @@ Outputs Machine::tick(const Inputs& in) {
     }
 
     const uint32_t input_faults = current_input_faults(in);
+    const bool cancel_delay = in.stop_active || in.reset_request || in.cancel_delayed_start ||
+        in.maintenance_inhibit || in.service_requested || input_faults != FAULT_NONE || faults_ != FAULT_NONE;
+    if (cancel_delay && delay_armed_) {
+        delay_armed_ = false;
+        delay_cancel_reason_ = in.stop_active ? StartBlock::STOP : (in.maintenance_inhibit || in.service_requested) ? StartBlock::SERVICE :
+            (input_faults || faults_) ? StartBlock::FAULT : StartBlock::RESET;
+    }
+    bool delayed_attempt{};
+    if (!cancel_delay && delay_armed_ && elapsed(in.now_ms, delay_started_ms_) >= delay_ms_) {
+        delay_armed_ = false; // Consume before checking; a rejected attempt can never become pending.
+        delay_cancel_reason_ = start_block(in);
+        if (delay_cancel_reason_ == StartBlock::NONE && (!in.arm_applied || !outputs_.arm_ready)) delay_cancel_reason_ = StartBlock::SAFETY;
+        if (delay_cancel_reason_ == StartBlock::NONE) {
+            in.heat_enable = true;
+            delayed_attempt = true;
+        }
+    } else if (!cancel_delay && !delay_armed_ && new_arm && in.delay_minutes != 0) {
+        delay_cancel_reason_ = start_block(in);
+        if (delay_cancel_reason_ == StartBlock::NONE && (!in.arm_applied || !outputs_.arm_ready)) delay_cancel_reason_ = StartBlock::SAFETY;
+        if (delay_cancel_reason_ == StartBlock::NONE) {
+            delay_armed_ = true;
+            delay_started_ms_ = in.now_ms;
+            delay_ms_ = static_cast<uint32_t>(in.delay_minutes) * 60000u;
+        }
+    }
     const bool reset_pressed = in.reset_request && !previous_reset_request_;
     const uint32_t immediate = input_faults &
         (FAULT_CONFIG | FAULT_SAFETY_OPEN | FAULT_LOCAL_UI | FAULT_OUTPUT |
@@ -470,10 +515,35 @@ Outputs Machine::tick(const Inputs& in) {
                 elapsed(in.now_ms, glow_started_ms_) >= config_.glow_max_ms) {
                 trip(FAULT_GLOW_TIMEOUT, in.now_ms);
             }
-            if (state_ != State::LOCKOUT) run_state(in);
+            if (state_ != State::LOCKOUT) {
+                // Old deadline and STOP win over a same-pass UI apply. Unsigned elapsed is
+                // wrap-safe for <=24h; the watchdog forbids a control gap of a full 32-bit wrap.
+                if (duration_active_ && !in.stop_active && in.heat_enable &&
+                    elapsed(in.now_ms, duration_started_ms_) >= duration_ms_) {
+                    timer_expired_ = true;
+                    in.heat_enable = false;
+                } else if (before >= State::PREPURGE && before <= State::RUN_LOW &&
+                           in.apply_duration && !in.stop_active && in.heat_enable &&
+                           !in.reset_request && !in.cancel_delayed_start && !in.maintenance_inhibit) {
+                    duration_ms_ = static_cast<uint32_t>(in.duration_minutes) * 60000u;
+                    duration_started_ms_ = in.now_ms;
+                    duration_active_ = duration_ms_ != 0;
+                }
+                run_state(in);
+            }
         }
     }
 
+    if (before == State::WAIT_COOLDOWN && state_ == State::PREPURGE) {
+        duration_started_ms_ = in.now_ms;
+        duration_ms_ = static_cast<uint32_t>(in.duration_minutes) * 60000u;
+        duration_active_ = duration_ms_ != 0;
+        timer_expired_ = false;
+        delay_armed_ = false;
+        delay_cancel_reason_ = StartBlock::NONE;
+    }
+    if (delayed_attempt && state_ != State::PREPURGE) delay_cancel_reason_ = start_block(in);
+    if (state_ < State::PREPURGE || state_ > State::RUN_LOW) duration_active_ = false;
     outputs_ = make_outputs(in);
     const bool invariant_bad =
         (outputs_.glow_command && !outputs_.fan_request) ||
@@ -490,17 +560,7 @@ Outputs Machine::tick(const Inputs& in) {
     outputs_.watchdog_heartbeat = heartbeat_level_;
     previous_reset_request_ = in.reset_request;
     previous_heat_enable_ = in.heat_enable;
-    start_block_ = StartBlock::NONE;
-    if (!in.configuration_ok || validate_config(config_) != CONFIG_OK) start_block_ = StartBlock::PROFILE;
-    else if (faults_ != FAULT_NONE) start_block_ = StartBlock::FAULT;
-    else if (!recovery_complete_) start_block_ = StartBlock::RECOVERY;
-    else if (in.maintenance_inhibit) start_block_ = StartBlock::SERVICE;
-    else if (state_ != State::WAIT_COOLDOWN) start_block_ = StartBlock::ACTIVE;
-    else if (in.stop_active) start_block_ = StartBlock::STOP;
-    else if (!in.safety_ok) start_block_ = StartBlock::SAFETY;
-    else if (restart_inhibit_) start_block_ = StartBlock::RESTART_DELAY;
-    else if (!cold(in)) start_block_ = StartBlock::HOT;
-    else if (static_cast<int64_t>(in.room.milli_c) > room_boundary(config_, in, config_.start_delta_milli_c)) start_block_ = StartBlock::ROOM;
+    start_block_ = start_block(in);
     return outputs_;
 }
 
@@ -526,6 +586,14 @@ Status Machine::status(uint32_t now_ms) const {
     result.ignition_baseline_milli_c = ignition_baseline_milli_c_;
     result.commissioning_ready = validate_config(config_) == CONFIG_OK;
     result.recovery_complete = recovery_complete_;
+    result.duration_active = duration_active_;
+    result.timer_expired = timer_expired_;
+    const uint32_t run_age = elapsed(now_ms, duration_started_ms_);
+    result.duration_remaining_ms = duration_active_ && run_age < duration_ms_ ? duration_ms_ - run_age : 0;
+    result.delay_armed = delay_armed_;
+    const uint32_t delay_age = elapsed(now_ms, delay_started_ms_);
+    result.delay_remaining_ms = delay_armed_ && delay_age < delay_ms_ ? delay_ms_ - delay_age : 0;
+    result.delay_cancel_reason = delay_cancel_reason_;
     result.outputs = outputs_;
     return result;
 }

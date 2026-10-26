@@ -36,7 +36,7 @@ UiFrame example_frame() {
     frame.boot_id = 7;
     frame.session_id = 3;
     frame.profile_token = CommissioningStore{}.candidate_token(frame.config);
-    std::strcpy(frame.firmware_version,"0.1.8-DRAFT");
+    std::strcpy(frame.firmware_version,"0.1.9-DRAFT");
     frame.exhaust_fault = 0;
     frame.hot_air_fault = 0;
     frame.safety_ok = true;
@@ -119,6 +119,26 @@ int main(int argc, char** argv) {
         fault.exhaust=failure.in.exhaust; fault.hot_air=failure.in.hot_air; fault.hot_air_fault=0x20;
         render_example(directory, "fault", fault, UiPage::HOME);
         render_example(directory, "diagnostics_fault", fault, UiPage::DIAGNOSTICS);
+        auto timer=frame; timer.settings.duration_minutes=1440; timer.settings.delay_minutes=61;
+        timer.staged_minutes=1440;
+        render_example(directory,"timer_settings",timer,UiPage::SETTINGS,7);
+        render_example(directory,"timer_hours_24",timer,UiPage::TIMER_HOURS);
+        render_example(directory,"timer_minutes_24",timer,UiPage::TIMER_MINUTES);
+        render_example(directory,"timer_confirm_restart",timer,UiPage::TIMER_CONFIRM);
+        timer.staged_minutes=0;
+        render_example(directory,"timer_confirm_OFF",timer,UiPage::TIMER_CONFIRM);
+        timer.editing_delay=true; timer.staged_minutes=61;
+        render_example(directory,"delay_confirm_not_armed",timer,UiPage::TIMER_CONFIRM);
+        timer.status.duration_active=true; timer.status.duration_remaining_ms=86400000;
+        render_example(directory,"timer_run_24h",timer,UiPage::HOME);
+        timer.status.duration_active=false; timer.status.timer_expired=true; timer.status.state=State::POST_PURGE;
+        timer.status.outputs.fuel_command=timer.status.outputs.fuel_permit=timer.status.outputs.glow_command=false;
+        render_example(directory,"timer_expired_purge",timer,UiPage::HOME);
+        timer.status.state=State::WAIT_COOLDOWN; timer.status.timer_expired=false; timer.status.delay_armed=true;
+        timer.status.delay_remaining_ms=3659999;
+        render_example(directory,"delay_armed",timer,UiPage::HOME);
+        timer.status.delay_armed=false; timer.status.delay_cancel_reason=StartBlock::HOT;
+        render_example(directory,"delay_cancelled_hot",timer,UiPage::HOME);
         return 0;
     } catch (const std::exception& error) {
         std::cerr << "render_ui: " << error.what() << '\n';

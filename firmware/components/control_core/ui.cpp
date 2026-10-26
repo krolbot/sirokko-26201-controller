@@ -198,15 +198,6 @@ const char* sensor_quality_label(SensorQuality quality) {
     return "?";
 }
 
-const char* zone_label(RoomZone zone) {
-    switch (zone) {
-        case RoomZone::BELOW: return "НИЖЕ";
-        case RoomZone::BAND: return "ПОЛОСА";
-        case RoomZone::ABOVE: return "ВЫШЕ";
-        case RoomZone::INVALID: return "НЕТ";
-    }
-    return "НЕТ";
-}
 
 const char* stop_reason_label(StopReason reason) {
     switch (reason) {
@@ -217,6 +208,9 @@ const char* stop_reason_label(StopReason reason) {
         case StopReason::FAULT: return "АВАРИЯ";
         case StopReason::RESET: return "СБРОС";
         case StopReason::BOOT: return "ЗАГРУЗКА";
+        case StopReason::TIMER: return "ТАЙМЕР";
+        case StopReason::DELAY_ARMED: return "ВЗВЕДЁН";
+        case StopReason::DELAY_CANCELLED: return "ОТМЕНЁН";
     }
     return "НЕТ";
 }
@@ -265,7 +259,7 @@ bool profile_run_low_qualified(const Config& config) { return config.run_low_qua
 uint32_t profile_revision(const Config& config) { return config.profile_revision; }
 
 uint8_t normalized_selection(uint8_t selection) {
-    return static_cast<uint8_t>(selection % 7u);
+    return static_cast<uint8_t>(selection % 9u);
 }
 
 const char* setting_label(uint8_t selection) {
@@ -277,6 +271,8 @@ const char* setting_label(uint8_t selection) {
         case 4: return "ПРОФИЛЬ";
         case 5: return "СЧЕТЧИКИ";
         case 6: return "ВЕРСИЯ";
+        case 7: return "ВРЕМЯ РАБОТЫ";
+        case 8: return "ОТЛОЖЕННЫЙ ПУСК";
     }
     return "УСТАВКА";
 }
@@ -290,6 +286,8 @@ UiPage selected_page(uint8_t selection) {
         case 4: return UiPage::PROFILE;
         case 5: return UiPage::COUNTERS;
         case 6: return UiPage::VERSION;
+        case 7:
+        case 8: return UiPage::TIMER_HOURS;
     }
     return UiPage::SETTINGS;
 }
@@ -319,9 +317,16 @@ const char* start_label(StartBlock b) {
         case StartBlock::RESTART_DELAY: return "ПАУЗА ПУСКА";
         case StartBlock::HOT: return "ОХЛАЖДЕНИЕ";
         case StartBlock::ROOM: return "КОМНАТА ТЕПЛАЯ";
+        case StartBlock::RESET: return "RESET";
     }
     return "ЗАПРЕЩЁН";
 }
+void format_remaining(char* text, size_t size, uint32_t ms) {
+    const uint32_t seconds = (ms + 999u) / 1000u;
+    std::snprintf(text, size, "ОСТ:%02lu:%02lu:%02lu", static_cast<unsigned long>(seconds / 3600u),
+                  static_cast<unsigned long>((seconds / 60u) % 60u), static_cast<unsigned long>(seconds % 60u));
+}
+
 void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     char first[96]{};
     char second[96]{};
@@ -336,10 +341,11 @@ void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             format_temperature(second, sizeof(second), "УСТ ", frame.settings.setpoint_milli_c);
             break;
         case 1:
-            format_temperature(first, sizeof(first), "ГИСТ ", frame.settings.hysteresis_milli_c);
-            std::snprintf(second, sizeof(second), "ЗОНА:%s",
-                          zone_label(room_zone(frame.room, frame.settings, frame.now_ms,
-                                               frame.config.sensor_stale_ms)));
+            std::snprintf(first, sizeof(first), "РАБОТА %u:%02u Ч:М", frame.settings.duration_minutes / 60u,
+                          frame.settings.duration_minutes % 60u);
+            if (frame.status.duration_active)
+                format_remaining(second, sizeof(second), frame.status.duration_remaining_ms);
+            else std::snprintf(second, sizeof(second), "%s", frame.settings.duration_minutes ? "С МОМЕНТА ПУСКА" : "ТАЙМЕР ВЫКЛ");
             break;
         case 2:
             format_sample(first, sizeof(first), "ВЫХ RAW ", frame.exhaust);
@@ -348,7 +354,10 @@ void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
         case 3:
             foreground = frame.status.state == State::LOCKOUT ? kRed : kYellow;
             std::snprintf(first, sizeof(first), "%s", ui_state_label(frame.status.state));
-            if (status_stage_timed(frame.status)) {
+            if (frame.status.timer_expired && frame.status.state == State::POST_PURGE) {
+                std::snprintf(first, sizeof(first), "ТАЙМЕР ИСТЁК");
+                std::snprintf(second, sizeof(second), "- ПРОДУВКА");
+            } else if (status_stage_timed(frame.status)) {
                 std::snprintf(second, sizeof(second), "ОСТ:%luС",
                               static_cast<unsigned long>(status_stage_remaining_ms(frame.status) / 1000u));
             } else if (frame.status.state == State::WAIT_COOLDOWN) {
@@ -357,7 +366,7 @@ void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             } else if (frame.status.state == State::LOCKOUT) {
                 std::snprintf(second, sizeof(second), "СБРОС НЕ В UI");
             } else {
-                std::snprintf(second, sizeof(second), "БЕЗ ТАЙМЕРА");
+                std::snprintf(second, sizeof(second), "ЭТАП БЕЗ ТАЙМЕРА");
             }
             break;
         case 4: {
@@ -372,7 +381,8 @@ void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
         }
         case 5: {
             std::snprintf(first, sizeof(first), "НАКАЛ КОМ:%s", yes_no(frame.status.outputs.glow_command));
-            std::snprintf(second, sizeof(second), "ПУСК:%s", start_label(frame.status.start_block));
+            if (frame.status.start_block == StartBlock::ACTIVE) std::snprintf(second, sizeof(second), "ПУСК: НЕДОСТУПЕН");
+            else std::snprintf(second, sizeof(second), "ПУСК:%s", start_label(frame.status.start_block));
             break;
         }
         case 6:
@@ -384,8 +394,11 @@ void render_home(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             break;
         case 7:
             foreground = kOrange;
-            std::snprintf(first, sizeof(first), "BENCH ONLY");
-            std::snprintf(second, sizeof(second), "СЕТЬ:%s", frame.network_connected ? "ONLINE" : "НЕТ");
+            if (frame.status.delay_cancel_reason != StartBlock::NONE)
+                std::snprintf(first, sizeof(first), "ПУСК ОТМЕНЁН");
+            else std::snprintf(first, sizeof(first), "ЗАДЕРЖКА %u:%02u Ч:М", frame.settings.delay_minutes / 60u, frame.settings.delay_minutes % 60u);
+            std::snprintf(second, sizeof(second), "%s", frame.status.delay_cancel_reason != StartBlock::NONE ?
+                          start_label(frame.status.delay_cancel_reason) : frame.settings.delay_minutes ? "ДОЛГО: ВЗВЕСТИ" : "ДОЛГО:ПУСК/СТОП");
             break;
         default:
             return;
@@ -404,9 +417,10 @@ void render_settings(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
 
     if (band == 0) {
         std::snprintf(first, sizeof(first), "НАСТРОЙКИ");
-        std::snprintf(second, sizeof(second), "UP/DN ВЫБОР");
+        std::snprintf(second, sizeof(second), "UP/DN КОРОТКО:ВХОД");
     } else {
-        const uint8_t item = static_cast<uint8_t>(band - 1u);
+        const uint8_t item = static_cast<uint8_t>(band - 1u + (selection >= 7 ? 7 : 0));
+        if (item >= 9) { clear_band(pixels, background); return; }
         if (item == selection) {
             background = kDarkBlue;
             foreground = kCyan;
@@ -420,6 +434,8 @@ void render_settings(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
             case 4: std::snprintf(second, sizeof(second), "ГЕЙТ И ШИМ"); break;
             case 5: std::snprintf(second, sizeof(second), "UP+DN:СБРОС"); break;
             case 6: std::snprintf(second, sizeof(second), "%s", frame.firmware_version); break;
+            case 7: std::snprintf(second, sizeof(second), "%u:%02u / С ПУСКА", frame.settings.duration_minutes / 60u, frame.settings.duration_minutes % 60u); break;
+            case 8: std::snprintf(second, sizeof(second), "%u:%02u / НЕ ВЗВЕДЁН", frame.settings.delay_minutes / 60u, frame.settings.delay_minutes % 60u); break;
             default: break;
         }
     }
@@ -677,6 +693,60 @@ void render_version(BandCanvas pixels, uint8_t band, const UiFrame& frame) {
     draw_lines(pixels, first, second, kWhite);
 }
 
+void render_timer(BandCanvas pixels, uint8_t band, const UiFrame& f, bool armed) {
+    char first[96]{}, second[96]{};
+    const uint16_t minutes = armed ? f.settings.delay_minutes : f.staged_minutes;
+    switch (band) {
+        case 0:
+            std::snprintf(first, sizeof(first), "%s", armed || f.editing_delay ? "ОТЛОЖЕННЫЙ ПУСК" : "ВРЕМЯ РАБОТЫ");
+            std::snprintf(second, sizeof(second), "%s", armed ? "ВЗВЕДЁН" : f.page == UiPage::TIMER_HOURS ? "ЧАСЫ" : f.page == UiPage::TIMER_MINUTES ? "МИНУТЫ" : "ПОДТВЕРЖДЕНИЕ");
+            break;
+        case 1:
+            std::snprintf(first, sizeof(first), "%s %u:%02u Ч:М", armed ? "ЗАДЕРЖКА" : "ИТОГ", minutes / 60u, minutes % 60u);
+            if (armed) format_remaining(second, sizeof(second), f.status.delay_remaining_ms);
+            else std::snprintf(second, sizeof(second), "%s", minutes ? "1 МИН...24 ЧАСА" : "ВЫКЛ");
+            break;
+        case 2:
+            std::snprintf(first, sizeof(first), "РАБОТА:%u:%02u", f.settings.duration_minutes / 60u, f.settings.duration_minutes % 60u);
+            std::snprintf(second, sizeof(second), "С МОМЕНТА ПУСКА");
+            break;
+        case 3:
+            if (armed || f.editing_delay) {
+                std::snprintf(first, sizeof(first), "%s", armed ? "ТОПЛ/НАКАЛ ВЫКЛ" : "ТОЛЬКО НАСТРОЙКА");
+                std::snprintf(second, sizeof(second), "%s", armed ? "ПУСК ПОСЛЕ ПРОВЕРОК" : "ПОКА НЕ ВЗВОДИТСЯ");
+            } else if (f.status.state >= State::PREPURGE && f.status.state <= State::RUN_LOW) {
+                std::snprintf(first, sizeof(first), "%s", minutes ? "НАЧАТЬ НОВЫЙ" : "ОТКЛЮЧИТЬ ТОЛЬКО");
+                std::snprintf(second, sizeof(second), "%s", minutes ? "ОТСЧЁТ СЕЙЧАС" : "ТАЙМЕР РАБОТЫ");
+            } else std::snprintf(first, sizeof(first), "ДЛЯ СЛЕД. ПУСКА");
+            break;
+        case 4:
+            if (armed) {
+                std::snprintf(first, sizeof(first), "ДОЛГО ПУСК/СТОП");
+                std::snprintf(second, sizeof(second), "- СНЯТЬ С ВЗВОДА");
+            } else if (f.page == UiPage::TIMER_CONFIRM) {
+                std::snprintf(first, sizeof(first), "UP: ПРИМЕНИТЬ");
+                std::snprintf(second, sizeof(second), "DOWN: ОТМЕНА");
+            } else {
+                std::snprintf(first, sizeof(first), "UP/DOWN: ИЗМЕНИТЬ");
+                std::snprintf(second, sizeof(second), "КОРОТКО: ДАЛЕЕ");
+            }
+            break;
+        case 5:
+            if (!armed && f.page == UiPage::TIMER_CONFIRM) {
+                std::snprintf(first, sizeof(first), "КОРОТКО: ВЫХОД");
+                std::snprintf(second, sizeof(second), "БЕЗ ПРИМЕНЕНИЯ");
+            }
+            break;
+        case 7:
+            std::snprintf(first, sizeof(first), "BENCH ONLY");
+            std::snprintf(second, sizeof(second), "БЕЗ RTC И СЕТИ");
+            break;
+        default: break;
+    }
+    clear_band(pixels, armed ? kDarkBlue : kBlack);
+    draw_lines(pixels, first, second, armed ? kYellow : kWhite);
+}
+
 }  // namespace
 
 const char* ui_state_label(State state) {
@@ -717,6 +787,14 @@ const char* ui_fault_label(uint32_t faults) {
     return "НЕИЗВЕСТНО";
 }
 
+void LocalMenu::open_selected(const OperatorSettings& settings) {
+    page_ = selected_page(selection_);
+    if (page_ == UiPage::TIMER_HOURS) {
+        editing_delay_ = selection_ == 8;
+        staged_minutes_ = editing_delay_ ? settings.delay_minutes : settings.duration_minutes;
+    }
+}
+
 UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& settings,
                          const Config& config) {
     UiAction action{};
@@ -744,8 +822,11 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
     }
 
     if (keys.mode_short) {
-        page_ = page_ == UiPage::HOME ? UiPage::SETTINGS : UiPage::HOME;
-        selection_ = 0;
+        if (page_ == UiPage::HOME) { page_ = UiPage::SETTINGS; selection_ = 0; }
+        else if (page_ == UiPage::SETTINGS) open_selected(settings);
+        else if (page_ == UiPage::TIMER_HOURS) page_ = UiPage::TIMER_MINUTES;
+        else if (page_ == UiPage::TIMER_MINUTES) page_ = UiPage::TIMER_CONFIRM;
+        else page_ = UiPage::HOME; // Confirmation short exits WITHOUT applying.
         last_activity_ = now_ms;
         chord_active_ = keys.up_held || keys.down_held;
         chord_fired_ = chord_active_;
@@ -781,7 +862,7 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
                 selection_ = 0;
                 break;
             case UiPage::SETTINGS:
-                page_ = selected_page(selection_);
+                open_selected(settings);
                 break;
             case UiPage::SETPOINT:
             case UiPage::HYSTERESIS:
@@ -789,6 +870,9 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
             case UiPage::DIAGNOSTICS:
             case UiPage::PROFILE:
             case UiPage::VERSION:
+            case UiPage::TIMER_HOURS:
+            case UiPage::TIMER_MINUTES:
+            case UiPage::TIMER_CONFIRM:
                 page_ = UiPage::SETTINGS;
                 break;
             case UiPage::COUNTERS:
@@ -828,8 +912,34 @@ UiAction LocalMenu::tick(const UiKeys& keys, uint32_t now_ms, OperatorSettings& 
                                                      config.setpoint_max_milli_c, up);
             break;
         case UiPage::SETTINGS:
-            selection_ = up ? static_cast<uint8_t>((normalized_selection(selection_) + 6u) % 7u)
-                            : static_cast<uint8_t>((normalized_selection(selection_) + 1u) % 7u);
+            selection_ = up ? static_cast<uint8_t>((normalized_selection(selection_) + 8u) % 9u)
+                            : static_cast<uint8_t>((normalized_selection(selection_) + 1u) % 9u);
+            break;
+        case UiPage::TIMER_HOURS:
+        case UiPage::TIMER_MINUTES: {
+            int32_t value = staged_minutes_;
+            if (page_ == UiPage::TIMER_HOURS) {
+                int32_t hours = value / 60;
+                adjust_bounded(hours, 1, 0, 24, up);
+                value = hours * 60 + (hours == 24 ? 0 : value % 60);
+            } else {
+                // Minutes are a separate 0..59 field; 24 hours permits only 00 minutes.
+                const int32_t hours = value / 60;
+                int32_t minutes = value % 60;
+                adjust_bounded(minutes, 1, 0, hours == 24 ? 0 : 59, up);
+                value = hours * 60 + minutes;
+            }
+            staged_minutes_ = static_cast<uint16_t>(value);
+            break;
+        }
+        case UiPage::TIMER_CONFIRM:
+            if (up) {
+                if (editing_delay_) settings.delay_minutes = staged_minutes_;
+                else { settings.duration_minutes = staged_minutes_; action.apply_duration = true; }
+                action.settings_changed = true; // Same nonzero duration explicitly means restart NOW.
+                action.timer_applied = true;
+            }
+            page_ = UiPage::HOME;
             break;
         case UiPage::SETPOINT:
             action.settings_changed = adjust_bounded(settings.setpoint_milli_c, 500,
@@ -863,6 +973,7 @@ void render_ui_band(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
     if (!pixels || band >= kUiHeight / kUiBandRows) return;
     const BandCanvas canvas{pixels, (band % 2u) != 0};
     const uint8_t section = band / 2u;
+    if (frame.status.delay_armed) { render_timer(canvas, section, frame, true); return; }
     switch (frame.page) {
         case UiPage::HOME: render_home(canvas, section, frame); break;
         case UiPage::SETTINGS: render_settings(canvas, section, frame); break;
@@ -874,6 +985,9 @@ void render_ui_band(uint16_t* pixels, uint8_t band, const UiFrame& frame) {
         case UiPage::COUNTERS: render_counters(canvas, section, frame); break;
         case UiPage::RESET_COUNTERS: render_reset_counters(canvas, section); break;
         case UiPage::VERSION: render_version(canvas, section, frame); break;
+        case UiPage::TIMER_HOURS:
+        case UiPage::TIMER_MINUTES:
+        case UiPage::TIMER_CONFIRM: render_timer(canvas, section, frame, false); break;
     }
 }
 

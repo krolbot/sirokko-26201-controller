@@ -1,4 +1,4 @@
-# Сервис Wi-Fi / MQTT / OTA — 0.1.8-DRAFT
+# Сервис Wi-Fi / MQTT / OTA — 0.1.9-DRAFT
 
 Переход draft-05→draft-06 нельзя делать удалённым обновлением старой платы: требуется ручная аппаратная интеграция четырёх кнопок и удаление старого NC STOP/J22. Старый NVS не даёт новую приёмку. Ни наличие USB, ни подпись OTA не доказывают совместимость проводки. Только BENCH, опасные нагрузки отключены.
 
@@ -32,6 +32,8 @@
 Telemetry содержит version/board, nonce, `last_sequence`, uptime/boot/session, состояние/faults/start_block, config schema/revision/low qualification, настройки, raw/calibrated room, EXH/AIR, качество/возраст/MAX faults, команды вентилятора/муфты/свечи/permit, safety/storage, время этапа, update flag и счётчики. Температуры — целые mC, скорость — 0..1000 permille. `command_starts`, `failed_ignitions`, `command_run_ms`, `command_glow_ms` — десятичные СТРОКИ uint64, чтобы JSON/JavaScript не терял точность. SensorQuality и start_block — enum из `control.hpp`; неверное качество важнее отображённого числа. `safety_ok` — отдельный аппаратный вход; команды выходов не являются измеренными контактами.
 
 ## Задание и защита от повторов
+
+В telemetry/USB `status` добавлены только читаемые поля `duration_minutes`, `duration_active`, `duration_remaining_ms`, `timer_expired`, `delay_minutes`, `delay_armed`, `delay_remaining_ms`, `delay_cancel_reason` (StartBlock). Интервалы — минуты, остатки — монотонные миллисекунды. Два относительных таймера полностью автономны от RTC/сети. Сетевых START/взведения/редактирования таймеров нет. STOP отменяет взведённую задержку; явный запрос обслуживания/OTA также отменяет её до проверки lease, даже если обслуживание затем отклонено. Внутренний AUTOSAVE — не явное обслуживание: при взведении или нажатом START он откладывается непосредственно control task, не по устаревшему снимку storage task.
 
 JSON — один плоский объект, до 2047 байт, не более 20 полей, без duplicate keys, вложенности, NUL и хвостового мусора. Фрагментированные/retained сообщения отклоняются. Общие поля:
 

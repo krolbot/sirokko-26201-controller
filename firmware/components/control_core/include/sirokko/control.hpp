@@ -5,6 +5,7 @@
 namespace sirokko {
 
 inline constexpr uint32_t kControlLoopPeriodMs = 20;
+inline constexpr uint16_t kTimerMaximumMinutes = 24u * 60u;
 inline constexpr uint32_t kControlLoopJitterBudgetMs = 20;
 inline constexpr uint32_t kWatchdogMinimumTimeoutMs = 170;
 inline constexpr uint32_t kHeartbeatMaximumFallingEdgeMs = 100;
@@ -136,6 +137,12 @@ struct Inputs {
     int32_t setpoint_milli_c{};
     int32_t hysteresis_milli_c{1000};
     bool maintenance_inhibit{};
+    uint16_t duration_minutes{}; // 0=OFF; settings, never an active deadline in NVS.
+    uint16_t delay_minutes{};
+    bool apply_duration{}; // Explicit local confirmation, not editing or a settings snapshot.
+    bool arm_delayed_start{}; // One new qualified local LONG; never from the network.
+    bool cancel_delayed_start{}; // Raw RESET/service request wins over expiry in this pass.
+    bool service_requested{}; // Cancels delayed START even if the flash lease is later rejected.
     SensorSample exhaust{};
     SensorSample hot_air{};
     SensorSample room{};
@@ -172,7 +179,7 @@ struct Outputs {
     uint16_t speed_permille{};
 };
 
-enum class StartBlock : uint8_t { NONE, PROFILE, FAULT, RECOVERY, ACTIVE, SERVICE, STOP, SAFETY, RESTART_DELAY, HOT, ROOM };
+enum class StartBlock : uint8_t { NONE, PROFILE, FAULT, RECOVERY, ACTIVE, SERVICE, STOP, SAFETY, RESTART_DELAY, HOT, ROOM, RESET };
 
 struct Status {
     StartBlock start_block{StartBlock::RECOVERY};
@@ -184,6 +191,12 @@ struct Status {
     int32_t ignition_baseline_milli_c{};
     bool commissioning_ready{};
     bool recovery_complete{};
+    bool duration_active{};
+    bool timer_expired{};
+    uint32_t duration_remaining_ms{};
+    bool delay_armed{};
+    uint32_t delay_remaining_ms{};
+    StartBlock delay_cancel_reason{StartBlock::NONE};
     Outputs outputs{};
 };
 
@@ -216,11 +229,15 @@ private:
     bool heartbeat_level_{};
     StartBlock start_block_{StartBlock::RECOVERY};
     Outputs outputs_{};
+    uint32_t duration_started_ms_{}, duration_ms_{}, delay_started_ms_{}, delay_ms_{};
+    bool duration_active_{}, timer_expired_{}, delay_armed_{}, previous_delay_arm_{};
+    StartBlock delay_cancel_reason_{StartBlock::NONE};
 
     static uint32_t elapsed(uint32_t now, uint32_t since);
     bool sample_ok(const SensorSample& sample, uint32_t now) const;
     uint32_t current_input_faults(const Inputs& inputs) const;
     bool cold(const Inputs& inputs) const;
+    StartBlock start_block(const Inputs& inputs) const;
     bool flame_rise_proven(const Inputs& inputs) const;
     bool state_may_need_purge(State state) const;
     void transition(State state, uint32_t now);

@@ -95,37 +95,47 @@ void control_task(void*) {
         if (remote_stop || before.state == sirokko::State::LOCKOUT ||
             before.state == sirokko::State::POST_PURGE) heat = false;
         auto lease_state = g_lease_state.load();
+        const bool service_requested = lease_state == LeaseState::REQUESTED && g_lease_purpose.load() != FlashPurpose::AUTOSAVE;
         if (lease_state == LeaseState::RELEASE) {
             ota_lease.release(); local_lease = false;
             g_lease_state.store(LeaseState::IDLE);
         }
         auto context = sirokko::StartStopContext::BLOCKED;
         const bool inhibited = remote_stop || !reset_high || reset.pressed() || g_ota_pending.load() ||
-            local_lease || ota_lease.held() || lease_state == LeaseState::REQUESTED ||
+            local_lease || ota_lease.held() || service_requested ||
             before.faults != sirokko::FAULT_NONE;
-        if (!inhibited && g_outputs.arm_applied()) {
+        if (before.delay_armed || (before.state >= sirokko::State::PREPURGE && before.state <= sirokko::State::RUN_LOW))
+            context = sirokko::StartStopContext::STOP; // Local STOP is never swallowed by a service/UI request.
+        else if (!inhibited && g_outputs.arm_applied()) {
             if (before.state == sirokko::State::WAIT_COOLDOWN && before.start_block == sirokko::StartBlock::NONE)
                 context = sirokko::StartStopContext::START;
-            else if (before.state >= sirokko::State::PREPURGE && before.state <= sirokko::State::RUN_LOW)
-                context = sirokko::StartStopContext::STOP;
         }
         const auto gesture = start.update(start_high, now, context);
         const bool start_event = gesture == sirokko::ButtonGesture::LONG && context == sirokko::StartStopContext::START;
         const bool local_stop = gesture == sirokko::ButtonGesture::LONG && context == sirokko::StartStopContext::STOP;
-        if (start_event) heat = true;
+        if (start_event && settings.delay_minutes == 0) heat = true;
         if (local_stop) heat = false;
         sirokko::OperatorSettings requested{};
         if (xQueueReceive(g_setting_queue, &requested, 0) == pdTRUE && sirokko::operator_settings_valid(requested, config)) {
             settings = requested; g_settings_revision.fetch_add(1);
         }
-        const auto action = menu.tick({u, d, up.pressed(), down.pressed(), local_stop || remote_stop,
+        const auto action = menu.tick({u, d, up.pressed(), down.pressed(), start_event || local_stop || remote_stop ||
+            !reset_high || reset.pressed() || local_lease || ota_lease.held() || service_requested || before.delay_armed,
             gesture == sirokko::ButtonGesture::SHORT}, now, settings, config);
         if (action.settings_changed) g_settings_revision.fetch_add(1);
+        if (action.timer_applied && before.state == sirokko::State::WAIT_COOLDOWN)
+            start.update(start_high, now, sirokko::StartStopContext::BLOCKED); // Never consume an active session's pending STOP.
         if (action.reset_counters) { history.reset_counters(); g_settings_revision.fetch_add(1); }
         sirokko::Inputs in{};
         in.now_ms = now;
         in.heat_enable = heat;
-        in.stop_active = remote_stop;
+        in.stop_active = remote_stop || local_stop;
+        in.duration_minutes = settings.duration_minutes;
+        in.delay_minutes = settings.delay_minutes;
+        in.apply_duration = action.apply_duration;
+        in.arm_delayed_start = start_event && settings.delay_minutes != 0;
+        in.cancel_delayed_start = !reset_high || reset.pressed();
+        in.service_requested = service_requested;
         in.start_pressed = !start_high;
         in.arm_applied = g_outputs.arm_applied();
         if (!in.arm_applied || !previous.arm_ready || local_lease || ota_lease.held()) reset_released_ready = false;
@@ -144,7 +154,8 @@ void control_task(void*) {
         sirokko::ServiceResult lease_result = sirokko::ServiceResult::BUSY;
         if (lease_state == LeaseState::REQUESTED && !start_event && !heat) {
             if (g_lease_purpose.load() == FlashPurpose::OTA) lease_result = ota_lease.acquire(before, in, config, g_outputs.healthy());
-            else if (off(before.outputs) && !before.outputs.fan_request && before.outputs.speed_permille == 0) {
+            else if (off(before.outputs) && !before.outputs.fan_request && before.outputs.speed_permille == 0 &&
+                     (g_lease_purpose.load() != FlashPurpose::AUTOSAVE || (!before.delay_armed && !in.start_pressed))) {
                 local_lease = true;
                 lease_result = sirokko::ServiceResult::OK;
             }
@@ -164,6 +175,10 @@ void control_task(void*) {
         }
         outputs = g_outputs.applied();
         auto status = machine.status(now);
+        if (before.state == sirokko::State::WAIT_COOLDOWN && status.state == sirokko::State::PREPURGE)
+            heat = true; // An accepted one-shot delayed START now owns the ordinary session.
+        if (status.faults != before.faults || (status.state == sirokko::State::POST_PURGE && before.state != status.state))
+            menu.tick({false, false, up.pressed(), down.pressed(), true, false}, now, settings, config);
         status.outputs = outputs;
         g_current_faults.store(status.faults);
         g_flash_outputs_safe.store(ota_lease.held() && !outputs.arm_ready &&
@@ -204,6 +219,7 @@ void control_task(void*) {
             g_frame.settings_ok = g_settings_ok.load(); g_frame.storage_ok = g_storage_ok.load();
             g_frame.network_configured = service_network_configured(); g_frame.network_connected = service_network_connected();
             g_frame.update_active = ota_lease.held(); g_frame.page = menu.page(); g_frame.selection = menu.selection();
+            g_frame.staged_minutes = menu.staged_minutes(); g_frame.editing_delay = menu.editing_delay();
             g_history_snapshot = history;
             xSemaphoreGive(g_snapshot_mutex);
         }
@@ -225,6 +241,7 @@ void storage_task(void*) {
         sirokko::UiFrame f{};
         if (!runtime_snapshot(&f)) continue;
         const uint32_t revision = f.settings_revision;
+        if (f.status.delay_armed) continue; // Internal autosave must not cancel an operator's armed delay.
         const bool fault_change = f.status.faults != persisted_faults;
         const bool rare_snapshot = static_cast<uint32_t>(ms() - last_snapshot) >= 900000;
         const bool new_event = f.last_event.boot_id != persisted_event.boot_id ||
@@ -234,7 +251,7 @@ void storage_task(void*) {
         if (static_cast<uint32_t>(ms() - last_attempt) < (g_storage_ok.load() ? 5000u : 60000u)) continue;
         last_attempt = ms();
         // No flash write while ignition, RUN or required fan purge is active. Hardware watchdog is never serviced by this worker.
-        if (runtime_acquire_flash(FlashPurpose::LOCAL_SETTINGS) != sirokko::ServiceResult::OK) continue;
+        if (runtime_acquire_flash(FlashPurpose::AUTOSAVE) != sirokko::ServiceResult::OK) continue;
         sirokko::CommandHistory history;
         if (xSemaphoreTake(g_snapshot_mutex, pdMS_TO_TICKS(50)) != pdTRUE) { runtime_release_flash(); continue; }
         f = g_frame; history = g_history_snapshot;
@@ -266,6 +283,9 @@ void print_status() {
         static_cast<unsigned>(f.hot_air.quality), f.hot_air_fault, static_cast<unsigned long>(f.now_ms - f.hot_air.sample_ms));
     std::printf("COMMANDS fan=%u fuel=%u glow=%u permit=%u safety_input=%u storage=%u settings=%u\n",
         o.speed_permille, o.fuel_command, o.glow_command, o.fuel_permit, f.safety_ok, f.storage_ok, f.settings_ok);
+    std::printf("duration_minutes=%u duration_active=%u duration_remaining_ms=%lu timer_expired=%u delay_minutes=%u delay_armed=%u delay_remaining_ms=%lu delay_cancel_reason=%u\n",
+        f.settings.duration_minutes, f.status.duration_active, static_cast<unsigned long>(f.status.duration_remaining_ms), f.status.timer_expired,
+        f.settings.delay_minutes, f.status.delay_armed, static_cast<unsigned long>(f.status.delay_remaining_ms), static_cast<unsigned>(f.status.delay_cancel_reason));
 }
 void help() {
     std::printf("status | history [saved] | counters | help | reboot\n"

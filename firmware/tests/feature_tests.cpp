@@ -24,7 +24,7 @@ void hysteresis() {
         s.in.room.milli_c=s.in.setpoint_milli_c+h/2-1; s.tick();
         check(s.state()!=State::POST_PURGE,"one below upper boundary");
         s.in.room.milli_c++; s.tick(); check(s.state()==State::POST_PURGE,"exact upper boundary"); expect_safe(s.out);
-        OperatorSettings settings{1,s.in.setpoint_milli_c,h,0};
+        OperatorSettings settings{kOperatorSchema,s.in.setpoint_milli_c,h,0};
         check(room_zone({settings.setpoint_milli_c-h/2,s.in.now_ms,SensorQuality::OK},settings,s.in.now_ms,1000)==RoomZone::BELOW,"display lower boundary matches controller");
         check(room_zone({settings.setpoint_milli_c+h/2,s.in.now_ms,SensorQuality::OK},settings,s.in.now_ms,1000)==RoomZone::ABOVE,"display upper boundary matches controller");
     }
@@ -72,10 +72,10 @@ void counters_history() {
 }
 void persisted_operator() {
     fake_idf::reset(); CommissioningStore store; check(store.begin(),"NVS begin"); const auto c=test_config();
-    OperatorSettings settings{1,22500,3000,-1250}; check(store.save_operator_settings(settings,c),"operator save");
+    OperatorSettings settings{kOperatorSchema,22500,3000,-1250}; check(store.save_operator_settings(settings,c),"operator save");
     bool integrity{}; auto loaded=store.load_operator_settings(c,&integrity); check(integrity && loaded.room_offset_milli_c==-1250 && loaded.hysteresis_milli_c==3000,"operator readback");
     auto invalid=settings; invalid.hysteresis_milli_c=0; check(!store.save_operator_settings(invalid,c),"operator bounds persisted");
-    fake_idf::nvs["operator_v1"].back()^=1; store.load_operator_settings(c,&integrity); check(!integrity,"corrupt settings cannot silently default and START");
+    fake_idf::nvs["operator_v2"].back()^=1; store.load_operator_settings(c,&integrity); check(!integrity,"corrupt settings cannot silently default and START");
     CommandCounters counters{4,2,123,456}; check(store.save_counters(counters),"save counters"); CommandCounters out{}; check(store.load_counters(&out) && out.glow_ms==456,"read counters");
     fake_idf::nvs["counters_v1"][0]=2; check(!store.load_counters(&out),"newer counter schema not erased");
 }

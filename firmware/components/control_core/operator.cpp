@@ -13,7 +13,8 @@ bool operator_settings_valid(const OperatorSettings& s, const Config& c) {
     return s.schema == kOperatorSchema && s.setpoint_milli_c >= c.setpoint_min_milli_c &&
            s.setpoint_milli_c <= c.setpoint_max_milli_c &&
            s.hysteresis_milli_c >= kHysteresisMinMilliC && s.hysteresis_milli_c <= kHysteresisMaxMilliC &&
-           s.room_offset_milli_c >= -kRoomOffsetLimitMilliC && s.room_offset_milli_c <= kRoomOffsetLimitMilliC;
+           s.room_offset_milli_c >= -kRoomOffsetLimitMilliC && s.room_offset_milli_c <= kRoomOffsetLimitMilliC &&
+           s.duration_minutes <= kTimerMaximumMinutes && s.delay_minutes <= kTimerMaximumMinutes;
 }
 SensorSample calibrated_room(const SensorSample& raw, int32_t offset, uint32_t now, uint32_t stale) {
     SensorSample sample = raw;
@@ -44,7 +45,7 @@ bool CommandHistory::restore_events(const EventRecord* events, size_t count) {
         const auto& e = events[i];
         if (static_cast<unsigned>(e.from) > static_cast<unsigned>(State::LOCKOUT) ||
             static_cast<unsigned>(e.to) > static_cast<unsigned>(State::LOCKOUT) ||
-            static_cast<unsigned>(e.reason) > static_cast<unsigned>(StopReason::BOOT) || e.boot_id == 0) return false;
+            static_cast<unsigned>(e.reason) > static_cast<unsigned>(StopReason::DELAY_CANCELLED) || e.boot_id == 0) return false;
     }
     for (size_t i = 0; i < count; ++i) events_[i] = events[i];
     count_ = count; next_ = count % kEventCapacity;
@@ -56,7 +57,8 @@ void CommandHistory::observe(const Status& s, uint64_t now, StopReason reason) {
         if (run(previous_.state)) counters_.run_ms = saturated_add(counters_.run_ms, dt);
         if (previous_.outputs.glow_command) counters_.glow_ms = saturated_add(counters_.glow_ms, dt);
     }
-    const bool changed = !initialized_ || previous_.state != s.state || previous_.faults != s.faults;
+    const bool changed = !initialized_ || previous_.state != s.state || previous_.faults != s.faults ||
+        previous_.delay_armed != s.delay_armed;
     if (changed) {
         if (s.state == State::PREPURGE && (!initialized_ || previous_.state != s.state)) {
             counters_.starts = saturated_add(counters_.starts, 1);
@@ -67,7 +69,10 @@ void CommandHistory::observe(const Status& s, uint64_t now, StopReason reason) {
         }
         if (!initialized_) reason = StopReason::BOOT;
         else if (s.faults) reason = StopReason::FAULT;
-        else if (s.state == State::POST_PURGE && reason == StopReason::NONE) reason = StopReason::THERMOSTAT;
+        else if (s.state == State::POST_PURGE && reason == StopReason::NONE)
+            reason = s.timer_expired ? StopReason::TIMER : StopReason::THERMOSTAT;
+        else if (s.delay_armed && !previous_.delay_armed) reason = StopReason::DELAY_ARMED;
+        else if (previous_.delay_armed && s.state != State::PREPURGE && reason == StopReason::NONE) reason = StopReason::DELAY_CANCELLED;
         else if (previous_.state == State::LOCKOUT && !s.faults) reason = StopReason::RESET;
         events_[next_] = {boot_id_, session_id_, now, previous_.state, s.state, reason, s.faults};
         next_ = (next_ + 1) % kEventCapacity;

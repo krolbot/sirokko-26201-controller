@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
             receive(packet()); require(net_fake::stops==1,"replay STOP");
             receive(packet("start",2)); check_reply("FORBIDDEN");
             uint32_t seq=3;
-            for(const char* op:{"reset","fuel","glow","config"}) receive(packet(op,seq++));
+            for(const char* op:{"reset","fuel","glow","config","arm_delayed_start","delay","timer"}) receive(packet(op,seq++));
             require(net_fake::stops==1,"forbidden output controls");
             net_fake::time_us+=31'000'000; receive(packet("stop",99)); require(net_fake::stops==1,"expired STOP");
         }},
@@ -136,11 +136,14 @@ int main(int argc, char** argv) {
             const char flat[]="{\"value\":\"quoted { brackets [] and \\\"escaped\\\"\"}";
             auto* parsed=parse_flat_object(flat,sizeof(flat)-1); require(parsed,"flat JSON string handling"); cJSON_Delete(parsed);
             sirokko::UiFrame f{}; f.counters={UINT64_MAX,UINT64_MAX,UINT64_MAX,UINT64_MAX};
+            f.settings.duration_minutes=f.settings.delay_minutes=1440; f.status.delay_armed=true;
+            f.status.duration_remaining_ms=f.status.delay_remaining_ms=86400000;
             f.now_ms=f.boot_id=f.session_id=f.status.faults=f.config.profile_revision=UINT32_MAX;
             f.raw_room.milli_c=f.room.milli_c=f.exhaust.milli_c=f.hot_air.milli_c=INT32_MIN;
             char out[1536]{}; require(format_telemetry(out,sizeof(out),f,g_nonce),"full telemetry overflow");
             parsed=cJSON_Parse(out); require(parsed,"invalid telemetry JSON");
-            require(std::strcmp(cJSON_GetObjectItemCaseSensitive(parsed,"command_run_ms")->valuestring,"18446744073709551615")==0,"64bit telemetry precision"); cJSON_Delete(parsed);
+            require(std::strcmp(cJSON_GetObjectItemCaseSensitive(parsed,"command_run_ms")->valuestring,"18446744073709551615")==0,"64bit telemetry precision");
+            require(cJSON_GetObjectItemCaseSensitive(parsed,"delay_armed")->valueint==1 && cJSON_GetObjectItemCaseSensitive(parsed,"delay_remaining_ms")->valueint==86400000 && cJSON_GetObjectItemCaseSensitive(parsed,"duration_minutes")->valueint==1440,"timer telemetry fields"); cJSON_Delete(parsed);
             char tiny[8]{}; require(!format_telemetry(tiny,sizeof(tiny),f,g_nonce),"truncated telemetry reported valid");
         }},
         {"version_hash_key_and_config_validation",[]{

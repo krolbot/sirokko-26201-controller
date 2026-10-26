@@ -5,7 +5,7 @@
 #include "sirokko/control.hpp"
 
 namespace sirokko {
-inline constexpr uint32_t kOperatorSchema = 1;
+inline constexpr uint32_t kOperatorSchema = 2;
 inline constexpr int32_t kHysteresisMinMilliC = 500;
 inline constexpr int32_t kHysteresisMaxMilliC = 10000;
 inline constexpr int32_t kRoomOffsetLimitMilliC = 10000;
@@ -15,6 +15,8 @@ struct OperatorSettings {
     int32_t setpoint_milli_c{20000};
     int32_t hysteresis_milli_c{2000};
     int32_t room_offset_milli_c{};
+    uint16_t duration_minutes{};
+    uint16_t delay_minutes{};
 };
 bool operator_settings_valid(const OperatorSettings&, const Config&);
 SensorSample calibrated_room(const SensorSample& raw, int32_t offset_milli_c, uint32_t now_ms,
@@ -29,7 +31,8 @@ struct CommandCounters {
     uint64_t run_ms{};
     uint64_t glow_ms{};
 };
-enum class StopReason : uint8_t { NONE, LOCAL_STOP, REMOTE_STOP, THERMOSTAT, FAULT, RESET, BOOT };
+// Append only: persisted history_v1 keeps its layout and all old numeric meanings.
+enum class StopReason : uint8_t { NONE, LOCAL_STOP, REMOTE_STOP, THERMOSTAT, FAULT, RESET, BOOT, TIMER, DELAY_ARMED, DELAY_CANCELLED };
 struct EventRecord {
     uint32_t boot_id{};
     uint32_t session_id{};

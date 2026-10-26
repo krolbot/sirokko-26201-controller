@@ -2,7 +2,7 @@
 #include "sirokko/ui.hpp"
 #include "sirokko/service.hpp"
 
-enum class FlashPurpose : uint8_t { LOCAL_SETTINGS, OTA };
+enum class FlashPurpose : uint8_t { LOCAL_SETTINGS, OTA, AUTOSAVE };
 bool runtime_snapshot(sirokko::UiFrame*);
 void runtime_remote_stop();
 sirokko::ServiceResult runtime_acquire_flash(FlashPurpose);

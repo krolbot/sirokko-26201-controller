@@ -20,7 +20,7 @@ namespace {
 bool sensor_freeze{};
 void prepare(bool accepted=true) {
     sensor_freeze=false;
-    fake_idf::observer={}; fake_idf::reset(); rt_fake::tick={}; rt_fake::delay={}; rt_fake::time_us=0;
+    fake_idf::observer={}; fake_idf::reset(); rt_fake::tick={}; rt_fake::delay={}; rt_fake::time_us=0; rt_fake::next_step_ms=0;
     rt_fake::valid_marks=rt_fake::rollback_marks=rt_fake::wdt_resets=0; rt_fake::image_state=0;
     delete g_sensor_queue; delete g_setting_queue; delete g_snapshot_mutex; delete g_service_mutex;
     g_sensor_queue=xQueueCreate(1,sizeof(SensorFrame)); g_setting_queue=xQueueCreate(1,sizeof(OperatorSettings));
@@ -32,7 +32,7 @@ void prepare(bool accepted=true) {
     g_control_progress.store(0); g_flash_outputs_safe.store(false); g_current_faults.store(0);
     g_display_progress.store(0); g_passes.store(0); g_settings_revision.store(0); g_saved_revision.store(0);
     g_startup_faults=accepted?FAULT_NONE:FAULT_CONFIG; g_inputs_ok=g_config_integrity=g_records_ok=true;
-    g_initial_settings={1,20000,1000,0}; g_initial_counters={}; g_frame={}; g_history_snapshot={};
+    g_initial_settings={kOperatorSchema,20000,1000,0}; g_initial_counters={}; g_frame={}; g_history_snapshot={};
     g_initial_history.begin(g_store.boot_count(),g_initial_counters);
     g_lease_state.store(LeaseState::IDLE); g_lease_result.store(ServiceResult::BUSY);
     fake_idf::levels[5]=1; fake_idf::levels[6]=fake_idf::levels[7]=fake_idf::levels[39]=fake_idf::levels[40]=1;

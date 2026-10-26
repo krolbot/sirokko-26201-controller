@@ -319,6 +319,8 @@ bool format_telemetry(char* payload, size_t capacity, const sirokko::UiFrame& f,
         "{\"version\":\"%s\",\"board\":\"%s\",\"nonce\":\"%s\",\"uptime_ms\":%lu,\"boot\":%lu,\"session\":%lu,"
         "\"last_sequence\":%lu,\"state\":\"%s\",\"faults\":%lu,\"start_block\":%u,\"config_schema\":%lu,\"profile_revision\":%lu,\"run_low_qualified\":%u,"
         "\"setpoint_mC\":%ld,\"hysteresis_mC\":%ld,\"room_offset_mC\":%ld,\"settings_saved\":%u,"
+        "\"duration_minutes\":%u,\"duration_active\":%u,\"duration_remaining_ms\":%lu,\"timer_expired\":%u,"
+        "\"delay_minutes\":%u,\"delay_armed\":%u,\"delay_remaining_ms\":%lu,\"delay_cancel_reason\":%u,"
         "\"room_raw_mC\":%ld,\"room_mC\":%ld,\"room_q\":%u,\"room_age_ms\":%lu,"
         "\"exh_mC\":%ld,\"exh_q\":%u,\"exh_fault\":%u,\"exh_age_ms\":%lu,\"air_mC\":%ld,\"air_q\":%u,\"air_fault\":%u,\"air_age_ms\":%lu,"
         "\"fan_command_permille\":%u,\"fuel_command\":%u,\"glow_command\":%u,\"permit_command\":%u,\"safety_ok\":%u,\"storage_ok\":%u,"
@@ -328,6 +330,8 @@ bool format_telemetry(char* payload, size_t capacity, const sirokko::UiFrame& f,
         static_cast<unsigned long>(g_last_sequence.load()),sirokko::state_name(s.state),static_cast<unsigned long>(s.faults),static_cast<unsigned>(s.start_block),
         static_cast<unsigned long>(f.config.schema_version),static_cast<unsigned long>(f.config.profile_revision),static_cast<unsigned>(f.config.run_low_qualified),
         static_cast<long>(f.settings.setpoint_milli_c),static_cast<long>(f.settings.hysteresis_milli_c),static_cast<long>(f.settings.room_offset_milli_c),static_cast<unsigned>(f.settings_saved),
+        static_cast<unsigned>(f.settings.duration_minutes),static_cast<unsigned>(s.duration_active),static_cast<unsigned long>(s.duration_remaining_ms),static_cast<unsigned>(s.timer_expired),
+        static_cast<unsigned>(f.settings.delay_minutes),static_cast<unsigned>(s.delay_armed),static_cast<unsigned long>(s.delay_remaining_ms),static_cast<unsigned>(s.delay_cancel_reason),
         static_cast<long>(f.raw_room.milli_c),static_cast<long>(f.room.milli_c),static_cast<unsigned>(f.room.quality),static_cast<unsigned long>(f.now_ms-f.raw_room.sample_ms),
         static_cast<long>(f.exhaust.milli_c),static_cast<unsigned>(f.exhaust.quality),static_cast<unsigned>(f.exhaust_fault),static_cast<unsigned long>(f.now_ms-f.exhaust.sample_ms),
         static_cast<long>(f.hot_air.milli_c),static_cast<unsigned>(f.hot_air.quality),static_cast<unsigned>(f.hot_air_fault),static_cast<unsigned long>(f.now_ms-f.hot_air.sample_ms),
