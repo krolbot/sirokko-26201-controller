@@ -1,0 +1,85 @@
+Checking "python3" ...
+Python 3.12.3
+"python3" has been detected
+Activating ESP-IDF 5.5
+Setting IDF_PATH to '/opt/esp/idf'.
+* Checking python version ... 3.12.3
+* Checking python dependencies ... OK
+* Deactivating the current ESP-IDF environment (if any) ... OK
+* Establishing a new ESP-IDF environment ... OK
+* Identifying shell ... bash
+* Detecting outdated tools in system ... OK - no outdated tools found
+* Shell completion ... Autocompletion code generated
+
+Done! You can now compile ESP-IDF projects.
+Go to the project directory and run:
+
+  idf.py build
+esptool.py v4.11.dev1
+File size: 1065536 (bytes)
+
+ESP32S3 image header
+====================
+Image version: 1
+Entry point: 0x403757cc
+Segments: 6
+Flash size: 8MB
+Flash freq: 80m
+Flash mode: DIO
+
+ESP32S3 extended image header
+=============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 9 (ESP32-S3)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v0.99
+
+Segments information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x28f00  0x3c0c0020  0x00000018  DROM
+      1  0x05a28  0x3fc9f600  0x00028f20  BYTE_ACCESSIBLE, MEM_INTERNAL, DRAM
+      2  0x016c0  0x40374000  0x0002e950  MEM_INTERNAL, IRAM
+      3  0xba370  0x42000020  0x00030018  IROM
+      4  0x19e5c  0x403756c0  0x000ea390  MEM_INTERNAL, IRAM
+      5  0x00020  0x50000000  0x001041f4  RTC_DATA
+
+ESP32S3 image footer
+====================
+Checksum: 0xb9 (valid)
+Validation hash: a3165f1cd166d20e7608ca6d0af29559d0a31ee2134ffd6d1fc6c21e603b1a76 (valid)
+
+Application information
+=======================
+Project name: sirokko_26201_controller
+App version: 0.1.9-DRAFT
+Compile time: Oct 26 2026 02:05:16
+ELF file SHA256: 1a399bf371d051d44794149e23fc8534d8270bfef87a82790974e8dc7e115fcd
+ESP-IDF: v5.5.2
+Minimal eFuse block revision: 0.0
+Maximal eFuse block revision: 1.99
+MMU page size: 64 KB
+Secure version: 0
+esptool.py v4.11.dev1
+File size: 21408 (bytes)
+Image version: 1
+Entry point: 403c8930
+3 segments
+
+Segment 1: len 0x015c8 load 0x3fce28e0 file_offs 0x00000018 [BYTE_ACCESSIBLE,MEM_INTERNAL,DRAM]
+Segment 2: len 0x00d4c load 0x403c8700 file_offs 0x000015e8 [MEM_INTERNAL,IRAM]
+Segment 3: len 0x03038 load 0x403cb700 file_offs 0x0000233c [MEM_INTERNAL,IRAM]
+Checksum: 0e (valid)
+Validation Hash: 0c0039745eb30d9a357ede819a5315919a6824c8de885367ae6ee6206cd23de7 (valid)
+# ESP-IDF Partition Table
+# Name, Type, SubType, Offset, Size, Flags
+nvs,data,nvs,0x9000,24K,
+phy_init,data,phy,0xf000,4K,
+otadata,data,ota,0x10000,8K,
+ota_0,app,ota_0,0x20000,3M,
+ota_1,app,ota_1,0x320000,3M,
+coredump,data,coredump,0x620000,64K,
+Parsing binary partition input...
+Verifying table...

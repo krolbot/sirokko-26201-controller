@@ -1,0 +1,199 @@
+latched failure=258 shutdown=0; reboot required
+latched failure=258 shutdown=0; reboot required
+latched failure=258 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=259 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=-1; reboot required
+PASS pwm_hardware_boundaries
+PASS real_adapter_off_pwm_dc_pwm_off
+PASS real_adapter_rejects_unqualified_commands
+PASS real_adapter_initialization_errors
+PASS real_adapter_runtime_errors
+PASS real_adapter_stop_failure_detaches_gpio
+PASS cli_store_validation_and_token_bypass
+NVS profile rejected; CONFIG_PWM=1. Correct parameters, validate, accept and reboot. No clamping.
+NVS profile rejected; CONFIG_PWM=1. Correct parameters, validate, accept and reboot. No clamping.
+NVS profile rejected; CONFIG_PWM=1. Correct parameters, validate, accept and reboot. No clamping.
+NVS profile rejected; CONFIG_PWM=0. Correct parameters, validate, accept and reboot. No clamping.
+PASS legacy_accepted_nvs_out_of_range
+PASS output_fault_and_config_edit_latch
+PASS static_recovery_and_unchanged_purge
+PASS config_validation
+PASS uncommissioned_image_is_locked
+PASS recovery_purge_after_power_loss_from_every_state
+PASS repeated_power_loss_restarts_recovery_timer
+PASS recovery_blockers_and_request_edges
+PASS latched_fault_survives_reboot_until_qualified_reset
+PASS cold_start_sequence_and_fuel_gate
+PASS glow_always_implies_fan_during_startup
+PASS ignition_timeout_latches
+PASS flame_confirmation_after_glow_off
+PASS confirmation_drop_latches
+PASS flame_loss_latches
+PASS pwm_low_speed
+PASS room_stop_and_purge
+PASS stop_from_every_active_state
+PASS sensor_failure_matrix
+PASS stale_data_latches
+PASS self_test_wait_and_timeout
+PASS safety_input_fail_closed
+PASS local_ui_failure_fails_closed
+PASS detected_display_init_failure_preserves_recovery_purge
+PASS display_transfer_failure_during_recovery_preserves_purge
+PASS shared_spi_display_contract
+PASS overtemperature_boundaries
+PASS hot_start_is_inhibited
+PASS manual_reset_no_autostart
+PASS set_dominant_latch_reset_handshake
+PASS reset_release_cannot_qualify_safety
+PASS reset_blocker_cancels_qualification
+PASS coupled_hardware_latch_reset_protocol
+PASS coupled_hardware_latch_debounced_reset_protocol
+PASS watchdog_only_when_healthy
+PASS watchdog_falling_edges_with_loop_jitter
+PASS purge_needs_cold_and_minimum_time
+PASS restart_inhibit
+PASS timer_wraparound
+PASS exact_timer_boundaries
+PASS setpoint_out_of_range_locks
+PASS active_low_button_held_at_boot_is_ignored
+PASS active_low_button_rejects_bounce_and_wraps
+RESULT 50/50 passed
+PASS room_raw_calibration_quality_and_staleness
+PASS thermostat_hysteresis_boundaries
+PASS low_combustion_requires_explicit_qualification
+PASS room_noise_keeps_continuous_clutch
+PASS thermostat_stop_never_auto_reignites
+PASS OTA_lease_all_machine_states_and_START_race
+PASS command_counters_ring_wrap_saturation_reset
+PASS real_NVS_operator_counters_corruption
+PASS legacy_NVS_and_boot_identity_fail_closed
+PASS history_across_reboot_without_duplicate_failures
+PASS real_stage_countdown
+RESULT 11/11 passed
+latched failure=258 shutdown=0; reboot required
+latched failure=-1 shutdown=-1; reboot required
+PASS real_control_task_REMOTE_STOP_each_ignition_stage
+PASS real_menu_keeps_long_START_and_remote_STOP_independent
+PASS GPIO_OFF_ack_before_flash_and_START_race
+PASS uncommissioned_profile_local_USB_repair
+PASS GPIO_failure_rejects_flash_ack
+PASS lease_timeout_never_reuses_previous_OK
+PASS stalled_UI_and_sensor_keep_control_alive
+PASS real_storage_preserves_bad_records_and_latches_write_error
+PASS real_health_task_marks_only_valid_image
+PASS real_health_task_rolls_back_bad_image
+PASS stalled_control_cannot_approve_pending_image
+RESULT 11/11 passed (real app tasks; injected scheduler/peripherals/otadata)
+PASS real_ST7789_config_10MHz_CS_cycles_and_16strips
+PASS real_display_frame_coherence_and_DMA_ownership
+SPI LOAD MODEL: 10s, control=501, falling_edges=250, max_falling_ms=40, max_MAX_wait_us=7625, transactions=3001
+PASS shared_SPI_arbitration_load_STOP_heartbeat_model
+PASS real_display_stall_deadline_core_fuel_OFF
+RESULT 4/4 passed (real display/core; injected SDK, nominal serial-bus model, NOT physical SPI)
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+latched failure=258 shutdown=0; reboot required
+latched failure=-1 shutdown=0; reboot required
+PASS gesture_short_long_bounce_repeat_wrap
+PASS gesture_boot_hold_inhibit_role_change
+PASS GPIO8_released_init_settle_real_pad_heartbeat_order
+PASS GPIO8_API_and_stuck_LOW_independent_barriers
+PASS recovery_no_deadlock_RESET_START_and_purge_gates
+PASS actual_draft05_NVS_rejected_new_acceptance
+PASS real_app_short_is_UI_only
+PASS real_app_long_STOP_all_seven_active_stages
+PASS real_app_START_loses_to_RESET_FAULT_OTA_service
+PASS real_app_recovery_held_RESET_new_physical_edge
+PASS real_app_held_boot_START_requires_new_gesture
+PASS real_app_held_STOP_preserves_purge_no_restart
+PASS real_app_GPIO8_pad_failure_latches_output_fault
+RESULT 13/13 passed (DRAFT-06 host models, NOT physical qualification)
+latched failure=-1 shutdown=0; reboot required
+PASS real_app_duration_OFF_1m_1h_24h_before_at_after_wrap
+PASS real_app_duration_expiry_all_seven_active_states
+PASS real_app_delay_1m_1h_24h_then_independent_duration_no_repeat
+PASS real_app_fresh_blockers_and_STOP_RESET_FAULT_OTA_service_deadline_priority
+PASS real_app_long_cancel_hold_no_purge_and_new_explicit_rearm
+PASS real_app_physical_menu_staged_apply_DOWN_short_cancel
+PASS real_app_editor_STOP_FAULT_local_long_and_restart_now
+PASS core_staging_OFF_expired_apply_and_STOP_FAULT_priority
+PASS NVS_legacy_newer_corrupt_bounds_history_and_reboot
+PASS real_app_autosave_stale_snapshot_qualification_and_deadline_races
+PASS menu_independent_fields_bounds_wrap_timeout_and_fresh_post_apply_LONG
+RESULT 11/11 passed (production app/core/outputs; virtual monotonic time; NO physical qualification)
+PASS home_and_edit_bounds
+PASS chord_latching_boot_and_timeout
+PASS counter_reset_requires_fresh_long_chord
+PASS renderer_wire_format_and_pages
+RESULT 4/4 passed
+build-host/ui/home.ppm
+build-host/ui/settings.ppm
+build-host/ui/setpoint.ppm
+build-host/ui/hysteresis.ppm
+build-host/ui/room_offset.ppm
+build-host/ui/diagnostics.ppm
+build-host/ui/profile.ppm
+build-host/ui/counters.ppm
+build-host/ui/reset_counters.ppm
+build-host/ui/version.ppm
+build-host/ui/fault.ppm
+build-host/ui/diagnostics_fault.ppm
+build-host/ui/timer_settings.ppm
+build-host/ui/timer_hours_24.ppm
+build-host/ui/timer_minutes_24.ppm
+build-host/ui/timer_confirm_restart.ppm
+build-host/ui/timer_confirm_OFF.ppm
+build-host/ui/delay_confirm_not_armed.ppm
+build-host/ui/timer_run_24h.ppm
+build-host/ui/timer_expired_purge.ppm
+build-host/ui/delay_armed.ppm
+build-host/ui/delay_cancelled_hot.ppm
+PASS retained_replay_expiry_and_forbidden_commands
+PASS reconnect_rotates_nonce_and_discards_old_commands
+PASS unsigned_manifest_never_acquires_flash
+PASS signed_manifest_metadata_is_bound
+PASS busy_does_not_stop_or_interrupt_combustion
+PASS oversize_and_expired_do_not_write
+PASS TLS_failure_releases_lease_without_boot_selection
+PASS truncated_disconnect_and_OTA_error_abort
+PASS wrong_image_version_and_project_abort
+PASS full_image_hash_checked_before_finish
+PASS valid_signed_OTA_keeps_exclusive_lease_through_restart
+PASS strict_JSON_duplicate_trailing_NUL_and_wrong_nonce
+PASS signed_packet_real_parser_queue_and_old_connection
+PASS wrong_target_version_and_disconnected_auth_failure
+PASS native_finish_error_keeps_old_boot_and_releases_lease
+PASS bounded_flat_JSON_and_worst_case_telemetry
+PASS version_hash_key_and_config_validation
+RESULT 17/17 passed (real adapter; injected TLS/RTOS/flash, OpenSSL RSA/SHA)
+test_USB_import_is_owner_only_and_does_not_echo (__main__.ServiceArtifactsTests.test_USB_import_is_owner_only_and_does_not_echo) ... ok
+test_invalid_version_HTTP_and_sequence (__main__.ServiceArtifactsTests.test_invalid_version_HTTP_and_sequence) ... ok
+test_private_file_and_no_overwrite (__main__.ServiceArtifactsTests.test_private_file_and_no_overwrite) ... ok
+test_signed_request_is_accepted_by_production_parser_and_RSA (__main__.ServiceArtifactsTests.test_signed_request_is_accepted_by_production_parser_and_RSA) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.418s
+
+OK

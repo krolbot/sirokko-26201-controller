@@ -1,0 +1,162 @@
+{
+  "commit": "9164e149e0cb0763e33e3fe537b120a52beefdcf",
+  "remote_main": "9164e149e0cb0763e33e3fe537b120a52beefdcf",
+  "files": [
+    {
+      "path": "docs/CURRENT_STATE_RU.md",
+      "size": 170966,
+      "sha256": "d80b74168c4b79b4cd8f34db8ffa6c459ea637a2e6a2d26a1ff5d665153ac37d"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/ROOM_DQ_SHA256.json",
+      "size": 3133,
+      "sha256": "bc1b1fab8498355077f64ca144cd82ecb166d20f13f512a7f4e3c72f8976b035"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko26201_control_motor_candidate.kicad_pcb",
+      "size": 756237,
+      "sha256": "9737e5b8b3d0ddcb12535d479f71ca41ab978aa10b0d7d524521008083633f6e"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko26201_control_motor_candidate.kicad_pro",
+      "size": 9921,
+      "sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko26201_control_motor_candidate.kicad_sch",
+      "size": 250252,
+      "sha256": "82e199e7acffd2b6478b0a0131ba9dfd83bd9774b2d4b35113609f7be13a2ff1"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_D101_STPS5H100B.kicad_sym",
+      "size": 1482,
+      "sha256": "738e30a8c1005aac57b5cdacd8461cd98282192fdbe548463a42e042488b3193"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod",
+      "size": 1344,
+      "sha256": "27f65864bc168b4c158d426d6fcb3ad4b6147478605c1bd60707c7998d8c0d43"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Power.kicad_sym",
+      "size": 19108,
+      "sha256": "7e3c983b331a05e83057f9bc339c4d657cb5149197b4b8ab31af722def3fe844"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod",
+      "size": 2960,
+      "sha256": "324d7ec3faa2b6df84d861bb197388c17ead8c1e22b0139826a8a445b6b20998"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Power.pretty/WSLP2726.kicad_mod",
+      "size": 1253,
+      "sha256": "79640b947975b765f1f1864f118c11103dd9f3a779c254cbb2b2fbfa994a12b0"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_MECHANICAL_PINMAP_HOLD.kicad_mod",
+      "size": 3299,
+      "sha256": "93dbfee1534bbc07a4b52e9934e5e2f8588a41025af32d0b9fadcee8d078183d"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Safety.kicad_sym",
+      "size": 23614,
+      "sha256": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod",
+      "size": 4785,
+      "sha256": "f6617d430df6ec2596055e3da0aa02421b8201f905586f24d462e8e7c8c2e0ab"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/Sirokko_thermal.kicad_sym",
+      "size": 12967,
+      "sha256": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/fp-lib-table",
+      "size": 643,
+      "sha256": "352b38be719ecbe937d904b6450e4f05aa04ed4c238eeb48aa85f5a79a612bbd"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/images_room/ROOM_DQ_ROUTING_RU.md",
+      "size": 6915,
+      "sha256": "2791516efea32cefce00b0736ebdcc74ff490d14ad2b70ee6225cd8bac8fb889"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/images_room/bottom.svg",
+      "size": 81711,
+      "sha256": "27dd39f990d6cef0f3b2db4febf364d2a8dd7850c847348f6b1bddeec00d0900"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/images_room/bottom_DRAFT.png",
+      "size": 119625,
+      "sha256": "314ba1c8a6c151ebeda77a5ba9b3c5f5f93a710c43b424db69b8439167f4b96b"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/images_room/top.svg",
+      "size": 574181,
+      "sha256": "dc327c488400b3684c316904f153738ed15370bb669eb3c013078b107b27b392"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/images_room/top_DRAFT.png",
+      "size": 192525,
+      "sha256": "c0c69f0d88601c265f655c1d56e2a7d33068018c712d3a61642a618df64408b3"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/logic_power_24_5_DRAFT.kicad_sch",
+      "size": 63078,
+      "sha256": "3de1496ddb55bd33571a223ca2ac75078050966e29e081a559b43627c22e2929"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/motor_pwm_DRAFT.kicad_sch",
+      "size": 50905,
+      "sha256": "803ec26b424b92c8fbe083e4b72e898c7e9e4752c73e0e1fc6002330bd1f8b6c"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/motor_pwm_REBUILD.kicad_sch",
+      "size": 112151,
+      "sha256": "2c6f036e65544ed8171605a88dcd515d642d8e1140f6d7515af9bf94b53c6a83"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/motor_pwm_REBUILD.kicad_sym",
+      "size": 3618,
+      "sha256": "a9b9577029bdd3f964f1fff16d3c560f569feb6e57f39aea128396c7fcb640e8"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/power_return_reset_DRAFT.kicad_sch",
+      "size": 49978,
+      "sha256": "f4b2923e341b4ce732de9ece37af8edb61fad1e8b91c84cb8fe34faa7b120436"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/relay_level_shift_REVB.kicad_sch",
+      "size": 41568,
+      "sha256": "02bfe8dee487c0ef8236a3f6ae676ef632495943c226765dbe7f65abcc0cb038"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/reports_room_dq/baseline.json",
+      "size": 63747,
+      "sha256": "6993b8ffa5638b21534d5fe0d145e93d9f537cd060e70c7cff7e0dfd313a24b4"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/reports_room_dq/j12_dq_v3.json",
+      "size": 60617,
+      "sha256": "7e505a5bf49c62fb41f68c5ec0e4494773a3054182e9f2ebbeeeab8b06bb5d15"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/reports_room_dq/native_acceptance.json",
+      "size": 507,
+      "sha256": "2bd554a60b69694200fe54e1de0bdfc714f458b71977df828d8c627c8094e7f9"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/reports_room_dq/root_erc.json",
+      "size": 1435,
+      "sha256": "ce280cce00fce7abb46a0aa042675ccc2e3fbee0b25c9f676f308314065f99db"
+    },
+    {
+      "path": "hardware/candidates/room_ds18b20_routing_wip/sym-lib-table",
+      "size": 367,
+      "sha256": "51f7bee0a7023809543336252774b714866757c9b7cb10b2b77ba3ecb101aac2"
+    }
+  ],
+  "verified": 31
+}

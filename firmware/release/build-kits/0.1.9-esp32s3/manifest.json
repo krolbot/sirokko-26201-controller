@@ -1,0 +1,119 @@
+{
+  "version": "0.1.9-DRAFT",
+  "status": "BENCH ONLY / NOT FOR ORDER / NO FIRE",
+  "source_commit": "9d78b361c7ac84baa1b6a17bb34bc3a25d5e8dd2",
+  "source_url": "https://github.com/krolbot/sirokko-26201-controller/commit/9d78b361c7ac84baa1b6a17bb34bc3a25d5e8dd2",
+  "source_git_files": 77,
+  "source_total_files": 140,
+  "source_exact_commit_remote_verified": 77,
+  "sdk_components_unchanged_files": 61,
+  "sdk": {
+    "version": "5.5.2",
+    "commit": "30aaf64524299d3bde422ca9a2848090d1bc5d0f",
+    "image": "espressif/idf@sha256:05cbfc42ed2e987b8026722c15bf1d8523d3e4fd1b4ac04d2e4056f5e0918b99"
+  },
+  "target": {
+    "chip": "esp32s3",
+    "board": "ESP32-S3-DevKitC-1-N8R8-v1.1",
+    "flash_bytes": 8388608,
+    "flash_mode": "dio",
+    "flash_freq_mhz": 80,
+    "psram": "octal80MHz",
+    "rollback": true
+  },
+  "target_build": {
+    "exit_code": 0,
+    "build_directory": "build-registry",
+    "log": "logs/idf-target-build.log",
+    "registry_metadata_network_required": true,
+    "offline_success": false,
+    "external_source_modified": false
+  },
+  "tests": {
+    "cpp_passed": 121,
+    "cpp_total": 121,
+    "python_passed": 4,
+    "python_total": 4,
+    "timer_groups": 11,
+    "source_archive_full_replay": true,
+    "network_suite_skipped": false
+  },
+  "flash_files": {
+    "0x0": {
+      "path": "bootloader/bootloader.bin",
+      "size": 21408,
+      "sha256": "4a6427ea706f218ac33b4ae56e0ace53c9454f8a6b659e591d6a25059e0a9128"
+    },
+    "0x20000": {
+      "path": "sirokko_26201_controller.bin",
+      "size": 1065536,
+      "sha256": "d74937ece1bcde07dc49b89d6288724cdac4a93f57a3bdd7a54a2afe0801ec8c"
+    },
+    "0x8000": {
+      "path": "partition_table/partition-table.bin",
+      "size": 3072,
+      "sha256": "4113a94d4b5ee6d35cd3e7b9c706d17620710a1ce39914be09388e81f25cda46"
+    },
+    "0x10000": {
+      "path": "ota_data_initial.bin",
+      "size": 8192,
+      "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+    }
+  },
+  "ota_slots": [
+    {
+      "offset": "0x20000",
+      "size": 3145728,
+      "free_bytes": 2080192
+    },
+    {
+      "offset": "0x320000",
+      "size": 3145728,
+      "free_bytes": 2080192
+    }
+  ],
+  "ui": {
+    "frames": 22,
+    "png_files": 23,
+    "frame_pixels": [
+      240,
+      320
+    ],
+    "visual_review": true,
+    "exact_source_replay": true,
+    "physical_photos": false
+  },
+  "timers": {
+    "off_minutes": 0,
+    "minimum_minutes": 1,
+    "maximum_minutes": 1440,
+    "duration_from": "accepted START -> PREPURGE",
+    "duration_expiry": "ordinary STOP -> POST_PURGE -> WAIT; StopReason::TIMER",
+    "delay_arm": "new qualified local LONG after release; never settings save/network",
+    "reboot_restores_deadlines": false,
+    "rtc_network_required": false
+  },
+  "schema": {
+    "config": 4,
+    "hardware_contract_id": 6,
+    "operator": 2,
+    "operator_v1_read_only_migration": true,
+    "history_old_enum_values_preserved": true
+  },
+  "related_publication_commits": {
+    "requirements_v3": "456dfe55fd80fca1e4ddf6fcaf63c6ff92fae127",
+    "room_ds18b20_wip": "9164e149e0cb0763e33e3fe537b120a52beefdcf"
+  },
+  "limitations": [
+    "No physical device connected or flashed",
+    "Current PCB STOP_STATUS incompatible with MCU_STOP_N GPIO8 OD",
+    "RESET and relay pinmap HOLD",
+    "No fuel/load/fire/production qualification",
+    "GPIO/SPI/TFT/sensors/relay/watchdog/EMC/thermal not physically verified",
+    "MQTT/TLS/OTA/rollback and power interruption are host models, not hardware validation",
+    "No active timer or RUN NVS restore; saved intervals only",
+    "Old firmware may reject newer history; no arbitrary rollback promised",
+    "Offline target build failed; successful build uses official registry metadata; no package/image installation or external-source patch",
+    "Build timestamp changes future binary hashes"
+  ]
+}

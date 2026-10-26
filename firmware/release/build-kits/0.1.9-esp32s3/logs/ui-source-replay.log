@@ -1,0 +1,2 @@
+HOST SIMULATION: counters, delay_armed, delay_cancelled_hot, delay_confirm_not_armed, diagnostics, diagnostics_fault, fault, home, hysteresis, profile, reset_counters, room_offset, setpoint, settings, timer_confirm_OFF, timer_confirm_restart, timer_expired_purge, timer_hours_24, timer_minutes_24, timer_run_24h, timer_settings, version
+replay/firmware/build-host/ui/contact-sheet.png

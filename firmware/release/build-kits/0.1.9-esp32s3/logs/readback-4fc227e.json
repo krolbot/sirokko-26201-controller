@@ -1,0 +1,17 @@
+{
+  "commit": "4fc227e0e8fbf269b68eadb14da687d1d6e83807",
+  "remote_main": "4fc227e0e8fbf269b68eadb14da687d1d6e83807",
+  "files": [
+    {
+      "path": "docs/REQUIREMENTS_RU.md",
+      "size": 38289,
+      "sha256": "5c2a52189252ed439560f592e1e82d537d931765b395a8695ce9a9e1cd1b5a1c"
+    },
+    {
+      "path": "docs/UX_PANEL_REQUIREMENTS_RU.md",
+      "size": 15757,
+      "sha256": "872045fd0371eee2b204e3df31e52b3e6e81d5f3a3e22a84358a8548d6d91115"
+    }
+  ],
+  "verified": 2
+}
