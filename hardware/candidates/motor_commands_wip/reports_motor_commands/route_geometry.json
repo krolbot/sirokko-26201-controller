@@ -1,0 +1,14 @@
+{
+  "/FAN_REQUEST": {
+    "new_route_length_mm": 201.39818542494925,
+    "new_vias": 9
+  },
+  "/SPEED_CMD": {
+    "new_route_length_mm": 195.35215289957605,
+    "new_vias": 11
+  },
+  "/GND": {
+    "new_route_length_mm": 30.04,
+    "new_vias": 2
+  }
+}
