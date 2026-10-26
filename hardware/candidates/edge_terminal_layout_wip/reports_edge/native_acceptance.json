@@ -1,0 +1,83 @@
+{
+  "source_pcb_sha256": "15e963ebde40575ee8b937d2fdc5ce4163f79a869c501736ae140c5da5b19a13",
+  "final_pcb_sha256": "4e2490d9e1701037c4272a84775dae28104819858de5e2b436c4dcbbf7f69367",
+  "prior_pad_groups_broken": 0,
+  "pad_map_size_drill_layers_preserved": 451,
+  "relocated_references": [
+    "J102",
+    "J12",
+    "J13",
+    "J22",
+    "J23",
+    "J24",
+    "J25"
+  ],
+  "prior_copper_objects_present": 901,
+  "retargeted_track_uuids": [
+    "2ea62c4e-dcc4-478c-a24f-09cee0c8a6fd"
+  ],
+  "target_pad_groups": [
+    [
+      [
+        "U5",
+        "4",
+        "/NOT_GLOW_CMD"
+      ],
+      [
+        "U3",
+        "8",
+        "/NOT_GLOW_CMD"
+      ]
+    ],
+    [
+      [
+        "U3",
+        "6",
+        "/NOT_FUEL_PERMIT"
+      ],
+      [
+        "U5",
+        "3",
+        "/NOT_FUEL_PERMIT"
+      ]
+    ],
+    [
+      [
+        "U6",
+        "3",
+        "/SAFETY_OK"
+      ],
+      [
+        "U6",
+        "12",
+        "/SAFETY_OK"
+      ]
+    ],
+    [
+      [
+        "R12",
+        "1",
+        "/SAFETY_OK"
+      ]
+    ],
+    [
+      [
+        "U5",
+        "2",
+        "/NOT_FUEL_CMD"
+      ],
+      [
+        "U3",
+        "4",
+        "/NOT_FUEL_CMD"
+      ]
+    ],
+    [
+      [
+        "J1",
+        "5",
+        "/SAFETY_OK"
+      ]
+    ]
+  ]
+}
