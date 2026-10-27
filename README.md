@@ -10,6 +10,8 @@
 
 **DRAFT / NOT FOR ORDER / NO FIRE.** This is neither a manufacturing set nor an accepted complete layout. Relay pin mapping/DC breaking, TFT/standoff height assembly and the overall YD mounting contract remain open; general routing and further firmware integration remain **HOLD**. [Preview with draft warnings](hardware/candidates/j27_j28_14e676dd/images/Sirokko_layout_14e676dd_DRAFT.png), [source provenance](hardware/candidates/j27_j28_14e676dd/PUBLIC_MANIFEST.json) and [checksums](hardware/candidates/j27_j28_14e676dd/SHA256SUMS). No firmware change or new firmware tests are part of this publication.
 
+**Historical checkpoint before the rectangular-board change:** [MPN_BOM_F1FFC0B3](hardware/candidates/MPN_BOM_F1FFC0B3/README.md) preserves the exact stepped native WIP after the edge-terminal and J12/J13 MPN corrections. It is not the current PCB. Component coordinates and the current 335 × 170 mm WIP size are not fixed design constraints; see the [Sirokko layout-freedom rule](docs/LAYOUT_FREEDOM_RU.md).
+
 [REQ-029: right-hand control column](docs/UI_RIGHT_COLUMN_RU.md): TFT on the left; push rotary encoder, one combined START/STOP button and protection RESET on the right, top to bottom on one vertical axis. The accepted nominal distance is **60 mm from the right window edge to the axis**, with 30 mm vertical spacing. This is an assigned engineering dimension based on a hand-envelope model, not an anthropometric standard or a physical guarantee.
 
 - [1:1 SVG sketch](docs/Sirokko_UI_right_column_1to1.svg) and [preview PNG](docs/Sirokko_UI_right_column_1to1.png): required relative geometry, not a drilling template.

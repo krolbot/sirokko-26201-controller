@@ -1,0 +1,20 @@
+{
+  "source_archive_sha256": "e80f06e6dbce8a19c1d5c57f0c80ebe173eb2ac21a6ffcd34def3c4c07c6bb83",
+  "method": "KiCad 10.0.7 BOARD.BuildConnectivity + CONNECTIVITY_DATA.GetConnectedItems(PAD)",
+  "pcb_sha256": "f1ffc0b350faeefc1ff839984bc5629022640fd8d20b3bc6d7df0a8a4ad533b1",
+  "counts": {
+    "pads": 532,
+    "physical_components": 291,
+    "physical_pad_pairs": 5646,
+    "cross_net_physical_pairs": 0
+  },
+  "pairset_sha256": "0a7333cab267e2275872fe7d5ece114142cb47cb812d13e36a0c9da44bcaa6cc",
+  "input_98b40191_to_f1ffc0b3": {
+    "pairsets_identical": true,
+    "added_pairs": 0,
+    "removed_pairs": 0,
+    "pad_identity_or_position_changes": 0,
+    "footprint_geometry_changes": 0
+  },
+  "production_release": false
+}

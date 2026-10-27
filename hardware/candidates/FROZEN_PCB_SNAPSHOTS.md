@@ -2,7 +2,7 @@
 
 Это индекс опубликованных исторических WIP-срезов, а не перечень канонических или производственных версий. Общий статус: DRAFT / NOT FOR ORDER / NO FIRE; `production_release=false`. Единая компоновка не принята, активная CAD-компоновка продолжается отдельно.
 
-Latest FROZEN published candidate: [LEFT_STRIP_02aed516](LEFT_STRIP_02aed516/README.md), PCB `02aed516356bf7402ecc8fe9276fcf5455d4f114622a2bc4f6c866932b4b6e94`.
+Latest FROZEN published candidate: [MPN_BOM_F1FFC0B3](MPN_BOM_F1FFC0B3/README.md), PCB `f1ffc0b350faeefc1ff839984bc5629022640fd8d20b3bc6d7df0a8a4ad533b1`.
 
 Последовательность:
 
@@ -10,5 +10,6 @@ Latest FROZEN published candidate: [LEFT_STRIP_02aed516](LEFT_STRIP_02aed516/REA
 2. [MOTOR_RIGHT_WING_f0170893](MOTOR_RIGHT_WING_f0170893/README.md)
 3. [H11_H12_0179185b](H11_H12_0179185b/README.md)
 4. [LEFT_STRIP_02aed516](LEFT_STRIP_02aed516/README.md)
+5. [MPN_BOM_F1FFC0B3](MPN_BOM_F1FFC0B3/README.md) — клеммы вводами наружу и J12/J13 MPN; ступенчатая контрольная точка до прямоугольной правки.
 
-В `LEFT_STRIP_02aed516` J10/J11/J12/J13/J25/J102 всё ещё направлены вводом внутрь; исправление не входит в замороженный срез. Текущий продуктовый статус и канонические указатели остаются в корневых README; этот индекс их не заменяет.
+В `LEFT_STRIP_02aed516` J10/J11/J12/J13/J25/J102 всё ещё направлены вводом внутрь; исправление сохранено только в последующем `MPN_BOM_F1FFC0B3`. Текущий продуктовый статус и канонические указатели остаются в корневых README; этот индекс их не заменяет.
