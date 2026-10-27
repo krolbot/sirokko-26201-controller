@@ -1,0 +1,153 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-27T04:08:25",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7",
+            "violations": [
+                {
+                    "description": "Unconnected \"no connection\" flag",
+                    "items": [
+                        {
+                            "description": "No Connect",
+                            "pos": {
+                                "x": 358.14,
+                                "y": 190.5
+                            },
+                            "uuid": "84a057c4-e8bf-40c9-b0f9-2f3f6295f060"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "no_connect_dangling"
+                },
+                {
+                    "description": "Unconnected \"no connection\" flag",
+                    "items": [
+                        {
+                            "description": "No Connect",
+                            "pos": {
+                                "x": 358.14,
+                                "y": 193.04
+                            },
+                            "uuid": "12c52ee1-0a42-4e32-9ac2-b1a2c8778f63"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "no_connect_dangling"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GLOW_SWITCHED_POS__POWER_PATH_NOT_CONNECTED'",
+                            "pos": {
+                                "x": 394.97,
+                                "y": 400.05
+                            },
+                            "uuid": "c281e341-55fd-4076-a025-bbd5ab2f17ec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'CLUTCH_SWITCHED_POS__POWER_PATH_NOT_CONNECTED'",
+                            "pos": {
+                                "x": 474.98,
+                                "y": 400.05
+                            },
+                            "uuid": "1b54c8f4-58f9-4f3a-a958-3ed4e912e072"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Unconnected wire endpoint",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 2.54 mm",
+                            "pos": {
+                                "x": 500.38,
+                                "y": 342.9
+                            },
+                            "uuid": "2c643864-2486-4bdd-a9a3-35b286093253"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "unconnected_wire_endpoint"
+                },
+                {
+                    "description": "Unconnected wire endpoint",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 2.54 mm",
+                            "pos": {
+                                "x": 500.38,
+                                "y": 345.44
+                            },
+                            "uuid": "fcfc29eb-a93f-4f57-88bc-fc30bbf833ae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "unconnected_wire_endpoint"
+                },
+                {
+                    "description": "Unconnected wire endpoint",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 2.54 mm",
+                            "pos": {
+                                "x": 500.38,
+                                "y": 347.98
+                            },
+                            "uuid": "11a491f5-3ba9-4904-a0df-6c38afc52903"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "unconnected_wire_endpoint"
+                }
+            ]
+        },
+        {
+            "path": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/803a47a9-bc89-4fae-91f4-92180f46587a",
+            "violations": []
+        },
+        {
+            "path": "/MOTOR_PWM_REBUILD_CANDIDATE/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/738f1eb5-5037-42a1-995a-b2820277f936",
+            "violations": []
+        }
+    ],
+    "source": "Sirokko26201_control_motor_candidate.kicad_sch"
+}

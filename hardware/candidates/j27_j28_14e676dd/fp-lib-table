@@ -1,0 +1,8 @@
+(fp_lib_table
+ (version 7)
+ (lib (name "Sirokko_Safety") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Safety.pretty") (options "") (descr "Project TPS3431 DRB0008A footprint"))
+ (lib (name "Sirokko_Power") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Power.pretty") (options "") (descr "Project TI DDA0008B LM5013 PowerPAD footprint"))
+ (lib (name "Sirokko_Input") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Input.pretty") (options "") (descr "Keystone 3568 MINI holder DRAFT"))
+ (lib (name "Sirokko_Relay_Mechanical") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Relay_Mechanical.pretty") (options "") (descr "MECHANICAL ONLY PINMAP HOLD NOT FOR ORDER"))
+ (lib (name "Sirokko_Panel") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Panel.pretty") (options "") (descr "Verified panel controls and TFT mechanical envelope"))
+)

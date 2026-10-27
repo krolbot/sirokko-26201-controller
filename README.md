@@ -4,11 +4,17 @@
 
 ## Current requirements and status
 
+**Latest hardware WIP: [J27/J28, PCB 14e676dd](hardware/candidates/j27_j28_14e676dd/README_RU.md).** This is the single current published hardware snapshot; earlier CAD directories remain historical, not parallel active PCBs. Only mechanical placement of the permanent GLOW/CLUTCH outputs and preservation of the existing 476 pads / 5647 connected pairs are accepted. J27/J28 face outward; all four new pads remain physically isolated, including both pin 2 GND pads. Relay/load power paths are **NOT CONNECTED**. Saved checks: **13 DRC warnings / 80 unconnected items; 7 ERC warnings**.
+
+**DRAFT / NOT FOR ORDER / NO FIRE.** This is neither a manufacturing set nor an accepted complete layout. Relay pin mapping/DC breaking, TFT/standoff height assembly and the overall YD mounting contract remain open; general routing and further firmware integration remain **HOLD**. [Preview with draft warnings](hardware/candidates/j27_j28_14e676dd/images/Sirokko_layout_14e676dd_DRAFT.png), [source provenance](hardware/candidates/j27_j28_14e676dd/PUBLIC_MANIFEST.json) and [checksums](hardware/candidates/j27_j28_14e676dd/SHA256SUMS). No firmware change or new firmware tests are part of this publication.
+
 [REQ-029: right-hand control column](docs/UI_RIGHT_COLUMN_RU.md): TFT on the left; push rotary encoder, one combined START/STOP button and protection RESET on the right, top to bottom on one vertical axis. The accepted nominal distance is **60 mm from the right window edge to the axis**, with 30 mm vertical spacing. This is an assigned engineering dimension based on a hand-envelope model, not an anthropometric standard or a physical guarantee.
 
 - [1:1 SVG sketch](docs/Sirokko_UI_right_column_1to1.svg) and [preview PNG](docs/Sirokko_UI_right_column_1to1.png): required relative geometry, not a drilling template.
 - [Requirements register](docs/REQUIREMENTS_RU.md), [panel contract](docs/UX_PANEL_REQUIREMENTS_RU.md), [current state](docs/CURRENT_STATE_RU.md).
 - [Earlier UI centres](docs/UI_LAYOUT_CENTRES_RU.md) and [TFT/BL placement](docs/TFT_BL_PANEL_WINDOW_RU.md): historical absolute coordinates. The old B-side view with controls on the left and RESET off-axis is superseded; frozen candidates remain unchanged.
+
+### Earlier TFT snapshot — historical status, not PCB 14e676dd
 
 **2026-10-26: TFT mounting keepout correction accepted, 4/4 only; general routing and firmware remain HOLD.** The immutable [TFT Ø8 snapshot 35e1f7c2](hardware/candidates/tft_d8_35e1f7c2/README_RU.md) corrects the earlier 0/4 defect with four F.Cu/B.Cu circumscribed 64-gon R4 keepouts around the relocated MH5 holes. Ø8 is the protected area; the NPTH drill is Ø2.7 mm. The [dated erratum supplement](docs/TFT_KEEPOUT_ERRATUM_RU.md) supersedes the old unresolved-defect statement only for this PCB, not the withdrawal of general continuation permission. The [115e8ed2](hardware/candidates/u7_c7_local_115e8ed2/README_RU.md) and [d015fbb1](hardware/candidates/panel_v2_req029_yd_d015fbb1/README_RU.md) snapshots remain unchanged history.
 
