@@ -1,0 +1,65 @@
+{
+  "status": "DRAFT_ANALYSIS_NOT_IMPLEMENTED",
+  "source_commit": "b3d96db41630285efa6a0425b1f874fdf3b12767",
+  "sources": [
+    {
+      "path": "firmware/main/board.hpp",
+      "sha256": "0106697320e578bfa832ebcd93ac29eadd269acbd73ae7798d97b26c3ede2bad"
+    },
+    {
+      "path": "firmware/components/control_core/include/sirokko/display_geometry.hpp",
+      "sha256": "971925b730e7b6e1d7bf29474640c9abf71e49e8ba454f78b2379d97ac3d415c"
+    },
+    {
+      "path": "firmware/main/local_display.cpp",
+      "sha256": "5d809276f8ebe2140584ea41b5eaec031c82588a1184e5f4ee8819d613600fd2"
+    }
+  ],
+  "ili9341_document": {
+    "url": "https://files.waveshare.com/upload/e/e3/ILI9341_DS.pdf",
+    "revision": "V1.05",
+    "page": 237,
+    "sha256": "c8999eb5bbad45e3bc9cba9467b97be3f256e81ff5cb50483a5277d92eb465b6",
+    "Ta_C": 25,
+    "VDDI_V": [
+      1.65,
+      3.3
+    ],
+    "VCI_V": [
+      2.5,
+      3.3
+    ],
+    "write_period_min_ns": 100,
+    "write_high_low_min_ns": 40,
+    "data_setup_hold_min_ns": 30,
+    "rise_fall_max_ns": 15
+  },
+  "recommended_engineering_target": {
+    "width": 320,
+    "height": 240,
+    "rows_per_band": 12,
+    "spi_hz": 8000000,
+    "spi_mode": 0,
+    "band_bytes": 7680,
+    "bands": 20,
+    "band_wire_us": 7680.0,
+    "frame_wire_ms": 153.6,
+    "period_ns": 125.0,
+    "ideal_half_period_ns": 62.5,
+    "command_bytes_per_band_assumption": 11,
+    "band_command_wire_us": 11.0,
+    "candidate_total_budget_us": 8180.0
+  },
+  "negative_cases": {
+    "old_st7789_constructor": "wrong_controller_for_selected_module",
+    "old_portrait_geometry": [
+      240,
+      320
+    ],
+    "landscape20rows10MHz_wire_us": 10240.0,
+    "landscape20rows8MHz_wire_us": 12800.0,
+    "old_10MHz_period_ns": 100.0
+  },
+  "physical_waveform_verified": false,
+  "firmware_modified": false
+}
