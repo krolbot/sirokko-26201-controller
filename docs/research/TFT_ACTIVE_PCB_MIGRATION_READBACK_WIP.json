@@ -1,0 +1,118 @@
+{
+  "status": "LIVE_WIP_READ_ONLY_NOT_FINAL_ACCEPTANCE",
+  "recorded_utc": "2026-10-27T15:46:41.268007+00:00",
+  "source": "native kicad MCP get_board_info/get_footprint_pads, manually transcribed; writer concurrently active",
+  "pcb_path": "локальный проверочный артефакт, не включён",
+  "board_info": {
+    "footprints": 141,
+    "traces": 842,
+    "vias": 198,
+    "nets": 117,
+    "zones": 24,
+    "thickness_mm": 1.6
+  },
+  "observed_pad_net": {
+    "J26": {
+      "1": "/TFT_3V3",
+      "2": "/GND",
+      "3": "/TFT_MOSI_BUF",
+      "4": "/TFT_SCK_BUF",
+      "5": "/TFT_CS_BUF",
+      "6": "/TFT_DC_BUF",
+      "7": "/TFT_RESET_N",
+      "8": "/TFT_3V3"
+    },
+    "U303": {
+      "1": "/GND",
+      "2": "/TC_SDI_MOSI",
+      "3": "/TFT_MOSI_BUF",
+      "4": "/GND",
+      "5": "/TC_SCK",
+      "6": "/TFT_SCK_BUF",
+      "7": "/GND",
+      "8": "/TFT_CS_BUF",
+      "9": "/TFT_CS",
+      "10": "/GND",
+      "11": "/TFT_DC_BUF",
+      "12": "/TFT_DC",
+      "13": "/GND",
+      "14": "/TFT_3V3"
+    },
+    "U302": {
+      "1": "/TFT_RESET_N",
+      "2": "/GND",
+      "3": "unconnected-(U302-~{MR}-Pad3)",
+      "4": "unconnected-(U302-CT-Pad4)",
+      "5": "/TFT_3V3",
+      "6": "/TFT_3V3"
+    },
+    "R303": {
+      "1": "/TFT_3V3",
+      "2": "/TFT_RESET_N"
+    },
+    "C305": {
+      "1": "/TFT_3V3",
+      "2": "/GND"
+    }
+  },
+  "pad_count_checked": 32,
+  "R23_native_lookup": "Footprint R23 not found on this PCB",
+  "J26": {
+    "side": "F.Cu",
+    "rotation_deg": 180,
+    "origin_mm": [
+      189.4,
+      132.74
+    ],
+    "pitch_mm": 2.54,
+    "span_mm": 17.78,
+    "pad_centers_mm": [
+      [
+        189.4,
+        132.74
+      ],
+      [
+        186.86,
+        132.74
+      ],
+      [
+        184.32,
+        132.74
+      ],
+      [
+        181.78,
+        132.74
+      ],
+      [
+        179.24,
+        132.74
+      ],
+      [
+        176.70000000000002,
+        132.74
+      ],
+      [
+        174.16,
+        132.74
+      ],
+      [
+        171.62,
+        132.74
+      ]
+    ],
+    "all_pad_centers_inside_TFT_BFab_projection": true,
+    "TFT_nominal_projection_mm": {
+      "xmin": 125.95,
+      "xmax": 196.45,
+      "ymin": 118.425,
+      "ymax": 161.725
+    },
+    "placement_review": "Source decision criterion49 says J26 outside module envelope. Projection overlaps; F.Cu header opposite B-side module does not itself prove through-hole tail clearance. Requires writer resolution or explicit justified deviation/Z verification, not an asserted collision."
+  },
+  "limitations": [
+    "No file SHA/frozen snapshot yet.",
+    "Native assigned nets are not proof of continuous copper or SCH/PCB parity.",
+    "No final ERC/DRC acceptance.",
+    "No production or physical qualification."
+  ]
+}

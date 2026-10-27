@@ -1,0 +1,54 @@
+{
+  "assumptions": {
+    "R_nom_ohm": 10000,
+    "tol": 0.01,
+    "TCR_per_K": 0.0001,
+    "reference_C": 25,
+    "max_abs_temperature_delta_K": 100,
+    "I_buffer_bound_at_datasheet_test_conditions_A": 2e-05,
+    "additional_leakage_allocation_A_NOT_GUARANTEED": 2e-05,
+    "MCU_rail_min_V_design_condition": 3.0,
+    "MCU_rail_max_V_design_condition": 3.6
+  },
+  "Rmin_ohm": 9801.0,
+  "Rmax_ohm": 10201.0,
+  "Vpulldown_max_V_conditional": 0.40804,
+  "Vpullup_min_V_conditional": 2.59196,
+  "LOW_noise_margin_V_conditional": 0.39196000000000003,
+  "HIGH_noise_margin_V_conditional": 0.5919599999999998,
+  "per_resistor_max_I_A": 0.0003673094582185491,
+  "per_resistor_max_P_W": 0.001322314049586777,
+  "three_added_pulldowns_max_current_A": 0.0011019283746556475,
+  "four_bias_resistors_max_current_A": 0.0014692378328741965,
+  "R100k_negative_Vpulldown_V": 4.0804,
+  "passive_rise_0p8_to_2V_ns_per_V_TYP_CAP_SCREENING": 22.235679646717937,
+  "per_resistor_125C_rated_power_W_from_70to155_linear_curve": 0.03529411764705882,
+  "status": "DRAFT_STATIC_SCREENING_ONLY_NOT_INTEGRATED",
+  "recommended_change": {
+    "added_parts_quantity": 3,
+    "mpn": "RC0603FR-0710KL",
+    "connection_pairs": [
+      [
+        "TC_SDI_MOSI (U303.2, MCU side)",
+        "GND"
+      ],
+      [
+        "TC_SCK (U303.5, MCU side)",
+        "GND"
+      ],
+      [
+        "TFT_DC (U303.12, MCU side)",
+        "GND"
+      ]
+    ],
+    "existing_R24": "Keep 10k pullup TFT_CS(U303.9) to MCU +3V3; verify its MPN and tolerance. Do not add a second parallel pullup or move pullup to TFT_3V3."
+  },
+  "limitations": [
+    "Input leakage test conditions are retained; no full ramp/intermediate-VCC guarantee.",
+    "Additional leakage allocation includes MCU, both MAX31856 inputs on shared lines, PCB; it is an assigned interface condition, not a measured or full-temperature guaranteed bound.",
+    "ESP32-S3 v2.2 table5-4 is only 3.3V/25C; 50nA cannot be extrapolated to all temperatures.",
+    "Passive RC timing with CI_typ is illustrative only and fails the 10ns/V screening; resistor selection does not close rise/fall or power-ramp acceptance.",
+    "I*R of 4.0804V for 100k is a failed bound, not a predicted physical voltage beyond the supply.",
+    "No root SCH/PCB/BOM/firmware edited; sole CAD writer assigns unique designators and checks existing pulls."
+  ]
+}
