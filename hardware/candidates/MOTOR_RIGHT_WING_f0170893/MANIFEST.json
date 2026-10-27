@@ -1,0 +1,259 @@
+{
+  "snapshot": "MOTOR_RIGHT_WING_f0170893",
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "production_release": false,
+  "native_project_files": 40,
+  "payload_files": 50,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6582,
+      "sha256": "cd17a3c08c7f9302d8fcf78bc4acf813354d3dd753003a888f1909f995795c6a"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 3381,
+      "sha256": "760ce26bd2173d2421f16f4cb6e9dce83ebc09de4bab19649f66c7c485553be7"
+    },
+    {
+      "path": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+      "bytes": 899009,
+      "sha256": "f01708937e7cb64c2f95951047e65413e1678352dd7ed2bde7297c07636c926d"
+    },
+    {
+      "path": "project/Sirokko26201_control_motor_candidate.kicad_pro",
+      "bytes": 9921,
+      "sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964"
+    },
+    {
+      "path": "project/Sirokko26201_control_motor_candidate.kicad_sch",
+      "bytes": 293166,
+      "sha256": "e55451b7fb660838984636533113f20c78f4737963bb65d77b54728b3bec2e7e"
+    },
+    {
+      "path": "project/Sirokko_Connectors.pretty/Connfly_DS1021_1x08_P2.54mm_Type1_Drill1.02.kicad_mod",
+      "bytes": 1699,
+      "sha256": "2a325ea21537f74e48f31c680caec3db2075a38c0e3f1a34c5016ad6f71581eb"
+    },
+    {
+      "path": "project/Sirokko_D101_STPS5H100B.kicad_sym",
+      "bytes": 1482,
+      "sha256": "738e30a8c1005aac57b5cdacd8461cd98282192fdbe548463a42e042488b3193"
+    },
+    {
+      "path": "project/Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod",
+      "bytes": 1344,
+      "sha256": "27f65864bc168b4c158d426d6fcb3ad4b6147478605c1bd60707c7998d8c0d43"
+    },
+    {
+      "path": "project/Sirokko_Mechanical.pretty/MountingHole_2.4mm_M2_DRAFT.kicad_mod",
+      "bytes": 739,
+      "sha256": "ec579ba5264178d16d92bd8114c87110dacbbc54292de64e630a3293cc70ac35"
+    },
+    {
+      "path": "project/Sirokko_Panel.pretty/Connfly_DS1023_1x07S21_P2.54mm.kicad_mod",
+      "bytes": 2920,
+      "sha256": "fc84d6bbfe7abe12b1634f4affbc6706961de0dd6711e0dc3f4240228a136b67"
+    },
+    {
+      "path": "project/Sirokko_Panel.pretty/RotaryEncoder_Alps_EC11E15244G1.kicad_mod",
+      "bytes": 1981,
+      "sha256": "7a2a26956b6c6824a471300ee62523eb3137a8ea51f8797093e449634c00ae87"
+    },
+    {
+      "path": "project/Sirokko_Panel.pretty/SW_NKK_BB25AB-FA.kicad_mod",
+      "bytes": 2461,
+      "sha256": "b4d03b4695e30381d0dae481c339323919dd17ca383a52e743e84bf96f8c7547"
+    },
+    {
+      "path": "project/Sirokko_Panel.pretty/TFT_GMT020-02-7P_Envelope_62x37.1.kicad_mod",
+      "bytes": 2443,
+      "sha256": "c1c36050ee52679c2a5eaa91929ad00e1baebf026a77f0bd49b7e42a821b233d"
+    },
+    {
+      "path": "project/Sirokko_Power.kicad_sym",
+      "bytes": 20670,
+      "sha256": "a6a3e521a33fb668bd3c53063768f2fed3fff56a767636b034af4a7392d0b367"
+    },
+    {
+      "path": "project/Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod",
+      "bytes": 2960,
+      "sha256": "324d7ec3faa2b6df84d861bb197388c17ead8c1e22b0139826a8a445b6b20998"
+    },
+    {
+      "path": "project/Sirokko_Power.pretty/Phoenix_1756993_MKDS5HV_2_9.52_ZSZS.kicad_mod",
+      "bytes": 1511,
+      "sha256": "162a196f419af9961762c27db9b8c4253ecb8a3a2e230ab0ac0e0d1bc5e072f7"
+    },
+    {
+      "path": "project/Sirokko_Power.pretty/WSLP2726.kicad_mod",
+      "bytes": 1253,
+      "sha256": "79640b947975b765f1f1864f118c11103dd9f3a779c254cbb2b2fbfa994a12b0"
+    },
+    {
+      "path": "project/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_MECHANICAL_PINMAP_HOLD.kicad_mod",
+      "bytes": 3299,
+      "sha256": "93dbfee1534bbc07a4b52e9934e5e2f8588a41025af32d0b9fadcee8d078183d"
+    },
+    {
+      "path": "project/Sirokko_Safety.kicad_sym",
+      "bytes": 23614,
+      "sha256": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f"
+    },
+    {
+      "path": "project/Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod",
+      "bytes": 4785,
+      "sha256": "f6617d430df6ec2596055e3da0aa02421b8201f905586f24d462e8e7c8c2e0ab"
+    },
+    {
+      "path": "project/Sirokko_thermal.kicad_sym",
+      "bytes": 12967,
+      "sha256": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1"
+    },
+    {
+      "path": "project/fp-lib-table",
+      "bytes": 1383,
+      "sha256": "108ae8187aabcbcec4581de7c0b9618977c97abf2cc2c80c256ea50bf5659df0"
+    },
+    {
+      "path": "project/logic_power_24_5_DRAFT.kicad_sch",
+      "bytes": 63078,
+      "sha256": "3de1496ddb55bd33571a223ca2ac75078050966e29e081a559b43627c22e2929"
+    },
+    {
+      "path": "project/motor_pwm_REBUILD.kicad_sch",
+      "bytes": 114627,
+      "sha256": "b22b6a21ea106bb19320a4dea394c6f087b4b2f97ee7a3a4cdafdc1fa1eb8813"
+    },
+    {
+      "path": "project/motor_pwm_REBUILD.kicad_sym",
+      "bytes": 3618,
+      "sha256": "a9b9577029bdd3f964f1fff16d3c560f569feb6e57f39aea128396c7fcb640e8"
+    },
+    {
+      "path": "project/sym-lib-table",
+      "bytes": 606,
+      "sha256": "115f731c309622a127e33c00d0ba9a1687a2f8c88578100d57cf7e5e515cd78c"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/fp-lib-table",
+      "bytes": 203,
+      "sha256": "2e9d53f28360afba3177dce3f59370937a5bdfa77cf168607db0b0862240552a"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM188_1608_Reflow.kicad_mod",
+      "bytes": 900,
+      "sha256": "bd9eecbddab9dfd31a14ceafa99b0969365b61c0fcf2b02615957922d9806806"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM21B_2012_Reflow.kicad_mod",
+      "bytes": 901,
+      "sha256": "8bc9e9f3bd850cfbb4acee0f7c8cb500b04a4f0c3b582869fcd94b69c547c0da"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM32E_3225_Reflow.kicad_mod",
+      "bytes": 890,
+      "sha256": "54b3f66b322802ed88060948bb28da8e210e8f7ec59bb132d911b454cdc43a1c"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/L_Wuerth_744025003_2828_Reflow.kicad_mod",
+      "bytes": 939,
+      "sha256": "0af77026ac56536515f8bd695e66996bfae0eeeb2cacbac0f9cab91c84b98c54"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/R_Yageo_RC0603_1608_Reflow.kicad_mod",
+      "bytes": 935,
+      "sha256": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_pro",
+      "bytes": 245,
+      "sha256": "c4908e02842a1744ef62f8c20c5f16f004302c6d68206d63b913230626da5b79"
+    },
+    {
+      "path": "project/tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_sch",
+      "bytes": 35434,
+      "sha256": "0c7efb3ff8df3ea80de764dd28d519bdd6b053a2655ae650c4775cce268e39c6"
+    },
+    {
+      "path": "project/tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_pro",
+      "bytes": 243,
+      "sha256": "9079a75b16eff2288a02293fb49091fca1698cd0dbf9d3a860cb9438792ced4f"
+    },
+    {
+      "path": "project/tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch",
+      "bytes": 19945,
+      "sha256": "e9e29c224185f0c3088a36bf2645254be9b160e3ed2048af1be58c378451f67f"
+    },
+    {
+      "path": "project/tft_reset_local_DRAFT/sym-lib-table",
+      "bytes": 217,
+      "sha256": "f584f8a6004f839c9f2ffabf905a8f0e0e1097b6df8afcc4223b45282ec44e45"
+    },
+    {
+      "path": "project/tft_spi_isolation_DRAFT/fp-lib-table",
+      "bytes": 348,
+      "sha256": "aad57bccae3759d1e957f6752b3849d104021cde3f0b4a6d26d1e919484ed3a1"
+    },
+    {
+      "path": "project/tft_spi_isolation_DRAFT/sirokko_tft_interface_review_20261027.kicad_sym",
+      "bytes": 4428,
+      "sha256": "6b0041075b1ba5d8e553e789428f412299e282caa4290907f17892ff486e86a1"
+    },
+    {
+      "path": "project/tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_pro",
+      "bytes": 245,
+      "sha256": "ff40f5d2a3fb5ea586cc36a3e4de0078124bf252ee3583b13558dc6e8a8f8cce"
+    },
+    {
+      "path": "project/tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_sch",
+      "bytes": 22372,
+      "sha256": "a93042d429e58f480b0b31285b4ff5b73709fc670e77b895a878b811634b9ee0"
+    },
+    {
+      "path": "project/tft_spi_isolation_DRAFT/sym-lib-table",
+      "bytes": 246,
+      "sha256": "210ddc39ddcb4d0580520fb3c6475891513442027884e7741715628b32281658"
+    },
+    {
+      "path": "verification/fresh_full_drc.json",
+      "bytes": 89217,
+      "sha256": "514bfc0d55904f1493c6876dea0763ea4d76d5813fbce7951d025e324167785f"
+    },
+    {
+      "path": "verification/fresh_root_erc.json",
+      "bytes": 5282,
+      "sha256": "07b9ca381368a25a64ba45a0af0951c91284d42811b0f39a1787f80b5b5711db"
+    },
+    {
+      "path": "verification/fresh_root_netlist.xml",
+      "bytes": 208893,
+      "sha256": "c1d7b0859835572471c493c5e97516bc68c98a4a3a8958d4f6eff1bb5868d709"
+    },
+    {
+      "path": "verification/source_drc.json",
+      "bytes": 89218,
+      "sha256": "ecd624ff3b41cc6ea4a16ea0f1f493a8e57a532bc971ab675ac222c73401416e"
+    },
+    {
+      "path": "verification/source_erc.json",
+      "bytes": 5282,
+      "sha256": "c63e18e21c669f619fdf4fa0ba319b6a225f68885f4cd4fc9de572e922eddfa6"
+    },
+    {
+      "path": "views/back_DRAFT.png",
+      "bytes": 225154,
+      "sha256": "1ac24bbc40d85a6642ab5276e1f1daea3ccae65442e0d06d89e0a4c47d410f44"
+    },
+    {
+      "path": "views/front_DRAFT.png",
+      "bytes": 341812,
+      "sha256": "db8ee697b7f69b252830883e21d0d335245fec6b83c4cee5f16d80f435dfc539"
+    },
+    {
+      "path": "views/outline_DRAFT.png",
+      "bytes": 82803,
+      "sha256": "919a61b8631447e5b36c9c8d73467acfde3ffc373d86f2f067870307d80b3e5d"
+    }
+  ]
+}
