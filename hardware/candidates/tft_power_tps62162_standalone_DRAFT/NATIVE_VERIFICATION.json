@@ -66,5 +66,7 @@
     }
   ],
   "integration_status": "standalone_not_integrated",
-  "production_release": false
+  "production_release": false,
+  "comparison_base_revision": "7412454ff09e380f474e6c2b5ccf6eef288e61d4",
+  "native_components_libparts_libraries_nets_exact": true
 }

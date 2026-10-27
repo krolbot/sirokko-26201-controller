@@ -1,21 +1,24 @@
 {
-  "status": "GRAPHICAL_LAYOUT_ACCEPTED_NOT_PRODUCTION",
+  "status": "GRAPHICAL_REVIEW_PENDING_NOT_PRODUCTION",
   "reviewer": "engineer",
-  "provenance": "Operator-delivered independent engineer acceptance on this task; publisher independently matched the reported SCH/PDF hashes.",
-  "schematic_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
-  "pdf_sha256": "00c994b9d595ee2c361ac645fe1745a54d8e4414679a6e22c0e0cd01e424a8eb",
-  "reviewer_observations": {
-    "independently_obtained_pdf_and_viewed_3500px_raster": true,
-    "U301_L301_C_R_three_GND_readable_no_overlaps_or_clipping": true,
-    "independently_compared_before_after_native_xml_and_contract": true,
-    "nets": 6,
-    "electrical_pins": 23,
-    "all_pin_to_net_exact_including_root_slash": true,
-    "EP9_net": "/GND",
-    "all_8_instance_footprints_empty": true
+  "provenance": "Previous review requested one graphical correction; new exact outputs await independent review.",
+  "schematic_sha256": "651c8f13e90f7c0329a827f7a82aefc3a21aa0208c13665af1134b7c840bb42f",
+  "pdf_sha256": "723d402ebd94bd55b691c8153d5d09e27d3adea721e4f2e8403825689e1b9817",
+  "previous_review": {
+    "status": "CHANGES_REQUESTED",
+    "commit": "7412454ff09e380f474e6c2b5ccf6eef288e61d4",
+    "schematic_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+    "pdf_sha256": "00c994b9d595ee2c361ac645fe1745a54d8e4414679a6e22c0e0cd01e424a8eb",
+    "defect": "Upper PWR_FLAG diamond intersects final R of +5V_CARRIER; earlier preliminary acceptance superseded."
+  },
+  "implementer_checks": {
+    "original_defect_reproduced": true,
+    "new_full_300dpi_page_viewed": true,
+    "input_crop_viewed": true,
+    "visible_gap_confirmed": true,
+    "other_fields_no_new_overlap_observed": true
   },
   "production_release": false,
   "integration_status": "standalone_not_integrated",
-  "general_routing_and_firmware": "HOLD",
-  "later_U301_geometry_and_all_8_footprint_assignment": "Separate subsequent step; no assignments in this correction."
+  "general_routing_and_firmware": "HOLD"
 }

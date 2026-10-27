@@ -1816,7 +1816,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify right top)
 		)
 		(uuid "e23273cb-d0c9-4238-81c6-4634173ee957")
 	)

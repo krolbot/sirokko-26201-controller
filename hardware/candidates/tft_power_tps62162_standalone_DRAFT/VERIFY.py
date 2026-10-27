@@ -33,7 +33,19 @@ assert edit['footprints_assigned'] is False
 native = json.loads((HERE / 'NATIVE_VERIFICATION.json').read_text())
 assert native['full_pin_to_net_equal'] and native['ignored_checks_unchanged']
 acceptance = json.loads((HERE / 'ENGINEER_ACCEPTANCE.json').read_text())
-assert acceptance['status'] == 'GRAPHICAL_LAYOUT_ACCEPTED_NOT_PRODUCTION'
+assert acceptance['status'] == 'GRAPHICAL_REVIEW_PENDING_NOT_PRODUCTION'
+correction = json.loads((HERE / 'LABEL_CORRECTION_VERIFICATION.json').read_text())
+assert correction['reverse_single_atom_recovers_previous_bytes']
+assert correction['all_other_schematic_bytes_unchanged']
+assert correction['anchor_mm'] == [45.72, 59.69]
+assert correction['angle'] == 0 and correction['justify_after'] == ['right', 'top']
+assert correction['result_sha256'] == edit['result_sha256']
+previous = acceptance['previous_review']
+assert previous['status'] == 'CHANGES_REQUESTED'
+assert previous['commit'] == correction['previous_commit']
+assert previous['schematic_sha256'] == correction['previous_schematic_sha256']
+# Regression check for the exact known label; not a schematic parser.
+assert re.search(r'\(label "\+5V_CARRIER"\s*\(at 45\.72 59\.69 0\)\s*\(effects\s*\(font\s*\(size 1\.27 1\.27\)\s*\)\s*\(justify right top\)', (HERE / (NAME + '.kicad_sch')).read_text())
 assert acceptance['schematic_sha256'] == hashlib.sha256((HERE / (NAME + '.kicad_sch')).read_bytes()).hexdigest()
 assert acceptance['pdf_sha256'] == hashlib.sha256((HERE / (NAME + '.pdf')).read_bytes()).hexdigest()
 

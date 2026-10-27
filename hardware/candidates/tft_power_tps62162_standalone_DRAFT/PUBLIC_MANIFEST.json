@@ -110,15 +110,29 @@
       }
     ],
     "integration_status": "standalone_not_integrated",
-    "production_release": false
+    "production_release": false,
+    "comparison_base_revision": "7412454ff09e380f474e6c2b5ccf6eef288e61d4",
+    "native_components_libparts_libraries_nets_exact": true
   },
   "native_gui_used": false,
   "active_readback": {
-    "active_sch_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+    "active_sch_sha256": "651c8f13e90f7c0329a827f7a82aefc3a21aa0208c13665af1134b7c840bb42f",
     "working_copy_sha_equal": true,
     "active_native_xml_full_map_equal": true,
     "active_native_erc_violations": 0,
     "ignored_checks_unchanged": true,
+    "reverse_all_authorized_edits_recovers_original_bytes": true,
+    "original_schematic_sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
+    "other_native_project_files_unchanged": {
+      "motor_pwm_DRAFT.kicad_sch": "803ec26b424b92c8fbe083e4b72e898c7e9e4752c73e0e1fc6002330bd1f8b6c",
+      "relay_level_shift_REVB.kicad_sch": "02bfe8dee487c0ef8236a3f6ae676ef632495943c226765dbe7f65abcc0cb038",
+      "motor_pwm_REBUILD.kicad_sch": "b22b6a21ea106bb19320a4dea394c6f087b4b2f97ee7a3a4cdafdc1fa1eb8813",
+      "power_return_reset_DRAFT.kicad_sch": "f4b2923e341b4ce732de9ece37af8edb61fad1e8b91c84cb8fe34faa7b120436",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "14e676dd315d7b6450743435452050a5b382a0fde45158df389b1793817c0d0d",
+      "Sirokko26201_control_motor_candidate.kicad_pro": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+      "logic_power_24_5_DRAFT.kicad_sch": "3de1496ddb55bd33571a223ca2ac75078050966e29e081a559b43627c22e2929",
+      "Sirokko26201_control_motor_candidate.kicad_sch": "0c30e8aec99435d2e00a2c3f9029a0b80554895aa89a76423a48346fa53948c7"
+    },
     "commands": [
       {
         "argv": [
@@ -154,17 +168,18 @@
       }
     ]
   },
-  "native_xml_sha256": "e6b6ef363fb7997c21240619afa8ce5730ababac820c1c8087d6de34e9564ee4",
+  "native_xml_sha256": "90c36f354c93cbbd3e7babb42ea99774e18697da415da787bc285d0ba701c53a",
   "visual": {
     "implementer_checked": true,
-    "independent_engineer_acceptance": "accepted exact SCH/PDF by engineer; see ENGINEER_ACCEPTANCE.json",
+    "independent_engineer_acceptance": "Pending repeat review; earlier preliminary acceptance superseded by changes requested. See ENGINEER_ACCEPTANCE.json.",
     "frame_complete": true,
     "known_overlapping_labels": [],
     "description_U301_hidden": true,
     "png_size_px": [
       2105,
       1489
-    ]
+    ],
+    "input_label_correction": "Single justify atom right bottom -> right top at unchanged (45.72,59.69), angle 0; full page and crop checked at 300 dpi."
   },
   "passives_v3": {
     "archive_sha256": "f9694ad9d8b7fa449d662da2aff55f4f352c30cc541b128a670abfe743609a7a",
@@ -175,24 +190,24 @@
   },
   "files": {
     "ACTIVE_READBACK.json": {
-      "sha256": "20b9a10f6f4d1161a6542268b98ebef23528523173e5c8d073cbbee17f7fd298",
-      "size": 935
+      "sha256": "b1c72a5398b436a8c6c6cd915b0526e0c5ca84dcb2db751f27bb225a8771c681",
+      "size": 2042
     },
     "ENGINEER_ACCEPTANCE.json": {
-      "sha256": "98a7a84e78d59916bafc937f69adbf858f28b2b51e83dbee48f7b878e6a2fd92",
-      "size": 1056
+      "sha256": "27732a6fdbd72dff4f27b8c4a25b1d6bd405729f0ff7a7e0028c067fcda8611c",
+      "size": 1142
     },
     "FIELD_EDIT_VERIFICATION.json": {
-      "sha256": "9e15cecf8331e2b49f78b2bcc6347bcfa65c5e3dba192f2ecdef5d95bbb35798",
-      "size": 1359
+      "sha256": "eb6458d6c70de089db57f4cba44e4d50506d6efa0354bc3b2ab740d810a78fd8",
+      "size": 1433
     },
     "NATIVE_COMMANDS.json": {
-      "sha256": "843fcffc90c9c80b95419e0b63da336b7846ad660bd04a8397945a65bcc4c077",
-      "size": 1693
+      "sha256": "af50e0c8f5397a4ce3d0063ad7b655613a725dda495731f373b6c7bdc1864071",
+      "size": 1844
     },
     "NATIVE_VERIFICATION.json": {
-      "sha256": "a55fe0ca7b1be3bae41f66fdbf759286516787c0cde1858a336a46a512a5e052",
-      "size": 1475
+      "sha256": "58ae810b1f26889774aa52f62d068213aaad275a2b3912a3b9ba5b14857dbf93",
+      "size": 1608
     },
     "NET_MAP.json": {
       "sha256": "5c6a61fb027e20fc3b3a4b86f652643d045846b11c83d11082fa07547c270776",
@@ -207,12 +222,12 @@
       "size": 585
     },
     "README_RU.md": {
-      "sha256": "bf821e02a4b45d3034ad3788050041eed3a81403a970e1c501f88c8a6616eebc",
-      "size": 17610
+      "sha256": "6acca25abd28d13ad3e5c2dd75d0ec031a09801cd0bbff18a0beeb677b12b1d3",
+      "size": 18295
     },
     "VERIFY.py": {
-      "sha256": "75408ab0b626735b1a8a41e6984a72c1f5475b308b82e608dfed1b5021351062",
-      "size": 5442
+      "sha256": "f497ac90c0e63e66ffc68b695ee72c70706489aa6a0fc0d424bf3fbb12c8df28",
+      "size": 6323
     },
     "passives_v3/SHA256SUMS": {
       "sha256": "d61e9256f04b382a6c1a956c9ced4aec4341436f87875222a08f58df043c33b3",
@@ -303,28 +318,33 @@
       "size": 5261
     },
     "tft_power_tps62162_review_DRAFT-erc.json": {
-      "sha256": "51a84860e50fbe3f9d872520c191f11ae1149dc2c64a518cbfbbdac0c76e88cf",
+      "sha256": "5d9626f8fc0b0725653d0c43f7b7761a7a49ca34d2edc9df6e46cd74bbddb59b",
       "size": 1004
     },
     "tft_power_tps62162_review_DRAFT.kicad_sch": {
-      "sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
-      "size": 32094
+      "sha256": "651c8f13e90f7c0329a827f7a82aefc3a21aa0208c13665af1134b7c840bb42f",
+      "size": 32091
     },
     "tft_power_tps62162_review_DRAFT.pdf": {
-      "sha256": "00c994b9d595ee2c361ac645fe1745a54d8e4414679a6e22c0e0cd01e424a8eb",
-      "size": 67716
+      "sha256": "723d402ebd94bd55b691c8153d5d09e27d3adea721e4f2e8403825689e1b9817",
+      "size": 67720
     },
     "tft_power_tps62162_review_DRAFT.png": {
-      "sha256": "0e26fc80faa3516895cf9ba35263cf2a1ce4bbc114590bc9e0fc5bee436c3f5b",
-      "size": 101995
+      "sha256": "daa4d0d57806e09f92b991d8ebe35439b5406f33c8b4bf9b39d6ca749736d037",
+      "size": 101973
     },
     "tft_power_tps62162_review_DRAFT.xml": {
-      "sha256": "a934b2dea0d106d416d56f6aba05529d7cb230c8f3f4a0961e9a9885e49a1bb9",
+      "sha256": "d1674590db2c70da71090dd54b091996bfd0e1a9022d9f8b416da789101b16b2",
       "size": 14205
     },
     "../../../docs/research/TFT_3V3_TPS62162_SELECTED_DESIGN_CALC_RU.md": {
-      "sha256": "a0db7f11e991e703debe2596cf95e81fc178afe58f849c73b9189dec8ccd14d8",
-      "size": 14388
+      "sha256": "79e40d8282ef9380d09868d784e0ed73e74339a3c1fb13073772763cafcbd14a",
+      "size": 14749
+    },
+    "LABEL_CORRECTION_VERIFICATION.json": {
+      "sha256": "393895a692ec9abf4cb9af7aa81205bc3ed0af7844a9d83d51181bdfab571a2a",
+      "size": 1939
     }
-  }
+  },
+  "correction_base_revision": "7412454ff09e380f474e6c2b5ccf6eef288e61d4"
 }

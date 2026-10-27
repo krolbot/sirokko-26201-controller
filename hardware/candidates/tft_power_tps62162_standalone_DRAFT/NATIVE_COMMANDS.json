@@ -1,5 +1,6 @@
 [
   {
+    "cwd": ".",
     "argv": [
       "kicad-cli",
       "version"
@@ -9,6 +10,7 @@
     "stderr": ""
   },
   {
+    "cwd": "before",
     "argv": [
       "kicad-cli",
       "sch",
@@ -17,14 +19,15 @@
       "--format",
       "kicadxml",
       "-o",
-      "before.xml",
-      "source_before.kicad_sch"
+      "../before.xml",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
     ],
     "exit_code": 0,
     "stdout": "",
     "stderr": ""
   },
   {
+    "cwd": "before",
     "argv": [
       "kicad-cli",
       "sch",
@@ -33,14 +36,15 @@
       "json",
       "--exit-code-violations",
       "-o",
-      "before-erc.json",
-      "source_before.kicad_sch"
+      "../before-erc.json",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
     ],
     "exit_code": 0,
-    "stdout": "Found 0 violations\nSaved ERC Report to before-erc.json\n",
+    "stdout": "Found 0 violations\nSaved ERC Report to ../before-erc.json\n",
     "stderr": ""
   },
   {
+    "cwd": ".",
     "argv": [
       "kicad-cli",
       "sch",
@@ -57,6 +61,7 @@
     "stderr": ""
   },
   {
+    "cwd": ".",
     "argv": [
       "kicad-cli",
       "sch",
@@ -71,6 +76,7 @@
     "stderr": ""
   },
   {
+    "cwd": ".",
     "argv": [
       "kicad-cli",
       "sch",

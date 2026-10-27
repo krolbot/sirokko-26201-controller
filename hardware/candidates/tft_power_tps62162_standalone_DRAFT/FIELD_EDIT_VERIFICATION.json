@@ -1,6 +1,6 @@
 {
   "source_sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
-  "result_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+  "result_sha256": "651c8f13e90f7c0329a827f7a82aefc3a21aa0208c13665af1134b7c840bb42f",
   "writer": "installed mcp-server-kicad 0.21.1 _cst + _atomic_write; no parser/generator changes",
   "reverse_authorized_changes_recovers_original_bytes": true,
   "all_uuid_wires_lib_symbols_instances_anchors_untouched": true,
@@ -63,5 +63,6 @@
     "Datasheet": "https://static.chipdip.ru/lib/720/DOC012720002.pdf",
     "Supplier_URL": "https://www.chipdip.ru/product/rc0603fr-07100kl"
   },
-  "footprints_assigned": false
+  "footprints_assigned": false,
+  "presentation_correction_report": "LABEL_CORRECTION_VERIFICATION.json"
 }
