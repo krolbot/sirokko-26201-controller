@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>tft_power_tps62162_review_DRAFT.kicad_sch</source>
-    <date>2026-10-27T16:19:51</date>
+    <source>/projects/exports/sirokko_t_c135683e/final_verify/tft_power_tps62162_review_DRAFT.kicad_sch</source>
+    <date>2026-10-27T16:47:30</date>
     <tool>Eeschema 10.0.7-10.0.7~ubuntu26.04.1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -26,13 +26,14 @@
   <components>
     <comp ref="C301">
       <value>10uF GRM21BR61E106KA73L</value>
+      <footprint>Sirokko_TFT_Passives:C_Murata_GRM21B_2012_Reflow</footprint>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:C_Murata_GRM21B_2012_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
@@ -49,13 +50,14 @@
     </comp>
     <comp ref="C302">
       <value>10uF GRM21BR61E106KA73L</value>
+      <footprint>Sirokko_TFT_Passives:C_Murata_GRM21B_2012_Reflow</footprint>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:C_Murata_GRM21B_2012_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
@@ -72,13 +74,14 @@
     </comp>
     <comp ref="C303">
       <value>100nF GRM188R71E104KA01D</value>
+      <footprint>Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow</footprint>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
@@ -95,13 +98,14 @@
     </comp>
     <comp ref="C304">
       <value>47uF GRM32ER61C476KE15L</value>
+      <footprint>Sirokko_TFT_Passives:C_Murata_GRM32E_3225_Reflow</footprint>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:C_Murata_GRM32E_3225_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
@@ -118,13 +122,14 @@
     </comp>
     <comp ref="L301">
       <value>744025003 3.3uH</value>
+      <footprint>Sirokko_TFT_Passives:L_Wuerth_744025003_2828_Reflow</footprint>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:L_Wuerth_744025003_2828_Reflow</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="Device" part="L" description="Inductor"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
       <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
@@ -141,13 +146,14 @@
     </comp>
     <comp ref="R301">
       <value>100k 1% EN</value>
+      <footprint>Sirokko_TFT_Passives:R_Yageo_RC0603_1608_Reflow</footprint>
       <datasheet>https://static.chipdip.ru/lib/720/DOC012720002.pdf</datasheet>
       <fields>
         <field name="MPN">RC0603FR-07100KL</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">ChipDip9000632023</field>
         <field name="Supplier_URL">https://www.chipdip.ru/product/rc0603fr-07100kl</field>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:R_Yageo_RC0603_1608_Reflow</field>
         <field name="Datasheet">https://static.chipdip.ru/lib/720/DOC012720002.pdf</field>
         <field name="Description"/>
       </fields>
@@ -156,7 +162,7 @@
       <property name="Manufacturer" value="Yageo"/>
       <property name="Supplier" value="ChipDip9000632023"/>
       <property name="Supplier_URL" value="https://www.chipdip.ru/product/rc0603fr-07100kl"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
@@ -173,13 +179,14 @@
     </comp>
     <comp ref="R302">
       <value>100k 1% PG</value>
+      <footprint>Sirokko_TFT_Passives:R_Yageo_RC0603_1608_Reflow</footprint>
       <datasheet>https://static.chipdip.ru/lib/720/DOC012720002.pdf</datasheet>
       <fields>
         <field name="MPN">RC0603FR-07100KL</field>
         <field name="Manufacturer">Yageo</field>
         <field name="Supplier">ChipDip9000632023</field>
         <field name="Supplier_URL">https://www.chipdip.ru/product/rc0603fr-07100kl</field>
-        <field name="Footprint"/>
+        <field name="Footprint">Sirokko_TFT_Passives:R_Yageo_RC0603_1608_Reflow</field>
         <field name="Datasheet">https://static.chipdip.ru/lib/720/DOC012720002.pdf</field>
         <field name="Description"/>
       </fields>
@@ -188,7 +195,7 @@
       <property name="Manufacturer" value="Yageo"/>
       <property name="Supplier" value="ChipDip9000632023"/>
       <property name="Supplier_URL" value="https://www.chipdip.ru/product/rc0603fr-07100kl"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
@@ -205,15 +212,16 @@
     </comp>
     <comp ref="U301">
       <value>TPS62162DSGR</value>
+      <footprint>Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm_ThermalVias</footprint>
       <datasheet>https://www.ti.com/lit/ds/symlink/tps62160.pdf</datasheet>
       <description>TPS62162DSGR fixed3.3V/1A. Reused TPS62170DSG geometry only: all9pins checked against TPS6216x SLVSAM2E p4. Standalone review, not integrated.</description>
       <fields>
-        <field name="Footprint"/>
+        <field name="Footprint">Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm_ThermalVias</field>
         <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps62160.pdf</field>
         <field name="Description">TPS62162DSGR fixed3.3V/1A. Reused TPS62170DSG geometry only: all9pins checked against TPS6216x SLVSAM2E p4. Standalone review, not integrated.</field>
       </fields>
       <libsource lib="Regulator_Switching" part="TPS62170DSG" description="500mA Step-Down Converter with DCS-Control, adjustable output, 3-17V input voltage, WSON-8"/>
-      <property name="Sheetname" value="Root"/>
+      <property name="Sheetname" value="tft_power_tps62162_review_DRAFT"/>
       <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
       <property name="ki_keywords" value="step-down dc-dc buck regulator"/>
       <property name="ki_fp_filters" value="*WSON*EP*2x2mm*P0.5mm*"/>
