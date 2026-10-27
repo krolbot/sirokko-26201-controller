@@ -5,35 +5,8 @@
       "version"
     ],
     "exit_code": 0,
-    "stdout": "10.0.7\n"
-  },
-  {
-    "argv": [
-      "kicad-cli",
-      "sch",
-      "erc",
-      "--format",
-      "json",
-      "--exit-code-violations",
-      "-o",
-      "./native-cli-erc.json",
-      "tft_power_tps62162_review_DRAFT.kicad_sch"
-    ],
-    "exit_code": 0,
-    "stdout": "Found 0 violations\nSaved ERC Report to ./native-cli-erc.json\n"
-  },
-  {
-    "argv": [
-      "kicad-cli",
-      "sch",
-      "export",
-      "pdf",
-      "-o",
-      "./tft_power_tps62162_review_DRAFT.pdf",
-      "tft_power_tps62162_review_DRAFT.kicad_sch"
-    ],
-    "exit_code": 0,
-    "stdout": "Plotted to './tft_power_tps62162_review_DRAFT.pdf'.\nDone.\n"
+    "stdout": "10.0.7\n",
+    "stderr": ""
   },
   {
     "argv": [
@@ -44,10 +17,73 @@
       "--format",
       "kicadxml",
       "-o",
-      "./native-reexport.xml",
+      "before.xml",
+      "source_before.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "before-erc.json",
+      "source_before.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Found 0 violations\nSaved ERC Report to before-erc.json\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "netlist",
+      "--format",
+      "kicadxml",
+      "-o",
+      "tft_power_tps62162_review_DRAFT.xml",
       "tft_power_tps62162_review_DRAFT.kicad_sch"
     ],
     "exit_code": 0,
-    "stdout": ""
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "pdf",
+      "-o",
+      "tft_power_tps62162_review_DRAFT.pdf",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to 'tft_power_tps62162_review_DRAFT.pdf'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "tft_power_tps62162_review_DRAFT-erc.json",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Found 0 violations\nSaved ERC Report to tft_power_tps62162_review_DRAFT-erc.json\n",
+    "stderr": ""
   }
 ]

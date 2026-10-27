@@ -2,6 +2,8 @@
   "status": "DRAFT / NOT FOR ORDER / NO FIRE",
   "integration_status": "standalone_not_integrated",
   "production_release": false,
+  "source_revision": "aad1652650c8786924ec5433ee808d7a3922fecf",
+  "source_capture_scope": "Historical byte-preserving source capture at first publication; not a claim that this revision leaves SCH/PDF unchanged.",
   "source_capture": {
     "before": {
       "tft_power_tps62162_review_DRAFT.kicad_sch": {
@@ -35,94 +37,294 @@
   },
   "original_calculation_sha256": "55453c4f7169e16f18ed93a4b446a2b506c9c693cd52421e9ab65a2ea5cc750f",
   "public_edits": {
-    "SCH": "none",
-    "PDF": "none",
-    "XML": "design/source and 8 Sheetfile paths only",
-    "calculation": "private paths replaced; warning added; separate publisher postscript appended; engineering numbers and MPN unchanged"
+    "SCH": "Authorized field positions/orientations/visibility and label orientation/justify only; hidden R301/R302 procurement properties added. No wires, symbol origins/rotations, anchors, UUID or values changed.",
+    "XML": "Fresh native export; design/source absolute working prefix removed only.",
+    "PDF_PNG": "Fresh PDF/PNG from corrected SCH; visually inspected.",
+    "calculation": "Engineering source before publisher section unchanged; historical first-publication note retained and correction explicitly separated."
   },
   "native_checks": {
-    "version": "10.0.7",
-    "erc_exit": 0,
-    "erc_violations": 0,
-    "scope": "standalone_not_integrated",
+    "native_reopen": "KiCad CLI re-read on each PDF/XML/ERC invocation; no GUI editor claim",
+    "kicad_version": "10.0.7",
+    "full_pin_to_net_equal": true,
+    "nets": {
+      "/+5V_CARRIER": [
+        "C301.1",
+        "C302.1",
+        "C303.1",
+        "R301.1",
+        "U301.2"
+      ],
+      "/GND": [
+        "C301.2",
+        "C302.2",
+        "C303.2",
+        "C304.2",
+        "U301.1",
+        "U301.4",
+        "U301.5",
+        "U301.9"
+      ],
+      "/TFT_3V3": [
+        "C304.1",
+        "L301.2",
+        "R302.1",
+        "U301.6"
+      ],
+      "/TFT_3V3_PG": [
+        "R302.2",
+        "U301.8"
+      ],
+      "/TFT_PWR_EN": [
+        "R301.2",
+        "U301.3"
+      ],
+      "/TFT_PWR_SW": [
+        "L301.1",
+        "U301.7"
+      ]
+    },
+    "components": 8,
+    "electrical_pins": 23,
+    "values_unchanged": true,
+    "libparts_unchanged": true,
+    "footprints_empty": true,
+    "erc_violations_before": 0,
+    "erc_violations_after": 0,
+    "ignored_checks_unchanged": true,
     "ignored_checks": [
-      "single_global_label",
-      "four_way_junction",
-      "simulation_model_issue",
-      "footprint_filter"
+      {
+        "description": "Global label only appears once in the schematic",
+        "key": "single_global_label"
+      },
+      {
+        "description": "Four connection points are joined together",
+        "key": "four_way_junction"
+      },
+      {
+        "description": "SPICE model issue",
+        "key": "simulation_model_issue"
+      },
+      {
+        "description": "Assigned footprint doesn't match footprint filters",
+        "key": "footprint_filter"
+      }
     ],
-    "all_six_nets_23_nodes_match_fresh_export": true,
-    "components_and_libparts_match_fresh_export": true,
-    "pdf_equal_except_CreationDate": true,
-    "pdf_png_render_byte_identical": true,
-    "reexport_pdf": {
-      "sha256": "2f0c051e4cb9e4cc5c618b34c1a38a5761b6309be95b1520ff134dd41ed06ae3",
-      "size": 67402
-    },
-    "source_pdf": {
-      "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
-      "size": 67402
-    },
-    "native_gui_used": false
+    "integration_status": "standalone_not_integrated",
+    "production_release": false
   },
+  "native_gui_used": false,
+  "active_readback": {
+    "active_sch_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+    "working_copy_sha_equal": true,
+    "active_native_xml_full_map_equal": true,
+    "active_native_erc_violations": 0,
+    "ignored_checks_unchanged": true,
+    "commands": [
+      {
+        "argv": [
+          "kicad-cli",
+          "sch",
+          "export",
+          "netlist",
+          "--format",
+          "kicadxml",
+          "-o",
+          "active.xml",
+          "tft_power_tps62162_review_DRAFT.kicad_sch"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "kicad-cli",
+          "sch",
+          "erc",
+          "--format",
+          "json",
+          "--exit-code-violations",
+          "-o",
+          "active-erc.json",
+          "tft_power_tps62162_review_DRAFT.kicad_sch"
+        ],
+        "exit_code": 0,
+        "stdout": "Found 0 violations\nSaved ERC Report to active-erc.json\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "native_xml_sha256": "e6b6ef363fb7997c21240619afa8ce5730ababac820c1c8087d6de34e9564ee4",
   "visual": {
-    "accepted": false,
+    "implementer_checked": true,
+    "independent_engineer_acceptance": "accepted exact SCH/PDF by engineer; see ENGINEER_ACCEPTANCE.json",
     "frame_complete": true,
-    "known_overlapping_labels": [
-      "U301",
-      "L301",
-      "C301-C303 / PWR_FLAG group"
-    ],
+    "known_overlapping_labels": [],
     "description_U301_hidden": true,
     "png_size_px": [
       2105,
       1489
     ]
   },
+  "passives_v3": {
+    "archive_sha256": "f9694ad9d8b7fa449d662da2aff55f4f352c30cc541b128a670abfe743609a7a",
+    "entries": 22,
+    "all_files_byte_identical_to_archive": true,
+    "status": "FOOTPRINT_GEOMETRY_ONLY_NOT_PRODUCTION",
+    "instance_footprints_assigned": false
+  },
   "files": {
+    "ACTIVE_READBACK.json": {
+      "sha256": "20b9a10f6f4d1161a6542268b98ebef23528523173e5c8d073cbbee17f7fd298",
+      "size": 935
+    },
+    "ENGINEER_ACCEPTANCE.json": {
+      "sha256": "98a7a84e78d59916bafc937f69adbf858f28b2b51e83dbee48f7b878e6a2fd92",
+      "size": 1056
+    },
+    "FIELD_EDIT_VERIFICATION.json": {
+      "sha256": "9e15cecf8331e2b49f78b2bcc6347bcfa65c5e3dba192f2ecdef5d95bbb35798",
+      "size": 1359
+    },
     "NATIVE_COMMANDS.json": {
-      "sha256": "004422217b0537cd84986cc3c4f3bca0eecf631cc86becee51ce71e9310f3fd3",
-      "size": 1003
+      "sha256": "843fcffc90c9c80b95419e0b63da336b7846ad660bd04a8397945a65bcc4c077",
+      "size": 1693
+    },
+    "NATIVE_VERIFICATION.json": {
+      "sha256": "a55fe0ca7b1be3bae41f66fdbf759286516787c0cde1858a336a46a512a5e052",
+      "size": 1475
     },
     "NET_MAP.json": {
-      "sha256": "25687c5901803599f4bc75f702dbc60af014d2f8fc9fd11aadddf47e27b17b16",
-      "size": 675
+      "sha256": "5c6a61fb027e20fc3b3a4b86f652643d045846b11c83d11082fa07547c270776",
+      "size": 540
+    },
+    "PASSIVE_PUBLISH_READBACK.json": {
+      "sha256": "46bca2bc8cae55cefc380c29efeacc4657ada7c2fcdcc42a345359ba6b4ca5d7",
+      "size": 3151
     },
     "PWR_FLAG_READBACK.json": {
       "sha256": "424c81814bb28170e7dc28bed646f42bc44164751c9578889798d360e7edd3fc",
       "size": 585
     },
     "README_RU.md": {
-      "sha256": "4c463da8bf66db3401af8c84955ded2304e757316cb61a913b59b919fa47d8d8",
-      "size": 12495
+      "sha256": "bf821e02a4b45d3034ad3788050041eed3a81403a970e1c501f88c8a6616eebc",
+      "size": 17610
     },
     "VERIFY.py": {
-      "sha256": "9ea17b33e0cfade0c0a2f8f5235b28b22b79a48701b8adcdea50d84d12b6424f",
-      "size": 3845
+      "sha256": "75408ab0b626735b1a8a41e6984a72c1f5475b308b82e608dfed1b5021351062",
+      "size": 5442
+    },
+    "passives_v3/SHA256SUMS": {
+      "sha256": "d61e9256f04b382a6c1a956c9ced4aec4341436f87875222a08f58df043c33b3",
+      "size": 2553
+    },
+    "passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM188_1608_Reflow.kicad_mod": {
+      "sha256": "bd9eecbddab9dfd31a14ceafa99b0969365b61c0fcf2b02615957922d9806806",
+      "size": 900
+    },
+    "passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM21B_2012_Reflow.kicad_mod": {
+      "sha256": "8bc9e9f3bd850cfbb4acee0f7c8cb500b04a4f0c3b582869fcd94b69c547c0da",
+      "size": 901
+    },
+    "passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM32E_3225_Reflow.kicad_mod": {
+      "sha256": "54b3f66b322802ed88060948bb28da8e210e8f7ec59bb132d911b454cdc43a1c",
+      "size": 890
+    },
+    "passives_v3/Sirokko_TFT_Passives.pretty/L_Wuerth_744025003_2828_Reflow.kicad_mod": {
+      "sha256": "0af77026ac56536515f8bd695e66996bfae0eeeb2cacbac0f9cab91c84b98c54",
+      "size": 939
+    },
+    "passives_v3/Sirokko_TFT_Passives.pretty/R_Yageo_RC0603_1608_Reflow.kicad_mod": {
+      "sha256": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a",
+      "size": 935
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM188_1608_Reflow.png": {
+      "sha256": "1a3b1f203e8365d26e8b635dfcd851d385369ee2b11adb385e286d7903d541b5",
+      "size": 39361
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM188_1608_Reflow.svg": {
+      "sha256": "32b09fa9e58ab5eb7e2ab93fcf3ff25deb76529990d05a74b1bd76e093f52287",
+      "size": 21074
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM21B_2012_Reflow.png": {
+      "sha256": "00c33d3055701a6aecacf40300a1c85434e41ca1802dbccb399ef2d3b6169ab6",
+      "size": 36941
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM21B_2012_Reflow.svg": {
+      "sha256": "201a921f66dcc6d2759ffcb2a4316f85d937487211bda9b1002d305fc8d045a8",
+      "size": 17314
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM32E_3225_Reflow.png": {
+      "sha256": "e676265e69fc16cee6656dcc1a777a47744d3cbb4f6e358d54bb8280c65ff03e",
+      "size": 38142
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM32E_3225_Reflow.svg": {
+      "sha256": "a5bfa6f4333f9e3b7658fa4cfd95e52bddffa1c298d5e248016ff49f9c134cc7",
+      "size": 17160
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/L_Wuerth_744025003_2828_Reflow.png": {
+      "sha256": "8d3dcc677e9c58c1b6828782f08a2de9b8dc5937b466e1191fac934a0972994b",
+      "size": 39610
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/L_Wuerth_744025003_2828_Reflow.svg": {
+      "sha256": "f53df96e897add021200e7d3209ed3c513f17f517ee8afb3c139cb4d53daf321",
+      "size": 20678
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/R_Yageo_RC0603_1608_Reflow.png": {
+      "sha256": "940b5a534708d7ab8876d749179bb1a8c9931998caf3ee0f8431d8660a726dbd",
+      "size": 41872
+    },
+    "passives_v3/Sirokko_TFT_Passives_previews/R_Yageo_RC0603_1608_Reflow.svg": {
+      "sha256": "b4a4c9d18bca44c6a5a6a97f99bcb71e50aca9b1491524e53ba6d2af01780932",
+      "size": 21677
+    },
+    "passives_v3/TFT_L301_FOOTPRINT_ACCEPTANCE.json": {
+      "sha256": "2eb8ad0710405e7c4fef97173b76f4e4857b10df3ce7fc7321336d09dec5be56",
+      "size": 1099
+    },
+    "passives_v3/TFT_L301_FOOTPRINT_RU.md": {
+      "sha256": "3f9fe2e761a694ed9a48de7fc861057ff6c8d15a52dd9a708e8084a3e3fff2aa",
+      "size": 6718
+    },
+    "passives_v3/TFT_MURATA_PASSIVE_FOOTPRINTS_RU.md": {
+      "sha256": "8045f10f9e9ae8bc4d8d31ed7aafac4d20b17d35a04a8ec3be5f53e49d648e48",
+      "size": 9482
+    },
+    "passives_v3/TFT_MURATA_PASSIVE_FOOTPRINT_ACCEPTANCE.json": {
+      "sha256": "fcdd77d6f945cd011d5ac1a252ca236ba7fad56a00014a81e8a8c72e450c2e4c",
+      "size": 2806
+    },
+    "passives_v3/TFT_R301_R302_FOOTPRINT_ACCEPTANCE.json": {
+      "sha256": "fcb74ab975854b61ff0cce2bff8b8563a9aed35b04ce0dacdcaaa053320b3848",
+      "size": 1012
+    },
+    "passives_v3/TFT_R301_R302_FOOTPRINT_RU.md": {
+      "sha256": "37e4081a4d970204498cf6af1b62a061c970a52d6b64fa0ae4c55852ae407c20",
+      "size": 5261
     },
     "tft_power_tps62162_review_DRAFT-erc.json": {
-      "sha256": "b4893b142a4a15886dfe8da0af42f9883457b624dd5620b7488dfaf3f6d7f44a",
+      "sha256": "51a84860e50fbe3f9d872520c191f11ae1149dc2c64a518cbfbbdac0c76e88cf",
       "size": 1004
     },
     "tft_power_tps62162_review_DRAFT.kicad_sch": {
-      "sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
-      "size": 30654
+      "sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+      "size": 32094
     },
     "tft_power_tps62162_review_DRAFT.pdf": {
-      "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
-      "size": 67402
+      "sha256": "00c994b9d595ee2c361ac645fe1745a54d8e4414679a6e22c0e0cd01e424a8eb",
+      "size": 67716
     },
     "tft_power_tps62162_review_DRAFT.png": {
-      "sha256": "e556908b3828975afb365f977f0f45deed2eba2b4ec588f4048e97506f9f87b1",
-      "size": 107239
+      "sha256": "0e26fc80faa3516895cf9ba35263cf2a1ce4bbc114590bc9e0fc5bee436c3f5b",
+      "size": 101995
     },
     "tft_power_tps62162_review_DRAFT.xml": {
-      "sha256": "88d2fffc2d0d1a71bab0fe2de325733788d92e5ad69c54e8cdcfc5b13a349a4b",
-      "size": 12915
+      "sha256": "a934b2dea0d106d416d56f6aba05529d7cb230c8f3f4a0961e9a9885e49a1bb9",
+      "size": 14205
     },
     "../../../docs/research/TFT_3V3_TPS62162_SELECTED_DESIGN_CALC_RU.md": {
-      "sha256": "79153745af1f020ad1841ae49fdb1359b1e4aba5ae43be5e097033baff8ecbc8",
-      "size": 12992
+      "sha256": "a0db7f11e991e703debe2596cf95e81fc178afe58f849c73b9189dec8ccd14d8",
+      "size": 14388
     }
   }
 }

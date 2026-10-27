@@ -870,7 +870,7 @@
 	(dnp no)
 	(uuid "9cec0f69-89ba-4cb5-ad82-0e24170866d2")
 	(property "Reference" "U301"
-		(at 114.3 72.39 0)
+		(at 114.3 60.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -878,7 +878,7 @@
 		)
 	)
 	(property "Value" "TPS62162DSGR"
-		(at 114.3 80.01 0)
+		(at 114.3 63.5 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -960,7 +960,7 @@
 	(dnp no)
 	(uuid "281f02fb-0744-4dc2-8b33-65cfab1c8f67")
 	(property "Reference" "L301"
-		(at 162.56 64.77 0)
+		(at 162.56 64.77 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -968,7 +968,7 @@
 		)
 	)
 	(property "Value" "744025003 3.3uH"
-		(at 162.56 72.39 0)
+		(at 162.56 72.39 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1019,19 +1019,21 @@
 	(dnp no)
 	(uuid "f247dd64-dab4-4645-9211-2979d76eaf84")
 	(property "Reference" "C301"
-		(at 45.72 62.23 0)
+		(at 49.53 64.77 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "10uF GRM21BR61E106KA73L"
-		(at 45.72 69.85 0)
+		(at 49.53 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1078,19 +1080,21 @@
 	(dnp no)
 	(uuid "1b66973a-b33a-446a-aabe-12b03ae2aff3")
 	(property "Reference" "C302"
-		(at 45.72 87.63 0)
+		(at 49.53 90.17 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "10uF GRM21BR61E106KA73L"
-		(at 45.72 95.25 0)
+		(at 49.53 92.71 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1137,19 +1141,21 @@
 	(dnp no)
 	(uuid "c2f86ab8-362c-4126-98e9-157869ba664f")
 	(property "Reference" "C303"
-		(at 45.72 113.03 0)
+		(at 49.53 115.57 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "100nF GRM188R71E104KA01D"
-		(at 45.72 120.65 0)
+		(at 49.53 118.11 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1196,19 +1202,21 @@
 	(dnp no)
 	(uuid "0c75724c-63b6-4742-998a-f637198a55d7")
 	(property "Reference" "C304"
-		(at 195.58 92.71 0)
+		(at 199.39 95.25 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "47uF GRM32ER61C476KE15L"
-		(at 195.58 100.33 0)
+		(at 199.39 97.79 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1255,19 +1263,21 @@
 	(dnp no)
 	(uuid "8ee47beb-e195-4149-b6f4-380b7d4ffb00")
 	(property "Reference" "R301"
-		(at 81.28 36.83 0)
+		(at 85.09 39.37 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "100k 1% EN"
-		(at 81.28 44.45 0)
+		(at 85.09 41.91 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1279,7 +1289,7 @@
 			(hide yes)
 		)
 	)
-	(property "Datasheet" "~"
+	(property "Datasheet" "https://static.chipdip.ru/lib/720/DOC012720002.pdf"
 		(at 81.28 40.64 0)
 		(effects
 			(font
@@ -1288,6 +1298,46 @@
 			(hide yes)
 		)
 	)
+	(property "MPN" "RC0603FR-07100KL"
+	(id 0)
+	(at 81.28 40.64 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Yageo"
+	(id 1)
+	(at 81.28 40.64 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Supplier" "ChipDip9000632023"
+	(id 2)
+	(at 81.28 40.64 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Supplier_URL" "https://www.chipdip.ru/product/rc0603fr-07100kl"
+	(id 3)
+	(at 81.28 40.64 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 	(pin "1"
 	(uuid "2a33cb95-77dd-4b2f-b8ff-c4b3f81cc320")
 )
@@ -1314,19 +1364,21 @@
 	(dnp no)
 	(uuid "8c3931d7-b837-41ac-9673-cb03aa84ceb1")
 	(property "Reference" "R302"
-		(at 162.56 100.33 0)
+		(at 166.37 102.87 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Value" "100k 1% PG"
-		(at 162.56 107.95 0)
+		(at 166.37 105.41 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1338,7 +1390,7 @@
 			(hide yes)
 		)
 	)
-	(property "Datasheet" "~"
+	(property "Datasheet" "https://static.chipdip.ru/lib/720/DOC012720002.pdf"
 		(at 162.56 104.14 0)
 		(effects
 			(font
@@ -1347,6 +1399,46 @@
 			(hide yes)
 		)
 	)
+	(property "MPN" "RC0603FR-07100KL"
+	(id 0)
+	(at 162.56 104.14 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Yageo"
+	(id 1)
+	(at 162.56 104.14 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Supplier" "ChipDip9000632023"
+	(id 2)
+	(at 162.56 104.14 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Supplier_URL" "https://www.chipdip.ru/product/rc0603fr-07100kl"
+	(id 3)
+	(at 162.56 104.14 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 	(pin "1"
 	(uuid "6172fca5-adf7-48f2-88e4-d4502b318799")
 )
@@ -1378,14 +1470,16 @@
 			(font
 				(size 1.27 1.27)
 			)
+			(hide yes)
 		)
 	)
 	(property "Value" "PWR_FLAG"
-		(at 45.72 63.5 0)
+		(at 49.53 57.15 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1434,14 +1528,16 @@
 			(font
 				(size 1.27 1.27)
 			)
+			(hide yes)
 		)
 	)
 	(property "Value" "PWR_FLAG"
-		(at 45.72 76.2 0)
+		(at 49.53 69.85 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
+			(justify left)
 		)
 	)
 	(property "Footprint" ""
@@ -1715,62 +1811,62 @@
 		(uuid "6b239511-c19d-4256-afb8-87a80e663b35")
 	)
 	(label "+5V_CARRIER"
-		(at 45.72 59.69 90)
+		(at 45.72 59.69 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "e23273cb-d0c9-4238-81c6-4634173ee957")
 	)
 	(label "+5V_CARRIER"
-		(at 45.72 85.09 90)
+		(at 45.72 85.09 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "bd6c113c-cabc-4d5e-b29d-97b491151119")
 	)
 	(label "+5V_CARRIER"
-		(at 45.72 110.49 90)
+		(at 45.72 110.49 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "ca551f08-76c6-4635-846e-86a185f4cc69")
 	)
 	(label "+5V_CARRIER"
-		(at 81.28 34.29 90)
+		(at 81.28 34.29 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "24cadbd3-4853-48a7-aa32-bfa214e233f1")
 	)
 	(label "GND"
-		(at 114.3 88.9 270)
+		(at 114.3 88.9 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify right top)
 		)
 		(uuid "95f645e5-099d-4ed7-a287-b87b0de3b632")
 	)
 	(label "GND"
-		(at 116.84 88.9 270)
+		(at 116.84 88.9 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left top)
 		)
 		(uuid "52c19ea8-4dcb-4c4f-8981-49fc9e2cf648")
 	)
@@ -1785,7 +1881,7 @@
 		(uuid "31889f2d-9947-4818-9499-8ffcf6b239cf")
 	)
 	(label "GND"
-		(at 111.76 88.9 270)
+		(at 111.76 88.9 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1795,17 +1891,17 @@
 		(uuid "a82bf900-1c9d-40d5-a3c5-84fc3b179773")
 	)
 	(label "GND"
-		(at 45.72 72.39 270)
+		(at 45.72 72.39 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify right top)
 		)
 		(uuid "599a19c6-0d1c-4d06-a13d-bfb6be7ba893")
 	)
 	(label "GND"
-		(at 45.72 97.79 270)
+		(at 45.72 97.79 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1815,7 +1911,7 @@
 		(uuid "7379dd85-c78f-4d3c-8c09-446cfb7d2708")
 	)
 	(label "GND"
-		(at 45.72 123.19 270)
+		(at 45.72 123.19 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1825,7 +1921,7 @@
 		(uuid "b9ee9ffb-89e3-4a99-89bd-cd90795936b1")
 	)
 	(label "GND"
-		(at 195.58 102.87 270)
+		(at 195.58 102.87 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1845,7 +1941,7 @@
 		(uuid "8aa56e50-ca86-42b6-93e1-4fc3e3c967d1")
 	)
 	(label "TFT_PWR_EN"
-		(at 81.28 46.99 270)
+		(at 81.28 46.99 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1895,22 +1991,22 @@
 		(uuid "054b4f51-7b5c-41df-a564-62f0d525a6eb")
 	)
 	(label "TFT_3V3"
-		(at 195.58 90.17 90)
+		(at 195.58 90.17 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "96d5a137-9673-45bb-a71b-5a5fcec3a732")
 	)
 	(label "TFT_3V3"
-		(at 162.56 97.79 90)
+		(at 162.56 97.79 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "7a925361-0d5f-48d1-8fc7-f29ad777f34f")
 	)
@@ -1925,7 +2021,7 @@
 		(uuid "98402106-ee2f-4a42-8ba9-ae47ff5b2264")
 	)
 	(label "TFT_3V3_PG"
-		(at 162.56 110.49 270)
+		(at 162.56 110.49 0)
 		(effects
 			(font
 				(size 1.27 1.27)

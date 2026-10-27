@@ -59,6 +59,10 @@ TI Table 2 подтверждает nominal LC = 3.3 µH / 47 µF and explicitly
 
 Before CAD release: exact Murata Ceff-vs-bias/tolerance/temperature proof, footprint + EP stencil/thermal-via implementation, 5V shared budget, and schematic review of EN/PG ownership. Before production: full thermal layout calculation and bench tests of startup/inrush, ripple/overshoot, PSM/PWM noise near thermocouples, load steps and cable-end VOUT. No physical test has been performed.
 
-## Примечание издателя: повторная проверка отдельного листа
+## Историческое примечание издателя: первая публикация отдельного листа
+
+Позднее исправлены только поля и выравнивание меток отдельной SCH, а R301/R302 получили точные скрытые свойства Yageo RC0603FR-07100KL. [Текущий комплект и DC-проверка резисторов](../../hardware/candidates/tft_power_tps62162_standalone_DRAFT/README_RU.md) заменяют прежние изображения с наложениями; оформление независимо принято инженером по точным SCH/PDF SHA. Карта 6 сетей/23 выводов и прежние ERC/ограничения сохранены. Пять библиотечных мест v3 имеют только геометрическую проверку и не назначены экземплярам SCH. Исходный инженерный расчёт выше, MPN/числа и отзыв неподтверждённых деталей не изменены; root SCH/PCB/BOM/прошивка не затронуты. PG также Hi-Z при EN OFF/UVLO/TSD (TI §8.3.3), не универсальное разрешение безопасности. Общий HOLD сохраняется.
+
+Ниже — результат первой публикации, не утверждение о текущем оформлении:
 
 Исходный расчёт выше сохранён без изменения MPN, чисел и ограничений; удалены только частные рабочие пути. [Комплект отдельного листа](../../hardware/candidates/tft_power_tps62162_standalone_DRAFT/README_RU.md) содержит исходную SCH/PDF, публичный XML, PNG, полный ERC и карту сетей. Повторный штатный экспорт KiCad 10.0.7 дал PDF, отличающийся только метаданным CreationDate (растр PNG побайтно совпал), и ту же карту всех шести сетей; ERC — 0 нарушений при четырёх отключённых проверках, перечисленных в отчёте. PDF визуально осмотрен: рамка целая, но подписи U301/L301 и входной группы перекрываются. Оформление не принято; схема не редактировалась. Это не интеграция в root, не PCB, не производственная BOM и не системная квалификация; общий HOLD сохранён.

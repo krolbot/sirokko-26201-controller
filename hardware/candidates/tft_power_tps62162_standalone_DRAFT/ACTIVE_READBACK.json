@@ -1,0 +1,41 @@
+{
+  "active_sch_sha256": "ba86a8c91199ce1bbd2dce6f301d0932d963631c134471cc3721474069e40497",
+  "working_copy_sha_equal": true,
+  "active_native_xml_full_map_equal": true,
+  "active_native_erc_violations": 0,
+  "ignored_checks_unchanged": true,
+  "commands": [
+    {
+      "argv": [
+        "kicad-cli",
+        "sch",
+        "export",
+        "netlist",
+        "--format",
+        "kicadxml",
+        "-o",
+        "active.xml",
+        "tft_power_tps62162_review_DRAFT.kicad_sch"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "kicad-cli",
+        "sch",
+        "erc",
+        "--format",
+        "json",
+        "--exit-code-violations",
+        "-o",
+        "active-erc.json",
+        "tft_power_tps62162_review_DRAFT.kicad_sch"
+      ],
+      "exit_code": 0,
+      "stdout": "Found 0 violations\nSaved ERC Report to active-erc.json\n",
+      "stderr": ""
+    }
+  ]
+}
