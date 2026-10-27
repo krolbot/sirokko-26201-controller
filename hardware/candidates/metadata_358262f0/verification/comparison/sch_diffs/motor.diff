@@ -1,0 +1,276 @@
+--- before_archive/SIROKKO_RECTANGULAR_t_99e25778_DRAFT/project/motor_pwm_REBUILD.kicad_sch	2026-10-28 00:37:56.000000000 +0300
++++ after_sch/motor_pwm_REBUILD.kicad_sch	2026-10-28 01:36:26.000000000 +0300
+@@ -3679,6 +3679,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "INA240A1ID"
++	(id 0)
++	(at 110.49 105.41 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "de2bb8ea-8ffd-40d2-9527-f063f9c8b3d1")
+ )
+@@ -3762,6 +3772,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "TLV9020DBVR"
++	(id 0)
++	(at 149.86 119.38 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "28b194ff-4af7-4262-aded-235f1c6a368a")
+ )
+@@ -3836,6 +3856,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74LVC1G32DBVR"
++	(id 0)
++	(at 90.17 149.86 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "531f9ca6-0577-460c-82aa-0efb196ccdb8")
+ )
+@@ -3910,6 +3940,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74LVC1G08DBVR"
++	(id 0)
++	(at 129.54 149.86 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "9b6b88ad-cfd8-4303-b74e-764f9726c6ae")
+ )
+@@ -4049,6 +4089,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "WSLP27262L000FEA"
++	(id 0)
++	(at 129.54 100.33 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "892ff23a-11e1-4760-9bae-f2e9667fb088")
+ )
+@@ -4114,6 +4164,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74LVC1G08DBVR"
++	(id 0)
++	(at 49.53 180.34 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "d270d039-9170-4031-b987-91573d989eb1")
+ )
+@@ -4448,6 +4508,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "IRFB4110PBF"
++	(id 0)
++	(at 180.34 85.09 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "22fbf82d-ab0b-4d26-b056-6b8515973965")
+ )
+@@ -5056,6 +5126,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "LM317HVT/NOPB"
++	(id 0)
++	(at 77.47 87.63 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "7e9034b1-dab4-450d-9689-f2804924c639")
+ )
+@@ -5115,7 +5195,7 @@
+ 			(hide yes)
+ 		)
+ 	)
+-	(property "Datasheet" "~"
++	(property "Datasheet" "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+ 		(at 58.42 86.36 0)
+ 		(effects
+ 			(font
+@@ -5124,6 +5204,46 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "RC0805FR-0775RL"
++	(id 0)
++	(at 58.42 86.36 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Manufacturer" "YAGEO"
++	(id 1)
++	(at 58.42 86.36 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Supplier_PN" "ChipDip 8001791959"
++	(id 2)
++	(at 58.42 86.36 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Supplier_URL" "https://www.chipdip.ru/product/rc0805fr-0775rl-yageo-8001791959"
++	(id 3)
++	(at 58.42 86.36 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "c89bd5aa-60c5-4f4a-b804-729ec84322d3")
+ )
+@@ -5163,7 +5283,7 @@
+ 			)
+ 		)
+ 	)
+-	(property "Value" "681R 1% 0.5W; LM317 ADJ→GND"
++	(property "Value" "681R 1% 0.75W; LM317 ADJ→GND"
+ 		(at 58.42 97.79 0)
+ 		(effects
+ 			(font
+@@ -5180,7 +5300,7 @@
+ 			(hide yes)
+ 		)
+ 	)
+-	(property "Datasheet" "~"
++	(property "Datasheet" "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+ 		(at 58.42 93.98 0)
+ 		(effects
+ 			(font
+@@ -5189,6 +5309,46 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "RC2010FK-07681RL"
++	(id 0)
++	(at 58.42 93.98 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Manufacturer" "YAGEO"
++	(id 1)
++	(at 58.42 93.98 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Supplier_PN" "ChipDip 8031324009"
++	(id 2)
++	(at 58.42 93.98 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
++	(property "Supplier_URL" "https://www.chipdip.ru/product/rc2010fk-07681rl-thick-film-resistors-smd-general-yageo-8031324009"
++	(id 3)
++	(at 58.42 93.98 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "79b95f66-fc75-4eb6-9688-6e8d4f1488fe")
+ )
+@@ -5254,6 +5414,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "LTC7001IMSE#PBF"
++	(id 0)
++	(at 147.32 82.55 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "eb80b160-f32b-46c7-8efa-48ec1dd5e966")
+ )

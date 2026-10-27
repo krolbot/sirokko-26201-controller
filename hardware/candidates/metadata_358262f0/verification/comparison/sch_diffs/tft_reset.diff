@@ -1,0 +1,19 @@
+--- before_archive/SIROKKO_RECTANGULAR_t_99e25778_DRAFT/project/tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch	2026-10-28 00:38:16.000000000 +0300
++++ after_sch/tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch	2026-10-28 01:34:39.000000000 +0300
+@@ -668,6 +668,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "TPS3808G33DBVR"
++	(id 0)
++	(at 101.6 81.28 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "1d810702-4c0f-49a9-b8bf-6f151fde866a")
+ )

@@ -1,0 +1,17 @@
+{
+  "source_pcb_sha256": "358262f03654d008130564c0e45faec82b87620b9485119ec4021a83dba2e42d",
+  "datasheet": "https://static.chipdip.ru/lib/647/DOC027647254.pdf",
+  "revision": "LTC7001 Rev G p11 visually checked",
+  "qg_design_screen_C": 3e-07,
+  "qg_design_screen_is_guaranteed": false,
+  "minimum_Ceff_with_30percent_F": 3.8999999999999997e-07,
+  "positive_Ceff_F": 4e-07,
+  "positive_droop_V": 0.75,
+  "negative_Ceff_F": 1e-07,
+  "negative_droop_V": 3.0,
+  "chargepump_only_frequency_Hz_typ": 50.0,
+  "nominal_1uF_charge_time_s_typ": 0.4,
+  "f_screen_Hz": 20000,
+  "gate_charge_current_A_screen": 0.006,
+  "production_release": false
+}

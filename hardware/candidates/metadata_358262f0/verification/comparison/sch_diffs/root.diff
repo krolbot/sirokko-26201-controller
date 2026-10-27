@@ -1,0 +1,147 @@
+--- before_archive/SIROKKO_RECTANGULAR_t_99e25778_DRAFT/project/Sirokko26201_control_motor_candidate.kicad_sch	2026-10-28 00:38:35.000000000 +0300
++++ after_sch/Sirokko26201_control_motor_candidate.kicad_sch	2026-10-28 01:36:26.000000000 +0300
+@@ -7455,6 +7455,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "TPS3431SDRBR"
++	(id 0)
++	(at 210.82 170.18 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "3db95300-fc8a-496c-8cbd-58010a9e0d3f")
+ )
+@@ -7824,6 +7834,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74HCS74D"
++	(id 0)
++	(at 279.4 330.2 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "13181032-25ed-4d5b-b556-59105633dd7f")
+ )
+@@ -7919,6 +7939,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74HCS14D"
++	(id 0)
++	(at 177.8 330.2 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "4a123935-bad4-41fe-a774-a8ad2f9794e6")
+ )
+@@ -8014,6 +8044,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74HCS30D"
++	(id 0)
++	(at 76.2 304.8 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "f5453fa3-ae62-425e-9f64-f1e3fb0c458c")
+ )
+@@ -8109,6 +8149,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74HCS30D"
++	(id 0)
++	(at 76.2 360.68 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "a5ff407c-ca8a-4753-9462-757ef34f57c1")
+ )
+@@ -8204,6 +8254,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74HCS11D"
++	(id 0)
++	(at 381 330.2 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "ece02493-dfd1-4fa2-a90e-0773d2225582")
+ )
+@@ -8299,6 +8359,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "TPS3839G33DBZR"
++	(id 0)
++	(at 454.66 228.6 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "042924e2-d2da-423c-b55d-a5a1b4a4109d")
+ )
+@@ -8361,6 +8431,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "SN74LVC1G14DBVR"
++	(id 0)
++	(at 454.66 269.24 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "5159d61d-42d7-49c7-9ddd-70db4c1a7962")
+ )
+@@ -11302,7 +11382,7 @@
+ 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/738f1eb5-5037-42a1-995a-b2820277f936/29607fa9-91f0-412f-a431-54a868620f39"
+ 			(reference "R9010")
+ 			(unit 1)
+-			(value "681R 1% 0.5W; LM317 ADJ→GND")
++			(value "681R 1% 0.75W; LM317 ADJ→GND")
+ 			(footprint "Resistor_SMD:R_2010_5025Metric")
+ 		)
+ 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/738f1eb5-5037-42a1-995a-b2820277f936/aeb39c6e-9487-4ee0-bc91-c8440305d7cf"

@@ -1,0 +1,19 @@
+--- before_archive/SIROKKO_RECTANGULAR_t_99e25778_DRAFT/project/logic_power_24_5_DRAFT.kicad_sch	2026-10-28 00:38:18.000000000 +0300
++++ after_sch/logic_power_24_5_DRAFT.kicad_sch	2026-10-28 01:34:38.000000000 +0300
+@@ -1611,6 +1611,16 @@
+ 			(hide yes)
+ 		)
+ 	)
++	(property "MPN" "LM5013DDAR"
++	(id 0)
++	(at 90.17 66.04 0)
++	(effects
++		(font
++			(size 1.27 1.27)
++		)
++		(hide yes)
++	)
++)
+ 	(pin "1"
+ 	(uuid "07d389d2-2bb1-4878-b951-3cf11f676539")
+ )

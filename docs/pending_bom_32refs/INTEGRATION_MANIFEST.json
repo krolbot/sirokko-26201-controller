@@ -1,0 +1,771 @@
+{
+  "status": "DRAFT_NOT_FOR_ORDER_NOT_CANONICAL",
+  "source_pcb_sha256": "358262f03654d008130564c0e45faec82b87620b9485119ec4021a83dba2e42d",
+  "source_sch_sha256": "31fbc2689f761bf65e51e803cfec680fcbd4bfa0c23d4bc96a3bfcee36fef618",
+  "candidate_bom_sha256": "6f8d27117ab1c939613de0f6346a917db47c3da02be5a3425d4212b75aea6821",
+  "rows": 128,
+  "mpn_filled": 91,
+  "mpn_missing": 37,
+  "changed_refs": 32,
+  "footprint_changes": 21,
+  "canonical_cad_modified": false,
+  "production_release": false,
+  "changes": [
+    {
+      "Reference": "C1",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C2",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C3",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C4",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C5",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C6",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C7",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C8",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C9",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/TC_EXH_BIAS"
+      }
+    },
+    {
+      "Reference": "C12",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C13",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C14",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/TC_AIR_BIAS"
+      }
+    },
+    {
+      "Reference": "C17",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C18",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C305",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/TFT_3V3"
+      }
+    },
+    {
+      "Reference": "C306",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/TFT_3V3"
+      }
+    },
+    {
+      "Reference": "C9004",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C9005",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C9006",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C9011",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "C9012",
+      "fields": {
+        "Footprint": {
+          "before": "Capacitor_SMD:C_0603_1608Metric",
+          "after": "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow"
+        },
+        "MPN": {
+          "before": "",
+          "after": "GRM188R71C104KA01D"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "Murata"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM188R71C104KA01-01.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/GND"
+      }
+    },
+    {
+      "Reference": "R18",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/WD_CWD_FIXED"
+      }
+    },
+    {
+      "Reference": "R19",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/WD_OK"
+      }
+    },
+    {
+      "Reference": "R20",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/RESET_HW_NC_N"
+      }
+    },
+    {
+      "Reference": "R21",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/RESET_HW_NO_N"
+      }
+    },
+    {
+      "Reference": "R22",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/THERMAL_OK"
+      }
+    },
+    {
+      "Reference": "R24",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/+3V3",
+        "1": "/TFT_CS"
+      }
+    },
+    {
+      "Reference": "R9002",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-07100KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_GATE_CMD"
+      }
+    },
+    {
+      "Reference": "R9003",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-07130KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/MOTOR_PWM_REBUILD_CANDIDATE/VCCUV"
+      }
+    },
+    {
+      "Reference": "R9006",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "2": "/GND",
+        "1": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+      }
+    },
+    {
+      "Reference": "R9007",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-071ML"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK",
+        "2": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+      }
+    },
+    {
+      "Reference": "R9008",
+      "fields": {
+        "MPN": {
+          "before": "",
+          "after": "RC0603FR-0710KL"
+        },
+        "Manufacturer": {
+          "before": "",
+          "after": "YAGEO"
+        },
+        "Datasheet": {
+          "before": "",
+          "after": "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+        }
+      },
+      "pin_net_unchanged": {
+        "1": "/+3V3",
+        "2": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK"
+      }
+    }
+  ]
+}

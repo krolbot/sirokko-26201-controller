@@ -1,0 +1,27 @@
+{
+  "drc": {
+    "after_sha256": "860199ba1dd6802ca4d560700ff0e88fa52507d554aee3d344efd8079935817f",
+    "before_sha256": "d626b4367d64fe8482384bbf1356a5da15741b569fb568fac4a81d09c385334e",
+    "exit_code": 5,
+    "interpretation": "KiCad chose different representative track endpoints after metadata-only footprint block changes; counts and per-net histogram stayed equal, and native physical connectivity is verified separately as identical.",
+    "ordinary_signatures_identical": true,
+    "parity_signatures_identical": true,
+    "schematic_parity": 14,
+    "unconnected": 120,
+    "unconnected_net_histogram_identical": true,
+    "unconnected_representative_signature_substitutions": 6,
+    "unconnected_representative_uuid_substitutions": 5,
+    "violations": 25
+  },
+  "erc": {
+    "after_sha256": "31092a2e4c40c6b6aa6821099aa71363ebe23a20f9bcc7960be2c94aaf675b11",
+    "before_sha256": "20f62e847983ef120ed8e43299d090e358ecf9ad2d75fea2ec31f4a291a96d2f",
+    "errors": 0,
+    "exit_code": 5,
+    "sheets": 6,
+    "signatures_identical_ignoring_date": true,
+    "warnings": 8
+  },
+  "production_release": false,
+  "verdict": "PASS_WITH_INHERITED_VIOLATIONS"
+}

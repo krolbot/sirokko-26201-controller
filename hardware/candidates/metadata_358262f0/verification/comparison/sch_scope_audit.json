@@ -1,0 +1,119 @@
+{
+  "all_non_target_schematic_objects_byte_identical": true,
+  "changed_ref_count": 28,
+  "changed_refs_exact": [
+    "C301",
+    "C302",
+    "C303",
+    "C304",
+    "L301",
+    "Q101",
+    "R9001",
+    "R9009",
+    "R9010",
+    "U1",
+    "U101",
+    "U2",
+    "U3",
+    "U301",
+    "U302",
+    "U303",
+    "U4",
+    "U5",
+    "U6",
+    "U7",
+    "U8",
+    "U9001",
+    "U9002",
+    "U9003",
+    "U9004",
+    "U9005",
+    "U9006",
+    "U9007"
+  ],
+  "files": {
+    "Sirokko26201_control_motor_candidate.kicad_sch": {
+      "after_sha256": "31fbc2689f761bf65e51e803cfec680fcbd4bfa0c23d4bc96a3bfcee36fef618",
+      "before_sha256": "88523b1d3cffcc62d6e7043fae632a186ada9ce4d166e639162da94d352f8b60",
+      "changed_refs": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ]
+    },
+    "logic_power_24_5_DRAFT.kicad_sch": {
+      "after_sha256": "3731525dbc1db66495f3b974389afa3fc001537b496ec5500eb32c9f4ee6fe3a",
+      "before_sha256": "3de1496ddb55bd33571a223ca2ac75078050966e29e081a559b43627c22e2929",
+      "changed_refs": [
+        "U101"
+      ]
+    },
+    "motor_pwm_REBUILD.kicad_sch": {
+      "after_sha256": "3107d4f323c69712d45bf1171a87e8ff314f4328b189428ba255a802abee86ee",
+      "before_sha256": "b22b6a21ea106bb19320a4dea394c6f087b4b2f97ee7a3a4cdafdc1fa1eb8813",
+      "changed_refs": [
+        "Q101",
+        "R9001",
+        "R9009",
+        "R9010",
+        "U9001",
+        "U9002",
+        "U9003",
+        "U9004",
+        "U9005",
+        "U9006",
+        "U9007"
+      ]
+    },
+    "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_sch": {
+      "after_sha256": "62762a11d1d923ba31f7490796e23cd100d5366d8a8aadcb414d2481ab10c8b5",
+      "before_sha256": "0c7efb3ff8df3ea80de764dd28d519bdd6b053a2655ae650c4775cce268e39c6",
+      "changed_refs": [
+        "C301",
+        "C302",
+        "C303",
+        "C304",
+        "L301",
+        "U301"
+      ]
+    },
+    "tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch": {
+      "after_sha256": "160c5917157a80ec7ce830a39fe45059a16a52b9ef7e656febb6f06258eefa2f",
+      "before_sha256": "e9e29c224185f0c3088a36bf2645254be9b160e3ed2048af1be58c378451f67f",
+      "changed_refs": [
+        "U302"
+      ]
+    },
+    "tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_sch": {
+      "after_sha256": "f50a5e1377c28d90ecc467317fb10ea01e5b2a779f1b6a584bcfbbef4db3bda4",
+      "before_sha256": "a93042d429e58f480b0b31285b4ff5b73709fc670e77b895a878b811634b9ee0",
+      "changed_refs": [
+        "U303"
+      ]
+    }
+  },
+  "verdict": "PASS",
+  "whitelist": {
+    "R9009": [
+      "Datasheet",
+      "MPN",
+      "Manufacturer",
+      "Supplier_PN",
+      "Supplier_URL"
+    ],
+    "R9010": [
+      "Datasheet",
+      "MPN",
+      "Manufacturer",
+      "Supplier_PN",
+      "Supplier_URL",
+      "Value"
+    ],
+    "identity_refs": "MPN only"
+  }
+}

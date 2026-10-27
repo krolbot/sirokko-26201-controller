@@ -1,0 +1,16 @@
+{
+  "after_sha256": "f077983c07d0352df98e24f75099a7d650ff5898c7923fcb56b1899d37709c59",
+  "before_sha256": "53c8d70f9d29f6fd27e4f39bc4f75e643c3672bd0eccbebc9d693ea73c4dbb27",
+  "components": 292,
+  "components_and_pairs_identical": true,
+  "cross_net_physical_pairs": 0,
+  "footprint_position_orientation_layer_and_pad_uuid_records_identical": true,
+  "gnd_pad_count": 122,
+  "gnd_physical_pairs": 3829,
+  "only_ignored_difference": "method.board path spelling",
+  "pad_uuid_records_identical": true,
+  "pads": 533,
+  "pairset_sha256": "0a7333cab267e2275872fe7d5ece114142cb47cb812d13e36a0c9da44bcaa6cc",
+  "physical_pad_pairs": 5646,
+  "verdict": "PASS"
+}

@@ -1,0 +1,234 @@
+{
+  "after_sha256": "6bbb50550a38d44632ad50943f44013623771dd05bed9347ae0a41107c22554a",
+  "before_sha256": "67bc63bddf1492dccc3417dd13372664746a24eb3ad44bc1cb9c8e04c21ede58",
+  "changed_fields_by_ref": {
+    "C301": {
+      "MPN": [
+        "",
+        "GRM21BR61E106KA73L"
+      ]
+    },
+    "C302": {
+      "MPN": [
+        "",
+        "GRM21BR61E106KA73L"
+      ]
+    },
+    "C303": {
+      "MPN": [
+        "",
+        "GRM188R71E104KA01D"
+      ]
+    },
+    "C304": {
+      "MPN": [
+        "",
+        "GRM32ER61C476KE15L"
+      ]
+    },
+    "L301": {
+      "MPN": [
+        "",
+        "744025003"
+      ]
+    },
+    "Q101": {
+      "MPN": [
+        "",
+        "IRFB4110PBF"
+      ]
+    },
+    "R9001": {
+      "MPN": [
+        "",
+        "WSLP27262L000FEA"
+      ]
+    },
+    "R9009": {
+      "Datasheet": [
+        "",
+        "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+      ],
+      "MPN": [
+        "",
+        "RC0805FR-0775RL"
+      ],
+      "Manufacturer": [
+        "",
+        "YAGEO"
+      ]
+    },
+    "R9010": {
+      "Datasheet": [
+        "",
+        "https://static.chipdip.ru/lib/175/DOC011175144.pdf"
+      ],
+      "MPN": [
+        "",
+        "RC2010FK-07681RL"
+      ],
+      "Manufacturer": [
+        "",
+        "YAGEO"
+      ],
+      "Value": [
+        "681R 1% 0.5W; LM317 ADJ→GND",
+        "681R 1% 0.75W; LM317 ADJ→GND"
+      ]
+    },
+    "U1": {
+      "MPN": [
+        "",
+        "TPS3431SDRBR"
+      ]
+    },
+    "U101": {
+      "MPN": [
+        "",
+        "LM5013DDAR"
+      ]
+    },
+    "U2": {
+      "MPN": [
+        "",
+        "SN74HCS74D"
+      ]
+    },
+    "U3": {
+      "MPN": [
+        "",
+        "SN74HCS14D"
+      ]
+    },
+    "U301": {
+      "MPN": [
+        "",
+        "TPS62162DSGR"
+      ]
+    },
+    "U302": {
+      "MPN": [
+        "",
+        "TPS3808G33DBVR"
+      ]
+    },
+    "U303": {
+      "MPN": [
+        "",
+        "74LVC125APW,118"
+      ]
+    },
+    "U4": {
+      "MPN": [
+        "",
+        "SN74HCS30D"
+      ]
+    },
+    "U5": {
+      "MPN": [
+        "",
+        "SN74HCS30D"
+      ]
+    },
+    "U6": {
+      "MPN": [
+        "",
+        "SN74HCS11D"
+      ]
+    },
+    "U7": {
+      "MPN": [
+        "",
+        "TPS3839G33DBZR"
+      ]
+    },
+    "U8": {
+      "MPN": [
+        "",
+        "SN74LVC1G14DBVR"
+      ]
+    },
+    "U9001": {
+      "MPN": [
+        "",
+        "LTC7001IMSE#PBF"
+      ]
+    },
+    "U9002": {
+      "MPN": [
+        "",
+        "INA240A1ID"
+      ]
+    },
+    "U9003": {
+      "MPN": [
+        "",
+        "TLV9020DBVR"
+      ]
+    },
+    "U9004": {
+      "MPN": [
+        "",
+        "SN74LVC1G32DBVR"
+      ]
+    },
+    "U9005": {
+      "MPN": [
+        "",
+        "SN74LVC1G08DBVR"
+      ]
+    },
+    "U9006": {
+      "MPN": [
+        "",
+        "SN74LVC1G08DBVR"
+      ]
+    },
+    "U9007": {
+      "MPN": [
+        "",
+        "LM317HVT/NOPB"
+      ]
+    }
+  },
+  "empty_mpn": 69,
+  "filled_mpn": 59,
+  "negative_control": {
+    "R9010_value": "681R 1% 0.5W; LM317 ADJ→GND",
+    "empty_target_mpn": 28
+  },
+  "non_target_rows_byte_semantically_identical": true,
+  "rows": 128,
+  "target_count": 28,
+  "target_refs_exact": [
+    "C301",
+    "C302",
+    "C303",
+    "C304",
+    "L301",
+    "Q101",
+    "R9001",
+    "R9009",
+    "R9010",
+    "U1",
+    "U101",
+    "U2",
+    "U3",
+    "U301",
+    "U302",
+    "U303",
+    "U4",
+    "U5",
+    "U6",
+    "U7",
+    "U8",
+    "U9001",
+    "U9002",
+    "U9003",
+    "U9004",
+    "U9005",
+    "U9006",
+    "U9007"
+  ],
+  "verdict": "PASS"
+}

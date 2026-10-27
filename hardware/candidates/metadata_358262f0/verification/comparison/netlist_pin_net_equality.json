@@ -1,0 +1,40 @@
+{
+  "after_sha256": "66feae5743e2ecad087891172bb73a901d203de74cbc12a70f39eb838fad2668",
+  "before_sha256": "32acc63af3c29374e9f9a64bbcb27147d8a543588ddab65b470d4597bcea8fb2",
+  "changed_component_metadata": {
+    "R9010": {
+      "after": {
+        "footprint": "Resistor_SMD:R_2010_5025Metric",
+        "sheetpath": [
+          [
+            "names",
+            "/MOTOR_PWM_REBUILD_CANDIDATE/"
+          ],
+          [
+            "tstamps",
+            "/738f1eb5-5037-42a1-995a-b2820277f936/"
+          ]
+        ],
+        "value": "681R 1% 0.75W; LM317 ADJ→GND"
+      },
+      "before": {
+        "footprint": "Resistor_SMD:R_2010_5025Metric",
+        "sheetpath": [
+          [
+            "names",
+            "/MOTOR_PWM_REBUILD_CANDIDATE/"
+          ],
+          [
+            "tstamps",
+            "/738f1eb5-5037-42a1-995a-b2820277f936/"
+          ]
+        ],
+        "value": "681R 1% 0.5W; LM317 ADJ→GND"
+      }
+    }
+  },
+  "component_count": 128,
+  "pin_net_equality": true,
+  "pin_node_count": 467,
+  "verdict": "PASS"
+}

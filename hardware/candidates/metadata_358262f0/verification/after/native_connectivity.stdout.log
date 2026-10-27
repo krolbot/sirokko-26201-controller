@@ -1,0 +1,1 @@
+{"components": 292, "cross_net_physical_pairs": 0, "multi_pad_components": 56, "native_connected_pad_count": 496, "native_unconnected_edges": 120, "output": "metadata_358262f0_final/after_physical_connectivity.json", "pads": 533, "pairset_sha256": "0a7333cab267e2275872fe7d5ece114142cb47cb812d13e36a0c9da44bcaa6cc", "physical_pad_pairs": 5646}

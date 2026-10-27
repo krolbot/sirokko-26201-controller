@@ -1,0 +1,76 @@
+{
+  "source_pcb_sha256": "358262f03654d008130564c0e45faec82b87620b9485119ec4021a83dba2e42d",
+  "Vin_V": [
+    21.6,
+    28.8
+  ],
+  "R9009_range_ohm": [
+    73.28475,
+    76.73474999999999
+  ],
+  "R9010_range_ohm": [
+    665.42553,
+    696.75153
+  ],
+  "Vref_V": [
+    1.2,
+    1.3
+  ],
+  "Iadj_upper_model_A": 0.000105,
+  "Vout_static_model_V": [
+    11.606115039144587,
+    13.732851602512905
+  ],
+  "min_static_headroom_V": 7.867148397487096,
+  "divider_min_A": 0.015638286434763914,
+  "strict_upper_heat_bounds": [
+    {
+      "Iexternal_A": 0,
+      "P_bound_W": 0.308026752265813,
+      "P_with25_W": 0.3850334403322663,
+      "theta_required_C_per_W": {
+        "50": 194.78827588398147,
+        "60": 168.81650576611727,
+        "85": 103.88708047145678
+      }
+    },
+    {
+      "Iexternal_A": 0.01,
+      "P_bound_W": 0.4799656018743671,
+      "P_with25_W": 0.5999570023429589,
+      "theta_required_C_per_W": {
+        "50": 125.00895848720683,
+        "60": 108.34109735557925,
+        "85": 66.67144452651031
+      }
+    },
+    {
+      "Iexternal_A": 0.025,
+      "P_bound_W": 0.7378738762871982,
+      "P_with25_W": 0.9223423453589978,
+      "theta_required_C_per_W": {
+        "50": 81.31470963832653,
+        "60": 70.47274835321633,
+        "85": 43.367845140440814
+      }
+    },
+    {
+      "Iexternal_A": 0.05,
+      "P_bound_W": 1.1677210003085836,
+      "P_with25_W": 1.4596512503857295,
+      "theta_required_C_per_W": {
+        "50": 51.38213664406508,
+        "60": 44.531185091523064,
+        "85": 27.40380621016804
+      }
+    }
+  ],
+  "assumptions": [
+    "Initial resistance tolerance and independent TCR envelope only, no aging.",
+    "Vin=28.8 upper; Vout_min and divider_max combined conservatively.",
+    "Pin_adj conservatively counted as Vin*Iadj.",
+    "External load means total VDRV current excluding setting divider, not GPIO current.",
+    "No pass claimed for startup, pulsed SOA, transients, regulator below 0C, or actual mounting theta."
+  ],
+  "production_release": false
+}

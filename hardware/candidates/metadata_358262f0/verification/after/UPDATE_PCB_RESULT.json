@@ -1,0 +1,22 @@
+{
+  "status": "ok",
+  "added": [],
+  "value_updated": ["R9010"],
+  "fpid_changed": [],
+  "fields_updated": [
+    "C301", "C302", "C303", "C304", "L301", "Q101", "R9001", "R9009", "R9010",
+    "U1", "U101", "U2", "U3", "U301", "U302", "U303", "U4", "U5", "U6", "U7", "U8",
+    "U9001", "U9002", "U9003", "U9004", "U9005", "U9006", "U9007"
+  ],
+  "excluded_from_board": [],
+  "stale_footprints": ["H6", "K1", "H7", "H8", "H12", "H4", "H2", "K3", "H10", "H5", "H9", "H11", "H3", "K2", "H1", "H13"],
+  "stale_removed": [],
+  "nets_added": 0,
+  "nets_removed": 0,
+  "pads_bound": 467,
+  "orphaned_tracks": 0,
+  "orphaned_zones": 0,
+  "skipped": [],
+  "warnings": [],
+  "source": "Fresh KiCad MCP update_pcb_from_schematic result; delete_stale=false"
+}
