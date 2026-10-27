@@ -1,0 +1,77 @@
+{
+  "snapshot": "LEFT_STRIP_02aed516",
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "production_release": false,
+  "frozen_publication_only": true,
+  "canonical_layout": false,
+  "unified_layout_accepted": false,
+  "active_layout_continues_separately": true,
+  "native_project_files": 41,
+  "native_file_types": {
+    ".kicad_mod": 18,
+    ".kicad_pcb": 1,
+    ".kicad_pro": 4,
+    ".kicad_sch": 6,
+    ".kicad_sym": 6,
+    "fp-lib-table": 3,
+    "sym-lib-table": 3
+  },
+  "pcb_sha256": "02aed516356bf7402ecc8fe9276fcf5455d4f114622a2bc4f6c866932b4b6e94",
+  "root_sch_sha256": "e55451b7fb660838984636533113f20c78f4737963bb65d77b54728b3bec2e7e",
+  "source_archive": {
+    "sha256": "62b5ad14dedd790a65de791988eebe7147355dfc13dd7540b23d99d80be1b55f",
+    "members": 88,
+    "manifest_payload_files": 86,
+    "manifest_payload_verified": true,
+    "zip_crc_verified": true
+  },
+  "source_integrity": {
+    "native_bytes_unchanged": true,
+    "project_files": 41,
+    "non_pcb_files_equal_to_previous_snapshot": 40,
+    "physical_pad_pairs": 5646
+  },
+  "geometry_delta": {
+    "base_pcb_sha256": "0179185bec5966e835244c18a191b8a39e723176a673778f89e258152513da28",
+    "left_edge_x_before_after_mm": [10, -5],
+    "board_bbox_mm": [335, 170],
+    "relocated_holes": {
+      "H1": [3, 20],
+      "H3": [3, 172]
+    },
+    "hole_type": "board-only NPTH",
+    "drill_mm": 3.6,
+    "front_back_keepout_min_radius_mm": 5.5,
+    "dwgs_user_outline_radius_mm": 4,
+    "not_relocated": ["H2", "H4", "H5", "H6", "motor wing"]
+  },
+  "known_late_findings": [
+    "J10/J11/J12/J13/J25/J102 terminal entries face inward",
+    "terminal-entry correction is not included in this snapshot"
+  ],
+  "archived_drc": {
+    "report": "verification/archived_full_drc.json",
+    "fresh_publication_check": false,
+    "warnings": 25,
+    "unconnected_errors": 120,
+    "schematic_parity_warnings": 14,
+    "ignored_check_types": 5
+  },
+  "archived_erc": {
+    "report": "verification/archived_root_erc.json",
+    "fresh_publication_check": false,
+    "sheets": 6,
+    "errors": 0,
+    "warnings": 8,
+    "ignored_check_types": 4
+  },
+  "not_qualified": [
+    "unified layout acceptance",
+    "TFT mating, Z-fit and window",
+    "relay PCB/socket/pin-map",
+    "power, safety and thermal design",
+    "ILI9341 firmware",
+    "manufacturing and tests",
+    "heater connection or fire test"
+  ]
+}
