@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>tft_power_tps62162_review_DRAFT.kicad_sch</source>
+    <date>2026-10-27T14:07:49</date>
+    <tool>Eeschema 10.0.7-10.0.7~ubuntu26.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>tft_power_tps62162_review_DRAFT.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C301">
+      <value>10uF GRM21BR61E106KA73L</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f247dd64-dab4-4645-9211-2979d76eaf84</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C302">
+      <value>10uF GRM21BR61E106KA73L</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1b66973a-b33a-446a-aabe-12b03ae2aff3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C303">
+      <value>100nF GRM188R71E104KA01D</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c2f86ab8-362c-4126-98e9-157869ba664f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C304">
+      <value>47uF GRM32ER61C476KE15L</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0c75724c-63b6-4742-998a-f637198a55d7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L301">
+      <value>744025003 3.3uH</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>281f02fb-0744-4dc2-8b33-65cfab1c8f67</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R301">
+      <value>100k 1% EN</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8ee47beb-e195-4149-b6f4-380b7d4ffb00</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R302">
+      <value>100k 1% PG</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8c3931d7-b837-41ac-9673-cb03aa84ceb1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U301">
+      <value>TPS62162DSGR</value>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tps62160.pdf</datasheet>
+      <description>TPS62162DSGR fixed3.3V/1A. Reused TPS62170DSG geometry only: all9pins checked against TPS6216x SLVSAM2E p4. Standalone review, not integrated.</description>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps62160.pdf</field>
+        <field name="Description">TPS62162DSGR fixed3.3V/1A. Reused TPS62170DSG geometry only: all9pins checked against TPS6216x SLVSAM2E p4. Standalone review, not integrated.</field>
+      </fields>
+      <libsource lib="Regulator_Switching" part="TPS62170DSG" description="500mA Step-Down Converter with DCS-Control, adjustable output, 3-17V input voltage, WSON-8"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="tft_power_tps62162_review_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="step-down dc-dc buck regulator"/>
+      <property name="ki_fp_filters" value="*WSON*EP*2x2mm*P0.5mm*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9cec0f69-89ba-4cb5-ad82-0e24170866d2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="7"/>
+            <pin num="6"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L">
+      <description>Inductor</description>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Inductor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Switching" part="TPS62170DSG">
+      <description>500mA Step-Down Converter with DCS-Control, adjustable output, 3-17V input voltage, WSON-8</description>
+      <docs>http://www.ti.com/lit/ds/symlink/tps62170.pdf</docs>
+      <footprints>
+        <fp>*WSON*EP*2x2mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPS62170DSG</field>
+        <field name="Footprint">Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm_ThermalVias</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/tps62170.pdf</field>
+        <field name="Description">500mA Step-Down Converter with DCS-Control, adjustable output, 3-17V input voltage, WSON-8</field>
+      </fields>
+      <pins>
+        <pin num="1" name="PGND" type="power_in"/>
+        <pin num="2" name="VIN" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="AGND" type="power_in"/>
+        <pin num="5" name="FB" type="input"/>
+        <pin num="6" name="VOS" type="input"/>
+        <pin num="7" name="SW" type="output"/>
+        <pin num="8" name="PG" type="open_collector"/>
+        <pin num="9" name="PAD" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Regulator_Switching">
+      <uri>${KICAD10_SYMBOL_DIR}/Regulator_Switching.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/+5V_CARRIER" class="Default">
+      <node ref="C301" pin="1" pintype="passive"/>
+      <node ref="C302" pin="1" pintype="passive"/>
+      <node ref="C303" pin="1" pintype="passive"/>
+      <node ref="R301" pin="1" pintype="passive"/>
+      <node ref="U301" pin="2" pinfunction="VIN_2" pintype="power_in"/>
+    </net>
+    <net code="2" name="/GND" class="Default">
+      <node ref="C301" pin="2" pintype="passive"/>
+      <node ref="C302" pin="2" pintype="passive"/>
+      <node ref="C303" pin="2" pintype="passive"/>
+      <node ref="C304" pin="2" pintype="passive"/>
+      <node ref="U301" pin="1" pinfunction="PGND_1" pintype="power_in"/>
+      <node ref="U301" pin="4" pinfunction="AGND_4" pintype="power_in"/>
+      <node ref="U301" pin="5" pinfunction="FB_5" pintype="input"/>
+      <node ref="U301" pin="9" pinfunction="PAD_9" pintype="power_in"/>
+    </net>
+    <net code="3" name="/TFT_3V3" class="Default">
+      <node ref="C304" pin="1" pintype="passive"/>
+      <node ref="L301" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="R302" pin="1" pintype="passive"/>
+      <node ref="U301" pin="6" pinfunction="VOS_6" pintype="input"/>
+    </net>
+    <net code="4" name="/TFT_3V3_PG" class="Default">
+      <node ref="R302" pin="2" pintype="passive"/>
+      <node ref="U301" pin="8" pinfunction="PG_8" pintype="open_collector"/>
+    </net>
+    <net code="5" name="/TFT_PWR_EN" class="Default">
+      <node ref="R301" pin="2" pintype="passive"/>
+      <node ref="U301" pin="3" pinfunction="EN_3" pintype="input"/>
+    </net>
+    <net code="6" name="/TFT_PWR_SW" class="Default">
+      <node ref="L301" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="U301" pin="7" pinfunction="SW_7" pintype="output"/>
+    </net>
+  </nets>
+</export>

@@ -1,0 +1,42 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "integration_status": "standalone_not_integrated",
+  "xml_net_names_preserved": true,
+  "nets": {
+    "/+5V_CARRIER": [
+      "C301.1",
+      "C302.1",
+      "C303.1",
+      "R301.1",
+      "U301.2"
+    ],
+    "/GND": [
+      "C301.2",
+      "C302.2",
+      "C303.2",
+      "C304.2",
+      "U301.1",
+      "U301.4",
+      "U301.5",
+      "U301.9"
+    ],
+    "/TFT_PWR_EN": [
+      "R301.2",
+      "U301.3"
+    ],
+    "/TFT_PWR_SW": [
+      "L301.1",
+      "U301.7"
+    ],
+    "/TFT_3V3": [
+      "C304.1",
+      "L301.2",
+      "R302.1",
+      "U301.6"
+    ],
+    "/TFT_3V3_PG": [
+      "R302.2",
+      "U301.8"
+    ]
+  }
+}

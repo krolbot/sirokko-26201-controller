@@ -1,0 +1,12 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "integration_status": "standalone_not_integrated",
+  "method": "KiCad MCP get_net_connections; flags are intentionally absent from electrical XML nodes",
+  "coordinate_units": "mm",
+  "power_flags": [
+    {"reference": "#FLG301", "pin": "1", "net": "+5V_CARRIER", "x": 45.72, "y": 59.69},
+    {"reference": "#FLG302", "pin": "1", "net": "GND", "x": 45.72, "y": 72.39}
+  ],
+  "trace_connection_counts_including_flags": {"+5V_CARRIER": 6, "GND": 9},
+  "scope": "External test supply only; does not qualify LM5013 or root integration"
+}

@@ -1,0 +1,128 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "integration_status": "standalone_not_integrated",
+  "production_release": false,
+  "source_capture": {
+    "before": {
+      "tft_power_tps62162_review_DRAFT.kicad_sch": {
+        "sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
+        "size": 30654
+      },
+      "tft_power_tps62162_review_DRAFT.xml": {
+        "sha256": "ee03bfe4de3d39b04444de46411408cbcf1929d3d7eba1362073f104a17b49a6",
+        "size": 13294
+      },
+      "tft_power_tps62162_review_DRAFT.pdf": {
+        "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
+        "size": 67402
+      }
+    },
+    "after": {
+      "tft_power_tps62162_review_DRAFT.kicad_sch": {
+        "sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
+        "size": 30654
+      },
+      "tft_power_tps62162_review_DRAFT.xml": {
+        "sha256": "ee03bfe4de3d39b04444de46411408cbcf1929d3d7eba1362073f104a17b49a6",
+        "size": 13294
+      },
+      "tft_power_tps62162_review_DRAFT.pdf": {
+        "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
+        "size": 67402
+      }
+    },
+    "all_three_byte_identical": true
+  },
+  "original_calculation_sha256": "55453c4f7169e16f18ed93a4b446a2b506c9c693cd52421e9ab65a2ea5cc750f",
+  "public_edits": {
+    "SCH": "none",
+    "PDF": "none",
+    "XML": "design/source and 8 Sheetfile paths only",
+    "calculation": "private paths replaced; warning added; separate publisher postscript appended; engineering numbers and MPN unchanged"
+  },
+  "native_checks": {
+    "version": "10.0.7",
+    "erc_exit": 0,
+    "erc_violations": 0,
+    "scope": "standalone_not_integrated",
+    "ignored_checks": [
+      "single_global_label",
+      "four_way_junction",
+      "simulation_model_issue",
+      "footprint_filter"
+    ],
+    "all_six_nets_23_nodes_match_fresh_export": true,
+    "components_and_libparts_match_fresh_export": true,
+    "pdf_equal_except_CreationDate": true,
+    "pdf_png_render_byte_identical": true,
+    "reexport_pdf": {
+      "sha256": "2f0c051e4cb9e4cc5c618b34c1a38a5761b6309be95b1520ff134dd41ed06ae3",
+      "size": 67402
+    },
+    "source_pdf": {
+      "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
+      "size": 67402
+    },
+    "native_gui_used": false
+  },
+  "visual": {
+    "accepted": false,
+    "frame_complete": true,
+    "known_overlapping_labels": [
+      "U301",
+      "L301",
+      "C301-C303 / PWR_FLAG group"
+    ],
+    "description_U301_hidden": true,
+    "png_size_px": [
+      2105,
+      1489
+    ]
+  },
+  "files": {
+    "NATIVE_COMMANDS.json": {
+      "sha256": "004422217b0537cd84986cc3c4f3bca0eecf631cc86becee51ce71e9310f3fd3",
+      "size": 1003
+    },
+    "NET_MAP.json": {
+      "sha256": "25687c5901803599f4bc75f702dbc60af014d2f8fc9fd11aadddf47e27b17b16",
+      "size": 675
+    },
+    "PWR_FLAG_READBACK.json": {
+      "sha256": "424c81814bb28170e7dc28bed646f42bc44164751c9578889798d360e7edd3fc",
+      "size": 585
+    },
+    "README_RU.md": {
+      "sha256": "4c463da8bf66db3401af8c84955ded2304e757316cb61a913b59b919fa47d8d8",
+      "size": 12495
+    },
+    "VERIFY.py": {
+      "sha256": "9ea17b33e0cfade0c0a2f8f5235b28b22b79a48701b8adcdea50d84d12b6424f",
+      "size": 3845
+    },
+    "tft_power_tps62162_review_DRAFT-erc.json": {
+      "sha256": "b4893b142a4a15886dfe8da0af42f9883457b624dd5620b7488dfaf3f6d7f44a",
+      "size": 1004
+    },
+    "tft_power_tps62162_review_DRAFT.kicad_sch": {
+      "sha256": "53c1ce4366eda6a2a700bf841c1add75976813fd38cfbb425db891a6d7d8b1e1",
+      "size": 30654
+    },
+    "tft_power_tps62162_review_DRAFT.pdf": {
+      "sha256": "772ac18c4de713471dff66c6a09130e75e4133d2d9bf88a2e41f3e51aff80e59",
+      "size": 67402
+    },
+    "tft_power_tps62162_review_DRAFT.png": {
+      "sha256": "e556908b3828975afb365f977f0f45deed2eba2b4ec588f4048e97506f9f87b1",
+      "size": 107239
+    },
+    "tft_power_tps62162_review_DRAFT.xml": {
+      "sha256": "88d2fffc2d0d1a71bab0fe2de325733788d92e5ad69c54e8cdcfc5b13a349a4b",
+      "size": 12915
+    },
+    "../../../docs/research/TFT_3V3_TPS62162_SELECTED_DESIGN_CALC_RU.md": {
+      "sha256": "79153745af1f020ad1841ae49fdb1359b1e4aba5ae43be5e097033baff8ecbc8",
+      "size": 12992
+    }
+  }
+}

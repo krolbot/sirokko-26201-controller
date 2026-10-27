@@ -1,0 +1,53 @@
+[
+  {
+    "argv": [
+      "kicad-cli",
+      "version"
+    ],
+    "exit_code": 0,
+    "stdout": "10.0.7\n"
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "./native-cli-erc.json",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Found 0 violations\nSaved ERC Report to ./native-cli-erc.json\n"
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "pdf",
+      "-o",
+      "./tft_power_tps62162_review_DRAFT.pdf",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to './tft_power_tps62162_review_DRAFT.pdf'.\nDone.\n"
+  },
+  {
+    "argv": [
+      "kicad-cli",
+      "sch",
+      "export",
+      "netlist",
+      "--format",
+      "kicadxml",
+      "-o",
+      "./native-reexport.xml",
+      "tft_power_tps62162_review_DRAFT.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": ""
+  }
+]
