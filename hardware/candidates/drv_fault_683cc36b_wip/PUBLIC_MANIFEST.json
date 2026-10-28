@@ -1,0 +1,133 @@
+{
+  "package": "SIROKKO_DRV_FAULT_683CC36B_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_DRV_FAULT_683CC36B_WIP.zip",
+    "sha256": "5471ac5cadd64f7dcb17cdd356c205f0be4e5c417105beac21e050f4c63aa020",
+    "entries": 8,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false,
+    "entry_crc32": {
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "a5377bbe",
+      "WIP_RU.md": "f5dbb91d",
+      "DRC.json": "2243ec3f",
+      "NATIVE_COMPARISON.json": "1606834e",
+      "PARTITIONS.json": "5db56921",
+      "detail.png": "d473540a",
+      "detail.svg": "177d0697",
+      "SHA256SUMS": "8bcda41e"
+    }
+  },
+  "baseline_project": {
+    "path": "../drv_pulldowns_614aa289_wip/project",
+    "git_commit": "320b65f5da3d92f6fc6ed343c34254473a799574",
+    "git_tree": "4922539cc475f588d23ebca836564d2d3332a737",
+    "pcb_sha256": "614aa289df50d25d1d0009dcabedcc3d486c06aec19db7cd31628b4d3a2c82a3",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "683cc36b083ae62516e52cd2b9c65c984eec985394a256b5202c27d5fb543826",
+    "previous_pcb_sha256": "614aa289df50d25d1d0009dcabedcc3d486c06aec19db7cd31628b4d3a2c82a3",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "683cc36b083ae62516e52cd2b9c65c984eec985394a256b5202c27d5fb543826",
+    "WIP_RU.md": "1da2a453838d1cf9ca55e29d22adaba88cbd47d7a0f51971445cb7c00d009af7",
+    "DRC.json": "cf29dcf9b33c12f85ed386cf4c6f7e2af1357f16ff95475358dd1c8e3f092f32",
+    "NATIVE_COMPARISON.json": "212c99f865f0ab67717fe97c1c535e2da80224ef8021677e98702014db7acada",
+    "PARTITIONS.json": "f5f0533ef1722d32bb41978631d5369dfc0adc02e1ab183eccfdf6bd449bb857",
+    "detail.png": "fed522b5dbff0dca551dad0f31fec2b899c4b170a17ead2de44e69e7519b9223",
+    "detail.svg": "325529e8e554373ba239521c8461e83bba137407f192a2d50547c8326216b62e"
+  },
+  "recorded_checks": {
+    "kicad_version": "10.0.7",
+    "zones_refilled": 10,
+    "drc_unconnected": 183,
+    "drc_warnings": 26,
+    "drc_pass": false,
+    "drc_violation_multiset_unchanged": true,
+    "drc_command_recorded": false,
+    "drc_exit_code_recorded": false,
+    "schematic_parity_recorded": false,
+    "erc_rerun": false,
+    "pads": 699,
+    "source_physical_groups": 401,
+    "candidate_physical_groups": 397,
+    "source_physical_pairs": 7043,
+    "candidate_physical_pairs": 7051,
+    "source_pairs_sha256": "2edf8bb212e08f13bd37b2ea1947adebc6672fb85745a94b83c50d3f73d62130",
+    "candidate_pairs_sha256": "af6dad678cdae00cfa533e97b7d32e28c6ed95c392c1268147af0f36f12e2f4a",
+    "pair_hash_format": "sorted UUID pairs joined as TSV lines with final LF",
+    "partition_pair_hashes_recomputed": true,
+    "lost_physical_pairs": 0,
+    "added_physical_pairs": 8,
+    "cross_net_physical_pairs": 0,
+    "negative_source_groups_separate": true,
+    "power_regression_checks_passed": 18,
+    "preserved_thermal_vias": 9,
+    "each_preserved_thermal_via_connected_to_ep_group_and_both_existing_zones": true,
+    "added_copper_segments": 11,
+    "relay_driver_ok_segments": 5,
+    "local_3v3_segments": 5,
+    "local_gnd_segments": 1,
+    "segments_width_0_25_mm": 8,
+    "segments_width_0_40_mm": 3,
+    "vias_added": 0,
+    "old_geometry_copper_and_zones_preserved": true,
+    "removed_copper_objects": 0,
+    "candidate_tracks_and_vias": 1477,
+    "candidate_zones": 27,
+    "preview_inspected_by_engineer": true,
+    "preview_inspected_by_publisher": true
+  },
+  "probe_diagnostics": {
+    "initial_read_only_probe_error": "AttributeError: GetReference on BOARD_ITEM_CONTAINER",
+    "initial_probe_writes": 0,
+    "corrected_mapping": "PAD UUID to reference.pin",
+    "enum_and_image_handler_stderr_disclosed": true,
+    "successful_native_exit_zero_is_drc_pass": false
+  },
+  "pin_function_erratum": {
+    "source": "TI DRV8803 SLVSAW5D, section 5, HTSSOP/PWP Pin Functions",
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/drv8803.pdf",
+    "pin_1": "VM",
+    "pin_2": "VCLAMP",
+    "physical_ground_pins": ["5", "12", "EP17"],
+    "grounded_logic_inputs_not_power_ground_pins": ["8=nENBL", "9=RESET", "10=IN4"],
+    "electrical_cad_changed_by_erratum": false,
+    "third_party_pdf_published": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_entries_verified": 7,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "drc_erc_parity_rerun": false,
+    "preview_inspected": true,
+    "private_infrastructure_paths_found": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "local_fault_routing_implemented": true,
+    "u6_10_connected_to_fault_group": false,
+    "bulk_supply_qualified": false,
+    "board_wide_ground_return_connected": false,
+    "command_sources_qualified": false,
+    "safety_chain_qualified": false,
+    "thermal_current_transient_uvlo_qualified": false,
+    "drv8803_functional_test_passed": false
+  }
+}
