@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: каналы A/B энкодера e46c2b70
+## 2026-10-29 — самый новый PCB-checkpoint: подтяжка ENC_A 829494e5
+
+[Кандидат encoder_pullup_a_829494e5_wip](../hardware/candidates/encoder_pullup_a_829494e5_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `829494e526155fa26e5bd204558ff008993350f07091be6a6af061f6c71a278a`; исходная PCB — `e46c2b70f7ed430a0a603065394cddae4e46d21fc6d9a1cf16b4d63e65e5f8ce`. Остальные 63 файла проектного контекста и firmware не менялись.
+
+R16.2 подключён к J23.1/C19.1 `/ENC_A`; R16.1 ранее находился на `+3V3`. Добавлены восемь сегментов 0,25 мм и пять переходов 0,60/0,30 мм. Старая медь, footprints, pads/UUID/net, зоны, keepout, Edge.Cuts, правила и номиналы сохранены.
+
+Native-проверка: 699 площадок, 350→349 групп, 8923→8925 пары; потерь 0, ровно две ожидаемые добавленные пары. Реальные KiCad CLI-запуски завершились кодом 5, `stderr` пуст: исходник — 26/136/0, кандидат — 26/135/0 по нарушениям/несоединениям/parity. Это **не PASS**; ERC не запускался.
+
+J3.9 вне A, J3.8/R17.2 вне B, J3.10 вне SW. Остались 135 соединений, включая START J1.7/R14.2, питание, силовые/управляющие цепи и SPI. Длинная разводка не квалифицирует ЭМС или временные параметры GPIO. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: каналы A/B энкодера e46c2b70
 
 [Кандидат encoder_ab_e46c2b70_wip](../hardware/candidates/encoder_ab_e46c2b70_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `e46c2b70f7ed430a0a603065394cddae4e46d21fc6d9a1cf16b4d63e65e5f8ce`; исходная PCB — `6a842e8a0dc4c835f77d2165d1400897b648628812f288ea879ba8547426468c`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 

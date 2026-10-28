@@ -1,0 +1,6 @@
+#VRML V2.0 utf8
+# PROJECT RESERVE ENVELOPE: 35.0 x 30.5 x 56.0 mm from PCB; not a vendor model and not a qualified installed-height limit. DG85BM body, blades, DZ85AB mating depth and PCB datum remain to be physically qualified.
+Transform {
+  translation 0.000000000 -4.232283465 11.023622047
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.0800 0.0800 0.1000 } } geometry Box { size 13.779527559 12.007874016 22.047244094 } } ]
+}
