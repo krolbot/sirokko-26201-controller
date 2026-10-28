@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: SAFETY_OK_RAW и RESET_ACCEPT 3af3e417
+## 2026-10-29 — самый новый PCB-checkpoint: локальная разводка P24 b64cbaa9
+
+[Кандидат p24_local_b64cbaa9_wip](../hardware/candidates/p24_local_b64cbaa9_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `b64cbaa99161242f4f52cd8409a385a1a736106f1efe0df467dbbb6747b32d3a`; исходная PCB — `3af3e4174ceb359a195e720471346f7bc616f936cfd66b8711c77e76efb7880a`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+Локально соединены `P24_ZENER_K` R121.2/D20.1, `P24_BASE` D20.2/Q20.1/R123.1, `P24_SENSE_N` Q20.3/R122.2/U20.6 и GND Q20.2/R123.2 с прежней основной группой через C106.2. Добавлены 17 сегментов 0,25 мм и один переход 0,60/0,30 мм; прежняя медь не удалялась и не двигалась.
+
+Сохранённая native-проверка сообщает 699 площадок, 384→377 физических групп и 7086→7296 пар; потерь 0, добавлено 210 ожидаемых пар объединённых групп, межсетевых PAD-пар 0. Большой прирост обусловлен присоединением к существующей группе GND, а не 210 новыми маршрутами. Хеши партиций независимо пересчитаны издателем. Сохранённый KiCad 10.0.7 DRC содержит 163 несоединения и 26 прежних предупреждений; полный набор предупреждений совпал с базой. Это **не PASS**: CLI exit code, ERC и PCB↔SCH parity не подтверждены и издателем не повторялись.
+
+Питание U20/C28, входная последовательная цепь до R121.1 и P24_PRESENT к U6 ещё не готовы. Потеря основной шины, запрет повторного взведения, UVLO, переходные, токовые, тепловые и динамические режимы не квалифицированы. Физических сборки, пайки, прошивки, измерений и испытаний не было. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: SAFETY_OK_RAW и RESET_ACCEPT 3af3e417
 
 [Кандидат safety_reset_3af3e417_wip](../hardware/candidates/safety_reset_3af3e417_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `3af3e4174ceb359a195e720471346f7bc616f936cfd66b8711c77e76efb7880a`; исходная PCB — `0504358e6753282aec204a52c9939167b2e0928628001acd711c8242dc974467`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
