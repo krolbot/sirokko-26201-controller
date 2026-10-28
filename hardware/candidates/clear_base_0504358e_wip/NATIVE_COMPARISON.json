@@ -1,0 +1,319 @@
+{
+  "source_sha256": "b82b025f4b4bbb9ae7489802c7426c9eb456a6ba531b08139d22f51a3a8e6963",
+  "candidate_sha256": "0504358e6753282aec204a52c9939167b2e0928628001acd711c8242dc974467",
+  "pads": 699,
+  "old_groups": 387,
+  "new_groups": 386,
+  "old_pairs": 7083,
+  "new_pairs": 7084,
+  "lost_pairs": 0,
+  "added_pairs": 1,
+  "cross_net_pairs": 0,
+  "old_zone_footprint_pad_geometry_preserved": true,
+  "removed_copper": [],
+  "added_copper": [
+    [
+      "16d5da0a-f31c-42cb-b0fa-49681c7e4f59",
+      "/CLEAR_OK_BASE",
+      [
+        53000000,
+        66900000
+      ],
+      [
+        53000000,
+        73300000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "e4e7b3c8-e48c-4baa-99f5-2e3164f5473f",
+      "/CLEAR_OK_BASE",
+      [
+        52475000,
+        56270000
+      ],
+      [
+        53800000,
+        56800000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "ee8cb0ef-807e-48af-8381-07407b3ea21f",
+      "/CLEAR_OK_BASE",
+      [
+        50500000,
+        79800000
+      ],
+      [
+        50500000,
+        82540000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "fb879875-c975-4cf0-9cde-715d7da0bd2a",
+      "/CLEAR_OK_BASE",
+      [
+        50500000,
+        82540000
+      ],
+      [
+        52475000,
+        82540000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "23ee1362-c8aa-4253-9614-d7d6110dd6d6",
+      "/CLEAR_OK_BASE",
+      [
+        53000000,
+        73300000
+      ],
+      [
+        53000000,
+        73300000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "4c9c1045-a6d2-4bf2-98b1-baa96e7252e4",
+      "/CLEAR_OK_BASE",
+      [
+        53800000,
+        56800000
+      ],
+      [
+        53800000,
+        56800000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "b604613f-1e6c-4d99-b434-79af53d64dc7",
+      "/CLEAR_OK_BASE",
+      [
+        50500000,
+        79800000
+      ],
+      [
+        50500000,
+        79800000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "fd9672a6-5f93-48b6-b311-f08e4db5e579",
+      "/CLEAR_OK_BASE",
+      [
+        53000000,
+        66900000
+      ],
+      [
+        53000000,
+        66900000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "2203ada2-164c-4a49-8935-b6b980b1d506",
+      "/CLEAR_OK_BASE",
+      [
+        53800000,
+        56800000
+      ],
+      [
+        53000000,
+        57600000
+      ],
+      [
+        250000
+      ],
+      2
+    ],
+    [
+      "3d23f30d-761a-49f1-91d7-fe185472ba6b",
+      "/CLEAR_OK_BASE",
+      [
+        53000000,
+        57600000
+      ],
+      [
+        53000000,
+        66900000
+      ],
+      [
+        250000
+      ],
+      2
+    ],
+    [
+      "912245c1-858c-4d83-9612-5a0c4161a151",
+      "/CLEAR_OK_BASE",
+      [
+        50500000,
+        73300000
+      ],
+      [
+        50500000,
+        79800000
+      ],
+      [
+        250000
+      ],
+      2
+    ],
+    [
+      "bd1bd994-e6d0-4fde-a99e-b4836ee65452",
+      "/CLEAR_OK_BASE",
+      [
+        53000000,
+        73300000
+      ],
+      [
+        50500000,
+        73300000
+      ],
+      [
+        250000
+      ],
+      2
+    ]
+  ],
+  "latch_clear_allow_groups": {
+    "/CLEAR_OK": [
+      "U6.8",
+      "U6.2",
+      "U2.1"
+    ],
+    "/ALLOW_LATCH": [
+      "U2.5",
+      "U6.1"
+    ]
+  },
+  "old_thermal_vias_still_connected": [
+    {
+      "uuid": "1e862e81-6893-4e85-9601-9fb1ea5f8824",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "3cc0006d-eefd-439d-8b9a-ce52ddc61bb2",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "5e593f56-1376-4eaf-9e01-353bc5ccf04d",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "60450c54-f662-481b-87dd-f13e564100d4",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "7078ab05-6c2b-4501-9366-c96bcde4051c",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "a4678447-48d1-4f37-a13e-1406d7421232",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "da034588-c6d8-457d-8e2f-2f161426c987",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "e7d37ac4-15c1-4b28-960e-a59fd4d3e58b",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "f517711c-c266-4b19-b575-449092995667",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    }
+  ],
+  "power_regression_checks": {
+    "J26.1": true,
+    "J26.8": true,
+    "U303.14": true,
+    "U302.5": true,
+    "U302.6": true,
+    "C305.1": true,
+    "C306.1": true,
+    "R302.1": true,
+    "R303.1": true,
+    "J26.2": true,
+    "U303.1": true,
+    "U303.4": true,
+    "U303.7": true,
+    "U303.10": true,
+    "U303.13": true,
+    "U302.2": true,
+    "C305.2": true,
+    "C306.2": true
+  },
+  "negative_old_CLEAR_OK_BASE_groups_separate": true,
+  "EdgeCuts_preserved": true,
+  "SPEED_groups_preserved": true
+}
