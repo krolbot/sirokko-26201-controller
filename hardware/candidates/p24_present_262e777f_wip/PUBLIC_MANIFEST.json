@@ -1,0 +1,143 @@
+{
+  "package": "SIROKKO_P24_PRESENT_262E777F_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_P24_PRESENT_262E777F_WIP.zip",
+    "sha256": "57912ac47af7b315323870f4d2e31b24c69fe218e56e4f3a31a0bc0a51f8481e",
+    "size_bytes": 350819,
+    "entries": 8,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "source_manifest_payloads_verified": 7,
+    "archive_published": false,
+    "entry_crc32": {
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "1ea975d6",
+      "P24_PRESENT_262E777F_WIP_RU.md": "54f13783",
+      "native_comparison.json": "493cea75",
+      "physical_partitions.json": "8aed9582",
+      "source_full_cli.json": "c202617f",
+      "candidate_full_cli.json": "708d3068",
+      "full_cli_execution.json": "02e2b732",
+      "manifest.json": "0238081d"
+    }
+  },
+  "baseline_project": {
+    "path": "../p24_mainfeed_e244c81b_wip/project",
+    "git_commit": "32a01fe9d5471c553876274c8256b6ae92ed0c4c",
+    "git_tree": "76811284e2c1486c40f150cbede478a481245eb1",
+    "pcb_sha256": "e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "262e777ff380b949c23ce35fd21919f51fc5c1344e3d9de79bfd92289606c51c",
+    "previous_pcb_sha256": "e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "262e777ff380b949c23ce35fd21919f51fc5c1344e3d9de79bfd92289606c51c",
+    "P24_PRESENT_262E777F_WIP_RU.md": "0f9c1f578d53f463c837093696a671b5efbf3322241411dcde6370f79126e032",
+    "native_comparison.json": "da643b41274597a8be1793f90c7c6418439181da4e69d194021352e842e640d3",
+    "physical_partitions.json": "be13cc392468000c6ca3035ff8313aebb759ef1371293e59ad01ba27c55107c4",
+    "source_full_cli.json": "3f3dfa7fa95690550ce73b44fda67b676ca7bd9524a136ee4185c89721e397fd",
+    "candidate_full_cli.json": "d021d60b43eaff84dca1c58c1622b074bf6045a5160ed7b671817e355ef170f3",
+    "full_cli_execution.json": "8fef4c58ceca5dc732e1be3d95c4f20986cc429b18c4cab27fb64deecebd4f96"
+  },
+  "published_payload_sha256": {
+    "P24_PRESENT_262E777F_WIP_RU.md": "0f9c1f578d53f463c837093696a671b5efbf3322241411dcde6370f79126e032",
+    "native_comparison.json": "da643b41274597a8be1793f90c7c6418439181da4e69d194021352e842e640d3",
+    "physical_partitions.json": "be13cc392468000c6ca3035ff8313aebb759ef1371293e59ad01ba27c55107c4",
+    "source_full_cli.json": "3f3dfa7fa95690550ce73b44fda67b676ca7bd9524a136ee4185c89721e397fd",
+    "candidate_full_cli.json": "d021d60b43eaff84dca1c58c1622b074bf6045a5160ed7b671817e355ef170f3",
+    "full_cli_execution.json": "a20ee831f5346f49b320a3cce313163c50a9d5d68d7e62298b232fd32ef354ed",
+    "manifest.json": "c8995d71ad33a81fe2950ff1ddab377e621e13bea82aab46ca0acc8638715936"
+  },
+  "public_copy_edits": {
+    "full_cli_execution.json": "Only private absolute source/output paths were replaced by candidate-relative paths; command options, exit codes, stdout, stderr, PCB hashes and counts are unchanged.",
+    "engineering_source_files_modified": false
+  },
+  "partition_checks": {
+    "source_pairs": 7849,
+    "candidate_pairs": 7850,
+    "lost_pairs": 0,
+    "added_pairs": 1,
+    "source_pairs_sha256": "731afd1e62ff3ce29ec5cb5ffcce31c014071f46ec77ef6171da6a8047c89c30",
+    "candidate_pairs_sha256": "838f53b69f487e2f9885f652035f8482b001876b9896304b7c3b2a3efcf28826",
+    "source_hash_matches_frozen": true,
+    "candidate_hash_matches_frozen": true,
+    "recompute_encoding": "sorted UUID pairs, tab-separated, newline-terminated"
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 368,
+    "candidate_groups": 367,
+    "source_pairs": 7849,
+    "candidate_pairs": 7850,
+    "lost_pairs": 0,
+    "added_pairs": 1,
+    "expected_added_pair": [
+      "U20.4",
+      "U6.11"
+    ],
+    "cross_net_pairs": 0,
+    "added_segments": 25,
+    "added_vias": 10,
+    "segment_width_mm": 0.25,
+    "via_diameter_mm": 0.6,
+    "via_drill_mm": 0.3,
+    "segment_length_mm_excluding_via_verticals": 185.95328,
+    "master_tracks_and_vias": 1678,
+    "master_zones": 27,
+    "mcp_drc_source_unconnected": 154,
+    "mcp_drc_candidate_unconnected": 153,
+    "mcp_drc_warnings": 26,
+    "cli_source_exit_code": 5,
+    "cli_candidate_exit_code": 5,
+    "cli_source_violations": 26,
+    "cli_candidate_violations": 26,
+    "cli_source_unconnected": 154,
+    "cli_candidate_unconnected": 153,
+    "cli_source_schematic_parity": 0,
+    "cli_candidate_schematic_parity": 0,
+    "cli_stderr_empty": true,
+    "cli_pcb_bytes_unchanged": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks": [
+      "missing_courtyard",
+      "track_not_centered_on_via",
+      "tuning_profile_track_geometries",
+      "footprint_filters_mismatch",
+      "footprint_type_mismatch"
+    ],
+    "old_geometry_copper_and_zones_preserved": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 7,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "partition_pair_hashes_recomputed": true,
+    "preview_inspected": false,
+    "private_infrastructure_paths_found_in_public_json": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "P24_PRESENT U20.4↔U6.11 is physically joined, but power-loss with USB-powered MCU, brownout, thresholds, rearm, latch dynamics, continuous HF return, EMC, remaining power/return/SPI routing and 153 opens are not qualified. DRC is not PASS; ERC was not run."
+}

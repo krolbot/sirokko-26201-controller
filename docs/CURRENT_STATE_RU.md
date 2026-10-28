@@ -4,7 +4,19 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: основной подвод P24 и питания U20 e244c81b
+## 2026-10-29 — самый новый PCB-checkpoint: P24_PRESENT к защитной логике 262e777f
+
+[Кандидат p24_present_262e777f_wip](../hardware/candidates/p24_present_262e777f_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `262e777ff380b949c23ce35fd21919f51fc5c1344e3d9de79bfd92289606c51c`; исходная PCB — `e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+Выход `P24_PRESENT` U20.4 физически соединён с U6.11 принятой защитной логики. Добавлены 25 сегментов шириной 0,25 мм и 10 переходов 0,60/0,30 мм; суммарная длина сегментов 185,953280 мм без вертикали переходов. Прежняя медь, footprints, pads, UUID, pad→net, геометрия и позиции, зоны, keepout и Edge.Cuts сохранены.
+
+Native-проверка сообщает 699 площадок, 368→367 физических групп и 7849→7850 пар; потерь 0, добавлена ровно целевая пара U20.4/U6.11, межсетевых PAD-пар 0. На исходнике обе площадки были отдельными singleton-группами; на результате их группа содержит ровно эти две площадки. Сохранены прежние safety-группы, 18 TFT power/GND checks и связь девяти thermal-via с EP и двумя конкретными GND-зонами. Хеши полных партиций независимо пересчитаны издателем.
+
+Сохранённый MCP DRC содержит 153 несоединения и 26 прежних предупреждений вместо 154/26; полное мультимножество `violations` совпало с исходником. Во frozen-пакете зафиксирован реально выполненный KiCad CLI для исходника и кандидата с `--all-track-errors --schematic-parity --severity-all --exit-code-violations --refill-zones` без `--save-board`: оба запуска завершились кодом 5, `stderr` пуст; исходник — 26 нарушений / 154 несоединения / 0 расхождений схемы, кандидат — 26 / 153 / 0. Байты обеих PCB после запуска не изменились. Это **не PASS**. ERC на этом шаге не запускался.
+
+Сохранённые `ignored_checks`: `missing_courtyard`, `track_not_centered_on_via`, `tuning_profile_track_geometries`, `footprint_filters_mismatch`, `footprint_type_mismatch`. Они не менялись; отчёты не доказывают проверку отключённых правил. Соединение P24_PRESENT медью не доказывает полную защитную функцию. Остались 153 несоединения, силовые и общие цепи питания/возврата, SPI U303.2/U303.5 и другие проверки. Потеря 24 В при сохранённом USB-питании MCU, brownout, пороги, повторное взведение, динамика защёлки, непрерывный высокочастотный обратный путь и ЭМС не квалифицированы. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: основной подвод P24 и питания U20 e244c81b
 
 [Кандидат p24_mainfeed_e244c81b_wip](../hardware/candidates/p24_mainfeed_e244c81b_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd`; исходная PCB — `57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
