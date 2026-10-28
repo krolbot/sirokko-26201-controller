@@ -4,6 +4,16 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
+## 2026-10-28 — самый новый native WIP: Harwin/BOM 4fe3df0d
+
+[Кандидат panel_harwin_4fe3df0d_wip](../hardware/candidates/panel_harwin_4fe3df0d_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком, не заменяя прежние кандидаты. Основная PCB SHA256 `4fe3df0d78b568ea887debc1af283c9adb6c64013222b72591d7b5f04e4a3772`, root SCH `365f145538a060896e46179736340f62282831361c208a06163400a60d088194`, PRO `54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964`. Из верхнего `active_project/` замороженного архива побайтно перенесены 64 native-файла: одна PCB, четыре PRO, семь SCH, девять SYM, 29 MOD, восемь собственных WRL и шесть таблиц библиотек. Замкнуты все шесть целей `Sheetfile` и все 15 корневых целей библиотек.
+
+J26 теперь Harwin `M20-9960845` на B.Cu; выбранные C28/R122/R123 и актуальные relay/socket поля K1–K3 присутствуют в native и полной текущей 168-строчной BOM. Побайтный DRAFT PNG содержит полные архивные F.Cu/B.Cu виды и явные запреты заказа, питания и огневых испытаний. [Проверка схемного пути питания и релейных выходов](research/INPUT_POWER_4FE3_SCHEMATIC_REVIEW_RU.md) сохраняет 16 условий карты питания, 15 назначений DRV8803, восемь статических состояний и ограниченные расчёты; это не стенд, не fresh native solver и не приёмка компоновки.
+
+Сохранённая медь ещё не полностью разведена. Новые DRC/ERC не запускались; исторические 31 warning / 246 unconnected / 0 parity и ERC 9 warning относятся к исходной ревизии и не объявляются новым PASS. Отвергнутые cable-route/OBJ/SVG/PNG, assembly contract и старые `FINAL_VALIDATION` с ложной layout/routing-ready трактовкой не опубликованы. Единственный текущий источник монтажной/cable/Z-коррекции остаётся t_099cdb36/run322, но его наличие не означает принятую механику, кабельный объём или Z-цепочку.
+
+Официальный Waveshare STEP исключён из-за отсутствия подтверждённого права перераспространения; три native-ссылки на него сохранены без изменения байтов и явно перечислены в манифесте. Служебные `.kicad_prl`, сторонние документы/модели, сценарии, резервные копии, частные пути и сам архив не публикуются. Firmware tree не изменён. Сохраняются `full_layout_accepted=false`, `production_release=false`, `general_routing_allowed=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
 ## 2026-10-28 — текущий frozen-кандидат: ось 4a3ab23b + relay WRL 19eb37e4
 
 [Кандидат panel_axis_4a3ab23b_relay3d_19eb37e4](../hardware/candidates/panel_axis_4a3ab23b_relay3d_19eb37e4/README_RU.md) опубликован отдельным immutable DRAFT/WIP после `t521_bdd026d5`. Основная PCB SHA256 `4a3ab23b0998b5e5730ba60325a51cf142fe0b877d3b37196c24bca61bb79a9b`, root SCH `abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868`, PRO `54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964`, исправленная авторская WRL K1–K3 `19eb37e4deffac96e27576c6fe0d4ebe48d0eab7de7a91b7af54c989769f5d8d`.

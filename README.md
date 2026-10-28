@@ -4,6 +4,10 @@
 
 ## Current requirements and status
 
+**Latest native hardware WIP: [panel Harwin/BOM PCB 4fe3df0d](hardware/candidates/panel_harwin_4fe3df0d_wip/README_RU.md).** The byte-exact seven-sheet KiCad snapshot integrates J26 Harwin M20-9960845 on B.Cu, C28/R122/R123 selections and current K1–K3 relay metadata; its full BOM and explicitly labeled two-side DRAFT preview are included. The previous immutable candidates remain history and are not overwritten.
+
+This is the latest native CAD, not an accepted layout or a production release. Preserved copper is still incomplete; `full_layout_accepted=false`, `general_routing_allowed=false`, `firmware_integration_allowed=false`, `production_release=false`. No new DRC/ERC was run: historical 31 warnings / 246 unconnected / 0 parity and ERC 9 warnings remain source-revision records, not a fresh PASS. The [power and relay schematic review](docs/research/INPUT_POWER_4FE3_SCHEMATIC_REVIEW_RU.md) is a static source review, not bench qualification. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Firmware is unchanged.
+
 **Latest published hardware WIP: [panel-axis PCB 4a3ab23b + corrected relay-envelope WRL 19eb37e4](hardware/candidates/panel_axis_4a3ab23b_relay3d_19eb37e4/README_RU.md).** It is a separate immutable DRAFT snapshot after `t521_bdd026d5`, not a replacement for earlier history and not an accepted full layout. The package preserves the complete seven-sheet hierarchy, all 15 root local-library targets and the project-native CAD/library files; internal tools and the vendor STEP without confirmed redistribution permission are excluded.
 
 **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** The J23/J22/J24 actuator axis is corrected to X=64.95 mm, exactly 60.00 mm from the right window edge; the shared K1–K3 WRL Y-translation sign is also corrected. Full DRC still reports 31 warnings and 246 unconnected items; ERC reports 9 warnings. Relay height/Z, full TFT/cable mechanics, general routing and firmware remain HOLD; `full_layout_accepted=false`, `production_release=false`.
