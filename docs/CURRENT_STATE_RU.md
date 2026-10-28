@@ -4,7 +4,19 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: кнопка энкодера 6a842e8a
+## 2026-10-29 — самый новый PCB-checkpoint: каналы A/B энкодера e46c2b70
+
+[Кандидат encoder_ab_e46c2b70_wip](../hardware/candidates/encoder_ab_e46c2b70_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `e46c2b70f7ed430a0a603065394cddae4e46d21fc6d9a1cf16b4d63e65e5f8ce`; исходная PCB — `6a842e8a0dc4c835f77d2165d1400897b648628812f288ea879ba8547426468c`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+J23.1 соединён с C19.1 `/ENC_A`, J23.3 — с C20.1 `/ENC_B`; подтяжки R16.2/R17.2 и MCU J3.9/J3.8 ещё вне групп. `/ENC_SW` не доведён до J3.10. Добавлены 10 сегментов 0,25 мм и шесть переходов 0,60/0,30 мм. Прежняя медь, footprints, pads/UUID/net, 27 зон, keepout и Edge.Cuts сохранены; правила и номиналы не менялись.
+
+Native-проверка сообщает 699 площадок, 352→350 физических групп и 8921→8923 пары; потерь 0, добавлены ровно две ожидаемые пары J23.1/C19.1 и J23.3/C20.1. Сохранены прежняя группа кнопки J23.4/C75.1/R85.2, START/safety/`P24_PRESENT`, 18 TFT power/GND checks и девять thermal-via с EP и двумя конкретными GND-зонами.
+
+После перезаливки 10 зон реальные KiCad CLI-запуски завершились кодом 5, `stderr` пуст: исходник — 26 нарушений / 138 несоединений / 0 расхождений схемы, кандидат — 26 / 136 / 0. Полные мультимножества `violations` и parity совпали; SHA PCB не изменились. Это **не PASS**. ERC не запускался, унаследованные `ignored_checks` не квалифицированы.
+
+Остались 136 несоединений: MCU и подтяжки энкодера, J1.7/R14.2, SPI U303.2/U303.5 и другие управляющие, питающие и силовые цепи. Целостность CAD не квалифицирует GPIO, дребезг, ЭМС, токовые или тепловые режимы. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: кнопка энкодера 6a842e8a
 
 [Кандидат encoder_switch_6a842e8a_wip](../hardware/candidates/encoder_switch_6a842e8a_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `6a842e8a0dc4c835f77d2165d1400897b648628812f288ea879ba8547426468c`; исходная PCB — `9e897bf8d805a47bc0e4aac25f1050a115974e5f9e2f534b7070403bf0818f66`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
