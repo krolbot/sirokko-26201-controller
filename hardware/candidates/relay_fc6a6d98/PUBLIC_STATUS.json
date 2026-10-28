@@ -1,0 +1,77 @@
+{
+  "candidate": "relay_fc6a6d98",
+  "status": [
+    "DRAFT",
+    "NOT FOR ORDER",
+    "NO FIRE"
+  ],
+  "production_release": false,
+  "current_published_hardware_snapshot": true,
+  "unified_layout_accepted": false,
+  "firmware_modified": false,
+  "source_archive_sha256": "2fc36003e9869a5ce222ad7e95578791f3c65df5439bd8567a94a628737b6faa",
+  "project_files": 77,
+  "schematic_sheets": 6,
+  "pcb_sha256": "fc6a6d98efadc539fd21af9af2b8381dd91618b5b57a4ce21c1aadf7d15004e3",
+  "root_sch_sha256": "49a81ce6383e121ec857c6cdf1ce1889b7179d3dfc686141b4a27563874bbfbe",
+  "components": {
+    "U11": "DRV8803PWPR",
+    "U12": "SN74HCS08D",
+    "K1_K3": "DG85BM / DZ85AB",
+    "decoupling": [
+      "C21",
+      "C22",
+      "C23"
+    ]
+  },
+  "bom": {
+    "rows": 140,
+    "mpn_filled": 121,
+    "mpn_missing": 19
+  },
+  "physical_connectivity": {
+    "pads": [
+      533,
+      582
+    ],
+    "pairs": [
+      5646,
+      5648
+    ],
+    "lost_pairs": 0,
+    "added_pairs": 2,
+    "new_pair_labels": [
+      "C23.2-U12.7",
+      "C23.1-U12.14"
+    ],
+    "cross_net_pairs": [
+      0,
+      0
+    ],
+    "evidence": "review/INDEPENDENT_NATIVE_PHYSICAL_PARTITIONS.json"
+  },
+  "erc": {
+    "sheets": 6,
+    "errors": 3,
+    "warnings": 6
+  },
+  "drc": {
+    "handed_summary": {
+      "violations": 27,
+      "unconnected_items": 150,
+      "schematic_parity": 14
+    },
+    "archived_final_json": {
+      "violations": 27,
+      "unconnected_items": 164,
+      "schematic_parity": 11
+    },
+    "discrepancy_disclosed": true
+  },
+  "excluded": [
+    "verification/verify_connectivity_delta.py",
+    "verification/CONNECTIVITY_DELTA.json",
+    "source archive as a whole",
+    "third-party manuals and STEP files"
+  ]
+}
