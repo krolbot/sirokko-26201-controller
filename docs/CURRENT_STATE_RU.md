@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: подтяжка ENC_B bebc7b90
+## 2026-10-29 — самый новый PCB-checkpoint: энкодер до MCU bdba2e69
+
+[Кандидат encoder_mcu_bdba2e69_wip](../hardware/candidates/encoder_mcu_bdba2e69_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `bdba2e6976e41dce6c9c2c548176809d7fba3b5b71e2e41aa9fbf13160fdbd04`; исходная PCB — `bebc7b901a16404cf6934bad8f7926cc9a1e845646b5695a5af846ca0a8dfded`. Остальные 63 файла и firmware не менялись.
+
+Завершена CAD-связность трёх отдельных сетей до ESP32: `/ENC_A` = J23.1/C19.1/R16.2/J3.9, `/ENC_B` = J23.3/C20.1/R17.2/J3.8, `/ENC_SW` = J23.4/C75.1/R85.2/J3.10. Добавлены 23 сегмента 0,25 мм и 12 переходов 0,60/0,30 мм. ALL V1 отклонён из-за зазоров к `P24_PRESENT`; принят V2 с переходом (91;98,3) без ослабления правил.
+
+Native: 699 площадок, 348→345 групп, 8927→8936 пар, потерь 0, девять ожидаемых пар. CLI: исходник 26/134/0, кандидат 26/131/0; оба exit 5, `stderr` пуст. Это **не PASS**; ERC не запускался.
+
+CAD-связность энкодера не квалифицирует GPIO, дребезг или ЭМС. Осталось 131 соединение: START J1.7/R14.2, питание/возвраты, силовые/управляющие цепи и TFT SPI; общая квалификация не завершена. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: подтяжка ENC_B bebc7b90
 
 [Кандидат encoder_pullup_b_bebc7b90_wip](../hardware/candidates/encoder_pullup_b_bebc7b90_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `bebc7b901a16404cf6934bad8f7926cc9a1e845646b5695a5af846ca0a8dfded`; исходная PCB — `829494e526155fa26e5bd204558ff008993350f07091be6a6af061f6c71a278a`. Остальные 63 файла и firmware не менялись.
 

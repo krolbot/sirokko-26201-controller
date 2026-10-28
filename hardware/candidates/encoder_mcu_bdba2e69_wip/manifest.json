@@ -1,0 +1,12 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO POWER / NO FIRE",
+  "sha256": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "bdba2e6976e41dce6c9c2c548176809d7fba3b5b71e2e41aa9fbf13160fdbd04",
+    "ENCODER_MCU_BDBA2E69_WIP_RU.md": "443f0d31dcc7373b81d73282cb3e809cddfdd9273c2acdadde7069a5f27bb1d7",
+    "native_comparison.json": "a30a5caac9414eb810d0b9e61a0d0dde597a4f8bdc40bad0475e2a3ff2aa1015",
+    "physical_partitions.json": "951831afbef2a6c6fc016544bc91ca17a70d02fce625efa84d6198416ef160f5",
+    "source_full_cli.json": "a2f4c53252809ed3489ea31774a768ac2c2994c122d2c57acc11ad323ad2f78a",
+    "candidate_full_cli.json": "4372d225e88399ea392ef274e9e078a699b8f1305504d56418805cd037eeede9",
+    "full_cli_execution.json": "eab23482dd31e9342b3669af4c6aef7efa283edb66780bc5650139e7be1f70a3"
+  }
+}
