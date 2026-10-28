@@ -12,6 +12,12 @@
 
 Снимок не принят: DRC содержит 31 предупреждение и 246 неподключённых элементов; ERC — 9 предупреждений; новые цепи U14/U20/P24 не объявляются физически проведёнными. [Отдельная проверка оси панели](T521_FROZEN_PANEL_AXIS_CORRECTION_RU.md) выявила не исправленный в frozen CAD размер: окно `72.5 × 45.3 мм` даёт `56.95 мм` до общей оси J23/J22/J24 вместо обязательных `60.00 мм`. Сохраняются `layout_accepted=false`, `general_routing_allowed=false`, `firmware_allowed=false`, `production_release=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`.
 
+## 2026-10-28 — DRAFT-кандидат крепежа и выступающего TFT
+
+[Проверка кандидата винта M2×5](TFT_M2X5_FASTENER_SCREEN_RU.md) и [закупочная ведомость](TFT_MOUNT_PROCUREMENT_CANDIDATE.csv) сохраняют комплект из 4 стоек Würth `970120244`, 8 винтов СКБЭ-0000593К / SKU `9001179867` и 8 наружных шайб Bossard `1253131`. В CSV три строки со статусом `DRAFT_CANDIDATE_NOT_FOR_ORDER`: минимальная закупка по проверенным предложениям — 1340 руб. без доставки, стоимость использованных деталей — 944 руб. Покупка и резервирование не выполнялись.
+
+[Проектный интерфейс выступающего TFT](PANEL_PROTRUDING_TFT_INTERFACE_DRAFT_RU.md) и его [схема принципа](PANEL_PROTRUDING_TFT_INTERFACE_DRAFT.png) сохраняют независимые четыре M2-опоры, проход панели по полному TFT-envelope и отдельную защитную рамку без опоры на стекло, PCB, разъём или кабель. Это не принятая сборка и не CAD-изменение. Frozen T521, активные SCH/PCB/BOM и прежняя строка `Manufacturer=TBD, MPN=M2x5` в `ASSEMBLY_HARDWARE_BOM_DRAFT.csv` намеренно не переписаны. Полное зацепление, момент затяжки, толщина TFT, кабельный объём, рамка и совмещение панели остаются открытыми. **NOT FOR ORDER / NO POWER / NO FIRE; production_release=false.**
+
 ## 2026-10-28 — замороженная unified-база da1962d9 и контракт следующей CAD-операции
 
 [Кандидат unified_da1962d9](../hardware/candidates/unified_da1962d9/README_RU.md) — отдельный неизменяемый WIP-снимок полного семилистового проекта с локальными библиотеками, отчётами, BOM и 2D/3D-видами. PCB SHA256 `da1962d9f238b34332b78f29a8fff23da1a68ea447098ecf7306490068acdb89`, root SCH `9f36ee4720911b3f2bb674c44b73b0ebf4e4f65ed5b4f1869eaf9efd25724cf5`; 5558 физических пар и их SHA256 `3bfbd2dc4db8828fe6e2020189b06201d164b02e97bb9a175cab3959fa095f1e` совпадают с frozen-источником. В сопроводительных XML/JSON/MD при публикации заменены только частные машинные пути на относительные публичные ссылки; native-файлы `project/` перенесены побайтно.
