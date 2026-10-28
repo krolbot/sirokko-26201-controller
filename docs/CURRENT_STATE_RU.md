@@ -4,7 +4,15 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-28 — самый новый native WIP: Harwin/BOM 4fe3df0d
+## 2026-10-28 — самый новый PCB-checkpoint: подвод питания TFT 965b97be
+
+[Кандидат tft_power_feed_965b97be_wip](../hardware/candidates/tft_power_feed_965b97be_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a`; предыдущая рабочая PCB — `371e10acc4b6b76cd5f9194d45c56f7310ab92791335be1d4f791c136c6dc0ff`. SCH/PRO, локальные библиотеки и firmware не менялись; полный проектный контекст унаследован побайтно от `panel_harwin_4fe3df0d_wip`.
+
+Подведён `+5V_DEVKIT` от существующей магистрали к C302/U301.VIN, добавлен отдельный обратный путь локальной земли TFT-buck, подключены C301 и подтяжка EN R301. Добавлено 25 медных объектов; сохранены 699 площадок, зоны и вся прежняя медь. Нативное сравнение сообщает 0 потерянных и 714 добавленных физических PAD-пар, 0 межсетевых пар. Расчёт по постоянному току — только предварительный скрининг с явно заданными допущениями, не квалификация допустимого тока или тепла.
+
+Сохранённый KiCad 10.0.7 DRC: 229 неподключённых элементов и 30 прежних предупреждений вместо 233/30 до шага; это **не PASS**. ERC/parity заново не запускались. TFT_3V3 к буферам и J26, земля J26 и сигналы TFT не завершены; физические, силовые, тепловые, ЭМС- и огневые испытания не проводились. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-28 — предыдущая полная native-база: Harwin/BOM 4fe3df0d
 
 [Кандидат panel_harwin_4fe3df0d_wip](../hardware/candidates/panel_harwin_4fe3df0d_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком, не заменяя прежние кандидаты. Основная PCB SHA256 `4fe3df0d78b568ea887debc1af283c9adb6c64013222b72591d7b5f04e4a3772`, root SCH `365f145538a060896e46179736340f62282831361c208a06163400a60d088194`, PRO `54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964`. Из верхнего `active_project/` замороженного архива побайтно перенесены 64 native-файла: одна PCB, четыре PRO, семь SCH, девять SYM, 29 MOD, восемь собственных WRL и шесть таблиц библиотек. Замкнуты все шесть целей `Sheetfile` и все 15 корневых целей библиотек.
 

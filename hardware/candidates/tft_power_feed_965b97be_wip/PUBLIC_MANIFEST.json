@@ -1,0 +1,54 @@
+{
+  "package": "SIROKKO_TFT_POWER_FEED_965B97BE_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_TFT_FEED_965B97BE_WIP.zip",
+    "sha256": "e975425bd8ea50de44460b30d6fb606f064d658835042a57896b22363328561d",
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false
+  },
+  "baseline_project": {
+    "path": "../panel_harwin_4fe3df0d_wip/project",
+    "git_tree": "3571d471be8935eb267bab7bc39dce6ddb2bfa27",
+    "pcb_sha256": "4fe3df0d78b568ea887debc1af283c9adb6c64013222b72591d7b5f04e4a3772",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a",
+    "previous_working_pcb_sha256": "371e10acc4b6b76cd5f9194d45c56f7310ab92791335be1d4f791c136c6dc0ff",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "WIP_RU.md": "cc3965b59cfc4f3f1016da2589ba8d53e5e16cbe3a485caa2ce4daf4e100933c",
+    "DRC.json": "10e58551be6a2c9a19127b1961bb440c2f6d1f889456d8e4ab7924674f3381d7",
+    "NATIVE_COMPARISON.json": "1b89f2366702b3b370766b093e7600e8688dfc94d5cc6458dc5a41d6b63e585f",
+    "DC_SCREEN.json": "e9a3223dc3270eba6d2971965994b7ace13ee4ca1fee3a77160b76c4a3374a19",
+    "TFT_INPUT_DETAIL_DRAFT.png": "442aaff167ec778fcb2e1a1cfda6d19e49493a830959e1e89d86064088f083bc"
+  },
+  "recorded_checks": {
+    "kicad_version": "10.0.7",
+    "drc_unconnected": 229,
+    "drc_warnings": 30,
+    "drc_pass": false,
+    "erc_rerun": false,
+    "parity_rerun": false,
+    "pads": 699,
+    "lost_physical_pairs": 0,
+    "added_physical_pairs": 714,
+    "cross_net_physical_pairs": 0,
+    "added_copper_objects": 25,
+    "preview_inspected": true
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false
+  }
+}
