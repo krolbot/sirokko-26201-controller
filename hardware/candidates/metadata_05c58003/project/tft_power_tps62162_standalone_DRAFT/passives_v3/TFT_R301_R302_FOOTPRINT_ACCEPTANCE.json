@@ -1,0 +1,31 @@
+{
+  "native_kicad": "10.0.7-10.0.7~ubuntu26.04.1",
+  "footprint": "R_Yageo_RC0603_1608_Reflow",
+  "sha256": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a",
+  "pad_centers_x_mm": [
+    -0.85,
+    0.85
+  ],
+  "pad_sizes_xy_mm": [
+    [
+      0.9,
+      0.8
+    ],
+    [
+      0.9,
+      0.8
+    ]
+  ],
+  "gap_mm": 0.7999999999999999,
+  "copper_overall_x_mm": 2.6,
+  "positive": true,
+  "negative_wave_gap_rejected": true,
+  "source": "Yageo Chip Resistors Mounting V10,2018-02-13,p4,Table1 Reflow",
+  "production_release": false,
+  "runtime_diagnostics": [
+    "./kicad/include/properties/property.h(607): assert \"m_choices.GetCount() > 0\" failed in PROPERTY_ENUM(): No enum choices defined",
+    "./kicad/include/properties/property.h(607): assert \"m_choices.GetCount() > 0\" failed in PROPERTY_ENUM(): No enum choices defined",
+    "./kicad/include/properties/property.h(607): assert \"m_choices.GetCount() > 0\" failed in PROPERTY_ENUM(): No enum choices defined"
+  ],
+  "exit_code": 0
+}

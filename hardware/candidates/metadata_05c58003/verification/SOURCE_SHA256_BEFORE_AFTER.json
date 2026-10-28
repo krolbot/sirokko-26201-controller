@@ -1,0 +1,463 @@
+{
+  "task": "t_17025a35",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_FIRE",
+  "production_release": false,
+  "files": [
+    {
+      "path": "Sirokko26201_control_motor_candidate.kicad_pcb",
+      "before_sha256": "4f626502ad177c08a06b949cee6a78ef300543a7075aa1c78efacd1c989b14eb",
+      "after_sha256": "05c58003722be967ed31e54bef893a04c161347910efcb29c9e27a26fb0b0ab2",
+      "changed": true
+    },
+    {
+      "path": "Sirokko26201_control_motor_candidate.kicad_prl",
+      "before_sha256": "a83b8ed565a2d13992cb35bc0ea5edecacd5d76a8f0c05488cbfedc6b5c0e21a",
+      "after_sha256": "a83b8ed565a2d13992cb35bc0ea5edecacd5d76a8f0c05488cbfedc6b5c0e21a",
+      "changed": false
+    },
+    {
+      "path": "Sirokko26201_control_motor_candidate.kicad_pro",
+      "before_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+      "after_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+      "changed": false
+    },
+    {
+      "path": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "before_sha256": "371c8a653a7fc014ade5142b5d4f87e32f66a69015a219eeec9c09f7a8837ea7",
+      "after_sha256": "3fa9d05afd6750a27b56ec9dd9dad9b9e80d0631f0fe072cb2c67f2f5674aa50",
+      "changed": true
+    },
+    {
+      "path": "Sirokko_Connectors.pretty/Connfly_DS1021_1x08_P2.54mm_Type1_Drill1.02.kicad_mod",
+      "before_sha256": "2a325ea21537f74e48f31c680caec3db2075a38c0e3f1a34c5016ad6f71581eb",
+      "after_sha256": "2a325ea21537f74e48f31c680caec3db2075a38c0e3f1a34c5016ad6f71581eb",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_D101_STPS5H100B.kicad_sym",
+      "before_sha256": "738e30a8c1005aac57b5cdacd8461cd98282192fdbe548463a42e042488b3193",
+      "after_sha256": "738e30a8c1005aac57b5cdacd8461cd98282192fdbe548463a42e042488b3193",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod",
+      "before_sha256": "27f65864bc168b4c158d426d6fcb3ad4b6147478605c1bd60707c7998d8c0d43",
+      "after_sha256": "27f65864bc168b4c158d426d6fcb3ad4b6147478605c1bd60707c7998d8c0d43",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Mechanical.pretty/MountingHole_2.4mm_M2_DRAFT.kicad_mod",
+      "before_sha256": "ec579ba5264178d16d92bd8114c87110dacbbc54292de64e630a3293cc70ac35",
+      "after_sha256": "ec579ba5264178d16d92bd8114c87110dacbbc54292de64e630a3293cc70ac35",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Mechanical.pretty/MountingHole_3.6mm_R5.5_DRAFT.kicad_mod",
+      "before_sha256": "f5a199d5049a6fd9419aef3169aff97fdfbb00959e5e43c5607e7dfa67e6cb17",
+      "after_sha256": "f5a199d5049a6fd9419aef3169aff97fdfbb00959e5e43c5607e7dfa67e6cb17",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Panel.pretty/Connfly_DS1023_1x07S21_P2.54mm.kicad_mod",
+      "before_sha256": "fc84d6bbfe7abe12b1634f4affbc6706961de0dd6711e0dc3f4240228a136b67",
+      "after_sha256": "fc84d6bbfe7abe12b1634f4affbc6706961de0dd6711e0dc3f4240228a136b67",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Panel.pretty/RotaryEncoder_Alps_EC11E15244G1.kicad_mod",
+      "before_sha256": "7a2a26956b6c6824a471300ee62523eb3137a8ea51f8797093e449634c00ae87",
+      "after_sha256": "7a2a26956b6c6824a471300ee62523eb3137a8ea51f8797093e449634c00ae87",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Panel.pretty/SW_NKK_BB25AB-FA.kicad_mod",
+      "before_sha256": "b4d03b4695e30381d0dae481c339323919dd17ca383a52e743e84bf96f8c7547",
+      "after_sha256": "b4d03b4695e30381d0dae481c339323919dd17ca383a52e743e84bf96f8c7547",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Panel.pretty/TFT_GMT020-02-7P_Envelope_62x37.1.kicad_mod",
+      "before_sha256": "c1c36050ee52679c2a5eaa91929ad00e1baebf026a77f0bd49b7e42a821b233d",
+      "after_sha256": "c1c36050ee52679c2a5eaa91929ad00e1baebf026a77f0bd49b7e42a821b233d",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Power.kicad_sym",
+      "before_sha256": "a6a3e521a33fb668bd3c53063768f2fed3fff56a767636b034af4a7392d0b367",
+      "after_sha256": "a6a3e521a33fb668bd3c53063768f2fed3fff56a767636b034af4a7392d0b367",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod",
+      "before_sha256": "324d7ec3faa2b6df84d861bb197388c17ead8c1e22b0139826a8a445b6b20998",
+      "after_sha256": "324d7ec3faa2b6df84d861bb197388c17ead8c1e22b0139826a8a445b6b20998",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Power.pretty/Phoenix_1756993_MKDS5HV_2_9.52_ZSZS.kicad_mod",
+      "before_sha256": "162a196f419af9961762c27db9b8c4253ecb8a3a2e230ab0ac0e0d1bc5e072f7",
+      "after_sha256": "162a196f419af9961762c27db9b8c4253ecb8a3a2e230ab0ac0e0d1bc5e072f7",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Power.pretty/WSLP2726.kicad_mod",
+      "before_sha256": "79640b947975b765f1f1864f118c11103dd9f3a779c254cbb2b2fbfa994a12b0",
+      "after_sha256": "79640b947975b765f1f1864f118c11103dd9f3a779c254cbb2b2fbfa994a12b0",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_MECHANICAL_PINMAP_HOLD.kicad_mod",
+      "before_sha256": "93dbfee1534bbc07a4b52e9934e5e2f8588a41025af32d0b9fadcee8d078183d",
+      "after_sha256": "93dbfee1534bbc07a4b52e9934e5e2f8588a41025af32d0b9fadcee8d078183d",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Safety.kicad_sym",
+      "before_sha256": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f",
+      "after_sha256": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod",
+      "before_sha256": "f6617d430df6ec2596055e3da0aa02421b8201f905586f24d462e8e7c8c2e0ab",
+      "after_sha256": "f6617d430df6ec2596055e3da0aa02421b8201f905586f24d462e8e7c8c2e0ab",
+      "changed": false
+    },
+    {
+      "path": "Sirokko_thermal.kicad_sym",
+      "before_sha256": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1",
+      "after_sha256": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1",
+      "changed": false
+    },
+    {
+      "path": "fp-lib-table",
+      "before_sha256": "108ae8187aabcbcec4581de7c0b9618977c97abf2cc2c80c256ea50bf5659df0",
+      "after_sha256": "108ae8187aabcbcec4581de7c0b9618977c97abf2cc2c80c256ea50bf5659df0",
+      "changed": false
+    },
+    {
+      "path": "logic_power_24_5_DRAFT.kicad_sch",
+      "before_sha256": "3731525dbc1db66495f3b974389afa3fc001537b496ec5500eb32c9f4ee6fe3a",
+      "after_sha256": "3731525dbc1db66495f3b974389afa3fc001537b496ec5500eb32c9f4ee6fe3a",
+      "changed": false
+    },
+    {
+      "path": "motor_pwm_REBUILD.kicad_sch",
+      "before_sha256": "590dcba10ca7909d4304c719bbae05ba61eef6ef0f9be3b9d1a7981491e35a05",
+      "after_sha256": "590dcba10ca7909d4304c719bbae05ba61eef6ef0f9be3b9d1a7981491e35a05",
+      "changed": false
+    },
+    {
+      "path": "motor_pwm_REBUILD.kicad_sym",
+      "before_sha256": "a9b9577029bdd3f964f1fff16d3c560f569feb6e57f39aea128396c7fcb640e8",
+      "after_sha256": "a9b9577029bdd3f964f1fff16d3c560f569feb6e57f39aea128396c7fcb640e8",
+      "changed": false
+    },
+    {
+      "path": "sym-lib-table",
+      "before_sha256": "115f731c309622a127e33c00d0ba9a1687a2f8c88578100d57cf7e5e515cd78c",
+      "after_sha256": "115f731c309622a127e33c00d0ba9a1687a2f8c88578100d57cf7e5e515cd78c",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/HANDOFF_RU.md",
+      "before_sha256": "1b02c50851c0d3accf80d094f8df0de7fdb3f127c0389dda022a638e9ae0267f",
+      "after_sha256": "1b02c50851c0d3accf80d094f8df0de7fdb3f127c0389dda022a638e9ae0267f",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/NET_MAP.json",
+      "before_sha256": "f60ba370f1947759e47c4cbf9004697b1420aa9acf79ea7f2736fbf74177bd86",
+      "after_sha256": "f60ba370f1947759e47c4cbf9004697b1420aa9acf79ea7f2736fbf74177bd86",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/PUBLIC_MANIFEST.json",
+      "before_sha256": "7f401951aaca399402ded9e2b5bb57a76a09a0289e21b0081bd59e9e6c47e76d",
+      "after_sha256": "7f401951aaca399402ded9e2b5bb57a76a09a0289e21b0081bd59e9e6c47e76d",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/README_RU.md",
+      "before_sha256": "53bb2a8a2dab968a776f4865ecb141b160fd120cca0266a2b642049efc58492a",
+      "after_sha256": "53bb2a8a2dab968a776f4865ecb141b160fd120cca0266a2b642049efc58492a",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/SHA256SUMS",
+      "before_sha256": "bb0338fa98fcd147515b0c0b86049f5d50bbedf10ee44df8479d170e5d8969bc",
+      "after_sha256": "bb0338fa98fcd147515b0c0b86049f5d50bbedf10ee44df8479d170e5d8969bc",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/VERIFICATION.json",
+      "before_sha256": "aa63fad4865534a0b9d6c266b77c99eac51c40d96f75c5ef45b1af87856e64e4",
+      "after_sha256": "aa63fad4865534a0b9d6c266b77c99eac51c40d96f75c5ef45b1af87856e64e4",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/VERIFY.py",
+      "before_sha256": "13587095095a00a001732428545a164e845312958c3de9988097064f2b471f36",
+      "after_sha256": "13587095095a00a001732428545a164e845312958c3de9988097064f2b471f36",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/fp-lib-table",
+      "before_sha256": "2e9d53f28360afba3177dce3f59370937a5bdfa77cf168607db0b0862240552a",
+      "after_sha256": "2e9d53f28360afba3177dce3f59370937a5bdfa77cf168607db0b0862240552a",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/SHA256SUMS",
+      "before_sha256": "d61e9256f04b382a6c1a956c9ced4aec4341436f87875222a08f58df043c33b3",
+      "after_sha256": "d61e9256f04b382a6c1a956c9ced4aec4341436f87875222a08f58df043c33b3",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM188_1608_Reflow.kicad_mod",
+      "before_sha256": "a31df4074837ebdb2e17c84462371b148507209240b3f8f4c19000584d0fa5c5",
+      "after_sha256": "a31df4074837ebdb2e17c84462371b148507209240b3f8f4c19000584d0fa5c5",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM21B_2012_Reflow.kicad_mod",
+      "before_sha256": "8bc9e9f3bd850cfbb4acee0f7c8cb500b04a4f0c3b582869fcd94b69c547c0da",
+      "after_sha256": "8bc9e9f3bd850cfbb4acee0f7c8cb500b04a4f0c3b582869fcd94b69c547c0da",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM32E_3225_Reflow.kicad_mod",
+      "before_sha256": "54b3f66b322802ed88060948bb28da8e210e8f7ec59bb132d911b454cdc43a1c",
+      "after_sha256": "54b3f66b322802ed88060948bb28da8e210e8f7ec59bb132d911b454cdc43a1c",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/L_Wuerth_744025003_2828_Reflow.kicad_mod",
+      "before_sha256": "0af77026ac56536515f8bd695e66996bfae0eeeb2cacbac0f9cab91c84b98c54",
+      "after_sha256": "0af77026ac56536515f8bd695e66996bfae0eeeb2cacbac0f9cab91c84b98c54",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/R_Yageo_RC0603_1608_Reflow.kicad_mod",
+      "before_sha256": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a",
+      "after_sha256": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM188_1608_Reflow.png",
+      "before_sha256": "1a3b1f203e8365d26e8b635dfcd851d385369ee2b11adb385e286d7903d541b5",
+      "after_sha256": "1a3b1f203e8365d26e8b635dfcd851d385369ee2b11adb385e286d7903d541b5",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM188_1608_Reflow.svg",
+      "before_sha256": "32b09fa9e58ab5eb7e2ab93fcf3ff25deb76529990d05a74b1bd76e093f52287",
+      "after_sha256": "32b09fa9e58ab5eb7e2ab93fcf3ff25deb76529990d05a74b1bd76e093f52287",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM21B_2012_Reflow.png",
+      "before_sha256": "00c33d3055701a6aecacf40300a1c85434e41ca1802dbccb399ef2d3b6169ab6",
+      "after_sha256": "00c33d3055701a6aecacf40300a1c85434e41ca1802dbccb399ef2d3b6169ab6",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM21B_2012_Reflow.svg",
+      "before_sha256": "201a921f66dcc6d2759ffcb2a4316f85d937487211bda9b1002d305fc8d045a8",
+      "after_sha256": "201a921f66dcc6d2759ffcb2a4316f85d937487211bda9b1002d305fc8d045a8",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM32E_3225_Reflow.png",
+      "before_sha256": "e676265e69fc16cee6656dcc1a777a47744d3cbb4f6e358d54bb8280c65ff03e",
+      "after_sha256": "e676265e69fc16cee6656dcc1a777a47744d3cbb4f6e358d54bb8280c65ff03e",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/C_Murata_GRM32E_3225_Reflow.svg",
+      "before_sha256": "a5bfa6f4333f9e3b7658fa4cfd95e52bddffa1c298d5e248016ff49f9c134cc7",
+      "after_sha256": "a5bfa6f4333f9e3b7658fa4cfd95e52bddffa1c298d5e248016ff49f9c134cc7",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/L_Wuerth_744025003_2828_Reflow.png",
+      "before_sha256": "8d3dcc677e9c58c1b6828782f08a2de9b8dc5937b466e1191fac934a0972994b",
+      "after_sha256": "8d3dcc677e9c58c1b6828782f08a2de9b8dc5937b466e1191fac934a0972994b",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/L_Wuerth_744025003_2828_Reflow.svg",
+      "before_sha256": "f53df96e897add021200e7d3209ed3c513f17f517ee8afb3c139cb4d53daf321",
+      "after_sha256": "f53df96e897add021200e7d3209ed3c513f17f517ee8afb3c139cb4d53daf321",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/R_Yageo_RC0603_1608_Reflow.png",
+      "before_sha256": "940b5a534708d7ab8876d749179bb1a8c9931998caf3ee0f8431d8660a726dbd",
+      "after_sha256": "940b5a534708d7ab8876d749179bb1a8c9931998caf3ee0f8431d8660a726dbd",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives_previews/R_Yageo_RC0603_1608_Reflow.svg",
+      "before_sha256": "b4a4c9d18bca44c6a5a6a97f99bcb71e50aca9b1491524e53ba6d2af01780932",
+      "after_sha256": "b4a4c9d18bca44c6a5a6a97f99bcb71e50aca9b1491524e53ba6d2af01780932",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_L301_FOOTPRINT_ACCEPTANCE.json",
+      "before_sha256": "2eb8ad0710405e7c4fef97173b76f4e4857b10df3ce7fc7321336d09dec5be56",
+      "after_sha256": "2eb8ad0710405e7c4fef97173b76f4e4857b10df3ce7fc7321336d09dec5be56",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_L301_FOOTPRINT_RU.md",
+      "before_sha256": "3f9fe2e761a694ed9a48de7fc861057ff6c8d15a52dd9a708e8084a3e3fff2aa",
+      "after_sha256": "3f9fe2e761a694ed9a48de7fc861057ff6c8d15a52dd9a708e8084a3e3fff2aa",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_MURATA_PASSIVE_FOOTPRINTS_RU.md",
+      "before_sha256": "8045f10f9e9ae8bc4d8d31ed7aafac4d20b17d35a04a8ec3be5f53e49d648e48",
+      "after_sha256": "8045f10f9e9ae8bc4d8d31ed7aafac4d20b17d35a04a8ec3be5f53e49d648e48",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_MURATA_PASSIVE_FOOTPRINT_ACCEPTANCE.json",
+      "before_sha256": "fcdd77d6f945cd011d5ac1a252ca236ba7fad56a00014a81e8a8c72e450c2e4c",
+      "after_sha256": "fcdd77d6f945cd011d5ac1a252ca236ba7fad56a00014a81e8a8c72e450c2e4c",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_R301_R302_FOOTPRINT_ACCEPTANCE.json",
+      "before_sha256": "fcb74ab975854b61ff0cce2bff8b8563a9aed35b04ce0dacdcaaa053320b3848",
+      "after_sha256": "fcb74ab975854b61ff0cce2bff8b8563a9aed35b04ce0dacdcaaa053320b3848",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/passives_v3/TFT_R301_R302_FOOTPRINT_RU.md",
+      "before_sha256": "37e4081a4d970204498cf6af1b62a061c970a52d6b64fa0ae4c55852ae407c20",
+      "after_sha256": "37e4081a4d970204498cf6af1b62a061c970a52d6b64fa0ae4c55852ae407c20",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT-erc.json",
+      "before_sha256": "8f57dcc7f7c7b469366631775208c6b0c69b91027bc1bb28bb45f82c55b76b31",
+      "after_sha256": "8f57dcc7f7c7b469366631775208c6b0c69b91027bc1bb28bb45f82c55b76b31",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_pro",
+      "before_sha256": "c4908e02842a1744ef62f8c20c5f16f004302c6d68206d63b913230626da5b79",
+      "after_sha256": "c4908e02842a1744ef62f8c20c5f16f004302c6d68206d63b913230626da5b79",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_sch",
+      "before_sha256": "62762a11d1d923ba31f7490796e23cd100d5366d8a8aadcb414d2481ab10c8b5",
+      "after_sha256": "62762a11d1d923ba31f7490796e23cd100d5366d8a8aadcb414d2481ab10c8b5",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.pdf",
+      "before_sha256": "7250f92dd70c94a9e08f392715c09cc373fd471feed18f371013f8deea4e2ac1",
+      "after_sha256": "7250f92dd70c94a9e08f392715c09cc373fd471feed18f371013f8deea4e2ac1",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.png",
+      "before_sha256": "09be3dc1b6bf2990fbc85ec3e817f9433f1b19aba369d99bb58259b29e5475de",
+      "after_sha256": "09be3dc1b6bf2990fbc85ec3e817f9433f1b19aba369d99bb58259b29e5475de",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.svg",
+      "before_sha256": "64e2a093ce35c72fc8d1b138b952cd9a3bbe31293421a3afacc3c32efc1f76c4",
+      "after_sha256": "64e2a093ce35c72fc8d1b138b952cd9a3bbe31293421a3afacc3c32efc1f76c4",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.xml",
+      "before_sha256": "9dae04b8d193f6716f7db77c5b2d42e7aac1067997329f98c9bbfcbbe064c539",
+      "after_sha256": "9dae04b8d193f6716f7db77c5b2d42e7aac1067997329f98c9bbfcbbe064c539",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/u301_review/TFT_U301_FOOTPRINT_REVIEW_RU.md",
+      "before_sha256": "7c5147be5e8a15599444e1b8ae67a1797b313c6e1aa6b845b3121d54eaff5b2f",
+      "after_sha256": "7c5147be5e8a15599444e1b8ae67a1797b313c6e1aa6b845b3121d54eaff5b2f",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/u301_review/U301_copper_detail.png",
+      "before_sha256": "9cf8a6d9016e42f857b238480d2aee38380d3982d2f04c0ce320892f08912d51",
+      "after_sha256": "9cf8a6d9016e42f857b238480d2aee38380d3982d2f04c0ce320892f08912d51",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/u301_review/U301_copper_detail.svg",
+      "before_sha256": "8c96bd8ed516696347fecb5c191dfaf8ddf6bd9304922a229488ba8c1dfd0015",
+      "after_sha256": "8c96bd8ed516696347fecb5c191dfaf8ddf6bd9304922a229488ba8c1dfd0015",
+      "changed": false
+    },
+    {
+      "path": "tft_power_tps62162_standalone_DRAFT/u301_review/U301_native_geometry.json",
+      "before_sha256": "14a474e249a9b8dada0cb4edb1ce2a4be1d04d12aada735f2cebbcfecc8bb6c6",
+      "after_sha256": "14a474e249a9b8dada0cb4edb1ce2a4be1d04d12aada735f2cebbcfecc8bb6c6",
+      "changed": false
+    },
+    {
+      "path": "tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_pro",
+      "before_sha256": "9079a75b16eff2288a02293fb49091fca1698cd0dbf9d3a860cb9438792ced4f",
+      "after_sha256": "9079a75b16eff2288a02293fb49091fca1698cd0dbf9d3a860cb9438792ced4f",
+      "changed": false
+    },
+    {
+      "path": "tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch",
+      "before_sha256": "ac283564f54e886c9e0d62e8d00a2ef4f5923f4f624a2ad5576d009cc1949ab9",
+      "after_sha256": "5440a7318222fc539a87b6a25773cc005a77c1ec5f0411951747006176d8b939",
+      "changed": true
+    },
+    {
+      "path": "tft_reset_local_DRAFT/sym-lib-table",
+      "before_sha256": "f584f8a6004f839c9f2ffabf905a8f0e0e1097b6df8afcc4223b45282ec44e45",
+      "after_sha256": "f584f8a6004f839c9f2ffabf905a8f0e0e1097b6df8afcc4223b45282ec44e45",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/fp-lib-table",
+      "before_sha256": "aad57bccae3759d1e957f6752b3849d104021cde3f0b4a6d26d1e919484ed3a1",
+      "after_sha256": "aad57bccae3759d1e957f6752b3849d104021cde3f0b4a6d26d1e919484ed3a1",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/sirokko_tft_interface_review_20261027.kicad_sym",
+      "before_sha256": "6b0041075b1ba5d8e553e789428f412299e282caa4290907f17892ff486e86a1",
+      "after_sha256": "6b0041075b1ba5d8e553e789428f412299e282caa4290907f17892ff486e86a1",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_prl",
+      "before_sha256": "71c5e0aec66ccd0914239d8ac00d3683015adc54a2bdb382520b307ab4a3a717",
+      "after_sha256": "71c5e0aec66ccd0914239d8ac00d3683015adc54a2bdb382520b307ab4a3a717",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_pro",
+      "before_sha256": "ff40f5d2a3fb5ea586cc36a3e4de0078124bf252ee3583b13558dc6e8a8f8cce",
+      "after_sha256": "ff40f5d2a3fb5ea586cc36a3e4de0078124bf252ee3583b13558dc6e8a8f8cce",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_sch",
+      "before_sha256": "3f3441b176c4a2d35e26b21ac8a769a6013c2dfbd41fdeb31e080c6902a1e8eb",
+      "after_sha256": "3f3441b176c4a2d35e26b21ac8a769a6013c2dfbd41fdeb31e080c6902a1e8eb",
+      "changed": false
+    },
+    {
+      "path": "tft_spi_isolation_DRAFT/sym-lib-table",
+      "before_sha256": "210ddc39ddcb4d0580520fb3c6475891513442027884e7741715628b32281658",
+      "after_sha256": "210ddc39ddcb4d0580520fb3c6475891513442027884e7741715628b32281658",
+      "changed": false
+    }
+  ]
+}

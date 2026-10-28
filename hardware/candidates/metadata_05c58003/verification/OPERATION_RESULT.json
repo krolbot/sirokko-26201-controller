@@ -1,0 +1,454 @@
+{
+  "bom": {
+    "after_mpn_filled": 110,
+    "after_rows": 128,
+    "before_mpn_filled": 105,
+    "before_rows": 128,
+    "changed_refs_fields": {
+      "R1": {
+        "Datasheet": [
+          "",
+          "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
+        ],
+        "MPN": [
+          "",
+          "MFR-25FTE52-4K7"
+        ],
+        "Manufacturer": [
+          "",
+          "Yageo"
+        ]
+      },
+      "R16": {
+        "Datasheet": [
+          "",
+          "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
+        ],
+        "MPN": [
+          "",
+          "MFR-25FTE52-2K2"
+        ],
+        "Manufacturer": [
+          "",
+          "Yageo"
+        ]
+      },
+      "R17": {
+        "Datasheet": [
+          "",
+          "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
+        ],
+        "MPN": [
+          "",
+          "MFR-25FTE52-2K2"
+        ],
+        "Manufacturer": [
+          "",
+          "Yageo"
+        ]
+      },
+      "R303": {
+        "Datasheet": [
+          "",
+          "https://static.chipdip.ru/lib/104/DOC032104908.pdf"
+        ],
+        "MPN": [
+          "",
+          "RC0603FR-07100KL"
+        ],
+        "Manufacturer": [
+          "",
+          "Yageo"
+        ]
+      },
+      "R85": {
+        "Datasheet": [
+          "",
+          "https://static.chipdip.ru/lib/104/DOC032104908.pdf"
+        ],
+        "MPN": [
+          "",
+          "RC0603FR-072K2L"
+        ],
+        "Manufacturer": [
+          "",
+          "Yageo"
+        ]
+      }
+    },
+    "next5_exact": {
+      "R1": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-4K7",
+        "Manufacturer": "Yageo"
+      },
+      "R16": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-2K2",
+        "Manufacturer": "Yageo"
+      },
+      "R17": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-2K2",
+        "Manufacturer": "Yageo"
+      },
+      "R303": {
+        "Datasheet": "https://static.chipdip.ru/lib/104/DOC032104908.pdf",
+        "MPN": "RC0603FR-07100KL",
+        "Manufacturer": "Yageo"
+      },
+      "R85": {
+        "Datasheet": "https://static.chipdip.ru/lib/104/DOC032104908.pdf",
+        "MPN": "RC0603FR-072K2L",
+        "Manufacturer": "Yageo"
+      }
+    },
+    "previous_mpn_preserved": true
+  },
+  "changed_manifest_files": [
+    "Sirokko26201_control_motor_candidate.kicad_pcb",
+    "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch"
+  ],
+  "checks": {
+    "allowed_diff_only": true,
+    "bom_counts": true,
+    "bom_delta_fields": true,
+    "bom_delta_refs": true,
+    "changed_files": true,
+    "murata_reference_0p8": true,
+    "native_exports_ok": true,
+    "netlist_467_equal": true,
+    "next5_exact": true,
+    "no_missing_files": true,
+    "parity_field_mismatch_zero": true,
+    "pcb_sync19": true,
+    "physical_counts": true,
+    "physical_equal": true,
+    "previous_mpn_preserved": true,
+    "remaining_parity_14": true
+  },
+  "drc": {
+    "field_mismatch_descriptions": [],
+    "field_mismatches": 0,
+    "ignored_checks": 5,
+    "included_severities": [
+      "error",
+      "warning",
+      "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "schematic_parity": 14,
+    "schematic_parity_severity": {
+      "warning": 14
+    },
+    "schematic_parity_types": {
+      "extra_footprint": 11,
+      "footprint_symbol_mismatch": 3
+    },
+    "unconnected": 120,
+    "unconnected_severity": {
+      "error": 120
+    },
+    "violation_severity": {
+      "warning": 27
+    },
+    "violations": 27
+  },
+  "erc": {
+    "ignored_checks": 4,
+    "included_severities": [
+      "error",
+      "warning",
+      "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "severity": {
+      "warning": 8
+    },
+    "types": {
+      "isolated_pin_label": 3,
+      "no_connect_dangling": 2,
+      "unconnected_wire_endpoint": 3
+    },
+    "violations": 8
+  },
+  "exit_codes": {
+    "after_connectivity": 0,
+    "before_connectivity": 0,
+    "bom": 0,
+    "full_drc": 5,
+    "full_erc": 5,
+    "netlist": 0
+  },
+  "missing_manifest_files": [],
+  "murata_reference_font_sizes_mm": {
+    "C1": [
+      0.8,
+      0.8
+    ],
+    "C12": [
+      0.8,
+      0.8
+    ],
+    "C13": [
+      0.8,
+      0.8
+    ],
+    "C14": [
+      0.8,
+      0.8
+    ],
+    "C17": [
+      0.8,
+      0.8
+    ],
+    "C18": [
+      0.8,
+      0.8
+    ],
+    "C2": [
+      0.8,
+      0.8
+    ],
+    "C3": [
+      0.8,
+      0.8
+    ],
+    "C305": [
+      0.8,
+      0.8
+    ],
+    "C306": [
+      0.8,
+      0.8
+    ],
+    "C4": [
+      0.8,
+      0.8
+    ],
+    "C5": [
+      0.8,
+      0.8
+    ],
+    "C6": [
+      0.8,
+      0.8
+    ],
+    "C7": [
+      0.8,
+      0.8
+    ],
+    "C8": [
+      0.8,
+      0.8
+    ],
+    "C9": [
+      0.8,
+      0.8
+    ],
+    "C9004": [
+      0.8,
+      0.8
+    ],
+    "C9005": [
+      0.8,
+      0.8
+    ],
+    "C9006": [
+      0.8,
+      0.8
+    ],
+    "C9011": [
+      0.8,
+      0.8
+    ],
+    "C9012": [
+      0.8,
+      0.8
+    ]
+  },
+  "netlist": {
+    "after_entries": 467,
+    "before_entries": 467,
+    "equal": true,
+    "next5": {
+      "R1.1": "/+3V3",
+      "R1.2": "/ROOM_DQ",
+      "R16.1": "/+3V3",
+      "R16.2": "/ENC_A",
+      "R17.1": "/+3V3",
+      "R17.2": "/ENC_B",
+      "R303.1": "/TFT_3V3",
+      "R303.2": "/TFT_RESET_N",
+      "R85.1": "/+3V3",
+      "R85.2": "/ENC_SW"
+    }
+  },
+  "normalized_allowed_diff_only": {
+    "child_sch_equal": true,
+    "pcb_equal": true,
+    "root_sch_equal": true
+  },
+  "pcb_sync19": {
+    "fields": {
+      "R1": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-4K7",
+        "Manufacturer": "Yageo"
+      },
+      "R10": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R11": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R12": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R13": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R14": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R15": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R16": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-2K2",
+        "Manufacturer": "Yageo"
+      },
+      "R17": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FTE52-2K2",
+        "Manufacturer": "Yageo"
+      },
+      "R2": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R3": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R303": {
+        "Datasheet": "https://static.chipdip.ru/lib/104/DOC032104908.pdf",
+        "MPN": "RC0603FR-07100KL",
+        "Manufacturer": "Yageo"
+      },
+      "R4": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R5": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R6": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R7": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R8": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      },
+      "R85": {
+        "Datasheet": "https://static.chipdip.ru/lib/104/DOC032104908.pdf",
+        "MPN": "RC0603FR-072K2L",
+        "Manufacturer": "Yageo"
+      },
+      "R9": {
+        "Datasheet": "https://static.chipdip.ru/lib/534/DOC021534312.pdf",
+        "MPN": "MFR-25FBF52-10K",
+        "Manufacturer": "Yageo"
+      }
+    },
+    "fields_match_schematic_bom": true,
+    "refs": [
+      "R1",
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R15",
+      "R16",
+      "R17",
+      "R2",
+      "R3",
+      "R303",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "R8",
+      "R85",
+      "R9"
+    ]
+  },
+  "physical_connectivity": {
+    "after_counts": {
+      "components": 292,
+      "cross_net_physical_pairs": 0,
+      "multi_pad_components": 56,
+      "native_connected_pad_count": 496,
+      "native_unconnected_edges": 120,
+      "pads": 533,
+      "physical_pad_pairs": 5646
+    },
+    "after_pairset_sha256": "0a7333cab267e2275872fe7d5ece114142cb47cb812d13e36a0c9da44bcaa6cc",
+    "before_counts": {
+      "components": 292,
+      "cross_net_physical_pairs": 0,
+      "multi_pad_components": 56,
+      "native_connected_pad_count": 496,
+      "native_unconnected_edges": 120,
+      "pads": 533,
+      "physical_pad_pairs": 5646
+    },
+    "before_pairset_sha256": "0a7333cab267e2275872fe7d5ece114142cb47cb812d13e36a0c9da44bcaa6cc",
+    "equal_fields": {
+      "components": true,
+      "cross_net_pairs": true,
+      "footprints": true,
+      "pads": true,
+      "pairs": true
+    }
+  },
+  "production_release": false,
+  "source_sha256": {
+    "after_child_sch": "5440a7318222fc539a87b6a25773cc005a77c1ec5f0411951747006176d8b939",
+    "after_pcb": "05c58003722be967ed31e54bef893a04c161347910efcb29c9e27a26fb0b0ab2",
+    "after_root_sch": "3fa9d05afd6750a27b56ec9dd9dad9b9e80d0631f0fe072cb2c67f2f5674aa50",
+    "before_child_sch": "ac283564f54e886c9e0d62e8d00a2ef4f5923f4f624a2ad5576d009cc1949ab9",
+    "before_pcb": "4f626502ad177c08a06b949cee6a78ef300543a7075aa1c78efacd1c989b14eb",
+    "before_root_sch": "371c8a653a7fc014ade5142b5d4f87e32f66a69015a219eeec9c09f7a8837ea7"
+  },
+  "status": "PASS",
+  "task": "t_17025a35"
+}
