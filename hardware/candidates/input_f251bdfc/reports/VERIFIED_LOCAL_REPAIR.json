@@ -1,0 +1,345 @@
+{
+  "repair": {
+    "status": "LOCAL_REPAIR_VERIFIED",
+    "before": "cf907717fe381a6bc3a2ef4c97a519a7fe89e330b05a05d41367c8e91a24d8c4",
+    "after": "f251bdfcd9c84cdded3e93a57433dcff61cab35c5131e52dad8f50e37e54f988",
+    "backup": "BEFORE_LOCAL_REPAIR_CF907717.zip (not bundled)",
+    "backup_sha": "cbab35068392238fbd81c9cb33a3a9dea9e222e07a843a06861f30bf4df12eed",
+    "modified_existing_tracks": [
+      "07234146-ea79-45df-b969-95b4b5863354",
+      "25571826-58ad-44ec-bc76-77c1d581e098",
+      "4e57c50a-8b04-4512-9cbc-bdfdcdca9f26",
+      "98ae80d1-e3b4-4b23-8454-c13dfa659b0f",
+      "ba3d0d2f-5b37-4647-888d-8483c416dc99",
+      "47687dec-48fd-4e73-a9f0-d83cb9a87c86"
+    ],
+    "added_via": "ee6ad284-e193-40af-b24b-a906d2896ecc",
+    "added_power_segments": [
+      "feb4d1db-c8a0-4cce-b092-3a9911625120",
+      "80668b0d-9207-4d9d-9846-14ed90014a29"
+    ],
+    "Q3_delta_mm": [
+      0,
+      0.5
+    ],
+    "Q4_delta_mm": [
+      0,
+      -0.5
+    ],
+    "R92_reference_before_mm": [
+      48.0,
+      140.35
+    ],
+    "R92_reference_after_mm": [
+      56.5,
+      142
+    ],
+    "source_generated_pad_uuid_count": 104,
+    "pads": 678,
+    "physical_pairs": 5558,
+    "physical_pair_losses": 0,
+    "physical_pair_additions": 0,
+    "drc_exit": 5,
+    "drc_stdout": "Found 31 violations\nFound 226 unconnected items\nFound 14 schematic parity issues\nSaved DRC Report to reports/AFTER_LOCAL_REPAIR_DRC.json\n",
+    "drc_report": "reports/AFTER_LOCAL_REPAIR_DRC.json",
+    "drc_sha": "fe8a401d49a5dca6ce4bc3b7b358494541ca1c820fb8e208fee9145b15bed7a8",
+    "counts": {
+      "violations": 31,
+      "unconnected_items": 226,
+      "schematic_parity": 14
+    },
+    "no_new_violation_signatures": true,
+    "other_sources_unchanged": true,
+    "production_release": false
+  },
+  "post_verification": {
+    "pcb_sha": "f251bdfcd9c84cdded3e93a57433dcff61cab35c5131e52dad8f50e37e54f988",
+    "all_678_pad_UUIDs_persisted_and_repeat_load_stable": true,
+    "drc": {
+      "counts": {
+        "violations": {
+          "warning": 31
+        },
+        "unconnected_items": {
+          "error": 226
+        },
+        "schematic_parity": {
+          "warning": 14
+        }
+      },
+      "types": {
+        "nonmirrored_text_on_back_layer": 2,
+        "silk_overlap": 6,
+        "silk_over_copper": 2,
+        "text_height": 7,
+        "lib_footprint_mismatch": 1,
+        "track_dangling": 12,
+        "via_dangling": 1
+      },
+      "ignored": [
+        {
+          "description": "Footprint has no courtyard defined",
+          "key": "missing_courtyard"
+        },
+        {
+          "description": "Track endpoint not centered on via",
+          "key": "track_not_centered_on_via"
+        },
+        {
+          "description": "Tuning profile track geometries",
+          "key": "tuning_profile_track_geometries"
+        },
+        {
+          "description": "Footprint doesn't match symbol's footprint filters",
+          "key": "footprint_filters_mismatch"
+        },
+        {
+          "description": "Footprint component type doesn't match footprint pads",
+          "key": "footprint_type_mismatch"
+        }
+      ]
+    },
+    "erc": {
+      "exit": 5,
+      "stdout": "Found 9 violations\nSaved ERC Report to reports/AFTER_LOCAL_REPAIR_ERC.json\n",
+      "severities": {
+        "warning": 9
+      },
+      "violations": [
+        {
+          "description": "Label connected to only one pin",
+          "items": [
+            {
+              "description": "Label 'EN_CHIP_PU'",
+              "pos": {
+                "x": 177.8,
+                "y": 68.58
+              },
+              "uuid": "eea6dc6e-aea8-4519-afa6-080c57f58391"
+            }
+          ],
+          "severity": "warning",
+          "type": "isolated_pin_label"
+        },
+        {
+          "description": "Unconnected \"no connection\" flag",
+          "items": [
+            {
+              "description": "No Connect",
+              "pos": {
+                "x": 347.98,
+                "y": 278.13
+              },
+              "uuid": "0215a904-3a61-4fb7-91e4-4b18c98c7b59"
+            }
+          ],
+          "severity": "warning",
+          "type": "no_connect_dangling"
+        },
+        {
+          "description": "Unconnected \"no connection\" flag",
+          "items": [
+            {
+              "description": "No Connect",
+              "pos": {
+                "x": 347.98,
+                "y": 281.94
+              },
+              "uuid": "14871e6c-e1cd-458e-807d-b973e107445d"
+            }
+          ],
+          "severity": "warning",
+          "type": "no_connect_dangling"
+        },
+        {
+          "description": "Unconnected \"no connection\" flag",
+          "items": [
+            {
+              "description": "No Connect",
+              "pos": {
+                "x": 358.14,
+                "y": 190.5
+              },
+              "uuid": "84a057c4-e8bf-40c9-b0f9-2f3f6295f060"
+            }
+          ],
+          "severity": "warning",
+          "type": "no_connect_dangling"
+        },
+        {
+          "description": "Unconnected \"no connection\" flag",
+          "items": [
+            {
+              "description": "No Connect",
+              "pos": {
+                "x": 358.14,
+                "y": 193.04
+              },
+              "uuid": "12c52ee1-0a42-4e32-9ac2-b1a2c8778f63"
+            }
+          ],
+          "severity": "warning",
+          "type": "no_connect_dangling"
+        },
+        {
+          "description": "Unconnected wire endpoint",
+          "items": [
+            {
+              "description": "Horizontal Wire, length 2.54 mm",
+              "pos": {
+                "x": 500.38,
+                "y": 342.9
+              },
+              "uuid": "2c643864-2486-4bdd-a9a3-35b286093253"
+            }
+          ],
+          "severity": "warning",
+          "type": "unconnected_wire_endpoint"
+        },
+        {
+          "description": "Unconnected wire endpoint",
+          "items": [
+            {
+              "description": "Horizontal Wire, length 2.54 mm",
+              "pos": {
+                "x": 500.38,
+                "y": 345.44
+              },
+              "uuid": "fcfc29eb-a93f-4f57-88bc-fc30bbf833ae"
+            }
+          ],
+          "severity": "warning",
+          "type": "unconnected_wire_endpoint"
+        },
+        {
+          "description": "Unconnected wire endpoint",
+          "items": [
+            {
+              "description": "Horizontal Wire, length 2.54 mm",
+              "pos": {
+                "x": 500.38,
+                "y": 347.98
+              },
+              "uuid": "11a491f5-3ba9-4904-a0df-6c38afc52903"
+            }
+          ],
+          "severity": "warning",
+          "type": "unconnected_wire_endpoint"
+        },
+        {
+          "description": "Symbol pin or wire end off connection grid",
+          "items": [
+            {
+              "description": "Horizontal Wire, length 2.54 mm",
+              "pos": {
+                "x": 30.0,
+                "y": 80.0
+              },
+              "uuid": "c688bba1-0d51-46ae-a08f-e3d16690d0f7"
+            }
+          ],
+          "severity": "warning",
+          "type": "endpoint_off_grid"
+        }
+      ],
+      "ignored": [
+        {
+          "description": "Global label only appears once in the schematic",
+          "key": "single_global_label"
+        },
+        {
+          "description": "Four connection points are joined together",
+          "key": "four_way_junction"
+        },
+        {
+          "description": "SPICE model issue",
+          "key": "simulation_model_issue"
+        },
+        {
+          "description": "Assigned footprint doesn't match footprint filters",
+          "key": "footprint_filter"
+        }
+      ],
+      "report_sha": "d5363bfbf4a64f48c3696096edc3b594f9f6dfad72749d42f2092c5bf9172d79"
+    },
+    "current_reset_net_contract": {
+      "U12.5": "/+3V3",
+      "U14.4": "/CLEAR_OK",
+      "U2.1": "/CLEAR_OK",
+      "U14.6": "/CLEAR_OK_BASE",
+      "U3.10": "/CLEAR_OK_BASE",
+      "U12.6": "/GLOW_CMD",
+      "U12.4": "/GLOW_ENABLE_HW",
+      "U11.16": "/RELAY_DRIVER_OK",
+      "U14.3": "/RELAY_DRIVER_OK"
+    }
+  },
+  "input_schematic_readback": {
+    "sources": {
+      "project/Sirokko26201_control_motor_candidate.kicad_sch": "7cf3ab3607838036759c3c2c4f3a3c1741a286b28c811eaff37256c974e1d5f8",
+      "project/Sirokko_Input_Protection_WIP.kicad_sch": "803bf1a90879346758a702c44e8768e810533a5476ea12d801fa96de8e626cff",
+      "project/tft_spi_isolation_DRAFT/sirokko_tft_spi_isolation_DRAFT.kicad_sch": "3f3441b176c4a2d35e26b21ac8a769a6013c2dfbd41fdeb31e080c6902a1e8eb",
+      "project/tft_reset_local_DRAFT/sirokko_tft_reset_local_DRAFT.kicad_sch": "5440a7318222fc539a87b6a25773cc005a77c1ec5f0411951747006176d8b939",
+      "project/tft_power_tps62162_standalone_DRAFT/tft_power_tps62162_review_DRAFT.kicad_sch": "62762a11d1d923ba31f7490796e23cd100d5366d8a8aadcb414d2481ab10c8b5",
+      "project/motor_pwm_REBUILD.kicad_sch": "590dcba10ca7909d4304c719bbae05ba61eef6ef0f9be3b9d1a7981491e35a05",
+      "project/logic_power_24_5_DRAFT.kicad_sch": "3731525dbc1db66495f3b974389afa3fc001537b496ec5500eb32c9f4ee6fe3a"
+    },
+    "pcb_sha": "cf907717fe381a6bc3a2ef4c97a519a7fe89e330b05a05d41367c8e91a24d8c4",
+    "export_exit": 0,
+    "xml_path": "reports/FULL_NETLIST.xml",
+    "xml_sha": "3ca794fbc0d2976bec4c19696cc3b0991c6ad37436de62541d4d4be41abf34ba",
+    "nodes": {
+      "C25.2": {
+        "net": "/GND",
+        "node": {
+          "ref": "C25",
+          "pin": "2",
+          "pintype": "passive"
+        }
+      },
+      "U13.11": {
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET",
+        "node": {
+          "ref": "U13",
+          "pin": "11",
+          "pinfunction": "CAP_11",
+          "pintype": "power_out"
+        }
+      },
+      "C25.1": {
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID",
+        "node": {
+          "ref": "C25",
+          "pin": "1",
+          "pintype": "passive"
+        }
+      },
+      "R94.1": {
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID",
+        "node": {
+          "ref": "R94",
+          "pin": "1",
+          "pintype": "passive"
+        }
+      },
+      "R96.1": {
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID",
+        "node": {
+          "ref": "R96",
+          "pin": "1",
+          "pintype": "passive"
+        }
+      },
+      "U13.10": {
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID",
+        "node": {
+          "ref": "U13",
+          "pin": "10",
+          "pinfunction": "VS_10",
+          "pintype": "power_in"
+        }
+      }
+    },
+    "sources_unchanged": true
+  }
+}

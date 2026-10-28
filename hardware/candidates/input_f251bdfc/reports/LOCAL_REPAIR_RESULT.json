@@ -1,0 +1,53 @@
+{
+  "status": "LOCAL_REPAIR_VERIFIED",
+  "before": "cf907717fe381a6bc3a2ef4c97a519a7fe89e330b05a05d41367c8e91a24d8c4",
+  "after": "f251bdfcd9c84cdded3e93a57433dcff61cab35c5131e52dad8f50e37e54f988",
+  "backup": "BEFORE_LOCAL_REPAIR_CF907717.zip (not bundled)",
+  "backup_sha": "cbab35068392238fbd81c9cb33a3a9dea9e222e07a843a06861f30bf4df12eed",
+  "modified_existing_tracks": [
+    "07234146-ea79-45df-b969-95b4b5863354",
+    "25571826-58ad-44ec-bc76-77c1d581e098",
+    "4e57c50a-8b04-4512-9cbc-bdfdcdca9f26",
+    "98ae80d1-e3b4-4b23-8454-c13dfa659b0f",
+    "ba3d0d2f-5b37-4647-888d-8483c416dc99",
+    "47687dec-48fd-4e73-a9f0-d83cb9a87c86"
+  ],
+  "added_via": "ee6ad284-e193-40af-b24b-a906d2896ecc",
+  "added_power_segments": [
+    "feb4d1db-c8a0-4cce-b092-3a9911625120",
+    "80668b0d-9207-4d9d-9846-14ed90014a29"
+  ],
+  "Q3_delta_mm": [
+    0,
+    0.5
+  ],
+  "Q4_delta_mm": [
+    0,
+    -0.5
+  ],
+  "R92_reference_before_mm": [
+    48.0,
+    140.35
+  ],
+  "R92_reference_after_mm": [
+    56.5,
+    142
+  ],
+  "source_generated_pad_uuid_count": 104,
+  "pads": 678,
+  "physical_pairs": 5558,
+  "physical_pair_losses": 0,
+  "physical_pair_additions": 0,
+  "drc_exit": 5,
+  "drc_stdout": "Found 31 violations\nFound 226 unconnected items\nFound 14 schematic parity issues\nSaved DRC Report to reports/AFTER_LOCAL_REPAIR_DRC.json\n",
+  "drc_report": "reports/AFTER_LOCAL_REPAIR_DRC.json",
+  "drc_sha": "fe8a401d49a5dca6ce4bc3b7b358494541ca1c820fb8e208fee9145b15bed7a8",
+  "counts": {
+    "violations": 31,
+    "unconnected_items": 226,
+    "schematic_parity": 14
+  },
+  "no_new_violation_signatures": true,
+  "other_sources_unchanged": true,
+  "production_release": false
+}
