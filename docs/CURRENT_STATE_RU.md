@@ -4,7 +4,21 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: питание UI и входы RESET c40d6c07
+## 2026-10-29 — самый новый PCB-checkpoint: локальные контакты ПУСК/СТОП ee7f604f
+
+[Кандидат start_local_ee7f604f_wip](../hardware/candidates/start_local_ee7f604f_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5`; исходная PCB — `c40d6c07393fbba6fbbdb21c5f7749c2f1cece14be73b32f7382acfd820a36d4`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+Обе физические площадки J22.2/GND подключены к прежней общей земле C8.2, а обе J22.1/START_REQUEST соединены друг с другом. Площадки 1 и 2 медью не объединены; основной START_REQUEST к U5.5 остаётся открытым, поэтому кнопка целиком ещё не готова. Добавлены пять сегментов шириной 0,25 мм и один переход 0,60/0,30 мм. Прежняя медь, footprints, pads, UUID, pad→net, геометрия и позиции, зоны, keepout, Edge.Cuts и RESET сохранены.
+
+Native-проверка сообщает 699 площадок, 362→359 физических групп и 8296→8516 пар; потерь 0, добавлены ровно 220 ожидаемых пар от присоединения двух J22.2 к общей земле и объединения двух J22.1, а не 220 маршрутов; межсетевых PAD-пар 0. Повторные номера площадок учитывались по UUID. Проверены исходная раздельность групп, полный ожидаемый набор пар, прежние safety-группы и `P24_PRESENT`, 18 TFT power/GND checks и связь девяти thermal-via с EP и двумя конкретными GND-зонами. U5.5 остаётся вне группы J22.1. Хеши полных партиций независимо пересчитаны издателем.
+
+Сохранённый MCP DRC содержит 145 несоединений и 26 прежних предупреждений вместо 148/26; полное мультимножество `violations` совпало с исходником. Во frozen-пакете зафиксирован реально выполненный KiCad CLI для исходника и кандидата с `--all-track-errors --schematic-parity --severity-all --exit-code-violations --refill-zones` без `--save-board`: оба запуска завершились кодом 5, `stderr` пуст; исходник — 26 нарушений / 148 несоединений / 0 расхождений схемы, кандидат — 26 / 145 / 0. Байты обеих PCB после запуска не изменились. Это **не PASS**. ERC на этом шаге не запускался.
+
+Сохранённые `ignored_checks`: `missing_courtyard`, `track_not_centered_on_via`, `tuning_profile_track_geometries`, `footprint_filters_mismatch`, `footprint_type_mismatch`. Они не менялись; отчёты не доказывают проверку отключённых правил. Остались 145 несоединений, включая START_REQUEST к U5.5, SPI U303.2/U303.5 и другие управляющие, питающие и силовые цепи. Времена кнопок/RESET, ЭМС и безопасность изделия не квалифицированы. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+В этом снимке опубликован побайтный `UI_POWER_C40D6C07_CORRECTION_RU.md`: он закрывает документальный дефект прежнего frozen `ui_power_c40d6c07_wip`, не переписывая его. Вложенный туда старый `UI_POWER_C40D6C07_WIP_RU.md`, повторяющий P24_PRESENT, неприменим как описание c40d6c07. Источниками доказательств c40d6c07 остаются его точная PCB, native/partition и полные CLI JSON.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: питание UI и входы RESET c40d6c07
 
 [Кандидат ui_power_c40d6c07_wip](../hardware/candidates/ui_power_c40d6c07_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `c40d6c07393fbba6fbbdb21c5f7749c2f1cece14be73b32f7382acfd820a36d4`; исходная PCB — `262e777ff380b949c23ce35fd21919f51fc5c1344e3d9de79bfd92289606c51c`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
@@ -16,7 +30,7 @@ Native-проверка сообщает 699 площадок, 367→362 физ�
 
 Сохранённые `ignored_checks`: `missing_courtyard`, `track_not_centered_on_via`, `tuning_profile_track_geometries`, `footprint_filters_mismatch`, `footprint_type_mismatch`. Они не менялись; отчёты не доказывают проверку отключённых правил. Физическая связность питания UI и входов RESET не доказывает работу RESET, корректность времён, термозащиты или ЭМС. Остались 148 несоединений, силовые и общие цепи питания/возврата, SPI U303.2/U303.5 и другие проверки. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
 
-Исходный `UI_POWER_C40D6C07_WIP_RU.md` побайтно сохранён, но ошибочно повторяет заголовок и текст предыдущего `262e777f`/`e244c81b`. Он не используется как доказательство этой ревизии; расхождение раскрыто в README и `PUBLIC_MANIFEST.json`, а актуальные сведения проверены по PCB, native/partition и полным CLI-отчётам.
+Исходный `UI_POWER_C40D6C07_WIP_RU.md` побайтно сохранён, но ошибочно повторяет заголовок и текст предыдущего `262e777f`/`e244c81b`. Он не используется как доказательство этой ревизии; расхождение раскрыто в README и `PUBLIC_MANIFEST.json`, а актуальные сведения проверены по PCB, native/partition и полным CLI-отчётам. Документальный дефект закрыт опубликованным в следующем снимке [`UI_POWER_C40D6C07_CORRECTION_RU.md`](../hardware/candidates/start_local_ee7f604f_wip/UI_POWER_C40D6C07_CORRECTION_RU.md); исторический frozen не переписывался.
 
 ## 2026-10-29 — предыдущий PCB-checkpoint: P24_PRESENT к защитной логике 262e777f
 

@@ -1,0 +1,161 @@
+{
+  "package": "SIROKKO_START_LOCAL_EE7F604F_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_START_LOCAL_EE7F604F_WIP.zip",
+    "sha256": "97df5b3085b570f1e2778dfdf236b6dd39ec55bc26026bd3a086351b996ad147",
+    "size_bytes": 353091,
+    "entries": 9,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "archive_published": false,
+    "entry_crc32": {
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "eea257c4",
+      "START_LOCAL_EE7F604F_WIP_RU.md": "7aa8d3af",
+      "UI_POWER_C40D6C07_CORRECTION_RU.md": "f1b2fc0f",
+      "native_comparison.json": "0d90d592",
+      "physical_partitions.json": "66eeb064",
+      "source_full_cli.json": "08de34f2",
+      "candidate_full_cli.json": "ff6bf3a1",
+      "full_cli_execution.json": "1338c359",
+      "manifest.json": "6b85feda"
+    }
+  },
+  "baseline_project": {
+    "path": "../ui_power_c40d6c07_wip/project",
+    "git_commit": "3d02a64f5c096ead53c0dfe67110a006ed9a8253",
+    "git_tree": "858d305f21d336712f873c33d6a726929152ac8c",
+    "pcb_sha256": "c40d6c07393fbba6fbbdb21c5f7749c2f1cece14be73b32f7382acfd820a36d4",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5",
+    "previous_pcb_sha256": "c40d6c07393fbba6fbbdb21c5f7749c2f1cece14be73b32f7382acfd820a36d4",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5",
+    "START_LOCAL_EE7F604F_WIP_RU.md": "82d3cd9055c873cc6b827940e73a178da2dd65972c75f71edab764927215cdb7",
+    "UI_POWER_C40D6C07_CORRECTION_RU.md": "6fde7a189e92e54d39d395e9b83bc244e9af50da651c0aea6ff44a5a02a178c8",
+    "native_comparison.json": "c6589756cc05b60a81e2525a17384142cb3591fcaec993737f4f25d3637d0c93",
+    "physical_partitions.json": "806e5b52c6c8f296174b4112156af66515aa531711e007fc2dbbf28e969e9f3a",
+    "source_full_cli.json": "0688ca5051b083a63761a31eb7f2fc2785377e746dee2404c53e6bd323bac7c2",
+    "candidate_full_cli.json": "81d136bf4e618fcc77ac60611ed0d3ec002576d00f459d070e99fb8d0a9e4c02",
+    "full_cli_execution.json": "3c36c048a8810bbd96bbf7a337c72faaac7dd28761cead942515a92503b5250f"
+  },
+  "published_payload_sha256": {
+    "START_LOCAL_EE7F604F_WIP_RU.md": "82d3cd9055c873cc6b827940e73a178da2dd65972c75f71edab764927215cdb7",
+    "UI_POWER_C40D6C07_CORRECTION_RU.md": "6fde7a189e92e54d39d395e9b83bc244e9af50da651c0aea6ff44a5a02a178c8",
+    "native_comparison.json": "c6589756cc05b60a81e2525a17384142cb3591fcaec993737f4f25d3637d0c93",
+    "physical_partitions.json": "806e5b52c6c8f296174b4112156af66515aa531711e007fc2dbbf28e969e9f3a",
+    "source_full_cli.json": "0688ca5051b083a63761a31eb7f2fc2785377e746dee2404c53e6bd323bac7c2",
+    "candidate_full_cli.json": "81d136bf4e618fcc77ac60611ed0d3ec002576d00f459d070e99fb8d0a9e4c02",
+    "full_cli_execution.json": "70671bfefd05fb36ee12b1b56633b75c373da874392df943a58fad78c74dd27a",
+    "manifest.json": "df27d6a9f325558dcaecd4461b3bd14b1d9daa026f41c0c90c7c53acb035f8cf"
+  },
+  "public_copy_edits": {
+    "full_cli_execution.json": "Only private absolute source/output paths were replaced by candidate-relative paths; command options, exit codes, stdout, stderr, PCB hashes and counts are unchanged.",
+    "engineering_source_files_modified": false
+  },
+  "documentation_correction": {
+    "affected_historical_candidate": "../ui_power_c40d6c07_wip",
+    "incorrect_historical_file": "UI_POWER_C40D6C07_WIP_RU.md",
+    "incorrect_text_applicable": false,
+    "historical_candidate_rewritten": false,
+    "correction_file": "UI_POWER_C40D6C07_CORRECTION_RU.md",
+    "correction_preserved_byte_exact": true,
+    "evidence_sources_remain": [
+      "historical exact PCB",
+      "historical native_comparison.json",
+      "historical physical_partitions.json",
+      "historical full CLI JSON"
+    ]
+  },
+  "partition_checks": {
+    "source_pairs": 8296,
+    "candidate_pairs": 8516,
+    "lost_pairs": 0,
+    "added_pairs": 220,
+    "source_pairs_sha256": "cced3856e670fd29a6785bab7d01cf1067834eca2c01d7e68d06f32c1ece85b8",
+    "candidate_pairs_sha256": "2839246f684119d1ccf1571754dcbb44d2fcc8ad53989730f58a35c3520c9971",
+    "source_hash_matches_frozen": true,
+    "candidate_hash_matches_frozen": true,
+    "recompute_encoding": "sorted UUID pairs, tab-separated, newline-terminated"
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 362,
+    "candidate_groups": 359,
+    "source_pairs": 8296,
+    "candidate_pairs": 8516,
+    "lost_pairs": 0,
+    "added_pairs": 220,
+    "expected_group_joins": [
+      "both J22.2 pads to existing GND group C8.2",
+      "both J22.1 START_REQUEST pads to each other"
+    ],
+    "j22_pad_1_and_pad_2_short": false,
+    "u5_5_in_j22_1_group": false,
+    "cross_net_pairs": 0,
+    "added_segments": 5,
+    "added_vias": 1,
+    "segment_width_mm": 0.25,
+    "via_diameter_mm": 0.6,
+    "via_drill_mm": 0.3,
+    "master_tracks_and_vias": 1702,
+    "master_zones": 27,
+    "mcp_drc_source_unconnected": 148,
+    "mcp_drc_candidate_unconnected": 145,
+    "mcp_drc_warnings": 26,
+    "cli_source_exit_code": 5,
+    "cli_candidate_exit_code": 5,
+    "cli_source_violations": 26,
+    "cli_candidate_violations": 26,
+    "cli_source_unconnected": 148,
+    "cli_candidate_unconnected": 145,
+    "cli_source_schematic_parity": 0,
+    "cli_candidate_schematic_parity": 0,
+    "cli_stderr_empty": true,
+    "cli_pcb_bytes_unchanged": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks": [
+      "missing_courtyard",
+      "track_not_centered_on_via",
+      "tuning_profile_track_geometries",
+      "footprint_filters_mismatch",
+      "footprint_type_mismatch"
+    ],
+    "old_geometry_copper_and_zones_preserved": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "partition_pair_hashes_recomputed": true,
+    "preview_inspected": false,
+    "private_infrastructure_paths_found_in_public_json": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "Only the local J22 contact groups are routed. START_REQUEST to U5.5 and 145 other connections remain open. DRC is not PASS; ERC was not run. Button/RESET timing, EMC, remaining power/return/control/SPI routing, safety behavior and physical operation are unqualified."
+}
