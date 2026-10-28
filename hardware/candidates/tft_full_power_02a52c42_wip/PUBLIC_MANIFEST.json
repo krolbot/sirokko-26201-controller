@@ -1,0 +1,72 @@
+{
+  "package": "SIROKKO_TFT_FULL_POWER_02A52C42_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_TFT_FULL_POWER_02A52C42_WIP.zip",
+    "sha256": "97a4e46c8bee8c8d97beab9954e44f64a8639aec30dd8d7d3c6f3f0627612fa5",
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false
+  },
+  "baseline_project": {
+    "path": "../tft_power_feed_965b97be_wip/project",
+    "git_tree": "3f495387b0d7d1ffa71fb7f1b59143cc856293a4",
+    "pcb_sha256": "965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "02a52c4267aca798afe19dcb3e5142734acbf15b20dd101a48ab70c20abde5ad",
+    "previous_pcb_sha256": "965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "WIP_RU.md": "0c1d119c9f027cc1bc36f4dc86867c2e7c698a038d3b7f774aceadb344d7d092",
+    "DRC.json": "9909dd358cf2c529ea4ab9b71dd2bf6929ef04fdd0dbd964e2437d289b77e6f0",
+    "NATIVE_COMPARISON.json": "a6104e6bd950429ccca1f530098ac49c91940c68adb1e210d7c0691ac35b7709",
+    "PARTITIONS.json": "2072d65eb8941046a63af4da8a8df0cbaee1267129e54bb100be9f1219ae657e",
+    "DC_SCREEN.json": "87d2de9936dffb0344b2678a13df36f6fd4a2ddcdc272e6bb4495b358348c6fd",
+    "TFT_POWER_DETAIL_DRAFT.png": "d643c359a6162967823302463bd1b6b7acbcbabd9238d19832a15ca54fc66e8b"
+  },
+  "recorded_checks": {
+    "kicad_version": "10.0.7",
+    "drc_unconnected": 211,
+    "drc_warnings": 30,
+    "drc_pass": false,
+    "drc_command_recorded": false,
+    "drc_exit_code_recorded": false,
+    "schematic_parity_recorded": false,
+    "erc_rerun": false,
+    "pads": 699,
+    "physical_groups": 424,
+    "physical_pairs": 6980,
+    "lost_physical_pairs": 0,
+    "added_physical_pairs": 927,
+    "cross_net_physical_pairs": 0,
+    "target_physical_checks_passed": 19,
+    "added_copper_objects": 66,
+    "only_C305_C306_moved": true,
+    "preview_inspected_by_publisher": true
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_entries_verified": 7,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "local_kicad_cli_available": false,
+    "drc_erc_parity_rerun": false
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false
+  }
+}

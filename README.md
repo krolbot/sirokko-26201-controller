@@ -4,7 +4,9 @@
 
 ## Current requirements and status
 
-**Latest PCB checkpoint: [TFT power feed PCB 965b97be](hardware/candidates/tft_power_feed_965b97be_wip/README_RU.md).** The PCB is published byte-exact with its WIP report, recorded DRC, physical-connectivity comparison, DC screening and labeled F.Cu/B.Cu detail. The existing SCH/PRO, local libraries and firmware are unchanged. Recorded DRC is 229 unconnected items and 30 existing warnings — **not PASS**. TFT_3V3/J26/signal routing and physical/power testing remain incomplete. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+**Latest PCB checkpoint: [TFT/J26 power and local decoupling PCB 02a52c42](hardware/candidates/tft_full_power_02a52c42_wip/README_RU.md).** The byte-exact PCB is published with the previous full SCH/PRO/library context, its WIP report, recorded DRC, physical-connectivity partitions, DC screening and labeled F.Cu/B.Cu detail. TFT_3V3 now reaches J26.1/8; J26.2, U302/U303 and C305/C306 have local power/ground routing. Only C305/C306 moved. Recorded DRC is 211 unconnected items and 30 existing warnings — **not PASS**; the recorded command, exit code and schematic parity are unavailable. SPI/RESET, the rest of the board and physical/power testing remain incomplete. SCH/PRO, local libraries and firmware are unchanged. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+**Previous PCB checkpoint: [TFT power feed PCB 965b97be](hardware/candidates/tft_power_feed_965b97be_wip/README_RU.md).** It remains an immutable historical snapshot and was not overwritten.
 
 **Previous complete native hardware base: [panel Harwin/BOM PCB 4fe3df0d](hardware/candidates/panel_harwin_4fe3df0d_wip/README_RU.md).** The byte-exact seven-sheet KiCad snapshot integrates J26 Harwin M20-9960845 on B.Cu, C28/R122/R123 selections and current K1–K3 relay metadata; its full BOM and explicitly labeled two-side DRAFT preview are included. The previous immutable candidates remain history and are not overwritten.
 

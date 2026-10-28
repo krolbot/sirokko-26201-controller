@@ -1,0 +1,67 @@
+{
+  "source_sha256": "965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a",
+  "candidate_sha256": "02a52c4267aca798afe19dcb3e5142734acbf15b20dd101a48ab70c20abde5ad",
+  "pads": 699,
+  "old_groups": 442,
+  "new_groups": 424,
+  "old_physical_pairs": 6053,
+  "new_physical_pairs": 6980,
+  "lost_pairs": 0,
+  "added_pairs": 927,
+  "cross_net_pairs": 0,
+  "partition_symmetry_and_closure": true,
+  "only_capacitors_C305_C306_moved": true,
+  "all_other_footprints_pads_unchanged": true,
+  "old_copper_and_zones_preserved": true,
+  "new_zones": [
+    [
+      "90d39370-ac84-48cf-9216-6d328b1dc877",
+      "/GND",
+      "00000000_00000000_00000000_00000004",
+      5,
+      false,
+      [
+        [
+          [
+            176800000,
+            133800000
+          ],
+          [
+            197000000,
+            133800000
+          ],
+          [
+            197000000,
+            148500000
+          ],
+          [
+            176800000,
+            148500000
+          ]
+        ]
+      ]
+    ]
+  ],
+  "added_copper_objects": 66,
+  "target_physical_checks": {
+    "J26.1--C304.1": true,
+    "J26.8--C304.1": true,
+    "U303.14--C304.1": true,
+    "U302.5--C304.1": true,
+    "U302.6--C304.1": true,
+    "C305.1--C304.1": true,
+    "C306.1--C304.1": true,
+    "R302.1--C304.1": true,
+    "R303.1--C304.1": true,
+    "L301.2--C304.1": true,
+    "J26.2--C106.2": true,
+    "U303.1--C106.2": true,
+    "U303.4--C106.2": true,
+    "U303.7--C106.2": true,
+    "U303.10--C106.2": true,
+    "U303.13--C106.2": true,
+    "U302.2--C106.2": true,
+    "C305.2--C106.2": true,
+    "C306.2--C106.2": true
+  }
+}

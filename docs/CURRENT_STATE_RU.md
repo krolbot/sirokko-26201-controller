@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-28 — самый новый PCB-checkpoint: подвод питания TFT 965b97be
+## 2026-10-28 — самый новый PCB-checkpoint: TFT/J26 и локальная развязка 02a52c42
+
+[Кандидат tft_full_power_02a52c42_wip](../hardware/candidates/tft_full_power_02a52c42_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `02a52c4267aca798afe19dcb3e5142734acbf15b20dd101a48ab70c20abde5ad`; исходная PCB — `965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a`. SCH/PRO, 63 остальных файла проектного контекста и firmware не менялись.
+
+`TFT_3V3` от C304/L301 подведена к J26.1 VCC и J26.8 BL; J26.2 соединён с общей землёй. Подключены питание и земля U303/U302/R302/R303 и локальная развязка C305/C306. Только C305 и C306 перемещены для коротких местных петель. Добавлены 66 медных объектов и локальная B.Cu GND-зона; прежняя медь, зоны, ограничения и остальные посадочные места сохранены.
+
+Сохранённый KiCad 10.0.7 DRC: 211 несоединений и 30 прежних предупреждений вместо 229/30. Это **не PASS**: фактическая команда, код завершения и включение schematic parity исходным MCP не зафиксированы; на машине издателя `kicad-cli` отсутствует, поэтому DRC/ERC/parity не повторялись. Нативная проверка сообщает 699 площадок, 424 группы, 6980 физических пар, 0 потерянных и 927 добавленных пар, 0 межсетевых PAD-пар; 19 адресных проверок питания/земли пройдены. Полные разбивки сохранены в `PARTITIONS.json`.
+
+Расчёт 0,40 А / ×1,30 = 0,52 А — только предварительный скрининг выбранной петли, не допустимый ток и не тепловая приёмка. SPI, `TFT_RESET_N`, остальные сигналы и остальная плата ещё не разведены полностью; физических, силовых, тепловых, ЭМС- и огневых испытаний не проводилось. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-28 — предыдущий PCB-checkpoint: подвод питания TFT 965b97be
 
 [Кандидат tft_power_feed_965b97be_wip](../hardware/candidates/tft_power_feed_965b97be_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `965b97bef2f7ff7b98082a9bcc55c4a2eb0ee5a941edc81da56a2c42ddfd592a`; предыдущая рабочая PCB — `371e10acc4b6b76cd5f9194d45c56f7310ab92791335be1d4f791c136c6dc0ff`. SCH/PRO, локальные библиотеки и firmware не менялись; полный проектный контекст унаследован побайтно от `panel_harwin_4fe3df0d_wip`.
 
