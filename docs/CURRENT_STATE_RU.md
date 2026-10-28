@@ -4,6 +4,14 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
+## 2026-10-28 — отдельный frozen-кандидат T521 bdd026d5
+
+[Кандидат t521_bdd026d5](../hardware/candidates/t521_bdd026d5/README_RU.md) опубликован отдельным immutable DRAFT/WIP после `unified_da1962d9`, не заменяя предыдущую базу. PCB SHA256 `bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06`, root SCH `abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868`. Исходный архив SHA256 `9d3d8d1ad62dc60f23cfd0783d7d0c4adf4d76f0ec45e0b41832ef43a8383e3c`; проверены все 76 записей исходного `SHA256SUMS`.
+
+Публичный снимок дополнен 32 отсутствовавшими файлами дочерних листов и локальных библиотек, побайтно совпавшими с исходной immutable-базой; все шесть `Sheetfile` и цели `fp-lib-table`/`sym-lib-table` разрешаются. Служебные пути очищены. Внутренние сценарии `tools/` не публикуются; официальный Waveshare STEP исключён, потому что разрешение на перераспространение не найдено. Прошивка и изменяемый CAD не затрагивались.
+
+Снимок не принят: DRC содержит 31 предупреждение и 246 неподключённых элементов; ERC — 9 предупреждений; новые цепи U14/U20/P24 не объявляются физически проведёнными. [Отдельная проверка оси панели](T521_FROZEN_PANEL_AXIS_CORRECTION_RU.md) выявила не исправленный в frozen CAD размер: окно `72.5 × 45.3 мм` даёт `56.95 мм` до общей оси J23/J22/J24 вместо обязательных `60.00 мм`. Сохраняются `layout_accepted=false`, `general_routing_allowed=false`, `firmware_allowed=false`, `production_release=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`.
+
 ## 2026-10-28 — замороженная unified-база da1962d9 и контракт следующей CAD-операции
 
 [Кандидат unified_da1962d9](../hardware/candidates/unified_da1962d9/README_RU.md) — отдельный неизменяемый WIP-снимок полного семилистового проекта с локальными библиотеками, отчётами, BOM и 2D/3D-видами. PCB SHA256 `da1962d9f238b34332b78f29a8fff23da1a68ea447098ecf7306490068acdb89`, root SCH `9f36ee4720911b3f2bb674c44b73b0ebf4e4f65ed5b4f1869eaf9efd25724cf5`; 5558 физических пар и их SHA256 `3bfbd2dc4db8828fe6e2020189b06201d164b02e97bb9a175cab3959fa095f1e` совпадают с frozen-источником. В сопроводительных XML/JSON/MD при публикации заменены только частные машинные пути на относительные публичные ссылки; native-файлы `project/` перенесены побайтно.
