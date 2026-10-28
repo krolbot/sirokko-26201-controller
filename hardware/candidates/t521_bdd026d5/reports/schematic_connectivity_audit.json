@@ -1,0 +1,787 @@
+{
+  "source_netlist": "reports/FULL_NETLIST_frozen.xml",
+  "source_erc": "reports/ERC_frozen.json",
+  "components": {
+    "DS1": {
+      "value": "Waveshare 18366 / 2.4inch LCD Module",
+      "footprint": "Sirokko_Mechanical:Waveshare_18366_Module_Bside_Envelope_NO_CY"
+    },
+    "U2": {
+      "value": "SN74HCS74D",
+      "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+    },
+    "U3": {
+      "value": "SN74HCS14D",
+      "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+    },
+    "U4": {
+      "value": "SN74HCS30D",
+      "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+    },
+    "U6": {
+      "value": "SN74HCS11D",
+      "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+    },
+    "U11": {
+      "value": "DRV8803PWPR",
+      "footprint": "Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm"
+    },
+    "U12": {
+      "value": "SN74LVC1G97DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+    },
+    "U14": {
+      "value": "SN74LVC1G97DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+    },
+    "U20": {
+      "value": "SN74LVC1G97DBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+    },
+    "Q20": {
+      "value": "BC847B,215",
+      "footprint": "Package_TO_SOT_SMD:SOT-23"
+    },
+    "D20": {
+      "value": "BZT52C15-7-F 15V 500mW",
+      "footprint": "Diode_SMD:D_SOD-123"
+    },
+    "R120": {
+      "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+      "footprint": "Resistor_SMD:R_1206_3216Metric"
+    },
+    "R121": {
+      "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+      "footprint": "Resistor_SMD:R_1206_3216Metric"
+    },
+    "R122": {
+      "value": "47k 1%",
+      "footprint": "Resistor_SMD:R_0805_2012Metric"
+    },
+    "R123": {
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0805_2012Metric"
+    },
+    "C28": {
+      "value": "100nF 50V X7R",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric"
+    }
+  },
+  "pin_nets": {
+    "DS1": {},
+    "U2": {
+      "14": "/+3V3",
+      "4": "/+3V3",
+      "5": "/ALLOW_LATCH",
+      "1": "/CLEAR_OK",
+      "11": "/GND",
+      "12": "/GND",
+      "7": "/GND",
+      "3": "/HW_RESET_CLK",
+      "9": "/HW_RESET_CLK",
+      "2": "/RESET_ACCEPT",
+      "13": "/RESET_HW_NC_N",
+      "10": "/RESET_HW_NO_N",
+      "6": "unconnected-(U2-~{1Q}-Pad6)",
+      "8": "unconnected-(U2-~{2Q}-Pad8)"
+    },
+    "U3": {
+      "14": "/+3V3",
+      "10": "/CLEAR_OK_BASE",
+      "3": "/FUEL_CMD",
+      "5": "/FUEL_PERMIT",
+      "9": "/GLOW_CMD",
+      "7": "/GND",
+      "11": "/NOT_CLEAR_OK",
+      "4": "/NOT_FUEL_CMD",
+      "6": "/NOT_FUEL_PERMIT",
+      "8": "/NOT_GLOW_CMD",
+      "13": "/NOT_RESET_ACCEPT",
+      "2": "/NOT_SW_TRIP",
+      "12": "/RESET_ACCEPT",
+      "1": "/SW_TRIP"
+    },
+    "U4": {
+      "11": "/+3V3",
+      "12": "/+3V3",
+      "14": "/+3V3",
+      "5": "/ARM_READY",
+      "7": "/GND",
+      "8": "/NOT_CLEAR_OK",
+      "6": "/NOT_SW_TRIP",
+      "1": "/PG_OK",
+      "3": "/STOP_OK",
+      "4": "/THERMAL_OK",
+      "2": "/WD_OK",
+      "9": "unconnected-(U4-NC-Pad9)",
+      "10": "unconnected-(U4-NC-Pad10)",
+      "13": "unconnected-(U4-NC-Pad13)"
+    },
+    "U6": {
+      "13": "/+3V3",
+      "14": "/+3V3",
+      "5": "/+3V3",
+      "1": "/ALLOW_LATCH",
+      "2": "/CLEAR_OK",
+      "8": "/CLEAR_OK",
+      "9": "/CLEAR_OK_BASE",
+      "6": "/EXT_SAFETY_ENABLE",
+      "4": "/FUEL_PERMIT",
+      "7": "/GND",
+      "11": "/P24_PRESENT",
+      "10": "/RELAY_DRIVER_OK",
+      "3": "/SAFETY_OK",
+      "12": "/SAFETY_OK_RAW"
+    },
+    "U11": {
+      "13": "/FUEL_CMD",
+      "14": "/GLOW_ENABLE_HW",
+      "10": "/GND",
+      "12": "/GND",
+      "17": "/GND",
+      "5": "/GND",
+      "8": "/GND",
+      "9": "/GND",
+      "4": "/K_CLUTCH_RUN_COIL_LOW",
+      "6": "/K_CLUTCH_SAFE_COIL_LOW",
+      "3": "/K_GLOW_COIL_LOW",
+      "1": "/P24_PROTECTED",
+      "2": "/P24_PROTECTED",
+      "16": "/RELAY_DRIVER_OK",
+      "11": "/SAFETY_OK",
+      "15": "unconnected-(U11-NC-Pad15)",
+      "7": "unconnected-(U11-OUT4-Pad7)"
+    },
+    "U12": {
+      "5": "/+3V3",
+      "6": "/GLOW_CMD",
+      "4": "/GLOW_ENABLE_HW",
+      "1": "/GND",
+      "2": "/GND",
+      "3": "/SAFETY_OK"
+    },
+    "U14": {
+      "5": "/+3V3",
+      "6": "/+3V3",
+      "1": "/GND",
+      "2": "/GND",
+      "4": "/SAFETY_OK",
+      "3": "/SAFETY_OK_RAW"
+    },
+    "U20": {
+      "1": "/+3V3",
+      "5": "/+3V3",
+      "2": "/GND",
+      "3": "/GND",
+      "4": "/P24_PRESENT",
+      "6": "/P24_SENSE_N"
+    },
+    "Q20": {
+      "2": "/GND",
+      "1": "/P24_BASE",
+      "3": "/P24_SENSE_N"
+    },
+    "D20": {
+      "2": "/P24_BASE",
+      "1": "/P24_ZENER_K"
+    },
+    "R120": {
+      "1": "/P24_PROTECTED",
+      "2": "/P24_SERIES_MID"
+    },
+    "R121": {
+      "1": "/P24_SERIES_MID",
+      "2": "/P24_ZENER_K"
+    },
+    "R122": {
+      "1": "/+3V3",
+      "2": "/P24_SENSE_N"
+    },
+    "R123": {
+      "2": "/GND",
+      "1": "/P24_BASE"
+    },
+    "C28": {
+      "1": "/+3V3",
+      "2": "/GND"
+    }
+  },
+  "checks": [
+    {
+      "name": "component_present:DS1",
+      "pass": true,
+      "detail": {
+        "value": "Waveshare 18366 / 2.4inch LCD Module",
+        "footprint": "Sirokko_Mechanical:Waveshare_18366_Module_Bside_Envelope_NO_CY"
+      }
+    },
+    {
+      "name": "component_present:U2",
+      "pass": true,
+      "detail": {
+        "value": "SN74HCS74D",
+        "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+      }
+    },
+    {
+      "name": "component_present:U3",
+      "pass": true,
+      "detail": {
+        "value": "SN74HCS14D",
+        "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+      }
+    },
+    {
+      "name": "component_present:U4",
+      "pass": true,
+      "detail": {
+        "value": "SN74HCS30D",
+        "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+      }
+    },
+    {
+      "name": "component_present:U6",
+      "pass": true,
+      "detail": {
+        "value": "SN74HCS11D",
+        "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
+      }
+    },
+    {
+      "name": "component_present:U11",
+      "pass": true,
+      "detail": {
+        "value": "DRV8803PWPR",
+        "footprint": "Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm"
+      }
+    },
+    {
+      "name": "component_present:U12",
+      "pass": true,
+      "detail": {
+        "value": "SN74LVC1G97DBVR",
+        "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+      }
+    },
+    {
+      "name": "component_present:U14",
+      "pass": true,
+      "detail": {
+        "value": "SN74LVC1G97DBVR",
+        "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+      }
+    },
+    {
+      "name": "component_present:U20",
+      "pass": true,
+      "detail": {
+        "value": "SN74LVC1G97DBVR",
+        "footprint": "Package_TO_SOT_SMD:SOT-23-6"
+      }
+    },
+    {
+      "name": "component_present:Q20",
+      "pass": true,
+      "detail": {
+        "value": "BC847B,215",
+        "footprint": "Package_TO_SOT_SMD:SOT-23"
+      }
+    },
+    {
+      "name": "component_present:D20",
+      "pass": true,
+      "detail": {
+        "value": "BZT52C15-7-F 15V 500mW",
+        "footprint": "Diode_SMD:D_SOD-123"
+      }
+    },
+    {
+      "name": "component_present:R120",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "component_present:R121",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "component_present:R122",
+      "pass": true,
+      "detail": {
+        "value": "47k 1%",
+        "footprint": "Resistor_SMD:R_0805_2012Metric"
+      }
+    },
+    {
+      "name": "component_present:R123",
+      "pass": true,
+      "detail": {
+        "value": "100k 1%",
+        "footprint": "Resistor_SMD:R_0805_2012Metric"
+      }
+    },
+    {
+      "name": "component_present:C28",
+      "pass": true,
+      "detail": {
+        "value": "100nF 50V X7R",
+        "footprint": "Capacitor_SMD:C_0805_2012Metric"
+      }
+    },
+    {
+      "name": "pin_net:R120.1",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED"
+      }
+    },
+    {
+      "name": "pin_net:R120.2",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_SERIES_MID",
+        "actual": "/P24_SERIES_MID"
+      }
+    },
+    {
+      "name": "pin_net:R121.1",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_SERIES_MID",
+        "actual": "/P24_SERIES_MID"
+      }
+    },
+    {
+      "name": "pin_net:R121.2",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_ZENER_K",
+        "actual": "/P24_ZENER_K"
+      }
+    },
+    {
+      "name": "pin_net:D20.1",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_ZENER_K",
+        "actual": "/P24_ZENER_K"
+      }
+    },
+    {
+      "name": "pin_net:D20.2",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_BASE",
+        "actual": "/P24_BASE"
+      }
+    },
+    {
+      "name": "pin_net:Q20.1",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_BASE",
+        "actual": "/P24_BASE"
+      }
+    },
+    {
+      "name": "pin_net:Q20.2",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:Q20.3",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_SENSE_N",
+        "actual": "/P24_SENSE_N"
+      }
+    },
+    {
+      "name": "pin_net:R122.1",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:R122.2",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_SENSE_N",
+        "actual": "/P24_SENSE_N"
+      }
+    },
+    {
+      "name": "pin_net:R123.1",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_BASE",
+        "actual": "/P24_BASE"
+      }
+    },
+    {
+      "name": "pin_net:R123.2",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:C28.1",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:C28.2",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:U20.1",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U20.2",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:U20.3",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:U20.4",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_PRESENT",
+        "actual": "/P24_PRESENT"
+      }
+    },
+    {
+      "name": "pin_net:U20.5",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U20.6",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_SENSE_N",
+        "actual": "/P24_SENSE_N"
+      }
+    },
+    {
+      "name": "pin_net:U14.1",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:U14.2",
+      "pass": true,
+      "detail": {
+        "expected": "/GND",
+        "actual": "/GND"
+      }
+    },
+    {
+      "name": "pin_net:U14.3",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK_RAW",
+        "actual": "/SAFETY_OK_RAW"
+      }
+    },
+    {
+      "name": "pin_net:U14.4",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK",
+        "actual": "/SAFETY_OK"
+      }
+    },
+    {
+      "name": "pin_net:U14.5",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U14.6",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U6.3",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK",
+        "actual": "/SAFETY_OK"
+      }
+    },
+    {
+      "name": "pin_net:U6.8",
+      "pass": true,
+      "detail": {
+        "expected": "/CLEAR_OK",
+        "actual": "/CLEAR_OK"
+      }
+    },
+    {
+      "name": "pin_net:U6.9",
+      "pass": true,
+      "detail": {
+        "expected": "/CLEAR_OK_BASE",
+        "actual": "/CLEAR_OK_BASE"
+      }
+    },
+    {
+      "name": "pin_net:U6.10",
+      "pass": true,
+      "detail": {
+        "expected": "/RELAY_DRIVER_OK",
+        "actual": "/RELAY_DRIVER_OK"
+      }
+    },
+    {
+      "name": "pin_net:U6.11",
+      "pass": true,
+      "detail": {
+        "expected": "/P24_PRESENT",
+        "actual": "/P24_PRESENT"
+      }
+    },
+    {
+      "name": "pin_net:U6.12",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK_RAW",
+        "actual": "/SAFETY_OK_RAW"
+      }
+    },
+    {
+      "name": "pin_net:U2.1",
+      "pass": true,
+      "detail": {
+        "expected": "/CLEAR_OK",
+        "actual": "/CLEAR_OK"
+      }
+    },
+    {
+      "name": "pin_net:U3.10",
+      "pass": true,
+      "detail": {
+        "expected": "/CLEAR_OK_BASE",
+        "actual": "/CLEAR_OK_BASE"
+      }
+    },
+    {
+      "name": "pin_net:U11.11",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK",
+        "actual": "/SAFETY_OK"
+      }
+    },
+    {
+      "name": "pin_net:U11.16",
+      "pass": true,
+      "detail": {
+        "expected": "/RELAY_DRIVER_OK",
+        "actual": "/RELAY_DRIVER_OK"
+      }
+    },
+    {
+      "name": "pin_net:U12.3",
+      "pass": true,
+      "detail": {
+        "expected": "/SAFETY_OK",
+        "actual": "/SAFETY_OK"
+      }
+    },
+    {
+      "name": "pin_net:U12.4",
+      "pass": true,
+      "detail": {
+        "expected": "/GLOW_ENABLE_HW",
+        "actual": "/GLOW_ENABLE_HW"
+      }
+    },
+    {
+      "name": "pin_net:U12.5",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U12.6",
+      "pass": true,
+      "detail": {
+        "expected": "/GLOW_CMD",
+        "actual": "/GLOW_CMD"
+      }
+    },
+    {
+      "name": "pin_net:U4.11",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "pin_net:U4.12",
+      "pass": true,
+      "detail": {
+        "expected": "/+3V3",
+        "actual": "/+3V3"
+      }
+    },
+    {
+      "name": "DS1_mechanical_only",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "DS1_exact_footprint",
+      "pass": true,
+      "detail": {
+        "value": "Waveshare 18366 / 2.4inch LCD Module",
+        "footprint": "Sirokko_Mechanical:Waveshare_18366_Module_Bside_Envelope_NO_CY"
+      }
+    },
+    {
+      "name": "R120_1206",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "R120_exact_value",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "R121_1206",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "R121_exact_value",
+      "pass": true,
+      "detail": {
+        "value": "2.7k 1% 0.25W RC1206FR-072K7L",
+        "footprint": "Resistor_SMD:R_1206_3216Metric"
+      }
+    },
+    {
+      "name": "old_direct_U3.10_to_U2.1_absent",
+      "pass": true,
+      "detail": {
+        "U3.10": "/CLEAR_OK_BASE",
+        "U2.1": "/CLEAR_OK"
+      }
+    }
+  ],
+  "checks_passed": 66,
+  "checks_failed": 0,
+  "erc": {
+    "violation_count": 9,
+    "severity_counts": {
+      "warning": 9
+    },
+    "items": [
+      {
+        "severity": "warning",
+        "description": "Label connected to only one pin"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected \"no connection\" flag"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected \"no connection\" flag"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected \"no connection\" flag"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected \"no connection\" flag"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected wire endpoint"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected wire endpoint"
+      },
+      {
+        "severity": "warning",
+        "description": "Unconnected wire endpoint"
+      },
+      {
+        "severity": "warning",
+        "description": "Symbol pin or wire end off connection grid"
+      }
+    ]
+  },
+  "limits": [
+    "Netlist pin mapping proves schematic connectivity only, not routed PCB copper.",
+    "ERC warnings are retained and not waived.",
+    "Logic review is not timing or bench qualification."
+  ]
+}

@@ -1,0 +1,18 @@
+da1962d9f238b34332b78f29a8fff23da1a68ea447098ecf7306490068acdb89  UNIFIED_DA1962D9_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
+bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06  T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
+{
+  "group_count": 435,
+  "pair_count": 5558,
+  "pairset_sha256": "3bfbd2dc4db8828fe6e2020189b06201d164b02e97bb9a175cab3959fa095f1e",
+  "save_board_called": false
+}
+{
+  "group_count": 460,
+  "pair_count": 5302,
+  "pairset_sha256": "f7efb1cda9af7cdcb676142eff38d19580a8f73a7fa1b5ae35563233fbd8864f",
+  "save_board_called": false
+}
+da1962d9f238b34332b78f29a8fff23da1a68ea447098ecf7306490068acdb89  UNIFIED_DA1962D9_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
+bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06  T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
+37d195b771e85409f49ea29115c8558a8d60bc0a9f680268dcc1ea8d387b70d6  T521_FROZEN_PROJECT/FROZEN_NATIVE_PARTITION_BASE.json
+daec3341282ba2bf067934f1d93c0f485d9f062cd9e58b2dc005f230aa016ffe  T521_FROZEN_PROJECT/FROZEN_NATIVE_PARTITION_WORK.json

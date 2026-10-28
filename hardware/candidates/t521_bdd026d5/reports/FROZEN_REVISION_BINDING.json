@@ -1,0 +1,90 @@
+{
+  "status": "FROZEN_REVISION_BOUND",
+  "frozen_revision": {
+    "protected_original_pcb_sha256": "da1962d9f238b34332b78f29a8fff23da1a68ea447098ecf7306490068acdb89",
+    "work_pcb_sha256": "bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06",
+    "work_schematic_sha256": "abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868",
+    "frozen_netlist_sha256": "741f05e4c25dcc00ca31432538b2c28eeaa69e900daa474a78565924f9d7135d"
+  },
+  "binding": {
+    "native_command_log": "DRC, ERC and netlist were regenerated in one read-only command bracketed by identical PCB and schematic SHA256 values.",
+    "native_physical_partition_work_board_sha256": "bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06",
+    "native_physical_partition_work_pcb_path": "T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "mechanical_native_checks_board_sha256": "bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06",
+    "pairset_partition_hashes": {
+      "base": "37d195b771e85409f49ea29115c8558a8d60bc0a9f680268dcc1ea8d387b70d6",
+      "work": "daec3341282ba2bf067934f1d93c0f485d9f062cd9e58b2dc005f230aa016ffe"
+    },
+    "native_save_reopen_sha256": "bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06"
+  },
+  "files": {
+    "output/reports/FROZEN_NATIVE_COMMAND_LOG.txt": {
+      "sha256": "0aac7e4cf46dc5c00e6689437ca3ae8f5eeb97c601186b0f5efe97975422b46f",
+      "bytes": 929
+    },
+    "output/reports/FROZEN_PHYSICAL_COMMAND_LOG.txt": {
+      "sha256": "cfadc3761cba07db6bc437cecb9e8b0d6c24008992aaa3aeff34159dd2c23cec",
+      "bytes": 1230
+    },
+    "output/reports/FROZEN_PAIRSET_COMPARISON_LOG.txt": {
+      "sha256": "0605bc19d1d5fd1b35820cddb9db59baf80d8a19b431caa37f2b9a068fe94cb2",
+      "bytes": 4016
+    },
+    "output/reports/FROZEN_MECHANICAL_COMMAND_LOG.txt": {
+      "sha256": "14b399f9150412a971187b8f9fbebd097661ad335f93ab746056f2981a5fa431",
+      "bytes": 802
+    },
+    "output/reports/DRC_frozen.json": {
+      "sha256": "eb223a6b44637fc692e3e044edb8c6bf4ccc8fc7b5bc549bd1ae620d9606f219",
+      "bytes": 217352
+    },
+    "output/reports/ERC_frozen.json": {
+      "sha256": "235c9d99feddfa8413f6a879f9c4a987702ada170d5efcf9aa56051a4185dc98",
+      "bytes": 7740
+    },
+    "output/reports/FULL_NETLIST_frozen.xml": {
+      "sha256": "741f05e4c25dcc00ca31432538b2c28eeaa69e900daa474a78565924f9d7135d",
+      "bytes": 306621
+    },
+    "reports/schematic_connectivity_audit.json": {
+      "sha256": "05b9ab0fd0d7c288eea988f2886d9f32569e816d61c4d126b470d1aeca5536ba",
+      "bytes": 17312
+    },
+    "reports/external_wiring_delta_vs_latest_netlist.json": {
+      "sha256": "43169c5d338238fe738b0f3d78b736cb0dccf5159e93b3287688ef8839755858",
+      "bytes": 10754
+    },
+    "reports/NATIVE_PHYSICAL_PARTITIONS_BASE.json": {
+      "sha256": "37d195b771e85409f49ea29115c8558a8d60bc0a9f680268dcc1ea8d387b70d6",
+      "bytes": 258086
+    },
+    "reports/NATIVE_PHYSICAL_PARTITIONS_WORK.json": {
+      "sha256": "daec3341282ba2bf067934f1d93c0f485d9f062cd9e58b2dc005f230aa016ffe",
+      "bytes": 266158
+    },
+    "reports/PHYSICAL_CONNECTIVITY_DELTA.json": {
+      "sha256": "140d8e86e812c4c390212e63bc60fae263cb358fdbec3ac1aac81ffd5b15fc87",
+      "bytes": 20828
+    },
+    "reports/MECHANICAL_NATIVE_CHECKS.json": {
+      "sha256": "c5d1f2613f2f236d228e28c22c109cb95ec75e60df20d0dcce6e739be73b9d64",
+      "bytes": 8209
+    },
+    "reports/T521_TFT_MOUNT_KEEP_OUT_READBACK.json": {
+      "sha256": "b7b702fbf705a5a1d0dd67c5bfa32ca0eb1d1b2b41a97b360b6f920ff84ca0a8",
+      "bytes": 4728
+    },
+    "reports/NATIVE_PCB_SAVE_REOPEN.json": {
+      "sha256": "2afd415535d9b600882da035e720e7e306604888835ac7c1ffdd880edc12aad2",
+      "bytes": 527
+    },
+    "reports/FINAL_VALIDATION_SUMMARY.json": {
+      "sha256": "4c59332427c3ae2115416830d44cd3c1152f89238f11fd33f264c99f6a96621f",
+      "bytes": 28312
+    },
+    "reports/FINAL_HANDOFF_RU.md": {
+      "sha256": "fca40c4d04f9b0df70a34f8de2526c5683ca888c897c56ad55bd7098bf63e1a0",
+      "bytes": 10440
+    }
+  }
+}

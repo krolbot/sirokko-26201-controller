@@ -1,0 +1,387 @@
+{
+  "pcb": "T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "pcb_sha256": "bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06",
+  "edge_cuts_centerline_bbox_mm": [
+    -5.0,
+    10.0,
+    330.0,
+    180.0
+  ],
+  "edge_cuts_centerline_size_mm": [
+    335.0,
+    170.0
+  ],
+  "edge_cuts_stroked_bbox_mm": [
+    -5.025,
+    9.975,
+    330.025,
+    180.025
+  ],
+  "edge_cuts_stroked_bbox_size_mm": [
+    335.05,
+    170.05
+  ],
+  "footprint_origins_outside_edge_bbox": [],
+  "focus_footprint_bounds": {
+    "DS1": {
+      "origin_mm": [
+        196.45,
+        118.425
+      ],
+      "footprint_bbox_mm": [
+        124.875,
+        114.9071,
+        197.525,
+        165.07325
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": true
+    },
+    "K1": {
+      "origin_mm": [
+        212.5,
+        30.0
+      ],
+      "footprint_bbox_mm": [
+        191.994048,
+        22.1214,
+        233.005953,
+        61.1786
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "K2": {
+      "origin_mm": [
+        212.5,
+        80.0
+      ],
+      "footprint_bbox_mm": [
+        189.232143,
+        72.1214,
+        235.767858,
+        111.1786
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "K3": {
+      "origin_mm": [
+        270.0,
+        80.0
+      ],
+      "footprint_bbox_mm": [
+        246.494047,
+        72.1214,
+        293.505953,
+        111.1786
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J13": {
+      "origin_mm": [
+        4.0,
+        120.0
+      ],
+      "footprint_bbox_mm": [
+        -4.47825,
+        102.162619,
+        15.71825,
+        128.317381
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J27": {
+      "origin_mm": [
+        321.37,
+        60.99
+      ],
+      "footprint_bbox_mm": [
+        309.65175,
+        53.07738,
+        329.84825,
+        78.422619
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J28": {
+      "origin_mm": [
+        321.37,
+        110.99
+      ],
+      "footprint_bbox_mm": [
+        309.65175,
+        102.244047,
+        329.84825,
+        129.255953
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "F1": {
+      "origin_mm": [
+        6.0,
+        96.0
+      ],
+      "footprint_bbox_mm": [
+        0.15175,
+        86.375,
+        11.84825,
+        105.625
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J23": {
+      "origin_mm": [
+        68.0,
+        110.0
+      ],
+      "footprint_bbox_mm": [
+        51.041666,
+        99.15175,
+        84.958334,
+        120.84825
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J24": {
+      "origin_mm": [
+        68.0,
+        170.0
+      ],
+      "footprint_bbox_mm": [
+        58.970238,
+        161.45175,
+        77.029763,
+        178.54825
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "J26": {
+      "origin_mm": [
+        137.0,
+        114.5
+      ],
+      "footprint_bbox_mm": [
+        130.003094,
+        112.475,
+        161.776906,
+        119.34825
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": false
+    },
+    "H7": {
+      "origin_mm": [
+        193.95,
+        159.225
+      ],
+      "footprint_bbox_mm": [
+        176.634523,
+        154.92675,
+        211.265478,
+        163.52325
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": true
+    },
+    "H8": {
+      "origin_mm": [
+        128.45,
+        159.225
+      ],
+      "footprint_bbox_mm": [
+        111.134523,
+        154.92675,
+        145.765478,
+        163.52325
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": true
+    },
+    "H9": {
+      "origin_mm": [
+        193.95,
+        120.925
+      ],
+      "footprint_bbox_mm": [
+        176.634523,
+        116.62675,
+        211.265478,
+        125.22325
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": true
+    },
+    "H10": {
+      "origin_mm": [
+        128.45,
+        120.925
+      ],
+      "footprint_bbox_mm": [
+        111.134523,
+        116.62675,
+        145.765478,
+        125.22325
+      ],
+      "bbox_inside_edge_bbox": true,
+      "board_only": true
+    }
+  },
+  "tft_mount_foreign_pad_clearance": {
+    "H7": {
+      "required_radius_mm": 3.1,
+      "nearest_foreign_pad_bbox_distance_mm": 4.797721,
+      "nearest_foreign_pad": "C304.2",
+      "nearest_pad_bbox_mm": [
+        188.1,
+        159.9,
+        189.2,
+        162.1
+      ],
+      "conservative_bbox_clear": true,
+      "nearest_5": [
+        {
+          "distance_mm": 4.797721,
+          "pad": "C304.2"
+        },
+        {
+          "distance_mm": 5.638096,
+          "pad": "L301.2"
+        },
+        {
+          "distance_mm": 6.853329,
+          "pad": "L301.1"
+        },
+        {
+          "distance_mm": 7.100176,
+          "pad": "U301.5"
+        },
+        {
+          "distance_mm": 7.280968,
+          "pad": "U301.6"
+        }
+      ]
+    },
+    "H8": {
+      "required_radius_mm": 3.1,
+      "nearest_foreign_pad_bbox_distance_mm": 10.525,
+      "nearest_foreign_pad": "R9010.2",
+      "nearest_pad_bbox_mm": [
+        116.7,
+        158.675,
+        117.925,
+        161.325
+      ],
+      "conservative_bbox_clear": true,
+      "nearest_5": [
+        {
+          "distance_mm": 10.525,
+          "pad": "R9010.2"
+        },
+        {
+          "distance_mm": 13.27309,
+          "pad": "U9007.3"
+        },
+        {
+          "distance_mm": 13.494759,
+          "pad": "J25.1"
+        },
+        {
+          "distance_mm": 13.588161,
+          "pad": "J25.2"
+        },
+        {
+          "distance_mm": 15.107102,
+          "pad": "J25.3"
+        }
+      ]
+    },
+    "H9": {
+      "required_radius_mm": 3.1,
+      "nearest_foreign_pad_bbox_distance_mm": 18.872682,
+      "nearest_foreign_pad": "U303.14",
+      "nearest_pad_bbox_mm": [
+        184.125,
+        137.85,
+        185.6,
+        138.25
+      ],
+      "conservative_bbox_clear": true,
+      "nearest_5": [
+        {
+          "distance_mm": 18.872682,
+          "pad": "U303.14"
+        },
+        {
+          "distance_mm": 19.457727,
+          "pad": "U303.13"
+        },
+        {
+          "distance_mm": 20.046773,
+          "pad": "U303.12"
+        },
+        {
+          "distance_mm": 20.63948,
+          "pad": "U303.11"
+        },
+        {
+          "distance_mm": 20.64354,
+          "pad": "R17.2"
+        }
+      ]
+    },
+    "H10": {
+      "required_radius_mm": 3.1,
+      "nearest_foreign_pad_bbox_distance_mm": 9.436531,
+      "nearest_foreign_pad": "J26.1",
+      "nearest_pad_bbox_mm": [
+        136.1,
+        113.6,
+        137.9,
+        115.4
+      ],
+      "conservative_bbox_clear": true,
+      "nearest_5": [
+        {
+          "distance_mm": 9.436531,
+          "pad": "J26.1"
+        },
+        {
+          "distance_mm": 11.591451,
+          "pad": "J26.2"
+        },
+        {
+          "distance_mm": 13.877266,
+          "pad": "J26.3"
+        },
+        {
+          "distance_mm": 15.355394,
+          "pad": "R13.1"
+        },
+        {
+          "distance_mm": 15.694107,
+          "pad": "C20.2"
+        }
+      ]
+    }
+  },
+  "assertions": {
+    "edge_centerline_size_335x170": true,
+    "all_footprint_origins_inside_edge_bbox": true,
+    "all_tft_holes_foreign_pad_bbox_clear": true
+  },
+  "limits": [
+    "Edge.Cuts centerline rectangle is 335x170 mm; the native stroked bounding box is 335.05x170.05 mm because the four edge segments are 0.05 mm wide.",
+    "Edge.Cuts bounding rectangle is not a substitute for arbitrary-outline point-in-polygon testing; the final full KiCad DRC is authoritative for board-edge violations.",
+    "Footprint bounding boxes can include text/graphics and are reported, not treated as 3D body envelopes.",
+    "Foreign-pad clearance uses the pad bounding rectangle, which is conservative: passing it proves the actual pad shape is no closer.",
+    "This report does not close Z-stack, thread engagement, relay/socket mating depth, or service-clearance qualification."
+  ]
+}

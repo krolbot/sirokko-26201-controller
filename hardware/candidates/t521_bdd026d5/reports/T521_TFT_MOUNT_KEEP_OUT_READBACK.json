@@ -1,0 +1,179 @@
+{
+  "status": "DRAFT / LIMITED READ-ONLY GEOMETRY CHECK / NOT FOR ORDER",
+  "pcb": "T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "zone_response_sha256": "b389a0f2736273bd764c171fbd0856947bf41b70b2dff55aaf61d5ee0f8d2943",
+  "holes": [
+    {
+      "reference": "H7",
+      "centre_mm": [
+        193.95,
+        159.225
+      ],
+      "required_radius_mm": 3.1,
+      "covering_zones": [
+        {
+          "zone_index": 14,
+          "minimum_edge_distance_mm": 3.5107423747717155,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "allowed"
+          }
+        },
+        {
+          "zone_index": 18,
+          "minimum_edge_distance_mm": 3.233578537462444,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "not_allowed"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "H8",
+      "centre_mm": [
+        128.45,
+        159.225
+      ],
+      "required_radius_mm": 3.1,
+      "covering_zones": [
+        {
+          "zone_index": 9,
+          "minimum_edge_distance_mm": 3.510742374771709,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "allowed"
+          }
+        },
+        {
+          "zone_index": 16,
+          "minimum_edge_distance_mm": 3.2335785374624306,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "not_allowed"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "H9",
+      "centre_mm": [
+        193.95,
+        120.925
+      ],
+      "required_radius_mm": 3.1,
+      "covering_zones": [
+        {
+          "zone_index": 11,
+          "minimum_edge_distance_mm": 3.5107423747717155,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "allowed"
+          }
+        },
+        {
+          "zone_index": 17,
+          "minimum_edge_distance_mm": 3.233578537462444,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "not_allowed"
+          }
+        }
+      ]
+    },
+    {
+      "reference": "H10",
+      "centre_mm": [
+        128.45,
+        120.925
+      ],
+      "required_radius_mm": 3.1,
+      "covering_zones": [
+        {
+          "zone_index": 10,
+          "minimum_edge_distance_mm": 3.2335785374624306,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "not_allowed"
+          }
+        },
+        {
+          "zone_index": 12,
+          "minimum_edge_distance_mm": 3.510742374771709,
+          "layers": [
+            "F.Cu",
+            "B.Cu"
+          ],
+          "rules": {
+            "tracks": "not_allowed",
+            "vias": "not_allowed",
+            "pads": "allowed",
+            "copperpour": "not_allowed",
+            "footprints": "allowed"
+          }
+        }
+      ]
+    }
+  ],
+  "mounting_grid_mm": [
+    65.5,
+    38.3
+  ],
+  "result": "4/4 hole centres have an enclosing track/via/copperpour prohibition covering radius 3.1 mm on both copper layers",
+  "limits": [
+    "Working file, not frozen final CAD",
+    "Pads are allowed in these rules to retain own NPTH: foreign pads need an independent clearance check",
+    "No drill-diameter readback in this MCP response: displayed NPTH pad size is not treated as independent drill measurement",
+    "No Z, hardware fastener/thread, torque, collision, insulation, copper connectivity or production acceptance",
+    "No active CAD writes"
+  ]
+}

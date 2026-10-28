@@ -1,0 +1,10 @@
+Category,References_or_use,Qty,Manufacturer,MPN_or_designation,Status,Qualification_note
+Display module,DS1,1,Waveshare,18366,DRAFT / NOT FOR ORDER,Mechanical BOM instance; electrical interface remains J26
+Display cable,DS1 to J26,1,Waveshare,PH2.0 8PIN 20cm,DRAFT / VERIFY HARNESS,PH2.0 module end and separate carrier-side sockets; continuity and pin order must be checked without trusting colors
+Standoff,H7-H10,4,Wuerth Elektronik,970120244 M2x12,DRAFT CANDIDATE,Nominal only; full Z stack and engagement not qualified
+Washer,DS1 mounting outer washers,8,Bossard,1253131 / BN670 / B2,DRAFT CANDIDATE,ID2.2 OD5.0 h0.3; do not insert between PCB and standoff
+Screw,DS1 mounting,8,TBD,M2x5,DRAFT CANDIDATE,Full thread engagement and tightening torque not qualified
+Relay,K1-K3,3,Durakool,DG85BM-5021-76-1024,DRAFT / VERIFY PHYSICAL MATE,Exact 1024 coil option without R/DR/D; 200 mA per channel is a calculation budget only
+Relay socket,K1-K3,3,Durakool,DZ85AB-5-PCB,DRAFT / VERIFY PHYSICAL MATE,PCB datum and mating depth remain open; current 56 mm Z model is a project reserve not a catalog limit
+Relay installed-height reserve,K1-K3,3,Project envelope,35x30.5x56 mm from PCB,MODEL ONLY / NOT ORDERABLE,Interim collision reserve; not a vendor model and not collision PASS
+Relay service corridor,K1-K3,3,Project envelope,top 103.7 mm from PCB,OPEN-CASE SERVICE RESERVE,Not a closed-enclosure requirement and not a catalog extraction stroke
