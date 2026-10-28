@@ -4,7 +4,9 @@
 
 ## Current requirements and status
 
-**Latest PCB checkpoint: [ENC_A pull-up PCB 829494e5](hardware/candidates/encoder_pullup_a_829494e5_wip/README_RU.md).** The byte-exact PCB is published with the unchanged e46c2b70 SCH/PRO/library context and frozen evidence. R16.2 now joins J23.1/C19.1 on `/ENC_A`; R16.1 was already on `+3V3`. The revision adds eight 0.25 mm segments and five 0.60/0.30 mm vias. Native evidence reports 699 pads, 350→349 groups and 8923→8925 pairs, with 0 lost and exactly two expected additions. Actual frozen KiCad CLI runs both exited 5; source is 26/136/0 and candidate 26/135/0 for violations/unconnected/parity, with empty stderr. This is **not PASS**; ERC was not run. J3.9 remains outside A, J3.8/R17.2 outside B and J3.10 outside SW; 135 other connections and qualification remain open. No new preview exists. Firmware remains strictly after final PCB acceptance. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+**Latest PCB checkpoint: [ENC_B pull-up PCB bebc7b90](hardware/candidates/encoder_pullup_b_bebc7b90_wip/README_RU.md).** The byte-exact PCB is published with unchanged 829494e5 non-PCB context and firmware. R17.2 now joins J23.3/C20.1 on `/ENC_B`; R17.1 was already on `+3V3`. Eleven 0.25 mm segments and six 0.60/0.30 mm vias were added. V1 was rejected for 0.075 mm clearance from R16.1 `+3V3` to `ENC_B` versus 0.200 mm required; V2 at X=143.5 mm was accepted without relaxed rules. Native evidence reports 699 pads, 349→348 groups and 8925→8927 pairs, with 0 lost and two expected additions. CLI source is 26/135/0 and candidate 26/134/0; both exited 5 with empty stderr. This is **not PASS**; ERC was not run. All three ESP32 encoder lines and 134 total connections remain open. No new preview exists. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+**Previous PCB checkpoint: [ENC_A pull-up PCB 829494e5](hardware/candidates/encoder_pullup_a_829494e5_wip/README_RU.md).** It remains immutable and was not overwritten.
 
 **Previous PCB checkpoint: [encoder A/B routing PCB e46c2b70](hardware/candidates/encoder_ab_e46c2b70_wip/README_RU.md).** It remains an immutable historical snapshot and was not overwritten.
 

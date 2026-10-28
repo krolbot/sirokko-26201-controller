@@ -1,0 +1,134 @@
+{
+  "package": "SIROKKO_ENCODER_PULLUP_B_BEBC7B90_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_ENCODER_PULLUP_B_BEBC7B90_WIP.zip",
+    "sha256": "41263aaacb03ed3609dacfcf7f7fbe8c35478a3a9918822526a85bdfa50e17c1",
+    "size_bytes": 351848,
+    "entries": 8,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 7,
+    "archive_published": false,
+    "entry_crc32": {
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "62e531ac",
+      "ENCODER_PULLUP_B_BEBC7B90_WIP_RU.md": "cf1f7f54",
+      "native_comparison.json": "b1e3dbf9",
+      "physical_partitions.json": "cc9ce338",
+      "source_full_cli.json": "b06980c5",
+      "candidate_full_cli.json": "13423046",
+      "full_cli_execution.json": "e510ceca",
+      "manifest.json": "250cdbb6"
+    }
+  },
+  "baseline_project": {
+    "path": "../encoder_pullup_a_829494e5_wip/project",
+    "git_commit": "78a2ec965ccb7ccff1f07faad96b75c4cffd8c51",
+    "git_tree": "de3097a4304ff1184b28c51cc26d77da6d05f917",
+    "pcb_sha256": "829494e526155fa26e5bd204558ff008993350f07091be6a6af061f6c71a278a",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "bebc7b901a16404cf6934bad8f7926cc9a1e845646b5695a5af846ca0a8dfded",
+    "previous_pcb_sha256": "829494e526155fa26e5bd204558ff008993350f07091be6a6af061f6c71a278a",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "bebc7b901a16404cf6934bad8f7926cc9a1e845646b5695a5af846ca0a8dfded",
+    "ENCODER_PULLUP_B_BEBC7B90_WIP_RU.md": "ca14a72e794b5c5617294673ca50e958a81cd8e06b32df74664da48fbcbc5757",
+    "native_comparison.json": "df0378303ff3f5b37131c948d1fa5605d9ed58b507827f6e47cfe2477858d080",
+    "physical_partitions.json": "b84e855fc5bec9c08b2bd38a732a60e053156e79493110c57eb8fe1efaa62f89",
+    "source_full_cli.json": "b689623146a3fbe3cf9ba2ba1591381bd866e2bd303eacf40f113a4c1f4b8d64",
+    "candidate_full_cli.json": "abaa2846c11da8acfc89593cbbcb9c28c884b737e4cc972ca821a235b6a5c5b6",
+    "full_cli_execution.json": "0b73042a8af5c907ab223746172b05e5e06cc3aef25a6dc08e9fc0e33b152041"
+  },
+  "published_payload_sha256": {
+    "ENCODER_PULLUP_B_BEBC7B90_WIP_RU.md": "ca14a72e794b5c5617294673ca50e958a81cd8e06b32df74664da48fbcbc5757",
+    "native_comparison.json": "df0378303ff3f5b37131c948d1fa5605d9ed58b507827f6e47cfe2477858d080",
+    "physical_partitions.json": "b84e855fc5bec9c08b2bd38a732a60e053156e79493110c57eb8fe1efaa62f89",
+    "source_full_cli.json": "b689623146a3fbe3cf9ba2ba1591381bd866e2bd303eacf40f113a4c1f4b8d64",
+    "candidate_full_cli.json": "abaa2846c11da8acfc89593cbbcb9c28c884b737e4cc972ca821a235b6a5c5b6",
+    "full_cli_execution.json": "eb800c7f7faeba284e7d6ca694dd2b8cc8d770b7da75a0858a274700c3ad17e9",
+    "manifest.json": "1749555e4fb99cdb69788b62be23f40c8e1a97446da6363fd327fa39a98858bb"
+  },
+  "public_copy_edits": {
+    "full_cli_execution.json": "Private absolute paths replaced by candidate-relative paths only",
+    "engineering_source_files_modified": false
+  },
+  "partition_checks": {
+    "source_pairs": 8925,
+    "candidate_pairs": 8927,
+    "lost_pairs": 0,
+    "added_pairs": 2,
+    "source_pairs_sha256": "c5fed98d2c04303a49c1b4ee2d3a335dae6c707619eb7c4e63cd2399db7d19a5",
+    "candidate_pairs_sha256": "8f4cc7f3b175f54e7c3f9ee14c6ad085c38fff653cc212eb1ab8eb62e2b5267b",
+    "hashes_recomputed": true
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 349,
+    "candidate_groups": 348,
+    "lost_pairs": 0,
+    "added_pairs": 2,
+    "expected_joins": [
+      "R17.2 to J23.3 on ENC_B",
+      "R17.2 to C20.1 on ENC_B"
+    ],
+    "added_segments": 11,
+    "added_vias": 6,
+    "segment_width_mm": 0.25,
+    "via_diameter_mm": 0.6,
+    "via_drill_mm": 0.3,
+    "rejected_v1_clearance_mm": 0.075,
+    "required_clearance_mm": 0.2,
+    "accepted_v2_vertical_x_mm": 143.5,
+    "master_tracks_and_vias": 1800,
+    "master_zones": 27,
+    "cli_source": {
+      "violations": 26,
+      "unconnected": 135,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_candidate": {
+      "violations": 26,
+      "unconnected": 134,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_stderr_empty": true,
+    "cli_pcb_bytes_unchanged": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks_unchanged_and_unqualified": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 7,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "private_infrastructure_paths_found_in_public_json": 0
+  },
+  "documentation_correction": {
+    "correction_file": "../start_local_ee7f604f_wip/UI_POWER_C40D6C07_CORRECTION_RU.md",
+    "historical_candidates_rewritten": false,
+    "correction_preserved_in_repository": true
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "All three encoder MCU lines and 134 total connections remain open. DRC is not PASS; ERC was not run. EMC, GPIO timing and physical operation are unqualified."
+}
