@@ -1,0 +1,51 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO FIRE",
+  "component": "Littelfuse 0997030.WXN + Keystone3568 (holder thermal qualification open)",
+  "boundary_not_measured_load": {
+    "P_W": 480,
+    "Vmin_V": 21.6
+  },
+  "formula": "I_cont_A = Inom_A * k(T) * 0.75; required_nominal_A = Iload_A/(k(T)*0.75)",
+  "source_guide": "https://www.littelfuse.com/assetdocs/littelfuse-fuseology?assetguid=c81c1a21-b903-44b6-b46d-180c48f7c3c5; III.D.1 and III.D.3",
+  "source_997": "https://static.chipdip.ru/lib/211/DOC012211849.pdf",
+  "results": [
+    {
+      "ambient_C": 25,
+      "rerating_factor_k": 1.0,
+      "k_source": "Exact 0997 Temperature Rerating Curve, independently rendered and visually read; approximate ±0.005, not guaranteed assembly limit",
+      "I_load_design_boundary_A": 22.22222222222222,
+      "I_cont_recommended_A": 22.5,
+      "fuse_nominal_required_A": 29.62962962962963,
+      "P_cont_input_at21p6V_W": 486.00000000000006,
+      "screen_pass": true,
+      "I_cont_upper_graphical_uncertainty_A": 22.612499999999997,
+      "pass_even_using_upper_graphical_k": true
+    },
+    {
+      "ambient_C": 60,
+      "rerating_factor_k": 0.95,
+      "k_source": "Exact 0997 Temperature Rerating Curve, independently rendered and visually read; approximate ±0.005, not guaranteed assembly limit",
+      "I_load_design_boundary_A": 22.22222222222222,
+      "I_cont_recommended_A": 21.375,
+      "fuse_nominal_required_A": 31.18908382066277,
+      "P_cont_input_at21p6V_W": 461.70000000000005,
+      "screen_pass": false,
+      "I_cont_upper_graphical_uncertainty_A": 21.4875,
+      "pass_even_using_upper_graphical_k": false
+    },
+    {
+      "ambient_C": 85,
+      "rerating_factor_k": 0.91,
+      "k_source": "Exact 0997 Temperature Rerating Curve, independently rendered and visually read; approximate ±0.005, not guaranteed assembly limit",
+      "I_load_design_boundary_A": 22.22222222222222,
+      "I_cont_recommended_A": 20.475,
+      "fuse_nominal_required_A": 32.56003256003256,
+      "P_cont_input_at21p6V_W": 442.26000000000005,
+      "screen_pass": false,
+      "I_cont_upper_graphical_uncertainty_A": 20.587500000000002,
+      "pass_even_using_upper_graphical_k": false
+    }
+  ],
+  "restriction": "Do not increase fuse nominal or change power architecture automatically. Need duty/state load envelope, startup pulses, wiring protection and holder thermal qualification. Recommendation screen is not guaranteed opening threshold. Do not multiply final application-specific derating curve by 0.75 again without its defined basis.",
+  "cad_modified": false
+}
