@@ -1,0 +1,101 @@
+{
+  "package": "SIROKKO_U20_57D1A4E9_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_U20_57D1A4E9_WIP.zip",
+    "sha256": "a3b95996b790e4c6bbad094808b526e14bf5b9d9d4a24719252e8107d58f229b",
+    "entries": 6,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false,
+    "entry_crc32": {
+      "SIROKKO_57D1A4E9_DRAFT.kicad_pcb": "9e1bc2f7",
+      "U20_NATIVE.json": "5b352794",
+      "U20_PARTITIONS.json": "b392afc5",
+      "U20_DRC.json": "0c22edd1",
+      "U20_57D1A4E9_RU.md": "87ac1e2d",
+      "SHA256SUMS": "67ccff79"
+    }
+  },
+  "baseline_project": {
+    "path": "../p24_local_b64cbaa9_wip/project",
+    "git_commit": "23d0d20b951c3cfb81165928dd2a7a7222790e7c",
+    "git_tree": "453b9be091b1089dc48714c4320fc32151137996",
+    "pcb_sha256": "b64cbaa99161242f4f52cd8409a385a1a736106f1efe0df467dbbb6747b32d3a",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80",
+    "previous_pcb_sha256": "b64cbaa99161242f4f52cd8409a385a1a736106f1efe0df467dbbb6747b32d3a",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "SIROKKO_57D1A4E9_DRAFT.kicad_pcb": "57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80",
+    "U20_NATIVE.json": "0e408b15ee99cbbfddac9c829c2868556fd5ef8032364b48e7f107c6073c1120",
+    "U20_PARTITIONS.json": "07e94baf8643a59f0cdda1f811d8b74232b580e9dd869d4754286f4b1af11ae3",
+    "U20_DRC.json": "3cb35d44a64a2be935823f54332d07f66d1b88c4e52d338213c29ec0565e7e60",
+    "U20_57D1A4E9_RU.md": "61fa9e5e1bba1ed26388b8bebf78b64ca1f18ba82dc7233997ff6757a87065c1"
+  },
+  "partition_checks": [
+    {
+      "file": "U20_PARTITIONS.json",
+      "source_pairs": 7296,
+      "candidate_pairs": 7614,
+      "lost_pairs": 0,
+      "added_pairs": 318,
+      "source_pairs_sha256": "ec88ba476f2daf3717cfcb365ebf62bdd0e949b594dbe18db4d7c8397977bf1f",
+      "candidate_pairs_sha256": "0ab9c76cb7d01c62c28b3a9214c88f85e45c571179160d87d55570dd12058b31"
+    }
+  ],
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 377,
+    "candidate_groups": 371,
+    "source_pairs": 7296,
+    "candidate_pairs": 7614,
+    "lost_pairs": 0,
+    "added_pairs": 318,
+    "cross_net_pairs": 0,
+    "drc_unconnected": 157,
+    "drc_warnings": 26,
+    "added_segments": 15,
+    "vias_added": 1,
+    "master_tracks_and_vias": 1629,
+    "master_zones": 27,
+    "drc_pass": false,
+    "drc_command_recorded": false,
+    "drc_exit_code_recorded": false,
+    "schematic_parity_recorded": false,
+    "erc_rerun": false,
+    "partition_pair_hashes_recomputed": true,
+    "old_geometry_copper_and_zones_preserved": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_entries_verified": 5,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_resolved": 17,
+    "drc_erc_parity_rerun": false,
+    "preview_inspected": false,
+    "private_infrastructure_paths_found": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "Основной подвод +3V3, P24_PRESENT к U6 и вход до R121.1 ещё не готовы; power-loss/brownout/rearm, PI/EMC, переходные, токовые, тепловые и динамические режимы не квалифицированы. Остальные 157 разрывов сохраняются."
+}
