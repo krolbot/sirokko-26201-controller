@@ -1,0 +1,118 @@
+{
+  "package": "SIROKKO_PANEL_AXIS_4A3AB23B_RELAY3D_19EB37E4_PUBLIC_DRAFT_FROZEN",
+  "status": "DRAFT_AXIS_CORRECTED_RELAY_3D_Y_CORRECTED_NOT_LAYOUT_ACCEPTED",
+  "source_archive": {
+    "name": "SIROKKO_TE0C92A5A_RELAY_3D_Y_DRAFT_FROZEN.tar.gz",
+    "sha256": "acd31ae4d6bb68e4a63d7857cfbcfe4a5b8af517cea75b50d1b9150368816769",
+    "regular_files": 162,
+    "sha256_entries_verified": 160
+  },
+  "entrypoints": {
+    "human_handoff_ru": "README_RU.md",
+    "publication_audit_ru": "PUBLICATION_AUDIT_RU.md",
+    "kicad_project": "project/Sirokko26201_control_motor_candidate.kicad_pro",
+    "pcb": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "schematic": "project/Sirokko26201_control_motor_candidate.kicad_sch",
+    "relay_envelope": "project/3dmodels/DG85BM_DZ85AB_installed_envelope.wrl",
+    "full_netlist": "reports/FULL_NETLIST.net",
+    "external_wiring": "evidence/external_wiring/EXTERNAL_WIRING_DRAFT_RU.md",
+    "public_integrity_check": "verify_package.py"
+  },
+  "frozen_revision": {
+    "pcb_sha256": "4a3ab23b0998b5e5730ba60325a51cf142fe0b877d3b37196c24bca61bb79a9b",
+    "schematic_sha256": "abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868",
+    "project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "relay_envelope_sha256": "19eb37e4deffac96e27576c6fe0d4ebe48d0eab7de7a91b7af54c989769f5d8d",
+    "source_netlist_misnamed_xml_sha256": "cb163bc148b0e2c29a047d34db15a4e209a74414b11c673d9b77932edccb4441",
+    "public_path_sanitized_netlist_sha256": "bff2361da87415342028b542c6aa82a84dea98ded68e4f0eed2ad99b0ea4af6f"
+  },
+  "project": {
+    "published_native_files": 66,
+    "pcb_files": 3,
+    "project_files": 4,
+    "schematic_files": 7,
+    "root_sheetfile_targets": 6,
+    "symbol_library_files": 9,
+    "footprint_files": 30,
+    "author_wrl_files": 7,
+    "library_table_files": 6,
+    "root_library_table_targets": 15,
+    "root_library_targets_all_present": true,
+    "current_pcb": "Sirokko26201_control_motor_candidate.kicad_pcb",
+    "historical_pcb_files": [
+      "baseline_before_18366.kicad_pcb",
+      "before_safezone_reroute.kicad_pcb"
+    ]
+  },
+  "panel_axis": {
+    "status": "CORRECTED_IN_FROZEN_PCB",
+    "axis_x_mm": 64.95,
+    "window_right_edge_x_mm": 124.95,
+    "window_to_axis_mm": 60.0,
+    "j23_origin_x_mm": 64.95,
+    "j24_origin_x_mm": 64.95,
+    "j22_footprint_origin_x_mm": 58.7,
+    "j22_hidden_actuator_center_x_mm": 64.95
+  },
+  "relay_3d": {
+    "status": "Y_TRANSLATION_SIGN_CORRECTED",
+    "only_active_source_path_changed_after_panel_axis_revision": "project/3dmodels/DG85BM_DZ85AB_installed_envelope.wrl",
+    "project_envelope_size_mm": [35.0, 30.5, 56.0],
+    "passport_model": false,
+    "installed_height_qualified": false,
+    "z_chain_qualified": false
+  },
+  "verified_snapshot": {
+    "pads": 699,
+    "physical_groups": 460,
+    "physical_pairs": 5302,
+    "physical_pairset_sha256": "f7efb1cda9af7cdcb676142eff38d19580a8f73a7fa1b5ae35563233fbd8864f",
+    "drc_warnings": 31,
+    "drc_unconnected": 246,
+    "drc_schematic_parity": 0,
+    "erc_warnings": 9,
+    "erc_sheets": 7,
+    "external_connectors": 9,
+    "external_contacts": 27,
+    "external_pin_net_changes": 0
+  },
+  "publication": {
+    "total_files_including_manifest_filelist_sha256sums_and_verifier": 97,
+    "private_paths_removed": true,
+    "source_tools_published": false,
+    "unlicensed_waveshare_step_published": false,
+    "third_party_pdfs_or_models_published": false,
+    "firmware_changed": false,
+    "active_cad_changed_by_publisher": false,
+    "top_level_repository_pointers_changed": true,
+    "source_netlist_filename_corrected_to_net": true,
+    "source_netlist_path_field_sanitized": true
+  },
+  "editorial_changes": [
+    "Renamed the misleading source reports/FULL_NETLIST.xml copy to reports/FULL_NETLIST.net.",
+    "Replaced the single absolute source path inside the public netlist with project/Sirokko26201_control_motor_candidate.kicad_sch; electrical content was not changed.",
+    "Added public README, audit, manifest, file list, checksums and standard-library verification script.",
+    "Added the frozen 27-contact external-wiring package and reviewed overview images.",
+    "Updated repository README.md, README_RU.md and docs/CURRENT_STATE_RU.md pointers."
+  ],
+  "excluded": [
+    "internal source tools and modification scripts",
+    "service logs and reports containing absolute machine paths",
+    "recovery copy of the previous erroneous relay WRL",
+    "Waveshare_18366_k01-2_official_nominal.stp without redistribution permission",
+    "third-party PDFs, datasheets, scans and unlicensed models",
+    "credentials, private addresses and firmware"
+  ],
+  "acceptance": {
+    "panel_axis_correction_accepted_in_scope": true,
+    "relay_envelope_y_correction_accepted_in_scope": true,
+    "layout_accepted": false,
+    "full_layout_accepted": false,
+    "general_routing_allowed": false,
+    "firmware_allowed": false,
+    "production_release": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false
+  },
+  "integrity": "Run python3 verify_package.py from the package root."
+}

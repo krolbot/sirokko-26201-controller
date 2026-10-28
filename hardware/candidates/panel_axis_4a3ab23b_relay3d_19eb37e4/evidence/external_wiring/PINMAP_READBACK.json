@@ -1,0 +1,180 @@
+{
+  "status": "DRAFT_NOT_FOR_CONNECTION",
+  "pcb_sha256": "4a3ab23b0998b5e5730ba60325a51cf142fe0b877d3b37196c24bca61bb79a9b",
+  "source_archive_sha256": "680c0f4d2983900f646858349a5a2f071192ccdc68b78287a0fbfe12a15922ce",
+  "old_map_revision": "da1962d9",
+  "connector_count": 9,
+  "contact_count": 27,
+  "pin_net_changes": [],
+  "checked_contacts": [
+    {
+      "ref": "J13",
+      "pin": "1",
+      "net": "/VIN_RAW_24",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J13",
+      "pin": "2",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J102",
+      "pin": "1",
+      "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J102",
+      "pin": "2",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J27",
+      "pin": "1",
+      "net": "/GLOW_SWITCHED_POS",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J27",
+      "pin": "2",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J28",
+      "pin": "1",
+      "net": "/CLUTCH_SWITCHED_POS",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J28",
+      "pin": "2",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J10",
+      "pin": "1",
+      "net": "/TC_EXH_TP",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J10",
+      "pin": "2",
+      "net": "/TC_EXH_TM",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J11",
+      "pin": "1",
+      "net": "/TC_AIR_TP",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J11",
+      "pin": "2",
+      "net": "/TC_AIR_TM",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J12",
+      "pin": "1",
+      "net": "/+3V3",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J12",
+      "pin": "2",
+      "net": "/ROOM_DQ",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J12",
+      "pin": "3",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J25",
+      "pin": "1",
+      "net": "/+3V3",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J25",
+      "pin": "2",
+      "net": "/THERMAL_OK",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J25",
+      "pin": "3",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J25",
+      "pin": "4",
+      "net": "/EXT_SAFETY_ENABLE",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "1",
+      "net": "/TFT_3V3",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "2",
+      "net": "/GND",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "3",
+      "net": "/TFT_MOSI_BUF",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "4",
+      "net": "/TFT_SCK_BUF",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "5",
+      "net": "/TFT_CS_BUF",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "6",
+      "net": "/TFT_DC_BUF",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "7",
+      "net": "/TFT_RESET_N",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    },
+    {
+      "ref": "J26",
+      "pin": "8",
+      "net": "/TFT_3V3",
+      "source": "literal native PCB pad + native audit JSON; both agree"
+    }
+  ],
+  "new_native_netlist_export": false,
+  "executor_current_full_netlist_checked": true,
+  "executor_full_netlist_sha256": "cb163bc148b0e2c29a047d34db15a4e209a74414b11c673d9b77932edccb4441",
+  "executor_full_netlist_format": "KiCad S-expression; source filename FULL_NETLIST.xml is misleading, not XML",
+  "executor_archive_sha256": "acd31ae4d6bb68e4a63d7857cfbcfe4a5b8af517cea75b50d1b9150368816769",
+  "physical_continuity_test": false,
+  "production_release": false
+}

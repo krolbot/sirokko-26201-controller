@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-28 — отдельный frozen-кандидат T521 bdd026d5
+## 2026-10-28 — текущий frozen-кандидат: ось 4a3ab23b + relay WRL 19eb37e4
+
+[Кандидат panel_axis_4a3ab23b_relay3d_19eb37e4](../hardware/candidates/panel_axis_4a3ab23b_relay3d_19eb37e4/README_RU.md) опубликован отдельным immutable DRAFT/WIP после `t521_bdd026d5`. Основная PCB SHA256 `4a3ab23b0998b5e5730ba60325a51cf142fe0b877d3b37196c24bca61bb79a9b`, root SCH `abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868`, PRO `54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964`, исправленная авторская WRL K1–K3 `19eb37e4deffac96e27576c6fe0d4ebe48d0eab7de7a91b7af54c989769f5d8d`.
+
+Ось актуаторов J23/J22/J24 исправлена до X=64,95 мм — ровно 60,00 мм от правого края окна. У J22 начало footprint остаётся X=58,70 мм, а скрытый центр актуатора внутри footprint теперь X=64,95 мм. После проверки оси отдельно исправлен только знак Y общей WRL; PCB/SCH/PRO и остальные 114 source project files не менялись. Сохранены 699 площадок, 460 физических групп, 5302 пары, DRC 31 warning / 246 unconnected / 0 parity и ERC 9 warning на семи листах.
+
+Публичный каталог содержит полный семилистовой native-проект, все 15 целей корневых таблиц библиотек, отчёты, нативные виды, проверенную карту 9 разъёмов / 27 контактов и актуальный `SHA256SUMS`. Исходный `FULL_NETLIST.xml` оказался KiCad S-expression; публичная копия называется `FULL_NETLIST.net`, а абсолютный source-path заменён относительным с фиксацией обоих SHA в манифесте. Внутренние сценарии, служебные пути, recovery старой WRL, сторонние PDF/модели и Waveshare STEP без подтверждённых прав исключены. Прошивка не изменена.
+
+Размер 35×30,5×56 мм — только временная проектная envelope-геометрия, не паспортная высота реле. Не приняты фактическая высота relay/socket, Z-цепочка, TFT/кабельный объём, полная компоновка, общая разводка и firmware. Сохраняются `full_layout_accepted=false`, `general_routing_allowed=false`, `firmware_allowed=false`, `production_release=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`.
+
+## 2026-10-28 — предыдущий frozen-кандидат T521 bdd026d5 (история)
 
 [Кандидат t521_bdd026d5](../hardware/candidates/t521_bdd026d5/README_RU.md) опубликован отдельным immutable DRAFT/WIP после `unified_da1962d9`, не заменяя предыдущую базу. PCB SHA256 `bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06`, root SCH `abec756a479dc1fa352ee6db5f0ed0c6f03ea472992acd5553bc54deffdde868`. Исходный архив SHA256 `9d3d8d1ad62dc60f23cfd0783d7d0c4adf4d76f0ec45e0b41832ef43a8383e3c`; проверены все 76 записей исходного `SHA256SUMS`.
 

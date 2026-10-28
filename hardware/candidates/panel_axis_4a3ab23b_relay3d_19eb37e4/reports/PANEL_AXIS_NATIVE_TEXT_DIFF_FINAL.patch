@@ -1,0 +1,232 @@
+diff --git a/work/Sirokko26201_control_motor_candidate.before.kicad_pcb b/work/Sirokko26201_control_motor_candidate.final.kicad_pcb
+index 4d05381..0f1ef8c 100644
+--- a/work/Sirokko26201_control_motor_candidate.before.kicad_pcb
++++ b/work/Sirokko26201_control_motor_candidate.final.kicad_pcb
+@@ -6526,7 +6526,7 @@
+ 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
+ 		(tags "resistor")
+ 		(property "Reference" "R92"
+-			(at 8.5 0 0)
++			(at 5.5 0 0)
+ 			(layer "F.SilkS")
+ 			(uuid "6834e4c4-7a2f-4747-b35c-9494ee1979c2")
+ 			(effects
+@@ -40739,7 +40739,7 @@
+ 	(footprint "Sirokko_Panel:SW_NKK_BB25AB-FA_3D_ENVELOPE"
+ 		(layer "B.Cu")
+ 		(uuid "38ecba98-0272-4117-907c-13361819d777")
+-		(at 68 170)
++		(at 64.95 170)
+ 		(descr "NKK BB25AB-FA momentary DPDT pushbutton, straight PC with bracket; footprint per NKK Series BB catalog C16")
+ 		(tags "pushbutton DPDT NKK BB25AB-FA")
+ 		(property "Reference" "J24"
+@@ -41024,7 +41024,7 @@
+ 	(footprint "Sirokko_Panel:RotaryEncoder_Alps_EC11E15244G1_Knob41001_3D_ENVELOPE"
+ 		(layer "B.Cu")
+ 		(uuid "5dace102-70e9-4a32-aea3-0fdc288a1c3a")
+-		(at 68 110)
++		(at 64.95 110)
+ 		(descr "Alps Alpine EC11E15244G1, vertical 11.7x12 mm, 30 detents / 15 pulses, push switch; manufacturer drawings EC11 d_82/d_83")
+ 		(tags "rotary encoder EC11E15244G1")
+ 		(property "Reference" "J23"
+@@ -41263,7 +41263,7 @@
+ 	(footprint "Button_Switch_THT:SW_SPST_Omron_B3F-40xx"
+ 		(layer "B.Cu")
+ 		(uuid "87945ea7-7ba8-4210-a00b-5748f446f389")
+-		(at 61.75 142.5)
++		(at 58.7 142.5)
+ 		(descr "SW_THT_Tactile_Omron_B3F-40xx, 12x12 mm, Through hole switch from the B3F Family manufactured by Omron,  https://www.omron.com/ecb/products/pdf/en-b3f.pdf")
+ 		(tags "tactile switch THT button push B3F-4000 B3F-4050 B3F-4005 B3F-4055  ")
+ 		(property "Reference" "J22"
+@@ -41318,7 +41318,7 @@
+ 				(justify mirror)
+ 			)
+ 		)
+-		(property "Panel_Actuator_Centre_X_mm" "102.25"
++		(property "Panel_Actuator_Centre_X_mm" "64.95"
+ 			(at 0 0 0)
+ 			(layer "B.SilkS")
+ 			(hide yes)
+@@ -41330,7 +41330,7 @@
+ 				)
+ 			)
+ 		)
+-		(property "Panel_Actuator_Centre_Y_mm" "146.50"
++		(property "Panel_Actuator_Centre_Y_mm" "140.00"
+ 			(at 0 0 0)
+ 			(layer "B.SilkS")
+ 			(hide yes)
+@@ -42851,7 +42851,7 @@
+ 			)
+ 		)
+ 	)
+-	(gr_text "PANEL CUTOUT 66.4 x 46.0; PLANE Z=8.5"
++	(gr_text "PANEL WINDOW 72.5 x 45.3; OUTER ENVELOPE; Z NOT QUALIFIED"
+ 		(at 128 115 0)
+ 		(layer "Dwgs.User")
+ 		(uuid "403ebeba-1482-493b-b303-92432dfc58bf")
+@@ -42861,7 +42861,7 @@
+ 			)
+ 		)
+ 	)
+-	(gr_text "CONTROL AXIS X=68.0; 60.0 FROM WINDOW RIGHT"
++	(gr_text "CONTROL AXIS X=64.95; 60.00 FROM WINDOW OPERATOR-RIGHT"
+ 		(at 66 110 90)
+ 		(layer "Dwgs.User")
+ 		(uuid "ef54e0c6-ed8a-438e-b72d-f2c03dcf275f")
+@@ -42881,7 +42881,7 @@
+ 			)
+ 		)
+ 	)
+-	(gr_text "J26 CABLE EXIT INSIDE PANEL CUTOUT"
++	(gr_text "J26 CABLE EXIT INSIDE PANEL WINDOW"
+ 		(at 129 140 90)
+ 		(layer "Cmts.User")
+ 		(uuid "07e04ef5-23b3-4a50-8e04-8b76b589baa1")
+@@ -45818,7 +45818,7 @@
+ 		(uuid "d980dcc1-c07b-4b14-96b8-1ccf3f73c33e")
+ 	)
+ 	(segment
+-		(start 65.46 170)
++		(start 62.41 170)
+ 		(end 72.46 170)
+ 		(width 0.25)
+ 		(layer "F.Cu")
+@@ -47075,6 +47075,14 @@
+ 		(net "/P24_PROTECTED")
+ 		(uuid "2c26fba1-16a3-46ce-b5c0-a2bdb7857a00")
+ 	)
++	(segment
++		(start 58 146.08)
++		(end 62 146.08)
++		(width 1)
++		(layer "F.Cu")
++		(net "/P24_PROTECTED")
++		(uuid "2cd6649d-dd90-420e-9150-dbe2ab4043bf")
++	)
+ 	(segment
+ 		(start 85 115)
+ 		(end 58 115)
+@@ -47196,8 +47204,8 @@
+ 		(uuid "a4a2f71c-6cd7-44c9-9752-34e5bde5d521")
+ 	)
+ 	(segment
+-		(start 58 146.08)
+-		(end 58 120)
++		(start 62 146.08)
++		(end 62 120)
+ 		(width 1)
+ 		(layer "F.Cu")
+ 		(net "/P24_PROTECTED")
+@@ -47219,6 +47227,14 @@
+ 		(net "/P24_PROTECTED")
+ 		(uuid "b093021b-6962-489d-a612-ec0a6884e97a")
+ 	)
++	(segment
++		(start 62 120)
++		(end 58 120)
++		(width 1)
++		(layer "F.Cu")
++		(net "/P24_PROTECTED")
++		(uuid "c46ebafa-ac74-476f-abc5-f442fddb8259")
++	)
+ 	(segment
+ 		(start 227 132.699999)
+ 		(end 276 132.699999)
+@@ -47629,9 +47645,17 @@
+ 		(net "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB")
+ 		(uuid "819c1a9f-3554-4dc5-ae29-507037e7f82c")
+ 	)
++	(segment
++		(start 61.5 107.5)
++		(end 57.5 108)
++		(width 0.2)
++		(layer "F.Cu")
++		(net "/RESET_HW_NO_N")
++		(uuid "0380ef3e-5bc2-427f-96e8-b65be6b5ae08")
++	)
+ 	(segment
+ 		(start 59.5438 102.4664)
+-		(end 59.5438 108.7449)
++		(end 61.5 106.5)
+ 		(width 0.2)
+ 		(layer "F.Cu")
+ 		(net "/RESET_HW_NO_N")
+@@ -47702,13 +47726,21 @@
+ 		(uuid "ca399089-9e7a-4732-a59c-bea9c4e12cf0")
+ 	)
+ 	(segment
+-		(start 59.5438 108.7449)
+-		(end 55.9798 112.3089)
++		(start 61.5 106.5)
++		(end 61.5 107.5)
+ 		(width 0.2)
+ 		(layer "F.Cu")
+ 		(net "/RESET_HW_NO_N")
+ 		(uuid "cbb882d9-2bd4-4cef-8d18-e1e1348f4405")
+ 	)
++	(segment
++		(start 57.5 108)
++		(end 55.9798 112.3089)
++		(width 0.2)
++		(layer "F.Cu")
++		(net "/RESET_HW_NO_N")
++		(uuid "d94268c6-4a5c-4fbb-a473-d9f0ced90f00")
++	)
+ 	(segment
+ 		(start 64.3039 84.4731)
+ 		(end 64.3039 81.9775)
+@@ -47805,6 +47837,14 @@
+ 		(net "/RESET_HW_NO_N")
+ 		(uuid "41f2703d-e15c-4f37-a874-7a964daf4cc7")
+ 	)
++	(segment
++		(start 54 172.54)
++		(end 55.9798 155.8163)
++		(width 0.2)
++		(layer "B.Cu")
++		(net "/RESET_HW_NO_N")
++		(uuid "4ec6ddcf-331d-4704-a570-cc13c4c7cc53")
++	)
+ 	(segment
+ 		(start 68.1082 78.1732)
+ 		(end 68.1082 75.7257)
+@@ -47822,8 +47862,8 @@
+ 		(uuid "ab9f276b-95a4-45da-b536-39a15ba0bf63")
+ 	)
+ 	(segment
+-		(start 65.46 172.54)
+-		(end 55.9798 155.8163)
++		(start 62.41 172.54)
++		(end 54 172.54)
+ 		(width 0.2)
+ 		(layer "B.Cu")
+ 		(net "/RESET_HW_NO_N")
+@@ -47982,8 +48022,16 @@
+ 		(uuid "2c57ff59-61fd-45ee-89f8-aad223ff205b")
+ 	)
+ 	(segment
+-		(start 65.46 167.46)
+-		(end 56.975 151.975)
++		(start 58 167.46)
++		(end 56.5 151.975)
++		(width 0.2)
++		(layer "B.Cu")
++		(net "/RESET_HW_NC_N")
++		(uuid "2d446adc-8a0a-40b1-acdf-66a182bb6e87")
++	)
++	(segment
++		(start 62.41 167.46)
++		(end 58 167.46)
+ 		(width 0.2)
+ 		(layer "B.Cu")
+ 		(net "/RESET_HW_NC_N")
+@@ -48038,7 +48086,7 @@
+ 		(uuid "e7e2d846-5d83-413d-8460-0775d5fa8145")
+ 	)
+ 	(segment
+-		(start 56.975 151.975)
++		(start 56.5 151.975)
+ 		(end 56.975 126.7046)
+ 		(width 0.2)
+ 		(layer "B.Cu")
