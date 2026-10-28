@@ -1,0 +1,119 @@
+{
+  "revision": "f251bdfc",
+  "full_netlist_sha": "3eaa6cdd3325951e7c81b5cfa5e399aa2cd22f85c6aad551f9eae1404ab1d32f",
+  "calculations": {
+    "safety_ok_pulldown_current_nominal_at_3p3_A": 0.001032127659574468,
+    "safety_ok_min_resistive_load_at_required_2V_A": 0.0006032882923550714,
+    "hcs_20uA_row_load_ratio": 30.164414617753565,
+    "clear_base_at_VCC3p0_HIGH_margin_V": 1.0299999999999998,
+    "clear_base_at_VCC3p0_LOW_margin_V": 0.74,
+    "fault_sink_upper_bound_VCC3p6_A": 0.00036363636363636367,
+    "fault_LOW_margin_at_LVC_VCC3p0_V": 0.33999999999999997,
+    "fault_HIGH_screen_VCC3p0_V": 2.9394,
+    "fault_HIGH_screen_margin_at_LVC_VCC3p0_V": 1.0694,
+    "q100_order_qty": 2,
+    "q100_lot_cost_RUB": 320
+  },
+  "logical_rows": 64,
+  "uvlo_highZ_corner": [
+    {
+      "vm": 1,
+      "driver_ok": 1,
+      "allow": 1,
+      "clear": 1,
+      "safety": 1,
+      "coil_cmd": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "vm": 0,
+      "driver_ok": 1,
+      "allow": 1,
+      "clear": 1,
+      "safety": 1,
+      "coil_cmd": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "vm": 1,
+      "driver_ok": 1,
+      "allow": 1,
+      "clear": 1,
+      "safety": 1,
+      "coil_cmd": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "positive_low_fault_control": [
+    {
+      "vm": 1,
+      "driver_ok": 1,
+      "allow": 1,
+      "coil_cmd": 1
+    },
+    {
+      "vm": 0,
+      "driver_ok": 0,
+      "allow": 0,
+      "coil_cmd": 0
+    },
+    {
+      "vm": 1,
+      "driver_ok": 1,
+      "allow": 0,
+      "coil_cmd": 0
+    }
+  ],
+  "qualification": false,
+  "bench_test": false,
+  "notes": [
+    "Exact VCC3.0 static screen is not full 3.0..3.6V qualification",
+    "DRV8803 section6.5 parameters are TA25C",
+    "nFAULT under UVLO is not guaranteed low in section7.3.2.3",
+    "This is an ideal logical counterexample, not a claim of measured nFAULT behavior"
+  ],
+  "logical_model": "clear=base AND driver_ok; safety=allow AND clear; glow_enable=glow AND safety; fuel_cmd=fuel_permit AND safety; output_k=vm_valid AND corresponding_command. Ideal intended schematic only.",
+  "frozen_base_clear_inputs": [
+    {
+      "pin": "11",
+      "net": "/+3V3"
+    },
+    {
+      "pin": "12",
+      "net": "/+3V3"
+    },
+    {
+      "pin": "5",
+      "net": "/ARM_READY"
+    },
+    {
+      "pin": "6",
+      "net": "/NOT_SW_TRIP"
+    },
+    {
+      "pin": "1",
+      "net": "/PG_OK"
+    },
+    {
+      "pin": "3",
+      "net": "/STOP_OK"
+    },
+    {
+      "pin": "4",
+      "net": "/THERMAL_OK"
+    },
+    {
+      "pin": "2",
+      "net": "/WD_OK"
+    }
+  ]
+}
