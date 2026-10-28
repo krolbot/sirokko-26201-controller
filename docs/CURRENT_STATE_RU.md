@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: энкодер до MCU bdba2e69
+## 2026-10-29 — самый новый PCB-checkpoint: START_REQUEST до MCU 4112abaf
+
+[Кандидат start_mcu_4112abaf_wip](../hardware/candidates/start_mcu_4112abaf_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `4112abaf1bffaa9d5b5c877df7f7ff294d98be1ec0443bd8295717e67789d310`; исходная PCB — `bdba2e6976e41dce6c9c2c548176809d7fba3b5b71e2e41aa9fbf13160fdbd04`. Остальные 63 файла и firmware не менялись.
+
+J1.7 физически соединён с прежней группой U5.5 и обеих площадок J22.1 `/START_REQUEST`; R14.2 остаётся отдельно, поэтому вся сеть ещё не завершена. Добавлены 12 сегментов 0,25 мм и пять переходов 0,60/0,30 мм. V1/V2 отклонены; опубликован только принятый V3 без ослабления правил.
+
+Native: 699 площадок, 345→344 группы, 8936→8939 пар, потерь 0, три ожидаемые пары. KiCad CLI: исходник 26/131/0, V3 и повторно открытый master 26/130/0; все exit 5. Полные мультимножества violations/parity прежние. Концы airwire между V3 и master нестабильны, но полные native-компоненты меди и PAD-партиции эквивалентны. Это **не PASS**; ERC не запускался.
+
+Остаётся 130 соединений, включая R14.2, питание/возвраты, силовые/управляющие цепи и TFT SPI; GPIO, дребезг, ЭМС, функциональная безопасность и общая квалификация не завершены. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: энкодер до MCU bdba2e69
 
 [Кандидат encoder_mcu_bdba2e69_wip](../hardware/candidates/encoder_mcu_bdba2e69_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `bdba2e6976e41dce6c9c2c548176809d7fba3b5b71e2e41aa9fbf13160fdbd04`; исходная PCB — `bebc7b901a16404cf6934bad8f7926cc9a1e845646b5695a5af846ca0a8dfded`. Остальные 63 файла и firmware не менялись.
 

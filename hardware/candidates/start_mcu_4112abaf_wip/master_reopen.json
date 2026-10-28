@@ -1,0 +1,12 @@
+{
+  "sha256": "4112abaf1bffaa9d5b5c877df7f7ff294d98be1ec0443bd8295717e67789d310",
+  "groups_exact_reopen": true,
+  "counts": {
+    "violations": 26,
+    "unconnected_items": 130,
+    "schematic_parity": 0
+  },
+  "CLI_exit": 5,
+  "native_airwire_components_equivalent": true,
+  "note": "Exact airwire endpoint records differ across CLI runs; equivalence independently checked against native complete copper components, including track endpoints. All PAD partitions match candidate."
+}
