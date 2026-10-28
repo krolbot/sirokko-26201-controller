@@ -4,7 +4,21 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: локальные контакты ПУСК/СТОП ee7f604f
+## 2026-10-29 — самый новый PCB-checkpoint: ПУСК/СТОП к аппаратной логике U5 ee4d7b31
+
+[Кандидат start_signal_ee4d7b31_wip](../hardware/candidates/start_signal_ee4d7b31_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `ee4d7b31500b5a4d96e84d3150c6a9347adbb032d2f5e9d101b0284d7b7c2228`; исходная PCB — `ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+U5.5 `START_REQUEST` физически соединён с обеими площадками J22.1 кнопки ПУСК/СТОП. J1.7 и R14.2 остаются вне группы, поэтому вся сигнальная сеть ещё не готова. Земля J22 и отдельные цепи RESET сохранены; контакт кнопки не зашунтирован. Добавлены 19 сегментов шириной 0,25 мм и 10 переходов 0,60/0,30 мм общей длиной 129,804949 мм без вертикали переходов. Прежняя медь, footprints, pads, UUID, pad→net, геометрия и позиции, зоны, keepout и Edge.Cuts сохранены; правила не ослаблялись.
+
+Native-проверка сообщает 699 площадок, 359→358 физических групп и 8516→8518 пар; потерь 0, добавлены ровно две ожидаемые пары U5.5 с двумя J22.1, межсетевых PAD-пар 0. Исходная группа J22.1 содержала ровно две площадки, U5.5 был singleton-группой. Проверены полный ожидаемый pairset, покрытие UUID, симметрия, транзитивная замкнутость, прежние safety-группы и `P24_PRESENT`, 18 TFT power/GND checks и связь девяти thermal-via с EP и двумя конкретными GND-зонами. J1.7 и R14.2 положительно остаются вне целевой группы; хеши полных партиций независимо пересчитаны издателем.
+
+Сохранённый MCP DRC содержит 144 несоединения и 26 прежних предупреждений вместо 145/26; полное мультимножество `violations` с severity, UUID и координатами совпало с исходником. Во frozen-пакете зафиксирован реально выполненный KiCad CLI для исходника и кандидата с `--all-track-errors --schematic-parity --severity-all --exit-code-violations --refill-zones` без `--save-board`: оба запуска завершились кодом 5, `stderr` пуст; исходник — 26 нарушений / 145 несоединений / 0 расхождений схемы, кандидат — 26 / 144 / 0. Байты обеих PCB после запуска не изменились. Это **не PASS**. ERC на этом шаге не запускался.
+
+Сохранённые `ignored_checks`: `missing_courtyard`, `track_not_centered_on_via`, `tuning_profile_track_geometries`, `footprint_filters_mismatch`, `footprint_type_mismatch`. Они не менялись; отчёты не доказывают проверку отключённых правил. Остались 144 несоединения, включая J1.7/R14.2, SPI U303.2/U303.5 и другие управляющие, питающие и силовые цепи. Длинный WIP-маршрут не квалифицирует дребезг и временные диаграммы кнопки, fail-off, power-loss/rearm, ЭМС, высокочастотный обратный путь или безопасность изделия. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+Исправление документации c40d6c07 остаётся опубликованным побайтно в предыдущем `start_local_ee7f604f_wip`; прежние frozen-кандидаты не переписывались.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: локальные контакты ПУСК/СТОП ee7f604f
 
 [Кандидат start_local_ee7f604f_wip](../hardware/candidates/start_local_ee7f604f_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5`; исходная PCB — `c40d6c07393fbba6fbbdb21c5f7749c2f1cece14be73b32f7382acfd820a36d4`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
