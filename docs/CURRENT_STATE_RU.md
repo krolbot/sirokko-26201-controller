@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: локальный CLEAR_OK_BASE 0504358e
+## 2026-10-29 — самый новый PCB-checkpoint: SAFETY_OK_RAW и RESET_ACCEPT 3af3e417
+
+[Кандидат safety_reset_3af3e417_wip](../hardware/candidates/safety_reset_3af3e417_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `3af3e4174ceb359a195e720471346f7bc616f936cfd66b8711c77e76efb7880a`; исходная PCB — `0504358e6753282aec204a52c9939167b2e0928628001acd711c8242dc974467`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+В двух последовательных записанных шагах соединены `/SAFETY_OK_RAW` U6.12↔U14.3 и `/RESET_ACCEPT` U3.12↔U2.2. Сохранённые native-проверки сообщают 699 площадок, 386→385→384 физические группы и 7084→7085→7086 пар; потерь 0, на каждом шаге добавлена ровно одна целевая пара, межсетевых PAD-пар 0. Хеши полных партиций независимо пересчитаны издателем. Исторический промежуточный PCB `8a39b984` сохранён только в evidence и отдельным кандидатом не публикуется.
+
+Финальный сохранённый KiCad 10.0.7 DRC содержит 170 несоединений и 26 предупреждений; полный набор предупреждений совпал с базой. Это **не PASS**: CLI exit code, ERC и PCB↔SCH parity не подтверждены и издателем не повторялись. Нового изображения нет.
+
+Остальные сигналы защиты и команд, общие питание и возвраты, силовые цепи, UVLO, переходные процессы, динамика защёлки, токовые и тепловые режимы, U303.2 MOSI и U303.5 SCK остаются незавершёнными. Физических сборки, пайки, прошивки, измерений и испытаний не было. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: локальный CLEAR_OK_BASE 0504358e
 
 [Кандидат clear_base_0504358e_wip](../hardware/candidates/clear_base_0504358e_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `0504358e6753282aec204a52c9939167b2e0928628001acd711c8242dc974467`; исходная PCB — `b82b025f4b4bbb9ae7489802c7426c9eb456a6ba531b08139d22f51a3a8e6963`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 

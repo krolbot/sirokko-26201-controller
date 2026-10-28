@@ -1,0 +1,313 @@
+{
+  "source_sha256": "8a39b984364875a9bd3927bfcd816baa10a14343638e35a964d18a55d1da386d",
+  "candidate_sha256": "3af3e4174ceb359a195e720471346f7bc616f936cfd66b8711c77e76efb7880a",
+  "pads": 699,
+  "old_groups": 385,
+  "new_groups": 384,
+  "old_pairs": 7085,
+  "new_pairs": 7086,
+  "lost_pairs": 0,
+  "added_pairs": 1,
+  "cross_net_pairs": 0,
+  "old_zone_footprint_pad_geometry_preserved": true,
+  "removed_copper": [],
+  "added_copper": [
+    [
+      "02e9d1f0-e6db-4c4b-988a-5a210c05bf7f",
+      "/RESET_ACCEPT",
+      [
+        54300000,
+        65900000
+      ],
+      [
+        54300000,
+        69200000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "04c079e0-538b-48ac-815e-44a7c99a7b71",
+      "/RESET_ACCEPT",
+      [
+        50500000,
+        65900000
+      ],
+      [
+        54300000,
+        65900000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "10377cb8-9d62-4479-87ef-9a72107fa9d8",
+      "/RESET_ACCEPT",
+      [
+        67200000,
+        72460000
+      ],
+      [
+        64525000,
+        72460000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "132a71b8-70e5-439f-9627-0d52b1359071",
+      "/RESET_ACCEPT",
+      [
+        57650000,
+        69200000
+      ],
+      [
+        57650000,
+        70200000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "55de338f-757a-4a2d-a3bf-bdd70920de1c",
+      "/RESET_ACCEPT",
+      [
+        52475000,
+        53730000
+      ],
+      [
+        50500000,
+        53730000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "8a497ed1-9610-4e10-a124-6362278af2d4",
+      "/RESET_ACCEPT",
+      [
+        54300000,
+        69200000
+      ],
+      [
+        57650000,
+        69200000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "ba1d6972-6f49-4d7a-9f1a-26ef0690cab5",
+      "/RESET_ACCEPT",
+      [
+        57650000,
+        70200000
+      ],
+      [
+        59000000,
+        70200000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "d3de47fd-0daa-482a-933b-d10496948234",
+      "/RESET_ACCEPT",
+      [
+        50500000,
+        53730000
+      ],
+      [
+        50500000,
+        65900000
+      ],
+      [
+        250000
+      ],
+      0
+    ],
+    [
+      "45ec40b6-e3fc-48ff-9ce0-b2f60adb8642",
+      "/RESET_ACCEPT",
+      [
+        67200000,
+        72460000
+      ],
+      [
+        67200000,
+        72460000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "a3731ac2-49be-4de0-89dd-58c078ba3d6c",
+      "/RESET_ACCEPT",
+      [
+        59000000,
+        70200000
+      ],
+      [
+        59000000,
+        70200000
+      ],
+      [
+        600000,
+        600000,
+        300000,
+        4
+      ],
+      0
+    ],
+    [
+      "39213c7f-5dfe-45d4-9d22-4c257be249b8",
+      "/RESET_ACCEPT",
+      [
+        59000000,
+        70200000
+      ],
+      [
+        67200000,
+        70200000
+      ],
+      [
+        250000
+      ],
+      2
+    ],
+    [
+      "6e99d1d3-9796-4d3f-a816-6f1ca222c699",
+      "/RESET_ACCEPT",
+      [
+        67200000,
+        70200000
+      ],
+      [
+        67200000,
+        72460000
+      ],
+      [
+        250000
+      ],
+      2
+    ]
+  ],
+  "latch_clear_allow_groups": {
+    "/CLEAR_OK": [
+      "U6.8",
+      "U6.2",
+      "U2.1"
+    ],
+    "/ALLOW_LATCH": [
+      "U2.5",
+      "U6.1"
+    ]
+  },
+  "old_thermal_vias_still_connected": [
+    {
+      "uuid": "1e862e81-6893-4e85-9601-9fb1ea5f8824",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "3cc0006d-eefd-439d-8b9a-ce52ddc61bb2",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "5e593f56-1376-4eaf-9e01-353bc5ccf04d",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "60450c54-f662-481b-87dd-f13e564100d4",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "7078ab05-6c2b-4501-9366-c96bcde4051c",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "a4678447-48d1-4f37-a13e-1406d7421232",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "da034588-c6d8-457d-8e2f-2f161426c987",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "e7d37ac4-15c1-4b28-960e-a59fd4d3e58b",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    },
+    {
+      "uuid": "f517711c-c266-4b19-b575-449092995667",
+      "connected_zone_UUIDs": [
+        "3846388d-9c2e-4416-b5c0-3e880a94c81a",
+        "d86f1412-49be-4ad1-a8cc-6c5f2fb8b510"
+      ]
+    }
+  ],
+  "power_regression_checks": {
+    "J26.1": true,
+    "J26.8": true,
+    "U303.14": true,
+    "U302.5": true,
+    "U302.6": true,
+    "C305.1": true,
+    "C306.1": true,
+    "R302.1": true,
+    "R303.1": true,
+    "J26.2": true,
+    "U303.1": true,
+    "U303.4": true,
+    "U303.7": true,
+    "U303.10": true,
+    "U303.13": true,
+    "U302.2": true,
+    "C305.2": true,
+    "C306.2": true
+  },
+  "negative_old_RESET_ACCEPT_groups_separate": true,
+  "EdgeCuts_preserved": true,
+  "SPEED_groups_preserved": true
+}
