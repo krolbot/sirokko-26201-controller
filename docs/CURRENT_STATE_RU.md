@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: локальные питание и уровни U20 57d1a4e9
+## 2026-10-29 — самый новый PCB-checkpoint: основной подвод P24 и питания U20 e244c81b
+
+[Кандидат p24_mainfeed_e244c81b_wip](../hardware/candidates/p24_mainfeed_e244c81b_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd`; исходная PCB — `57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+Основная +3V3 физически подведена от группы R17.1 к C28.1/U20.1/U20.5/R122.1; R120.2 соединён с R121.1 `P24_SERIES_MID`, R120.1 — с конкретной существующей дорожкой `P24_PROTECTED` x149,54, y142…166,5. Проводимость проверена относительно физической группы этой дорожки, а не только по имени сети. Добавлены 10 сегментов 0,25 мм и четыре перехода 0,60/0,30 мм; прежняя медь не удалялась, компоненты и маркировка не двигались.
+
+Native-проверка сообщает 699 площадок, 371→368 физических групп и 7614→7849 пар; потерь 0, добавлено 235 ожидаемых пар объединённых групп, межсетевых PAD-пар 0. Хеши партиций независимо пересчитаны издателем. Сохранённый DRC содержит 154 несоединения и 26 предупреждений; полный набор предупреждений совпал с базой. Это **не PASS**. CLI exit code, ERC и PCB↔SCH parity не подтверждены и издателем не повторялись.
+
+U20 теперь соединён медью с основной +3V3, но это не измерение напряжения. P24_PRESENT U20.4→U6.11 остаётся открытым; полная функция, power-loss/brownout/rearm, PI/EMC, силовая и динамическая квалификация не завершены. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: локальные питание и уровни U20 57d1a4e9
 
 [Кандидат u20_power_57d1a4e9_wip](../hardware/candidates/u20_power_57d1a4e9_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80`; исходная PCB — `b64cbaa99161242f4f52cd8409a385a1a736106f1efe0df467dbbb6747b32d3a`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 

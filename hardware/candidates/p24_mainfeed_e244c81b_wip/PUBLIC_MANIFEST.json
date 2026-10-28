@@ -1,0 +1,101 @@
+{
+  "package": "SIROKKO_P24_MAINFEED_E244C81B_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_P24_MAINFEED_E244C81B_WIP.zip",
+    "sha256": "8c149807a3683d1d2a82b4b11d77315e897b532b9bb798e64ddbe712282609bc",
+    "entries": 6,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false,
+    "entry_crc32": {
+      "SIROKKO_E244C81B_DRAFT.kicad_pcb": "8615b453",
+      "P24_MAINFEED_NATIVE.json": "51256ebf",
+      "P24_MAINFEED_PARTITIONS.json": "9d48bd14",
+      "P24_MAINFEED_DRC.json": "a1de305a",
+      "P24_MAINFEED_E244C81B_RU.md": "faa5b12b",
+      "SHA256SUMS": "01d413ed"
+    }
+  },
+  "baseline_project": {
+    "path": "../u20_power_57d1a4e9_wip/project",
+    "git_commit": "f8c9efa84e405d779d5614eb69d099213acabf28",
+    "git_tree": "98037df038bbc828d001b9831b3409c1706093f8",
+    "pcb_sha256": "57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd",
+    "previous_pcb_sha256": "57d1a4e9251ed2b594df479666af6ea5974f7e093adc0ed70c6e502182dd2f80",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "SIROKKO_E244C81B_DRAFT.kicad_pcb": "e244c81beb36eb33aa1eb1ff23aca742a803756bb27d7142fd7a587f7f3b0efd",
+    "P24_MAINFEED_NATIVE.json": "6138014081506d79e3ecc8f527b62c57ccafa3ee83f2f117e93b4b611f48fb0c",
+    "P24_MAINFEED_PARTITIONS.json": "5961c6a712874f5031c978d66f4abaec2465b12317d3b1645068d5fa942a9389",
+    "P24_MAINFEED_DRC.json": "458f6762f7d907088132749089fb0c86aa72737a5dbfca45ef7867e86644c7e4",
+    "P24_MAINFEED_E244C81B_RU.md": "2dac67c7d2cbe30fcf867f1444e77e61e54e9cf7d31a6855ffa740981dc1088f"
+  },
+  "partition_checks": [
+    {
+      "file": "P24_MAINFEED_PARTITIONS.json",
+      "source_pairs": 7614,
+      "candidate_pairs": 7849,
+      "lost_pairs": 0,
+      "added_pairs": 235,
+      "source_pairs_sha256": "0ab9c76cb7d01c62c28b3a9214c88f85e45c571179160d87d55570dd12058b31",
+      "candidate_pairs_sha256": "731afd1e62ff3ce29ec5cb5ffcce31c014071f46ec77ef6171da6a8047c89c30"
+    }
+  ],
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 371,
+    "candidate_groups": 368,
+    "source_pairs": 7614,
+    "candidate_pairs": 7849,
+    "lost_pairs": 0,
+    "added_pairs": 235,
+    "cross_net_pairs": 0,
+    "drc_unconnected": 154,
+    "drc_warnings": 26,
+    "added_segments": 10,
+    "vias_added": 4,
+    "master_tracks_and_vias": 1643,
+    "master_zones": 27,
+    "drc_pass": false,
+    "drc_command_recorded": false,
+    "drc_exit_code_recorded": false,
+    "schematic_parity_recorded": false,
+    "erc_rerun": false,
+    "partition_pair_hashes_recomputed": true,
+    "old_geometry_copper_and_zones_preserved": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_entries_verified": 5,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_resolved": 17,
+    "drc_erc_parity_rerun": false,
+    "preview_inspected": false,
+    "private_infrastructure_paths_found": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "U20 теперь соединён медью с основной +3V3, но это не измерение. P24_PRESENT U20.4→U6.11 остаётся открытым; полная функция, power-loss/brownout/rearm, PI/EMC, силовая и динамическая квалификация не завершены. Остальные 154 разрыва сохраняются."
+}
