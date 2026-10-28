@@ -1,0 +1,54 @@
+{
+  "source": {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--format",
+      "json",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--severity-all",
+      "--exit-code-violations",
+      "--refill-zones",
+      "--output",
+      "source_full_cli.json",
+      "../start_signal_ee4d7b31_wip/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 5,
+    "stdout": "Found 26 violations\nFound 144 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to source_full_cli.json\n",
+    "stderr": "",
+    "pcb_sha256": "ee4d7b31500b5a4d96e84d3150c6a9347adbb032d2f5e9d101b0284d7b7c2228",
+    "counts": {
+      "violations": 26,
+      "unconnected_items": 144,
+      "schematic_parity": 0
+    }
+  },
+  "candidate": {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--format",
+      "json",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--severity-all",
+      "--exit-code-violations",
+      "--refill-zones",
+      "--output",
+      "candidate_full_cli.json",
+      "project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 5,
+    "stdout": "Found 26 violations\nFound 139 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to candidate_full_cli.json\n",
+    "stderr": "",
+    "pcb_sha256": "9e897bf8d805a47bc0e4aac25f1050a115974e5f9e2f534b7070403bf0818f66",
+    "counts": {
+      "violations": 26,
+      "unconnected_items": 139,
+      "schematic_parity": 0
+    }
+  }
+}

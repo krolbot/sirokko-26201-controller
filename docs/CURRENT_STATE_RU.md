@@ -4,7 +4,19 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: ПУСК/СТОП к аппаратной логике U5 ee4d7b31
+## 2026-10-29 — самый новый PCB-checkpoint: локальная обвязка энкодера 9e897bf8
+
+[Кандидат encoder_local_9e897bf8_wip](../hardware/candidates/encoder_local_9e897bf8_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `9e897bf8d805a47bc0e4aac25f1050a115974e5f9e2f534b7070403bf0818f66`; исходная PCB — `ee4d7b31500b5a4d96e84d3150c6a9347adbb032d2f5e9d101b0284d7b7c2228`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
+
+R85.1 подключён к прежней физической группе `+3V3` с контрольной площадкой R17.1; R85.2 соединён с C75.1 на `/ENC_SW`; C75.2, C19.2 и C20.2 подключены к прежней общей `GND` с контрольной площадкой C8.2. `ENC_A`, `ENC_B` и `ENC_SW` не объединены и не заземлены; номиналы и положение компонентов не менялись. J23.4 и J3.10 остаются вне группы C75.1, поэтому основные маршруты энкодера ещё не готовы. Добавлены 10 сегментов 0,25 мм и четыре перехода 0,60/0,30 мм; прежняя медь, footprints, pads, UUID, pad→net, зоны, keepout и Edge.Cuts сохранены, правила не ослаблялись.
+
+Native-проверка сообщает 699 площадок, 358→353 физических группы и 8518→8919 пар; потерь 0, добавлена ровно 401 ожидаемая пара от присоединения пяти групп, а не 401 маршрут. Полный expected pairset состоит только из объединений R85.2/C75.1, C8.2/C75.2/C19.2/C20.2 и R17.1/R85.1. Проверены исходная раздельность групп, покрытие UUID, симметрия, транзитивная замкнутость, прежняя группа U5.5 с обеими J22.1, safety-группы и `P24_PRESENT`, 18 TFT power/GND checks и связь девяти thermal-via с EP и двумя конкретными GND-зонами. Хеши полных партиций независимо пересчитаны издателем.
+
+Сохранённый MCP DRC содержит 139 несоединений и 26 прежних предупреждений вместо 144/26; полное мультимножество `violations` с severity, UUID и координатами совпало с исходником. Реальные KiCad CLI-запуски с `--all-track-errors --schematic-parity --severity-all --exit-code-violations --refill-zones` без `--save-board` завершились кодом 5, `stderr` пуст: исходник — 26 нарушений / 144 несоединения / 0 расхождений схемы, кандидат — 26 / 139 / 0. Байты PCB не изменились. Это **не PASS**. ERC не запускался.
+
+Сохранённые `ignored_checks`: `missing_courtyard`, `track_not_centered_on_via`, `tuning_profile_track_geometries`, `footprint_filters_mismatch`, `footprint_type_mismatch`. Они не менялись и не квалифицированы. Остались 139 несоединений, включая основные сигналы энкодера, J1.7/R14.2, SPI U303.2/U303.5 и другие управляющие, питающие и силовые цепи. Наличие фильтров и общей земли не квалифицирует дребезг, ЭМС или временные параметры GPIO. `full_layout_accepted=false`, `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: ПУСК/СТОП к аппаратной логике U5 ee4d7b31
 
 [Кандидат start_signal_ee4d7b31_wip](../hardware/candidates/start_signal_ee4d7b31_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `ee4d7b31500b5a4d96e84d3150c6a9347adbb032d2f5e9d101b0284d7b7c2228`; исходная PCB — `ee7f604fca8c1c7cd29ba4719f769d28877a24af78b9104af1ce91e9ba76d5d5`. SCH/PRO, остальные 63 файла совместимого проектного контекста и firmware не менялись.
 
