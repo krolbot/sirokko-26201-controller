@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Power_Supervisor")(type "KiCad")(uri "${KICAD10_SYMBOL_DIR}/Power_Supervisor.kicad_sym")(options "")(descr "Installed stock TPS3808DBV used by exact published reset SCH"))
+)

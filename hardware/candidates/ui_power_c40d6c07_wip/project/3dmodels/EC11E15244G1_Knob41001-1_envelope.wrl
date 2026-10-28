@@ -1,0 +1,16 @@
+#VRML V2.0 utf8
+# DOCUMENTED NOMINAL ENVELOPE: EC11E body/shaft + project-baseline 41001-1 knob, full 13 mm insertion assumption; not production tolerance proof.
+Transform {
+  translation 0.000000000 0.000000000 0.885826772
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.1200 0.1200 0.1300 } } geometry Box { size 4.606299213 4.724409449 1.771653543 } } ]
+}
+Transform {
+  translation 0.000000000 0.000000000 5.708661417
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.7000 0.7200 0.7400 } } geometry Cylinder { radius 1.181102362 height 7.874015748 } } ]
+}
+Transform {
+  translation 0.000000000 0.000000000 7.677165354
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.0500 0.0500 0.0600 } } geometry Cylinder { radius 3.937007874 height 6.299212598 } } ]
+}
