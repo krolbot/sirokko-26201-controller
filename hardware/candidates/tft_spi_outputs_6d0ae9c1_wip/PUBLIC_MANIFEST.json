@@ -1,0 +1,110 @@
+{
+  "package": "SIROKKO_TFT_SPI_OUTPUTS_6D0AE9C1_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_TFT_SPI_OUTPUTS_6D0AE9C1_WIP.zip",
+    "sha256": "098191bbd347feb8964c1d3319ec1074bcae0ee10358a737a0ea8c3147127a10",
+    "entries": 9,
+    "crc_verified": true,
+    "source_manifest_verified": true,
+    "archive_published": false,
+    "entry_crc32": {
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "d500c418",
+      "WIP_RU.md": "e4d35ef2",
+      "DRC.json": "3bc87848",
+      "NATIVE_COMPARISON.json": "290da601",
+      "PARTITIONS.json": "0aff2a91",
+      "GEOMETRY.json": "975bbd77",
+      "detail.png": "590d230b",
+      "detail.svg": "07d9482a",
+      "SHA256SUMS": "8db70e91"
+    }
+  },
+  "baseline_project": {
+    "path": "../tft_reset_fe7754dc_wip/project",
+    "git_tree": "c384fd2d384ae66e0e96ee68bae398a80650d3f3",
+    "pcb_sha256": "fe7754dcd1b65a6b80eeec6add8ca52a188964832c15fc48a233d1cad37b09c2",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "6d0ae9c179ec16a54d06143f0fa3047a801e2270494e0fc7bfbb09d974388122",
+    "previous_pcb_sha256": "fe7754dcd1b65a6b80eeec6add8ca52a188964832c15fc48a233d1cad37b09c2",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "6d0ae9c179ec16a54d06143f0fa3047a801e2270494e0fc7bfbb09d974388122",
+    "WIP_RU.md": "c19b18dba773a271e3ccb0f62292b211602c64f0c7295049a73c08e907c92a7f",
+    "DRC.json": "fa329180edaf424d0b25582819024bcd19558b63bab71689b8051b3e13877c88",
+    "NATIVE_COMPARISON.json": "5dd6951b9a88bda73c1d18257f133405fba0adcc1048694c36aa33e1e098bf31",
+    "PARTITIONS.json": "d05ff97ed72547e8c04f73ab5023bed570c83180e4c1d96ad754fa97741bbdcc",
+    "GEOMETRY.json": "54ae50332a424687947e77574bc80a46b1e85da654fcb4791e235b45c6f5f371",
+    "detail.png": "de7e060dc5a0444bdf96284c7292082328497b7ffd021de219e512a26568cf9e",
+    "detail.svg": "77ffa194c9fe8f2972e8da2c190b6f389d871f82c39e4cf057164db274dddcf5"
+  },
+  "recorded_checks": {
+    "kicad_version": "10.0.7",
+    "zones_refilled": 8,
+    "drc_unconnected": 204,
+    "drc_warnings": 28,
+    "drc_pass": false,
+    "drc_violation_multiset_unchanged": true,
+    "drc_command_recorded": false,
+    "drc_exit_code_recorded": false,
+    "schematic_parity_recorded": false,
+    "erc_rerun": false,
+    "pads": 699,
+    "source_physical_groups": 422,
+    "candidate_physical_groups": 418,
+    "source_physical_pairs": 6983,
+    "candidate_physical_pairs": 6987,
+    "source_pairs_sha256": "76ecae4d66d351db597e43ecbe3eaf478a73f7ce427351c82a071980b297b75a",
+    "candidate_pairs_sha256": "c6bef3fbe35141569b9459acce7c8ebb3e6a9b33f8acefaffd23d84e1bbdb731",
+    "lost_physical_pairs": 0,
+    "added_physical_pairs": 4,
+    "cross_net_physical_pairs": 0,
+    "target_spi_groups": {
+      "/TFT_MOSI_BUF": ["U303.3", "J26.3"],
+      "/TFT_SCK_BUF": ["U303.6", "J26.4"],
+      "/TFT_CS_BUF": ["U303.8", "J26.5"],
+      "/TFT_DC_BUF": ["U303.11", "J26.6"]
+    },
+    "old_target_pairs_disconnected": true,
+    "power_regression_checks_passed": 18,
+    "new_spi_segments": 44,
+    "new_spi_vias": 28,
+    "spi_track_width_mm": 0.25,
+    "spi_via_diameter_mm": 0.60,
+    "spi_via_drill_mm": 0.30,
+    "speed_cmd_source_segments_replaced": 3,
+    "speed_cmd_replacement_segments": 3,
+    "global_dangling_track_cleanup_used": false,
+    "preview_inspected_by_engineer": true,
+    "preview_inspected_by_publisher": true
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_entries_verified": 8,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "engineer_reported_unchanged_sch_pro_observations": 23,
+    "local_kicad_cli_available": false,
+    "drc_erc_parity_rerun": false
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "si_emc_qualified": false,
+    "functional_display_test_passed": false
+  }
+}
