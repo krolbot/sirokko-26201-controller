@@ -1,0 +1,51 @@
+(kicad_symbol_lib
+  (version 20241209)
+  (generator "hermes-t_52190740")
+  (generator_version "9.0")
+  (symbol "Waveshare_18366_Module"
+    (exclude_from_sim yes)
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "DS"
+      (at 0 7.62 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "Waveshare 18366 / 2.4inch LCD Module"
+      (at 0 5.08 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "Sirokko_Mechanical:Waveshare_18366_Module_Bside_Envelope"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "https://www.waveshare.com/2.4inch-lcd-module.htm"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Description" "Mechanical/BOM instance for Waveshare 18366 TFT module; cable/electrical interface remains J26; DRAFT NOT FOR ORDER"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Manufacturer" "Waveshare"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "MPN" "18366"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "AssemblyNote" "B_front_0; 4x 970120244 M2x12; 8x Bossard 1253131; 8x M2 screws/heads; verify G physically before order"
+      (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (symbol "Waveshare_18366_Module_0_1"
+      (rectangle
+        (start -12.7 5.08)
+        (end 12.7 -5.08)
+        (stroke (width 0.254) (type default))
+        (fill (type background))
+      )
+
+    )
+  )
+)

@@ -1,0 +1,105 @@
+(footprint "MountingHole_3.6mm_R5.5_DRAFT"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "DRAFT / NOT FOR ORDER / NO FIRE. NPTH 3.60 +/-0.10 mm; radial position <=0.10 mm assigned, factory unverified. Complete hardware envelope <=R4.0 from actual bolt axis. 16-gon F/B keepout min apothem >=5.5 mm.")
+	(property "Reference" "REF**"
+		(at 0 -6.8 0)
+		(layer "F.SilkS")
+		(uuid "70fa7bef-bc7f-45e9-87b0-3b2df4dd1f6b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "MountingHole_3.6mm_R5.5_DRAFT"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5114e008-ed90-472e-93d2-41bc6d14ffa1")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "29008f38-127e-4bde-9b82-0258ad0b5c05")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "584b0ae1-1228-4c0c-a4b8-2c6a603f38e2")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr board_only exclude_from_pos_files exclude_from_bom)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_circle
+		(center 0 0)
+		(end 4 0)
+		(stroke
+			(width 0.15)
+			(type default)
+		)
+		(fill no)
+		(layer "Dwgs.User")
+		(uuid "28aaf546-81ed-41a0-858e-6ffebf578c4d")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 3.6 3.6)
+		(drill 3.6)
+		(layers "*.Mask")
+		(uuid "7ab6e423-f313-484f-895a-fc83e661a957")
+	)
+	(zone
+		(layers "F.Cu" "B.Cu")
+		(uuid "1655d5c5-c332-4482-a936-1c5f84e280dd")
+		(name "MOUNTING_R5p5_MIN_NO_COPPER_OR_FOREIGN_COMPONENTS")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.25)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints not_allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy 5.61 0) (xy 5.182964 2.146854) (xy 3.966869 3.966869) (xy 2.146854 5.182964) (xy 0 5.61) (xy -2.146854 5.182964)
+				(xy -3.966869 3.966869) (xy -5.182964 2.146854) (xy -5.61 0) (xy -5.182964 -2.146854) (xy -3.966869 -3.966869)
+				(xy -2.146854 -5.182964) (xy 0 -5.61) (xy 2.146854 -5.182964) (xy 3.966869 -3.966869) (xy 5.182964 -2.146854)
+			)
+		)
+	)
+	(embedded_fonts no)
+)
