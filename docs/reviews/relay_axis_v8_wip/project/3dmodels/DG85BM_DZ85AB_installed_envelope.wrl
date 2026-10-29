@@ -1,0 +1,3 @@
+#VRML V2.0 utf8
+# PROJECT RESERVE ONLY: 35 x 35 x 56 mm; local X=-17.5..17.5,Y=-9..26. Includes corrected relay-axis envelope based on Fig1 DG85BM 01-Jul-2026 FW; Y registration uses 9 REF, not guaranteed tolerance. Not vendor CAD, not qualified mating or installed height.
+Transform { translation 0 -3.346456692913 11.023622047244 children [ Shape { appearance Appearance { material Material { diffuseColor 0.08 0.08 0.1 } } geometry Box { size 13.779527559055 13.779527559055 22.047244094488 } } ] }
