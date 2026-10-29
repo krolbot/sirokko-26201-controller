@@ -1,0 +1,42 @@
+{
+  "source_exit": 5,
+  "candidate_exit": 5,
+  "unconnected_before": 90,
+  "unconnected_after": 88,
+  "violations_before": 59,
+  "violations_after": 57,
+  "new_full_violation_records": [],
+  "removed_full_violation_records": [
+    {
+      "description": "Track has unconnected end",
+      "items": [
+        {
+          "description": "Track [+5V_DEVKIT] on B.Cu, length 3.0000 mm",
+          "pos": {
+            "x": 113.0,
+            "y": 85.8
+          },
+          "uuid": "c9c6fe61-f2f1-4649-af84-2cc4fd87269c"
+        }
+      ],
+      "severity": "warning",
+      "type": "track_dangling"
+    },
+    {
+      "description": "Track has unconnected end",
+      "items": [
+        {
+          "description": "Track [/TC_EXH_CS] on B.Cu, length 51.5000 mm",
+          "pos": {
+            "x": 24.5,
+            "y": 46.43
+          },
+          "uuid": "e9f10e7a-a0ba-4925-bcf1-b6d43c54b3d8"
+        }
+      ],
+      "severity": "warning",
+      "type": "track_dangling"
+    }
+  ],
+  "all_full_records_compared": true
+}

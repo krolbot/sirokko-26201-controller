@@ -1,0 +1,199 @@
+{
+  "source_sha256": "be6d086c6ac27477d6814aa03d610e45cbb9c030a24881941e3202a9d42887e0",
+  "candidate_sha256": "a6abf29e70a52854d07d2e0c35011cc64b3f555be38e6f939ad98343cedb6640",
+  "old_tracks_vias": 2157,
+  "total_tracks_vias": 2164,
+  "old_copper_native_changed": [],
+  "pads": 699,
+  "pads_exact": true,
+  "pairs_before": 3654,
+  "pairs_after": 3667,
+  "lost_pairs": 0,
+  "added_pairs": [
+    {
+      "pair": [
+        [
+          "C107",
+          "2",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "C106",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "R2",
+          "2",
+          "/TC_EXH_CS"
+        ],
+        [
+          "J1",
+          "16",
+          "/TC_EXH_CS"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "C105",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "U9",
+          "9",
+          "/TC_EXH_CS"
+        ],
+        [
+          "J1",
+          "16",
+          "/TC_EXH_CS"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "C303",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "U301",
+          "2",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "L101",
+          "2",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "R301",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "R107",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "C302",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "C301",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    },
+    {
+      "pair": [
+        [
+          "R101",
+          "1",
+          "+5V_DEVKIT"
+        ],
+        [
+          "J1",
+          "21",
+          "+5V_DEVKIT"
+        ]
+      ]
+    }
+  ],
+  "added_pairs_exactly_expected": true,
+  "all_groups_symmetric_and_closed": true,
+  "zones_refilled_in_memory": true
+}
