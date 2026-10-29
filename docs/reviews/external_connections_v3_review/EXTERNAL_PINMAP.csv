@@ -1,0 +1,20 @@
+connector,destination,pin,function,direction,net,pad_x_mm,pad_y_mm,pcb_face,footprint
+J10,Термопара K №1,1,T+,пассивный вход термопары,/TC_EXH_TP,24.92,20.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J10,Термопара K №1,2,T−,пассивный вход термопары,/TC_EXH_TM,30.0,20.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J102,Двигатель,1,Двигатель PWM+,"силовой выход ШИМ, не постоянные +24 В",/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS,320.16,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J102,Двигатель,2,GND,возврат нагрузки,/GND,315.08,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J11,Термопара K №2,1,T+,пассивный вход термопары,/TC_AIR_TP,60.92,20.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J11,Термопара K №2,2,T−,пассивный вход термопары,/TC_AIR_TM,66.0,20.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal"
+J12,Комнатный DS18B20,1,"VDD +3,3 В",питание наружу,/+3V3,16.0,140.16,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
+J12,Комнатный DS18B20,2,DQ,двунаправленная 1-Wire,/ROOM_DQ,16.0,135.08,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
+J12,Комнатный DS18B20,3,GND,общий провод,/GND,16.0,130.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
+J13,Ввод 24 В,1,+24 В,"питание внутрь, до F1",/VIN_RAW_24,4.0,120.0,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
+J13,Ввод 24 В,2,GND / 0 В,общий провод,/GND,11.62,110.48,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
+J25,Внешний тепловой / разрешающий интерфейс,1,"+3,3 В","питание наружу, бюджет не квалифицирован",/+3V3,130.48,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal"
+J25,Внешний тепловой / разрешающий интерфейс,2,THERMAL_OK,"логический вход 3,3 В, U6.2",/THERMAL_OK,125.4,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal"
+J25,Внешний тепловой / разрешающий интерфейс,3,GND,общий провод,/GND,120.32,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal"
+J25,Внешний тепловой / разрешающий интерфейс,4,SAFETY_OK,"логический выход 3,3 В, U2.5; НЕ вход",/SAFETY_OK,115.24,174.0,F.Cu,"TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal"
+J27,Свеча,1,Свеча +,силовой выход через K1,/GLOW_SWITCHED_POS,321.37,60.99,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
+J27,Свеча,2,GND,возврат нагрузки,/GND,313.75,70.51,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
+J28,Электромуфта,1,Муфта +,силовой выход через K2 и K3,/CLUTCH_SWITCHED_POS,321.37,110.99,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
+J28,Электромуфта,2,GND,возврат нагрузки,/GND,313.75,120.51,F.Cu,Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE
