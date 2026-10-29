@@ -1,0 +1,126 @@
+{
+  "package": "SIROKKO_EXT_HEADER_POWER_03D257F6_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_EXT_HEADER_POWER_03D257F6_WIP.zip",
+    "sha256": "564c23ee620554b91d14f9e99dac436008930c6bcee1225eab0f219a38cfc5d7",
+    "size_bytes": 326245,
+    "entries": 9,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "archive_published": false,
+    "entry_crc32": {
+      "README_RU.md": "0790fa04",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "6d1fa6a1",
+      "base.json": "938eb0f3",
+      "candidate.json": "1109c61e",
+      "master.json": "69ea6a73",
+      "master_reopen.json": "faa415bc",
+      "native.json": "6b05162b",
+      "partitions.json": "c9031f0b",
+      "MANIFEST_SHA256.json": "b8898006"
+    }
+  },
+  "baseline_project": {
+    "path": "../devkit_gnd_cc1447f2_wip/project",
+    "git_commit": "d307f3cd2f1ba1b5ea8c6eeade435956233cb0c6",
+    "git_tree": "781e3e27de4f6d47e23304a7233faab534d805bc",
+    "pcb_sha256": "cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294",
+    "previous_pcb_sha256": "cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "README_RU.md": "9a4fbbddcaac9536b7536fb9a1ea25d7de629cddda50d2215e886f6c9dde20a8",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294",
+    "base.json": "405efa2232aa9ea8bd75ea74acf70280d15c62becd0dc1ee9c8b0d26e0ee2406",
+    "candidate.json": "2bdfd6da451592a23a564372426825019e8e0db5bc9fdbcb3ef2e6da794d932f",
+    "master.json": "12e83502ff331e69dbd1ff22bcb4ad8eb882f3315c958664c62edfd2f2d3a55d",
+    "master_reopen.json": "a899dc2f2d16838af2214da4dbbbc48490ac93cbeee9605ad87f2fd094b4bd92",
+    "native.json": "7982b4e55fc6de8f7788f966035c23066bcba0c00b1449b53fb65de74e3ddcc4",
+    "partitions.json": "8c9475106b8ec89cd4d7858da4cc9dd2410bf22b4c2c09653d02474bd2765bf7"
+  },
+  "archive_to_public_mapping": {
+    "README_RU.md": "EXT_HEADER_POWER_03D257F6_WIP_RU.md",
+    "base.json": "source_full_cli.json",
+    "candidate.json": "candidate_full_cli.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "MANIFEST_SHA256.json": "manifest.json"
+  },
+  "public_copy_edits": {
+    "archive_payloads_modified": false,
+    "engineering_source_files_modified": false
+  },
+  "partition_checks": {
+    "source_pairs": 9173,
+    "candidate_pairs": 9238,
+    "lost_pairs": 0,
+    "added_pairs": 65,
+    "source_groups_sha256": "846b0ec09cbdd0a89d1bad7b1b511efbb6fb1a185eb637f6cfbac533b29de18c",
+    "candidate_groups_sha256": "5f13cac84e780c008010e4c53b7aaa9e2b7b846ef11bfd56f6f8f3c154ae64c9",
+    "source_pairs_sha256": "52c346f5289e2707710d14b2df947a6fe9c4a798f2e5a1cb04c7e7d296eb73d3",
+    "candidate_pairs_sha256": "570bb0ea89fb316b37277b1aa42a50d25fd3e7e80d0b0bf1983b9c5bd3765939",
+    "hash_format": "sorted UUID tuples joined as TSV lines with final LF",
+    "hashes_recomputed": true
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 340,
+    "candidate_groups": 339,
+    "lost_pairs": 0,
+    "added_pairs": 65,
+    "connector_function": "THERMAL_AND_HW_ENABLE_3V3_ONLY",
+    "room_sensor_connector": "J12_ROOM_DS18B20_HARNESS",
+    "powered_contact": "J25.1_+3V3",
+    "existing_supply_group_contacts": ["J1.1", "J1.2", "R1.1"],
+    "open_contacts": ["J25.2_THERMAL_OK", "J25.4_EXT_SAFETY_ENABLE"],
+    "ground_contact_preserved": "J25.3_GND",
+    "main_3V3_group_pad_count_before": 65,
+    "main_3V3_group_pad_count_after": 66,
+    "added_segments": 3,
+    "added_vias": 0,
+    "segment_layer": "B.Cu",
+    "segment_width_mm": 0.40,
+    "master_tracks_and_vias": 1890,
+    "master_zones": 27,
+    "cli_source": {"violations": 26, "unconnected": 126, "parity": 0, "exit_code": 5},
+    "cli_candidate": {"violations": 26, "unconnected": 125, "parity": 0, "exit_code": 5},
+    "cli_master": {"violations": 26, "unconnected": 125, "parity": 0, "exit_code": 5},
+    "cli_stderr_empty": true,
+    "violations_and_parity_multisets_unchanged": true,
+    "master_reopen_full_comparison": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks_unchanged_and_unqualified": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "project_files": 64,
+    "changed_project_files": ["Sirokko26201_control_motor_candidate.kicad_pcb"],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "kiprjmod_target_set_unchanged_from_verified_baseline": true,
+    "private_infrastructure_paths_found_in_public_payloads": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "J25.1 is locally joined to +3V3 in CAD, but J25.2 and J25.4 remain open and 125 other connections remain. DRC is not PASS; ERC was not run. The interface function, complete safety chain, supply/return current, EMC, thermal and physical safety are not qualified."
+}

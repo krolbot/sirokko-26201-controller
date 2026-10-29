@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: земля вставного DevKit cc1447f2
+## 2026-10-29 — самый новый PCB-checkpoint: питание внешнего интерфейса блокировки 03d257f6
+
+[Кандидат ext_header_power_03d257f6_wip](../hardware/candidates/ext_header_power_03d257f6_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294`; исходная PCB — `cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e`. Остальные 63 файла и firmware не менялись.
+
+J25 — `THERMAL_AND_HW_ENABLE_3V3_ONLY`, не комнатный датчик; комнатный датчик — J12=`ROOM_DS18B20_HARNESS`. J25.1 `+3V3` физически подключён к существующей группе J1.1/J1.2/R1.1 тремя сегментами B.Cu шириной 0,40 мм без переходов. J25.2 `THERMAL_OK` и J25.4 `EXT_SAFETY_ENABLE` остаются открытыми, J25.3 сохраняется на GND; обходов защит нет.
+
+Native: 699 площадок, 340→339 групп, 9173→9238 пар, потерь 0, 65 ожидаемых добавлений. KiCad CLI: исходник 26/126/0, кандидат и повторно открытый master 26/125/0; все exit 5, `stderr` пуст. Полные мультимножества violations/parity прежние. Это **не PASS**; ERC не запускался.
+
+Остаётся 125 соединений. Функция внешнего интерфейса, полная safety-chain, токи и возвраты, ЭМС, тепловая, физическая и производственная квалификация не завершены. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: земля вставного DevKit cc1447f2
 
 [Кандидат devkit_gnd_cc1447f2_wip](../hardware/candidates/devkit_gnd_cc1447f2_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e`; исходная PCB — `be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb`. Остальные 63 файла и firmware не менялись.
 
