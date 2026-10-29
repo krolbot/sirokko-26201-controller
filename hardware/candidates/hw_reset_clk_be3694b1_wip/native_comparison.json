@@ -1,0 +1,27 @@
+{
+  "source_sha": "55fb397d0b58b9d1b5cad5a3eb7ecc71455f75a51a2dcca2570eb8ab1562b452",
+  "candidate_sha": "be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb",
+  "pads": 699,
+  "source_groups": 343,
+  "candidate_groups": 342,
+  "old_pairs": 8943,
+  "new_pairs": 8944,
+  "lost_pairs": 0,
+  "expected_added_pairs": 1,
+  "added_copper": 3,
+  "zones_base": 27,
+  "zones_candidate": 27,
+  "native_symmetry_closure_coverage": true,
+  "old_copper_fp_pad_unchanged": true,
+  "drc_multiset_unchanged": true,
+  "HW_RESET_CLK_group": [
+    [
+      "U2.9",
+      "3a5e31a2-ddb2-4762-99f9-88ad41193b19"
+    ],
+    [
+      "U2.3",
+      "e0ec8248-2438-4f08-af50-191060889210"
+    ]
+  ]
+}

@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: завершённая сеть START_REQUEST 55fb397d
+## 2026-10-29 — самый новый PCB-checkpoint: локальная цепь HW_RESET_CLK be3694b1
+
+[Кандидат hw_reset_clk_be3694b1_wip](../hardware/candidates/hw_reset_clk_be3694b1_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb`; исходная PCB — `55fb397d0b58b9d1b5cad5a3eb7ecc71455f75a51a2dcca2570eb8ab1562b452`. Остальные 63 файла и firmware не менялись.
+
+U2.3 физически соединён с U2.9 сети `/HW_RESET_CLK`. Добавлены ровно три сегмента F.Cu шириной 0,25 мм без переходов. Завершённая `/START_REQUEST`, прежняя медь, footprints, площадки, сети/UUID, SCH/PRO и 27 зон сохранены; обходов защит не добавлено.
+
+Native: 699 площадок, 343→342 группы, 8943→8944 пары, потерь 0, одна ожидаемая пара. KiCad CLI: исходник 26/129/0, кандидат и повторно открытый master 26/128/0; все exit 5, `stderr` пуст. Полные мультимножества violations/parity прежние. Это **не PASS**; ERC не запускался.
+
+Остаётся 128 соединений. Полная RESET/safety-chain, динамика защёлки, электрическая, ЭМС, токовая, тепловая, физическая и производственная квалификация не завершены. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: завершённая сеть START_REQUEST 55fb397d
 
 [Кандидат start_pullup_55fb397d_wip](../hardware/candidates/start_pullup_55fb397d_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `55fb397d0b58b9d1b5cad5a3eb7ecc71455f75a51a2dcca2570eb8ab1562b452`; исходная PCB — `4112abaf1bffaa9d5b5c877df7f7ff294d98be1ec0443bd8295717e67789d310`. Остальные 63 файла и firmware не менялись.
 
