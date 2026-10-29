@@ -1,0 +1,1078 @@
+{
+  "manufacturer_pcb_url": "https://raw.githubusercontent.com/vcc-gnd/YD-ESP32-S3/main/5-public-YD-ESP32-S3-Hardware%20info/ESP32-S3-size-pcb-ad.PcbDoc",
+  "manufacturer_pcb_sha256": "6321af6036af76eb165f7acfc644aaf71ab4db7ee75831715062d98ad3066c35",
+  "manufacturer_pcb_bytes": 990720,
+  "manufacturer_pdf_url": "https://raw.githubusercontent.com/vcc-gnd/YD-ESP32-S3/main/5-public-YD-ESP32-S3-Hardware%20info/ESP32-S3-Metric.pdf",
+  "manufacturer_pdf_sha256": "23098cc8e1195bff1f6040cca85c4e2536a6a7eae21d3bda1c2c2962ec3cbd19",
+  "source_limits": "Read only X/Y terminal and outline geometry. Imported 0.41116 mm stack thickness is NOT accepted as the commercial module thickness. Full-view visual 63.38 mm reading was retracted: crop + native show 57.15 mm PCB length. No 3D height or USB mating depth qualified.",
+  "transform_nm": {
+    "carrier_X_J1_pin1": 105860000,
+    "source_X_J1_pin1": 135801105,
+    "source_Y_pin1": 78333600,
+    "carrier_Y_pin1": 35000000,
+    "X_sign": -1,
+    "Y_sign": 1
+  },
+  "positive": [
+    {
+      "manufacturer": "J2.1",
+      "carrier": "J3.1",
+      "expected_nm": [
+        80460000,
+        35000000
+      ],
+      "actual_nm": [
+        80460000,
+        35000000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.2",
+      "carrier": "J3.2",
+      "expected_nm": [
+        80460000,
+        37540000
+      ],
+      "actual_nm": [
+        80460000,
+        37540000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.3",
+      "carrier": "J3.3",
+      "expected_nm": [
+        80460000,
+        40080000
+      ],
+      "actual_nm": [
+        80460000,
+        40080000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.4",
+      "carrier": "J3.4",
+      "expected_nm": [
+        80460000,
+        42620000
+      ],
+      "actual_nm": [
+        80460000,
+        42620000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.5",
+      "carrier": "J3.5",
+      "expected_nm": [
+        80460000,
+        45160000
+      ],
+      "actual_nm": [
+        80460000,
+        45160000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.6",
+      "carrier": "J3.6",
+      "expected_nm": [
+        80460000,
+        47700000
+      ],
+      "actual_nm": [
+        80460000,
+        47700000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.7",
+      "carrier": "J3.7",
+      "expected_nm": [
+        80460000,
+        50240000
+      ],
+      "actual_nm": [
+        80460000,
+        50240000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.8",
+      "carrier": "J3.8",
+      "expected_nm": [
+        80460000,
+        52780000
+      ],
+      "actual_nm": [
+        80460000,
+        52780000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.9",
+      "carrier": "J3.9",
+      "expected_nm": [
+        80460000,
+        55320000
+      ],
+      "actual_nm": [
+        80460000,
+        55320000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.10",
+      "carrier": "J3.10",
+      "expected_nm": [
+        80460000,
+        57860000
+      ],
+      "actual_nm": [
+        80460000,
+        57860000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.11",
+      "carrier": "J3.11",
+      "expected_nm": [
+        80460000,
+        60400000
+      ],
+      "actual_nm": [
+        80460000,
+        60400000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.12",
+      "carrier": "J3.12",
+      "expected_nm": [
+        80460000,
+        62940000
+      ],
+      "actual_nm": [
+        80460000,
+        62940000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.13",
+      "carrier": "J3.13",
+      "expected_nm": [
+        80460000,
+        65480000
+      ],
+      "actual_nm": [
+        80460000,
+        65480000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.14",
+      "carrier": "J3.14",
+      "expected_nm": [
+        80460000,
+        68020000
+      ],
+      "actual_nm": [
+        80460000,
+        68020000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.15",
+      "carrier": "J3.15",
+      "expected_nm": [
+        80460000,
+        70560000
+      ],
+      "actual_nm": [
+        80460000,
+        70560000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.16",
+      "carrier": "J3.16",
+      "expected_nm": [
+        80460000,
+        73100000
+      ],
+      "actual_nm": [
+        80460000,
+        73100000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.17",
+      "carrier": "J3.17",
+      "expected_nm": [
+        80460000,
+        75640000
+      ],
+      "actual_nm": [
+        80460000,
+        75640000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.18",
+      "carrier": "J3.18",
+      "expected_nm": [
+        80460000,
+        78180000
+      ],
+      "actual_nm": [
+        80460000,
+        78180000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.19",
+      "carrier": "J3.19",
+      "expected_nm": [
+        80460000,
+        80720000
+      ],
+      "actual_nm": [
+        80460000,
+        80720000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.20",
+      "carrier": "J3.20",
+      "expected_nm": [
+        80460000,
+        83260000
+      ],
+      "actual_nm": [
+        80460000,
+        83260000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.21",
+      "carrier": "J3.21",
+      "expected_nm": [
+        80460000,
+        85800000
+      ],
+      "actual_nm": [
+        80460000,
+        85800000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.22",
+      "carrier": "J3.22",
+      "expected_nm": [
+        80460000,
+        88340000
+      ],
+      "actual_nm": [
+        80460000,
+        88340000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.1",
+      "carrier": "J1.1",
+      "expected_nm": [
+        105860000,
+        35000000
+      ],
+      "actual_nm": [
+        105860000,
+        35000000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.2",
+      "carrier": "J1.2",
+      "expected_nm": [
+        105860000,
+        37540000
+      ],
+      "actual_nm": [
+        105860000,
+        37540000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.3",
+      "carrier": "J1.3",
+      "expected_nm": [
+        105860000,
+        40080000
+      ],
+      "actual_nm": [
+        105860000,
+        40080000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.4",
+      "carrier": "J1.4",
+      "expected_nm": [
+        105860000,
+        42620000
+      ],
+      "actual_nm": [
+        105860000,
+        42620000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.5",
+      "carrier": "J1.5",
+      "expected_nm": [
+        105860000,
+        45160000
+      ],
+      "actual_nm": [
+        105860000,
+        45160000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.6",
+      "carrier": "J1.6",
+      "expected_nm": [
+        105860000,
+        47700000
+      ],
+      "actual_nm": [
+        105860000,
+        47700000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.7",
+      "carrier": "J1.7",
+      "expected_nm": [
+        105860000,
+        50240000
+      ],
+      "actual_nm": [
+        105860000,
+        50240000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.8",
+      "carrier": "J1.8",
+      "expected_nm": [
+        105860000,
+        52780000
+      ],
+      "actual_nm": [
+        105860000,
+        52780000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.9",
+      "carrier": "J1.9",
+      "expected_nm": [
+        105860000,
+        55320000
+      ],
+      "actual_nm": [
+        105860000,
+        55320000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.10",
+      "carrier": "J1.10",
+      "expected_nm": [
+        105860000,
+        57860000
+      ],
+      "actual_nm": [
+        105860000,
+        57860000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.11",
+      "carrier": "J1.11",
+      "expected_nm": [
+        105860000,
+        60400000
+      ],
+      "actual_nm": [
+        105860000,
+        60400000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.12",
+      "carrier": "J1.12",
+      "expected_nm": [
+        105860000,
+        62940000
+      ],
+      "actual_nm": [
+        105860000,
+        62940000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.13",
+      "carrier": "J1.13",
+      "expected_nm": [
+        105860000,
+        65480000
+      ],
+      "actual_nm": [
+        105860000,
+        65480000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.14",
+      "carrier": "J1.14",
+      "expected_nm": [
+        105860000,
+        68020000
+      ],
+      "actual_nm": [
+        105860000,
+        68020000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.15",
+      "carrier": "J1.15",
+      "expected_nm": [
+        105860000,
+        70560000
+      ],
+      "actual_nm": [
+        105860000,
+        70560000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.16",
+      "carrier": "J1.16",
+      "expected_nm": [
+        105860000,
+        73100000
+      ],
+      "actual_nm": [
+        105860000,
+        73100000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.17",
+      "carrier": "J1.17",
+      "expected_nm": [
+        105860000,
+        75640000
+      ],
+      "actual_nm": [
+        105860000,
+        75640000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.18",
+      "carrier": "J1.18",
+      "expected_nm": [
+        105860000,
+        78180000
+      ],
+      "actual_nm": [
+        105860000,
+        78180000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.19",
+      "carrier": "J1.19",
+      "expected_nm": [
+        105860000,
+        80720000
+      ],
+      "actual_nm": [
+        105860000,
+        80720000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.20",
+      "carrier": "J1.20",
+      "expected_nm": [
+        105860000,
+        83260000
+      ],
+      "actual_nm": [
+        105860000,
+        83260000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.21",
+      "carrier": "J1.21",
+      "expected_nm": [
+        105860000,
+        85800000
+      ],
+      "actual_nm": [
+        105860000,
+        85800000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J1.22",
+      "carrier": "J1.22",
+      "expected_nm": [
+        105860000,
+        88340000
+      ],
+      "actual_nm": [
+        105860000,
+        88340000
+      ],
+      "error_nm": [
+        0,
+        0
+      ]
+    }
+  ],
+  "negative_old_J3": [
+    {
+      "manufacturer": "J2.1",
+      "carrier": "J3.1",
+      "expected_nm": [
+        80460000,
+        35000000
+      ],
+      "actual_nm": [
+        80460000,
+        35000000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.2",
+      "carrier": "J3.2",
+      "expected_nm": [
+        80460000,
+        37540000
+      ],
+      "actual_nm": [
+        80460000,
+        37540000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.3",
+      "carrier": "J3.3",
+      "expected_nm": [
+        80460000,
+        40080000
+      ],
+      "actual_nm": [
+        80460000,
+        40080000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.4",
+      "carrier": "J3.4",
+      "expected_nm": [
+        80460000,
+        42620000
+      ],
+      "actual_nm": [
+        80460000,
+        42620000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.5",
+      "carrier": "J3.5",
+      "expected_nm": [
+        80460000,
+        45160000
+      ],
+      "actual_nm": [
+        80460000,
+        45160000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.6",
+      "carrier": "J3.6",
+      "expected_nm": [
+        80460000,
+        47700000
+      ],
+      "actual_nm": [
+        80460000,
+        47700000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.7",
+      "carrier": "J3.7",
+      "expected_nm": [
+        80460000,
+        50240000
+      ],
+      "actual_nm": [
+        80460000,
+        50240000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.8",
+      "carrier": "J3.8",
+      "expected_nm": [
+        80460000,
+        52780000
+      ],
+      "actual_nm": [
+        80460000,
+        52780000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.9",
+      "carrier": "J3.9",
+      "expected_nm": [
+        80460000,
+        55320000
+      ],
+      "actual_nm": [
+        80460000,
+        55320000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.10",
+      "carrier": "J3.10",
+      "expected_nm": [
+        80460000,
+        57860000
+      ],
+      "actual_nm": [
+        80460000,
+        57860000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.11",
+      "carrier": "J3.11",
+      "expected_nm": [
+        80460000,
+        60400000
+      ],
+      "actual_nm": [
+        80460000,
+        60400000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.12",
+      "carrier": "J3.12",
+      "expected_nm": [
+        80460000,
+        62940000
+      ],
+      "actual_nm": [
+        80460000,
+        62940000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.13",
+      "carrier": "J3.13",
+      "expected_nm": [
+        80460000,
+        65480000
+      ],
+      "actual_nm": [
+        80460000,
+        65480000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.14",
+      "carrier": "J3.14",
+      "expected_nm": [
+        80460000,
+        68020000
+      ],
+      "actual_nm": [
+        80460000,
+        68020000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.15",
+      "carrier": "J3.15",
+      "expected_nm": [
+        80460000,
+        70560000
+      ],
+      "actual_nm": [
+        80460000,
+        70560000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.16",
+      "carrier": "J3.16",
+      "expected_nm": [
+        80460000,
+        73100000
+      ],
+      "actual_nm": [
+        80460000,
+        73100000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.17",
+      "carrier": "J3.17",
+      "expected_nm": [
+        80460000,
+        75640000
+      ],
+      "actual_nm": [
+        80460000,
+        75640000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.18",
+      "carrier": "J3.18",
+      "expected_nm": [
+        80460000,
+        78180000
+      ],
+      "actual_nm": [
+        80460000,
+        78180000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.19",
+      "carrier": "J3.19",
+      "expected_nm": [
+        80460000,
+        80720000
+      ],
+      "actual_nm": [
+        80460000,
+        80720000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.20",
+      "carrier": "J3.20",
+      "expected_nm": [
+        80460000,
+        83260000
+      ],
+      "actual_nm": [
+        80460000,
+        83260000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.21",
+      "carrier": "J3.21",
+      "expected_nm": [
+        80460000,
+        85800000
+      ],
+      "actual_nm": [
+        80460000,
+        85800000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    },
+    {
+      "manufacturer": "J2.22",
+      "carrier": "J3.22",
+      "expected_nm": [
+        80460000,
+        88340000
+      ],
+      "actual_nm": [
+        80460000,
+        88340000
+      ],
+      "error_nm": [
+        2540000,
+        0
+      ]
+    }
+  ],
+  "positive_count": 44,
+  "negative_rejected_count": 22
+}

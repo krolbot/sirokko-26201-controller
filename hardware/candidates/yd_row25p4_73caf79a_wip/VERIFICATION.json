@@ -1,0 +1,28 @@
+{
+  "pcb_sha256": "73caf79a937a17212b3ac8eb9cc1576ef709ab6d5dfcc5c0ad40c8c0e71ab7cf",
+  "base_sha256": "b21b8c1a0651dc6b23d11663b8f3e175462a0ddf72155afe889f765e2bb415b8",
+  "project_files": 64,
+  "changed_context_files": [
+    "Sirokko26201_control_motor_candidate.kicad_pcb"
+  ],
+  "unchanged_context_files": 63,
+  "drc_unconnected": 52,
+  "drc_warnings": 9,
+  "drc_new_violations": 0,
+  "drc_warning_multiset_exact": true,
+  "schematic_parity": 0,
+  "drc_exit": 5,
+  "erc_errors": 0,
+  "erc_warnings": 1,
+  "erc_exit": 5,
+  "native_pairs_independently_counted": 10685,
+  "geometry44_exact": true,
+  "old_row22_rejected": true,
+  "source_destination64_match": true,
+  "svg_parsed": true,
+  "png_decode_checked": 3,
+  "secret_private_address_hits": [],
+  "production_release": false,
+  "general_routing_allowed": false,
+  "firmware_changed": false
+}
