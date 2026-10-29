@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "copper": true,
+    "pads": true,
+    "footprints": true,
+    "outline": true,
+    "pad_components": true,
+    "all_native_components": true
+  },
+  "copper_count": 1717,
+  "physical_pad_count": 603,
+  "footprint_count": 158,
+  "physical_pad_components": 293,
+  "positive_control": "U6.1 and U6.2 physically connected",
+  "negative_control_same_net_unconnected": [
+    [
+      "R18",
+      "1",
+      "/+3V3"
+    ],
+    [
+      "C6",
+      "1",
+      "/+3V3"
+    ]
+  ],
+  "source_sha256": "f948c54af59fe790e8d852110d25c624056b2cf52f83a2036f32f2490edd7951",
+  "candidate_sha256": "06da6d92886ebd62abaf28a6c9a8a0f1411ce523ed016e7c8b279300a37785ee"
+}
