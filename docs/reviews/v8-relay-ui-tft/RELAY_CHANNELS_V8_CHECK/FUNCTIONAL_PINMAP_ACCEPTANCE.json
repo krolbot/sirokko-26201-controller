@@ -1,0 +1,44 @@
+{
+  "source_footprint": "/root/.hermes/profiles/engineer/cache/documents/sirokko_research/RELAY_AXIS_V8/project/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_DG85BM_ENVELOPE.kicad_mod",
+  "pads_mm": {
+    "30": [
+      0.0,
+      17.91
+    ],
+    "85": [
+      -8.43,
+      8.41
+    ],
+    "86": [
+      8.43,
+      8.41
+    ],
+    "87": [
+      0.0,
+      0.0
+    ],
+    "87a": [
+      0.0,
+      8.0
+    ]
+  },
+  "reflection": "(x,y)->(-x,y)",
+  "invariant_power_pads": [
+    "30",
+    "87",
+    "87a"
+  ],
+  "only_swapped_pads": [
+    "85",
+    "86"
+  ],
+  "qualified_MPN_only": "DG85BM-5021-76-1024",
+  "coil_polarity_independent": true,
+  "built_in_suppressor": "none",
+  "D_DR_substitution_permitted": false,
+  "functional_pinmap": "ACCEPTED_FOR_EXACT_UNSUPPRESSED_SPST_VARIANT",
+  "exact_physical_85_86_numbering": "not resolved; electrically immaterial for this exact coil",
+  "thermal_current_qualification": false,
+  "layout_complete": false,
+  "production_release": false
+}

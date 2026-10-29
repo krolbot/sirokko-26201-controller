@@ -1,0 +1,89 @@
+{
+  "basis": "DG85BM 01-Jul-2026 table1 coil1024; exact PCB MPN DG85BM-5021-76-1024, no built-in suppressor",
+  "temperature_scope": "23C ONLY; not a cold/hot qualification",
+  "formulae": [
+    "I=V/R",
+    "P=V^2/R"
+  ],
+  "supply_range_V": [
+    21.6,
+    28.8
+  ],
+  "coil_R_nom_ohm": 305,
+  "coil_R_tolerance": 0.1,
+  "corners": [
+    {
+      "supply_V": 21.6,
+      "coil_ohm_at_23C": 274.5,
+      "current_mA": 78.68852459016394,
+      "coil_power_W": 1.6996721311475411,
+      "three_coils_power_W": 5.099016393442624
+    },
+    {
+      "supply_V": 21.6,
+      "coil_ohm_at_23C": 305,
+      "current_mA": 70.81967213114754,
+      "coil_power_W": 1.529704918032787,
+      "three_coils_power_W": 4.589114754098362
+    },
+    {
+      "supply_V": 21.6,
+      "coil_ohm_at_23C": 335.5,
+      "current_mA": 64.38152011922504,
+      "coil_power_W": 1.390640834575261,
+      "three_coils_power_W": 4.171922503725783
+    },
+    {
+      "supply_V": 24.0,
+      "coil_ohm_at_23C": 274.5,
+      "current_mA": 87.43169398907104,
+      "coil_power_W": 2.098360655737705,
+      "three_coils_power_W": 6.295081967213115
+    },
+    {
+      "supply_V": 24.0,
+      "coil_ohm_at_23C": 305,
+      "current_mA": 78.68852459016394,
+      "coil_power_W": 1.8885245901639345,
+      "three_coils_power_W": 5.665573770491803
+    },
+    {
+      "supply_V": 24.0,
+      "coil_ohm_at_23C": 335.5,
+      "current_mA": 71.53502235469449,
+      "coil_power_W": 1.7168405365126678,
+      "three_coils_power_W": 5.150521609538003
+    },
+    {
+      "supply_V": 28.8,
+      "coil_ohm_at_23C": 274.5,
+      "current_mA": 104.91803278688525,
+      "coil_power_W": 3.021639344262295,
+      "three_coils_power_W": 9.064918032786887
+    },
+    {
+      "supply_V": 28.8,
+      "coil_ohm_at_23C": 305,
+      "current_mA": 94.42622950819673,
+      "coil_power_W": 2.7194754098360656,
+      "three_coils_power_W": 8.158426229508198
+    },
+    {
+      "supply_V": 28.8,
+      "coil_ohm_at_23C": 335.5,
+      "current_mA": 85.84202682563338,
+      "coil_power_W": 2.4722503725782414,
+      "three_coils_power_W": 7.416751117734725
+    }
+  ],
+  "maximum_at_23C": {
+    "supply_V": 28.8,
+    "coil_ohm_at_23C": 274.5,
+    "current_mA": 104.91803278688525,
+    "coil_power_W": 3.021639344262295,
+    "three_coils_power_W": 9.064918032786887
+  },
+  "driver_current_qualification_complete": false,
+  "physical_test": false,
+  "pcb_changed": false
+}
