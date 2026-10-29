@@ -1,0 +1,60 @@
+[
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "F.Cu,F.Silkscreen,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "--check-zones",
+      "-o",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/TOP.svg",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/TOP.svg'.\nDone.\n"
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "B.Cu,B.Silkscreen,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "--check-zones",
+      "-o",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/BOTTOM.svg",
+      "--mirror",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/BOTTOM.svg'.\nDone.\n"
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "F.Cu,B.Cu,F.Silkscreen,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "--check-zones",
+      "-o",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/DETAIL.svg",
+      "/projects/exports/sirokko_RELAY_P24_LOCAL_check/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_RELAY_P24_LOCAL_check/views/DETAIL.svg'.\nDone.\n"
+  }
+]
