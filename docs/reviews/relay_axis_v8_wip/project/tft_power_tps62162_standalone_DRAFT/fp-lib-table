@@ -1,4 +1,0 @@
-(fp_lib_table
-  (version 7)
-  (lib (name "Sirokko_TFT_Passives")(type "KiCad")(uri "${KIPRJMOD}/passives_v3/Sirokko_TFT_Passives.pretty")(options "")(descr "Frozen Sirokko TFT passives v3 — DRAFT"))
-)

@@ -1,4 +1,0 @@
-bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06  T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
-{"edge_centerline_size": [335.0, 170.0], "edge_stroked_bbox_size": [335.05, 170.05], "origins_outside": 0, "foreign_pad_clear": {"H7": 4.797721, "H8": 10.525, "H9": 18.872682, "H10": 9.436531}, "assertions": {"edge_centerline_size_335x170": true, "all_footprint_origins_inside_edge_bbox": true, "all_tft_holes_foreign_pad_bbox_clear": true}}
-bdd026d53029a05542647896575e8c83abd9b3d20d2b4bf2bddf866e07925f06  T521_FROZEN_PROJECT/Sirokko26201_control_motor_candidate.kicad_pcb
-c5d1f2613f2f236d228e28c22c109cb95ec75e60df20d0dcce6e739be73b9d64  T521_FROZEN_PROJECT/output/reports/MECHANICAL_NATIVE_CHECKS.json

@@ -1,3 +1,0 @@
-Reference,Quantity,Manufacturer,Manufacturer_part_number,Supplier,Supplier_part_number,Description,Mounting_location,Source,Status
-J26,1,Connfly electronic (Zhenqin),DS1023-1*7S21,ChipDip,9000022866,"1x7 direct THT socket; pitch2.54mm; housing18.28+/-0.30 x2.50 x8.50mm",Existing J26 direct TFT socket,https://static.chipdip.ru/lib/095/DOC006095303.pdf,SELECTED_COMPONENT_INSERTION_CHAIN_UNDER_DESIGN
-W_TFT1-W_TFT8,8,BOSSARD,8110867 / BN1074 M2,ChipDip,8014850467,"Polyamide washer; ID2.2mm; OD5mm; thickness0.3mm","4 under TFT front screw heads; 4 under main PCB underside screw heads; NOT between standoffs and PCBs",https://static.chipdip.ru/lib/679/DOC049679765.pdf,APPROVED_COMPONENT_FOR_CURRENT_DESIGN_NOT_PRODUCTION_RELEASE

@@ -1593,7 +1593,7 @@
 			)
 		)
 	)
-	(property "Footprint" "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B"
+	(property "Footprint" "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D"
 		(at 90.17 66.04 0)
 		(effects
 			(font
@@ -1611,6 +1611,16 @@
 			(hide yes)
 		)
 	)
+	(property "MPN" "LM5013DDAR"
+	(id 0)
+	(at 90.17 66.04 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 	(pin "1"
 	(uuid "07d389d2-2bb1-4878-b951-3cf11f676539")
 )
@@ -3013,7 +3023,7 @@
 			)
 		)
 	)
-	(property "Footprint" ""
+	(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
 		(at 119.38 86.36 0)
 		(effects
 			(font

@@ -1,4 +1,0 @@
-(fp_lib_table
- (version 7)
- (lib (name "Sirokko_Input") (type "KiCad") (uri "${KIPRJMOD}/Sirokko_Input.pretty") (options "") (descr "Keystone 3568 MINI holder DRAFT"))
-)

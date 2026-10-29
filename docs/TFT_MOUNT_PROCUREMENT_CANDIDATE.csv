@@ -1,4 +1,0 @@
-item,manufacturer,mpn,supplier_sku,needed,purchase_units,parts_per_unit,unit_price_rub,url,lead_time_reported,purchased_parts,leftover_parts,purchase_cost_rub,consumed_cost_rub,status
-Стойка,Wurth Elektronik,970120244,8000958002,4,4,1,200,https://www.chipdip.ru/product/970120244-standoff-brass-m2-hex-female-female-12-mm-wurth-8000958002,7 недель,4,0,800,800,DRAFT_CANDIDATE_NOT_FOR_ORDER
-Винт M2x5,СКБ Элемент,СКБЭ-0000593К,9001179867,8,1,10,140,https://www.chipdip.ru/product/din-7985-m2x5-upakovka-10-sht-vint-s-skb-element-9001179867,7 дней,10,2,140,112,DRAFT_CANDIDATE_NOT_FOR_ORDER
-Шайба M2,Bossard,1253131 / B2/BN670,8002597620,8,100,1,4,https://www.chipdip.ru/product/1253131-bossard-8002597620,7–8 недель,100,92,400,32,DRAFT_CANDIDATE_NOT_FOR_ORDER

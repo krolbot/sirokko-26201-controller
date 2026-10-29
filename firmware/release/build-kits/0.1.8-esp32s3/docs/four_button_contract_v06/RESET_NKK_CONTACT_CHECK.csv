@@ -1,9 +1,0 @@
-A_state,B_NO_state,U2_13_nCLR,U2_10_nPRE,GPIO6,forbidden_PRE_CLR_both_low,acceptance
-normal,open,0,1,1,0,CONTACT_ONLY_PASS
-normal,closed,0,1,0,0,CONTACT_ONLY_PASS
-gap,open,1,1,1,0,CONTACT_ONLY_PASS
-gap,closed,1,1,0,0,CONTACT_ONLY_PASS
-pressed,open,1,0,1,0,CONTACT_ONLY_PASS
-pressed,closed,1,0,0,0,CONTACT_ONLY_PASS
-MBB_negative_control,open,0,0,1,1,REJECT_MBB
-MBB_negative_control,closed,0,0,0,1,REJECT_MBB

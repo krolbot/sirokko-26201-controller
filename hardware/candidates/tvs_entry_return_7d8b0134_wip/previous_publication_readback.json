@@ -1,9 +1,0 @@
-{
-  "commit": "202f0e26d4ead7d5c79af536fe8c167f3c14b141",
-  "raw_CAD_SHA256": {
-    "Sirokko26201_control_motor_candidate.kicad_pcb": "4c86dc3057c78f4d95aab7d733341c5f1deb7d35804aa71c8d85bc67db3c661d",
-    "Sirokko26201_control_motor_candidate.kicad_sch": "9d55cba7b7cf83e675281d54b033433b145c7cf52a53bd0ec285aef1f5e22363",
-    "Sirokko_Input_Protection_WIP.kicad_sch": "1c042289b645c3dc4e4d1452640fd1d75b758666122e04ad19ba6f029b458df6"
-  },
-  "firmware_tree": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
-}

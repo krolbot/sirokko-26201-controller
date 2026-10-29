@@ -1,0 +1,20 @@
+{
+  "baseline_sha256": "1918cb75d021419289f40539d436a743d20e0bf167ef321ef0abffa77b168624",
+  "current_sha256": "4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2",
+  "baseline": {
+    "violations": 86,
+    "unconnected_items": 117,
+    "parity": 0
+  },
+  "current": {
+    "violations": 86,
+    "unconnected_items": 111,
+    "parity": 0
+  },
+  "violation_multiset_equal": true,
+  "added_violations": 0,
+  "removed_violations": 0,
+  "added_unconnected": 20,
+  "removed_unconnected": 26,
+  "ignored_checks_equal": true
+}

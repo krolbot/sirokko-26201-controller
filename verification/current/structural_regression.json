@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "before": "/root/.hermes/cache/scratch/c25_baseline.kicad_pcb",
+  "after": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "before_sha256": "1918cb75d021419289f40539d436a743d20e0bf167ef321ef0abffa77b168624",
+  "after_sha256": "4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2",
+  "copper_delta": {
+    "before_count": 1721,
+    "after_count": 1727,
+    "preserved_count": 1721,
+    "added": {
+      "62e75d41-f6fe-45e9-beeb-14b799d4895a": {
+        "type": "segment",
+        "start": "29.6 65.975",
+        "end": "30.5 65.825",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/GND\""
+      },
+      "88879ca8-a6ec-48a9-80df-08293fb1ab61": {
+        "type": "segment",
+        "start": "65.475 61.19",
+        "end": "65.825 58",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "bd594d75-6aa0-4172-beb2-cad4ab9edbda": {
+        "type": "segment",
+        "start": "65.475 62.46",
+        "end": "65.475 63.73",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/GND\""
+      },
+      "cbee3a9f-555d-43f4-8eca-3df3f705081e": {
+        "type": "segment",
+        "start": "49.475 61.19",
+        "end": "49.825 58",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "e6506b89-107e-4017-8d71-a373ae7f9e6c": {
+        "type": "segment",
+        "start": "65.475 63.73",
+        "end": "65.475 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/GND\""
+      },
+      "efdda954-c08a-427e-849c-a3da950b9799": {
+        "type": "segment",
+        "start": "32.4 64.025",
+        "end": "32.4 64.675",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/MinimalSafety/WD_OK\""
+      }
+    },
+    "removed": {},
+    "changed": {}
+  },
+  "local_references": {
+    "checked_count": 28,
+    "missing": []
+  },
+  "forbidden_hits": {},
+  "negative_geometry_mutation_detected": true
+}

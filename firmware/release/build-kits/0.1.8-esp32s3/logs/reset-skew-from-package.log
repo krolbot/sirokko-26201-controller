@@ -1,9 +1,0 @@
-PASS RESET_skew_scenario_0
-PASS RESET_skew_scenario_1
-PASS RESET_skew_scenario_2
-PASS RESET_skew_scenario_3
-PASS RESET_skew_scenario_4
-PASS RESET_skew_scenario_5
-PASS RESET_skew_scenario_6
-PASS RESET_skew_scenario_7
-SUPPLEMENTARY RESET RESULT 8/8 temporal scenarios; 32 independent-barrier combinations passed; host only
