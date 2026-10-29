@@ -1,20 +1,20 @@
 {
   "before": {
-    "pcb_sha256": "4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2",
-    "violations": 86,
-    "unconnected_items": 111,
-    "parity": 0
-  },
-  "after": {
     "pcb_sha256": "15e77269aea65b6863bdeeb762b7f94788abbc1b8d2b71620c9df5f3a2def58f",
     "violations": 86,
     "unconnected_items": 103,
     "parity": 0
   },
+  "after": {
+    "pcb_sha256": "1871ffa5460311b9283e2ff92f6249682ac68935023346bd98463a17cfca5180",
+    "violations": 86,
+    "unconnected_items": 98,
+    "parity": 0
+  },
   "violation_multiset_equal": true,
   "added_violations": 0,
   "removed_violations": 0,
-  "added_unconnected": 10,
-  "removed_unconnected": 18,
+  "added_unconnected": 17,
+  "removed_unconnected": 22,
   "ignored_checks_equal": true
 }

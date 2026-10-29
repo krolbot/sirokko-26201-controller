@@ -2,8 +2,8 @@
   "kicad_version": "10.0.7-10.0.7~ubuntu26.04.1",
   "source": "Sirokko26201_control_motor_candidate.kicad_pcb",
   "pad_count": 603,
-  "group_count": 280,
-  "unconnected_count": 103,
+  "group_count": 275,
+  "unconnected_count": 98,
   "groups": [
     {
       "group_id": "00209f38-e73a-4f97-bd60-31ba48d1abac",
@@ -564,6 +564,14 @@
       ],
       "pads": [
         {
+          "uuid": "0727068d-29af-47d1-8cbc-83856ce84b5a",
+          "reference": "C1",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 26.325,
+          "y_mm": 61.0
+        },
+        {
           "uuid": "536b486d-c4c4-416a-8eb3-401eac3a41c0",
           "reference": "C10",
           "pad": "2",
@@ -644,6 +652,14 @@
           "y_mm": 110.48
         },
         {
+          "uuid": "7f429516-fd53-4a92-a729-14d2939ac87a",
+          "reference": "U6",
+          "pad": "7",
+          "net": "/GND",
+          "x_mm": 44.525,
+          "y_mm": 68.81
+        },
+        {
           "uuid": "1129de68-7534-4a5f-afff-695344bfaa4c",
           "reference": "U9",
           "pad": "1",
@@ -722,22 +738,6 @@
           "net": "/TC_AIR_CS",
           "x_mm": 70.8625,
           "y_mm": 32.3
-        }
-      ]
-    },
-    {
-      "group_id": "0727068d-29af-47d1-8cbc-83856ce84b5a",
-      "nets": [
-        "/GND"
-      ],
-      "pads": [
-        {
-          "uuid": "0727068d-29af-47d1-8cbc-83856ce84b5a",
-          "reference": "C1",
-          "pad": "2",
-          "net": "/GND",
-          "x_mm": 26.325,
-          "y_mm": 61.0
         }
       ]
     },
@@ -4212,12 +4212,28 @@
       ],
       "pads": [
         {
+          "uuid": "f81531e9-66ad-40f5-9769-70a25a15cbaf",
+          "reference": "C1",
+          "pad": "1",
+          "net": "/+3V3",
+          "x_mm": 27.675,
+          "y_mm": 61.0
+        },
+        {
           "uuid": "4d96eecd-abea-4b11-b552-7c12035b5016",
           "reference": "U1",
           "pad": "1",
           "net": "/+3V3",
           "x_mm": 29.6,
           "y_mm": 64.025
+        },
+        {
+          "uuid": "87b68b55-d446-46db-9ca7-4bc82fca2e14",
+          "reference": "U1",
+          "pad": "3",
+          "net": "/+3V3",
+          "x_mm": 29.6,
+          "y_mm": 65.325
         }
       ]
     },
@@ -4914,6 +4930,14 @@
           "net": "/GND",
           "x_mm": 53.16,
           "y_mm": 77.0
+        },
+        {
+          "uuid": "8ee13d0b-ddd5-4a52-9939-13d1a4832052",
+          "reference": "U2",
+          "pad": "7",
+          "net": "/GND",
+          "x_mm": 60.525,
+          "y_mm": 68.81
         }
       ]
     },
@@ -5150,22 +5174,6 @@
       ]
     },
     {
-      "group_id": "7f429516-fd53-4a92-a729-14d2939ac87a",
-      "nets": [
-        "/GND"
-      ],
-      "pads": [
-        {
-          "uuid": "7f429516-fd53-4a92-a729-14d2939ac87a",
-          "reference": "U6",
-          "pad": "7",
-          "net": "/GND",
-          "x_mm": 44.525,
-          "y_mm": 68.81
-        }
-      ]
-    },
-    {
       "group_id": "7fd62f04-a446-40af-be7b-663a522f548f",
       "nets": [
         "/GLOW_CMD"
@@ -5334,22 +5342,6 @@
       ]
     },
     {
-      "group_id": "87b68b55-d446-46db-9ca7-4bc82fca2e14",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "87b68b55-d446-46db-9ca7-4bc82fca2e14",
-          "reference": "U1",
-          "pad": "3",
-          "net": "/+3V3",
-          "x_mm": 29.6,
-          "y_mm": 65.325
-        }
-      ]
-    },
-    {
       "group_id": "87d0d227-e3b9-48a6-8ee1-fc9ac5faf391",
       "nets": [
         "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT"
@@ -5514,22 +5506,6 @@
           "net": "",
           "x_mm": 143.04,
           "y_mm": 50.28
-        }
-      ]
-    },
-    {
-      "group_id": "8ee13d0b-ddd5-4a52-9939-13d1a4832052",
-      "nets": [
-        "/GND"
-      ],
-      "pads": [
-        {
-          "uuid": "8ee13d0b-ddd5-4a52-9939-13d1a4832052",
-          "reference": "U2",
-          "pad": "7",
-          "net": "/GND",
-          "x_mm": 60.525,
-          "y_mm": 68.81
         }
       ]
     },
@@ -7018,22 +6994,6 @@
           "net": "",
           "x_mm": 47.075,
           "y_mm": 147.225
-        }
-      ]
-    },
-    {
-      "group_id": "f81531e9-66ad-40f5-9769-70a25a15cbaf",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "f81531e9-66ad-40f5-9769-70a25a15cbaf",
-          "reference": "C1",
-          "pad": "1",
-          "net": "/+3V3",
-          "x_mm": 27.675,
-          "y_mm": 61.0
         }
       ]
     },

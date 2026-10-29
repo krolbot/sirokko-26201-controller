@@ -7,9 +7,9 @@ The working tree contains one current, complete KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current PCB SHA-256 after the next bounded routing step: `15e77269aea65b6863bdeeb762b7f94788abbc1b8d2b71620c9df5f3a2def58f`.
+- current after30 PCB SHA-256: `1871ffa5460311b9283e2ff92f6249682ac68935023346bd98463a17cfca5180`.
 
-Cleanup PCB `4a2f2871…` preserves all 1,721 copper objects from published C25/V8 PCB `1918cb75…` and adds six segments. The current PCB preserves all 1,727 cleanup objects by UUID, net, layer and geometry and adds exactly 14 more 0.25 mm F.Cu segments. See [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md) for the exact delta and open checks.
+Cleanup PCB `4a2f2871…` preserves all 1,721 C25/V8 copper objects and adds six segments; after20 adds 14 more. The current PCB preserves all 1,741 after20 objects by UUID, net, layer and geometry and adds exactly 10 more 0.25 mm F.Cu segments. See [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 
