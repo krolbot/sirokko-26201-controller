@@ -1,0 +1,20 @@
+{
+  "source_sha": "03b3a919b5ac4334fdf7fa9bccbaa55a841a82365b7af8bb1b5867c9a779fabf",
+  "candidate_sha": "534eecf809cf5ceae519a9d6934b88f5e85f365a44124aebd06f65f1d83dc05b",
+  "pads": 699,
+  "source_groups": 312,
+  "candidate_groups": 310,
+  "source_pairs": 9643,
+  "candidate_pairs": 9646,
+  "lost_pairs": 0,
+  "expected_added_pairs": 3,
+  "added_segments": 11,
+  "added_vias": 5,
+  "zones_source": 27,
+  "zones_candidate": 27,
+  "native_coverage_symmetry_closure": true,
+  "old_copper_fp_pads_unchanged": true,
+  "HGATE_separate_unchanged": true,
+  "master_reopen_exact": true,
+  "master_tracks_vias": 1998
+}

@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: подключение HGATE 03b3a919
+## 2026-10-29 — самый новый PCB-checkpoint: подключение DGATE 534eecf8
+
+[Кандидат dgate_534eecf8_wip](../hardware/candidates/dgate_534eecf8_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `534eecf809cf5ceae519a9d6934b88f5e85f365a44124aebd06f65f1d83dc05b`; исходная PCB — `03b3a919b5ac4334fdf7fa9bccbaa55a841a82365b7af8bb1b5867c9a779fabf`. Остальные 63 файла и firmware не менялись.
+
+U13.1, R90.1 и R91.1 физически соединены в отдельную группу DGATE из трёх площадок. Прежние R90.2↔Q1.1 и R91.2↔Q2.1 сохранены, резисторы не зашунтированы; HGATE U13.8/R92.1/R93.1 остаётся отдельной и неизменной. Добавлены одиннадцать сегментов 0,25 мм и пять переходов 0,60/0,30 мм. F.Cu по X=23 мм обходит `START_REQUEST` и пересекает только проекцию B.Cu `ROOM_DQ`; B.Cu-разветвление проходит по Y=149,2 мм, переходы вынесены из SMD-площадок. Прежняя медь, корпуса, площадки, UUID, сети, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 312→310 групп, 9643→9646 пар, потерь 0, три ожидаемых добавления; master содержит 1998 дорожек и переходов. KiCad CLI: исходник 98 несоединений / 25 предупреждений / 0 parity, кандидат и повторный master 96 / 25 / 0; все exit 5, `stderr` пуст. Полные мультимножества нарушений/parity совпадают; двенадцать изменившихся представительных концов airwire проверены через равенство native-компонент всех 96 записей. Это **не PASS**; ERC не запускался.
+
+Это CAD-связность DGATE и HGATE до входов затворных резисторов, не приёмка gate-drive. Силовой тракт и питание/возврат U13 не завершены. Динамика и заряд/разряд затворов, charge pump, UVLO/OV, reverse/transient, силовые/обратные пути, SOA, токовые, тепловые и ЭМС-режимы не квалифицированы. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. PNG показывает только контрольный фрагмент актуальной PCB, не общий вид, не 3D, не монтажный чертёж и не фотошаблон. `back_through.svg` показывает B.Cu сверху сквозь плату без зеркалирования, а не со стороны низа; шелкография служит только ориентиром. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: подключение HGATE 03b3a919
 
 [Кандидат hgate_03b3a919_wip](../hardware/candidates/hgate_03b3a919_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `03b3a919b5ac4334fdf7fa9bccbaa55a841a82365b7af8bb1b5867c9a779fabf`; исходная PCB — `49978656ab6bd0bb35a6134c59668fdaccbc0bd19b5f8057ae776193baa58416`. Остальные 63 файла и firmware не менялись.
 
