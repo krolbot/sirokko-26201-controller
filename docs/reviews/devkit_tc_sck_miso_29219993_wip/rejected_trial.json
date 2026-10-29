@@ -1,0 +1,30 @@
+{
+  "pcb_sha256": "23f6076361d3809c90459e084a1aceaa2f38313389061514d16fa70e55a24792",
+  "new_violations": [
+    {
+      "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)",
+      "items": [
+        {
+          "description": "Track [/TC_SDO_MISO] on F.Cu, length 8.5500 mm",
+          "pos": {
+            "x": 77.05,
+            "y": 30.85
+          },
+          "uuid": "1a786369-45c1-44c9-9c24-51c6eb711466"
+        },
+        {
+          "description": "Via [/TC_SCK] on F.Cu - B.Cu",
+          "pos": {
+            "x": 76.5,
+            "y": 32.2
+          },
+          "uuid": "be1b7911-fe34-4583-9fdf-953ca4b438e2"
+        }
+      ],
+      "severity": "error",
+      "type": "clearance"
+    }
+  ],
+  "adopted": false,
+  "reason": "MISO F.Cu vertical too close to new SCK via: 0.125 mm < 0.200 mm; final candidate jogged outward."
+}

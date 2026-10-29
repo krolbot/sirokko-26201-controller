@@ -1,0 +1,76 @@
+{
+  "source_sha256": "a6abf29e70a52854d07d2e0c35011cc64b3f555be38e6f939ad98343cedb6640",
+  "candidate_sha256": "292199936de4ab640723e54cb9ed04ad2a733e25116da2514441a4270b9ebf2d",
+  "old_tracks_vias": 2164,
+  "total_tracks_vias": 2196,
+  "old_copper_native_changed": [],
+  "pads": 699,
+  "pads_exact": true,
+  "pairs_before": 3667,
+  "pairs_after": 3672,
+  "lost_pairs": 0,
+  "added_pairs": [
+    [
+      [
+        "J1",
+        "19",
+        "/TC_SDO_MISO"
+      ],
+      [
+        "U9",
+        "11",
+        "/TC_SDO_MISO"
+      ]
+    ],
+    [
+      [
+        "J1",
+        "19",
+        "/TC_SDO_MISO"
+      ],
+      [
+        "U10",
+        "11",
+        "/TC_SDO_MISO"
+      ]
+    ],
+    [
+      [
+        "U10",
+        "10",
+        "/TC_SCK"
+      ],
+      [
+        "U9",
+        "10",
+        "/TC_SCK"
+      ]
+    ],
+    [
+      [
+        "U10",
+        "10",
+        "/TC_SCK"
+      ],
+      [
+        "J1",
+        "18",
+        "/TC_SCK"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "10",
+        "/TC_SCK"
+      ],
+      [
+        "J1",
+        "18",
+        "/TC_SCK"
+      ]
+    ]
+  ],
+  "all_groups_symmetric_and_closed": true,
+  "zones_refilled_in_memory": true
+}
