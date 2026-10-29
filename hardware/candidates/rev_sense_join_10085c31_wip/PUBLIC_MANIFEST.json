@@ -1,0 +1,195 @@
+{
+  "package": "SIROKKO_REV_SENSE_JOIN_10085C31_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_REV_SENSE_JOIN_10085C31_WIP.zip",
+    "sha256": "443a79f84d39b0751e433ca2ca93343cb5300041a23e48fe4ef3928e769c74c3",
+    "size_bytes": 723082,
+    "entries": 16,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 15,
+    "archive_published": false,
+    "entry_crc32": {
+      "README_RU.md": "7616880a",
+      "REV_MID_10085C31_detail_WIP.png": "668860a5",
+      "SHA256SUMS": "50b5e6a8",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "737fc6e6",
+      "U13_readback.json": "98d66ead",
+      "base.json": "b52b81ba",
+      "final_check.json": "5c705c13",
+      "geometry.json": "b1a6c94b",
+      "master.json": "ef3807bd",
+      "master_reopen.json": "edc36d91",
+      "native.json": "31d6b2ae",
+      "partitions.json": "46f09c55",
+      "v1.json": "65d6c9e3",
+      "views/back_through.svg": "5a44e708",
+      "views/bottom_mirror.svg": "68a06904",
+      "views/front.svg": "e6a53ab3"
+    }
+  },
+  "baseline_project": {
+    "path": "../drain_field_35628a20_wip/project",
+    "pcb_sha256": "35628a20ed8e90eea854f4456187cd9ec82fb44659fe3647a3f9402e8d7d084d",
+    "project_files": 64,
+    "non_pcb_files_byte_exact": 63
+  },
+  "revision": {
+    "pcb_sha256": "10085c3162690ea6d25ab623e4e8fb69c293160446d99bcc2c5509cda182255b",
+    "previous_pcb_sha256": "35628a20ed8e90eea854f4456187cd9ec82fb44659fe3647a3f9402e8d7d084d",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "README_RU.md": "d0c0abe8e94d4581705f5a28260bc96911ee2d3a23743780dcc40f101a58aa92",
+    "REV_MID_10085C31_detail_WIP.png": "c8502bdb8ca79ba9ce048caad3eb5f258cc84d27d8f194785a5f467020f205e3",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "10085c3162690ea6d25ab623e4e8fb69c293160446d99bcc2c5509cda182255b",
+    "U13_readback.json": "78c8d113f652606777fc5c398800a23fbf141847454a471daa313b6ba6e04f97",
+    "base.json": "2049ae9327073e0fcb2035ea2980f7bb1f7dd097b8e049bdad60e3afafdd9b90",
+    "final_check.json": "ab3d04817242632ae0138d7d6be06b7121016e7b0ad5a93c1982586f47d759cb",
+    "geometry.json": "7232b57c4a47dd4d715a5a2235cac0e381767611a24c3be91499d26412450ab9",
+    "master.json": "3729b6466fcdd0d23daa0e57655c13b31d8d2f6a0af39537800641dba8617f95",
+    "master_reopen.json": "46237b23fefa28a4137a6bea804313eb45880867111a4aa28770cf84529dadb6",
+    "native.json": "a84536dab59d71c477aae6465642b2efce96fddb7e1aa832c6a9e84b9af08796",
+    "partitions.json": "29a8376c3d0e40232dc6a2eeba495b1e0b2719dcf905fbb42a31984d9f1ab2f7",
+    "v1.json": "dc956ea56fa49834db8e35ccb30ccfe2a8ac6978b9c1c463a9b1f56f6bf733fa",
+    "views/back_through.svg": "27967815ea5db3d0d44d13871fa20d0c3b6430067bd76b906df34df71000a32c",
+    "views/bottom_mirror.svg": "81547713ba34bd8034523255ed75c1771323859da56fd7e24ffe6d5f7b99f678",
+    "views/front.svg": "1c94759f09268b7593b38e3cf89eaf0dea8ed643ca53b0f6ee75711e17042421"
+  },
+  "archive_to_public_mapping": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "README_RU.md": "REV_SENSE_JOIN_10085C31_WIP_RU.md",
+    "REV_MID_10085C31_detail_WIP.png": "REV_MID_10085C31_detail_WIP.png",
+    "U13_readback.json": "U13_readback.json",
+    "base.json": "source_full_cli.json",
+    "final_check.json": "final_check.json",
+    "geometry.json": "geometry.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "v1.json": "candidate_full_cli.json",
+    "views/back_through.svg": "back_through.svg",
+    "views/bottom_mirror.svg": "bottom_mirror.svg",
+    "views/front.svg": "front.svg"
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "footprints": 181,
+    "source_groups": 289,
+    "candidate_groups": 288,
+    "source_pairs": 9817,
+    "candidate_pairs": 9841,
+    "lost_pairs": 0,
+    "expected_added_pairs": 24,
+    "joined_pads": [
+      "Q2.4",
+      "Q3.4",
+      "Q4.4",
+      "U13.3",
+      "U13.4",
+      "U13.10",
+      "U13.12",
+      "C24.2",
+      "C25.1",
+      "R94.1",
+      "R96.1"
+    ],
+    "all_other_pad_groups_unchanged": true,
+    "GND_groups_unchanged": true,
+    "source_fields_unchanged": true,
+    "Q1_drain_separate": true,
+    "U13_EP13_isolated": true,
+    "zones_source": 32,
+    "zones_candidate": 32,
+    "old_zone_definitions_unchanged": true,
+    "tracks_vias_source": 2037,
+    "tracks_vias_candidate": 2040,
+    "old_tracks_vias_unchanged": true,
+    "added_segments": 3,
+    "added_vias": 0,
+    "new_route": {
+      "layer": "F.Cu",
+      "width_mm": 0.25,
+      "points_mm": [
+        [33.8, 138.75],
+        [35.8, 138.75],
+        [36.45, 139.4],
+        [46.0, 139.4]
+      ],
+      "UUIDs": [
+        "d763776d-277a-4fbc-ab66-d473f05f7d1e",
+        "07379fc1-cca1-40a9-825b-afd8e2b3615d",
+        "cc526652-1c84-4d7f-a900-19a5e981c308"
+      ],
+      "role": "REV_MID controller sense and charge-pump supply branch; not a main load-current conductor"
+    },
+    "master_reopen_exact": true,
+    "negative_move_all_new_tracks_restores_all_source_groups": true,
+    "cli_source": {
+      "unconnected": 75,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_candidate": {
+      "unconnected": 74,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_master": {
+      "unconnected": 74,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_stderr_empty": true,
+    "violations_parity_multiset_equal": true,
+    "airwire_native_component_records_verified": 74,
+    "raw_airwire_record_changes": 13,
+    "front_svg_export_exit": 0,
+    "bottom_mirror_svg_export_exit": 0,
+    "back_through_svg_export_exit": 0,
+    "svg_stderr_empty": true,
+    "pcb_sha_unchanged_after_checks": true,
+    "png_dimensions": [1800, 1792],
+    "png_inspected": true,
+    "erc_rerun": false,
+    "drc_pass": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 15,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "preview_pngs_decoded_and_inspected": 1,
+    "credentials_private_addresses_or_private_hostnames_found": 0,
+    "generic_tool_output_paths_present": [
+      "/projects/exports/sirokko_REV_SENSE_JOIN_check/views/front.svg"
+    ],
+    "generic_tool_output_paths_note": "The frozen final_check.json records a generic container-local export path without a user name, host name, network address, credential or secret; the mapped frozen evidence remains byte-exact."
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "Q1_joined_to_common_drain_field": false,
+    "main_load_current_path_qualified": false,
+    "vin_power_path_qualified": false,
+    "p24_power_path_qualified": false,
+    "drain_field_current_qualified": false,
+    "drain_field_thermal_qualified": false,
+    "charge_pump_qualified": false,
+    "gate_drive_qualified": false,
+    "power_stage_qualified": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "The new 0.25 mm F.Cu branch joins the existing Q2.4/Q3.4/Q4.4 drain group to the local eight-pad REV_MID controller group. It is not a main load-current conductor. Q1.4, the main VIN_FUSED/P24 path, F1, power ground and 74 opens remain incomplete. DRC is not PASS; ERC was not rerun; protection, current, thermal, transient, gate-drive, SOA and EMC behavior remain unqualified."
+}
