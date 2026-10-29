@@ -1,61 +1,125 @@
 {
   "status": "PASS",
-  "before": "/root/.hermes/cache/scratch/c25_baseline.kicad_pcb",
+  "before": "/root/.hermes/cache/scratch/after6_clean.kicad_pcb",
   "after": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-  "before_sha256": "1918cb75d021419289f40539d436a743d20e0bf167ef321ef0abffa77b168624",
-  "after_sha256": "4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2",
+  "before_sha256": "4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2",
+  "after_sha256": "15e77269aea65b6863bdeeb762b7f94788abbc1b8d2b71620c9df5f3a2def58f",
   "copper_delta": {
-    "before_count": 1721,
-    "after_count": 1727,
-    "preserved_count": 1721,
+    "before_count": 1727,
+    "after_count": 1741,
+    "preserved_count": 1727,
     "added": {
-      "62e75d41-f6fe-45e9-beeb-14b799d4895a": {
-        "type": "segment",
-        "start": "29.6 65.975",
-        "end": "30.5 65.825",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/GND\""
-      },
-      "88879ca8-a6ec-48a9-80df-08293fb1ab61": {
+      "1604ea7a-2632-4b05-ad41-48177d75ee34": {
         "type": "segment",
         "start": "65.475 61.19",
-        "end": "65.825 58",
+        "end": "67.1 61.19",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/+3V3\""
       },
-      "bd594d75-6aa0-4172-beb2-cad4ab9edbda": {
+      "1accca25-4d65-4690-84ca-18b9bc578cb0": {
         "type": "segment",
-        "start": "65.475 62.46",
-        "end": "65.475 63.73",
+        "start": "60.525 65",
+        "end": "65.475 66.27",
         "width": "0.25",
         "layers": "F.Cu",
-        "net": "\"/GND\""
+        "net": "\"/+3V3\""
       },
-      "cbee3a9f-555d-43f4-8eca-3df3f705081e": {
+      "266a04e6-c373-4ad7-a8d2-4d57b9d28d4e": {
+        "type": "segment",
+        "start": "55.425 65",
+        "end": "60.525 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "30f93082-801f-4264-b469-453ad502e5de": {
+        "type": "segment",
+        "start": "49.475 65",
+        "end": "55.425 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "3928595b-31e4-444e-a3e2-01af4ce2d9d4": {
+        "type": "segment",
+        "start": "44.525 67.54",
+        "end": "49.475 67.54",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/MinimalSafety/RESET_POWER_READY\""
+      },
+      "5150906f-5898-47bf-a408-29b26dc0fec7": {
+        "type": "segment",
+        "start": "51.1 61.19",
+        "end": "51.1 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "5bb1e219-2148-4fc7-8591-4cb64d080d9f": {
+        "type": "segment",
+        "start": "58.9 65",
+        "end": "60.525 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "a43ee5a2-2a3a-40fd-82fd-08ab6aea7c7c": {
+        "type": "segment",
+        "start": "44.525 63.73",
+        "end": "49.475 63.73",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/MinimalSafety/HARD_CONDITIONS_OK\""
+      },
+      "a5fe1c31-b597-44cb-9be0-786667276830": {
         "type": "segment",
         "start": "49.475 61.19",
-        "end": "49.825 58",
+        "end": "51.1 61.19",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/+3V3\""
       },
-      "e6506b89-107e-4017-8d71-a373ae7f9e6c": {
+      "ae2a8e41-03f1-4fc4-a844-14e0df2a8fab": {
         "type": "segment",
-        "start": "65.475 63.73",
-        "end": "65.475 65",
+        "start": "67.1 66.27",
+        "end": "65.475 66.27",
         "width": "0.25",
         "layers": "F.Cu",
-        "net": "\"/GND\""
+        "net": "\"/+3V3\""
       },
-      "efdda954-c08a-427e-849c-a3da950b9799": {
+      "e0d89c5c-8c8c-4cc7-ac2f-3e65d4db2242": {
         "type": "segment",
-        "start": "32.4 64.025",
-        "end": "32.4 64.675",
+        "start": "67.1 61.19",
+        "end": "67.1 66.27",
         "width": "0.25",
         "layers": "F.Cu",
-        "net": "\"/MinimalSafety/WD_OK\""
+        "net": "\"/+3V3\""
+      },
+      "e4fb6047-b600-4faf-926f-b25a3c30d1a7": {
+        "type": "segment",
+        "start": "51.1 65",
+        "end": "49.475 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "eda22897-c4cb-461e-930b-a9fbad2bcb8e": {
+        "type": "segment",
+        "start": "60.525 62.46",
+        "end": "58.9 62.46",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
+      },
+      "fdac919e-40c8-4594-a043-588e73a5f912": {
+        "type": "segment",
+        "start": "58.9 62.46",
+        "end": "58.9 65",
+        "width": "0.25",
+        "layers": "F.Cu",
+        "net": "\"/+3V3\""
       }
     },
     "removed": {},

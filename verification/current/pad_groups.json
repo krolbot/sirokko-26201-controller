@@ -2,8 +2,8 @@
   "kicad_version": "10.0.7-10.0.7~ubuntu26.04.1",
   "source": "Sirokko26201_control_motor_candidate.kicad_pcb",
   "pad_count": 603,
-  "group_count": 288,
-  "unconnected_count": 111,
+  "group_count": 280,
+  "unconnected_count": 103,
   "groups": [
     {
       "group_id": "00209f38-e73a-4f97-bd60-31ba48d1abac",
@@ -812,6 +812,22 @@
           "y_mm": 34.8
         },
         {
+          "uuid": "bfa2550b-834d-44b8-96f7-0336a5a80406",
+          "reference": "C2",
+          "pad": "1",
+          "net": "/+3V3",
+          "x_mm": 65.825,
+          "y_mm": 58.0
+        },
+        {
+          "uuid": "896a7ba2-990d-46a5-9123-0aa4c22643eb",
+          "reference": "C6",
+          "pad": "1",
+          "net": "/+3V3",
+          "x_mm": 49.825,
+          "y_mm": 58.0
+        },
+        {
           "uuid": "cec79a71-6526-41a1-a7b0-35d022b0dea4",
           "reference": "R2",
           "pad": "1",
@@ -842,6 +858,54 @@
           "net": "/+3V3",
           "x_mm": 70.8625,
           "y_mm": 32.95
+        },
+        {
+          "uuid": "bf17aef7-dbf8-40c6-9e50-b6828b635d15",
+          "reference": "U2",
+          "pad": "10",
+          "net": "/+3V3",
+          "x_mm": 65.475,
+          "y_mm": 66.27
+        },
+        {
+          "uuid": "33e2acb9-f40d-4dd8-9e59-f79a85552d0e",
+          "reference": "U2",
+          "pad": "14",
+          "net": "/+3V3",
+          "x_mm": 65.475,
+          "y_mm": 61.19
+        },
+        {
+          "uuid": "8a665780-c7f9-4750-9b36-7a46014fb5f6",
+          "reference": "U2",
+          "pad": "2",
+          "net": "/+3V3",
+          "x_mm": 60.525,
+          "y_mm": 62.46
+        },
+        {
+          "uuid": "f5060e53-1047-4caa-96c3-f28f09704f52",
+          "reference": "U2",
+          "pad": "4",
+          "net": "/+3V3",
+          "x_mm": 60.525,
+          "y_mm": 65.0
+        },
+        {
+          "uuid": "6e3af3f6-0956-4cd5-91e2-801ca358e684",
+          "reference": "U6",
+          "pad": "11",
+          "net": "/+3V3",
+          "x_mm": 49.475,
+          "y_mm": 65.0
+        },
+        {
+          "uuid": "2d0d3383-60ed-4899-b81b-2e4d646b6af3",
+          "reference": "U6",
+          "pad": "14",
+          "net": "/+3V3",
+          "x_mm": 49.475,
+          "y_mm": 61.19
         },
         {
           "uuid": "09575c9d-866b-458f-aa15-6db5f3b016c2",
@@ -2658,6 +2722,14 @@
           "net": "/MinimalSafety/HARD_CONDITIONS_OK",
           "x_mm": 49.475,
           "y_mm": 63.73
+        },
+        {
+          "uuid": "a19b6688-9a65-4a0f-b5ba-dccc1a35e698",
+          "reference": "U6",
+          "pad": "3",
+          "net": "/MinimalSafety/HARD_CONDITIONS_OK",
+          "x_mm": 44.525,
+          "y_mm": 63.73
         }
       ]
     },
@@ -2857,6 +2929,14 @@
           "pad": "6",
           "net": "/MinimalSafety/RESET_POWER_READY",
           "x_mm": 44.525,
+          "y_mm": 67.54
+        },
+        {
+          "uuid": "7570ffcc-c9e6-4e56-ba38-636cf7b60803",
+          "reference": "U6",
+          "pad": "9",
+          "net": "/MinimalSafety/RESET_POWER_READY",
+          "x_mm": 49.475,
           "y_mm": 67.54
         }
       ]
@@ -3138,30 +3218,6 @@
           "net": "unconnected-(U302-CT-Pad4)",
           "x_mm": 191.1375,
           "y_mm": 146.95
-        }
-      ]
-    },
-    {
-      "group_id": "2d0d3383-60ed-4899-b81b-2e4d646b6af3",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "896a7ba2-990d-46a5-9123-0aa4c22643eb",
-          "reference": "C6",
-          "pad": "1",
-          "net": "/+3V3",
-          "x_mm": 49.825,
-          "y_mm": 58.0
-        },
-        {
-          "uuid": "2d0d3383-60ed-4899-b81b-2e4d646b6af3",
-          "reference": "U6",
-          "pad": "14",
-          "net": "/+3V3",
-          "x_mm": 49.475,
-          "y_mm": 61.19
         }
       ]
     },
@@ -3482,30 +3538,6 @@
           "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE",
           "x_mm": -3.5,
           "y_mm": 147.3125
-        }
-      ]
-    },
-    {
-      "group_id": "33e2acb9-f40d-4dd8-9e59-f79a85552d0e",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "bfa2550b-834d-44b8-96f7-0336a5a80406",
-          "reference": "C2",
-          "pad": "1",
-          "net": "/+3V3",
-          "x_mm": 65.825,
-          "y_mm": 58.0
-        },
-        {
-          "uuid": "33e2acb9-f40d-4dd8-9e59-f79a85552d0e",
-          "reference": "U2",
-          "pad": "14",
-          "net": "/+3V3",
-          "x_mm": 65.475,
-          "y_mm": 61.19
         }
       ]
     },
@@ -4814,22 +4846,6 @@
       ]
     },
     {
-      "group_id": "6e3af3f6-0956-4cd5-91e2-801ca358e684",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "6e3af3f6-0956-4cd5-91e2-801ca358e684",
-          "reference": "U6",
-          "pad": "11",
-          "net": "/+3V3",
-          "x_mm": 49.475,
-          "y_mm": 65.0
-        }
-      ]
-    },
-    {
       "group_id": "6ff3b414-64e9-41c8-a6b2-b3d81160374d",
       "nets": [
         ""
@@ -4930,22 +4946,6 @@
           "net": "/TC_SDI_MOSI",
           "x_mm": 27.1375,
           "y_mm": 31.65
-        }
-      ]
-    },
-    {
-      "group_id": "7570ffcc-c9e6-4e56-ba38-636cf7b60803",
-      "nets": [
-        "/MinimalSafety/RESET_POWER_READY"
-      ],
-      "pads": [
-        {
-          "uuid": "7570ffcc-c9e6-4e56-ba38-636cf7b60803",
-          "reference": "U6",
-          "pad": "9",
-          "net": "/MinimalSafety/RESET_POWER_READY",
-          "x_mm": 49.475,
-          "y_mm": 67.54
         }
       ]
     },
@@ -5454,22 +5454,6 @@
       ]
     },
     {
-      "group_id": "8a665780-c7f9-4750-9b36-7a46014fb5f6",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "8a665780-c7f9-4750-9b36-7a46014fb5f6",
-          "reference": "U2",
-          "pad": "2",
-          "net": "/+3V3",
-          "x_mm": 60.525,
-          "y_mm": 62.46
-        }
-      ]
-    },
-    {
       "group_id": "8b742ee4-6173-4784-8104-df6888dd7c07",
       "nets": [
         ""
@@ -5890,22 +5874,6 @@
           "net": "",
           "x_mm": 51.925,
           "y_mm": 120.275
-        }
-      ]
-    },
-    {
-      "group_id": "a19b6688-9a65-4a0f-b5ba-dccc1a35e698",
-      "nets": [
-        "/MinimalSafety/HARD_CONDITIONS_OK"
-      ],
-      "pads": [
-        {
-          "uuid": "a19b6688-9a65-4a0f-b5ba-dccc1a35e698",
-          "reference": "U6",
-          "pad": "3",
-          "net": "/MinimalSafety/HARD_CONDITIONS_OK",
-          "x_mm": 44.525,
-          "y_mm": 63.73
         }
       ]
     },
@@ -6486,22 +6454,6 @@
       ]
     },
     {
-      "group_id": "bf17aef7-dbf8-40c6-9e50-b6828b635d15",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "bf17aef7-dbf8-40c6-9e50-b6828b635d15",
-          "reference": "U2",
-          "pad": "10",
-          "net": "/+3V3",
-          "x_mm": 65.475,
-          "y_mm": 66.27
-        }
-      ]
-    },
-    {
       "group_id": "bf2870d6-bc68-4b70-8e12-d935ea26d5e8",
       "nets": [
         "unconnected-(U10-DNC-Pad6)"
@@ -7049,22 +7001,6 @@
           "pad": "2",
           "net": "/MinimalSafety/WD_OK",
           "x_mm": 35.325,
-          "y_mm": 65.0
-        }
-      ]
-    },
-    {
-      "group_id": "f5060e53-1047-4caa-96c3-f28f09704f52",
-      "nets": [
-        "/+3V3"
-      ],
-      "pads": [
-        {
-          "uuid": "f5060e53-1047-4caa-96c3-f28f09704f52",
-          "reference": "U2",
-          "pad": "4",
-          "net": "/+3V3",
-          "x_mm": 60.525,
           "y_mm": 65.0
         }
       ]

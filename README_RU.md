@@ -7,9 +7,9 @@
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - плата: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- PCB после удаления отозванной 3D-модели крепежа TFT: `4a2f2871b59ec0b7101d66b4d00e637490095287cea9557cbcb189dc7f9adcd2`.
+- текущая PCB после следующего адресного этапа разводки: `15e77269aea65b6863bdeeb762b7f94788abbc1b8d2b71620c9df5f3a2def58f`.
 
-Исходный замороженный CAD-снимок имел PCB SHA-256 `1eff7eb399e5f460420b21d2ffcbbe302b59306de67aa8bbc7ee1501f6b389a3`. Относительно опубликованной C25/V8 PCB `1918cb75…` он сохраняет все 1721 объекта меди по UUID, сети, слою и геометрии и добавляет ровно шесть сегментов F.Cu шириной 0,25 мм. Подробности и незакрытые проверки: [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
+Cleanup-снимок `4a2f2871…` сохраняет все 1721 объекта меди опубликованной C25/V8 PCB `1918cb75…` и добавляет шесть сегментов. Текущая PCB поверх него сохраняет все 1727 объектов по UUID, сети, слою и геометрии и добавляет ровно 14 F.Cu-сегментов 0,25 мм. Подробности и незакрытые проверки: [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
 
 Отозванная условная модель крепежа голого TFT на стойках M2×12 удалена из проекта. Официальная номинальная STEP-модель Waveshare 18366 сохранена, но резьба, высота штатных опор, сопрягаемые детали и полный высотный размер не приняты.
 
