@@ -1,0 +1,137 @@
+{
+  "PCB_SHA256": "4c86dc3057c78f4d95aab7d733341c5f1deb7d35804aa71c8d85bc67db3c661d",
+  "J25.1": {
+    "net": "/+3V3",
+    "direction": "supply from controller; not an external power input"
+  },
+  "J25.2": {
+    "net": "/THERMAL_OK",
+    "direction": "input to U4.4; R22 10k to GND"
+  },
+  "J25.3": {
+    "net": "/GND",
+    "direction": "signal return"
+  },
+  "J25.4": {
+    "net": "/EXT_SAFETY_ENABLE",
+    "direction": "output from U6.6; DO NOT externally drive",
+    "source_IC": "SN74HCS11D",
+    "source_pin_function": "2Y_AND_6",
+    "not_FUEL_CMD": true
+  },
+  "native_netlist_evidence": [
+    {
+      "net": "/EXT_SAFETY_ENABLE",
+      "nodes": [
+        {
+          "ref": "J25",
+          "pin": "4",
+          "pinfunction": "Pin_4_4",
+          "pintype": "passive"
+        },
+        {
+          "ref": "U6",
+          "pin": "6",
+          "pinfunction": "2Y_AND_6",
+          "pintype": "output"
+        }
+      ]
+    },
+    {
+      "net": "/FUEL_PERMIT",
+      "nodes": [
+        {
+          "ref": "J3",
+          "pin": "18",
+          "pinfunction": "Pin_18_18",
+          "pintype": "passive"
+        },
+        {
+          "ref": "R6",
+          "pin": "1",
+          "pintype": "passive"
+        },
+        {
+          "ref": "U3",
+          "pin": "5",
+          "pinfunction": "3A_5",
+          "pintype": "input"
+        },
+        {
+          "ref": "U6",
+          "pin": "4",
+          "pinfunction": "2B_4",
+          "pintype": "input"
+        }
+      ]
+    },
+    {
+      "net": "/SAFETY_OK",
+      "nodes": [
+        {
+          "ref": "J1",
+          "pin": "5",
+          "pinfunction": "Pin_5_5",
+          "pintype": "passive"
+        },
+        {
+          "ref": "R12",
+          "pin": "1",
+          "pintype": "passive"
+        },
+        {
+          "ref": "R88",
+          "pin": "1",
+          "pintype": "passive"
+        },
+        {
+          "ref": "U11",
+          "pin": "11",
+          "pinfunction": "IN3_11",
+          "pintype": "input"
+        },
+        {
+          "ref": "U12",
+          "pin": "3",
+          "pinfunction": "IN0_3",
+          "pintype": "input"
+        },
+        {
+          "ref": "U14",
+          "pin": "4",
+          "pinfunction": "Y_4",
+          "pintype": "output"
+        },
+        {
+          "ref": "U6",
+          "pin": "3",
+          "pinfunction": "2A_3",
+          "pintype": "input"
+        }
+      ]
+    },
+    {
+      "net": "/THERMAL_OK",
+      "nodes": [
+        {
+          "ref": "J25",
+          "pin": "2",
+          "pinfunction": "Pin_2_2",
+          "pintype": "passive"
+        },
+        {
+          "ref": "R22",
+          "pin": "1",
+          "pintype": "passive"
+        },
+        {
+          "ref": "U4",
+          "pin": "4",
+          "pinfunction": "D_4",
+          "pintype": "input"
+        }
+      ]
+    }
+  ],
+  "physical_or_dynamic_safety_qualification": false
+}

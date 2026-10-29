@@ -1,0 +1,22 @@
+#VRML V2.0 utf8
+# NOMINAL/BOUND ENVELOPE: four Wuerth 970120244 M2x12 standoffs using max documented hex circumradius 2.3671361 mm; washers/screws documented separately.
+Transform {
+  translation 0.984251969 0.984251969 2.362204724
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.6500 0.6700 0.7000 } } geometry Cylinder { radius 0.931943346 height 4.724409449 } } ]
+}
+Transform {
+  translation 26.771653543 0.984251969 2.362204724
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.6500 0.6700 0.7000 } } geometry Cylinder { radius 0.931943346 height 4.724409449 } } ]
+}
+Transform {
+  translation 0.984251969 16.062992126 2.362204724
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.6500 0.6700 0.7000 } } geometry Cylinder { radius 0.931943346 height 4.724409449 } } ]
+}
+Transform {
+  translation 26.771653543 16.062992126 2.362204724
+  rotation 1 0 0 1.570796327
+  children [ Shape { appearance Appearance { material Material { diffuseColor 0.6500 0.6700 0.7000 } } geometry Cylinder { radius 0.931943346 height 4.724409449 } } ]
+}
