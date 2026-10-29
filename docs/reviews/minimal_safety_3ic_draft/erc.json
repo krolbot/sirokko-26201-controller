@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-29T12:53:56",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/b5354725-67b8-4f6a-8255-ebdfabfd0d5d",
+            "violations": [
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'K_CLUTCH_SAFE_COIL_LOW'",
+                            "pos": {
+                                "x": 332.74,
+                                "y": 67.31
+                            },
+                            "uuid": "c6da1e13-3f1a-4a80-adda-1c3295e2ac65"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'K_CLUTCH_RUN_COIL_LOW'",
+                            "pos": {
+                                "x": 332.74,
+                                "y": 69.85
+                            },
+                            "uuid": "10eebb77-2e93-4bcd-b896-43b10f0ca7e2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'K_GLOW_COIL_LOW'",
+                            "pos": {
+                                "x": 332.74,
+                                "y": 72.39
+                            },
+                            "uuid": "2013217f-1db2-4856-99e2-ff3c0525e554"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                }
+            ]
+        }
+    ],
+    "source": "Sirokko_minimal_safety.kicad_sch"
+}

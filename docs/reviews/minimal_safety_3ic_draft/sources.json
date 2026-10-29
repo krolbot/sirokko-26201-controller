@@ -1,0 +1,22 @@
+[
+  {
+    "part": "drv8803",
+    "url": "https://www.ti.com/lit/ds/symlink/drv8803.pdf",
+    "sha256": "650164fad4d69b0767063f05472bdc31b2f3ce0d683ae9905e8a3637f6752036"
+  },
+  {
+    "part": "tps3431",
+    "url": "https://www.ti.com/lit/ds/symlink/tps3431.pdf",
+    "sha256": "99bf5dbfffe06e8f85d9a86cfb777a0151e85b4a103033bc025f4897a0bdc6f3"
+  },
+  {
+    "part": "sn74hcs74",
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hcs74.pdf",
+    "sha256": "eac261a31ca71eed79dd051ed66a03bbd5d837f88087023fd864a3599cfa95fa"
+  },
+  {
+    "part": "sn74hcs11",
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hcs11.pdf",
+    "sha256": "9d2bd456aa0714be3975b05d4a12c9f7eec90c3416d7f2182676b4a940ac1268"
+  }
+]

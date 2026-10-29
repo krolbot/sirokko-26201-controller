@@ -1,0 +1,8 @@
+{
+  "model": "HCS11 AND gates + HCS74 positive-edge DFF with dominant asynchronous clear and D=1; DRV8803 nENBL high disables all outputs",
+  "cases": 1024,
+  "failed": 0,
+  "negative_watchdog_bypass_detected_cases": 20,
+  "rearm": "CLEAR_N recovery with no new ARM rising edge cannot set Q",
+  "scope": "logical model only; startup ramps, delays, metastability, supply loss and relay dynamics NOT qualified"
+}

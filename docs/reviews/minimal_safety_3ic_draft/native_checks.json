@@ -1,0 +1,14 @@
+{
+  "schematic_sha256": "df4d02f3970c691b6fe0b620a70bcfe53e37deb54a5281da3ed69b78461ceeca",
+  "expected_native_pin_mappings": 86,
+  "mappings_match": true,
+  "erc_exit": 5,
+  "erc_errors": 0,
+  "erc_warnings": 3,
+  "erc_warning_scope": "three relay-coil output labels at isolated sheet boundary; not waived or suppressed",
+  "complete_controller_checked": false,
+  "pcb_changed": false,
+  "firmware_changed": false,
+  "startup_dynamic_qualified": false,
+  "production_release": false
+}

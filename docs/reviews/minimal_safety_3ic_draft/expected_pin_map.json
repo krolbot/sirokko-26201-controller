@@ -1,0 +1,576 @@
+{
+  "pins": [
+    {
+      "reference": "U1",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U1",
+      "pin": "2",
+      "net": "WD_CWD_FIXED"
+    },
+    {
+      "reference": "U1",
+      "pin": "3",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U1",
+      "pin": "4",
+      "net": "GND"
+    },
+    {
+      "reference": "U1",
+      "pin": "5",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U1",
+      "pin": "6",
+      "net": "WD_HEARTBEAT"
+    },
+    {
+      "reference": "U1",
+      "pin": "7",
+      "net": "WD_OK"
+    },
+    {
+      "reference": "U1",
+      "pin": "8",
+      "net": "WD_OK"
+    },
+    {
+      "reference": "U1",
+      "pin": "9",
+      "net": "GND"
+    },
+    {
+      "reference": "U6",
+      "pin": "1",
+      "net": "WD_OK"
+    },
+    {
+      "reference": "U6",
+      "pin": "2",
+      "net": "THERMAL_OK"
+    },
+    {
+      "reference": "U6",
+      "pin": "13",
+      "net": "RELAY_DRIVER_OK"
+    },
+    {
+      "reference": "U6",
+      "pin": "12",
+      "net": "HARD_CONDITIONS_OK"
+    },
+    {
+      "reference": "U6",
+      "pin": "3",
+      "net": "HARD_CONDITIONS_OK"
+    },
+    {
+      "reference": "U6",
+      "pin": "4",
+      "net": "RESET_RELEASED"
+    },
+    {
+      "reference": "U6",
+      "pin": "5",
+      "net": "MCU_PERMIT"
+    },
+    {
+      "reference": "U6",
+      "pin": "6",
+      "net": "CLEAR_N"
+    },
+    {
+      "reference": "U6",
+      "pin": "7",
+      "net": "GND"
+    },
+    {
+      "reference": "U6",
+      "pin": "9",
+      "net": "GND"
+    },
+    {
+      "reference": "U6",
+      "pin": "10",
+      "net": "GND"
+    },
+    {
+      "reference": "U6",
+      "pin": "11",
+      "net": "GND"
+    },
+    {
+      "reference": "U6",
+      "pin": "8",
+      "net": null
+    },
+    {
+      "reference": "U6",
+      "pin": "14",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U2",
+      "pin": "1",
+      "net": "CLEAR_N"
+    },
+    {
+      "reference": "U2",
+      "pin": "2",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U2",
+      "pin": "3",
+      "net": "ARM_PULSE"
+    },
+    {
+      "reference": "U2",
+      "pin": "4",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U2",
+      "pin": "5",
+      "net": "SAFETY_OK"
+    },
+    {
+      "reference": "U2",
+      "pin": "6",
+      "net": "RELAY_DISABLE"
+    },
+    {
+      "reference": "U2",
+      "pin": "7",
+      "net": "GND"
+    },
+    {
+      "reference": "U2",
+      "pin": "8",
+      "net": null
+    },
+    {
+      "reference": "U2",
+      "pin": "9",
+      "net": null
+    },
+    {
+      "reference": "U2",
+      "pin": "10",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U2",
+      "pin": "11",
+      "net": "GND"
+    },
+    {
+      "reference": "U2",
+      "pin": "12",
+      "net": "GND"
+    },
+    {
+      "reference": "U2",
+      "pin": "13",
+      "net": "GND"
+    },
+    {
+      "reference": "U2",
+      "pin": "14",
+      "net": "+3V3"
+    },
+    {
+      "reference": "U11",
+      "pin": "1",
+      "net": "P24_PROTECTED"
+    },
+    {
+      "reference": "U11",
+      "pin": "2",
+      "net": "P24_PROTECTED"
+    },
+    {
+      "reference": "U11",
+      "pin": "3",
+      "net": "K_GLOW_COIL_LOW"
+    },
+    {
+      "reference": "U11",
+      "pin": "4",
+      "net": "K_CLUTCH_RUN_COIL_LOW"
+    },
+    {
+      "reference": "U11",
+      "pin": "5",
+      "net": "GND"
+    },
+    {
+      "reference": "U11",
+      "pin": "6",
+      "net": "K_CLUTCH_SAFE_COIL_LOW"
+    },
+    {
+      "reference": "U11",
+      "pin": "7",
+      "net": null
+    },
+    {
+      "reference": "U11",
+      "pin": "8",
+      "net": "RELAY_DISABLE"
+    },
+    {
+      "reference": "U11",
+      "pin": "9",
+      "net": "GND"
+    },
+    {
+      "reference": "U11",
+      "pin": "10",
+      "net": "GND"
+    },
+    {
+      "reference": "U11",
+      "pin": "11",
+      "net": "SAFETY_OK"
+    },
+    {
+      "reference": "U11",
+      "pin": "12",
+      "net": "GND"
+    },
+    {
+      "reference": "U11",
+      "pin": "13",
+      "net": "FUEL_CMD"
+    },
+    {
+      "reference": "U11",
+      "pin": "14",
+      "net": "GLOW_CMD"
+    },
+    {
+      "reference": "U11",
+      "pin": "15",
+      "net": null
+    },
+    {
+      "reference": "U11",
+      "pin": "16",
+      "net": "RELAY_DRIVER_OK"
+    },
+    {
+      "reference": "U11",
+      "pin": "17",
+      "net": "GND"
+    },
+    {
+      "reference": "C1",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "C1",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "C2",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "C2",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "C6",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "C6",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "C21",
+      "pin": "1",
+      "net": "P24_PROTECTED"
+    },
+    {
+      "reference": "C21",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "C22",
+      "pin": "1",
+      "net": "P24_PROTECTED"
+    },
+    {
+      "reference": "C22",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R18",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "R18",
+      "pin": "2",
+      "net": "WD_CWD_FIXED"
+    },
+    {
+      "reference": "R19",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "R19",
+      "pin": "2",
+      "net": "WD_OK"
+    },
+    {
+      "reference": "R9",
+      "pin": "1",
+      "net": "WD_HEARTBEAT"
+    },
+    {
+      "reference": "R9",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R86",
+      "pin": "1",
+      "net": "GLOW_CMD"
+    },
+    {
+      "reference": "R86",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R87",
+      "pin": "1",
+      "net": "FUEL_CMD"
+    },
+    {
+      "reference": "R87",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R88",
+      "pin": "1",
+      "net": "SAFETY_OK"
+    },
+    {
+      "reference": "R88",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R89",
+      "pin": "1",
+      "net": "+3V3"
+    },
+    {
+      "reference": "R89",
+      "pin": "2",
+      "net": "RELAY_DRIVER_OK"
+    },
+    {
+      "reference": "R700",
+      "pin": "1",
+      "net": "ARM_PULSE"
+    },
+    {
+      "reference": "R700",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R701",
+      "pin": "1",
+      "net": "THERMAL_OK"
+    },
+    {
+      "reference": "R701",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R702",
+      "pin": "1",
+      "net": "RESET_RELEASED"
+    },
+    {
+      "reference": "R702",
+      "pin": "2",
+      "net": "GND"
+    },
+    {
+      "reference": "R703",
+      "pin": "1",
+      "net": "MCU_PERMIT"
+    },
+    {
+      "reference": "R703",
+      "pin": "2",
+      "net": "GND"
+    }
+  ],
+  "parts": {
+    "U1": {
+      "value": "TPS3431SDRBR",
+      "position_mm": [
+        53.34,
+        66.04
+      ]
+    },
+    "U6": {
+      "value": "SN74HCS11D",
+      "position_mm": [
+        139.7,
+        66.04
+      ]
+    },
+    "U2": {
+      "value": "SN74HCS74D",
+      "position_mm": [
+        226.06,
+        66.04
+      ]
+    },
+    "U11": {
+      "value": "DRV8803PWPR",
+      "position_mm": [
+        317.5,
+        66.04
+      ]
+    },
+    "C1": {
+      "value": "100n 16V X7R",
+      "position_mm": [
+        30.48,
+        132.08
+      ]
+    },
+    "C2": {
+      "value": "100n 16V X7R",
+      "position_mm": [
+        78.74,
+        132.08
+      ]
+    },
+    "C6": {
+      "value": "100n 16V X7R",
+      "position_mm": [
+        127.0,
+        132.08
+      ]
+    },
+    "C21": {
+      "value": "100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS",
+      "position_mm": [
+        175.26,
+        132.08
+      ]
+    },
+    "C22": {
+      "value": "330uF 63V EEUFS1J331L BULK_DRAFT",
+      "position_mm": [
+        223.51999999999998,
+        132.08
+      ]
+    },
+    "R18": {
+      "value": "10k 1%",
+      "position_mm": [
+        271.78,
+        132.08
+      ]
+    },
+    "R19": {
+      "value": "10k 1%",
+      "position_mm": [
+        320.04,
+        132.08
+      ]
+    },
+    "R9": {
+      "value": "10k",
+      "position_mm": [
+        368.3,
+        132.08
+      ]
+    },
+    "R86": {
+      "value": "4k7 DRV_IN1_PULLDOWN",
+      "position_mm": [
+        30.48,
+        175.26000000000002
+      ]
+    },
+    "R87": {
+      "value": "4k7 DRV_IN2_PULLDOWN",
+      "position_mm": [
+        78.74,
+        175.26000000000002
+      ]
+    },
+    "R88": {
+      "value": "4k7 DRV_IN3_PULLDOWN",
+      "position_mm": [
+        127.0,
+        175.26000000000002
+      ]
+    },
+    "R89": {
+      "value": "10k RELAY_DRIVER_OK_PULLUP",
+      "position_mm": [
+        175.26,
+        175.26000000000002
+      ]
+    },
+    "R700": {
+      "value": "10k",
+      "position_mm": [
+        223.51999999999998,
+        175.26000000000002
+      ]
+    },
+    "R701": {
+      "value": "10k",
+      "position_mm": [
+        271.78,
+        175.26000000000002
+      ]
+    },
+    "R702": {
+      "value": "10k",
+      "position_mm": [
+        320.04,
+        175.26000000000002
+      ]
+    },
+    "R703": {
+      "value": "10k",
+      "position_mm": [
+        368.3,
+        175.26000000000002
+      ]
+    }
+  }
+}
