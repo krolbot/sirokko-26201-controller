@@ -1,0 +1,110 @@
+{
+  "zone_uuid": "636cef79-47d2-493e-851b-d7fd6b242a88",
+  "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED",
+  "layer": "B.Cu",
+  "bbox_mm": [
+    -1.6,
+    149.8,
+    42.3,
+    157.0
+  ],
+  "added_vias": [
+    {
+      "uuid": "b996ade6-e8b2-4152-9922-01769e3dd191",
+      "xy_mm": [
+        -1.2,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "b843a597-56d0-41ba-9a01-d86651febdd0",
+      "xy_mm": [
+        -0.2,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "ab8d4a9a-3b6b-4066-b29b-6bf2843eb757",
+      "xy_mm": [
+        0.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "591d4f1e-c5ca-4885-96ec-abb2d9636b0d",
+      "xy_mm": [
+        1.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "bedaec19-1ea7-4f78-b684-92947b94cc01",
+      "xy_mm": [
+        38.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "b2f2b0bd-d0b9-4040-be01-9eadd8ec75d3",
+      "xy_mm": [
+        39.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "d71bed79-ca32-4d14-93f3-588579561fa1",
+      "xy_mm": [
+        40.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    },
+    {
+      "uuid": "b37e53d8-b351-4acf-b725-6d47350e8579",
+      "xy_mm": [
+        41.8,
+        150.0
+      ],
+      "diameter_mm": 0.8,
+      "drill_mm": 0.4
+    }
+  ],
+  "intended_join": "Q1 source 5-PAD bank and Q2 source 5-PAD bank",
+  "ground_reroute": "six old1mm B.Cu segments; y>=152.8mm shifted+8mm; upper fixed GND node52.92,151.08 preserved",
+  "filled_area_mm2": 316.064522120362,
+  "strip_cases": [
+    {
+      "rect_mm": [
+        2.0,
+        149.9,
+        38.0,
+        156.9
+      ],
+      "empty_difference": true,
+      "uncovered_area_mm2": 0.0
+    },
+    {
+      "rect_mm": [
+        2.0,
+        149.7,
+        38.0,
+        157.1
+      ],
+      "empty_difference": false,
+      "uncovered_area_mm2": 7.2
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "via": "591d4f1e-c5ca-4885-96ec-abb2d9636b0d",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q1.3"
+  },
+  {
+    "via": "ab8d4a9a-3b6b-4066-b29b-6bf2843eb757",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q1.3"
+  },
+  {
+    "via": "b2f2b0bd-d0b9-4040-be01-9eadd8ec75d3",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q2.3"
+  },
+  {
+    "via": "b37e53d8-b351-4acf-b725-6d47350e8579",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q2.3"
+  },
+  {
+    "via": "b843a597-56d0-41ba-9a01-d86651febdd0",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q1.3"
+  },
+  {
+    "via": "b996ade6-e8b2-4152-9922-01769e3dd191",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q1.3"
+  },
+  {
+    "via": "bedaec19-1ea7-4f78-b684-92947b94cc01",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q2.3"
+  },
+  {
+    "via": "d71bed79-ca32-4d14-93f3-588579561fa1",
+    "minimum_hole_edge_to_F_pad_bbox_mm": 0.67,
+    "nearest_pad": "Q2.3"
+  }
+]
