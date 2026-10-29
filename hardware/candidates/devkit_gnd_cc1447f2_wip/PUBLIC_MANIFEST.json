@@ -1,0 +1,138 @@
+{
+  "package": "SIROKKO_DEVKIT_GND_CC1447F2_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_DEVKIT_GND_CC1447F2_WIP.zip",
+    "sha256": "866db48a2199382a51f386a32c4a2cd9689b4abea776af617b0b65bbd89139be",
+    "size_bytes": 326999,
+    "entries": 9,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "archive_published": false,
+    "entry_crc32": {
+      "README_RU.md": "12429dc7",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "c94de304",
+      "base.json": "e3d5ad3d",
+      "candidate.json": "83127c2b",
+      "master.json": "7e0d11fe",
+      "master_reopen.json": "5b3d8596",
+      "native.json": "b495407b",
+      "partitions.json": "58aba66b",
+      "MANIFEST_SHA256.json": "b0c529a8"
+    }
+  },
+  "baseline_project": {
+    "path": "../hw_reset_clk_be3694b1_wip/project",
+    "git_commit": "b7a6fcc095121e0c8fc496ba22f73799ace2064f",
+    "git_tree": "23403bef62bccddbb39b5dcfbc11513f6bdab751",
+    "pcb_sha256": "be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e",
+    "previous_pcb_sha256": "be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "README_RU.md": "f7d4d63bb3344ea47a7c8a6c9d7fa540f6d6f57d6da455b9fad540150a836a84",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e",
+    "base.json": "a9b16c6977bb5eacc2854d94751936b4154582e17115d0461d70b208c8e1f788",
+    "candidate.json": "4580f3061e6e4eb6c048a53a9ed0b89930e8431e5eb675a96e793d2168b90e1e",
+    "master.json": "05202ae1192202c39a787dc65a2d6743f2aa57ab8aeacbb83b88e5fc9651ee6d",
+    "master_reopen.json": "0ccfe1534faacc35fd1632f35a8e885fb1c24a48412c472a87fa8c7cb0a80f28",
+    "native.json": "f91bca7e88d523343c350a2af812ee378ca028464321f13d44aa27ad15204bbd",
+    "partitions.json": "fc2a0d4cb4414b0ea9d11b47a8c84b87dd6deb7321c07ab82a0db5bcd7d908a4"
+  },
+  "archive_to_public_mapping": {
+    "README_RU.md": "DEVKIT_GND_CC1447F2_WIP_RU.md",
+    "base.json": "source_full_cli.json",
+    "candidate.json": "candidate_full_cli.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "MANIFEST_SHA256.json": "manifest.json"
+  },
+  "published_payload_sha256": {
+    "DEVKIT_GND_CC1447F2_WIP_RU.md": "f7d4d63bb3344ea47a7c8a6c9d7fa540f6d6f57d6da455b9fad540150a836a84",
+    "source_full_cli.json": "a9b16c6977bb5eacc2854d94751936b4154582e17115d0461d70b208c8e1f788",
+    "candidate_full_cli.json": "4580f3061e6e4eb6c048a53a9ed0b89930e8431e5eb675a96e793d2168b90e1e",
+    "master_full_cli.json": "05202ae1192202c39a787dc65a2d6743f2aa57ab8aeacbb83b88e5fc9651ee6d",
+    "master_reopen.json": "0ccfe1534faacc35fd1632f35a8e885fb1c24a48412c472a87fa8c7cb0a80f28",
+    "native_comparison.json": "f91bca7e88d523343c350a2af812ee378ca028464321f13d44aa27ad15204bbd",
+    "physical_partitions.json": "fc2a0d4cb4414b0ea9d11b47a8c84b87dd6deb7321c07ab82a0db5bcd7d908a4"
+  },
+  "public_copy_edits": {
+    "archive_payloads_modified": false,
+    "engineering_source_files_modified": false
+  },
+  "partition_checks": {
+    "source_pairs": 8944,
+    "candidate_pairs": 9173,
+    "lost_pairs": 0,
+    "added_pairs": 229,
+    "source_groups_sha256": "627dc70fb3be4e798230ee8be8df2a617d8673c9ce94775309fc2751bbce2b93",
+    "candidate_groups_sha256": "846b0ec09cbdd0a89d1bad7b1b511efbb6fb1a185eb637f6cfbac533b29de18c",
+    "source_pairs_sha256": "3011285b642f0731c207083e5c93c5dd2a5d95827ed4fb70679447347f3ac6ae",
+    "candidate_pairs_sha256": "52c346f5289e2707710d14b2df947a6fe9c4a798f2e5a1cb04c7e7d296eb73d3",
+    "hash_format": "sorted UUID tuples joined as TSV lines with final LF",
+    "hashes_recomputed": true
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 342,
+    "candidate_groups": 340,
+    "lost_pairs": 0,
+    "added_pairs": 229,
+    "devkit_ground_contacts": ["J3.21", "J3.22"],
+    "existing_ground_reference_contact": "J1.22",
+    "main_ground_group_pad_count_before": 114,
+    "main_ground_group_pad_count_after": 116,
+    "start_request_full_pairset_preserved": true,
+    "hw_reset_clk_full_pairset_preserved": true,
+    "added_segments": 3,
+    "added_vias": 0,
+    "segment_layer": "F.Cu",
+    "segment_width_mm": 0.80,
+    "master_tracks_and_vias": 1887,
+    "master_zones": 27,
+    "cli_source": {"violations": 26, "unconnected": 128, "parity": 0, "exit_code": 5},
+    "cli_candidate": {"violations": 26, "unconnected": 126, "parity": 0, "exit_code": 5},
+    "cli_master": {"violations": 26, "unconnected": 126, "parity": 0, "exit_code": 5},
+    "cli_stderr_empty": true,
+    "violations_and_parity_multisets_unchanged": true,
+    "master_reopen_full_comparison": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks_unchanged_and_unqualified": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "project_files": 64,
+    "changed_project_files": ["Sirokko26201_control_motor_candidate.kicad_pcb"],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "kiprjmod_target_set_unchanged_from_verified_baseline": true,
+    "private_infrastructure_paths_found_in_public_payloads": 0
+  },
+  "documentation_correction": {
+    "correction_file": "../start_local_ee7f604f_wip/UI_POWER_C40D6C07_CORRECTION_RU.md",
+    "historical_candidates_rewritten": false,
+    "correction_preserved_in_repository": true
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "J3.21 and J3.22 are locally joined to common GND in CAD, but 126 other connections remain open. DRC is not PASS; ERC was not run. The branch width does not qualify all supply/return paths, EMC, thermal or physical safety."
+}

@@ -4,6 +4,16 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
+## 2026-10-29 — самый новый PCB-checkpoint: земля вставного DevKit cc1447f2
+
+[Кандидат devkit_gnd_cc1447f2_wip](../hardware/candidates/devkit_gnd_cc1447f2_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e`; исходная PCB — `be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb`. Остальные 63 файла и firmware не менялись.
+
+J3.21 и J3.22 `/GND` физически соединены с существующей общей землёй, включающей J1.22. Добавлены ровно три сегмента F.Cu шириной 0,80 мм без переходов. Прежняя медь, footprints, площадки, сети/UUID, SCH/PRO, `START_REQUEST`, `HW_RESET_CLK` и 27 зон сохранены; обходов защит не добавлено.
+
+Native: 699 площадок, 342→340 групп, 8944→9173 пары, потерь 0, 229 ожидаемых добавлений. Основная проверяемая GND-группа расширена со 114 до 116 площадок. KiCad CLI: исходник 26/128/0, кандидат и повторно открытый master 26/126/0; все exit 5, `stderr` пуст. Полные мультимножества violations/parity прежние. Это **не PASS**; ERC не запускался.
+
+Остаётся 126 соединений. Ширина нового ответвления не квалифицирует всё питание и возвраты; электрическая, ЭМС, токовая, тепловая, физическая и производственная квалификация не завершены. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
 ## 2026-10-29 — самый новый PCB-checkpoint: локальная цепь HW_RESET_CLK be3694b1
 
 [Кандидат hw_reset_clk_be3694b1_wip](../hardware/candidates/hw_reset_clk_be3694b1_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `be3694b163673b1f7772fb2fef75cd7477929128cb94ad99ee82cad2a72ee4eb`; исходная PCB — `55fb397d0b58b9d1b5cad5a3eb7ecc71455f75a51a2dcca2570eb8ab1562b452`. Остальные 63 файла и firmware не менялись.
