@@ -1,0 +1,22 @@
+{
+  "command": [
+    "kicad-cli",
+    "pcb",
+    "drc",
+    "--format",
+    "json",
+    "--severity-all",
+    "--all-track-errors",
+    "--schematic-parity",
+    "--refill-zones",
+    "--exit-code-violations",
+    "-o",
+    "/projects/exports/sirokko_SILK_CLEANUP_check/master_drc.json",
+    "/projects/exports/t_1e449959_layout_baseline/active_project/Sirokko26201_control_motor_candidate.kicad_pcb"
+  ],
+  "exit": 5,
+  "sha256": "8bdeca20dac79afe9e0d4746bd8e1c5bb7ef307f598b7ad300751eee6e4e9b5d",
+  "exact": true,
+  "stdout": "Found 10 violations\nFound 52 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to /projects/exports/sirokko_SILK_CLEANUP_check/master_drc.json\n",
+  "stderr": ""
+}
