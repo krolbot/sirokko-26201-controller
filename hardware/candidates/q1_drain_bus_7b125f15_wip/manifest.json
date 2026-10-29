@@ -1,0 +1,19 @@
+{
+  "Q1_DRAIN_BUS_7B125F15_detail_WIP.png": "56f8d2ecce8df4812b60d7178831a803cac28430d17650d902faa64061a6adc8",
+  "README_RU.md": "723ffba7f7af409911d3478050278e90451f1fb6e66aa65fa48a8416f43540ea",
+  "Sirokko26201_control_motor_candidate.kicad_pcb": "7b125f154a0cb273742b3e0e604d39cf8dac29ae6275b51ed5b314945777be80",
+  "U13_readback.json": "ea9c1dab49529b1c6361b23e6e0a5d0d893ceb042cc0c9b75c34a7ecf11ee177",
+  "base.json": "62ce172b3cc4ac4a317bedb6478f42bd7610345d1621debad1231153e70f9f77",
+  "final_check.json": "69cd49a62ef32f574a7727583ac4935d453769d4f5e4385dc56731b34051222b",
+  "geometry.json": "b0a5032d8f455bd4d3032c9fd733171d9a6d29fd4dd60d93f10b4bc3f88e9e19",
+  "master.json": "1b7ab966a92773320bbf7cad0c66118f632ffa10fc398d5d23b90622ad8be15e",
+  "master_reopen.json": "3a27d5438ddde4101929c505f0eb5471a4f87e07162830f89966c2b67b8daec4",
+  "native.json": "cdbac8994ae987ce3e6ec04d5c1ece1b45a9f6394f04182aafed9341e369ca1e",
+  "partitions.json": "954680dc9939e6aadcc36c94b2786534601bc548f16fcccbb583c7276878cc6a",
+  "reroute_geometry.json": "e4bbff1052446ba7fbb10d43e1184373b72ebdd483b1a4dbdfc66a71b96a1885",
+  "v1.json": "c33a4be94750fd49a7ed444fca656ec44a107e467b29e3c050610ce5d09c0ba3",
+  "v2.json": "287a075108f4112087f146d90f9f894919520ee8d1728a33aa2355d44ea59508",
+  "views/back_through.svg": "8a849af24eecbadef0817886368ccfb708c71708eb5e463a7bf0e32064224e01",
+  "views/bottom_mirror.svg": "289682ec56b2af5f2e0bc4aad2654fcd3d1507f2483e05c2edaf14d272d94cae",
+  "views/front.svg": "5ec94f8a3e621eb5fa7051c7427ee184453bd5d8076dd7870def0f025745b299"
+}

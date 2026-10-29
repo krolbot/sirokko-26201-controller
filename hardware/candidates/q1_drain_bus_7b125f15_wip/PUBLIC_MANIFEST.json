@@ -1,0 +1,274 @@
+{
+  "package": "SIROKKO_Q1_DRAIN_BUS_7B125F15_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_Q1_DRAIN_BUS_7B125F15_WIP.zip",
+    "sha256": "6c8011c4e2705571d415cc8a88f65119c2c3d955c473eeaccd856ad8be9769d1",
+    "size_bytes": 700229,
+    "entries": 18,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 17,
+    "archive_published": false,
+    "entry_crc32": {
+      "Q1_DRAIN_BUS_7B125F15_detail_WIP.png": "11c64d8a",
+      "README_RU.md": "70ab9a32",
+      "SHA256SUMS": "cdb75dae",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "acf42078",
+      "U13_readback.json": "d17cd412",
+      "base.json": "5f730b6f",
+      "final_check.json": "93bf6f68",
+      "geometry.json": "4ddc09a4",
+      "master.json": "0556fa98",
+      "master_reopen.json": "f4a7cabc",
+      "native.json": "34e6793b",
+      "partitions.json": "14c87535",
+      "reroute_geometry.json": "ba9deeee",
+      "v1.json": "3aaf6336",
+      "v2.json": "79d51394",
+      "views/back_through.svg": "9429fb0e",
+      "views/bottom_mirror.svg": "9a8489ff",
+      "views/front.svg": "971e7789"
+    }
+  },
+  "baseline_project": {
+    "path": "../rev_sense_join_10085c31_wip/project",
+    "pcb_sha256": "10085c3162690ea6d25ab623e4e8fb69c293160446d99bcc2c5509cda182255b",
+    "project_files": 64,
+    "non_pcb_files_byte_exact": 63
+  },
+  "revision": {
+    "pcb_sha256": "7b125f154a0cb273742b3e0e604d39cf8dac29ae6275b51ed5b314945777be80",
+    "previous_pcb_sha256": "10085c3162690ea6d25ab623e4e8fb69c293160446d99bcc2c5509cda182255b",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "Q1_DRAIN_BUS_7B125F15_detail_WIP.png": "56f8d2ecce8df4812b60d7178831a803cac28430d17650d902faa64061a6adc8",
+    "README_RU.md": "723ffba7f7af409911d3478050278e90451f1fb6e66aa65fa48a8416f43540ea",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "7b125f154a0cb273742b3e0e604d39cf8dac29ae6275b51ed5b314945777be80",
+    "U13_readback.json": "ea9c1dab49529b1c6361b23e6e0a5d0d893ceb042cc0c9b75c34a7ecf11ee177",
+    "base.json": "62ce172b3cc4ac4a317bedb6478f42bd7610345d1621debad1231153e70f9f77",
+    "final_check.json": "69cd49a62ef32f574a7727583ac4935d453769d4f5e4385dc56731b34051222b",
+    "geometry.json": "b0a5032d8f455bd4d3032c9fd733171d9a6d29fd4dd60d93f10b4bc3f88e9e19",
+    "master.json": "1b7ab966a92773320bbf7cad0c66118f632ffa10fc398d5d23b90622ad8be15e",
+    "master_reopen.json": "3a27d5438ddde4101929c505f0eb5471a4f87e07162830f89966c2b67b8daec4",
+    "native.json": "cdbac8994ae987ce3e6ec04d5c1ece1b45a9f6394f04182aafed9341e369ca1e",
+    "partitions.json": "954680dc9939e6aadcc36c94b2786534601bc548f16fcccbb583c7276878cc6a",
+    "reroute_geometry.json": "e4bbff1052446ba7fbb10d43e1184373b72ebdd483b1a4dbdfc66a71b96a1885",
+    "v1.json": "c33a4be94750fd49a7ed444fca656ec44a107e467b29e3c050610ce5d09c0ba3",
+    "v2.json": "287a075108f4112087f146d90f9f894919520ee8d1728a33aa2355d44ea59508",
+    "views/back_through.svg": "8a849af24eecbadef0817886368ccfb708c71708eb5e463a7bf0e32064224e01",
+    "views/bottom_mirror.svg": "289682ec56b2af5f2e0bc4aad2654fcd3d1507f2483e05c2edaf14d272d94cae",
+    "views/front.svg": "5ec94f8a3e621eb5fa7051c7427ee184453bd5d8076dd7870def0f025745b299"
+  },
+  "archive_to_public_mapping": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "README_RU.md": "Q1_DRAIN_BUS_7B125F15_WIP_RU.md",
+    "Q1_DRAIN_BUS_7B125F15_detail_WIP.png": "Q1_DRAIN_BUS_7B125F15_detail_WIP.png",
+    "U13_readback.json": "U13_readback.json",
+    "base.json": "source_full_cli.json",
+    "final_check.json": "final_check.json",
+    "geometry.json": "geometry.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "reroute_geometry.json": "reroute_geometry.json",
+    "v1.json": "rejected_v1_full_cli.json",
+    "v2.json": "candidate_full_cli.json",
+    "views/back_through.svg": "back_through.svg",
+    "views/bottom_mirror.svg": "bottom_mirror.svg",
+    "views/front.svg": "front.svg"
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "footprints": 181,
+    "source_groups": 288,
+    "candidate_groups": 287,
+    "source_pairs": 9841,
+    "candidate_pairs": 9852,
+    "lost_pairs": 0,
+    "expected_added_pairs": 11,
+    "joined_pads": [
+      "Q1.4",
+      "Q2.4",
+      "Q3.4",
+      "Q4.4",
+      "U13.3",
+      "U13.4",
+      "U13.10",
+      "U13.12",
+      "C24.2",
+      "C25.1",
+      "R94.1",
+      "R96.1"
+    ],
+    "all_other_pad_groups_unchanged": true,
+    "GND_groups_unchanged": true,
+    "source_fields_unchanged": true,
+    "P24_group_unchanged": true,
+    "U13_EP13_isolated": true,
+    "zones_source": 32,
+    "zones_candidate": 33,
+    "old_zone_definitions_unchanged": true,
+    "tracks_vias_source": 2040,
+    "tracks_vias_candidate": 2040,
+    "added_tracks": 0,
+    "added_vias": 0,
+    "changed_old_track_UUIDs": [
+      "47687dec-48fd-4e73-a9f0-d83cb9a87c86",
+      "64e733a1-f04a-4087-be40-cb8096dc8357",
+      "772071f4-8d1e-4a1e-ab83-10573e589fc6",
+      "80668b0d-9207-4d9d-9846-14ed90014a29",
+      "8faa17ab-1837-43f1-8716-cc64db8b3fb0",
+      "feb4d1db-c8a0-4cce-b092-3a9911625120"
+    ],
+    "all_other_tracks_vias_unchanged": true,
+    "new_zone": {
+      "UUID": "1d9d555e-8369-4c95-a417-a307e5f3179b",
+      "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID",
+      "layer": "F.Cu",
+      "bbox_mm": [
+        4.8,
+        154.9,
+        54.2,
+        162.3
+      ],
+      "priority": 2,
+      "clearance_mm": 0.2,
+      "minimum_fill_thickness_mm": 0.25,
+      "pad_connection": "solid",
+      "filled_area_mm2": 365.5483915902715
+    },
+    "continuous_strip": {
+      "rect_mm": [
+        5.0,
+        155.1,
+        54.0,
+        162.1
+      ],
+      "dimensions_mm": [
+        49.0,
+        7.0
+      ],
+      "uncovered_area_mm2": 0.0
+    },
+    "negative_strip": {
+      "rect_mm": [
+        5.0,
+        154.8,
+        54.0,
+        162.4
+      ],
+      "uncovered_area_mm2": 9.8
+    },
+    "P24_reroute": {
+      "old_segments_changed": 6,
+      "width_mm": 1.0,
+      "net_layer_width_UUIDs_preserved": true,
+      "only_old_nodes_y_at_least_159mm_shifted_mm": 5.0,
+      "upper_anchor_mm": [
+        58.0,
+        146.08
+      ],
+      "old_free_end_mm": [
+        16.0,
+        159.08
+      ],
+      "new_free_end_mm": [
+        16.0,
+        164.08
+      ],
+      "lower_horizontal_y_mm": 169.0,
+      "right_bypass_y_mm": 165.5,
+      "full_current_qualified": false
+    },
+    "master_reopen_exact": true,
+    "negative_move_new_zone_restores_all_source_groups": true,
+    "cli_source": {
+      "unconnected": 74,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_candidate": {
+      "unconnected": 73,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_master": {
+      "unconnected": 73,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_stderr_empty": true,
+    "source_candidate_violation_diff": {
+      "changed_full_records": 1,
+      "UUID": "8faa17ab-1837-43f1-8716-cc64db8b3fb0",
+      "type": "track_dangling",
+      "only_position_y_changed_mm": [
+        159.08,
+        164.08
+      ],
+      "same_net_length_severity_type": true,
+      "all_other_24_full_records_exact": true,
+      "new_violation": false,
+      "waiver_or_severity_change": false
+    },
+    "candidate_master_violations_parity_multiset_equal": true,
+    "airwire_native_component_records_verified": 73,
+    "raw_airwire_record_changes": 13,
+    "v1_rejected": true,
+    "v1_rejection_reason": "same-net zones with equal priority 1 produced zones_intersect/error",
+    "v2_accepted": true,
+    "v2_priority": 2,
+    "clearance_or_minfill_weakened": false,
+    "front_svg_export_exit": 0,
+    "bottom_mirror_svg_export_exit": 0,
+    "back_through_svg_export_exit": 0,
+    "svg_stderr_empty": true,
+    "pcb_sha_unchanged_after_checks": true,
+    "png_dimensions": [
+      2200,
+      1449
+    ],
+    "png_inspected": true,
+    "erc_rerun": false,
+    "drc_pass": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 17,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "preview_pngs_decoded_and_inspected": 1,
+    "credentials_private_addresses_or_private_hostnames_found": 0,
+    "generic_tool_output_paths_present": [
+      "/projects/exports/sirokko_Q1_DRAIN_BUS_check/views/front.svg"
+    ],
+    "generic_tool_output_paths_note": "The frozen final_check.json records a generic container-local export path without a user name, host name, network address, credential or secret; mapped frozen evidence remains byte-exact."
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "common_Q1_Q2_Q3_Q4_drain_join_present": true,
+    "main_load_current_path_qualified": false,
+    "vin_power_path_qualified": false,
+    "p24_power_path_qualified": false,
+    "drain_bus_current_qualified": false,
+    "drain_bus_thermal_qualified": false,
+    "protection_qualified": false,
+    "gate_drive_qualified": false,
+    "power_stage_qualified": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "The new priority-2 F.Cu zone joins Q1.4 to the prior 11-pad REV_MID group through wide bottom copper. Six existing 1 mm P24 segments were deliberately moved; all other tracks/vias and all 32 old zone definitions remain exact. The P24 branch still has an inherited free dangling end and is not qualified for full current. F1/VIN_FUSED input, source buses, P24 output, power ground and 73 opens remain incomplete. DRC is not PASS; ERC was not rerun; protection, current, thermal, transient, gate-drive, SOA and EMC behavior remain unqualified."
+}
