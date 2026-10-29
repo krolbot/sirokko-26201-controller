@@ -4,7 +4,15 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: правка маркировки PCB, 8bdeca20
+## 2026-10-29 — самый новый PCB-checkpoint: соответствие J25 библиотечному посадочному месту, 279d316f
+
+[Кандидат j25_library_match_279d316f_wip](../hardware/candidates/j25_library_match_279d316f_wip/README_RU.md) опубликован отдельным неизменяемым DRAFT-снимком. В полном 64-файловом проекте относительно `silk_cleanup_8bdeca20_wip` изменена только `Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `279d316fe3972f52550551de6a70f71673e4364a4fe7e421690745e754fc11ce`; остальные 63 файла побайтно прежние. Корневая схема остаётся `9d55cba7…`, лист входной защиты — `1c042289…`, дерево firmware — `fcbb4624…`.
+
+У J25 `TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal` изменены только четыре строки углов площадок: 0° → 180°, как у штатного библиотечного посадочного места при повороте корпуса 180°. Площадка 1 — центрально-симметричный квадрат со скруглениями 2,6×2,6 мм, площадки 2–4 — круги 2,6×2,6 мм; отверстия Ø1,3 мм, смещения нулевые. Размеры, bounding box, центры, номера, сети, UUID, медь, 39 зон и связность сохранены. Точный обратный поворот этих четырёх углов восстанавливает исходную PCB `8bdeca20…` побайтно.
+
+Свежий полный DRC KiCad 10.0.7: 52 несоединения, 9 предупреждений, 0 parity, exit 5 — **не PASS**. Исчезло ровно прежнее `lib_footprint_mismatch` J25; остаются те же 8 `track_dangling` и 1 `via_dangling`, правила и исключения не менялись, полезная медь не удалялась. ERC полного проекта: 0 ошибок, 1 предупреждение `isolated_pin_label` у EN_CHIP_PU/J1.3, exit 5 — **не чистый ERC**. Контракт J25 прежний: 1 — выход +3V3, 2 — вход THERMAL_OK, 3 — GND, 4 — выход EXT_SAFETY_ENABLE, который нельзя возбуждать извне; комнатный DS18B20 остаётся на J12. Основные P24/GND/силовые цепи и возвраты, токи, нагрев, переходные процессы, защита, ЭМС, сборочная документация, механическая и физическая квалификация остаются незавершёнными. Прошивка не менялась и не финализируется до инженерной приёмки PCB. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: правка маркировки PCB, 8bdeca20
 
 [Кандидат silk_cleanup_8bdeca20_wip](../hardware/candidates/silk_cleanup_8bdeca20_wip/README_RU.md) опубликован отдельным неизменяемым DRAFT-снимком. В полном 64-файловом проекте относительно `relay_outputs_068c6783_wip` изменена только `Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `8bdeca20dac79afe9e0d4746bd8e1c5bb7ef307f598b7ad300751eee6e4e9b5d`; остальные 63 файла побайтно прежние. Корневая схема остаётся `9d55cba7…`, лист входной защиты — `1c042289…`, дерево firmware — `fcbb4624…`.
 

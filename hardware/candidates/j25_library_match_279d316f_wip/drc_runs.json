@@ -1,0 +1,61 @@
+[
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--format",
+      "json",
+      "--severity-all",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--refill-zones",
+      "--exit-code-violations",
+      "-o",
+      "/projects/exports/sirokko_J25_LIBRARY_MATCH_check/base_drc.json",
+      "/projects/exports/sirokko_J25_LIBRARY_MATCH_check/base_project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit": 5,
+    "stderr": "",
+    "stdout": "Found 10 violations\nFound 52 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to /projects/exports/sirokko_J25_LIBRARY_MATCH_check/base_drc.json\n",
+    "counts": {
+      "violations": 10,
+      "unconnected_items": 52,
+      "schematic_parity": 0
+    },
+    "warnings": {
+      "lib_footprint_mismatch": 1,
+      "track_dangling": 8,
+      "via_dangling": 1
+    }
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--format",
+      "json",
+      "--severity-all",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--refill-zones",
+      "--exit-code-violations",
+      "-o",
+      "/projects/exports/sirokko_J25_LIBRARY_MATCH_check/final_drc.json",
+      "/projects/exports/sirokko_J25_LIBRARY_MATCH_check/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit": 5,
+    "stderr": "",
+    "stdout": "Found 9 violations\nFound 52 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to /projects/exports/sirokko_J25_LIBRARY_MATCH_check/final_drc.json\n",
+    "counts": {
+      "violations": 9,
+      "unconnected_items": 52,
+      "schematic_parity": 0
+    },
+    "warnings": {
+      "track_dangling": 8,
+      "via_dangling": 1
+    }
+  }
+]
