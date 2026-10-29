@@ -1,0 +1,80 @@
+{
+  "status": "conditional_DC_comparison_not_thermal_or_current_rating",
+  "formula": "rho=1.72e-8*(1+0.00393*(T-20)); R=rho*L/(w*t); U=I*R; P=I^2*R; SI units",
+  "assumptions": "w=6.5mm; equivalent RAW length19.04mm from J13.1 to F1.1 centerline, VIN vertical equivalent60.5mm; Cu35/70um not fab guarantee; conductor20/85C assumed not predicted; comparison10/13A not rating",
+  "exclusions": "not extracted multidirectional current distribution; head spreading, fuse/holder/connector contacts, THT pad-neck and barrel, MOSFET/via arrays/load return, transients/short circuit omitted; no IPC2152/thermal solve or measurements; 25%-30% requirements not closed",
+  "rows": [
+    {
+      "T_conductor_assumed_C": 20,
+      "Cu_assumed_um": 35,
+      "I_screen_A": 10,
+      "R_raw_straight_equiv_ohm": 0.0014395076923076925,
+      "R_VIN_straight_equiv_ohm": 0.004574065934065934,
+      "sum_drop_V": 0.06013573626373627,
+      "sum_loss_W": 0.6013573626373627
+    },
+    {
+      "T_conductor_assumed_C": 20,
+      "Cu_assumed_um": 35,
+      "I_screen_A": 13,
+      "R_raw_straight_equiv_ohm": 0.0014395076923076925,
+      "R_VIN_straight_equiv_ohm": 0.004574065934065934,
+      "sum_drop_V": 0.07817645714285715,
+      "sum_loss_W": 1.016293942857143
+    },
+    {
+      "T_conductor_assumed_C": 20,
+      "Cu_assumed_um": 70,
+      "I_screen_A": 10,
+      "R_raw_straight_equiv_ohm": 0.0007197538461538463,
+      "R_VIN_straight_equiv_ohm": 0.002287032967032967,
+      "sum_drop_V": 0.030067868131868136,
+      "sum_loss_W": 0.30067868131868136
+    },
+    {
+      "T_conductor_assumed_C": 20,
+      "Cu_assumed_um": 70,
+      "I_screen_A": 13,
+      "R_raw_straight_equiv_ohm": 0.0007197538461538463,
+      "R_VIN_straight_equiv_ohm": 0.002287032967032967,
+      "sum_drop_V": 0.039088228571428574,
+      "sum_loss_W": 0.5081469714285715
+    },
+    {
+      "T_conductor_assumed_C": 85,
+      "Cu_assumed_um": 35,
+      "I_screen_A": 10,
+      "R_raw_straight_equiv_ohm": 0.0018072299323076925,
+      "R_VIN_straight_equiv_ohm": 0.005742511076923077,
+      "sum_drop_V": 0.07549741009230769,
+      "sum_loss_W": 0.7549741009230769
+    },
+    {
+      "T_conductor_assumed_C": 85,
+      "Cu_assumed_um": 35,
+      "I_screen_A": 13,
+      "R_raw_straight_equiv_ohm": 0.0018072299323076925,
+      "R_VIN_straight_equiv_ohm": 0.005742511076923077,
+      "sum_drop_V": 0.09814663312000001,
+      "sum_loss_W": 1.27590623056
+    },
+    {
+      "T_conductor_assumed_C": 85,
+      "Cu_assumed_um": 70,
+      "I_screen_A": 10,
+      "R_raw_straight_equiv_ohm": 0.0009036149661538462,
+      "R_VIN_straight_equiv_ohm": 0.0028712555384615385,
+      "sum_drop_V": 0.037748705046153845,
+      "sum_loss_W": 0.37748705046153846
+    },
+    {
+      "T_conductor_assumed_C": 85,
+      "Cu_assumed_um": 70,
+      "I_screen_A": 13,
+      "R_raw_straight_equiv_ohm": 0.0009036149661538462,
+      "R_VIN_straight_equiv_ohm": 0.0028712555384615385,
+      "sum_drop_V": 0.049073316560000003,
+      "sum_loss_W": 0.63795311528
+    }
+  ]
+}

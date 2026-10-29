@@ -1,0 +1,415 @@
+{
+  "source_sha": "8d516517c273d77f73134da08ac20f235bd6f00c60b049b0da87a9c41d9934f3",
+  "candidate_sha": "fd2f819b894f402c4cf7c6e2dec6c1872c090ae5adbd737a5dd5fb9e2b330773",
+  "pads": 699,
+  "footprints": 181,
+  "source_groups": 283,
+  "candidate_groups": 279,
+  "source_pairs": 10012,
+  "candidate_pairs": 10046,
+  "lost_pairs": 0,
+  "expected_added_pairs": 34,
+  "all_other_PAD_groups_unchanged": true,
+  "joined_PADs": [
+    {
+      "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+      "pin": "Q2.3"
+    },
+    {
+      "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+      "pin": "Q2.2"
+    },
+    {
+      "uuid": "260dc8dc-ca65-4b2f-a85a-1ebbc921dd8c",
+      "pin": "D1.1"
+    },
+    {
+      "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+      "pin": "Q1.6"
+    },
+    {
+      "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+      "pin": "Q1.5"
+    },
+    {
+      "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+      "pin": "Q1.3"
+    },
+    {
+      "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+      "pin": "Q1.2"
+    },
+    {
+      "uuid": "897f77a5-dac4-4206-9548-f3a0bb0ea0a1",
+      "pin": "D1.4"
+    },
+    {
+      "uuid": "9c2a02a8-1f51-4f67-8fe8-9bdb7ad19db4",
+      "pin": "F1.2"
+    },
+    {
+      "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+      "pin": "Q2.7"
+    },
+    {
+      "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+      "pin": "Q1.7"
+    },
+    {
+      "uuid": "bd32196f-47fd-490a-8fc1-7af8430c2a9e",
+      "pin": "D1.2"
+    },
+    {
+      "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+      "pin": "Q2.5"
+    },
+    {
+      "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+      "pin": "Q2.6"
+    },
+    {
+      "uuid": "db7eddc1-f462-434f-824d-ca0c84570e18",
+      "pin": "D1.3"
+    },
+    {
+      "uuid": "f168be84-10c9-4c32-98e9-33388b26bf32",
+      "pin": "U13.2"
+    },
+    {
+      "uuid": "fc3f2405-2ba0-4111-bd97-6a5760c59d6d",
+      "pin": "F1.2"
+    }
+  ],
+  "raw_joined_PADs": [
+    {
+      "uuid": "37ce0ef1-42a1-4b9c-8680-ba844c71bf39",
+      "pin": "J13.1"
+    },
+    {
+      "uuid": "6a78ca35-0ffa-4bbe-b3e9-91179fe223d1",
+      "pin": "F1.1"
+    },
+    {
+      "uuid": "bc8e5b5d-871b-4203-ba83-eb013ca9a1c7",
+      "pin": "F1.1"
+    }
+  ],
+  "no_copper_fuse_bypass": true,
+  "only_moved_footprint": "R90",
+  "only_moved_PAD_UUIDs": [
+    "1ad15e9d-0657-4c3a-9cd9-475e2d503deb",
+    "e86c9a35-4cef-4b7f-b4ea-a7a41334115e"
+  ],
+  "changed_old_tracks_via_UUIDs": [
+    "1107224c-c0dd-4d76-8fdd-95a5534f9a08",
+    "9c742774-d42b-426c-ad44-8ce43d948b78",
+    "ae5c5da3-6b24-4a4d-a6de-14ed269d4637",
+    "ca6fff3b-1158-4984-a480-a6bcead8858e"
+  ],
+  "all_other_old_copper_and_FP_PAD_geometry_exact": true,
+  "all_old_zone_definitions_exact": true,
+  "native_coverage_symmetry_closure": true,
+  "negative_move_both_new_zones_restores_all_source_groups_despite_R90_and_gate_reroute": true,
+  "DRC_opens": 65,
+  "DRC_warnings": 25,
+  "CLI_exit": 5,
+  "violations_parity_full_multisets_equal": true,
+  "geometry": {
+    "zone_uuid": "ebe3febd-0d74-43cd-b218-b8314f447fe2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED",
+    "layer": "B.Cu",
+    "outline_mm": [
+      [
+        -4.5,
+        87.4
+      ],
+      [
+        9.4,
+        87.4
+      ],
+      [
+        9.4,
+        94.7
+      ],
+      [
+        2.2,
+        94.7
+      ],
+      [
+        2.2,
+        151.0
+      ],
+      [
+        -4.5,
+        151.0
+      ]
+    ],
+    "priority": 2,
+    "clearance_mm": 0.2,
+    "minfill_mm": 0.25,
+    "added": [
+      {
+        "uuid": "e3a54d28-3724-4a2e-a12a-f518120eb8f0",
+        "type": "track",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE",
+        "layer": "B.Cu",
+        "start_mm": [
+          3.2,
+          149.2
+        ],
+        "end_mm": [
+          3.2,
+          142.9125
+        ],
+        "width_mm": 0.25
+      },
+      {
+        "uuid": "29fea3cb-fe2d-4545-a78e-236b2e9b4e71",
+        "type": "track",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE",
+        "layer": "F.Cu",
+        "start_mm": [
+          -2.0,
+          141.0875
+        ],
+        "end_mm": [
+          -3.7,
+          141.0875
+        ],
+        "width_mm": 0.25
+      },
+      {
+        "uuid": "395b538b-7ac6-425b-996c-e3cc2136cb26",
+        "type": "track",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE",
+        "layer": "F.Cu",
+        "start_mm": [
+          -3.7,
+          141.0875
+        ],
+        "end_mm": [
+          -3.7,
+          146.19
+        ],
+        "width_mm": 0.25
+      }
+    ],
+    "changed_old": [
+      {
+        "uuid": "1107224c-c0dd-4d76-8fdd-95a5534f9a08",
+        "type": "track",
+        "layer": "B.Cu",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE",
+        "before_mm": [
+          [
+            23.0,
+            149.2
+          ],
+          [
+            -3.55,
+            149.2
+          ]
+        ],
+        "after_mm": [
+          [
+            23.0,
+            149.2
+          ],
+          [
+            3.2,
+            149.2
+          ]
+        ],
+        "width_mm": 0.25
+      },
+      {
+        "uuid": "9c742774-d42b-426c-ad44-8ce43d948b78",
+        "type": "track",
+        "layer": "F.Cu",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE",
+        "before_mm": [
+          [
+            -3.55,
+            149.2
+          ],
+          [
+            -3.55,
+            148.015
+          ]
+        ],
+        "after_mm": [
+          [
+            3.2,
+            142.9125
+          ],
+          [
+            -2.0,
+            142.9125
+          ]
+        ],
+        "width_mm": 0.25
+      },
+      {
+        "uuid": "ca6fff3b-1158-4984-a480-a6bcead8858e",
+        "type": "via",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE",
+        "before_mm": [
+          -3.55,
+          149.2
+        ],
+        "after_mm": [
+          3.2,
+          142.9125
+        ],
+        "diameter_mm": 0.6,
+        "drill_mm": 0.3
+      },
+      {
+        "uuid": "ae5c5da3-6b24-4a4d-a6de-14ed269d4637",
+        "type": "track",
+        "layer": "F.Cu",
+        "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE",
+        "before_mm": [
+          [
+            -3.55,
+            146.19
+          ],
+          [
+            0.35,
+            146.19
+          ]
+        ],
+        "after_mm": [
+          [
+            -3.7,
+            146.19
+          ],
+          [
+            0.35,
+            146.19
+          ]
+        ],
+        "width_mm": 0.25
+      }
+    ],
+    "footprint_change": {
+      "reference": "R90",
+      "uuid": "50929e38-717f-4517-a4c7-8228c7801eea",
+      "before_position_mm": [
+        -3.55,
+        147.1025
+      ],
+      "after_position_mm": [
+        -2.0,
+        142.0
+      ],
+      "translation_mm": [
+        1.55,
+        -5.1025
+      ],
+      "before_pads_mm": {
+        "1": [
+          -3.55,
+          148.015
+        ],
+        "2": [
+          -3.55,
+          146.19
+        ]
+      },
+      "after_pads_mm": {
+        "1": [
+          -2.0,
+          142.9125
+        ],
+        "2": [
+          -2.0,
+          141.0875
+        ]
+      },
+      "reason": "make room for an edge-compliant DGATE escape without narrowing the main input bus"
+    },
+    "role": "main F1 output to VIN_FUSED source bus; raw input feed and return not yet complete",
+    "actual_filled_area_mm2": 478.632722120362,
+    "native_union_strip_checks": [
+      {
+        "label": "F1_feed_column",
+        "rect_mm": [
+          -4.4,
+          90.0,
+          2.1,
+          150.5
+        ],
+        "empty_difference": true
+      },
+      {
+        "label": "RAW_midspan",
+        "rect_mm": [
+          2.8,
+          103.0,
+          9.3,
+          118.0
+        ],
+        "empty_difference": true
+      },
+      {
+        "label": "VIN_old_36x7",
+        "rect_mm": [
+          2.0,
+          149.9,
+          38.0,
+          156.9
+        ],
+        "empty_difference": true
+      },
+      {
+        "label": "REV_old_7mm",
+        "rect_mm": [
+          44.35,
+          112.3,
+          51.35,
+          155.2
+        ],
+        "empty_difference": true
+      }
+    ],
+    "negative_wider_column_uncovered_area_mm2": 10.6265,
+    "R90_reference_bbox_mm": [
+      -2.827381,
+      137.83925,
+      0.327381,
+      139.53575
+    ],
+    "raw_zone": {
+      "uuid": "8ac58e3c-db36-4866-ad99-0ef63fddd4eb",
+      "net": "/VIN_RAW_24",
+      "outline_mm": [
+        [
+          2.7,
+          99.4
+        ],
+        [
+          9.4,
+          99.4
+        ],
+        [
+          9.4,
+          121.5
+        ],
+        [
+          2.7,
+          121.5
+        ]
+      ],
+      "layer": "B.Cu",
+      "priority": 2,
+      "clearance_mm": 0.2,
+      "minfill_mm": 0.25,
+      "actual_filled_area_mm2": 148.051874194895,
+      "role": "J13.1 to both F1.1 pads; no copper bypass across fuse"
+    }
+  },
+  "master_reopen_exact": true,
+  "master_tracks_vias": 2071,
+  "zones": 37
+}
