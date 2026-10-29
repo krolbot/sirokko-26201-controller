@@ -1,0 +1,195 @@
+{
+  "package": "SIROKKO_P24_SOURCE_BUS_8D516517_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_P24_SOURCE_BUS_8D516517_WIP.zip",
+    "sha256": "6f89c62b86ce0b5babd60d9e0049078bb979861d07b9a08858aa65c27dcdb300",
+    "size_bytes": 712718,
+    "entries": 20,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 19,
+    "archive_published": false,
+    "entry_crc32": {
+      "DC_screen.json": "70b511cd",
+      "P24_SOURCE_BUS_8D516517_layers_WIP.png": "d40ec198",
+      "README_RU.md": "35db9ff2",
+      "SHA256SUMS": "039cc8fe",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "a612cbd9",
+      "U13_readback.json": "ec5269d4",
+      "base.json": "d6644920",
+      "final_check.json": "1def2491",
+      "geometry.json": "e493db0b",
+      "master.json": "fd0d35af",
+      "master_reopen.json": "ff694faa",
+      "native.json": "c3349733",
+      "negative_strip.json": "9154022c",
+      "partitions.json": "d0750f38",
+      "v1.json": "9618e0ce",
+      "via_readback.json": "ce007a8f",
+      "view_coordinate_check.json": "e2f3dd7e",
+      "views/back_through.svg": "431e79b7",
+      "views/bottom_mirror.svg": "dfe8e2c8",
+      "views/front.svg": "df4e006e"
+    }
+  },
+  "baseline_project": {
+    "path": "../vin_local_join_72af4b85_wip/project",
+    "pcb_sha256": "72af4b85a11c527462982571df0fd626840a11e3b0a2dd312872ae9f429499df",
+    "project_files": 64,
+    "non_pcb_files_byte_exact": 63,
+    "non_pcb_set_sha256": "912bcb2b76bb8d39d20708cb116a3dd322d5b3bba40a9090149504c3804e1bfc"
+  },
+  "revision": {
+    "pcb_sha256": "8d516517c273d77f73134da08ac20f235bd6f00c60b049b0da87a9c41d9934f3",
+    "previous_pcb_sha256": "72af4b85a11c527462982571df0fd626840a11e3b0a2dd312872ae9f429499df",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "DC_screen.json": "e585a195e03ecfd66d0578f418c5b0e7e662457f80b3d43463c8bd29b7ab4191",
+    "P24_SOURCE_BUS_8D516517_layers_WIP.png": "f431fc29e55f174c63604f25d9ae3a227b23d4ca12766abadb74575cee8ee41b",
+    "README_RU.md": "4fd12ae06f6f726d689dcaa5d446243aaad23c8e228fa0a6eae573eb5530c277",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "8d516517c273d77f73134da08ac20f235bd6f00c60b049b0da87a9c41d9934f3",
+    "U13_readback.json": "d873d7328ccf4f0f584c829b93c2740a89c62a9ca77e4e1cbb649d3c9ad7d160",
+    "base.json": "e436219f02ea897deed017b5b67a501458f97fa56cab600a6ee5e9fec84dbb5d",
+    "final_check.json": "a24c2c913aa0162545ba56d717228b6f4ef942946849a47326059395438b809c",
+    "geometry.json": "0ea85ef3ea7faf180948a3f231b4a1617175480cad271b0e6a6124f9cef5bc60",
+    "master.json": "226a30420af7ebb6a277bbbc4cadfc293d9f109e1051bfdb2955983a78fd90fd",
+    "master_reopen.json": "6e5e795a42e2327d0373adfebc55dfb91a7cffa3063e0f06faf92587b15a4f5a",
+    "native.json": "b2a475e77fd7a518a87f5b968c3e0135e827dc5f8a4d08ee4d987808ba4be780",
+    "negative_strip.json": "6f8dcdcb60ed40b593251d2409687e870b0f735b4011b3c819563164822c63df",
+    "partitions.json": "f530279a02fbe6aa2e9178b25b954718327579bb1b392d7b54dc9dcebfd5113a",
+    "v1.json": "e7bc331c4b521f2aa8837174cba9760f6949dc5ca8134331bfb2346bad935a3b",
+    "via_readback.json": "9fa0909549d4fcb427a683a6d33daa0622d8458145675ebd5fcd5a679db1df7f",
+    "view_coordinate_check.json": "e4c16171ea872f2b644b61ca9fcea386eb2e287cb0c803e9dce970dd31ddfffe",
+    "views/back_through.svg": "03c7b1f3a3dce85c171a2cb70479e2c82f0685a3a328c4128be32c004625e90f",
+    "views/bottom_mirror.svg": "8f414b70b9d23a7b60781bce062a9c51a7b524e842d38fb4b4ade90b54bb29e6",
+    "views/front.svg": "ecaf935709ee35b47ac199d562429be7e58ca529f3658c363feda6ec1f28b50d"
+  },
+  "archive_to_public_mapping": {
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "README_RU.md": "P24_SOURCE_BUS_8D516517_WIP_RU.md",
+    "DC_screen.json": "DC_screen.json",
+    "P24_SOURCE_BUS_8D516517_layers_WIP.png": "P24_SOURCE_BUS_8D516517_layers_WIP.png",
+    "U13_readback.json": "U13_readback.json",
+    "base.json": "source_full_cli.json",
+    "final_check.json": "final_check.json",
+    "geometry.json": "geometry.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "negative_strip.json": "negative_strip.json",
+    "partitions.json": "physical_partitions.json",
+    "v1.json": "rejected_v1_full_cli.json",
+    "via_readback.json": "via_readback.json",
+    "view_coordinate_check.json": "view_coordinate_check.json",
+    "views/back_through.svg": "back_through.svg",
+    "views/bottom_mirror.svg": "bottom_mirror.svg",
+    "views/front.svg": "front.svg"
+  },
+  "independent_pairset_recomputation": {
+    "source_groups": 285,
+    "candidate_groups": 283,
+    "source_pairs": 9927,
+    "candidate_pairs": 10012,
+    "lost_pairs": 0,
+    "added_pairs": 85,
+    "source_pairset_sha256": "80f7809a30da909a3cccbd67a74bad1444bba2cfcb7ef54fa86eac0234cc6a6d",
+    "candidate_pairset_sha256": "7f5ad9fd3aa6e8ff0f533565dc02c0aafb8980d0c38e47c56952d60e2405e7a5",
+    "added_pairset_sha256": "33f4f03b544209c8fd3274ae6fc38ed0745b07f1f662f7657969c8a9c2a5103c",
+    "merged_source_group_sizes": [
+      5,
+      5,
+      6
+    ],
+    "candidate_join_size": 16,
+    "unchanged_groups": 282
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 19,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "png_full_decode": true,
+    "png_dimensions": [
+      1730,
+      1485
+    ],
+    "png_inspected": true,
+    "png_visual_limitation": "Local crop; surrounding copper is clipped. The image does not establish electrical connectivity.",
+    "credentials_private_addresses_or_private_hostnames_found": 0,
+    "generic_tool_output_paths_present": [
+      "/projects/exports/sirokko_P24_SOURCE_BUS_check/views/front.svg"
+    ],
+    "generic_tool_output_paths_note": "Generic container-local export path; no user, host, address, credential or secret. Frozen evidence remains byte-exact."
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "footprints": 181,
+    "source_groups": 285,
+    "candidate_groups": 283,
+    "source_pairs": 9927,
+    "candidate_pairs": 10012,
+    "lost_pairs": 0,
+    "expected_added_pairs": 85,
+    "joined_pad_count": 16,
+    "source_join_group_sizes": [
+      5,
+      5,
+      6
+    ],
+    "changed_old_track_UUIDs": [
+      "7ecc9ded-d77a-4365-b4f2-efae5b556971"
+    ],
+    "added_tracks": 4,
+    "added_vias": 10,
+    "tracks_vias_candidate": 2068,
+    "zones_source": 34,
+    "zones_candidate": 35,
+    "new_zone_UUID": "8681616a-859d-4c9b-8020-8f0fc64d4d0c",
+    "master_reopen_exact": true,
+    "cli_source": {
+      "unconnected": 71,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_candidate": {
+      "unconnected": 69,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_master": {
+      "unconnected": 69,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_stderr_empty": true,
+    "violations_parity_full_multisets_equal": true,
+    "all69_airwire_native_components_verified": true,
+    "erc_rerun": false,
+    "drc_pass": false
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "Q3_Q4_source_bus_to_local_P24_branch_present": true,
+    "main_load_current_output_complete": false,
+    "F1_to_VIN_bus_complete": false,
+    "power_ground_complete": false,
+    "current_qualified": false,
+    "thermal_qualified": false,
+    "TVS_transient_qualified": false,
+    "protection_qualified": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "Q3/Q4 source fields are joined to the existing local P24 controller branch, not a complete load-current output. F1/VIN input, main output and return, TVS energy/return, OCP/UVLO/brownout, current/thermal margins, gate dynamics, SOA, EMC, 69 opens and 25 warnings remain open. DRC is not PASS; ERC was not rerun."
+}
