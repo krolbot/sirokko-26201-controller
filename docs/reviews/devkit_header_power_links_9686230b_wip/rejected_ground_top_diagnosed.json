@@ -1,0 +1,31 @@
+{
+  "rejected_sha256": "a416da107407fb18852f53cf21696e371059db7e84b11e5fbe3cb8e48aaca7a0",
+  "counts": [
+    2142,
+    2150
+  ],
+  "old_net_changes": [
+    {
+      "uuid": "a10e1b9a-5daa-4745-b07b-5bbf633d649b",
+      "before": "/SAFETY_OK_RAW",
+      "after": "/GND"
+    },
+    {
+      "uuid": "976f1cdc-f35d-406f-b2e4-11b74fb0554c",
+      "before": "/SAFETY_OK_RAW",
+      "after": "/GND"
+    },
+    {
+      "uuid": "98acf5ea-f43d-4d83-b526-d6ae97efbd12",
+      "before": "/SAFETY_OK_RAW",
+      "after": "/GND"
+    },
+    {
+      "uuid": "fb421f5d-ce0a-414d-968d-f6e4c54d38c0",
+      "before": "/SAFETY_OK_RAW",
+      "after": "/GND"
+    }
+  ],
+  "candidate_not_used": true,
+  "restored_sha256": "d9fdf21717b454dd4d4d5e5d85a2347e379fd8a2b76de882b069dfc10c18b59e"
+}

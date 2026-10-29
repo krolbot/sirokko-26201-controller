@@ -1,0 +1,75 @@
+{
+  "source_sha256": "f89e4d5fce780e57a5a617e35c57112059302d943c21184a87be45f8fb0c8ad2",
+  "candidate_sha256": "9686230b8cd3640bad00f33784339789345ce61b7ea66a05b7e0eb08b6c380b5",
+  "exact_reverse_8_added_segments": true,
+  "native_old_track_via_net_assignment_unchanged": 2142,
+  "native_pads_exact": 699,
+  "source_pairs": 3519,
+  "candidate_pairs": 3602,
+  "lost_pairs": 0,
+  "exact_expected_added_pairs": 83,
+  "3V3_group": [
+    "J1.1",
+    "J1.2"
+  ],
+  "GND_group": [
+    "C10.2",
+    "C11.2",
+    "C12.2",
+    "C13.2",
+    "C3.2",
+    "C4.2",
+    "C5.2",
+    "C9.2",
+    "D1.5",
+    "D1.6",
+    "D1.7",
+    "D1.8",
+    "J1.22",
+    "J13.2",
+    "J3.1",
+    "J3.21",
+    "J3.22",
+    "R22.2",
+    "U3.7",
+    "U4.7",
+    "U5.7",
+    "U9.1",
+    "U9.14"
+  ],
+  "negative_controls": [
+    {
+      "channel": "3V3_link",
+      "cut_detected": true
+    },
+    {
+      "channel": "GND_bank",
+      "cut_detected": true
+    },
+    {
+      "channel": "GND_upper",
+      "cut_detected": true
+    }
+  ],
+  "new_DRC_violations": 0,
+  "removed_DRC_violations": [
+    {
+      "description": "Track has unconnected end",
+      "items": [
+        {
+          "description": "Track [/GND] on F.Cu, length 18.0000 mm",
+          "pos": {
+            "x": 58.0,
+            "y": 64.0
+          },
+          "uuid": "32452400-3f5b-4f85-b82a-e2e93353a033"
+        }
+      ],
+      "severity": "warning",
+      "type": "track_dangling"
+    }
+  ],
+  "source_opens": 98,
+  "candidate_opens": 93,
+  "production_release": false
+}

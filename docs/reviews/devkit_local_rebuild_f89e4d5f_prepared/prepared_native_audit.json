@@ -1,0 +1,40 @@
+{
+  "source_sha256": "73caf79a937a17212b3ac8eb9cc1576ef709ab6d5dfcc5c0ad40c8c0e71ab7cf",
+  "prepared_sha256": "f89e4d5fce780e57a5a617e35c57112059302d943c21184a87be45f8fb0c8ad2",
+  "exact_allowed_replay": true,
+  "pads_total": 699,
+  "pads_moved": 44,
+  "other_pads_unchanged": 655,
+  "selected_old_copper": 94,
+  "retained_tails": 41,
+  "all_other_copper_unchanged": 2101,
+  "prepared_tracks_vias": 2142,
+  "antenna_core_mm": [
+    82.63652,
+    3.3361,
+    100.7,
+    9.705959
+  ],
+  "antenna_screen_mm": [
+    67.63652,
+    -11.6639,
+    115.7,
+    9.705959
+  ],
+  "carrier_intersections_mm2": [
+    0.0,
+    0.0
+  ],
+  "pad_copper_to_top_edge_min_mm": 0.6999999999999993,
+  "other_PTH_pads_under_module": [],
+  "module_bbox_mm": [
+    77.73,
+    9.645,
+    105.67,
+    66.795
+  ],
+  "module_installed_3D_qualified": false,
+  "layout_complete": false,
+  "production_release": false,
+  "status": "DRAFT / NOT FOR ORDER / NO POWER / NO FIRE"
+}
