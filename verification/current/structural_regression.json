@@ -1,90 +1,42 @@
 {
   "status": "PASS",
-  "before": "/root/.hermes/cache/scratch/after20_clean.kicad_pcb",
+  "before": "/root/.hermes/cache/scratch/after30_clean.kicad_pcb",
   "after": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-  "before_sha256": "15e77269aea65b6863bdeeb762b7f94788abbc1b8d2b71620c9df5f3a2def58f",
-  "after_sha256": "1871ffa5460311b9283e2ff92f6249682ac68935023346bd98463a17cfca5180",
+  "before_sha256": "1871ffa5460311b9283e2ff92f6249682ac68935023346bd98463a17cfca5180",
+  "after_sha256": "bfd03d74332023ec466b07661b9a374ff3f6122334599578f2e27be54f4bda6c",
   "copper_delta": {
-    "before_count": 1741,
-    "after_count": 1751,
-    "preserved_count": 1741,
+    "before_count": 1751,
+    "after_count": 1755,
+    "preserved_count": 1751,
     "added": {
-      "0611da0e-703e-4b13-8cf2-8604e85d6ff3": {
+      "0c38304f-f9c2-4cf0-9ad5-8c573dddc795": {
         "type": "segment",
-        "start": "26.325 61",
-        "end": "24.8 61",
+        "start": "51.175 56.5",
+        "end": "47.525 56.5",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/GND\""
       },
-      "0af505c4-e183-4fba-af32-6bb0a6f1b88c": {
+      "55626e22-2e0a-4094-97d9-fb19044b0d1a": {
         "type": "segment",
-        "start": "29.6 64.025",
-        "end": "28.7 64.025",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/+3V3\""
-      },
-      "0ea7d49f-a528-45c1-9717-be28380ed8ae": {
-        "type": "segment",
-        "start": "28.7 65.325",
-        "end": "29.6 65.325",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/+3V3\""
-      },
-      "10ae5997-5bf8-4d74-9f52-01f20d54de4e": {
-        "type": "segment",
-        "start": "24.8 61",
-        "end": "24.8 68.81",
+        "start": "47.525 56.5",
+        "end": "47.525 58.81",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/GND\""
       },
-      "2c3adcd5-4a6e-4fea-a773-ad830e005fae": {
+      "5ba2dbbe-9214-4996-bcb5-b61c79ea3997": {
         "type": "segment",
-        "start": "29.6 64.025",
-        "end": "27.675 61",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/+3V3\""
-      },
-      "4cd64a04-469b-417e-9e74-8970b6e1a9d6": {
-        "type": "segment",
-        "start": "24.8 68.81",
-        "end": "26.325 68.81",
+        "start": "29.6 65.975",
+        "end": "29.6 68.81",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/GND\""
       },
-      "88b8a998-dc58-4d33-bba5-c560e7625054": {
+      "8b1f4488-5eeb-4eed-ad52-65373a18373b": {
         "type": "segment",
-        "start": "60.525 68.81",
-        "end": "53.16 77",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/GND\""
-      },
-      "ba414569-8614-4613-a0f6-f45413e0a044": {
-        "type": "segment",
-        "start": "26.325 68.81",
-        "end": "28.2 68.81",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/GND\""
-      },
-      "eb08f1a7-66ac-40b8-97de-7839e32294bc": {
-        "type": "segment",
-        "start": "28.7 64.025",
-        "end": "28.7 65.325",
-        "width": "0.25",
-        "layers": "F.Cu",
-        "net": "\"/+3V3\""
-      },
-      "f79fda61-6ad1-4e36-b6aa-23b1b487cd0f": {
-        "type": "segment",
-        "start": "44.525 68.81",
-        "end": "39.7 70.3",
+        "start": "51.175 58",
+        "end": "51.175 56.5",
         "width": "0.25",
         "layers": "F.Cu",
         "net": "\"/GND\""
