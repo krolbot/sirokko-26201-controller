@@ -1,0 +1,20 @@
+{
+  "checked_cases": 4096,
+  "formula": "CLEAR_N = WD_OK AND RELAY_DRIVER_OK AND RESET_RELEASED AND P24_PRESENT AND MCU_PERMIT",
+  "U6_gate1": "WD_OK AND WD_OK AND RELAY_DRIVER_OK",
+  "MCU_PERMIT_contract": "request AND temperature_valid AND temperature_within_limits AND samples_fresh AND selftest_ok",
+  "software_tests_implemented": false,
+  "physical_timing_or_thresholds_tested": false,
+  "independent_hardware_overtemperature_limit": false,
+  "negative_control_software_contract_violated": {
+    "wd": true,
+    "relay_ok": true,
+    "reset_released": true,
+    "p24_present": true,
+    "temperature_valid": false,
+    "MCU_PERMIT_erroneously_HIGH": true,
+    "ARM_rising": true,
+    "latched_permission_can_become_HIGH": true
+  },
+  "result": "BOOLEAN_MODEL_PASS_ONLY"
+}

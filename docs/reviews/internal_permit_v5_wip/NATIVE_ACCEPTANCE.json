@@ -1,0 +1,42 @@
+{
+  "parent_sha": "70e2114caa9c09aef5db5edfe0a2fac80470dfe0aef5f570c1bb262d4471d404",
+  "pcb_sha": "f948c54af59fe790e8d852110d25c624056b2cf52f83a2036f32f2490edd7951",
+  "retained_copper_exact": 1716,
+  "added_track_uuid": "2750d5e5-f05b-4031-8795-c35abc31f8b7",
+  "added_track_length_mm": 1.27,
+  "added_track_width_mm": 0.25,
+  "added_vias": 0,
+  "removed_R701_pads": 2,
+  "pad_delta": {
+    "a4e127eb-fb60-4ee5-9c17-4ee4bb916350": [
+      [
+        "U6",
+        "2",
+        "/MinimalSafety/THERMAL_OK",
+        44525000,
+        62460000,
+        1950000,
+        600000,
+        0.0
+      ],
+      [
+        "U6",
+        "2",
+        "/MinimalSafety/WD_OK",
+        44525000,
+        62460000,
+        1950000,
+        600000,
+        0.0
+      ]
+    ]
+  },
+  "lost_pairs": 0,
+  "added_pairs": 1,
+  "negative_no_bridge_rejected": true,
+  "positive_pins1_2_connected": true,
+  "firmware_changed": false,
+  "physical_tests_performed": false,
+  "layout_complete": false,
+  "production_release": false
+}
