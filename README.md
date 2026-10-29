@@ -4,7 +4,9 @@
 
 ## Current requirements and status
 
-**Latest PCB checkpoint: [local U13/C24 PCB d9475d5e](hardware/candidates/input_cap_d9475d5e_wip/README_RU.md).** The byte-exact PCB is published with the unchanged 63-file non-PCB context from cbc1e192 and unchanged firmware. It locally joins the separate five-pad `REV_MID` and two-pad `CAP_NET` groups; U13.13 EP remains isolated. Native evidence reports 699 pads, 333→328 groups and 9250→9261 pairs, with 0 lost and 11 exact expected additions. KiCad CLI reports 119 unconnected / 26 warnings / 0 parity for the source and 114 / 26 / 0 for the candidate and reopened master; every run exited 5. This is **not PASS**; ERC was not run. Charge-pump, transient, reverse-polarity, startup/UVLO and full input-protection behavior remain unqualified. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+**Latest PCB checkpoint: [EN/OV dividers and return PCB 2a7bf85c](hardware/candidates/input_div_2a7bf85c_wip/README_RU.md).** The byte-exact PCB is published with the unchanged 63-file non-PCB context from d9475d5e and unchanged firmware. It joins three separate groups: `EN_DIV`, `OV_DIV`, and three new GND pads to the existing main return. Native evidence reports 699 pads, 328→321 groups and 9261→9618 pairs, with 0 lost and 357 exact expected additions. KiCad CLI reports 114 unconnected / 26 warnings / 0 parity for the source and 107 / 26 / 0 for the candidate and reopened master; every run exited 5. This is **not PASS**; ERC was not run. The upper divider branches still lack the full `REV_MID` feed; UVLO/OV thresholds and dynamics, transient behavior, full power/return paths and EMC remain unqualified. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+**Previous PCB checkpoint: [local U13/C24 PCB d9475d5e](hardware/candidates/input_cap_d9475d5e_wip/README_RU.md).** It remains immutable and was not overwritten.
 
 **Previous PCB checkpoint: [local D1 TVS buses PCB cbc1e192](hardware/candidates/tvs_local_cbc1e192_wip/README_RU.md).** It remains immutable. Its separate [top/bottom copper preview](hardware/previews/cbc1e192_wip/README_RU.md) is tied only to cbc1e192; it is not a 3D view or manufacturing drawing.
 

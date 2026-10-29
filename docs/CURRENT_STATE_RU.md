@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: локальная обвязка U13/C24 d9475d5e
+## 2026-10-29 — самый новый PCB-checkpoint: делители EN/OV и возврат 2a7bf85c
+
+[Кандидат input_div_2a7bf85c_wip](../hardware/candidates/input_div_2a7bf85c_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `2a7bf85c932b7a34290cc421144bb13fde5692e3202a427db335e094e8bb3b5b`; исходная PCB — `d9475d5e081ed75ec15770f7c6b7d88484ec6eb9e1692f4f0e64663f47bb7a6d`. Остальные 63 файла и firmware не менялись.
+
+Соединены три раздельные группы: `EN_DIV` U13.6/R96.2/R97.1, `OV_DIV` U13.5/R94.2/R95.1 и GND R97.2/R95.2/C25.2 с прежней общей землёй J1.22. Добавлены 28 сегментов 0,25/0,40 мм и шесть переходов 0,60/0,30 мм. Прежняя медь, корпуса, площадки, UUID, сети, SCH/PRO и 27 зон сохранены. Верхние выводы R94.1/R96.1/C25.1 ещё не доведены до общей `REV_MID`.
+
+Native: 699 площадок, 328→321 группа, 9261→9618 пар, потерь 0, 357 ожидаемых добавлений; главная GND-группа расширена со 116 до 119 площадок. KiCad CLI: исходник 114 несоединений / 26 предупреждений / 0 parity, кандидат и повторный master 107 / 26 / 0; все exit 5, `stderr` пуст. Это **не PASS**; ERC не запускался.
+
+Это конкретные сигнальные соединения и возвраты, а не приёмка порогов UVLO/OV, времени включения, переходных процессов, полной входной защиты, силового/обратного пути или ЭМС. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. Изображения cbc1e192 относятся к более ранней ревизии. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: локальная обвязка U13/C24 d9475d5e
 
 [Кандидат input_cap_d9475d5e_wip](../hardware/candidates/input_cap_d9475d5e_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `d9475d5e081ed75ec15770f7c6b7d88484ec6eb9e1692f4f0e64663f47bb7a6d`; исходная PCB — `cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9`. Остальные 63 файла и firmware не менялись.
 
