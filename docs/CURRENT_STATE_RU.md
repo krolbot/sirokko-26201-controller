@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: START_REQUEST до MCU 4112abaf
+## 2026-10-29 — самый новый PCB-checkpoint: завершённая сеть START_REQUEST 55fb397d
+
+[Кандидат start_pullup_55fb397d_wip](../hardware/candidates/start_pullup_55fb397d_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `55fb397d0b58b9d1b5cad5a3eb7ecc71455f75a51a2dcca2570eb8ab1562b452`; исходная PCB — `4112abaf1bffaa9d5b5c877df7f7ff294d98be1ec0443bd8295717e67789d310`. Остальные 63 файла и firmware не менялись.
+
+R14.2 физически соединён с прежней группой U5.5, J1.7 и обеих площадок J22.1 `/START_REQUEST`; все пять площадок теперь входят в одну группу. R14.1 остаётся на `+3V3`, кнопка не зашунтирована. Добавлены 18 сегментов 0,25 мм и 11 переходов 0,60/0,30 мм. V1/V2 отклонены; опубликован только принятый V3 без ослабления правил.
+
+Native: 699 площадок, 344→343 группы, 8939→8943 пары, потерь 0, четыре ожидаемые пары. KiCad CLI: исходник 26/130/0, V3 и повторно открытый master 26/129/0; все exit 5. Полные мультимножества violations/parity прежние. Это **не PASS**; ERC не запускался.
+
+Остаётся 129 соединений других участков, включая питание/возвраты, силовые/управляющие цепи и TFT SPI; GPIO, дребезг, ЭМС, функциональная безопасность и общая квалификация не завершены. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: START_REQUEST до MCU 4112abaf
 
 [Кандидат start_mcu_4112abaf_wip](../hardware/candidates/start_mcu_4112abaf_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `4112abaf1bffaa9d5b5c877df7f7ff294d98be1ec0443bd8295717e67789d310`; исходная PCB — `bdba2e6976e41dce6c9c2c548176809d7fba3b5b71e2e41aa9fbf13160fdbd04`. Остальные 63 файла и firmware не менялись.
 
