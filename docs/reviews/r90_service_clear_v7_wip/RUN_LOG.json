@@ -1,0 +1,113 @@
+[
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--refill-zones",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/drc.json",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 5,
+    "stdout": "Found 86 violations\nFound 117 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to /projects/exports/sirokko_R90_SERVICE_CLEAR_V7/drc.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/erc.json",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_sch"
+    ],
+    "exit_code": 0,
+    "stdout": "Found 0 violations\nSaved ERC Report to /projects/exports/sirokko_R90_SERVICE_CLEAR_V7/erc.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "drc",
+      "--all-track-errors",
+      "--schematic-parity",
+      "--refill-zones",
+      "--format",
+      "json",
+      "--exit-code-violations",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/drc.json",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 5,
+    "stdout": "Found 86 violations\nFound 117 unconnected items\nFound 0 schematic parity issues\nSaved DRC Report to /projects/exports/sirokko_R90_SERVICE_CLEAR_V7/drc.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "F.Fab,F.Silkscreen,Dwgs.User,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/TERMINAL_SERVICE_NATIVE.svg",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/TERMINAL_SERVICE_NATIVE.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "F.Cu,F.Silkscreen,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/BOARD_TOP_NATIVE.svg",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/BOARD_TOP_NATIVE.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--layers",
+      "B.Cu,B.Silkscreen,Edge.Cuts",
+      "--page-size-mode",
+      "2",
+      "--mode-single",
+      "-o",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/BOARD_BOTTOM_NATIVE.svg",
+      "/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/project/Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "exit_code": 0,
+    "stdout": "Plotted to '/projects/exports/sirokko_R90_SERVICE_CLEAR_V7/BOARD_BOTTOM_NATIVE.svg'.\nDone.\n",
+    "stderr": ""
+  }
+]
