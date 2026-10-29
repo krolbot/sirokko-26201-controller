@@ -2056,7 +2056,7 @@
 			)
 		)
 	)
-	(property "Value" "47uF 16V X7R"
+	(property "Value" "47uF 16V X5R"
 		(at 165.1 67.31 0)
 		(effects
 			(font
@@ -2131,7 +2131,7 @@
 			)
 		)
 	)
-	(property "Value" "47uF 16V X7R"
+	(property "Value" "47uF 16V X5R"
 		(at 185.42 67.31 0)
 		(effects
 			(font

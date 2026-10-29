@@ -59,68 +59,65 @@
     "input_current_budget_A_at_24V": 0.2604166666666667
   },
   "output_capacitors_selection": {
-    "status": "EXACT_MPN_SELECTED_FOR_DRAFT_REVIEW_NOT_INTEGRATED",
-    "references": ["C105", "C106"],
-    "manufacturer": "TDK",
-    "mpn": "C5750X7R1C476M230KB",
+    "status": "TYPICAL_CURVE_BASED_SENSITIVITY_NOT_GUARANTEED_MINIMUM",
+    "mpn": "GRM32ER61C476KE15L",
     "quantity": 2,
-    "capacitance_each_F": 0.000047,
-    "initial_tolerance_fraction": 0.20,
     "rated_voltage_V": 16,
-    "dielectric": "X7R",
-    "case": "2220 (5750 metric)",
-    "body_dimensions_mm": {"L": 5.7, "L_tolerance": 0.4, "W": 5.0, "W_tolerance": 0.4, "T": 2.3, "T_tolerance": 0.2},
-    "manufacturer_characterization": {
-      "hosted_copy_url": "https://static.chipdip.ru/lib/875/DOC059875023.pdf",
-      "printed_date": "2016-01-04",
-      "sha256": "98a3401ebc08c6824908429b3b9ceab6b9e518a65ac612c6bf3baaf577b7af95",
-      "dc_bias_at_5V_approx_cap_change_fraction": -0.08,
-      "dc_bias_at_8V_approx_cap_change_fraction": -0.24,
-      "curves_are_typical_not_guaranteed": true,
-      "combined_temperature_dc_bias_requires_separate_validation": true,
-      "live_manufacturer_product_page": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C5750X7R1C476M230KB",
-      "live_manufacturer_page_result": "extraction timeout; browser Access Denied; latest manufacturer revision not verified",
-      "distributor_lifecycle_corroboration": "DigiKey exact MPN page lists Active; not substituted for manufacturer confirmation"
+    "dielectric": "X5R",
+    "temperature_range_C": [
+      -55,
+      85
+    ],
+    "initial_tolerance_fraction": 0.1,
+    "source_url": "https://pimapi.murata.com/public/api/pim/v1/characteristics/search/technical?partNum=GRM32ER61C476KE15%23&productCategoryId=ceramicCapacitorSMD&displayLanguage=en&languageRegion=en-us",
+    "source_pdf_sha256": "6ae7899251e318d8e67654af727d4a7507bba4760a7fa21eb2c0076969c37eac",
+    "visual_readback": "Exact manufacturer characteristic sheet visually reviewed; DC-bias curve at120Hz/0.5Vrms approximately -40..-41% at5V and -41..-42% near5.15V. Sheet explicitly typical only.",
+    "screen_assumptions": {
+      "dc_bias_retained_fraction": 0.58,
+      "temperature_retained_fraction": 0.85,
+      "formula": "Cscreen=2*47uF*0.58*0.9*0.85; multiplicative sensitivity only; combined DC/temperature/AC dependence and aging not bounded"
     },
-    "procurement_snapshot": {
-      "retailer": "ChipDip",
-      "item": "8024469907",
-      "url": "https://www.chipdip.ru/product/c5750x7r1c476m230kb-chip-2220-x7r-47uf-20-16v-tdk-8024469907",
-      "checked_date": "2026-10-27",
-      "reported_stock_units": 1829,
-      "reported_stock_location": "Moscow warehouse",
-      "reported_lead_days": 8,
-      "unit_price_RUB": 81,
-      "minimum_order_units": 8,
-      "two_part_consumption_cost_RUB": 162,
-      "minimum_order_cost_RUB": 648,
-      "purchase_made": false
+    "screen_Ctotal_uF": 41.70779999999999,
+    "load_step_sensitivity": {
+      "assumed_current_step_A": 1,
+      "assumed_response_delay_us": 10,
+      "formula": "dV=deltaI*deltaT/C, capacitor-only before regulator response; excludes ESR/ESL",
+      "screen_droop_V": 0.2397633056646479,
+      "false_nominal_94uF_droop_V": 0.10638297872340427
     },
-    "screening_only": {
-      "formula": "Cscreen = 2*47uF*(1-0.20)*(1-0.15)*0.90; multiplicative approximation, not a guaranteed joint tolerance bound",
-      "dc_bias_factor_assumed": 0.90,
-      "pair_nominal_uF": 94.0,
-      "pair_after_initial_tolerance_only_uF": 75.2,
-      "pair_effective_screening_uF_NOT_guaranteed": 57.528,
-      "voltage_rating_ratio_to_existing_static_Vmax": 3.1100358973537365,
-      "CCM_conditions": "VIN=28.8V, VOUT=4.992V, nominal fsw=394936.7088607595Hz, assumed L=26.4uH; no claim of full startup/PSM/transient/current-limit coverage",
-      "delta_IL_A": 0.39579797979797965,
-      "ideal_capacitive_ripple_mV_excluding_ESR_ESL_and_control_dynamics": 2.1775934809587976,
-      "pair_ripple_Irms_A_ideal_CCM": 0.11425703509053681,
-      "each_ripple_Irms_A_assuming_equal_current_sharing": 0.057128517545268404
-    },
-    "integration_requirements": {
-      "native_readback_source": "локальный проверочный артефакт, не включён",
-      "native_readback_values": "C105/C106 still generic 47uF 16V X7R; no exact-MPN CAD integration claimed",
-      "footprint_candidate_only": "Capacitor_SMD:C_2220_5750Metric",
-      "native_footprint_pads": "centers +/-2.55mm, pads 1.8x5.4mm; inner gap 3.3mm, outer span 6.9mm",
-      "manufacturer_reflow_land_pattern_comparison_done": false,
-      "do_not_use_1210_as_drop_in": true,
-      "single_CAD_writer": "t_fbad33a1",
-      "root_SCH_PCB_BOM_changed_by_coordinator": false,
-      "remaining": "reflow footprint qualification; actual SCH/PCB/BOM update by sole writer; effective C including frequency/bias/temperature/ageing; startup and load-step; Type-3 stability and ripple; full 5V current/thermal budget"
-    },
-    "polymer_alternative_screened_not_selected": "Panasonic 25SVPF47M item8008518720: 25pc minimum and 6-7 week lead; no need to change dielectric/topology because an exact X7R option is available"
+    "decision": "Retain actual Murata as WIP; no part replacement from this screen. Do not budget nominal94uF for transient calculation. No guaranteed Ceff or dynamic acceptance. +85C operating limit must be checked against assigned enclosure conditions; X7R TDK data are inapplicable.",
+    "production_release": false,
+    "references": [
+      "C105",
+      "C106"
+    ],
+    "manufacturer": "Murata",
+    "capacitance_each_F": 4.7e-05,
+    "case": "1210 (3225 metric)",
+    "footprint": "Capacitor_SMD:C_1210_3225Metric",
+    "native_readback": {
+      "C105_origin_mm": [
+        168,
+        45
+      ],
+      "C106_origin_mm": [
+        173,
+        45
+      ],
+      "rotation_deg": 90,
+      "pad_size_mm": [
+        1.15,
+        2.7
+      ],
+      "pin_map": {
+        "1": "+5V_DEVKIT",
+        "2": "/GND"
+      },
+      "schematic_MPN_verified_at_commit": "b7aa0410546de123f3d26f21f648b45619e04850",
+      "observed_Value": "47uF 16V X5R",
+      "Value_conflicts_with_MPN_dielectric": false,
+      "metadata_correction_status": "APPLIED_NATIVELY_IN_PAIRED_SCHEMATIC_AND_PCB"
+    }
   },
   "operating_points": [
     {
@@ -247,7 +244,13 @@
   "package_review": {
     "datasheet_local": "локальный проверочный артефакт, не включён",
     "datasheet_pages": 40,
-    "reviewed_package_pages": [34,35,37,38,39],
+    "reviewed_package_pages": [
+      34,
+      35,
+      37,
+      38,
+      39
+    ],
     "older_thermal_drawing": "4206322-6/L 05/12: exposed metal 1.65..2.40 by 2.65..3.10 mm",
     "additional_package_drawing": "DDA0008B 4214849/B 09/2025: exposed metal 2.11..2.71 by 2.8..3.4 mm",
     "additional_land_pattern": "DDA0008B: signal pad 1.55x0.6 mm; row centers 5.4 mm; pitch 1.27 mm; EP mask opening 2.71x3.4 mm; see solder-mask-defined copper area and thermal-via details",
@@ -258,108 +261,251 @@
   "feedback_precision_selection": {
     "status": "SELECTED_FOR_CAD_NOT_APPLIED",
     "scope": "Keep nominal resistance and pad placement; specify actual precision components instead of generic 1-percent resistors. No PCB, schematic or manufacturing BOM edited by coordinator.",
-    "R101": {"mpn": "RT0603BRD0731K6L", "manufacturer": "Yageo", "nominal_ohm": 31600, "tolerance_fraction": 0.001, "TCR_ppm_per_C": 25, "chipdip": "8014781136", "url": "https://www.chipdip.ru/product/rt0603brd0731k6l-smd-chip-resistor-31.6-kohm-0.1-100-yageo-8014781136", "snapshot_price_RUB": 20, "snapshot_supplier_stock": 6320, "snapshot_lead_time": "7-8 weeks", "order_multiple": 10},
-    "R102": {"mpn": "RT0603BRD0710KL", "manufacturer": "Yageo", "nominal_ohm": 10000, "tolerance_fraction": 0.001, "TCR_ppm_per_C": 25, "chipdip": "9001548802", "url": "https://www.chipdip.ru/product/0.1vt-0603-10-kom-0.1-rt0603brd0710kl-chip-rezistor-yageo-9001548802", "snapshot_price_RUB": 12, "snapshot_stock_Moscow": 56025, "snapshot_lead_time": "5 days", "order_multiple": 5, "card_caution": "Seller description and first linked capacitor datasheet are erroneous; use the exact RT-series ordering code and resistor datasheet, not CC0603 capacitor data."},
-    "datasheet": {"title": "Yageo RT thin-film chip resistors", "revision": "V9, September 12 2017; not claimed latest", "url": "https://static.chipdip.ru/lib/771/DOC011771564.pdf", "sha256": "072cefffd3ca127216b080de3e2488763b7892a963d781d41c5e1bcb618e2a4a", "ordering_page": 2, "dimensions_page": 4, "electrical_page_visually_checked": 5, "power_rating_reference_page": 6},
-    "native_geometry_readback": {"pcb": "локальный проверочный артефакт, не включён", "R101_origin_mm": [170,58], "R101_rotation_deg": 0, "R102_origin_mm": [174,61], "R102_rotation_deg": 90, "local_pad_centres_mm": [[-0.825,0],[0.825,0]], "pad_size_mm": [0.8,0.95], "note": "Consistent with existing 0603 geometry. No footprint replacement or coordinate change requested; final assembler land-pattern acceptance remains separate."},
-    "static_model": {"formula": "Vout=Vref*(1+R101/R102), all endpoint combinations", "Vref_min_V": 1.181, "Vref_max_V": 1.218, "source_conditions": "LM5013 SNVSCB3 section7.5, VIN24V, TJ=-40..150C; line variation not included", "initial_R_bound_fraction": 0.001, "Vout_min_pre_ripple_V": 4.905503536463538, "Vout_max_pre_ripple_V": 5.074585465465464, "comparison_1pct_V": [4.8390598019801985,5.144635151515152], "TCR_sensitivity_at_assumed_resistor_60C": {"formula_bound": "e=(1+0.001)*(1+25e-6*abs(T-25))-1; symmetric conservative envelope", "R_bound_fraction": 0.001875875, "Vout_min_pre_ripple_V": 4.898984834733146, "Vout_max_pre_ripple_V": 5.081347174150308}, "exclusions": ["ripple injection DC offset", "line/load regulation", "transients", "PCB and cable loss", "lifetime and assembly drift", "actual resistor temperature"]},
-    "power_screen": {"assumption": "Each resistor independently bounded by full5.25V; initial Rmin; resistor ambient at most70C for full0.1W reference. This deliberately overbounds the voltage across the individual divider resistor.", "R101_upper_loss_mW": 0.8731041167750029, "R102_upper_loss_mW": 2.759009009009009, "rated_power_W_at_70C": 0.1, "coefficient_required_power": 1.25, "note": "Large power headroom follows standard0603 ratings at tiny divider current, not an intentional redesign with doubled system margin."},
+    "R101": {
+      "mpn": "RT0603BRD0731K6L",
+      "manufacturer": "Yageo",
+      "nominal_ohm": 31600,
+      "tolerance_fraction": 0.001,
+      "TCR_ppm_per_C": 25,
+      "chipdip": "8014781136",
+      "url": "https://www.chipdip.ru/product/rt0603brd0731k6l-smd-chip-resistor-31.6-kohm-0.1-100-yageo-8014781136",
+      "snapshot_price_RUB": 20,
+      "snapshot_supplier_stock": 6320,
+      "snapshot_lead_time": "7-8 weeks",
+      "order_multiple": 10
+    },
+    "R102": {
+      "mpn": "RT0603BRD0710KL",
+      "manufacturer": "Yageo",
+      "nominal_ohm": 10000,
+      "tolerance_fraction": 0.001,
+      "TCR_ppm_per_C": 25,
+      "chipdip": "9001548802",
+      "url": "https://www.chipdip.ru/product/0.1vt-0603-10-kom-0.1-rt0603brd0710kl-chip-rezistor-yageo-9001548802",
+      "snapshot_price_RUB": 12,
+      "snapshot_stock_Moscow": 56025,
+      "snapshot_lead_time": "5 days",
+      "order_multiple": 5,
+      "card_caution": "Seller description and first linked capacitor datasheet are erroneous; use the exact RT-series ordering code and resistor datasheet, not CC0603 capacitor data."
+    },
+    "datasheet": {
+      "title": "Yageo RT thin-film chip resistors",
+      "revision": "V9, September 12 2017; not claimed latest",
+      "url": "https://static.chipdip.ru/lib/771/DOC011771564.pdf",
+      "sha256": "072cefffd3ca127216b080de3e2488763b7892a963d781d41c5e1bcb618e2a4a",
+      "ordering_page": 2,
+      "dimensions_page": 4,
+      "electrical_page_visually_checked": 5,
+      "power_rating_reference_page": 6
+    },
+    "native_geometry_readback": {
+      "pcb": "локальный проверочный артефакт, не включён",
+      "R101_origin_mm": [
+        170,
+        58
+      ],
+      "R101_rotation_deg": 0,
+      "R102_origin_mm": [
+        174,
+        61
+      ],
+      "R102_rotation_deg": 90,
+      "local_pad_centres_mm": [
+        [
+          -0.825,
+          0
+        ],
+        [
+          0.825,
+          0
+        ]
+      ],
+      "pad_size_mm": [
+        0.8,
+        0.95
+      ],
+      "note": "Consistent with existing 0603 geometry. No footprint replacement or coordinate change requested; final assembler land-pattern acceptance remains separate."
+    },
+    "static_model": {
+      "formula": "Vout=Vref*(1+R101/R102), all endpoint combinations",
+      "Vref_min_V": 1.181,
+      "Vref_max_V": 1.218,
+      "source_conditions": "LM5013 SNVSCB3 section7.5, VIN24V, TJ=-40..150C; line variation not included",
+      "initial_R_bound_fraction": 0.001,
+      "Vout_min_pre_ripple_V": 4.905503536463538,
+      "Vout_max_pre_ripple_V": 5.074585465465464,
+      "comparison_1pct_V": [
+        4.8390598019801985,
+        5.144635151515152
+      ],
+      "TCR_sensitivity_at_assumed_resistor_60C": {
+        "formula_bound": "e=(1+0.001)*(1+25e-6*abs(T-25))-1; symmetric conservative envelope",
+        "R_bound_fraction": 0.001875875,
+        "Vout_min_pre_ripple_V": 4.898984834733146,
+        "Vout_max_pre_ripple_V": 5.081347174150308
+      },
+      "exclusions": [
+        "ripple injection DC offset",
+        "line/load regulation",
+        "transients",
+        "PCB and cable loss",
+        "lifetime and assembly drift",
+        "actual resistor temperature"
+      ]
+    },
+    "power_screen": {
+      "assumption": "Each resistor independently bounded by full5.25V; initial Rmin; resistor ambient at most70C for full0.1W reference. This deliberately overbounds the voltage across the individual divider resistor.",
+      "R101_upper_loss_mW": 0.8731041167750029,
+      "R102_upper_loss_mW": 2.759009009009009,
+      "rated_power_W_at_70C": 0.1,
+      "coefficient_required_power": 1.25,
+      "note": "Large power headroom follows standard0603 ratings at tiny divider current, not an intentional redesign with doubled system margin."
+    },
     "acceptance_limit": "Precision parts improve one verified static error term. They do not alone qualify4.75..5.25V, the5V current budget, thermal behavior or production release."
   },
   "D101_map_correction": {
     "basis": "Read-only native SW/GND queries in active panel-v2 logic_power_24_5_DRAFT.kicad_sch; D101 custom symbol STPS5H100B_DPAK_K2_A3",
-    "accepted_map": {"pin1": "NC", "pin2_tab_K": "SW", "pin3_A": "GND"},
+    "accepted_map": {
+      "pin1": "NC",
+      "pin2_tab_K": "SW",
+      "pin3_A": "GND"
+    },
     "note": "Corrected stale expected_netlist below/above to prevent return of the old two-pin diode map. This is a documentary correction, not a PCB repair. Other historical conditions and observations in this JSON are not refreshed by it."
-  },
-  "feedback_layout_candidate": {
-    "status": "NATIVE_APPLIED_VERIFIED_DRAFT_NOT_FOR_ORDER",
-    "basis": "Applied to the canonical KiCad 10 PCB from the verified f0cbceafcff1f6845bc850b090935e0a5f719f1fe8f087e952177cfb92e8722f input after a disposable-copy geometry and DRC probe.",
-    "source_url": "https://www.ti.com/lit/ds/symlink/lm5013.pdf",
-    "purpose": "Shorten and localize the high-impedance FB/RAMP network while retaining the existing power stage and all electrical nets.",
-    "footprint_positions_mm_deg": {
-      "R101": {"position_mm": [133.0, 55.8], "rotation_deg": 180.0},
-      "R102": {"position_mm": [128.5, 55.8], "rotation_deg": 180.0},
-      "C108": {"position_mm": [130.7, 58.3], "rotation_deg": 90.0},
-      "C107": {"position_mm": [134.0, 58.0], "rotation_deg": 0.0},
-      "R106": {"position_mm": [137.0, 56.5], "rotation_deg": -90.0}
-    },
-    "reference_positions_mm": {
-      "R102": [127.5, 62.5],
-      "C108": [130.5, 62.5],
-      "R101": [133.5, 62.5],
-      "C107": [137.0, 62.5],
-      "R106": [140.5, 62.5]
-    },
-    "local_routes": {
-      "FB": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["U101.5", "C108.2", "R102.1", "R101.2"]},
-      "RAMP": {"segments": 3, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["C108.1", "C107.1", "R106.2"]},
-      "quiet_GND": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads_required": ["R102.2", "U101.1", "U101.9"], "native_component_check": "PASS"},
-      "SW_feed": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["U101.8", "C104.2", "D101.2", "L101.1", "R106.1"]},
-      "+5V_sense": {"segments": 4, "width_mm": 0.25, "layers": ["F.Cu", "B.Cu"], "connected_power_endpoints": ["L101.2", "C105.1", "C106.1"], "connected_sense_pads": ["R101.1", "C107.2"]}
-    },
-    "wire_transition": {
-      "uuid": "21329e91-f66d-49db-8bc2-beae3d2954d1",
-      "position_mm": [134.775, 56.8],
-      "net": "+5V_DEVKIT",
-      "size_mm": 0.8,
-      "drill_mm": 0.4,
-      "front_tented": false,
-      "back_tented": false,
-      "assembly_intent": "Accessible from both faces for a soldered wire transition; manufacturing acceptance is still required."
-    },
-    "copper_change": {
-      "retired_scoped_objects": 15,
-      "retired_segments": 8,
-      "retired_vias": 7,
-      "added_segments": 13,
-      "added_vias": 1,
-      "preserved_original_copper_exact": 1770,
-      "preserved_original_copper_changed": 0
-    },
-    "identity_check": {
-      "footprint_uuid_set_preserved": true,
-      "pad_uuid_set_preserved": true,
-      "pad_uuid_count": 603,
-      "changed_pad_positions": 10,
-      "changed_pad_positions_scope": ["R101", "R102", "C108", "C107", "R106"],
-      "non_target_pad_groups_changed": 0
-    },
-    "board_rules": {
-      "minimum_copper_clearance_mm": 0.2,
-      "minimum_track_width_mm": 0.2,
-      "minimum_via_size_mm": 0.5,
-      "minimum_through_drill_mm": 0.3,
-      "minimum_microvia_size_mm": 0.2,
-      "minimum_microvia_drill_mm": 0.1,
-      "custom_rule_file": false,
-      "new_exclusions_or_suppressions": false
-    },
-    "native_verification": {
-      "kicad_version": "10.0.7",
-      "board_counts": {"footprints": 158, "pads": 603, "segments": 1389, "vias": 395, "zones": 35},
-      "baseline_DRC": {"violations": 83, "unconnected_items": 80, "schematic_parity": 0, "types": {"track_dangling": 78, "via_dangling": 5}},
-      "post_save_reopen_fill_DRC": {"violations": 83, "unconnected_items": 80, "schematic_parity": 0, "types": {"track_dangling": 78, "via_dangling": 5}},
-      "new_DRC_violations": 0,
-      "ERC_violations_all_sheets": 0,
-      "local_connectivity": "PASS",
-      "canonical_PCB_sha256": "e3ad6f4ac53ed4920114976b1e375036f123a895fe762bc52f13cea6db34c593"
-    },
-    "production_release": false,
-    "limitations": [
-      "The board still has the pre-existing 83 dangling-track/via violations and 80 unconnected items; DRC is not clean.",
-      "The wire transition is deliberately exposed but is not a declared production plated-through solution.",
-      "No thermal, assembly, power, flash, fire, load, or manufacturing qualification is claimed."
-    ]
   },
   "open_acceptance_items": [
     "Register project-specific symbol library without overwriting existing entries; repeat ERC and check full exclusions.",
     "Independently compare exported netlist to expected_netlist; PWR_FLAG nodes excluded from comparison.",
     "Review PDF visually and confirm physical pad mapping, especially diode and PowerPAD.",
-    "Choose exact inductor and capacitor MPNs; verify temperature, inductance/current ratings, MLCC DC-bias and effective capacitance.",
+    "Choose the exact inductor MPN; independently verify output-capacitor temperature, DC-bias, frequency, ageing and guaranteed effective capacitance for the selected Murata MPN.",
     "Complete loss/thermal analysis, timing tolerance analysis, dynamic and ripple-network DC regulation analysis.",
     "Input reverse polarity/overvoltage protection and 24-V loss detection are not on this sheet.",
     "USB reverse-feed prevention not on this sheet.",
-    "Resolve the pre-existing full-board 83 dangling-track/via violations and 80 unconnected items; the local LM5013 feedback groups now pass native connectivity checks.",
+    "Repeat full-board native copper/pad-connected-component acceptance after each bounded routing step; the integrated LM5013 feedback network and WD_OK closure do not qualify the remaining board.",
     "No ESP32 or load hardware test performed; no fuel/fire operation authorized."
-  ]
+  ],
+  "feedback_layout_native_readback": {
+    "status": "NATIVE_PLACEMENT_READBACK_ONLY_NOT_FUNCTIONAL_ACCEPTANCE",
+    "pcb_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "integration_published_commit": "8bcb3b68ab5b2b3c896fc8f287f2dbe2ba4b745d",
+    "native_FB_pads_mm": {
+      "R101.2": [
+        132.175,
+        55.8
+      ],
+      "R102.1": [
+        129.325,
+        55.8
+      ],
+      "C108.2": [
+        130.699999,
+        57.525
+      ]
+    },
+    "pin_map": {
+      "R101": "1=+5V_DEVKIT,2=FB",
+      "R102": "1=FB,2=GND",
+      "C108": "1=RAMP,2=FB"
+    },
+    "remaining": [
+      "Full current native copper/pad-connected-component comparison and board acceptance",
+      "Power loss/thermal analysis and startup/load-step/ripple/noise verification"
+    ],
+    "production_release": false
+  },
+  "current_V8_native_power_stage_screen": {
+    "status": "PARTIAL_ANALYTICAL_SCREEN_NOT_BOARD_OR_DYNAMIC_ACCEPTANCE",
+    "source_PCB": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "native_readback_PCB": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "assumed_regulator_pin_input_range_V": [
+      21.6,
+      28.8
+    ],
+    "note": "VIN is voltage AT U101.2, not guaranteed from the connector after input-protection and copper drops. VREF bounds apply to TI test conditions VIN24V; applying those bounds across this input interval remains a screening assumption, not guaranteed line regulation. Frequency model does not include an independently guaranteed timing-IC tolerance.",
+    "native_pad_assignment_checks": {
+      "U101.1": "GND",
+      "U101.2": "P24_PROTECTED",
+      "U101.3": "EN_LOGIC",
+      "U101.4": "RON",
+      "U101.5": "FB",
+      "U101.6": "PGOOD_5V",
+      "U101.7": "BOOT",
+      "U101.8": "SW",
+      "U101.9": "GND; two physical pads share number9",
+      "R101": "1=+5V_DEVKIT,2=FB",
+      "R102": "1=FB,2=GND",
+      "R103": "1=RON,2=GND",
+      "R106": "1=SW,2=RAMP",
+      "C107": "1=RAMP,2=+5V_DEVKIT",
+      "C108": "1=RAMP,2=FB"
+    },
+    "model_corner_count": 48,
+    "R_initial_tolerance_fraction": 0.01,
+    "Ca_initial_tolerance_fraction": 0.05,
+    "Vout_pre_ripple_model_bounds_V": [
+      4.8390598019801985,
+      5.144635151515152
+    ],
+    "nominal_timing_model_fsw_range_Hz": [
+      379046.5442082496,
+      411123.5097426122
+    ],
+    "nominal_timing_model_ton_range_ns": [
+      434.5,
+      591.0370370370371
+    ],
+    "ripple_FB_model_range_mV": [
+      23.32457021914908,
+      29.30281242061575
+    ],
+    "minimum_ripple_corner": {
+      "Vin_V": 21.6,
+      "Vout_V": 5.144635151515152,
+      "Ron_ohm": 31284.0,
+      "Ra_ohm": 82820.0,
+      "Ca_F": 4.935e-09,
+      "ton_s": 5.793333333333333e-07,
+      "fsw_Hz": 411123.5097426122,
+      "ripple_FB_V": 0.02332457021914908,
+      "dIL_nom33uH_A": 0.2888830717845118
+    },
+    "reference": "TI SNVSCB3 section9.2.2.7 equations16-18, original page20 raster visually inspected. TI recommends20mV nominal and12mV at minimum VIN for Type3. These are design guidelines, not measured circuit limits.",
+    "C105_C106_actual_PCB_MPN": "GRM32ER61C476KE15L",
+    "output_capacitor_selection_source": "output_capacitors_selection; no alternate MPN is authorized by this screen.",
+    "layout_readback_source": "feedback_layout_native_readback; old remote-divider coordinates retired",
+    "production_release": false,
+    "PCB_modified": false,
+    "firmware_modified": false,
+    "CA_equation16_min_capacity_to_requirement_ratio": 1.2921864727722772,
+    "negative_control_CA_10nF_FB_ripple_mV": 10.962548003000068,
+    "actual_output_capacitor_screen": {
+      "status": "TYPICAL_CURVE_BASED_SENSITIVITY_NOT_GUARANTEED_MINIMUM",
+      "mpn": "GRM32ER61C476KE15L",
+      "quantity": 2,
+      "rated_voltage_V": 16,
+      "dielectric": "X5R",
+      "temperature_range_C": [
+        -55,
+        85
+      ],
+      "initial_tolerance_fraction": 0.1,
+      "source_url": "https://pimapi.murata.com/public/api/pim/v1/characteristics/search/technical?partNum=GRM32ER61C476KE15%23&productCategoryId=ceramicCapacitorSMD&displayLanguage=en&languageRegion=en-us",
+      "source_pdf_sha256": "6ae7899251e318d8e67654af727d4a7507bba4760a7fa21eb2c0076969c37eac",
+      "visual_readback": "Exact manufacturer characteristic sheet visually reviewed; DC-bias curve at120Hz/0.5Vrms approximately -40..-41% at5V and -41..-42% near5.15V. Sheet explicitly typical only.",
+      "screen_assumptions": {
+        "dc_bias_retained_fraction": 0.58,
+        "temperature_retained_fraction": 0.85,
+        "formula": "Cscreen=2*47uF*0.58*0.9*0.85; multiplicative sensitivity only; combined DC/temperature/AC dependence and aging not bounded"
+      },
+      "screen_Ctotal_uF": 41.70779999999999,
+      "load_step_sensitivity": {
+        "assumed_current_step_A": 1,
+        "assumed_response_delay_us": 10,
+        "formula": "dV=deltaI*deltaT/C, capacitor-only before regulator response; excludes ESR/ESL",
+        "screen_droop_V": 0.2397633056646479,
+        "false_nominal_94uF_droop_V": 0.10638297872340427
+      },
+      "decision": "Retain actual Murata as WIP; no part replacement from this screen. Do not budget nominal94uF for transient calculation. No guaranteed Ceff or dynamic acceptance. +85C operating limit must be checked against assigned enclosure conditions; X7R TDK data are inapplicable.",
+      "production_release": false
+    }
+  }
 }
