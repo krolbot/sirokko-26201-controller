@@ -1,0 +1,16 @@
+{
+  "final_root_sha256": "429c2ea1acbba310bf71e3b7037a4e43e11988d136d6ce9ed5740a821d349664",
+  "child_sha256": "6a5d335c24bea0efbcf808b3622cf4d837a7dcb33c800d23544e6f4249aec659",
+  "action": "remove only P24_PRESENT parent-to-child wire",
+  "detected": true,
+  "affected_pins": [
+    {
+      "ref": "U6",
+      "pin": "5",
+      "expected": "/P24_PRESENT",
+      "negative": "/MinimalSafety/P24_PRESENT"
+    }
+  ],
+  "all_other_pins_unchanged": true,
+  "positive_project_bytes_unchanged": true
+}

@@ -1,0 +1,2652 @@
+[
+  {
+    "reference": "C1",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C1",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C10",
+    "pin": "1",
+    "net": "/TC_EXH_TP"
+  },
+  {
+    "reference": "C10",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C101",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "C101",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C102",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "C102",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C103",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "C103",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C104",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/BOOT"
+  },
+  {
+    "reference": "C104",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW"
+  },
+  {
+    "reference": "C105",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C105",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C106",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C106",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C107",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP"
+  },
+  {
+    "reference": "C107",
+    "pin": "2",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C108",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP"
+  },
+  {
+    "reference": "C108",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB"
+  },
+  {
+    "reference": "C11",
+    "pin": "1",
+    "net": "/TC_EXH_TM"
+  },
+  {
+    "reference": "C11",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C12",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C12",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C13",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C13",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C14",
+    "pin": "1",
+    "net": "/TC_AIR_BIAS"
+  },
+  {
+    "reference": "C14",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C15",
+    "pin": "1",
+    "net": "/TC_AIR_TP"
+  },
+  {
+    "reference": "C15",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C16",
+    "pin": "1",
+    "net": "/TC_AIR_TM"
+  },
+  {
+    "reference": "C16",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C17",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C17",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C18",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C18",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C19",
+    "pin": "1",
+    "net": "/ENC_A"
+  },
+  {
+    "reference": "C19",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C2",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C2",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C20",
+    "pin": "1",
+    "net": "/ENC_B"
+  },
+  {
+    "reference": "C20",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C21",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "C21",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C22",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "C22",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C24",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET"
+  },
+  {
+    "reference": "C24",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "C25",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "C25",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C28",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C28",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C301",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C301",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C302",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C302",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C303",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "C303",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C304",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "C304",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C305",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "C305",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C306",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "C306",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C6",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C6",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C75",
+    "pin": "1",
+    "net": "/ENC_SW"
+  },
+  {
+    "reference": "C75",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9",
+    "pin": "1",
+    "net": "/TC_EXH_BIAS"
+  },
+  {
+    "reference": "C9",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9004",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C9004",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9005",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C9005",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9006",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C9006",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9007",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V"
+  },
+  {
+    "reference": "C9007",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9008",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/BST"
+  },
+  {
+    "reference": "C9008",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI"
+  },
+  {
+    "reference": "C9011",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C9011",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "C9012",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "C9012",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "D1",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "D1",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "D1",
+    "pin": "3",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "D1",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "D1",
+    "pin": "5",
+    "net": "/GND"
+  },
+  {
+    "reference": "D1",
+    "pin": "6",
+    "net": "/GND"
+  },
+  {
+    "reference": "D1",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "D1",
+    "pin": "8",
+    "net": "/GND"
+  },
+  {
+    "reference": "D1",
+    "pin": "9",
+    "net": "unconnected-(D1-EP_NC-Pad9)"
+  },
+  {
+    "reference": "D101",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW"
+  },
+  {
+    "reference": "D101",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "D20",
+    "pin": "1",
+    "net": "/P24_ZENER_K"
+  },
+  {
+    "reference": "D20",
+    "pin": "2",
+    "net": "/P24_BASE"
+  },
+  {
+    "reference": "D9001",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "D9001",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS"
+  },
+  {
+    "reference": "D9001",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "D9002",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V"
+  },
+  {
+    "reference": "D9002",
+    "pin": "2",
+    "net": "unconnected-(D9002-NC-Pad2)"
+  },
+  {
+    "reference": "D9002",
+    "pin": "3",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/BST"
+  },
+  {
+    "reference": "F1",
+    "pin": "1",
+    "net": "/VIN_RAW_24"
+  },
+  {
+    "reference": "F1",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "J1",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "J1",
+    "pin": "10",
+    "net": "/SPEED_CMD"
+  },
+  {
+    "reference": "J1",
+    "pin": "11",
+    "net": "/WD_HEARTBEAT"
+  },
+  {
+    "reference": "J1",
+    "pin": "12",
+    "net": "unconnected-(J1-Pin_12-Pad12)"
+  },
+  {
+    "reference": "J1",
+    "pin": "13",
+    "net": "unconnected-(J1-Pin_13-Pad13)"
+  },
+  {
+    "reference": "J1",
+    "pin": "14",
+    "net": "unconnected-(J1-Pin_14-Pad14)"
+  },
+  {
+    "reference": "J1",
+    "pin": "15",
+    "net": "/TC_AIR_CS"
+  },
+  {
+    "reference": "J1",
+    "pin": "16",
+    "net": "/TC_EXH_CS"
+  },
+  {
+    "reference": "J1",
+    "pin": "17",
+    "net": "/TC_SDI_MOSI"
+  },
+  {
+    "reference": "J1",
+    "pin": "18",
+    "net": "/TC_SCK"
+  },
+  {
+    "reference": "J1",
+    "pin": "19",
+    "net": "/TC_SDO_MISO"
+  },
+  {
+    "reference": "J1",
+    "pin": "2",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "J1",
+    "pin": "20",
+    "net": "/GLOW_CMD"
+  },
+  {
+    "reference": "J1",
+    "pin": "21",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "J1",
+    "pin": "22",
+    "net": "/GND"
+  },
+  {
+    "reference": "J1",
+    "pin": "3",
+    "net": "/EN_CHIP_PU"
+  },
+  {
+    "reference": "J1",
+    "pin": "4",
+    "net": "/ROOM_DQ"
+  },
+  {
+    "reference": "J1",
+    "pin": "5",
+    "net": "/SAFETY_OK"
+  },
+  {
+    "reference": "J1",
+    "pin": "6",
+    "net": "/P24_PRESENT"
+  },
+  {
+    "reference": "J1",
+    "pin": "7",
+    "net": "/START_REQUEST"
+  },
+  {
+    "reference": "J1",
+    "pin": "8",
+    "net": "/FUEL_CMD"
+  },
+  {
+    "reference": "J1",
+    "pin": "9",
+    "net": "/FAN_REQUEST"
+  },
+  {
+    "reference": "J10",
+    "pin": "1",
+    "net": "/TC_EXH_TP"
+  },
+  {
+    "reference": "J10",
+    "pin": "2",
+    "net": "/TC_EXH_TM"
+  },
+  {
+    "reference": "J102",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS"
+  },
+  {
+    "reference": "J102",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J11",
+    "pin": "1",
+    "net": "/TC_AIR_TP"
+  },
+  {
+    "reference": "J11",
+    "pin": "2",
+    "net": "/TC_AIR_TM"
+  },
+  {
+    "reference": "J12",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "J12",
+    "pin": "2",
+    "net": "/ROOM_DQ"
+  },
+  {
+    "reference": "J12",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "J13",
+    "pin": "1",
+    "net": "/VIN_RAW_24"
+  },
+  {
+    "reference": "J13",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J22",
+    "pin": "1",
+    "net": "/START_REQUEST"
+  },
+  {
+    "reference": "J22",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J23",
+    "pin": "1",
+    "net": "/ENC_A"
+  },
+  {
+    "reference": "J23",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J23",
+    "pin": "3",
+    "net": "/ENC_B"
+  },
+  {
+    "reference": "J23",
+    "pin": "4",
+    "net": "/ENC_SW"
+  },
+  {
+    "reference": "J23",
+    "pin": "5",
+    "net": "/GND"
+  },
+  {
+    "reference": "J24",
+    "pin": "1",
+    "net": "/EN_CHIP_PU"
+  },
+  {
+    "reference": "J24",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J24",
+    "pin": "3",
+    "net": "unconnected-(J24-C-Pad3)"
+  },
+  {
+    "reference": "J24",
+    "pin": "4",
+    "net": "unconnected-(J24-A-Pad4)"
+  },
+  {
+    "reference": "J24",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "J24",
+    "pin": "6",
+    "net": "/RESET_RELEASED"
+  },
+  {
+    "reference": "J25",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "J25",
+    "pin": "2",
+    "net": "/THERMAL_OK"
+  },
+  {
+    "reference": "J25",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "J25",
+    "pin": "4",
+    "net": "/SAFETY_OK"
+  },
+  {
+    "reference": "J26",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "J26",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J26",
+    "pin": "3",
+    "net": "/TFT_MOSI_BUF"
+  },
+  {
+    "reference": "J26",
+    "pin": "4",
+    "net": "/TFT_SCK_BUF"
+  },
+  {
+    "reference": "J26",
+    "pin": "5",
+    "net": "/TFT_CS_BUF"
+  },
+  {
+    "reference": "J26",
+    "pin": "6",
+    "net": "/TFT_DC_BUF"
+  },
+  {
+    "reference": "J26",
+    "pin": "7",
+    "net": "/TFT_RESET_N"
+  },
+  {
+    "reference": "J26",
+    "pin": "8",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "J27",
+    "pin": "1",
+    "net": "/GLOW_SWITCHED_POS"
+  },
+  {
+    "reference": "J27",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J28",
+    "pin": "1",
+    "net": "/CLUTCH_SWITCHED_POS"
+  },
+  {
+    "reference": "J28",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "J3",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "J3",
+    "pin": "10",
+    "net": "/ENC_SW"
+  },
+  {
+    "reference": "J3",
+    "pin": "11",
+    "net": "unconnected-(J3-Pin_11-Pad11)"
+  },
+  {
+    "reference": "J3",
+    "pin": "12",
+    "net": "unconnected-(J3-Pin_12-Pad12)"
+  },
+  {
+    "reference": "J3",
+    "pin": "13",
+    "net": "unconnected-(J3-Pin_13-Pad13)"
+  },
+  {
+    "reference": "J3",
+    "pin": "14",
+    "net": "unconnected-(J3-Pin_14-Pad14)"
+  },
+  {
+    "reference": "J3",
+    "pin": "15",
+    "net": "unconnected-(J3-Pin_15-Pad15)"
+  },
+  {
+    "reference": "J3",
+    "pin": "16",
+    "net": "/TFT_DC"
+  },
+  {
+    "reference": "J3",
+    "pin": "17",
+    "net": "/TFT_CS"
+  },
+  {
+    "reference": "J3",
+    "pin": "18",
+    "net": "/MCU_PERMIT"
+  },
+  {
+    "reference": "J3",
+    "pin": "19",
+    "net": "unconnected-(J3-Pin_19-Pad19)"
+  },
+  {
+    "reference": "J3",
+    "pin": "2",
+    "net": "unconnected-(J3-Pin_2-Pad2)"
+  },
+  {
+    "reference": "J3",
+    "pin": "20",
+    "net": "unconnected-(J3-Pin_20-Pad20)"
+  },
+  {
+    "reference": "J3",
+    "pin": "21",
+    "net": "/GND"
+  },
+  {
+    "reference": "J3",
+    "pin": "22",
+    "net": "/GND"
+  },
+  {
+    "reference": "J3",
+    "pin": "3",
+    "net": "unconnected-(J3-Pin_3-Pad3)"
+  },
+  {
+    "reference": "J3",
+    "pin": "4",
+    "net": "/TC_EXH_DRDY"
+  },
+  {
+    "reference": "J3",
+    "pin": "5",
+    "net": "/TC_AIR_DRDY"
+  },
+  {
+    "reference": "J3",
+    "pin": "6",
+    "net": "unconnected-(J3-Pin_6-Pad6)"
+  },
+  {
+    "reference": "J3",
+    "pin": "7",
+    "net": "/ARM_PULSE"
+  },
+  {
+    "reference": "J3",
+    "pin": "8",
+    "net": "/ENC_B"
+  },
+  {
+    "reference": "J3",
+    "pin": "9",
+    "net": "/ENC_A"
+  },
+  {
+    "reference": "K1",
+    "pin": "30",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "K1",
+    "pin": "85",
+    "net": "/K_GLOW_COIL_LOW"
+  },
+  {
+    "reference": "K1",
+    "pin": "86",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "K1",
+    "pin": "87",
+    "net": "/GLOW_SWITCHED_POS"
+  },
+  {
+    "reference": "K1",
+    "pin": "87a",
+    "net": "unconnected-(K1-Pad87a)"
+  },
+  {
+    "reference": "K2",
+    "pin": "30",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "K2",
+    "pin": "85",
+    "net": "/K_CLUTCH_RUN_COIL_LOW"
+  },
+  {
+    "reference": "K2",
+    "pin": "86",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "K2",
+    "pin": "87",
+    "net": "/CLUTCH_STAGE1"
+  },
+  {
+    "reference": "K2",
+    "pin": "87a",
+    "net": "unconnected-(K2-Pad87a)"
+  },
+  {
+    "reference": "K3",
+    "pin": "30",
+    "net": "/CLUTCH_STAGE1"
+  },
+  {
+    "reference": "K3",
+    "pin": "85",
+    "net": "/K_CLUTCH_SAFE_COIL_LOW"
+  },
+  {
+    "reference": "K3",
+    "pin": "86",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "K3",
+    "pin": "87",
+    "net": "/CLUTCH_SWITCHED_POS"
+  },
+  {
+    "reference": "K3",
+    "pin": "87a",
+    "net": "unconnected-(K3-Pad87a)"
+  },
+  {
+    "reference": "L101",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW"
+  },
+  {
+    "reference": "L101",
+    "pin": "2",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "L301",
+    "pin": "1",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_PWR_SW"
+  },
+  {
+    "reference": "L301",
+    "pin": "2",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "Q1",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE"
+  },
+  {
+    "reference": "Q1",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q1",
+    "pin": "3",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q1",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "Q1",
+    "pin": "5",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q1",
+    "pin": "6",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q1",
+    "pin": "7",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q101",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101"
+  },
+  {
+    "reference": "Q101",
+    "pin": "2",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q101",
+    "pin": "3",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI"
+  },
+  {
+    "reference": "Q2",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE"
+  },
+  {
+    "reference": "Q2",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q2",
+    "pin": "3",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q2",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "Q2",
+    "pin": "5",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q2",
+    "pin": "6",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q2",
+    "pin": "7",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "Q20",
+    "pin": "1",
+    "net": "/P24_BASE"
+  },
+  {
+    "reference": "Q20",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "Q20",
+    "pin": "3",
+    "net": "/P24_SENSE_N"
+  },
+  {
+    "reference": "Q3",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE"
+  },
+  {
+    "reference": "Q3",
+    "pin": "2",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q3",
+    "pin": "3",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q3",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "Q3",
+    "pin": "5",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q3",
+    "pin": "6",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q3",
+    "pin": "7",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q4",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE"
+  },
+  {
+    "reference": "Q4",
+    "pin": "2",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q4",
+    "pin": "3",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q4",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "Q4",
+    "pin": "5",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q4",
+    "pin": "6",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "Q4",
+    "pin": "7",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "R1",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R1",
+    "pin": "2",
+    "net": "/ROOM_DQ"
+  },
+  {
+    "reference": "R101",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "R101",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB"
+  },
+  {
+    "reference": "R102",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB"
+  },
+  {
+    "reference": "R102",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R103",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON"
+  },
+  {
+    "reference": "R103",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R104",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "R104",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC"
+  },
+  {
+    "reference": "R105",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC"
+  },
+  {
+    "reference": "R105",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R106",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW"
+  },
+  {
+    "reference": "R106",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP"
+  },
+  {
+    "reference": "R107",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "R107",
+    "pin": "2",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V"
+  },
+  {
+    "reference": "R120",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "R120",
+    "pin": "2",
+    "net": "/P24_SERIES_MID"
+  },
+  {
+    "reference": "R121",
+    "pin": "1",
+    "net": "/P24_SERIES_MID"
+  },
+  {
+    "reference": "R121",
+    "pin": "2",
+    "net": "/P24_ZENER_K"
+  },
+  {
+    "reference": "R122",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R122",
+    "pin": "2",
+    "net": "/P24_SENSE_N"
+  },
+  {
+    "reference": "R123",
+    "pin": "1",
+    "net": "/P24_BASE"
+  },
+  {
+    "reference": "R123",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R14",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R14",
+    "pin": "2",
+    "net": "/START_REQUEST"
+  },
+  {
+    "reference": "R16",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R16",
+    "pin": "2",
+    "net": "/ENC_A"
+  },
+  {
+    "reference": "R17",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R17",
+    "pin": "2",
+    "net": "/ENC_B"
+  },
+  {
+    "reference": "R18",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R18",
+    "pin": "2",
+    "net": "/MinimalSafety/WD_CWD_FIXED"
+  },
+  {
+    "reference": "R19",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R19",
+    "pin": "2",
+    "net": "/MinimalSafety/WD_OK"
+  },
+  {
+    "reference": "R2",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R2",
+    "pin": "2",
+    "net": "/TC_EXH_CS"
+  },
+  {
+    "reference": "R24",
+    "pin": "1",
+    "net": "/TFT_CS"
+  },
+  {
+    "reference": "R24",
+    "pin": "2",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R3",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R3",
+    "pin": "2",
+    "net": "/TC_AIR_CS"
+  },
+  {
+    "reference": "R301",
+    "pin": "1",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "R301",
+    "pin": "2",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_PWR_EN"
+  },
+  {
+    "reference": "R302",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "R302",
+    "pin": "2",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_3V3_PG"
+  },
+  {
+    "reference": "R303",
+    "pin": "1",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "R303",
+    "pin": "2",
+    "net": "/TFT_RESET_N"
+  },
+  {
+    "reference": "R7",
+    "pin": "1",
+    "net": "/FAN_REQUEST"
+  },
+  {
+    "reference": "R7",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R700",
+    "pin": "1",
+    "net": "/ARM_PULSE"
+  },
+  {
+    "reference": "R700",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R701",
+    "pin": "1",
+    "net": "/THERMAL_OK"
+  },
+  {
+    "reference": "R701",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R702",
+    "pin": "1",
+    "net": "/RESET_RELEASED"
+  },
+  {
+    "reference": "R702",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R703",
+    "pin": "1",
+    "net": "/MCU_PERMIT"
+  },
+  {
+    "reference": "R703",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R8",
+    "pin": "1",
+    "net": "/SPEED_CMD"
+  },
+  {
+    "reference": "R8",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R85",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R85",
+    "pin": "2",
+    "net": "/ENC_SW"
+  },
+  {
+    "reference": "R86",
+    "pin": "1",
+    "net": "/GLOW_CMD"
+  },
+  {
+    "reference": "R86",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R87",
+    "pin": "1",
+    "net": "/FUEL_CMD"
+  },
+  {
+    "reference": "R87",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R88",
+    "pin": "1",
+    "net": "/SAFETY_OK"
+  },
+  {
+    "reference": "R88",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R89",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R89",
+    "pin": "2",
+    "net": "/MinimalSafety/RELAY_DRIVER_OK"
+  },
+  {
+    "reference": "R9",
+    "pin": "1",
+    "net": "/WD_HEARTBEAT"
+  },
+  {
+    "reference": "R9",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R90",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE"
+  },
+  {
+    "reference": "R90",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE"
+  },
+  {
+    "reference": "R9001",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI"
+  },
+  {
+    "reference": "R9001",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS"
+  },
+  {
+    "reference": "R9002",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_GATE_CMD"
+  },
+  {
+    "reference": "R9002",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R9003",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VCCUV"
+  },
+  {
+    "reference": "R9003",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R9004",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/TGUP"
+  },
+  {
+    "reference": "R9004",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101"
+  },
+  {
+    "reference": "R9005",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R9005",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+  },
+  {
+    "reference": "R9006",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+  },
+  {
+    "reference": "R9006",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R9007",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK"
+  },
+  {
+    "reference": "R9007",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+  },
+  {
+    "reference": "R9008",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "R9008",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK"
+  },
+  {
+    "reference": "R9009",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V"
+  },
+  {
+    "reference": "R9009",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VADJ"
+  },
+  {
+    "reference": "R9010",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VADJ"
+  },
+  {
+    "reference": "R9010",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R91",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE"
+  },
+  {
+    "reference": "R91",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE"
+  },
+  {
+    "reference": "R92",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE"
+  },
+  {
+    "reference": "R92",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE"
+  },
+  {
+    "reference": "R93",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE"
+  },
+  {
+    "reference": "R93",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE"
+  },
+  {
+    "reference": "R94",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "R94",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV"
+  },
+  {
+    "reference": "R95",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV"
+  },
+  {
+    "reference": "R95",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "R96",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "R96",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV"
+  },
+  {
+    "reference": "R97",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV"
+  },
+  {
+    "reference": "R97",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "TP101",
+    "pin": "1",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V"
+  },
+  {
+    "reference": "U1",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U1",
+    "pin": "2",
+    "net": "/MinimalSafety/WD_CWD_FIXED"
+  },
+  {
+    "reference": "U1",
+    "pin": "3",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U1",
+    "pin": "4",
+    "net": "/GND"
+  },
+  {
+    "reference": "U1",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U1",
+    "pin": "6",
+    "net": "/WD_HEARTBEAT"
+  },
+  {
+    "reference": "U1",
+    "pin": "7",
+    "net": "/MinimalSafety/WD_OK"
+  },
+  {
+    "reference": "U1",
+    "pin": "8",
+    "net": "/MinimalSafety/WD_OK"
+  },
+  {
+    "reference": "U1",
+    "pin": "9",
+    "net": "/GND"
+  },
+  {
+    "reference": "U10",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "U10",
+    "pin": "10",
+    "net": "/TC_SCK"
+  },
+  {
+    "reference": "U10",
+    "pin": "11",
+    "net": "/TC_SDO_MISO"
+  },
+  {
+    "reference": "U10",
+    "pin": "12",
+    "net": "/TC_SDI_MOSI"
+  },
+  {
+    "reference": "U10",
+    "pin": "13",
+    "net": "unconnected-(U10-FAULT-Pad13)"
+  },
+  {
+    "reference": "U10",
+    "pin": "14",
+    "net": "/GND"
+  },
+  {
+    "reference": "U10",
+    "pin": "2",
+    "net": "/TC_AIR_BIAS"
+  },
+  {
+    "reference": "U10",
+    "pin": "3",
+    "net": "/TC_AIR_TM"
+  },
+  {
+    "reference": "U10",
+    "pin": "4",
+    "net": "/TC_AIR_TP"
+  },
+  {
+    "reference": "U10",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U10",
+    "pin": "6",
+    "net": "unconnected-(U10-DNC-Pad6)"
+  },
+  {
+    "reference": "U10",
+    "pin": "7",
+    "net": "/TC_AIR_DRDY"
+  },
+  {
+    "reference": "U10",
+    "pin": "8",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U10",
+    "pin": "9",
+    "net": "/TC_AIR_CS"
+  },
+  {
+    "reference": "U101",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "U101",
+    "pin": "2",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "U101",
+    "pin": "3",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC"
+  },
+  {
+    "reference": "U101",
+    "pin": "4",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON"
+  },
+  {
+    "reference": "U101",
+    "pin": "5",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB"
+  },
+  {
+    "reference": "U101",
+    "pin": "6",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V"
+  },
+  {
+    "reference": "U101",
+    "pin": "7",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/BOOT"
+  },
+  {
+    "reference": "U101",
+    "pin": "8",
+    "net": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW"
+  },
+  {
+    "reference": "U101",
+    "pin": "9",
+    "net": "/GND"
+  },
+  {
+    "reference": "U11",
+    "pin": "1",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "U11",
+    "pin": "10",
+    "net": "/GND"
+  },
+  {
+    "reference": "U11",
+    "pin": "11",
+    "net": "/SAFETY_OK"
+  },
+  {
+    "reference": "U11",
+    "pin": "12",
+    "net": "/GND"
+  },
+  {
+    "reference": "U11",
+    "pin": "13",
+    "net": "/FUEL_CMD"
+  },
+  {
+    "reference": "U11",
+    "pin": "14",
+    "net": "/GLOW_CMD"
+  },
+  {
+    "reference": "U11",
+    "pin": "15",
+    "net": "unconnected-(U11-NC-Pad15)"
+  },
+  {
+    "reference": "U11",
+    "pin": "16",
+    "net": "/MinimalSafety/RELAY_DRIVER_OK"
+  },
+  {
+    "reference": "U11",
+    "pin": "17",
+    "net": "/GND"
+  },
+  {
+    "reference": "U11",
+    "pin": "2",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "U11",
+    "pin": "3",
+    "net": "/K_GLOW_COIL_LOW"
+  },
+  {
+    "reference": "U11",
+    "pin": "4",
+    "net": "/K_CLUTCH_RUN_COIL_LOW"
+  },
+  {
+    "reference": "U11",
+    "pin": "5",
+    "net": "/GND"
+  },
+  {
+    "reference": "U11",
+    "pin": "6",
+    "net": "/K_CLUTCH_SAFE_COIL_LOW"
+  },
+  {
+    "reference": "U11",
+    "pin": "7",
+    "net": "unconnected-(U11-OUT4-Pad7)"
+  },
+  {
+    "reference": "U11",
+    "pin": "8",
+    "net": "/MinimalSafety/RELAY_DISABLE"
+  },
+  {
+    "reference": "U11",
+    "pin": "9",
+    "net": "/GND"
+  },
+  {
+    "reference": "U13",
+    "pin": "1",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE"
+  },
+  {
+    "reference": "U13",
+    "pin": "10",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "U13",
+    "pin": "11",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET"
+  },
+  {
+    "reference": "U13",
+    "pin": "12",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "U13",
+    "pin": "13",
+    "net": "unconnected-(U13-EP-Pad13)"
+  },
+  {
+    "reference": "U13",
+    "pin": "2",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+  },
+  {
+    "reference": "U13",
+    "pin": "3",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "U13",
+    "pin": "4",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+  },
+  {
+    "reference": "U13",
+    "pin": "5",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV"
+  },
+  {
+    "reference": "U13",
+    "pin": "6",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV"
+  },
+  {
+    "reference": "U13",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "U13",
+    "pin": "8",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE"
+  },
+  {
+    "reference": "U13",
+    "pin": "9",
+    "net": "/P24_PROTECTED"
+  },
+  {
+    "reference": "U2",
+    "pin": "1",
+    "net": "/MinimalSafety/CLEAR_N"
+  },
+  {
+    "reference": "U2",
+    "pin": "10",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U2",
+    "pin": "11",
+    "net": "/GND"
+  },
+  {
+    "reference": "U2",
+    "pin": "12",
+    "net": "/GND"
+  },
+  {
+    "reference": "U2",
+    "pin": "13",
+    "net": "/GND"
+  },
+  {
+    "reference": "U2",
+    "pin": "14",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U2",
+    "pin": "2",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U2",
+    "pin": "3",
+    "net": "/ARM_PULSE"
+  },
+  {
+    "reference": "U2",
+    "pin": "4",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U2",
+    "pin": "5",
+    "net": "/SAFETY_OK"
+  },
+  {
+    "reference": "U2",
+    "pin": "6",
+    "net": "/MinimalSafety/RELAY_DISABLE"
+  },
+  {
+    "reference": "U2",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "U2",
+    "pin": "8",
+    "net": "unconnected-(U2-~{2Q}-Pad8)"
+  },
+  {
+    "reference": "U2",
+    "pin": "9",
+    "net": "unconnected-(U2-2Q-Pad9)"
+  },
+  {
+    "reference": "U20",
+    "pin": "1",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U20",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "U20",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U20",
+    "pin": "4",
+    "net": "/P24_PRESENT"
+  },
+  {
+    "reference": "U20",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U20",
+    "pin": "6",
+    "net": "/P24_SENSE_N"
+  },
+  {
+    "reference": "U301",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "U301",
+    "pin": "2",
+    "net": "+5V_DEVKIT"
+  },
+  {
+    "reference": "U301",
+    "pin": "3",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_PWR_EN"
+  },
+  {
+    "reference": "U301",
+    "pin": "4",
+    "net": "/GND"
+  },
+  {
+    "reference": "U301",
+    "pin": "5",
+    "net": "/GND"
+  },
+  {
+    "reference": "U301",
+    "pin": "6",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "U301",
+    "pin": "7",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_PWR_SW"
+  },
+  {
+    "reference": "U301",
+    "pin": "8",
+    "net": "/TFT_POWER_3V3_DRAFT/TFT_3V3_PG"
+  },
+  {
+    "reference": "U301",
+    "pin": "9",
+    "net": "/GND"
+  },
+  {
+    "reference": "U302",
+    "pin": "1",
+    "net": "/TFT_RESET_N"
+  },
+  {
+    "reference": "U302",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "U302",
+    "pin": "3",
+    "net": "unconnected-(U302-~{MR}-Pad3)"
+  },
+  {
+    "reference": "U302",
+    "pin": "4",
+    "net": "unconnected-(U302-CT-Pad4)"
+  },
+  {
+    "reference": "U302",
+    "pin": "5",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "U302",
+    "pin": "6",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "U303",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "U303",
+    "pin": "10",
+    "net": "/GND"
+  },
+  {
+    "reference": "U303",
+    "pin": "11",
+    "net": "/TFT_DC_BUF"
+  },
+  {
+    "reference": "U303",
+    "pin": "12",
+    "net": "/TFT_DC"
+  },
+  {
+    "reference": "U303",
+    "pin": "13",
+    "net": "/GND"
+  },
+  {
+    "reference": "U303",
+    "pin": "14",
+    "net": "/TFT_3V3"
+  },
+  {
+    "reference": "U303",
+    "pin": "2",
+    "net": "/TC_SDI_MOSI"
+  },
+  {
+    "reference": "U303",
+    "pin": "3",
+    "net": "/TFT_MOSI_BUF"
+  },
+  {
+    "reference": "U303",
+    "pin": "4",
+    "net": "/GND"
+  },
+  {
+    "reference": "U303",
+    "pin": "5",
+    "net": "/TC_SCK"
+  },
+  {
+    "reference": "U303",
+    "pin": "6",
+    "net": "/TFT_SCK_BUF"
+  },
+  {
+    "reference": "U303",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "U303",
+    "pin": "8",
+    "net": "/TFT_CS_BUF"
+  },
+  {
+    "reference": "U303",
+    "pin": "9",
+    "net": "/TFT_CS"
+  },
+  {
+    "reference": "U6",
+    "pin": "1",
+    "net": "/MinimalSafety/WD_OK"
+  },
+  {
+    "reference": "U6",
+    "pin": "10",
+    "net": "/MCU_PERMIT"
+  },
+  {
+    "reference": "U6",
+    "pin": "11",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U6",
+    "pin": "12",
+    "net": "/MinimalSafety/HARD_CONDITIONS_OK"
+  },
+  {
+    "reference": "U6",
+    "pin": "13",
+    "net": "/MinimalSafety/RELAY_DRIVER_OK"
+  },
+  {
+    "reference": "U6",
+    "pin": "14",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U6",
+    "pin": "2",
+    "net": "/THERMAL_OK"
+  },
+  {
+    "reference": "U6",
+    "pin": "3",
+    "net": "/MinimalSafety/HARD_CONDITIONS_OK"
+  },
+  {
+    "reference": "U6",
+    "pin": "4",
+    "net": "/RESET_RELEASED"
+  },
+  {
+    "reference": "U6",
+    "pin": "5",
+    "net": "/P24_PRESENT"
+  },
+  {
+    "reference": "U6",
+    "pin": "6",
+    "net": "/MinimalSafety/RESET_POWER_READY"
+  },
+  {
+    "reference": "U6",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "U6",
+    "pin": "8",
+    "net": "/MinimalSafety/CLEAR_N"
+  },
+  {
+    "reference": "U6",
+    "pin": "9",
+    "net": "/MinimalSafety/RESET_POWER_READY"
+  },
+  {
+    "reference": "U9",
+    "pin": "1",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9",
+    "pin": "10",
+    "net": "/TC_SCK"
+  },
+  {
+    "reference": "U9",
+    "pin": "11",
+    "net": "/TC_SDO_MISO"
+  },
+  {
+    "reference": "U9",
+    "pin": "12",
+    "net": "/TC_SDI_MOSI"
+  },
+  {
+    "reference": "U9",
+    "pin": "13",
+    "net": "unconnected-(U9-FAULT-Pad13)"
+  },
+  {
+    "reference": "U9",
+    "pin": "14",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9",
+    "pin": "2",
+    "net": "/TC_EXH_BIAS"
+  },
+  {
+    "reference": "U9",
+    "pin": "3",
+    "net": "/TC_EXH_TM"
+  },
+  {
+    "reference": "U9",
+    "pin": "4",
+    "net": "/TC_EXH_TP"
+  },
+  {
+    "reference": "U9",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9",
+    "pin": "6",
+    "net": "unconnected-(U9-DNC-Pad6)"
+  },
+  {
+    "reference": "U9",
+    "pin": "7",
+    "net": "/TC_EXH_DRDY"
+  },
+  {
+    "reference": "U9",
+    "pin": "8",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9",
+    "pin": "9",
+    "net": "/TC_EXH_CS"
+  },
+  {
+    "reference": "U9001",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V"
+  },
+  {
+    "reference": "U9001",
+    "pin": "10",
+    "net": "unconnected-(U9001-NC-Pad10)"
+  },
+  {
+    "reference": "U9001",
+    "pin": "11",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9001",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VCCUV"
+  },
+  {
+    "reference": "U9001",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9001",
+    "pin": "4",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_GATE_CMD"
+  },
+  {
+    "reference": "U9001",
+    "pin": "5",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9001",
+    "pin": "6",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101"
+  },
+  {
+    "reference": "U9001",
+    "pin": "7",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/TGUP"
+  },
+  {
+    "reference": "U9001",
+    "pin": "8",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI"
+  },
+  {
+    "reference": "U9001",
+    "pin": "9",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/BST"
+  },
+  {
+    "reference": "U9002",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS"
+  },
+  {
+    "reference": "U9002",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9002",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9002",
+    "pin": "4",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9002",
+    "pin": "5",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT"
+  },
+  {
+    "reference": "U9002",
+    "pin": "6",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9002",
+    "pin": "7",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9002",
+    "pin": "8",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI"
+  },
+  {
+    "reference": "U9003",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_THRESH"
+  },
+  {
+    "reference": "U9003",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9003",
+    "pin": "3",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/ISENSE_OUT"
+  },
+  {
+    "reference": "U9003",
+    "pin": "4",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK"
+  },
+  {
+    "reference": "U9003",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9004",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/FAN_WORK_PWM"
+  },
+  {
+    "reference": "U9004",
+    "pin": "2",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9004",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9004",
+    "pin": "4",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/FAN_REQUEST_OR_EMERG"
+  },
+  {
+    "reference": "U9004",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9005",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/FAN_REQUEST_OR_EMERG"
+  },
+  {
+    "reference": "U9005",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/OCP_OK"
+  },
+  {
+    "reference": "U9005",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9005",
+    "pin": "4",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_GATE_CMD"
+  },
+  {
+    "reference": "U9005",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9006",
+    "pin": "1",
+    "net": "/FAN_REQUEST"
+  },
+  {
+    "reference": "U9006",
+    "pin": "2",
+    "net": "/SPEED_CMD"
+  },
+  {
+    "reference": "U9006",
+    "pin": "3",
+    "net": "/GND"
+  },
+  {
+    "reference": "U9006",
+    "pin": "4",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/FAN_WORK_PWM"
+  },
+  {
+    "reference": "U9006",
+    "pin": "5",
+    "net": "/+3V3"
+  },
+  {
+    "reference": "U9007",
+    "pin": "1",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VADJ"
+  },
+  {
+    "reference": "U9007",
+    "pin": "2",
+    "net": "/MOTOR_PWM_REBUILD_CANDIDATE/VDRV12V"
+  },
+  {
+    "reference": "U9007",
+    "pin": "3",
+    "net": "/P24_PROTECTED"
+  }
+]
