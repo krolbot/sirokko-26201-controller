@@ -1,0 +1,21 @@
+{
+  "README_RU.md": "0184262788b983fedcaf949b25be5d90cc85c8ded938133572aba5079fd1d13f",
+  "Sirokko26201_control_motor_candidate.kicad_pcb": "cb0e1805a84b792b2679253165c129218e676805588cfde89cda39e89c2582f7",
+  "Sirokko_PCB_CB0E1805_BCU_WIP.png": "2762cb411289fbf964411d154958f72e46d53809eada3dd4d0d1ac6cf8f35486",
+  "Sirokko_PCB_CB0E1805_FCU_WIP.png": "ecb87cc5ab783ffdf3bb957948bc969cd87e5b19f6ab7f3abffdf9f32241ed93",
+  "Source_banks_CB0E1805_detail_WIP.png": "8634926cc5e974a152144a2898e9d1487d75961617f6f61d9fa61b612b677947",
+  "U13_readback.json": "ac7c72ffa4f9636f51568258de294255bcf93f5630233c08243d92023e976441",
+  "base.json": "8e419c5c2e898502ab9113564a039e614421f0ed1e9582f7b251d0bea39f7220",
+  "final_check.json": "e9b1a9802d4f6cdec183996be5fa69cdd5c330974e20f41f8289a46451a025f5",
+  "master.json": "c47eabe101e8bd7e93d5b42463c3e2a58fa665e7473d6f6864d114fdaad9e99c",
+  "master_reopen.json": "13c70f3ff6ededf1bff7ea21fa2a5204ca980f355c30eea8d030b0c1c994efc6",
+  "native.json": "09491c59ce339f8319bc4feef9999130cd30e8e1d2ed57342a13cc4602938278",
+  "partitions.json": "645295944b82a05b82e410007e2de86bb1cfc1cbe6bea5fbda5f4e900bf8e8e9",
+  "source_bank_geometry.json": "2f5afd1d2e48871e633c2039130123a5848c558960c8948599b34ca18e13f1d5",
+  "source_banks_readback.json": "12e99559d794c2231334efcef93f0a10b910bd8ae0efa3f3c2c0bc329d3453ab",
+  "v1.json": "5a13330f60191b253c1e1a851f73f090609c2e4054b917f024562743c8d78762",
+  "view_orientation_check.json": "f1f808abcc5dd48757aa03b27eec7958c7c129433e5d67bfedf1147a0bbc1a26",
+  "views/back_through.svg": "eebd0b0c5614ce872293374c6bd48f6881fbc977dffe1ff4223e5ae12f5e54e3",
+  "views/bottom_mirror.svg": "ae4eefda97f66e7d475aa6bdd7ff74368ebc42164b90da4282bf7e88e393ad45",
+  "views/front.svg": "dd50d62a8b0e48423ca39e72e3538f5681c824becec7d8dcbc5e3343e7b4c3fd"
+}

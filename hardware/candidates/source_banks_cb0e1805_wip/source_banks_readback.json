@@ -1,0 +1,712 @@
+{
+  "PCB_SHA256": "cb0e1805a84b792b2679253165c129218e676805588cfde89cda39e89c2582f7",
+  "footprints": 181,
+  "banks": [
+    {
+      "reference": "Q1",
+      "MPN_value": "IPB017N10N5LFATMA1 WIP",
+      "source_pad_numbers": [
+        "2",
+        "3",
+        "5",
+        "6",
+        "7"
+      ],
+      "gate_number": "1",
+      "drain_tab_number": "4",
+      "groups": {
+        "": [
+          {
+            "uuid": "3f38daea-a784-4bdf-983d-098c61a0d93c",
+            "pin": "Q1.",
+            "net": ""
+          }
+        ],
+        "1": [
+          {
+            "uuid": "33355e9b-ff5f-47fb-b210-3e19172d8d19",
+            "pin": "Q1.1",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE"
+          },
+          {
+            "uuid": "e86c9a35-4cef-4b7f-b4ea-a7a41334115e",
+            "pin": "R90.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE"
+          }
+        ],
+        "2": [
+          {
+            "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+            "pin": "Q1.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+            "pin": "Q1.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+            "pin": "Q1.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+            "pin": "Q1.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+            "pin": "Q1.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "3": [
+          {
+            "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+            "pin": "Q1.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+            "pin": "Q1.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+            "pin": "Q1.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+            "pin": "Q1.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+            "pin": "Q1.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "4": [
+          {
+            "uuid": "84e61e3f-bca6-4f9a-84ae-ba02813cf098",
+            "pin": "Q1.4",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+          }
+        ],
+        "5": [
+          {
+            "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+            "pin": "Q1.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+            "pin": "Q1.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+            "pin": "Q1.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+            "pin": "Q1.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+            "pin": "Q1.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "6": [
+          {
+            "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+            "pin": "Q1.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+            "pin": "Q1.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+            "pin": "Q1.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+            "pin": "Q1.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+            "pin": "Q1.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "7": [
+          {
+            "uuid": "3eb1facd-bd52-4a71-9f98-b5c169ed9621",
+            "pin": "Q1.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "68eca724-1719-41ba-a9d1-d41a9ac189e1",
+            "pin": "Q1.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "6911fa81-5626-4dec-912f-d62fc3779a3a",
+            "pin": "Q1.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "784ba579-d705-4213-bfae-f4b881a7363c",
+            "pin": "Q1.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "aebc1fec-dd88-427c-876a-82ee4f269ed9",
+            "pin": "Q1.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ]
+      }
+    },
+    {
+      "reference": "Q2",
+      "MPN_value": "IPB017N10N5LFATMA1 WIP",
+      "source_pad_numbers": [
+        "2",
+        "3",
+        "5",
+        "6",
+        "7"
+      ],
+      "gate_number": "1",
+      "drain_tab_number": "4",
+      "groups": {
+        "": [
+          {
+            "uuid": "83e35997-35c8-4378-96c3-3dc9d2566f59",
+            "pin": "Q2.",
+            "net": ""
+          }
+        ],
+        "1": [
+          {
+            "uuid": "0ad00856-91c1-4a7e-aff5-8c88b628de3d",
+            "pin": "R91.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE"
+          },
+          {
+            "uuid": "0b944e7d-2e51-4a81-986f-ab54cb9816ed",
+            "pin": "Q2.1",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE"
+          }
+        ],
+        "2": [
+          {
+            "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+            "pin": "Q2.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+            "pin": "Q2.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+            "pin": "Q2.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+            "pin": "Q2.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+            "pin": "Q2.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "3": [
+          {
+            "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+            "pin": "Q2.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+            "pin": "Q2.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+            "pin": "Q2.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+            "pin": "Q2.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+            "pin": "Q2.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "4": [
+          {
+            "uuid": "3c742008-90c8-4b0d-ab65-9a0e1b11dd4d",
+            "pin": "Q2.4",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+          }
+        ],
+        "5": [
+          {
+            "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+            "pin": "Q2.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+            "pin": "Q2.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+            "pin": "Q2.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+            "pin": "Q2.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+            "pin": "Q2.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "6": [
+          {
+            "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+            "pin": "Q2.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+            "pin": "Q2.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+            "pin": "Q2.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+            "pin": "Q2.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+            "pin": "Q2.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ],
+        "7": [
+          {
+            "uuid": "1d330ecf-14f8-4b40-9f75-db35ad6f9d95",
+            "pin": "Q2.3",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "2003fe29-badd-4640-9647-3bba31630f6b",
+            "pin": "Q2.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "a6d832b0-30f9-4661-8ab2-ddc37fe4e4ad",
+            "pin": "Q2.7",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c25067d9-109b-4dad-a2b2-c90fb40f47f3",
+            "pin": "Q2.5",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          },
+          {
+            "uuid": "c6b6a976-0d0f-4a6e-a54f-91742da9f71b",
+            "pin": "Q2.6",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+          }
+        ]
+      }
+    },
+    {
+      "reference": "Q3",
+      "MPN_value": "IPB017N10N5LFATMA1 WIP",
+      "source_pad_numbers": [
+        "2",
+        "3",
+        "5",
+        "6",
+        "7"
+      ],
+      "gate_number": "1",
+      "drain_tab_number": "4",
+      "groups": {
+        "": [
+          {
+            "uuid": "826578c4-27cf-4111-a257-f51c6052e7a6",
+            "pin": "Q3.",
+            "net": ""
+          }
+        ],
+        "1": [
+          {
+            "uuid": "bac912bf-6e27-4d63-a329-db77904e677d",
+            "pin": "R92.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE"
+          },
+          {
+            "uuid": "fb85a4a1-4d5d-4226-b35c-4c2563a6151a",
+            "pin": "Q3.1",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE"
+          }
+        ],
+        "2": [
+          {
+            "uuid": "0be12ddf-f2e1-491b-aed3-01f99ccbde3b",
+            "pin": "Q3.3",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "10993061-eefe-4f67-8499-6ba56afe6a8a",
+            "pin": "Q3.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "842187f6-ae52-42fc-abdd-cf5b82f5312b",
+            "pin": "Q3.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "9fd1dc79-86db-4853-974d-9c12bee714dc",
+            "pin": "Q3.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "f9ee9f77-6b71-41ee-8c73-e46c908e6c04",
+            "pin": "Q3.6",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "3": [
+          {
+            "uuid": "0be12ddf-f2e1-491b-aed3-01f99ccbde3b",
+            "pin": "Q3.3",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "10993061-eefe-4f67-8499-6ba56afe6a8a",
+            "pin": "Q3.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "842187f6-ae52-42fc-abdd-cf5b82f5312b",
+            "pin": "Q3.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "9fd1dc79-86db-4853-974d-9c12bee714dc",
+            "pin": "Q3.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "f9ee9f77-6b71-41ee-8c73-e46c908e6c04",
+            "pin": "Q3.6",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "4": [
+          {
+            "uuid": "291c150c-9de2-4566-b0fb-f2270a28800d",
+            "pin": "Q3.4",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+          }
+        ],
+        "5": [
+          {
+            "uuid": "0be12ddf-f2e1-491b-aed3-01f99ccbde3b",
+            "pin": "Q3.3",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "10993061-eefe-4f67-8499-6ba56afe6a8a",
+            "pin": "Q3.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "842187f6-ae52-42fc-abdd-cf5b82f5312b",
+            "pin": "Q3.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "9fd1dc79-86db-4853-974d-9c12bee714dc",
+            "pin": "Q3.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "f9ee9f77-6b71-41ee-8c73-e46c908e6c04",
+            "pin": "Q3.6",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "6": [
+          {
+            "uuid": "0be12ddf-f2e1-491b-aed3-01f99ccbde3b",
+            "pin": "Q3.3",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "10993061-eefe-4f67-8499-6ba56afe6a8a",
+            "pin": "Q3.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "842187f6-ae52-42fc-abdd-cf5b82f5312b",
+            "pin": "Q3.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "9fd1dc79-86db-4853-974d-9c12bee714dc",
+            "pin": "Q3.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "f9ee9f77-6b71-41ee-8c73-e46c908e6c04",
+            "pin": "Q3.6",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "7": [
+          {
+            "uuid": "0be12ddf-f2e1-491b-aed3-01f99ccbde3b",
+            "pin": "Q3.3",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "10993061-eefe-4f67-8499-6ba56afe6a8a",
+            "pin": "Q3.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "842187f6-ae52-42fc-abdd-cf5b82f5312b",
+            "pin": "Q3.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "9fd1dc79-86db-4853-974d-9c12bee714dc",
+            "pin": "Q3.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "f9ee9f77-6b71-41ee-8c73-e46c908e6c04",
+            "pin": "Q3.6",
+            "net": "/P24_PROTECTED"
+          }
+        ]
+      }
+    },
+    {
+      "reference": "Q4",
+      "MPN_value": "IPB017N10N5LFATMA1 WIP",
+      "source_pad_numbers": [
+        "2",
+        "3",
+        "5",
+        "6",
+        "7"
+      ],
+      "gate_number": "1",
+      "drain_tab_number": "4",
+      "groups": {
+        "": [
+          {
+            "uuid": "a14062e3-4894-4eac-8589-ac7ccb2f089e",
+            "pin": "Q4.",
+            "net": ""
+          }
+        ],
+        "1": [
+          {
+            "uuid": "a51b8b3c-d339-4404-8789-01ae9ad88330",
+            "pin": "R93.2",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE"
+          },
+          {
+            "uuid": "e6d6f5dd-9aba-4272-b0d2-01c146025727",
+            "pin": "Q4.1",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE"
+          }
+        ],
+        "2": [
+          {
+            "uuid": "2566d425-06c3-4af8-8c27-d0eaada3465a",
+            "pin": "Q4.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "2d9c1e38-db34-4951-9dfb-0cfdc8ddac03",
+            "pin": "Q4.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "3034ade5-dbdf-4261-b557-f8bf4d130fba",
+            "pin": "Q4.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "6cddc4d0-f7c0-4348-9d2e-022c2e2c07aa",
+            "pin": "Q4.6",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "ad512020-b2a6-44db-b575-c40eb784cbc0",
+            "pin": "Q4.3",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "3": [
+          {
+            "uuid": "2566d425-06c3-4af8-8c27-d0eaada3465a",
+            "pin": "Q4.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "2d9c1e38-db34-4951-9dfb-0cfdc8ddac03",
+            "pin": "Q4.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "3034ade5-dbdf-4261-b557-f8bf4d130fba",
+            "pin": "Q4.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "6cddc4d0-f7c0-4348-9d2e-022c2e2c07aa",
+            "pin": "Q4.6",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "ad512020-b2a6-44db-b575-c40eb784cbc0",
+            "pin": "Q4.3",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "4": [
+          {
+            "uuid": "6cdc3d12-d4b5-4f40-901a-0949c625acad",
+            "pin": "Q4.4",
+            "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID"
+          }
+        ],
+        "5": [
+          {
+            "uuid": "2566d425-06c3-4af8-8c27-d0eaada3465a",
+            "pin": "Q4.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "2d9c1e38-db34-4951-9dfb-0cfdc8ddac03",
+            "pin": "Q4.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "3034ade5-dbdf-4261-b557-f8bf4d130fba",
+            "pin": "Q4.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "6cddc4d0-f7c0-4348-9d2e-022c2e2c07aa",
+            "pin": "Q4.6",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "ad512020-b2a6-44db-b575-c40eb784cbc0",
+            "pin": "Q4.3",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "6": [
+          {
+            "uuid": "2566d425-06c3-4af8-8c27-d0eaada3465a",
+            "pin": "Q4.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "2d9c1e38-db34-4951-9dfb-0cfdc8ddac03",
+            "pin": "Q4.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "3034ade5-dbdf-4261-b557-f8bf4d130fba",
+            "pin": "Q4.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "6cddc4d0-f7c0-4348-9d2e-022c2e2c07aa",
+            "pin": "Q4.6",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "ad512020-b2a6-44db-b575-c40eb784cbc0",
+            "pin": "Q4.3",
+            "net": "/P24_PROTECTED"
+          }
+        ],
+        "7": [
+          {
+            "uuid": "2566d425-06c3-4af8-8c27-d0eaada3465a",
+            "pin": "Q4.7",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "2d9c1e38-db34-4951-9dfb-0cfdc8ddac03",
+            "pin": "Q4.2",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "3034ade5-dbdf-4261-b557-f8bf4d130fba",
+            "pin": "Q4.5",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "6cddc4d0-f7c0-4348-9d2e-022c2e2c07aa",
+            "pin": "Q4.6",
+            "net": "/P24_PROTECTED"
+          },
+          {
+            "uuid": "ad512020-b2a6-44db-b575-c40eb784cbc0",
+            "pin": "Q4.3",
+            "net": "/P24_PROTECTED"
+          }
+        ]
+      }
+    }
+  ],
+  "all_source_PADS_exact_five_per_bank": true,
+  "gate_and_drain_not_in_source_groups": true
+}

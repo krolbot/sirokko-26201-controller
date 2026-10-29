@@ -1,0 +1,78 @@
+[
+  {
+    "reference": "Q1",
+    "zone_uuid": "9514391d-e119-4926-a9f1-b47e1551ca09",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED",
+    "layer": "F.Cu",
+    "bbox_mm": [
+      -1.95,
+      147.06,
+      2.65,
+      154.21
+    ],
+    "width_mm": 4.6,
+    "height_mm": 7.15,
+    "outline_area_mm2": 32.89,
+    "clearance_mm": 0.2,
+    "min_thickness_mm": 0.25,
+    "priority": 1,
+    "pad_connection": "solid"
+  },
+  {
+    "reference": "Q2",
+    "zone_uuid": "94437361-83e3-4fc7-ad8e-049d692d0b7f",
+    "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED",
+    "layer": "F.Cu",
+    "bbox_mm": [
+      38.05,
+      147.06,
+      42.65,
+      154.21
+    ],
+    "width_mm": 4.6,
+    "height_mm": 7.15,
+    "outline_area_mm2": 32.89,
+    "clearance_mm": 0.2,
+    "min_thickness_mm": 0.25,
+    "priority": 1,
+    "pad_connection": "solid"
+  },
+  {
+    "reference": "Q3",
+    "zone_uuid": "15757706-4d6e-4d37-a304-cc9e0650fb12",
+    "net": "/P24_PROTECTED",
+    "layer": "F.Cu",
+    "bbox_mm": [
+      38.05,
+      131.56,
+      42.65,
+      138.71
+    ],
+    "width_mm": 4.6,
+    "height_mm": 7.15,
+    "outline_area_mm2": 32.89,
+    "clearance_mm": 0.2,
+    "min_thickness_mm": 0.25,
+    "priority": 1,
+    "pad_connection": "solid"
+  },
+  {
+    "reference": "Q4",
+    "zone_uuid": "a0ed1e99-afc4-47d5-8b7a-72d1b00c5e58",
+    "net": "/P24_PROTECTED",
+    "layer": "F.Cu",
+    "bbox_mm": [
+      38.05,
+      114.56,
+      42.65,
+      121.71
+    ],
+    "width_mm": 4.6,
+    "height_mm": 7.15,
+    "outline_area_mm2": 32.89,
+    "clearance_mm": 0.2,
+    "min_thickness_mm": 0.25,
+    "priority": 1,
+    "pad_connection": "solid"
+  }
+]
