@@ -1,0 +1,12 @@
+{
+  "board": {},
+  "boards": [],
+  "cvpcb": {},
+  "erc": {},
+  "libraries": {},
+  "meta": {"filename": "sirokko_tft_spi_isolation_DRAFT.kicad_pro", "version": 1},
+  "net_settings": {},
+  "pcbnew": {},
+  "schematic": {},
+  "text_variables": {}
+}
