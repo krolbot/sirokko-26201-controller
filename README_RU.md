@@ -7,9 +7,9 @@
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - плата: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- текущая PCB after42: `efeb38b31653ea389857859f559b1ea50626def0707b48efe72b8dbc157c8a88`.
+- текущая PCB after52: `b4d4b8f5c0783dd403f1caeb2114d5ee69a59bf7ac5d68f81e3fda3c474afb7c`.
 
-После cleanup последовательно опубликованы after20, after30 и after34. Текущая PCB сохраняет все 1755 объектов after34 по UUID, сети, слою и геометрии и добавляет ровно восемь F.Cu-сегментов 0,25 мм. Подробности: [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
+После cleanup последовательно опубликованы after20, after30, after34 и after42. Текущая PCB сохраняет все 1763 объекта after42 по UUID, сети, слою и геометрии и добавляет ровно десять F.Cu-сегментов 0,25 мм. Подробности: [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
 
 Отозванная условная модель крепежа голого TFT на стойках M2×12 удалена из проекта. Официальная номинальная STEP-модель Waveshare 18366 сохранена, но резьба, высота штатных опор, сопрягаемые детали и полный высотный размер не приняты.
 

@@ -7,9 +7,9 @@ The working tree contains one current, complete KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current after42 PCB SHA-256: `efeb38b31653ea389857859f559b1ea50626def0707b48efe72b8dbc157c8a88`.
+- current after52 PCB SHA-256: `b4d4b8f5c0783dd403f1caeb2114d5ee69a59bf7ac5d68f81e3fda3c474afb7c`.
 
-After20, after30 and after34 were published sequentially on top of cleanup. The current PCB preserves all 1,755 after34 objects by UUID, net, layer and geometry and adds exactly eight 0.25 mm F.Cu segments. See [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
+After20, after30, after34 and after42 were published sequentially on top of cleanup. The current PCB preserves all 1,763 after42 objects by UUID, net, layer and geometry and adds exactly ten 0.25 mm F.Cu segments. See [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md).
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 
