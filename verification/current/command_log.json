@@ -1,0 +1,25 @@
+{
+  "kicad_version": "10.0.7",
+  "lab_source": "/projects/exports/sirokko_C25_NATIVE_CANDIDATE/project/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "published_candidate": "/projects/exports/krol_t66ce361c_after63_corrected/project/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "fill_zones": {
+    "zones_filled": 22,
+    "warnings": []
+  },
+  "drc": {
+    "cwd": "/projects/exports/krol_t66ce361c_after63_corrected/project",
+    "command": "kicad-cli pcb drc --format json --output /projects/exports/krol_t66ce361c_after63_corrected/verification/drc.json --all-track-errors --schematic-parity --severity-all --refill-zones --exit-code-violations Sirokko26201_control_motor_candidate.kicad_pcb",
+    "exit_code": 5,
+    "violations": 83,
+    "unconnected_items": 80,
+    "schematic_parity": 0
+  },
+  "erc": {
+    "cwd": "/projects/exports/krol_t66ce361c_after63_corrected/project",
+    "root_project": "Sirokko26201_control_motor_candidate.kicad_pro",
+    "root_schematic": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "command": "kicad-cli sch erc --format json --output /projects/exports/krol_t66ce361c_after63_corrected/verification/erc.json --severity-all --exit-code-violations Sirokko26201_control_motor_candidate.kicad_sch",
+    "exit_code": 0,
+    "violations": 0
+  }
+}

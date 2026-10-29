@@ -1,0 +1,274 @@
+{
+  "status": "PASS",
+  "before": "verification_lab/raw_after63_pad_groups.json",
+  "after": "repo/verification/current/pad_groups.json",
+  "preservation": {
+    "before_pad_count": 603,
+    "after_pad_count": 603,
+    "before_group_count": 261,
+    "after_group_count": 261,
+    "missing_pad_uuids": [],
+    "added_pad_uuids": [],
+    "unchanged_old_groups": 261,
+    "expanded_old_groups": [],
+    "split_old_groups": []
+  },
+  "targets": [
+    {
+      "name": "gnd_return",
+      "requested": [
+        "C2.2",
+        "U2.11",
+        "R700.2",
+        "R703.2"
+      ],
+      "missing_labels": [],
+      "ambiguous_labels": [],
+      "connected": true,
+      "after_group": [
+        {
+          "uuid": "06229a44-f13e-4a38-9dfb-38dc62214bb4",
+          "reference": "C9",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 36.675,
+          "y_mm": 34.5
+        },
+        {
+          "uuid": "0727068d-29af-47d1-8cbc-83856ce84b5a",
+          "reference": "C1",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 26.325,
+          "y_mm": 61.0
+        },
+        {
+          "uuid": "1129de68-7534-4a5f-afff-695344bfaa4c",
+          "reference": "U9",
+          "pad": "1",
+          "net": "/GND",
+          "x_mm": 32.8625,
+          "y_mm": 32.95
+        },
+        {
+          "uuid": "166192b4-49dc-41bb-bf03-e1002702bd94",
+          "reference": "J13",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 11.62,
+          "y_mm": 110.48
+        },
+        {
+          "uuid": "16f9f3f4-e582-41e6-a5c3-aac62aef9865",
+          "reference": "U2",
+          "pad": "12",
+          "net": "/GND",
+          "x_mm": 65.475,
+          "y_mm": 63.73
+        },
+        {
+          "uuid": "1fe3ee80-bc0d-478f-885f-007308ab8a75",
+          "reference": "C6",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 51.175,
+          "y_mm": 58.0
+        },
+        {
+          "uuid": "2039a811-87af-48aa-b75e-ef5055e50aa5",
+          "reference": "U1",
+          "pad": "4",
+          "net": "/GND",
+          "x_mm": 29.6,
+          "y_mm": 65.975
+        },
+        {
+          "uuid": "30345aa9-e2eb-426d-b85d-76140e24ce36",
+          "reference": "U2",
+          "pad": "11",
+          "net": "/GND",
+          "x_mm": 65.475,
+          "y_mm": 65.0
+        },
+        {
+          "uuid": "382f6158-4e66-4453-a687-9bad3246924f",
+          "reference": "U2",
+          "pad": "13",
+          "net": "/GND",
+          "x_mm": 65.475,
+          "y_mm": 62.46
+        },
+        {
+          "uuid": "50e78618-9c50-4e42-913f-c1d438995abe",
+          "reference": "D1",
+          "pad": "8",
+          "net": "/GND",
+          "x_mm": 17.45,
+          "y_mm": 101.025
+        },
+        {
+          "uuid": "510b467a-c7f3-4352-8d72-999f9b679d48",
+          "reference": "R9",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 39.16,
+          "y_mm": 74.0
+        },
+        {
+          "uuid": "528b9558-c3fb-4f28-a3f5-6a2d8d5901f1",
+          "reference": "U1",
+          "pad": "9",
+          "net": "/GND",
+          "x_mm": 30.5,
+          "y_mm": 64.175
+        },
+        {
+          "uuid": "536b486d-c4c4-416a-8eb3-401eac3a41c0",
+          "reference": "C10",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 36.775,
+          "y_mm": 31.0
+        },
+        {
+          "uuid": "54be9b53-b94e-4fdd-a518-1dd9efebd1d2",
+          "reference": "C2",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 67.175,
+          "y_mm": 58.0
+        },
+        {
+          "uuid": "5b2e89fe-9630-4b8b-8ad1-cc0460e026e8",
+          "reference": "C13",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 23.175,
+          "y_mm": 29.05
+        },
+        {
+          "uuid": "6d295772-5923-4be3-bb8f-eae1494e9fd2",
+          "reference": "C11",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 40.775,
+          "y_mm": 32.5
+        },
+        {
+          "uuid": "7244fab5-44a1-4e31-b0e2-8c929e3c5998",
+          "reference": "R700",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 53.16,
+          "y_mm": 77.0
+        },
+        {
+          "uuid": "7302ba59-2b0e-40d7-b78f-64205a07c129",
+          "reference": "U1",
+          "pad": "9",
+          "net": "/GND",
+          "x_mm": 31.5,
+          "y_mm": 64.175
+        },
+        {
+          "uuid": "7f429516-fd53-4a92-a729-14d2939ac87a",
+          "reference": "U6",
+          "pad": "7",
+          "net": "/GND",
+          "x_mm": 44.525,
+          "y_mm": 68.81
+        },
+        {
+          "uuid": "8ee13d0b-ddd5-4a52-9939-13d1a4832052",
+          "reference": "U2",
+          "pad": "7",
+          "net": "/GND",
+          "x_mm": 60.525,
+          "y_mm": 68.81
+        },
+        {
+          "uuid": "94c10383-1486-4907-adcc-ed5c5f9fafc6",
+          "reference": "U1",
+          "pad": "9",
+          "net": "/GND",
+          "x_mm": 31.5,
+          "y_mm": 65.825
+        },
+        {
+          "uuid": "9ce492df-e3c1-468b-954d-7507dddd06a9",
+          "reference": "D1",
+          "pad": "6",
+          "net": "/GND",
+          "x_mm": 17.45,
+          "y_mm": 102.325
+        },
+        {
+          "uuid": "a109ad6c-e028-427d-89bd-c8c5eac14500",
+          "reference": "R702",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 53.16,
+          "y_mm": 83.0
+        },
+        {
+          "uuid": "b44336fd-7396-401b-ac51-df779c095615",
+          "reference": "D1",
+          "pad": "5",
+          "net": "/GND",
+          "x_mm": 17.45,
+          "y_mm": 102.975
+        },
+        {
+          "uuid": "cc7facdf-5d4a-45b8-bd4a-bf504ee3dafa",
+          "reference": "U9",
+          "pad": "14",
+          "net": "/GND",
+          "x_mm": 27.1375,
+          "y_mm": 32.95
+        },
+        {
+          "uuid": "de49fc00-7fb9-4442-9782-0aaf684a2743",
+          "reference": "U1",
+          "pad": "9",
+          "net": "/GND",
+          "x_mm": 31.0,
+          "y_mm": 65.0
+        },
+        {
+          "uuid": "e311cd27-9b8d-4d67-8f8e-321c64031806",
+          "reference": "D1",
+          "pad": "7",
+          "net": "/GND",
+          "x_mm": 17.45,
+          "y_mm": 101.675
+        },
+        {
+          "uuid": "e5728a08-a770-42db-82ec-240ddbb99dce",
+          "reference": "R703",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 69.16,
+          "y_mm": 83.0
+        },
+        {
+          "uuid": "fb33ffaa-032d-44c4-ad90-558b39a3f514",
+          "reference": "U1",
+          "pad": "9",
+          "net": "/GND",
+          "x_mm": 30.5,
+          "y_mm": 65.825
+        },
+        {
+          "uuid": "fcd43b26-ffca-4eb7-bbc1-34852075fc33",
+          "reference": "C12",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 40.675,
+          "y_mm": 28.8
+        }
+      ]
+    }
+  ],
+  "negative_group_split_detected": true,
+  "failures": []
+}

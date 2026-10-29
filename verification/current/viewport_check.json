@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "pcb_sha256": "163012134c37ba2859d1f034a44a450e88eb823defbe769d6b0ea0f4ee855127",
+  "pcb_sha256": "f0cbceafcff1f6845bc850b090935e0a5f719f1fe8f087e952177cfb92e8722f",
   "edge_cuts_mm": {
     "x_min": -5,
     "x_max": 330,

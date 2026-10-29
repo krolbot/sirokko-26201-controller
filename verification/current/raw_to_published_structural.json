@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "before": "cad_raw_after63/Sirokko26201_control_motor_candidate_corrected_filled.kicad_pcb",
+  "after": "repo/hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "before_sha256": "c210d9548f43d2a1b0ec0038c1cfbd2bc7238ed97b151addbe4a126f5b34d6be",
+  "after_sha256": "f0cbceafcff1f6845bc850b090935e0a5f719f1fe8f087e952177cfb92e8722f",
+  "copper_delta": {
+    "before_count": 1785,
+    "after_count": 1785,
+    "preserved_count": 1785,
+    "added": {},
+    "removed": {},
+    "changed": {}
+  },
+  "local_references": {
+    "checked_count": 28,
+    "missing": []
+  },
+  "forbidden_hits": {},
+  "negative_geometry_mutation_detected": true
+}
