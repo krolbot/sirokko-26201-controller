@@ -4,7 +4,9 @@
 
 ## Current requirements and status
 
-**Latest PCB checkpoint: [EN/OV dividers and return PCB 2a7bf85c](hardware/candidates/input_div_2a7bf85c_wip/README_RU.md).** The byte-exact PCB is published with the unchanged 63-file non-PCB context from d9475d5e and unchanged firmware. It joins three separate groups: `EN_DIV`, `OV_DIV`, and three new GND pads to the existing main return. Native evidence reports 699 pads, 328→321 groups and 9261→9618 pairs, with 0 lost and 357 exact expected additions. KiCad CLI reports 114 unconnected / 26 warnings / 0 parity for the source and 107 / 26 / 0 for the candidate and reopened master; every run exited 5. This is **not PASS**; ERC was not run. The upper divider branches still lack the full `REV_MID` feed; UVLO/OV thresholds and dynamics, transient behavior, full power/return paths and EMC remain unqualified. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+**Latest PCB checkpoint: [REV_MID signal branches PCB d3d80e54](hardware/candidates/rev_sense_d3d80e54_wip/README_RU.md).** The byte-exact PCB is published with the unchanged 63-file non-PCB context from 2a7bf85c and unchanged firmware. R94.1, R96.1 and C25.1 join the existing local five-pad `REV_MID` controller node, forming one eight-pad group. The four power-MOSFET pads remain separate. Native evidence reports 699 pads, 321→318 groups and 9618→9636 pairs, with 0 lost and 18 exact expected additions. KiCad CLI reports 107 unconnected / 26 warnings / 0 parity for the source and 104 / 26 / 0 for the candidate and reopened master; every run exited 5. This is **not PASS**; ERC was not run. The local node still lacks the correct power connection; EN/OV thresholds and dynamics, reverse/transient behavior, full power/return paths and EMC remain unqualified. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+**Previous PCB checkpoint: [EN/OV dividers and return PCB 2a7bf85c](hardware/candidates/input_div_2a7bf85c_wip/README_RU.md).** It remains immutable and was not overwritten.
 
 **Previous PCB checkpoint: [local U13/C24 PCB d9475d5e](hardware/candidates/input_cap_d9475d5e_wip/README_RU.md).** It remains immutable and was not overwritten.
 

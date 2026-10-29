@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: делители EN/OV и возврат 2a7bf85c
+## 2026-10-29 — самый новый PCB-checkpoint: сигнальные ветви REV_MID d3d80e54
+
+[Кандидат rev_sense_d3d80e54_wip](../hardware/candidates/rev_sense_d3d80e54_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `d3d80e54f3915a65ad33854c583e989fd6dc80cec0c5a2d4b046531dfd0250ae`; исходная PCB — `2a7bf85c932b7a34290cc421144bb13fde5692e3202a427db335e094e8bb3b5b`. Остальные 63 файла и firmware не менялись.
+
+R94.1, R96.1 и C25.1 подключены к прежней локальной группе `REV_MID` U13.3/U13.4/U13.10/U13.12/C24.2; получена одна группа из восьми площадок. Добавлены 12 сегментов 0,25 мм и шесть переходов 0,60/0,30 мм. Силовые Q1.4/Q2.4/Q3.4/Q4.4 остались отдельно. Прежняя медь, корпуса, площадки, UUID, сети, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 321→318 групп, 9618→9636 пар, потерь 0, 18 ожидаемых добавлений. KiCad CLI: исходник 107 несоединений / 26 предупреждений / 0 parity, кандидат и повторный master 104 / 26 / 0; все exit 5, `stderr` пуст. Это **не PASS**; ERC не запускался.
+
+Завершены только сигнальные ветви к локальному узлу контроллера. До соединения с правильным силовым узлом это не работающая защита. Пороги EN/OV, допуски и динамика, защита от переполюсовки и переходных процессов, силовые/обратные пути и ЭМС не квалифицированы. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. Изображения cbc1e192 относятся к более ранней ревизии. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: делители EN/OV и возврат 2a7bf85c
 
 [Кандидат input_div_2a7bf85c_wip](../hardware/candidates/input_div_2a7bf85c_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `2a7bf85c932b7a34290cc421144bb13fde5692e3202a427db335e094e8bb3b5b`; исходная PCB — `d9475d5e081ed75ec15770f7c6b7d88484ec6eb9e1692f4f0e64663f47bb7a6d`. Остальные 63 файла и firmware не менялись.
 
