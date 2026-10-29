@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: подключение DGATE 534eecf8
+## 2026-10-29 — самый новый PCB-checkpoint: возврат земли U13 796ec361
+
+[Кандидат u13_gnd_796ec361_wip](../hardware/candidates/u13_gnd_796ec361_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9`; исходная PCB — `534eecf809cf5ceae519a9d6934b88f5e85f365a44124aebd06f65f1d83dc05b`. Остальные 63 файла и firmware не менялись.
+
+U13.7 `/GND` физически подключён к прежней общей группе земли C25.2/J12.3. Группа увеличилась со 119 до 120 площадок. Добавлены пять сегментов 0,25 мм и два перехода 0,60/0,30 мм вне SMD-площадок: короткий выход F.Cu к (34,55;141,7), подъём B.Cu до (34,55;131) и возврат F.Cu в прежнюю медь C25.2. DGATE, HGATE, EP13 и локальная GND-группа TVS D1.5–8 сохранены раздельными и неизменными; TVS-остров не объединён с возвратом контроллера. Прежняя медь, корпуса, площадки, позиции, UUID, сети, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 310→309 групп, 9646→9765 пар, потерь 0, ровно 119 ожидаемых добавлений; master содержит 2005 дорожек и переходов. KiCad CLI: исходник 96 несоединений / 25 предупреждений / 0 parity, кандидат и повторный master 95 / 25 / 0; все exit 5, `stderr` пуст. Полные мультимножества нарушений/parity совпадают; шесть изменившихся представительных концов airwire проверены через равенство native-компонент всех 95 записей. Это **не PASS**; ERC не запускался.
+
+Это CAD-связность возврата земли U13, не приёмка её импеданса, gate-drive или силовой части. Входы VIN_FUSED/P24_PROTECTED U13, силовой REV_MID и полный возврат силового тока не завершены. Токи затвора и charge pump, UVLO/OV, reverse/transient, SOA, токовые, тепловые и ЭМС-режимы не квалифицированы. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. PNG показывает послойный контрольный фрагмент актуальной PCB, не общий вид, не 3D, не монтажный чертёж и не фотошаблон. `back_through.svg` показывает B.Cu сверху сквозь плату без зеркалирования, а не со стороны низа; шелкография служит только ориентиром. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: подключение DGATE 534eecf8
 
 [Кандидат dgate_534eecf8_wip](../hardware/candidates/dgate_534eecf8_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `534eecf809cf5ceae519a9d6934b88f5e85f365a44124aebd06f65f1d83dc05b`; исходная PCB — `03b3a919b5ac4334fdf7fa9bccbaa55a841a82365b7af8bb1b5867c9a779fabf`. Остальные 63 файла и firmware не менялись.
 

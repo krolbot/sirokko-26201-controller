@@ -1,0 +1,21 @@
+{
+  "source_sha": "534eecf809cf5ceae519a9d6934b88f5e85f365a44124aebd06f65f1d83dc05b",
+  "candidate_sha": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+  "pads": 699,
+  "source_groups": 310,
+  "candidate_groups": 309,
+  "source_pairs": 9646,
+  "candidate_pairs": 9765,
+  "lost_pairs": 0,
+  "expected_added_pairs": 119,
+  "source_ground_group_size": 119,
+  "new_ground_group_size": 120,
+  "added_segments": 5,
+  "added_vias": 2,
+  "zones_source": 27,
+  "zones_candidate": 27,
+  "native_coverage_symmetry_closure": true,
+  "old_copper_fp_pads_unchanged": true,
+  "HGATE_DGATE_EP_TVS_groups_unchanged": true,
+  "J12_ground_in_reference_group": true
+}

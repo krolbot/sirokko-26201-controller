@@ -1,0 +1,14 @@
+{
+  "README_RU.md": "44ff93d3c1c56646fb41882062a99e305693203a4c48a89be04f8fbf6df86922",
+  "Sirokko26201_control_motor_candidate.kicad_pcb": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+  "U13_GND_layers_detail_WIP.png": "d8796bcd26317332146eb428f6e321c1f409a9be24c08fc93b7311aea9d20cd6",
+  "back_through.svg": "b3409f1c936fd9e8dbf861d0b9cbc3a3aebedc09879d30ea8336a7a867ba54ba",
+  "base.json": "387680f8afe371a329b674dcba0ab2ce58034f725992ea7ea1336164c7623fc4",
+  "candidate.json": "b51413695e9dea742994d8de35e6b2fe919fdb35ba6b3de7ef41c173411bd0e5",
+  "final_check.json": "dc232f1c8072808bfff07a7cf1f2286c7adf0f6b436a79f7e229b9d11bf8751c",
+  "front.svg": "ca62d4b0e644002cee05dc9db7a73e2546d3c81c9cbc2ce2a7d61469742dec17",
+  "master.json": "5bb4adcf3dfd96a35f880ae4f806c912f1576bcc31553755d33d70fc5c6e9435",
+  "master_reopen.json": "7bd806dd463e49b95be87e349dbd061962be10e27f8ba0d5c460ba2c99f99402",
+  "native.json": "9d6500ea2e426bcfba1ab849aa008f856b331014f0112f886e6e27c00b59425d",
+  "partitions.json": "575c4ade801a8c8a7cfddb62a7932550181e07509a162316fac63d3e5dc43a5a"
+}
