@@ -2,8 +2,8 @@
   "kicad_version": "10.0.7-10.0.7~ubuntu26.04.1",
   "source": "Sirokko26201_control_motor_candidate.kicad_pcb",
   "pad_count": 603,
-  "group_count": 266,
-  "unconnected_count": 86,
+  "group_count": 263,
+  "unconnected_count": 83,
   "groups": [
     {
       "group_id": "00209f38-e73a-4f97-bd60-31ba48d1abac",
@@ -154,6 +154,14 @@
           "net": "/GND",
           "x_mm": 64.95,
           "y_mm": 117.5
+        },
+        {
+          "uuid": "8d055b99-93cf-49a0-9dd1-bcd74343b7ab",
+          "reference": "J24",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 67.49,
+          "y_mm": 170.0
         },
         {
           "uuid": "7bf381fa-a02e-4f6b-a8e8-49908f169c54",
@@ -673,6 +681,14 @@
           "pad": "2",
           "net": "/GND",
           "x_mm": 53.16,
+          "y_mm": 83.0
+        },
+        {
+          "uuid": "e5728a08-a770-42db-82ec-240ddbb99dce",
+          "reference": "R703",
+          "pad": "2",
+          "net": "/GND",
+          "x_mm": 69.16,
           "y_mm": 83.0
         },
         {
@@ -3634,6 +3650,14 @@
           "net": "/START_REQUEST",
           "x_mm": 71.2,
           "y_mm": 142.5
+        },
+        {
+          "uuid": "6b822add-fa6d-4ab2-ac4d-968756309f53",
+          "reference": "J22",
+          "pad": "1",
+          "net": "/START_REQUEST",
+          "x_mm": 58.7,
+          "y_mm": 142.5
         }
       ]
     },
@@ -4846,22 +4870,6 @@
       ]
     },
     {
-      "group_id": "6b822add-fa6d-4ab2-ac4d-968756309f53",
-      "nets": [
-        "/START_REQUEST"
-      ],
-      "pads": [
-        {
-          "uuid": "6b822add-fa6d-4ab2-ac4d-968756309f53",
-          "reference": "J22",
-          "pad": "1",
-          "net": "/START_REQUEST",
-          "x_mm": 58.7,
-          "y_mm": 142.5
-        }
-      ]
-    },
-    {
       "group_id": "6ff3b414-64e9-41c8-a6b2-b3d81160374d",
       "nets": [
         ""
@@ -5434,22 +5442,6 @@
           "net": "",
           "x_mm": 64.95,
           "y_mm": 144.5
-        }
-      ]
-    },
-    {
-      "group_id": "8d055b99-93cf-49a0-9dd1-bcd74343b7ab",
-      "nets": [
-        "/GND"
-      ],
-      "pads": [
-        {
-          "uuid": "8d055b99-93cf-49a0-9dd1-bcd74343b7ab",
-          "reference": "J24",
-          "pad": "2",
-          "net": "/GND",
-          "x_mm": 67.49,
-          "y_mm": 170.0
         }
       ]
     },
@@ -6730,22 +6722,6 @@
           "net": "/CLUTCH_STAGE1",
           "x_mm": 270.0,
           "y_mm": 97.91
-        }
-      ]
-    },
-    {
-      "group_id": "e5728a08-a770-42db-82ec-240ddbb99dce",
-      "nets": [
-        "/GND"
-      ],
-      "pads": [
-        {
-          "uuid": "e5728a08-a770-42db-82ec-240ddbb99dce",
-          "reference": "R703",
-          "pad": "2",
-          "net": "/GND",
-          "x_mm": 69.16,
-          "y_mm": 83.0
         }
       ]
     },

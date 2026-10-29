@@ -1,14 +1,14 @@
 {
   "before": {
-    "pcb_sha256": "efeb38b31653ea389857859f559b1ea50626def0707b48efe72b8dbc157c8a88",
-    "violations": 85,
-    "unconnected_items": 92,
-    "parity": 0
-  },
-  "after": {
     "pcb_sha256": "b4d4b8f5c0783dd403f1caeb2114d5ee69a59bf7ac5d68f81e3fda3c474afb7c",
     "violations": 84,
     "unconnected_items": 86,
+    "parity": 0
+  },
+  "after": {
+    "pcb_sha256": "163012134c37ba2859d1f034a44a450e88eb823defbe769d6b0ea0f4ee855127",
+    "violations": 83,
+    "unconnected_items": 83,
     "parity": 0
   },
   "added_violations": 0,
@@ -20,15 +20,15 @@
       "description": "Track has unconnected end",
       "items": [
         [
-          "df8a86b7-be2f-417f-b9c3-1fe1832253ae",
-          "Track [/GND] on F.Cu, length 6.5250 mm",
-          58.0,
-          79.8
+          "12aa03db-35cc-46de-9581-a84f716064d5",
+          "Track [/GND] on F.Cu, length 45.5604 mm",
+          72.46,
+          170.0
         ]
       ]
     }
   ],
-  "added_unconnected": 16,
-  "removed_unconnected": 22,
+  "added_unconnected": 13,
+  "removed_unconnected": 16,
   "ignored_checks_equal": true
 }

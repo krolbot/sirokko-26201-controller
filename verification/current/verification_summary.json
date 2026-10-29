@@ -1,0 +1,28 @@
+{
+  "pcb_sha256": "163012134c37ba2859d1f034a44a450e88eb823defbe769d6b0ea0f4ee855127",
+  "structural_status": "PASS",
+  "before_objects": 1773,
+  "after_objects": 1776,
+  "added_objects": 3,
+  "removed_objects": 0,
+  "changed_objects": 0,
+  "pad_status": "PASS",
+  "missing_pad_uuids": 0,
+  "added_pad_uuids": 0,
+  "split_old_groups": 0,
+  "duplicate_pad_status": "PASS",
+  "drc_violations": 83,
+  "drc_opens": 83,
+  "parity": 0,
+  "erc_violations": 0,
+  "exits": {
+    "drc.exit": "5",
+    "erc.exit": "0",
+    "svg.exit": "0",
+    "render.exit": "0"
+  },
+  "kicad_projects": 1,
+  "kicad_pcbs": 1,
+  "broken_markdown_links": [],
+  "forbidden_paths": []
+}
