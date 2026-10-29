@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: локальные шины TVS D1 cbc1e192
+## 2026-10-29 — самый новый PCB-checkpoint: локальная обвязка U13/C24 d9475d5e
+
+[Кандидат input_cap_d9475d5e_wip](../hardware/candidates/input_cap_d9475d5e_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `d9475d5e081ed75ec15770f7c6b7d88484ec6eb9e1692f4f0e64663f47bb7a6d`; исходная PCB — `cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9`. Остальные 63 файла и firmware не менялись.
+
+Локально соединены раздельные группы `REV_MID` U13.3/U13.4/U13.10/U13.12/C24.2 и `CAP_NET` U13.11/C24.1; U13.13 EP остаётся неподключённым. Добавлены 14 сегментов 0,25 мм и два перехода 0,60/0,30 мм. Прежняя медь, корпуса, площадки, UUID, сети, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 333→328 групп, 9250→9261 пара, потерь 0, 11 ожидаемых добавлений. KiCad CLI: исходник 119 несоединений / 26 предупреждений / 0 parity, кандидат и повторный master 114 / 26 / 0; все exit 5, `stderr` пуст. Это **не PASS**; ERC не запускался.
+
+Это локальная CAD-обвязка, а не приёмка зарядового насоса, transient immunity, reverse-polarity protection, startup/UVLO или полной входной защиты. Сигнальные ответвления не являются силовой шиной `REV_MID`. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. Изображения cbc1e192 относятся к предыдущей ревизии. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: локальные шины TVS D1 cbc1e192
 
 [Кандидат tvs_local_cbc1e192_wip](../hardware/candidates/tvs_local_cbc1e192_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9`; исходная PCB — `03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294`. Остальные 63 файла и firmware не менялись.
 

@@ -1,0 +1,20 @@
+{
+  "source_sha": "cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9",
+  "candidate_sha": "d9475d5e081ed75ec15770f7c6b7d88484ec6eb9e1692f4f0e64663f47bb7a6d",
+  "pads": 699,
+  "source_groups": 333,
+  "candidate_groups": 328,
+  "old_pairs": 9250,
+  "new_pairs": 9261,
+  "lost_pairs": 0,
+  "expected_added_pairs": 11,
+  "added_copper": 16,
+  "zones_base": 27,
+  "zones_candidate": 27,
+  "native_symmetry_closure_coverage": true,
+  "old_copper_fp_pad_unchanged": true,
+  "drc_multiset_unchanged": true,
+  "REV_MID_group_size_5": true,
+  "CAP_NET_group_size_2": true,
+  "U13_EP_remains_isolated": true
+}
