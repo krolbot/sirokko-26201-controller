@@ -1,0 +1,14 @@
+{
+  "added_segments": [
+    "\n\t(segment\n\t\t(start 77.75 21.71)\n\t\t(end 79 21.71)\n\t\t(width 0.25)\n\t\t(layer \"B.Cu\")\n\t\t(net \"/TC_AIR_DRDY\")\n\t\t(uuid \"3cd9bc60-9b59-4b50-9938-cec3dd80402f\")\n\t)",
+    "\n\t(segment\n\t\t(start 76 42.392261)\n\t\t(end 77.75 42.392261)\n\t\t(width 0.25)\n\t\t(layer \"B.Cu\")\n\t\t(net \"/TC_AIR_DRDY\")\n\t\t(uuid \"7ee74c3c-0e82-42c4-8d33-0e738804cb1a\")\n\t)",
+    "\n\t(segment\n\t\t(start 77.75 42.392261)\n\t\t(end 77.75 21.71)\n\t\t(width 0.25)\n\t\t(layer \"B.Cu\")\n\t\t(net \"/TC_AIR_DRDY\")\n\t\t(uuid \"9a3c7f70-ba68-4648-881e-958465888dde\")\n\t)",
+    "\n\t(segment\n\t\t(start 76 42.62)\n\t\t(end 77.75 42.62)\n\t\t(width 0.25)\n\t\t(layer \"F.Cu\")\n\t\t(net \"/TC_EXH_DRDY\")\n\t\t(uuid \"5a158d45-fcc6-4953-9d33-d84d0615fb3b\")\n\t)",
+    "\n\t(segment\n\t\t(start 77.75 19.17)\n\t\t(end 79 19.17)\n\t\t(width 0.25)\n\t\t(layer \"F.Cu\")\n\t\t(net \"/TC_EXH_DRDY\")\n\t\t(uuid \"6e9aec24-b4c3-49e0-bd41-a05781648ec4\")\n\t)",
+    "\n\t(segment\n\t\t(start 77.75 42.62)\n\t\t(end 77.75 19.17)\n\t\t(width 0.25)\n\t\t(layer \"F.Cu\")\n\t\t(net \"/TC_EXH_DRDY\")\n\t\t(uuid \"a61f2d52-2410-43ae-adb5-bdcaffb4d442\")\n\t)"
+  ],
+  "source_sha256": "6ca123bcff31ed3fc120579c38ca3f6402effb49e3ac4705826d6a473a00db20",
+  "candidate_sha256": "be6d086c6ac27477d6814aa03d610e45cbb9c030a24881941e3202a9d42887e0",
+  "method": "manual CAD, 6 segments only, no new vias",
+  "source_bytes_exact_after_removing_added_blocks": true
+}

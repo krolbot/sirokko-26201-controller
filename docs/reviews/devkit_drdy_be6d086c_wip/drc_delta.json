@@ -1,0 +1,48 @@
+{
+  "source": "6ca123bc",
+  "candidate": "be6d086c",
+  "command": "kicad-cli pcb drc --format json --all-track-errors --schematic-parity --refill-zones --exit-code-violations",
+  "exit_code": 5,
+  "unconnected_before": 92,
+  "unconnected_after": 90,
+  "violations_before": 61,
+  "violations_after": 59,
+  "new_full_violation_records": [],
+  "removed_full_violation_records": [
+    {
+      "description": "Track has unconnected end",
+      "items": [
+        {
+          "description": "Track [/TC_AIR_DRDY] on B.Cu, length 12.9460 mm",
+          "pos": {
+            "x": 65.0,
+            "y": 35.566
+          },
+          "uuid": "83e19aeb-a341-4401-9c2e-a8acd556ee98"
+        }
+      ],
+      "severity": "warning",
+      "type": "track_dangling"
+    },
+    {
+      "description": "Track has unconnected end",
+      "items": [
+        {
+          "description": "Track [/TC_EXH_DRDY] on F.Cu, length 35.0000 mm",
+          "pos": {
+            "x": 41.0,
+            "y": 42.62
+          },
+          "uuid": "386d33ae-2266-43c4-a1d8-c7efe2d9f2c1"
+        }
+      ],
+      "severity": "warning",
+      "type": "track_dangling"
+    }
+  ],
+  "categories_after": {
+    "via_dangling": 6,
+    "track_dangling": 53
+  },
+  "schematic_parity": 0
+}

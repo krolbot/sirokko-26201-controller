@@ -1,0 +1,62 @@
+{
+  "source_sha256": "6ca123bcff31ed3fc120579c38ca3f6402effb49e3ac4705826d6a473a00db20",
+  "candidate_sha256": "be6d086c6ac27477d6814aa03d610e45cbb9c030a24881941e3202a9d42887e0",
+  "source_copper": 2151,
+  "candidate_copper": 2157,
+  "native_old_copper_unchanged": true,
+  "pads_unchanged": 699,
+  "exact_reverse_to_source": true,
+  "source_pad_pairs": 3652,
+  "candidate_pad_pairs": 3654,
+  "lost_pairs": 0,
+  "new_pairs": [
+    [
+      [
+        "U10",
+        "7",
+        "/TC_AIR_DRDY"
+      ],
+      [
+        "J3",
+        "5",
+        "/TC_AIR_DRDY"
+      ]
+    ],
+    [
+      [
+        "U9",
+        "7",
+        "/TC_EXH_DRDY"
+      ],
+      [
+        "J3",
+        "4",
+        "/TC_EXH_DRDY"
+      ]
+    ]
+  ],
+  "groups_symmetry_closure": true,
+  "negative_controls": [
+    {
+      "net": "/TC_AIR_DRDY",
+      "one_vertical_segment_cut_detected": true,
+      "lost_pairs": 1,
+      "other_lost_pairs": 0
+    },
+    {
+      "net": "/TC_EXH_DRDY",
+      "one_vertical_segment_cut_detected": true,
+      "lost_pairs": 1,
+      "other_lost_pairs": 0
+    }
+  ],
+  "added_ids": [
+    "3cd9bc60-9b59-4b50-9938-cec3dd80402f",
+    "5a158d45-fcc6-4953-9d33-d84d0615fb3b",
+    "6e9aec24-b4c3-49e0-bd41-a05781648ec4",
+    "7ee74c3c-0e82-42c4-8d33-0e738804cb1a",
+    "9a3c7f70-ba68-4648-881e-958465888dde",
+    "a61f2d52-2410-43ae-adb5-bdcaffb4d442"
+  ],
+  "production_release": false
+}
