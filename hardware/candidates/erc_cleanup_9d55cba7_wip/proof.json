@@ -1,0 +1,60 @@
+{
+  "ERC_exit": 5,
+  "ERC_errors": 0,
+  "ERC_warnings": 1,
+  "remaining_warning": {
+    "description": "Label connected to only one pin",
+    "items": [
+      {
+        "description": "Label 'EN_CHIP_PU'",
+        "pos": {
+          "x": 177.8,
+          "y": 68.58
+        },
+        "uuid": "eea6dc6e-aea8-4519-afa6-080c57f58391"
+      }
+    ],
+    "severity": "warning",
+    "type": "isolated_pin_label"
+  },
+  "ignored_checks_unchanged": true,
+  "ignored_checks": [
+    {
+      "description": "Global label only appears once in the schematic",
+      "key": "single_global_label"
+    },
+    {
+      "description": "Four connection points are joined together",
+      "key": "four_way_junction"
+    },
+    {
+      "description": "SPICE model issue",
+      "key": "simulation_model_issue"
+    },
+    {
+      "description": "Assigned footprint doesn't match footprint filters",
+      "key": "footprint_filter"
+    }
+  ],
+  "full_netlist_620_pin_net_function_type_exact": true,
+  "changed_files": [
+    "Sirokko26201_control_motor_candidate.kicad_sch",
+    "Sirokko_Input_Protection_WIP.kicad_sch"
+  ],
+  "other_62_project_files_byte_exact": true,
+  "PCB_SHA256": "4c86dc3057c78f4d95aab7d733341c5f1deb7d35804aa71c8d85bc67db3c661d",
+  "root_SHA256": "9d55cba7b7cf83e675281d54b033433b145c7cf52a53bd0ec285aef1f5e22363",
+  "child_SHA256": "1c042289b645c3dc4e4d1452640fd1d75b758666122e04ad19ba6f029b458df6",
+  "rejected_trial_v2": "Netlist equality caught malformed over-span label removal in temporary candidate. Not applied to active source. Rebuilt v3 from byte-exact source and edit ledger.",
+  "production_release": false,
+  "GND_link_mm": [
+    [
+      30.48,
+      80.01
+    ],
+    [
+      40.64,
+      80.01
+    ]
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "changes": [
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "0215a904-3a61-4fb7-91e4-4b18c98c7b59",
+      "kind": "remove dangling no_connect",
+      "old": "\t(no_connect\n\t(at 347.98 278.13)\n\t(uuid \"0215a904-3a61-4fb7-91e4-4b18c98c7b59\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "14871e6c-e1cd-458e-807d-b973e107445d",
+      "kind": "remove dangling no_connect",
+      "old": "\t(no_connect\n\t(at 347.98 281.94)\n\t(uuid \"14871e6c-e1cd-458e-807d-b973e107445d\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "84a057c4-e8bf-40c9-b0f9-2f3f6295f060",
+      "kind": "remove dangling no_connect",
+      "old": "\t(no_connect\n\t(at 358.14 190.5)\n\t(uuid \"84a057c4-e8bf-40c9-b0f9-2f3f6295f060\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "12c52ee1-0a42-4e32-9ac2-b1a2c8778f63",
+      "kind": "remove dangling no_connect",
+      "old": "\t(no_connect\n\t(at 358.14 193.04)\n\t(uuid \"12c52ee1-0a42-4e32-9ac2-b1a2c8778f63\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "2c643864-2486-4bdd-a9a3-35b286093253",
+      "kind": "remove dangling wire tail",
+      "old": "\t(wire\n\t(pts\n\t\t(xy 500.38 342.9) (xy 497.84 342.9)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"2c643864-2486-4bdd-a9a3-35b286093253\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "fcfc29eb-a93f-4f57-88bc-fc30bbf833ae",
+      "kind": "remove dangling wire tail",
+      "old": "\t(wire\n\t(pts\n\t\t(xy 500.38 345.44) (xy 497.84 345.44)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"fcfc29eb-a93f-4f57-88bc-fc30bbf833ae\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "11a491f5-3ba9-4904-a0df-6c38afc52903",
+      "kind": "remove dangling wire tail",
+      "old": "\t(wire\n\t(pts\n\t\t(xy 500.38 347.98) (xy 497.84 347.98)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"11a491f5-3ba9-4904-a0df-6c38afc52903\")\n)\n",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "kind": "correct stale descriptive module note only",
+      "old": "ESP32-S3-DevKitC-1-N8R8 v1.1; J1 and J3 numbers follow the Espressif Header Block.",
+      "new": "YD-ESP32-S3 N16R8 removable module; J1 and J3 follow the verified project pin contract."
+    },
+    {
+      "file": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "uuid": "10403dc1-583d-4984-823e-e7f2f737754f",
+      "kind": "move entire GND label-wire-label link to 1.27mm grid",
+      "old": "(at 30 80 0)",
+      "new": "(at 30.48 80.01 0)"
+    },
+    {
+      "file": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "uuid": "074a8ecb-5e30-4603-82f7-3683752c6029",
+      "kind": "move entire GND label-wire-label link to 1.27mm grid",
+      "old": "(at 32.54 80 0)",
+      "new": "(at 40.64 80.01 0)"
+    },
+    {
+      "file": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "uuid": "c688bba1-0d51-46ae-a08f-e3d16690d0f7",
+      "kind": "move entire GND label-wire-label link to 1.27mm grid",
+      "old": "(xy 30 80) (xy 32.54 80)",
+      "new": "(xy 30.48 80.01) (xy 40.64 80.01)"
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "16152b84-75f6-4351-9e80-9074f223f644",
+      "kind": "remove only obsolete disconnected label; no component pin membership",
+      "old": "\t(label \"GND\"\n\t(at 497.84 342.9 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"16152b84-75f6-4351-9e80-9074f223f644\")\n)",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "5bfce439-86aa-45d4-aa70-ceb01cf1ab54",
+      "kind": "remove only obsolete disconnected label; no component pin membership",
+      "old": "\t(label \"RESET_HW_NC_N\"\n\t(at 497.84 345.44 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"5bfce439-86aa-45d4-aa70-ceb01cf1ab54\")\n)",
+      "new": ""
+    },
+    {
+      "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "uuid": "31f03d2b-1643-468d-bf23-709fad73226c",
+      "kind": "remove only obsolete disconnected label; no component pin membership",
+      "old": "\t(label \"RESET_HW_NO_N\"\n\t(at 497.84 347.98 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"31f03d2b-1643-468d-bf23-709fad73226c\")\n)",
+      "new": ""
+    }
+  ],
+  "grid_mm": 1.27,
+  "new_ground_link_mm": [
+    [
+      30.48,
+      80.01
+    ],
+    [
+      40.64,
+      80.01
+    ]
+  ],
+  "no_rule_changes": true,
+  "ground_link_length_for_label_legibility_mm": 10.16
+}
