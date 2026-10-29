@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: питание внешнего интерфейса блокировки 03d257f6
+## 2026-10-29 — самый новый PCB-checkpoint: локальные шины TVS D1 cbc1e192
+
+[Кандидат tvs_local_cbc1e192_wip](../hardware/candidates/tvs_local_cbc1e192_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9`; исходная PCB — `03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294`. Остальные 63 файла и firmware не менялись.
+
+D1.1/.2/.3/.4 сети `VIN_FUSED` локально объединены тремя сегментами F.Cu шириной 0,80 мм; D1.5/.6/.7/.8 сети `GND` — отдельно ещё тремя такими сегментами. Переходов нет. D1.9 `EP_NC` остаётся одиночным, две группы между собой не соединены. Прежняя медь, footprints, площадки, UUID, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 339→333 группы, 9238→9250 пар, потерь 0, 12 ожидаемых добавлений. KiCad CLI: исходник 26/125/0, кандидат и повторно открытый master 26/119/0; все exit 5, `stderr` пуст. Полные мультимножества violations/parity прежние. Это **не PASS**; ERC не запускался.
+
+Обе группы D1 пока локальные: полного подвода от предохранителя и рассчитанного импульсного возврата на силовую землю нет. Ток, энергия, длительность выброса, индуктивность полного контура, согласование с предохранителем и reverse-polarity stage не квалифицированы. Ширина 0,80 мм не гарантирует допустимый ток выброса. Это подготовка выводов корпуса, а не работающая защита и не surge qualification. Остаётся 119 несоединений; `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.** Нового изображения нет.
+
+## 2026-10-29 — предыдущий PCB-checkpoint: питание внешнего интерфейса блокировки 03d257f6
 
 [Кандидат ext_header_power_03d257f6_wip](../hardware/candidates/ext_header_power_03d257f6_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294`; исходная PCB — `cc1447f20733d355979bc3d63f6c3320864779f5a65e057dfcf8d6f4af90617e`. Остальные 63 файла и firmware не менялись.
 

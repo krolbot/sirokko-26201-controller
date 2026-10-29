@@ -1,0 +1,123 @@
+{
+  "package": "SIROKKO_TVS_LOCAL_CBC1E192_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_TVS_LOCAL_CBC1E192_WIP.zip",
+    "sha256": "d939770f786f882d6219d782a640767d8733e5ac3d531e28ec5234a04cd6fd91",
+    "size_bytes": 324476,
+    "entries": 9,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "archive_published": false,
+    "entry_crc32": {
+      "README_RU.md": "d8f817dc",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "0c2947a8",
+      "base.json": "e49cc312",
+      "candidate.json": "9577518b",
+      "master.json": "c80eaf30",
+      "master_reopen.json": "cb9a5785",
+      "native.json": "0efe3ce7",
+      "partitions.json": "afd68c32",
+      "MANIFEST_SHA256.json": "96f9cf5b"
+    }
+  },
+  "baseline_project": {
+    "path": "../ext_header_power_03d257f6_wip/project",
+    "git_commit": "56aea7c242b7f559dc599c5faf82a7de7f7526b4",
+    "git_tree": "476e04c0aba71a4d4769ad0b22581d0d4c756edf",
+    "pcb_sha256": "03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294",
+    "non_pcb_files_byte_exact": true
+  },
+  "revision": {
+    "pcb_sha256": "cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9",
+    "previous_pcb_sha256": "03d257f6e9660587b5bab84eab9c9cf38e4063585cfe2577b3cffe58f2726294",
+    "root_schematic_sha256": "365f145538a060896e46179736340f62282831361c208a06163400a60d088194",
+    "root_project_sha256": "54cf96572352ec0b91e7aaa03886a3f18396c1eaf5db8b1e98d5041825b5b964",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "README_RU.md": "8e92b4e9dd502f0d997f10157e1591b9753673fd9e9bf9f34dbf57cf564a84f7",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "cbc1e19209d2d3353c440e42848255d1bf4cb5b3518a8ac53860c900fcc19aa9",
+    "base.json": "9aa9a0f74dcd373eff7788ecf8aa90cb4aabbc09edbf182f46542267579b65b4",
+    "candidate.json": "b18e73c736421b8ad596c6e81ae369225972d5e0678cdd8872b9ae56f3a96d32",
+    "master.json": "198d17bc460b3903a7dab3158b0d02fd61ddbf785eaa9e841b49f6e641fc5f82",
+    "master_reopen.json": "beb265aec5bf6927d530c0dbb96f898ebbfa13a4327d24c79e193aa4631bee06",
+    "native.json": "5ad4ff429a705f05c457ee5e99e361e441b0158e13bca07376d30e79460024d7",
+    "partitions.json": "fb412ca0f49ac409002748355bf67f2ac728d8138a906953a25db3e343f4b606"
+  },
+  "archive_to_public_mapping": {
+    "README_RU.md": "TVS_LOCAL_CBC1E192_WIP_RU.md",
+    "base.json": "source_full_cli.json",
+    "candidate.json": "candidate_full_cli.json",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "MANIFEST_SHA256.json": "manifest.json"
+  },
+  "public_copy_edits": {
+    "archive_payloads_modified": false,
+    "engineering_source_files_modified": false
+  },
+  "partition_checks": {
+    "source_pairs": 9238,
+    "candidate_pairs": 9250,
+    "lost_pairs": 0,
+    "added_pairs": 12,
+    "source_groups_sha256": "5f13cac84e780c008010e4c53b7aaa9e2b7b846ef11bfd56f6f8f3c154ae64c9",
+    "candidate_groups_sha256": "736bdfa00c7fa3d8a7fd155db5fb8f85d949d6ed1301dfd70f6cd22c8ac28c54",
+    "source_pairs_sha256": "570bb0ea89fb316b37277b1aa42a50d25fd3e7e80d0b0bf1983b9c5bd3765939",
+    "candidate_pairs_sha256": "cc82de3f376de73fbfc96edd066db52266c14e862b68b58969f3e50229061108",
+    "hash_format": "sorted UUID tuples joined as TSV lines with final LF",
+    "hashes_recomputed": true
+  },
+  "recorded_checks": {
+    "pads": 699,
+    "source_groups": 339,
+    "candidate_groups": 333,
+    "lost_pairs": 0,
+    "added_pairs": 12,
+    "vin_fused_group": ["D1.1", "D1.2", "D1.3", "D1.4"],
+    "gnd_group": ["D1.5", "D1.6", "D1.7", "D1.8"],
+    "isolated_contact": "D1.9_EP_NC",
+    "groups_remain_separate": true,
+    "added_segments": 6,
+    "added_vias": 0,
+    "segment_layer": "F.Cu",
+    "segment_width_mm": 0.80,
+    "master_tracks_and_vias": 1896,
+    "master_zones": 27,
+    "cli_source": {"violations": 26, "unconnected": 125, "parity": 0, "exit_code": 5},
+    "cli_candidate": {"violations": 26, "unconnected": 119, "parity": 0, "exit_code": 5},
+    "cli_master": {"violations": 26, "unconnected": 119, "parity": 0, "exit_code": 5},
+    "cli_stderr_empty": true,
+    "violations_and_parity_multisets_unchanged": true,
+    "master_reopen_full_comparison": true,
+    "erc_rerun": false,
+    "drc_pass": false,
+    "ignored_checks_unchanged_and_unqualified": true,
+    "preview_available_for_this_revision": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 8,
+    "project_files": 64,
+    "changed_project_files": ["Sirokko26201_control_motor_candidate.kicad_pcb"],
+    "non_pcb_project_files_byte_exact": 63,
+    "relative_library_targets_total": 17,
+    "relative_library_targets_resolved": 17,
+    "kiprjmod_target_set_unchanged_from_verified_baseline": true,
+    "private_infrastructure_paths_found_in_public_payloads": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false,
+    "surge_qualification_passed": false
+  },
+  "limitations": "D1 VIN_FUSED and GND pads are each locally grouped, but the full fused input and impulse-current return are absent. Current, energy, duration, loop inductance, fuse coordination and reverse-polarity stage are unqualified. DRC is not PASS; ERC was not run."
+}
