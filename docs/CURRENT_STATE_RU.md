@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: затворные резисторы у MOSFET 49978656
+## 2026-10-29 — самый новый PCB-checkpoint: подключение HGATE 03b3a919
+
+[Кандидат hgate_03b3a919_wip](../hardware/candidates/hgate_03b3a919_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `03b3a919b5ac4334fdf7fa9bccbaa55a841a82365b7af8bb1b5867c9a779fabf`; исходная PCB — `49978656ab6bd0bb35a6134c59668fdaccbc0bd19b5f8057ae776193baa58416`. Остальные 63 файла и firmware не менялись.
+
+U13.8, R92.1 и R93.1 физически соединены в одну отдельную группу HGATE из трёх площадок. Прежние локальные участки R92.2↔Q3.1 и R93.2↔Q4.1 сохранены; DGATE U13.1/R90.1/R91.1 не объединена с HGATE и ещё не разведена. Добавлены девять сегментов 0,25 мм и пять переходов 0,60/0,30 мм. F.Cu-мост X=35,2 мм, Y=123…127 мм обходит проекции прежних B.Cu `ROOM_DQ` и `+3V3` без электрического соединения. Прежняя медь, корпуса, площадки, UUID, сети, SCH/PRO и 27 зон сохранены.
+
+Native: 699 площадок, 314→312 групп, 9640→9643 пары, потерь 0, три ожидаемых добавления; master содержит 1982 дорожки и перехода. KiCad CLI: исходник 100 несоединений / 25 предупреждений / 0 parity, кандидат и повторный master 98 / 25 / 0; все exit 5, `stderr` пуст. Полные мультимножества нарушений/parity совпадают; девять изменившихся представительных концов airwire проверены через равенство native-компонент всех 98 записей. Это **не PASS**; ERC не запускался.
+
+Это CAD-связность HGATE, не приёмка gate-drive. DGATE и силовой тракт входной защиты не завершены. Динамика и заряд/разряд затворов, зарядовый насос, UVLO/OV, reverse/transient, силовые/обратные пути, SOA, токовые, тепловые и ЭМС-режимы не квалифицированы. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. PNG показывает только фрагмент F.Cu и шелкографии актуальной PCB, не общий вид, не 3D, не монтажный чертёж и не фотошаблон. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: затворные резисторы у MOSFET 49978656
 
 [Кандидат gate_local_49978656_wip](../hardware/candidates/gate_local_49978656_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `49978656ab6bd0bb35a6134c59668fdaccbc0bd19b5f8057ae776193baa58416`; исходная PCB — `d3d80e54f3915a65ad33854c583e989fd6dc80cec0c5a2d4b046531dfd0250ae`. Остальные 63 файла и firmware не менялись.
 
