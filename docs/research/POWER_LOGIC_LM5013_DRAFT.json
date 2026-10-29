@@ -1,7 +1,7 @@
 {
   "status": "DRAFT_NOT_FOR_ORDER",
   "schematic_server_path": "локальный проверочный артефакт, не включён",
-  "canonical_pcb_replaced": false,
+  "canonical_pcb_replaced": true,
   "footprint_parent_acceptance": {
     "scope": "GEOMETRY_ACCEPTED_FOR_DRAFT_INTEGRATION_NOT_MANUFACTURING_RELEASE",
     "U101_assignment": "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B",
@@ -271,6 +271,86 @@
     "accepted_map": {"pin1": "NC", "pin2_tab_K": "SW", "pin3_A": "GND"},
     "note": "Corrected stale expected_netlist below/above to prevent return of the old two-pin diode map. This is a documentary correction, not a PCB repair. Other historical conditions and observations in this JSON are not refreshed by it."
   },
+  "feedback_layout_candidate": {
+    "status": "NATIVE_APPLIED_VERIFIED_DRAFT_NOT_FOR_ORDER",
+    "basis": "Applied to the canonical KiCad 10 PCB from the verified f0cbceafcff1f6845bc850b090935e0a5f719f1fe8f087e952177cfb92e8722f input after a disposable-copy geometry and DRC probe.",
+    "source_url": "https://www.ti.com/lit/ds/symlink/lm5013.pdf",
+    "purpose": "Shorten and localize the high-impedance FB/RAMP network while retaining the existing power stage and all electrical nets.",
+    "footprint_positions_mm_deg": {
+      "R101": {"position_mm": [133.0, 55.8], "rotation_deg": 180.0},
+      "R102": {"position_mm": [128.5, 55.8], "rotation_deg": 180.0},
+      "C108": {"position_mm": [130.7, 58.3], "rotation_deg": 90.0},
+      "C107": {"position_mm": [134.0, 58.0], "rotation_deg": 0.0},
+      "R106": {"position_mm": [137.0, 56.5], "rotation_deg": -90.0}
+    },
+    "reference_positions_mm": {
+      "R102": [127.5, 62.5],
+      "C108": [130.5, 62.5],
+      "R101": [133.5, 62.5],
+      "C107": [137.0, 62.5],
+      "R106": [140.5, 62.5]
+    },
+    "local_routes": {
+      "FB": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["U101.5", "C108.2", "R102.1", "R101.2"]},
+      "RAMP": {"segments": 3, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["C108.1", "C107.1", "R106.2"]},
+      "quiet_GND": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads_required": ["R102.2", "U101.1", "U101.9"], "native_component_check": "PASS"},
+      "SW_feed": {"segments": 2, "width_mm": 0.25, "layer": "F.Cu", "connected_pads": ["U101.8", "C104.2", "D101.2", "L101.1", "R106.1"]},
+      "+5V_sense": {"segments": 4, "width_mm": 0.25, "layers": ["F.Cu", "B.Cu"], "connected_power_endpoints": ["L101.2", "C105.1", "C106.1"], "connected_sense_pads": ["R101.1", "C107.2"]}
+    },
+    "wire_transition": {
+      "uuid": "21329e91-f66d-49db-8bc2-beae3d2954d1",
+      "position_mm": [134.775, 56.8],
+      "net": "+5V_DEVKIT",
+      "size_mm": 0.8,
+      "drill_mm": 0.4,
+      "front_tented": false,
+      "back_tented": false,
+      "assembly_intent": "Accessible from both faces for a soldered wire transition; manufacturing acceptance is still required."
+    },
+    "copper_change": {
+      "retired_scoped_objects": 15,
+      "retired_segments": 8,
+      "retired_vias": 7,
+      "added_segments": 13,
+      "added_vias": 1,
+      "preserved_original_copper_exact": 1770,
+      "preserved_original_copper_changed": 0
+    },
+    "identity_check": {
+      "footprint_uuid_set_preserved": true,
+      "pad_uuid_set_preserved": true,
+      "pad_uuid_count": 603,
+      "changed_pad_positions": 10,
+      "changed_pad_positions_scope": ["R101", "R102", "C108", "C107", "R106"],
+      "non_target_pad_groups_changed": 0
+    },
+    "board_rules": {
+      "minimum_copper_clearance_mm": 0.2,
+      "minimum_track_width_mm": 0.2,
+      "minimum_via_size_mm": 0.5,
+      "minimum_through_drill_mm": 0.3,
+      "minimum_microvia_size_mm": 0.2,
+      "minimum_microvia_drill_mm": 0.1,
+      "custom_rule_file": false,
+      "new_exclusions_or_suppressions": false
+    },
+    "native_verification": {
+      "kicad_version": "10.0.7",
+      "board_counts": {"footprints": 158, "pads": 603, "segments": 1389, "vias": 395, "zones": 35},
+      "baseline_DRC": {"violations": 83, "unconnected_items": 80, "schematic_parity": 0, "types": {"track_dangling": 78, "via_dangling": 5}},
+      "post_save_reopen_fill_DRC": {"violations": 83, "unconnected_items": 80, "schematic_parity": 0, "types": {"track_dangling": 78, "via_dangling": 5}},
+      "new_DRC_violations": 0,
+      "ERC_violations_all_sheets": 0,
+      "local_connectivity": "PASS",
+      "canonical_PCB_sha256": "e3ad6f4ac53ed4920114976b1e375036f123a895fe762bc52f13cea6db34c593"
+    },
+    "production_release": false,
+    "limitations": [
+      "The board still has the pre-existing 83 dangling-track/via violations and 80 unconnected items; DRC is not clean.",
+      "The wire transition is deliberately exposed but is not a declared production plated-through solution.",
+      "No thermal, assembly, power, flash, fire, load, or manufacturing qualification is claimed."
+    ]
+  },
   "open_acceptance_items": [
     "Register project-specific symbol library without overwriting existing entries; repeat ERC and check full exclusions.",
     "Independently compare exported netlist to expected_netlist; PWR_FLAG nodes excluded from comparison.",
@@ -279,7 +359,7 @@
     "Complete loss/thermal analysis, timing tolerance analysis, dynamic and ripple-network DC regulation analysis.",
     "Input reverse polarity/overvoltage protection and 24-V loss detection are not on this sheet.",
     "USB reverse-feed prevention not on this sheet.",
-    "Integrate approved circuit into root schematic and PCB; local labels currently do not connect across sheets.",
+    "Resolve the pre-existing full-board 83 dangling-track/via violations and 80 unconnected items; the local LM5013 feedback groups now pass native connectivity checks.",
     "No ESP32 or load hardware test performed; no fuel/fire operation authorized."
   ]
 }
