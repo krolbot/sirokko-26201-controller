@@ -1,35 +1,20 @@
 {
   "before": {
-    "pcb_sha256": "1871ffa5460311b9283e2ff92f6249682ac68935023346bd98463a17cfca5180",
-    "violations": 86,
-    "unconnected_items": 98,
-    "parity": 0
-  },
-  "after": {
     "pcb_sha256": "bfd03d74332023ec466b07661b9a374ff3f6122334599578f2e27be54f4bda6c",
     "violations": 85,
     "unconnected_items": 96,
     "parity": 0
   },
-  "violation_multiset_equal": false,
+  "after": {
+    "pcb_sha256": "efeb38b31653ea389857859f559b1ea50626def0707b48efe72b8dbc157c8a88",
+    "violations": 85,
+    "unconnected_items": 92,
+    "parity": 0
+  },
+  "violation_multiset_equal": true,
   "added_violations": 0,
-  "removed_violations": 1,
-  "removed_violation_details": [
-    {
-      "type": "track_dangling",
-      "severity": "warning",
-      "description": "Track has unconnected end",
-      "items": [
-        [
-          "aa165e92-384e-46be-abe3-b17b85a7f4c9",
-          "Track [/GND] on F.Cu, length 1.3250 mm",
-          29.525,
-          68.81
-        ]
-      ]
-    }
-  ],
-  "added_unconnected": 15,
-  "removed_unconnected": 17,
+  "removed_violations": 0,
+  "added_unconnected": 22,
+  "removed_unconnected": 26,
   "ignored_checks_equal": true
 }
