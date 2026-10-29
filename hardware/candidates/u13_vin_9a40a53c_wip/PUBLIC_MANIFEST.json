@@ -1,0 +1,175 @@
+{
+  "package": "SIROKKO_U13_VIN_9A40A53C_WIP",
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FIRE",
+  "source_archive": {
+    "name": "SIROKKO_U13_VIN_9A40A53C_WIP.zip",
+    "sha256": "ebe1d56aeac75ff6891ae6a32a2d7d4b713d4d911fb68891c6f65638f0111441",
+    "size_bytes": 765567,
+    "entries": 15,
+    "crc_verified": true,
+    "source_manifest_payloads_verified": 14,
+    "archive_published": false,
+    "entry_crc32": {
+      "README_RU.md": "d454bd06",
+      "Sirokko26201_control_motor_candidate.kicad_pcb": "43689a31",
+      "U13_VIN_layers_detail_WIP.png": "34206407",
+      "back_through.svg": "786a7516",
+      "base.json": "cea634db",
+      "candidate.json": "7da1706c",
+      "final_check.json": "72e7bf56",
+      "front.svg": "221bb0a1",
+      "master.json": "39628503",
+      "master_reopen.json": "2637928a",
+      "native.json": "ba3ed4c8",
+      "partitions.json": "bb89e121",
+      "rejected_v1.json": "a9def4f6",
+      "reroute_geometry.json": "5ec63e6e",
+      "MANIFEST_SHA256.json": "62d5007e"
+    }
+  },
+  "baseline_project": {
+    "path": "../u13_gnd_796ec361_wip/project",
+    "pcb_sha256": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+    "project_files": 64,
+    "non_pcb_files_byte_exact": 63
+  },
+  "revision": {
+    "pcb_sha256": "9a40a53cdd59032163e0918517aaa97e4a35e052d887d5653ef310d5dcba5564",
+    "previous_pcb_sha256": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+    "firmware_tree_before_publication": "fcbb4624da7a2ace3373f2d43f1845a6d96910b8"
+  },
+  "source_payload_sha256": {
+    "README_RU.md": "bfe13085f05eebf49e265ea51b0ecf473c24667db73936886e5ba7b21c64a7fb",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "9a40a53cdd59032163e0918517aaa97e4a35e052d887d5653ef310d5dcba5564",
+    "U13_VIN_layers_detail_WIP.png": "9e76de421a69fc6af5fe2100f2b3e313ef93bfd9a83100474b266d7f500ab67d",
+    "back_through.svg": "105d473e185f64253c6fc6c9b764401c12da55ad269e0c01a18d83b5e9d93951",
+    "base.json": "8f6176d24030d52c946d58000e64305345e770a957b035f3d4c1f6a29dfad6e9",
+    "candidate.json": "a4c027ade074e05ac24c2db18364a102eb7ed4f7754e97ba6be9ee9f6b5dbce7",
+    "final_check.json": "02bf3139a560da666e6c854118639c0e4748a4efff81c3b9897db99026259779",
+    "front.svg": "599fcff1173212a1d8a9014a8bafc1a718ddd215acae989f01bbde71eb9367e4",
+    "master.json": "c4e580b0ecda3abb91006d769c9d9393c6486da7f2ea84ffab3241988805eb31",
+    "master_reopen.json": "63fe67d76ea2126cb64b013cd3564bf0c1c3c6140fdd8726ec37387cc472fa63",
+    "native.json": "94d9933a72998bec77ae664fa3b9d0ced154dc81a3414af05f4288483c3b83f2",
+    "partitions.json": "bb91fa6d893dc9bc21cdb69c8c854db581e928ed6e85b3523ad95ed7d1fad5c7",
+    "rejected_v1.json": "553deabfddd07aa0e02912fcef9ee5573e47d35df17ff471f13e950abcdd851b",
+    "reroute_geometry.json": "226601d66e04ff8a5c0e48970c8f73ff3613d2e9f3a49f52ec7b580ec64ae6ab"
+  },
+  "archive_to_public_mapping": {
+    "README_RU.md": "U13_VIN_9A40A53C_WIP_RU.md",
+    "Sirokko26201_control_motor_candidate.kicad_pcb": "project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "U13_VIN_layers_detail_WIP.png": "U13_VIN_layers_detail_WIP.png",
+    "back_through.svg": "back_through.svg",
+    "base.json": "source_full_cli.json",
+    "candidate.json": "candidate_full_cli.json",
+    "final_check.json": "final_check.json",
+    "front.svg": "front.svg",
+    "master.json": "master_full_cli.json",
+    "master_reopen.json": "master_reopen.json",
+    "native.json": "native_comparison.json",
+    "partitions.json": "physical_partitions.json",
+    "rejected_v1.json": "rejected_v1.json",
+    "reroute_geometry.json": "reroute_geometry.json",
+    "MANIFEST_SHA256.json": "manifest.json"
+  },
+  "recorded_checks": {
+    "source_sha": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+    "candidate_sha": "9a40a53cdd59032163e0918517aaa97e4a35e052d887d5653ef310d5dcba5564",
+    "pads": 699,
+    "source_groups": 309,
+    "candidate_groups": 308,
+    "source_pairs": 9765,
+    "candidate_pairs": 9769,
+    "lost_pairs": 0,
+    "expected_added_pairs": 4,
+    "VIN_group_before": 4,
+    "VIN_group_after": 5,
+    "VIN_added_segments": 8,
+    "OV_added_segments": 4,
+    "added_vias": 2,
+    "track_width_mm": 0.25,
+    "via_diameter_drill_mm": [
+      0.6,
+      0.3
+    ],
+    "VIN_new_route_length_mm": 37.62034271247462,
+    "old_tracks_changed_exact_UUIDs": [
+      "222ca5a2-37a5-47f7-946a-cdac519de0b0",
+      "50b5b8f0-7f5a-4125-8a58-84906f3335a2",
+      "8505bd52-3a3d-419e-9c17-0fd6617234eb",
+      "de0e1b35-1cd3-4d4c-94b2-0425de84324a",
+      "c9ededd0-2149-487d-aa49-acdfddb754d3"
+    ],
+    "all_other_old_copper_unchanged": true,
+    "pads_footprints_sch_pro_unchanged": true,
+    "all_other_PAD_groups_unchanged": true,
+    "zones_source": 27,
+    "zones_candidate": 27,
+    "native_coverage_symmetry_closure": true,
+    "master_reopen_full_comparison": true,
+    "master_tracks_vias": 2019,
+    "cli_source": {
+      "unconnected": 95,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_candidate": {
+      "unconnected": 94,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_master": {
+      "unconnected": 94,
+      "warnings": 25,
+      "parity": 0,
+      "exit_code": 5
+    },
+    "cli_stderr_empty": true,
+    "new_violations": 0,
+    "violations_parity_multiset_equal": true,
+    "airwire_native_component_records_verified": 94,
+    "raw_airwire_record_changes": 15,
+    "rejected_v1_errors": [
+      "clearance 0.0375 mm < 0.2000 mm",
+      "hole clearance 0.1875 mm < 0.2500 mm"
+    ],
+    "front_svg_export_exit": 0,
+    "back_svg_export_exit": 0,
+    "svg_stderr_empty": true,
+    "pcb_sha_unchanged_after_checks": true,
+    "back_projection": "TOP_VIEW_THROUGH_BOARD_NOT_MIRRORED",
+    "back_silkscreen_usage": "REFERENCE_ONLY",
+    "png_dimensions": [
+      1800,
+      1000
+    ],
+    "png_scope": "CURRENT_PCB_LAYER_DETAIL_NOT_FULL_BOARD_NOT_3D_NOT_ASSEMBLY_DRAWING_NOT_PHOTOPLOT",
+    "erc_rerun": false,
+    "drc_pass": false
+  },
+  "publisher_checks": {
+    "source_archive_sha256_verified": true,
+    "source_archive_crc_verified": true,
+    "source_manifest_payloads_verified": 14,
+    "project_files": 64,
+    "changed_project_files": [
+      "Sirokko26201_control_motor_candidate.kicad_pcb"
+    ],
+    "non_pcb_project_files_byte_exact": 63,
+    "preview_png_decoded_and_inspected": true,
+    "private_infrastructure_paths_found_in_public_payloads": 0
+  },
+  "acceptance": {
+    "full_layout_accepted": false,
+    "vin_power_path_qualified": false,
+    "gate_drive_qualified": false,
+    "power_stage_qualified": false,
+    "production_release": false,
+    "firmware_integration_allowed": false,
+    "order_allowed": false,
+    "power_on_or_fire_test_allowed": false,
+    "functional_test_passed": false
+  },
+  "limitations": "U13 VIN_FUSED is connected only to the local D1 TVS group. The F1/Q1/Q2 power path, P24_PROTECTED, power REV_MID and full power ground remain incomplete. Route dynamics, gate-current and charge-pump behavior, UVLO/OV, reverse/transient behavior, SOA, current, thermal and EMC behavior are unqualified. DRC is not PASS; ERC was not run."
+}

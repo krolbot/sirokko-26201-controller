@@ -1,0 +1,30 @@
+{
+  "source_sha": "796ec361f47af89bae8e1bad2457b9fe68289fe7b149fabefb6e07d1487a8fa9",
+  "candidate_sha": "9a40a53cdd59032163e0918517aaa97e4a35e052d887d5653ef310d5dcba5564",
+  "pads": 699,
+  "source_groups": 309,
+  "candidate_groups": 308,
+  "source_pairs": 9765,
+  "candidate_pairs": 9769,
+  "lost_pairs": 0,
+  "expected_added_pairs": 4,
+  "VIN_added_segments": 8,
+  "OV_added_segments": 4,
+  "added_vias": 2,
+  "old_tracks_changed_exact_UUIDs": [
+    "222ca5a2-37a5-47f7-946a-cdac519de0b0",
+    "50b5b8f0-7f5a-4125-8a58-84906f3335a2",
+    "8505bd52-3a3d-419e-9c17-0fd6617234eb",
+    "de0e1b35-1cd3-4d4c-94b2-0425de84324a",
+    "c9ededd0-2149-487d-aa49-acdfddb754d3"
+  ],
+  "all_other_old_copper_unchanged": true,
+  "pads_footprints_sch_pro_unchanged": true,
+  "all_other_PAD_groups_unchanged": true,
+  "zones_source": 27,
+  "zones_candidate": 27,
+  "native_coverage_symmetry_closure": true,
+  "VIN_group_before": 4,
+  "VIN_group_after": 5,
+  "VIN_new_route_length_mm": 37.62034271247462
+}
