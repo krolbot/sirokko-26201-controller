@@ -1,0 +1,19 @@
+{
+  "PCB_SHA256": "b21b8c1a0651dc6b23d11663b8f3e175462a0ddf72155afe889f765e2bb415b8",
+  "nominal_THT_under_TFT": [],
+  "negative_old_TO220_positions_detected": [
+    "Q101.1",
+    "Q101.2",
+    "Q101.3",
+    "D9001.1",
+    "D9001.2",
+    "D9001.3"
+  ],
+  "negative_H7_outer_rule_track_prohibition_disabled": {
+    "radius_before_mm": 3.5107423747717257,
+    "radius_after_mm": 3.2335785374624435,
+    "required_radius_mm": 3.5,
+    "rejected": true
+  },
+  "mutations_saved": false
+}

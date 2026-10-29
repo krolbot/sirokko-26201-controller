@@ -1,0 +1,5714 @@
+{
+  "module_bbox_mm": [
+    125.95,
+    118.425,
+    196.45,
+    161.725
+  ],
+  "native_selected_parts": {
+    "sha": "279d316fe3972f52550551de6a70f71673e4364a4fe7e421690745e754fc11ce",
+    "footprints": [
+      {
+        "ref": "K1",
+        "value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW",
+        "xy": [
+          212.5,
+          30.0
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              206.0,
+              45.9
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "",
+            "xy": [
+              219.0,
+              31.91
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "30",
+            "xy": [
+              212.5,
+              47.91
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "85",
+            "xy": [
+              204.07,
+              38.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/K_GLOW_COIL_LOW",
+            "attr": 0
+          },
+          {
+            "n": "86",
+            "xy": [
+              220.93,
+              38.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "87",
+            "xy": [
+              212.5,
+              30.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/GLOW_SWITCHED_POS",
+            "attr": 0
+          },
+          {
+            "n": "87a",
+            "xy": [
+              212.5,
+              38.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "unconnected-(K1-Pad87a)",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "H7",
+        "value": "WAVESHARE18366_M2_DRAFT_NOT_FOR_ORDER",
+        "xy": [
+          193.95,
+          159.225
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              193.95,
+              159.225
+            ],
+            "size": [
+              2.4,
+              2.4
+            ],
+            "net": "",
+            "attr": 3
+          }
+        ]
+      },
+      {
+        "ref": "H8",
+        "value": "WAVESHARE18366_M2_DRAFT_NOT_FOR_ORDER",
+        "xy": [
+          128.45,
+          159.225
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              128.45,
+              159.225
+            ],
+            "size": [
+              2.4,
+              2.4
+            ],
+            "net": "",
+            "attr": 3
+          }
+        ]
+      },
+      {
+        "ref": "H10",
+        "value": "WAVESHARE18366_M2_DRAFT_NOT_FOR_ORDER",
+        "xy": [
+          128.45,
+          120.925
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              128.45,
+              120.925
+            ],
+            "size": [
+              2.4,
+              2.4
+            ],
+            "net": "",
+            "attr": 3
+          }
+        ]
+      },
+      {
+        "ref": "K2",
+        "value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN",
+        "xy": [
+          212.5,
+          80.0
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              206.0,
+              95.9
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "",
+            "xy": [
+              219.0,
+              81.91
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "30",
+            "xy": [
+              212.5,
+              97.91
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "85",
+            "xy": [
+              204.07,
+              88.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/K_CLUTCH_RUN_COIL_LOW",
+            "attr": 0
+          },
+          {
+            "n": "86",
+            "xy": [
+              220.93,
+              88.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "87",
+            "xy": [
+              212.5,
+              80.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/CLUTCH_STAGE1",
+            "attr": 0
+          },
+          {
+            "n": "87a",
+            "xy": [
+              212.5,
+              88.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "unconnected-(K2-Pad87a)",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "H9",
+        "value": "WAVESHARE18366_M2_DRAFT_NOT_FOR_ORDER",
+        "xy": [
+          193.95,
+          120.925
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              193.95,
+              120.925
+            ],
+            "size": [
+              2.4,
+              2.4
+            ],
+            "net": "",
+            "attr": 3
+          }
+        ]
+      },
+      {
+        "ref": "Q101",
+        "value": "IRFB4110PBF (100V; RDS(on) @ VGS=10V)",
+        "xy": [
+          257.0,
+          145.0
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "1",
+            "xy": [
+              257.0,
+              145.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/MOTOR_PWM_REBUILD_CANDIDATE/GATE_Q101",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              259.54,
+              145.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "3",
+            "xy": [
+              262.08,
+              145.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/MOTOR_PWM_REBUILD_CANDIDATE/SW_SHUNT_HI",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "K3",
+        "value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_SAFE",
+        "xy": [
+          270.0,
+          80.0
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              263.5,
+              95.9
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "",
+            "xy": [
+              276.5,
+              81.91
+            ],
+            "size": [
+              2.11,
+              2.11
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "30",
+            "xy": [
+              270.0,
+              97.91
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/CLUTCH_STAGE1",
+            "attr": 0
+          },
+          {
+            "n": "85",
+            "xy": [
+              261.57,
+              88.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/K_CLUTCH_SAFE_COIL_LOW",
+            "attr": 0
+          },
+          {
+            "n": "86",
+            "xy": [
+              278.43,
+              88.41
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/P24_PROTECTED",
+            "attr": 0
+          },
+          {
+            "n": "87",
+            "xy": [
+              270.0,
+              80.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "/CLUTCH_SWITCHED_POS",
+            "attr": 0
+          },
+          {
+            "n": "87a",
+            "xy": [
+              270.0,
+              88.0
+            ],
+            "size": [
+              3.4,
+              3.4
+            ],
+            "net": "unconnected-(K3-Pad87a)",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "D9001",
+        "value": "STPS30H100CW; common cathode: K/pin2/tab -> MOTOR_POS; A1/pin1 + A2/pin3 -> GND",
+        "xy": [
+          284.0,
+          156.0
+        ],
+        "rot": 0.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "n": "1",
+            "xy": [
+              284.0,
+              156.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              286.54,
+              156.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/MOTOR_PWM_REBUILD_CANDIDATE/MOTOR_POS",
+            "attr": 0
+          },
+          {
+            "n": "3",
+            "xy": [
+              289.08,
+              156.0
+            ],
+            "size": [
+              1.905,
+              2.0
+            ],
+            "net": "/GND",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "J24",
+        "value": "RESET NKK BB25AB-FA",
+        "xy": [
+          64.95,
+          170.0
+        ],
+        "rot": 0.0,
+        "layer": "B.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              62.41,
+              164.92
+            ],
+            "size": [
+              1.5,
+              1.5
+            ],
+            "net": "",
+            "attr": 0
+          },
+          {
+            "n": "",
+            "xy": [
+              62.41,
+              175.08
+            ],
+            "size": [
+              1.5,
+              1.5
+            ],
+            "net": "",
+            "attr": 0
+          },
+          {
+            "n": "",
+            "xy": [
+              67.49,
+              164.92
+            ],
+            "size": [
+              1.5,
+              1.5
+            ],
+            "net": "",
+            "attr": 0
+          },
+          {
+            "n": "",
+            "xy": [
+              67.49,
+              175.08
+            ],
+            "size": [
+              1.5,
+              1.5
+            ],
+            "net": "",
+            "attr": 0
+          },
+          {
+            "n": "1",
+            "xy": [
+              67.49,
+              172.54
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "/RESET_REQUEST",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              67.49,
+              170.0
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "3",
+            "xy": [
+              67.49,
+              167.46
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "unconnected-(J24-C-Pad3)",
+            "attr": 0
+          },
+          {
+            "n": "4",
+            "xy": [
+              62.41,
+              172.54
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "/RESET_HW_NO_N",
+            "attr": 0
+          },
+          {
+            "n": "5",
+            "xy": [
+              62.41,
+              170.0
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "6",
+            "xy": [
+              62.41,
+              167.46
+            ],
+            "size": [
+              1.6,
+              1.6
+            ],
+            "net": "/RESET_HW_NC_N",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "J23",
+        "value": "ENCODER EC11E15244G1 + KNOB 41001-1",
+        "xy": [
+          64.95,
+          110.0
+        ],
+        "rot": 0.0,
+        "layer": "B.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              59.45,
+              110.0
+            ],
+            "size": [
+              1.5,
+              2.6
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "",
+            "xy": [
+              70.45,
+              110.0
+            ],
+            "size": [
+              1.5,
+              2.6
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "1",
+            "xy": [
+              62.45,
+              117.5
+            ],
+            "size": [
+              1.8,
+              2.4
+            ],
+            "net": "/ENC_A",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              64.95,
+              117.5
+            ],
+            "size": [
+              1.8,
+              2.4
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "3",
+            "xy": [
+              67.45,
+              117.5
+            ],
+            "size": [
+              1.8,
+              2.4
+            ],
+            "net": "/ENC_B",
+            "attr": 0
+          },
+          {
+            "n": "4",
+            "xy": [
+              62.45,
+              103.0
+            ],
+            "size": [
+              1.8,
+              2.4
+            ],
+            "net": "/ENC_SW",
+            "attr": 0
+          },
+          {
+            "n": "5",
+            "xy": [
+              67.45,
+              103.0
+            ],
+            "size": [
+              1.8,
+              2.4
+            ],
+            "net": "/GND",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "J22",
+        "value": "START_STOP B3F-4055 + B32-1380 RED",
+        "xy": [
+          58.7,
+          142.5
+        ],
+        "rot": 0.0,
+        "layer": "B.Cu",
+        "pads": [
+          {
+            "n": "",
+            "xy": [
+              64.95,
+              135.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "",
+            "xy": [
+              64.95,
+              144.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "",
+            "attr": 3
+          },
+          {
+            "n": "1",
+            "xy": [
+              58.7,
+              142.5
+            ],
+            "size": [
+              2.9,
+              1.7
+            ],
+            "net": "/START_REQUEST",
+            "attr": 0
+          },
+          {
+            "n": "1",
+            "xy": [
+              71.2,
+              142.5
+            ],
+            "size": [
+              2.9,
+              1.7
+            ],
+            "net": "/START_REQUEST",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              58.7,
+              137.5
+            ],
+            "size": [
+              2.9,
+              1.7
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              71.2,
+              137.5
+            ],
+            "size": [
+              2.9,
+              1.7
+            ],
+            "net": "/GND",
+            "attr": 0
+          }
+        ]
+      },
+      {
+        "ref": "J26",
+        "value": "TFT CABLE HARWIN M20-9960845 RA THT",
+        "xy": [
+          137.0,
+          114.5
+        ],
+        "rot": 0.0,
+        "layer": "B.Cu",
+        "pads": [
+          {
+            "n": "1",
+            "xy": [
+              137.0,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_3V3",
+            "attr": 0
+          },
+          {
+            "n": "2",
+            "xy": [
+              139.54,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/GND",
+            "attr": 0
+          },
+          {
+            "n": "3",
+            "xy": [
+              142.08,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_MOSI_BUF",
+            "attr": 0
+          },
+          {
+            "n": "4",
+            "xy": [
+              144.62,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_SCK_BUF",
+            "attr": 0
+          },
+          {
+            "n": "5",
+            "xy": [
+              147.16,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_CS_BUF",
+            "attr": 0
+          },
+          {
+            "n": "6",
+            "xy": [
+              149.7,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_DC_BUF",
+            "attr": 0
+          },
+          {
+            "n": "7",
+            "xy": [
+              152.24,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_RESET_N",
+            "attr": 0
+          },
+          {
+            "n": "8",
+            "xy": [
+              154.78,
+              114.5
+            ],
+            "size": [
+              1.8,
+              1.8
+            ],
+            "net": "/TFT_3V3",
+            "attr": 0
+          }
+        ]
+      }
+    ],
+    "version": "10.0.7"
+  },
+  "native_PTH_and_rule_areas": {
+    "pcb_sha": "279d316fe3972f52550551de6a70f71673e4364a4fe7e421690745e754fc11ce",
+    "all_PTH_pad_bounds": [
+      {
+        "ref": "J26",
+        "pin": "1",
+        "uuid": "4069ed2f-793a-4893-9d05-f10b31987329",
+        "layer": "B.Cu",
+        "bbox": [
+          136.1,
+          113.6,
+          137.9,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "2",
+        "uuid": "9c61ef0e-70d4-48f6-b951-8b895a952c58",
+        "layer": "B.Cu",
+        "bbox": [
+          138.64,
+          113.6,
+          140.44,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "3",
+        "uuid": "ce92049d-65f8-4625-b201-3ab23887cbd4",
+        "layer": "B.Cu",
+        "bbox": [
+          141.18,
+          113.6,
+          142.98,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "4",
+        "uuid": "63b9c9f1-cba6-4dd1-b9d8-4228422d668b",
+        "layer": "B.Cu",
+        "bbox": [
+          143.72,
+          113.6,
+          145.52,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "5",
+        "uuid": "b6660e4c-dd3c-4a79-8ec7-ab53d22ccab0",
+        "layer": "B.Cu",
+        "bbox": [
+          146.26,
+          113.6,
+          148.06,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "6",
+        "uuid": "9a7184aa-b81c-48b7-8bbe-973eac65c083",
+        "layer": "B.Cu",
+        "bbox": [
+          148.8,
+          113.6,
+          150.6,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "7",
+        "uuid": "6a11b033-c326-4f73-a7ef-e31e0c9da5e1",
+        "layer": "B.Cu",
+        "bbox": [
+          151.34,
+          113.6,
+          153.14,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "J26",
+        "pin": "8",
+        "uuid": "67c9fe3e-0962-49bf-9070-c6a0c8f070f7",
+        "layer": "B.Cu",
+        "bbox": [
+          153.88,
+          113.6,
+          155.68,
+          115.4
+        ],
+        "distance_bbox_to_TFT_mm": 3.0249999999999915
+      },
+      {
+        "ref": "R17",
+        "pin": "1",
+        "uuid": "fe215657-bb03-4c99-b221-919e5e813769",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          109.2,
+          165.8,
+          110.8
+        ],
+        "distance_bbox_to_TFT_mm": 7.625
+      },
+      {
+        "ref": "R17",
+        "pin": "2",
+        "uuid": "67bcddea-b729-4de5-8b65-ff9d395c4452",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          109.2,
+          175.96,
+          110.8
+        ],
+        "distance_bbox_to_TFT_mm": 7.625
+      },
+      {
+        "ref": "R16",
+        "pin": "1",
+        "uuid": "a0d2d51c-1979-43eb-952b-0af1cc8e0c02",
+        "layer": "F.Cu",
+        "bbox": [
+          144.2,
+          109.2,
+          145.8,
+          110.8
+        ],
+        "distance_bbox_to_TFT_mm": 7.625
+      },
+      {
+        "ref": "R16",
+        "pin": "2",
+        "uuid": "0290b493-5845-4d53-896d-a3c0c8cfda97",
+        "layer": "F.Cu",
+        "bbox": [
+          154.36,
+          109.2,
+          155.96,
+          110.8
+        ],
+        "distance_bbox_to_TFT_mm": 7.625
+      },
+      {
+        "ref": "U9007",
+        "pin": "3",
+        "uuid": "18dc3e56-5f5a-4b27-a336-9676a494a19d",
+        "layer": "F.Cu",
+        "bbox": [
+          116.1275,
+          149.0,
+          118.0325,
+          151.0
+        ],
+        "distance_bbox_to_TFT_mm": 7.917500000000004
+      },
+      {
+        "ref": "U9007",
+        "pin": "2",
+        "uuid": "2dc18bb4-8ae6-4e82-b2b6-9eefe21f49c1",
+        "layer": "F.Cu",
+        "bbox": [
+          113.5875,
+          149.0,
+          115.4925,
+          151.0
+        ],
+        "distance_bbox_to_TFT_mm": 10.457499999999996
+      },
+      {
+        "ref": "J25",
+        "pin": "1",
+        "uuid": "8ca3e359-9c0c-465a-a2eb-461018c2dd59",
+        "layer": "F.Cu",
+        "bbox": [
+          129.18,
+          172.7,
+          131.78,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 10.974999999999994
+      },
+      {
+        "ref": "J25",
+        "pin": "2",
+        "uuid": "b4f89961-634a-4c70-b20a-11b8ef79fda9",
+        "layer": "F.Cu",
+        "bbox": [
+          124.1,
+          172.7,
+          126.7,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 10.974999999999994
+      },
+      {
+        "ref": "J25",
+        "pin": "3",
+        "uuid": "4e21f3ef-2188-481e-9bef-673521d0ee91",
+        "layer": "F.Cu",
+        "bbox": [
+          119.02,
+          172.7,
+          121.62,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 11.798284832974659
+      },
+      {
+        "ref": "R15",
+        "pin": "1",
+        "uuid": "baf2c7b6-def0-4614-b93c-397cb2588aa1",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          104.2,
+          165.8,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.625
+      },
+      {
+        "ref": "R15",
+        "pin": "2",
+        "uuid": "60995a5b-d2da-42cb-8de0-4ad0a1ab7e06",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          104.2,
+          175.96,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.625
+      },
+      {
+        "ref": "R13",
+        "pin": "2",
+        "uuid": "3d14e582-a38c-4480-9bb7-634804b4c0f8",
+        "layer": "F.Cu",
+        "bbox": [
+          134.36,
+          104.2,
+          135.96,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.625
+      },
+      {
+        "ref": "R14",
+        "pin": "1",
+        "uuid": "66f39c1b-215d-4eda-a40b-07efaf196fe3",
+        "layer": "F.Cu",
+        "bbox": [
+          144.2,
+          104.2,
+          145.8,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.625
+      },
+      {
+        "ref": "R14",
+        "pin": "2",
+        "uuid": "cc09a853-22dc-46da-bdbd-86cb57dc4f13",
+        "layer": "F.Cu",
+        "bbox": [
+          154.36,
+          104.2,
+          155.96,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.625
+      },
+      {
+        "ref": "R13",
+        "pin": "1",
+        "uuid": "a858c8be-5c2d-4b51-b04a-eb66ca2bbd98",
+        "layer": "F.Cu",
+        "bbox": [
+          124.2,
+          104.2,
+          125.8,
+          105.8
+        ],
+        "distance_bbox_to_TFT_mm": 12.62589105766401
+      },
+      {
+        "ref": "U9007",
+        "pin": "1",
+        "uuid": "7c4772bf-744d-4e6d-8b94-f45732ee5a4a",
+        "layer": "F.Cu",
+        "bbox": [
+          111.0475,
+          149.0,
+          112.9525,
+          151.0
+        ],
+        "distance_bbox_to_TFT_mm": 12.997500000000002
+      },
+      {
+        "ref": "J25",
+        "pin": "4",
+        "uuid": "59688f5b-e1db-43fb-8cf1-f2b580bdde4a",
+        "layer": "F.Cu",
+        "bbox": [
+          113.94,
+          172.7,
+          116.54,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 14.456788197936628
+      },
+      {
+        "ref": "R12",
+        "pin": "1",
+        "uuid": "6dd7f267-9ef5-46a7-931a-558a954e5823",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          99.2,
+          165.8,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625
+      },
+      {
+        "ref": "R12",
+        "pin": "2",
+        "uuid": "bf1623f9-c713-49ae-8337-25a63c19956d",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          99.2,
+          175.96,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625
+      },
+      {
+        "ref": "R10",
+        "pin": "2",
+        "uuid": "b240777c-3ef5-4dd2-b21e-7a4dd1557390",
+        "layer": "F.Cu",
+        "bbox": [
+          134.36,
+          99.2,
+          135.96,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625
+      },
+      {
+        "ref": "R11",
+        "pin": "1",
+        "uuid": "9a9d70f8-0399-461f-9b5d-530ca7e9526c",
+        "layer": "F.Cu",
+        "bbox": [
+          144.2,
+          99.2,
+          145.8,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625
+      },
+      {
+        "ref": "R11",
+        "pin": "2",
+        "uuid": "9eed988b-2e66-4975-a488-41d2ad050834",
+        "layer": "F.Cu",
+        "bbox": [
+          154.36,
+          99.2,
+          155.96,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625
+      },
+      {
+        "ref": "R10",
+        "pin": "1",
+        "uuid": "e7e93bfd-a41f-4ca3-afd4-c3140e92f079",
+        "layer": "F.Cu",
+        "bbox": [
+          124.2,
+          99.2,
+          125.8,
+          100.8
+        ],
+        "distance_bbox_to_TFT_mm": 17.625638286314626
+      },
+      {
+        "ref": "R8",
+        "pin": "1",
+        "uuid": "2de57fc0-20fc-4848-a194-f24df9397b01",
+        "layer": "F.Cu",
+        "bbox": [
+          144.2,
+          94.2,
+          145.8,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.625
+      },
+      {
+        "ref": "R8",
+        "pin": "2",
+        "uuid": "351bac56-a844-42ad-9b90-fd3fcedc18ac",
+        "layer": "F.Cu",
+        "bbox": [
+          154.36,
+          94.2,
+          155.96,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.625
+      },
+      {
+        "ref": "R9",
+        "pin": "1",
+        "uuid": "639513bf-d503-4ddf-a6d6-bec069104bb9",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          94.2,
+          165.8,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.625
+      },
+      {
+        "ref": "R9",
+        "pin": "2",
+        "uuid": "510b467a-c7f3-4352-8d72-999f9b679d48",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          94.2,
+          175.96,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.625
+      },
+      {
+        "ref": "R7",
+        "pin": "2",
+        "uuid": "1a7026c9-9afb-4b9a-ab0b-f77a12506f3a",
+        "layer": "F.Cu",
+        "bbox": [
+          134.36,
+          94.2,
+          135.96,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.625
+      },
+      {
+        "ref": "R7",
+        "pin": "1",
+        "uuid": "88112da6-8c4c-4cde-9783-30ca921cb17d",
+        "layer": "F.Cu",
+        "bbox": [
+          124.2,
+          94.2,
+          125.8,
+          95.8
+        ],
+        "distance_bbox_to_TFT_mm": 22.6254972321052
+      },
+      {
+        "ref": "K2",
+        "pin": "30",
+        "uuid": "e1779882-7eb5-4921-a943-4966ef474ad8",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          96.21,
+          214.2,
+          99.61
+        ],
+        "distance_bbox_to_TFT_mm": 23.662770864799427
+      },
+      {
+        "ref": "R6",
+        "pin": "1",
+        "uuid": "4a54d475-91a7-4cf1-858f-9b4cc070113f",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          89.2,
+          165.8,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625
+      },
+      {
+        "ref": "R6",
+        "pin": "2",
+        "uuid": "5403195f-7017-4baf-97ec-068c532b04d5",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          89.2,
+          175.96,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625
+      },
+      {
+        "ref": "R4",
+        "pin": "2",
+        "uuid": "fb3cf6fb-c09d-4bda-ad92-a869b265b1c9",
+        "layer": "F.Cu",
+        "bbox": [
+          134.36,
+          89.2,
+          135.96,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625
+      },
+      {
+        "ref": "R5",
+        "pin": "1",
+        "uuid": "79448515-7b8e-43a8-af38-296553ede481",
+        "layer": "F.Cu",
+        "bbox": [
+          144.2,
+          89.2,
+          145.8,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625
+      },
+      {
+        "ref": "R5",
+        "pin": "2",
+        "uuid": "99bb4388-d95f-42ff-8018-92ae20a2c05c",
+        "layer": "F.Cu",
+        "bbox": [
+          154.36,
+          89.2,
+          155.96,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625
+      },
+      {
+        "ref": "R4",
+        "pin": "1",
+        "uuid": "488c23ef-41ad-432e-a6d5-78a476326b45",
+        "layer": "F.Cu",
+        "bbox": [
+          124.2,
+          89.2,
+          125.8,
+          90.8
+        ],
+        "distance_bbox_to_TFT_mm": 27.625407236817342
+      },
+      {
+        "ref": "K2",
+        "pin": "85",
+        "uuid": "57ee0db2-af09-480d-8ba3-8c05b32a6c60",
+        "layer": "F.Cu",
+        "bbox": [
+          202.37,
+          86.71,
+          205.77,
+          90.11
+        ],
+        "distance_bbox_to_TFT_mm": 28.92724710372558
+      },
+      {
+        "ref": "K2",
+        "pin": "87a",
+        "uuid": "699cdfc2-642a-432f-ba26-b436bdc3944c",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          86.3,
+          214.2,
+          89.7
+        ],
+        "distance_bbox_to_TFT_mm": 32.109938103334926
+      },
+      {
+        "ref": "R3",
+        "pin": "1",
+        "uuid": "b6c8bec2-e359-4856-abd6-3cfbe8128d71",
+        "layer": "F.Cu",
+        "bbox": [
+          164.2,
+          84.2,
+          165.8,
+          85.8
+        ],
+        "distance_bbox_to_TFT_mm": 32.625
+      },
+      {
+        "ref": "R3",
+        "pin": "2",
+        "uuid": "92b0cf14-b469-4c25-80c7-74913bea937d",
+        "layer": "F.Cu",
+        "bbox": [
+          174.36,
+          84.2,
+          175.96,
+          85.8
+        ],
+        "distance_bbox_to_TFT_mm": 32.625
+      },
+      {
+        "ref": "R1",
+        "pin": "2",
+        "uuid": "bfd83bc1-60dc-4fa3-8c1c-1dc8a75a0614",
+        "layer": "F.Cu",
+        "bbox": [
+          134.36,
+          84.2,
+          135.96,
+          85.8
+        ],
+        "distance_bbox_to_TFT_mm": 32.625
+      },
+      {
+        "ref": "R1",
+        "pin": "1",
+        "uuid": "b63804f7-78d2-4c65-adce-8c09afb63a49",
+        "layer": "F.Cu",
+        "bbox": [
+          124.2,
+          84.2,
+          125.8,
+          85.8
+        ],
+        "distance_bbox_to_TFT_mm": 32.62534482576391
+      },
+      {
+        "ref": "J1",
+        "pin": "22",
+        "uuid": "7434fd16-4836-417a-913f-380d9bce06f7",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          87.49,
+          106.71,
+          89.19
+        ],
+        "distance_bbox_to_TFT_mm": 34.99804030227979
+      },
+      {
+        "ref": "K2",
+        "pin": "86",
+        "uuid": "d3bd45a2-9ef8-4e36-8235-1847e8ce1734",
+        "layer": "F.Cu",
+        "bbox": [
+          219.23,
+          86.71,
+          222.63,
+          90.11
+        ],
+        "distance_bbox_to_TFT_mm": 36.34099097438043
+      },
+      {
+        "ref": "J1",
+        "pin": "21",
+        "uuid": "f93abf2c-84c2-459a-8501-b96c921b1970",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          84.95,
+          106.71,
+          86.65
+        ],
+        "distance_bbox_to_TFT_mm": 37.14603915628152
+      },
+      {
+        "ref": "J1",
+        "pin": "20",
+        "uuid": "3015dded-bae2-4b44-9b06-f9c044e2a02a",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          82.41,
+          106.71,
+          84.11
+        ],
+        "distance_bbox_to_TFT_mm": 39.340778144312296
+      },
+      {
+        "ref": "K2",
+        "pin": "87",
+        "uuid": "bc12245c-8b49-4f90-b839-c5e808f0ef46",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          78.3,
+          214.2,
+          81.7
+        ],
+        "distance_bbox_to_TFT_mm": 39.429026427240125
+      },
+      {
+        "ref": "J1",
+        "pin": "19",
+        "uuid": "3fe591b0-844f-49c7-a4d4-7fefaf2c057c",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          79.87,
+          106.71,
+          81.57
+        ],
+        "distance_bbox_to_TFT_mm": 41.57485568225103
+      },
+      {
+        "ref": "J1",
+        "pin": "18",
+        "uuid": "f8ecb32f-c64b-48af-b377-c7331dcb93c5",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          77.33,
+          106.71,
+          79.03
+        ],
+        "distance_bbox_to_TFT_mm": 43.842258438634296
+      },
+      {
+        "ref": "J1",
+        "pin": "17",
+        "uuid": "d4cd3c89-afcb-44c6-bb2c-e7b9860d5ceb",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          74.79,
+          106.71,
+          76.49
+        ],
+        "distance_bbox_to_TFT_mm": 46.138073486005034
+      },
+      {
+        "ref": "J1",
+        "pin": "16",
+        "uuid": "67d70234-4abf-43c8-8371-684c4133eaa9",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          72.25,
+          106.71,
+          73.95
+        ],
+        "distance_bbox_to_TFT_mm": 48.45826271132716
+      },
+      {
+        "ref": "J1",
+        "pin": "15",
+        "uuid": "311f3869-adb7-4ad9-b338-a8479161b1c2",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          69.71,
+          106.71,
+          71.41
+        ],
+        "distance_bbox_to_TFT_mm": 50.79948646393977
+      },
+      {
+        "ref": "J3",
+        "pin": "22",
+        "uuid": "8ab67e5f-b881-4f7c-8877-e1e935f1220d",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          87.49,
+          83.85,
+          89.19
+        ],
+        "distance_bbox_to_TFT_mm": 51.25519705356717
+      },
+      {
+        "ref": "J3",
+        "pin": "21",
+        "uuid": "2db5ccc2-6a39-49a4-8655-640135ff0f23",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          84.95,
+          83.85,
+          86.65
+        ],
+        "distance_bbox_to_TFT_mm": 52.74524267647273
+      },
+      {
+        "ref": "J1",
+        "pin": "14",
+        "uuid": "5e724496-44fe-4903-ae60-d9735d1bcffa",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          67.17,
+          106.71,
+          68.87
+        ],
+        "distance_bbox_to_TFT_mm": 53.15896561258505
+      },
+      {
+        "ref": "J22",
+        "pin": "1",
+        "uuid": "36f6c481-9f2d-4314-93df-583828989676",
+        "layer": "B.Cu",
+        "bbox": [
+          69.75,
+          141.65,
+          72.65,
+          143.35
+        ],
+        "distance_bbox_to_TFT_mm": 53.3
+      },
+      {
+        "ref": "J22",
+        "pin": "2",
+        "uuid": "5a624fab-4398-44dd-9262-5e7d56e1aca4",
+        "layer": "B.Cu",
+        "bbox": [
+          69.75,
+          136.65,
+          72.65,
+          138.35
+        ],
+        "distance_bbox_to_TFT_mm": 53.3
+      },
+      {
+        "ref": "J3",
+        "pin": "20",
+        "uuid": "3097e939-2e76-458c-9c79-d19c5e184f9d",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          82.41,
+          83.85,
+          84.11
+        ],
+        "distance_bbox_to_TFT_mm": 54.31325091540738
+      },
+      {
+        "ref": "J1",
+        "pin": "13",
+        "uuid": "0a950119-e6db-4646-84dd-60c7697bb567",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          64.63,
+          106.71,
+          66.33
+        ],
+        "distance_bbox_to_TFT_mm": 55.53437336461086
+      },
+      {
+        "ref": "J3",
+        "pin": "19",
+        "uuid": "9246f73d-d9a7-4795-908d-5efdef8694e4",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          79.87,
+          83.85,
+          81.57
+        ],
+        "distance_bbox_to_TFT_mm": 55.95266772013646
+      },
+      {
+        "ref": "J23",
+        "pin": "3",
+        "uuid": "9ec78d4e-db38-4b8a-8422-6549838b647d",
+        "layer": "B.Cu",
+        "bbox": [
+          66.55,
+          116.3,
+          68.35,
+          118.7
+        ],
+        "distance_bbox_to_TFT_mm": 57.60000000000001
+      },
+      {
+        "ref": "J3",
+        "pin": "18",
+        "uuid": "f17c86ef-9024-4af4-ae21-d95ade768c5a",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          77.33,
+          83.85,
+          79.03
+        ],
+        "distance_bbox_to_TFT_mm": 57.65740217005966
+      },
+      {
+        "ref": "J24",
+        "pin": "",
+        "uuid": "64878d59-5614-4ece-8708-e6156e885cac",
+        "layer": "B.Cu",
+        "bbox": [
+          66.74,
+          164.17,
+          68.24,
+          165.67
+        ],
+        "distance_bbox_to_TFT_mm": 57.76177044551181
+      },
+      {
+        "ref": "J24",
+        "pin": "3",
+        "uuid": "59c07b89-6182-4d5f-9613-78a5f6d098d4",
+        "layer": "B.Cu",
+        "bbox": [
+          66.69,
+          166.66,
+          68.29,
+          168.26
+        ],
+        "distance_bbox_to_TFT_mm": 57.870802871569005
+      },
+      {
+        "ref": "J1",
+        "pin": "12",
+        "uuid": "84d20d71-3241-4a45-b560-159531e49e1b",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          62.09,
+          106.71,
+          63.79
+        ],
+        "distance_bbox_to_TFT_mm": 57.92375009441292
+      },
+      {
+        "ref": "J24",
+        "pin": "2",
+        "uuid": "8d055b99-93cf-49a0-9dd1-bcd74343b7ab",
+        "layer": "B.Cu",
+        "bbox": [
+          66.69,
+          169.2,
+          68.29,
+          170.8
+        ],
+        "distance_bbox_to_TFT_mm": 58.14250790084652
+      },
+      {
+        "ref": "J24",
+        "pin": "1",
+        "uuid": "b35b1d26-8b7d-4436-98ca-1506973a5728",
+        "layer": "B.Cu",
+        "bbox": [
+          66.69,
+          171.74,
+          68.29,
+          173.34
+        ],
+        "distance_bbox_to_TFT_mm": 58.52329301226991
+      },
+      {
+        "ref": "J24",
+        "pin": "",
+        "uuid": "87493d95-c9ea-4d6b-8e11-0dc7b0050aea",
+        "layer": "B.Cu",
+        "bbox": [
+          66.74,
+          174.33,
+          68.24,
+          175.83
+        ],
+        "distance_bbox_to_TFT_mm": 59.07055209662427
+      },
+      {
+        "ref": "J23",
+        "pin": "5",
+        "uuid": "47e9b50e-857e-4d9e-9f8f-ae22152b614d",
+        "layer": "B.Cu",
+        "bbox": [
+          66.55,
+          101.8,
+          68.35,
+          104.2
+        ],
+        "distance_bbox_to_TFT_mm": 59.33052018143783
+      },
+      {
+        "ref": "J3",
+        "pin": "17",
+        "uuid": "13ff6376-7f2e-42ec-9067-038be78ba5b0",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          74.79,
+          83.85,
+          76.49
+        ],
+        "distance_bbox_to_TFT_mm": 59.4218328983548
+      },
+      {
+        "ref": "Q101",
+        "pin": "1",
+        "uuid": "89c4895c-5052-4018-b68c-60c2ae02cef6",
+        "layer": "F.Cu",
+        "bbox": [
+          256.0475,
+          144.0,
+          257.9525,
+          146.0
+        ],
+        "distance_bbox_to_TFT_mm": 59.597500000000025
+      },
+      {
+        "ref": "J23",
+        "pin": "2",
+        "uuid": "021acad1-a470-48e2-b82f-b3b8485eb30e",
+        "layer": "B.Cu",
+        "bbox": [
+          64.05,
+          116.3,
+          65.85,
+          118.7
+        ],
+        "distance_bbox_to_TFT_mm": 60.10000000000001
+      },
+      {
+        "ref": "J1",
+        "pin": "11",
+        "uuid": "a440e76a-369d-4a15-a492-a304c2e4ae43",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          59.55,
+          106.71,
+          61.25
+        ],
+        "distance_bbox_to_TFT_mm": 60.32543597024393
+      },
+      {
+        "ref": "J3",
+        "pin": "16",
+        "uuid": "926650f1-c1f8-497f-97c6-ebff2073b321",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          72.25,
+          83.85,
+          73.95
+        ],
+        "distance_bbox_to_TFT_mm": 61.24080032951888
+      },
+      {
+        "ref": "Q101",
+        "pin": "2",
+        "uuid": "849115fe-8445-4c33-888a-5f601d2f7a17",
+        "layer": "F.Cu",
+        "bbox": [
+          258.5875,
+          144.0,
+          260.4925,
+          146.0
+        ],
+        "distance_bbox_to_TFT_mm": 62.13749999999999
+      },
+      {
+        "ref": "J23",
+        "pin": "1",
+        "uuid": "87472f06-ec57-405d-8fdf-d790f6636c5a",
+        "layer": "B.Cu",
+        "bbox": [
+          61.55,
+          116.3,
+          63.35,
+          118.7
+        ],
+        "distance_bbox_to_TFT_mm": 62.6
+      },
+      {
+        "ref": "J1",
+        "pin": "10",
+        "uuid": "15e2737c-14e9-486b-a9dd-a5addc44ee9e",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          57.01,
+          106.71,
+          58.71
+        ],
+        "distance_bbox_to_TFT_mm": 62.73801738180766
+      },
+      {
+        "ref": "J24",
+        "pin": "",
+        "uuid": "4c8f74a0-c69b-4c69-a43c-335cff814acc",
+        "layer": "B.Cu",
+        "bbox": [
+          61.66,
+          164.17,
+          63.16,
+          165.67
+        ],
+        "distance_bbox_to_TFT_mm": 62.83758528937916
+      },
+      {
+        "ref": "J24",
+        "pin": "6",
+        "uuid": "f2668b58-2d08-4f5a-b1d2-57177a7c0991",
+        "layer": "B.Cu",
+        "bbox": [
+          61.61,
+          166.66,
+          63.21,
+          168.26
+        ],
+        "distance_bbox_to_TFT_mm": 62.933789215333285
+      },
+      {
+        "ref": "J3",
+        "pin": "15",
+        "uuid": "a3295865-abce-442a-9c7e-bb7c1415b71f",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          69.71,
+          83.85,
+          71.41
+        ],
+        "distance_bbox_to_TFT_mm": 63.109589009911964
+      },
+      {
+        "ref": "J24",
+        "pin": "5",
+        "uuid": "5b2fef18-bd77-4e5d-955a-bc329cc96599",
+        "layer": "B.Cu",
+        "bbox": [
+          61.61,
+          169.2,
+          63.21,
+          170.8
+        ],
+        "distance_bbox_to_TFT_mm": 63.18372595059586
+      },
+      {
+        "ref": "J24",
+        "pin": "4",
+        "uuid": "e7e3a271-80b4-4904-9a59-c5e6a550327c",
+        "layer": "B.Cu",
+        "bbox": [
+          61.61,
+          171.74,
+          63.21,
+          173.34
+        ],
+        "distance_bbox_to_TFT_mm": 63.534304316644565
+      },
+      {
+        "ref": "J24",
+        "pin": "",
+        "uuid": "6ff3b414-64e9-41c8-a6b2-b3d81160374d",
+        "layer": "B.Cu",
+        "bbox": [
+          61.66,
+          174.33,
+          63.16,
+          175.83
+        ],
+        "distance_bbox_to_TFT_mm": 64.0427210930329
+      },
+      {
+        "ref": "J23",
+        "pin": "4",
+        "uuid": "b1a868a7-1b43-4d18-8502-349010c35aa0",
+        "layer": "B.Cu",
+        "bbox": [
+          61.55,
+          101.8,
+          63.35,
+          104.2
+        ],
+        "distance_bbox_to_TFT_mm": 64.19587700935318
+      },
+      {
+        "ref": "Q101",
+        "pin": "3",
+        "uuid": "e7da48b0-a212-4a75-875d-2cfb8435803d",
+        "layer": "F.Cu",
+        "bbox": [
+          261.1275,
+          144.0,
+          263.0325,
+          146.0
+        ],
+        "distance_bbox_to_TFT_mm": 64.67750000000001
+      },
+      {
+        "ref": "J3",
+        "pin": "14",
+        "uuid": "b3472f35-e6de-477c-b2c3-dd1d0fe6835e",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          67.17,
+          83.85,
+          68.87
+        ],
+        "distance_bbox_to_TFT_mm": 65.02390348940918
+      },
+      {
+        "ref": "J1",
+        "pin": "9",
+        "uuid": "3c4089b4-cc63-4c57-9053-2d7883e54677",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          54.47,
+          106.71,
+          56.17
+        ],
+        "distance_bbox_to_TFT_mm": 65.1602841077293
+      },
+      {
+        "ref": "J22",
+        "pin": "1",
+        "uuid": "6b822add-fa6d-4ab2-ac4d-968756309f53",
+        "layer": "B.Cu",
+        "bbox": [
+          57.25,
+          141.65,
+          60.15,
+          143.35
+        ],
+        "distance_bbox_to_TFT_mm": 65.80000000000001
+      },
+      {
+        "ref": "J22",
+        "pin": "2",
+        "uuid": "44b38496-39f4-44bc-8422-d3542dda71d1",
+        "layer": "B.Cu",
+        "bbox": [
+          57.25,
+          136.65,
+          60.15,
+          138.35
+        ],
+        "distance_bbox_to_TFT_mm": 65.80000000000001
+      },
+      {
+        "ref": "J3",
+        "pin": "13",
+        "uuid": "22a4a40d-646e-48c9-8969-b31de741b28e",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          64.63,
+          83.85,
+          66.33
+        ],
+        "distance_bbox_to_TFT_mm": 66.97984043725396
+      },
+      {
+        "ref": "J1",
+        "pin": "8",
+        "uuid": "75fa5218-3e83-4e5c-81ef-e532e81bdeda",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          51.93,
+          106.71,
+          53.63
+        ],
+        "distance_bbox_to_TFT_mm": 67.59119487773536
+      },
+      {
+        "ref": "J3",
+        "pin": "12",
+        "uuid": "1b19955b-493b-488c-96c7-b962d3b555ce",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          62.09,
+          83.85,
+          63.79
+        ],
+        "distance_bbox_to_TFT_mm": 68.97385899744917
+      },
+      {
+        "ref": "K3",
+        "pin": "85",
+        "uuid": "3c81295a-fc83-4ff0-9ee5-84efb5c4ca04",
+        "layer": "F.Cu",
+        "bbox": [
+          259.87,
+          86.71,
+          263.27,
+          90.11
+        ],
+        "distance_bbox_to_TFT_mm": 69.4538380868905
+      },
+      {
+        "ref": "J1",
+        "pin": "7",
+        "uuid": "a694e9c2-7b33-4c44-8824-449feff72071",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          49.39,
+          106.71,
+          51.09
+        ],
+        "distance_bbox_to_TFT_mm": 70.02984952861172
+      },
+      {
+        "ref": "K1",
+        "pin": "30",
+        "uuid": "3be38af4-f228-450d-a721-b95e4a8c3a73",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          46.21,
+          214.2,
+          49.61
+        ],
+        "distance_bbox_to_TFT_mm": 70.29528238082553
+      },
+      {
+        "ref": "J3",
+        "pin": "11",
+        "uuid": "57a1550c-58d9-41dd-915d-8003738327c7",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          59.55,
+          83.85,
+          61.25
+        ],
+        "distance_bbox_to_TFT_mm": 71.00275082699261
+      },
+      {
+        "ref": "J1",
+        "pin": "6",
+        "uuid": "0d58ff51-8c9a-46ba-9c97-993ac603e4a4",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          46.85,
+          106.71,
+          48.55
+        ],
+        "distance_bbox_to_TFT_mm": 72.4754663662125
+      },
+      {
+        "ref": "J3",
+        "pin": "10",
+        "uuid": "16458189-fe35-4aa8-839e-eaa17c0adadc",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          57.01,
+          83.85,
+          58.71
+        ],
+        "distance_bbox_to_TFT_mm": 73.06361081277053
+      },
+      {
+        "ref": "K3",
+        "pin": "30",
+        "uuid": "e3514be4-7b42-4409-b7a4-52f93cdb8947",
+        "layer": "F.Cu",
+        "bbox": [
+          268.3,
+          96.21,
+          271.7,
+          99.61
+        ],
+        "distance_bbox_to_TFT_mm": 74.27265125872378
+      },
+      {
+        "ref": "J1",
+        "pin": "5",
+        "uuid": "a8e5260b-d5f7-4de4-b867-67fb3cadac51",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          44.31,
+          106.71,
+          46.01
+        ],
+        "distance_bbox_to_TFT_mm": 74.92736365974716
+      },
+      {
+        "ref": "J3",
+        "pin": "9",
+        "uuid": "00209f38-e73a-4f97-bd60-31ba48d1abac",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          54.47,
+          83.85,
+          56.17
+        ],
+        "distance_bbox_to_TFT_mm": 75.15380911836738
+      },
+      {
+        "ref": "J3",
+        "pin": "8",
+        "uuid": "65d55219-0265-4070-a89c-2623361d1553",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          51.93,
+          83.85,
+          53.63
+        ],
+        "distance_bbox_to_TFT_mm": 77.2709649545028
+      },
+      {
+        "ref": "K3",
+        "pin": "87a",
+        "uuid": "8002a4fb-bb6b-4806-87ff-14a16cf695bf",
+        "layer": "F.Cu",
+        "bbox": [
+          268.3,
+          86.3,
+          271.7,
+          89.7
+        ],
+        "distance_bbox_to_TFT_mm": 77.37924867172079
+      },
+      {
+        "ref": "J1",
+        "pin": "4",
+        "uuid": "a4070a5d-8e04-466e-af84-92bf97e35a48",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          41.77,
+          106.71,
+          43.47
+        ],
+        "distance_bbox_to_TFT_mm": 77.38494443365583
+      },
+      {
+        "ref": "K1",
+        "pin": "85",
+        "uuid": "f2170ff0-0a42-4e27-80d5-875199525577",
+        "layer": "F.Cu",
+        "bbox": [
+          202.37,
+          36.71,
+          205.77,
+          40.11
+        ],
+        "distance_bbox_to_TFT_mm": 78.53843406256583
+      },
+      {
+        "ref": "J3",
+        "pin": "7",
+        "uuid": "0607d626-28e2-4212-af99-41c9bfe921cd",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          49.39,
+          83.85,
+          51.09
+        ],
+        "distance_bbox_to_TFT_mm": 79.41292227968947
+      },
+      {
+        "ref": "J1",
+        "pin": "3",
+        "uuid": "44e5b6ab-0a3b-41c4-83d9-85922fd4447a",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          39.23,
+          106.71,
+          40.93
+        ],
+        "distance_bbox_to_TFT_mm": 79.84768390504512
+      },
+      {
+        "ref": "K1",
+        "pin": "87a",
+        "uuid": "293d05aa-a247-40ce-a6f6-8687de634b32",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          36.3,
+          214.2,
+          39.7
+        ],
+        "distance_bbox_to_TFT_mm": 80.02217270856872
+      },
+      {
+        "ref": "K3",
+        "pin": "87",
+        "uuid": "2c0ef9e2-9c2e-4417-a40a-363566565052",
+        "layer": "F.Cu",
+        "bbox": [
+          268.3,
+          78.3,
+          271.7,
+          81.7
+        ],
+        "distance_bbox_to_TFT_mm": 80.69168560019057
+      },
+      {
+        "ref": "K1",
+        "pin": "86",
+        "uuid": "94698dc7-3183-44e6-a37b-2263b86f2158",
+        "layer": "F.Cu",
+        "bbox": [
+          219.23,
+          36.71,
+          222.63,
+          40.11
+        ],
+        "distance_bbox_to_TFT_mm": 81.56082163024107
+      },
+      {
+        "ref": "J3",
+        "pin": "6",
+        "uuid": "42b8cde1-814c-4cdb-9378-f35ff09bfe8f",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          46.85,
+          83.85,
+          48.55
+        ],
+        "distance_bbox_to_TFT_mm": 81.5777275057353
+      },
+      {
+        "ref": "J1",
+        "pin": "2",
+        "uuid": "51ced445-cfc8-4b01-8be8-db1363a1e318",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          36.69,
+          106.71,
+          38.39
+        ],
+        "distance_bbox_to_TFT_mm": 82.31511905476417
+      },
+      {
+        "ref": "J3",
+        "pin": "5",
+        "uuid": "c9b8e0ad-27d2-4b21-87d6-5d1556179f16",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          44.31,
+          83.85,
+          46.01
+        ],
+        "distance_bbox_to_TFT_mm": 83.76360919277535
+      },
+      {
+        "ref": "J1",
+        "pin": "1",
+        "uuid": "b0acc27a-8c4c-46f4-943d-2092260b7421",
+        "layer": "B.Cu",
+        "bbox": [
+          105.01,
+          34.15,
+          106.71,
+          35.85
+        ],
+        "distance_bbox_to_TFT_mm": 84.78683992813978
+      },
+      {
+        "ref": "K3",
+        "pin": "86",
+        "uuid": "5bc45823-431a-4c8b-8e44-11f07589d7a5",
+        "layer": "F.Cu",
+        "bbox": [
+          276.73,
+          86.71,
+          280.13,
+          90.11
+        ],
+        "distance_bbox_to_TFT_mm": 85.12706752261589
+      },
+      {
+        "ref": "J3",
+        "pin": "4",
+        "uuid": "d7ceb1f0-1c6c-4232-8fa7-faf0405c6f6f",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          41.77,
+          83.85,
+          43.47
+        ],
+        "distance_bbox_to_TFT_mm": 85.96895965986793
+      },
+      {
+        "ref": "D9001",
+        "pin": "1",
+        "uuid": "b1959d70-656c-4bbc-aefa-9f99540dd596",
+        "layer": "F.Cu",
+        "bbox": [
+          283.0475,
+          155.0,
+          284.9525,
+          157.0
+        ],
+        "distance_bbox_to_TFT_mm": 86.59750000000003
+      },
+      {
+        "ref": "K1",
+        "pin": "87",
+        "uuid": "7876bde8-b00c-4edb-8f92-7882cbf4004f",
+        "layer": "F.Cu",
+        "bbox": [
+          210.8,
+          28.3,
+          214.2,
+          31.7
+        ],
+        "distance_bbox_to_TFT_mm": 87.90419856298105
+      },
+      {
+        "ref": "J3",
+        "pin": "3",
+        "uuid": "d6317513-5f93-40d2-956a-63a0b643ac2e",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          39.23,
+          83.85,
+          40.93
+        ],
+        "distance_bbox_to_TFT_mm": 88.1923184013211
+      },
+      {
+        "ref": "D9001",
+        "pin": "2",
+        "uuid": "bb94b916-c3c0-44cb-b82c-9bf32e52a534",
+        "layer": "F.Cu",
+        "bbox": [
+          285.5875,
+          155.0,
+          287.4925,
+          157.0
+        ],
+        "distance_bbox_to_TFT_mm": 89.13749999999999
+      },
+      {
+        "ref": "R86",
+        "pin": "1",
+        "uuid": "7fd62f04-a446-40af-be7b-663a522f548f",
+        "layer": "F.Cu",
+        "bbox": [
+          244.2,
+          41.2,
+          245.8,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 89.43826432238049
+      },
+      {
+        "ref": "J3",
+        "pin": "2",
+        "uuid": "feffc4e9-dbc5-46c5-81d3-9f8aeda4f4f1",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          36.69,
+          83.85,
+          38.39
+        ],
+        "distance_bbox_to_TFT_mm": 90.43235717927516
+      },
+      {
+        "ref": "D9001",
+        "pin": "3",
+        "uuid": "228283e0-2134-4de3-866b-fa528dfddb89",
+        "layer": "F.Cu",
+        "bbox": [
+          288.1275,
+          155.0,
+          290.0325,
+          157.0
+        ],
+        "distance_bbox_to_TFT_mm": 91.67750000000001
+      },
+      {
+        "ref": "J3",
+        "pin": "1",
+        "uuid": "9f0ed0d2-e3f5-4972-ba3e-29a53e82e775",
+        "layer": "B.Cu",
+        "bbox": [
+          82.15,
+          34.15,
+          83.85,
+          35.85
+        ],
+        "distance_bbox_to_TFT_mm": 92.68786665470297
+      },
+      {
+        "ref": "R86",
+        "pin": "2",
+        "uuid": "55270fc1-3557-4d00-b9e9-aaa3573d0bde",
+        "layer": "F.Cu",
+        "bbox": [
+          254.36,
+          41.2,
+          255.96,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 95.25076758220904
+      },
+      {
+        "ref": "R87",
+        "pin": "1",
+        "uuid": "bcc9bd1b-93bb-474a-af5c-9661d6989adc",
+        "layer": "F.Cu",
+        "bbox": [
+          259.2,
+          41.2,
+          260.8,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 98.26852560713425
+      },
+      {
+        "ref": "R87",
+        "pin": "2",
+        "uuid": "fa066d75-a07c-4df1-9197-16e3d709c84f",
+        "layer": "F.Cu",
+        "bbox": [
+          269.36,
+          41.2,
+          270.96,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 105.04764978332453
+      },
+      {
+        "ref": "R88",
+        "pin": "1",
+        "uuid": "2d6b02ef-c430-4c4d-9442-8d8aec618640",
+        "layer": "F.Cu",
+        "bbox": [
+          274.2,
+          41.2,
+          275.8,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 108.46291128768395
+      },
+      {
+        "ref": "J12",
+        "pin": "1",
+        "uuid": "ae13573a-0258-4f40-bd27-22245723b2c1",
+        "layer": "F.Cu",
+        "bbox": [
+          14.7,
+          138.86,
+          17.3,
+          141.46
+        ],
+        "distance_bbox_to_TFT_mm": 108.65
+      },
+      {
+        "ref": "J12",
+        "pin": "2",
+        "uuid": "8fdd97b1-ab36-4e9c-93c0-1d87e0192c47",
+        "layer": "F.Cu",
+        "bbox": [
+          14.7,
+          133.78,
+          17.3,
+          136.38
+        ],
+        "distance_bbox_to_TFT_mm": 108.65
+      },
+      {
+        "ref": "J12",
+        "pin": "3",
+        "uuid": "a640df85-3738-4715-8c9e-ec67c1a1ba72",
+        "layer": "F.Cu",
+        "bbox": [
+          14.7,
+          128.7,
+          17.3,
+          131.3
+        ],
+        "distance_bbox_to_TFT_mm": 108.65
+      },
+      {
+        "ref": "J13",
+        "pin": "2",
+        "uuid": "166192b4-49dc-41bb-bf03-e1002702bd94",
+        "layer": "F.Cu",
+        "bbox": [
+          10.32,
+          109.18,
+          12.92,
+          111.78
+        ],
+        "distance_bbox_to_TFT_mm": 113.22516030017357
+      },
+      {
+        "ref": "J11",
+        "pin": "2",
+        "uuid": "5dd76d0a-4270-4520-8c6d-51e72ce6a20a",
+        "layer": "F.Cu",
+        "bbox": [
+          64.7,
+          18.7,
+          67.3,
+          21.3
+        ],
+        "distance_bbox_to_TFT_mm": 113.45963213848351
+      },
+      {
+        "ref": "C22",
+        "pin": "1",
+        "uuid": "577b7958-7a80-49bf-b538-45d50ad0e909",
+        "layer": "F.Cu",
+        "bbox": [
+          257.0,
+          18.5,
+          259.0,
+          20.5
+        ],
+        "distance_bbox_to_TFT_mm": 115.13300189346234
+      },
+      {
+        "ref": "R88",
+        "pin": "2",
+        "uuid": "ead2b1c2-b125-4481-a626-a9e1a9a0afd7",
+        "layer": "F.Cu",
+        "bbox": [
+          284.36,
+          41.2,
+          285.96,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 115.96253155653339
+      },
+      {
+        "ref": "J28",
+        "pin": "2",
+        "uuid": "46bd3159-d33c-4722-8fea-f803754d8f1c",
+        "layer": "F.Cu",
+        "bbox": [
+          312.45,
+          119.21,
+          315.05,
+          121.81
+        ],
+        "distance_bbox_to_TFT_mm": 116.0
+      },
+      {
+        "ref": "J11",
+        "pin": "1",
+        "uuid": "60c25546-2b1c-4caa-bba9-e9cb97d92a49",
+        "layer": "F.Cu",
+        "bbox": [
+          59.62,
+          18.7,
+          62.22,
+          21.3
+        ],
+        "distance_bbox_to_TFT_mm": 116.16702856232486
+      },
+      {
+        "ref": "C22",
+        "pin": "2",
+        "uuid": "ef5aaf45-8950-441c-8dc9-d3c8ebd1db29",
+        "layer": "F.Cu",
+        "bbox": [
+          262.0,
+          18.5,
+          264.0,
+          20.5
+        ],
+        "distance_bbox_to_TFT_mm": 117.83933182515929
+      },
+      {
+        "ref": "J102",
+        "pin": "2",
+        "uuid": "af132fe4-82b6-42a5-a4a8-92616f6d1519",
+        "layer": "F.Cu",
+        "bbox": [
+          313.78,
+          172.7,
+          316.38,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 117.84218058488224
+      },
+      {
+        "ref": "F1",
+        "pin": "1",
+        "uuid": "bc8e5b5d-871b-4203-ba83-eb013ca9a1c7",
+        "layer": "F.Cu",
+        "bbox": [
+          6.3,
+          99.56,
+          9.1,
+          102.36
+        ],
+        "distance_bbox_to_TFT_mm": 117.94917009034019
+      },
+      {
+        "ref": "R89",
+        "pin": "1",
+        "uuid": "808afa07-951f-4e7e-b2a9-b7b2c34efcbd",
+        "layer": "F.Cu",
+        "bbox": [
+          289.2,
+          41.2,
+          290.8,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 119.67331835041594
+      },
+      {
+        "ref": "F1",
+        "pin": "2",
+        "uuid": "fc3f2405-2ba0-4111-bd97-6a5760c59d6d",
+        "layer": "F.Cu",
+        "bbox": [
+          6.3,
+          89.64,
+          9.1,
+          92.44
+        ],
+        "distance_bbox_to_TFT_mm": 119.70439726676712
+      },
+      {
+        "ref": "J13",
+        "pin": "1",
+        "uuid": "37ce0ef1-42a1-4b9c-8680-ba844c71bf39",
+        "layer": "F.Cu",
+        "bbox": [
+          2.7,
+          118.7,
+          5.3,
+          121.3
+        ],
+        "distance_bbox_to_TFT_mm": 120.65
+      },
+      {
+        "ref": "F1",
+        "pin": "1",
+        "uuid": "6a78ca35-0ffa-4bbe-b3e9-91179fe223d1",
+        "layer": "F.Cu",
+        "bbox": [
+          2.9,
+          99.56,
+          5.7,
+          102.36
+        ],
+        "distance_bbox_to_TFT_mm": 121.31836928099553
+      },
+      {
+        "ref": "J102",
+        "pin": "1",
+        "uuid": "b5672e6d-a939-4ca2-9486-c8008ce53fda",
+        "layer": "F.Cu",
+        "bbox": [
+          318.86,
+          172.7,
+          321.46,
+          175.3
+        ],
+        "distance_bbox_to_TFT_mm": 122.90101189575294
+      },
+      {
+        "ref": "F1",
+        "pin": "2",
+        "uuid": "9c2a02a8-1f51-4f67-8fe8-9bdb7ad19db4",
+        "layer": "F.Cu",
+        "bbox": [
+          2.9,
+          89.64,
+          5.7,
+          92.44
+        ],
+        "distance_bbox_to_TFT_mm": 123.02553688157593
+      },
+      {
+        "ref": "R2",
+        "pin": "2",
+        "uuid": "2d9c4b30-4bb0-4b6c-9ec7-013e80e1b884",
+        "layer": "F.Cu",
+        "bbox": [
+          23.7,
+          45.63,
+          25.3,
+          47.23
+        ],
+        "distance_bbox_to_TFT_mm": 123.28483493520199
+      },
+      {
+        "ref": "J28",
+        "pin": "1",
+        "uuid": "9d3eac76-a475-4d83-aae9-f58bc1d3e825",
+        "layer": "F.Cu",
+        "bbox": [
+          320.07,
+          109.69,
+          322.67,
+          112.29
+        ],
+        "distance_bbox_to_TFT_mm": 123.77213993867926
+      },
+      {
+        "ref": "J27",
+        "pin": "2",
+        "uuid": "13e0251f-8fc5-404b-b37b-2d390ad7795f",
+        "layer": "F.Cu",
+        "bbox": [
+          312.45,
+          69.21,
+          315.05,
+          71.81
+        ],
+        "distance_bbox_to_TFT_mm": 125.0158318974041
+      },
+      {
+        "ref": "R89",
+        "pin": "2",
+        "uuid": "893eb635-6bbc-4658-9a7b-42c166a0fe86",
+        "layer": "F.Cu",
+        "bbox": [
+          299.36,
+          41.2,
+          300.96,
+          42.8
+        ],
+        "distance_bbox_to_TFT_mm": 127.70907847525956
+      },
+      {
+        "ref": "R2",
+        "pin": "1",
+        "uuid": "cec79a71-6526-41a1-a7b0-35d022b0dea4",
+        "layer": "F.Cu",
+        "bbox": [
+          13.54,
+          45.63,
+          15.14,
+          47.23
+        ],
+        "distance_bbox_to_TFT_mm": 131.7102278678463
+      },
+      {
+        "ref": "J10",
+        "pin": "2",
+        "uuid": "f771ade6-4814-4e85-add5-c15208210b99",
+        "layer": "F.Cu",
+        "bbox": [
+          28.7,
+          18.7,
+          31.3,
+          21.3
+        ],
+        "distance_bbox_to_TFT_mm": 135.61669559829278
+      },
+      {
+        "ref": "J27",
+        "pin": "1",
+        "uuid": "2f786acd-6caf-45cc-90a1-5f6b1b872db4",
+        "layer": "F.Cu",
+        "bbox": [
+          320.07,
+          59.69,
+          322.67,
+          62.29
+        ],
+        "distance_bbox_to_TFT_mm": 135.76834176272465
+      },
+      {
+        "ref": "J10",
+        "pin": "1",
+        "uuid": "c8d13e0b-fd22-47b9-b00c-6f956261e03e",
+        "layer": "F.Cu",
+        "bbox": [
+          23.62,
+          18.7,
+          26.22,
+          21.3
+        ],
+        "distance_bbox_to_TFT_mm": 139.2096926402756
+      }
+    ],
+    "rules": [
+      {
+        "name": "R9001_KELVIN_NO_ZONE_COPPER",
+        "uuid": "c6a62bde-f586-40e6-9e70-1aeda5fac23e",
+        "vertices": [
+          [
+            265.9,
+            147.6
+          ],
+          [
+            274.1,
+            147.6
+          ],
+          [
+            274.1,
+            154.6
+          ],
+          [
+            265.9,
+            154.6
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000001",
+        "no_tracks": false,
+        "no_vias": false,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "MOUNT_H6_CLEAR_R5_HARDWARE_OD8_MAX",
+        "uuid": "008c1762-c3c6-4be2-8aa0-f160f68dd09b",
+        "vertices": [
+          [
+            243.01,
+            172.0
+          ],
+          [
+            242.985875,
+            172.491065
+          ],
+          [
+            242.913734,
+            172.977402
+          ],
+          [
+            242.794271,
+            173.454326
+          ],
+          [
+            242.628636,
+            173.917243
+          ],
+          [
+            242.418425,
+            174.361697
+          ],
+          [
+            242.165662,
+            174.783406
+          ],
+          [
+            241.872782,
+            175.17831
+          ],
+          [
+            241.542604,
+            175.542604
+          ],
+          [
+            241.17831,
+            175.872782
+          ],
+          [
+            240.783406,
+            176.165662
+          ],
+          [
+            240.361697,
+            176.418425
+          ],
+          [
+            239.917243,
+            176.628636
+          ],
+          [
+            239.454326,
+            176.794271
+          ],
+          [
+            238.977402,
+            176.913734
+          ],
+          [
+            238.491065,
+            176.985875
+          ],
+          [
+            238.0,
+            177.01
+          ],
+          [
+            237.508934,
+            176.985875
+          ],
+          [
+            237.022597,
+            176.913734
+          ],
+          [
+            236.545673,
+            176.794271
+          ],
+          [
+            236.082756,
+            176.628636
+          ],
+          [
+            235.638302,
+            176.418425
+          ],
+          [
+            235.216593,
+            176.165662
+          ],
+          [
+            234.821689,
+            175.872782
+          ],
+          [
+            234.457395,
+            175.542604
+          ],
+          [
+            234.127217,
+            175.17831
+          ],
+          [
+            233.834337,
+            174.783406
+          ],
+          [
+            233.581574,
+            174.361697
+          ],
+          [
+            233.371363,
+            173.917243
+          ],
+          [
+            233.205728,
+            173.454326
+          ],
+          [
+            233.086265,
+            172.977402
+          ],
+          [
+            233.014124,
+            172.491065
+          ],
+          [
+            232.99,
+            172.0
+          ],
+          [
+            233.014124,
+            171.508934
+          ],
+          [
+            233.086265,
+            171.022597
+          ],
+          [
+            233.205728,
+            170.545673
+          ],
+          [
+            233.371363,
+            170.082756
+          ],
+          [
+            233.581574,
+            169.638302
+          ],
+          [
+            233.834337,
+            169.216593
+          ],
+          [
+            234.127217,
+            168.821689
+          ],
+          [
+            234.457395,
+            168.457395
+          ],
+          [
+            234.821689,
+            168.127217
+          ],
+          [
+            235.216593,
+            167.834337
+          ],
+          [
+            235.638302,
+            167.581574
+          ],
+          [
+            236.082756,
+            167.371363
+          ],
+          [
+            236.545673,
+            167.205728
+          ],
+          [
+            237.022597,
+            167.086265
+          ],
+          [
+            237.508934,
+            167.014124
+          ],
+          [
+            238.0,
+            166.99
+          ],
+          [
+            238.491065,
+            167.014124
+          ],
+          [
+            238.977402,
+            167.086265
+          ],
+          [
+            239.454326,
+            167.205728
+          ],
+          [
+            239.917243,
+            167.371363
+          ],
+          [
+            240.361697,
+            167.581574
+          ],
+          [
+            240.783406,
+            167.834337
+          ],
+          [
+            241.17831,
+            168.127217
+          ],
+          [
+            241.542604,
+            168.457395
+          ],
+          [
+            241.872782,
+            168.821689
+          ],
+          [
+            242.165662,
+            169.216593
+          ],
+          [
+            242.418425,
+            169.638302
+          ],
+          [
+            242.628636,
+            170.082756
+          ],
+          [
+            242.794271,
+            170.545673
+          ],
+          [
+            242.913734,
+            171.022597
+          ],
+          [
+            242.985875,
+            171.508934
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "TFT_M2_ENVELOPE_D7p2",
+        "uuid": "15d6bace-6a7c-432b-a18b-0f8e271f2a26",
+        "vertices": [
+          [
+            136.200002,
+            126.396507
+          ],
+          [
+            136.16148,
+            126.78763
+          ],
+          [
+            136.084806,
+            127.173093
+          ],
+          [
+            135.97072,
+            127.549185
+          ],
+          [
+            135.82032,
+            127.912284
+          ],
+          [
+            135.635054,
+            128.258892
+          ],
+          [
+            135.416706,
+            128.585672
+          ],
+          [
+            135.16738,
+            128.889477
+          ],
+          [
+            134.889477,
+            129.16738
+          ],
+          [
+            134.585672,
+            129.416706
+          ],
+          [
+            134.258892,
+            129.635054
+          ],
+          [
+            133.912284,
+            129.82032
+          ],
+          [
+            133.549185,
+            129.97072
+          ],
+          [
+            133.173093,
+            130.084806
+          ],
+          [
+            132.78763,
+            130.16148
+          ],
+          [
+            132.396507,
+            130.200002
+          ],
+          [
+            132.003493,
+            130.200002
+          ],
+          [
+            131.61237,
+            130.16148
+          ],
+          [
+            131.226907,
+            130.084806
+          ],
+          [
+            130.850815,
+            129.97072
+          ],
+          [
+            130.487716,
+            129.82032
+          ],
+          [
+            130.141108,
+            129.635054
+          ],
+          [
+            129.814328,
+            129.416706
+          ],
+          [
+            129.510523,
+            129.16738
+          ],
+          [
+            129.23262,
+            128.889477
+          ],
+          [
+            128.983294,
+            128.585672
+          ],
+          [
+            128.764946,
+            128.258892
+          ],
+          [
+            128.57968,
+            127.912284
+          ],
+          [
+            128.42928,
+            127.549185
+          ],
+          [
+            128.315194,
+            127.173093
+          ],
+          [
+            128.23852,
+            126.78763
+          ],
+          [
+            128.199998,
+            126.396507
+          ],
+          [
+            128.199998,
+            126.003493
+          ],
+          [
+            128.23852,
+            125.61237
+          ],
+          [
+            128.315194,
+            125.226907
+          ],
+          [
+            128.42928,
+            124.850815
+          ],
+          [
+            128.57968,
+            124.487716
+          ],
+          [
+            128.764946,
+            124.141108
+          ],
+          [
+            128.983294,
+            123.814328
+          ],
+          [
+            129.23262,
+            123.510523
+          ],
+          [
+            129.510523,
+            123.23262
+          ],
+          [
+            129.814328,
+            122.983294
+          ],
+          [
+            130.141108,
+            122.764946
+          ],
+          [
+            130.487716,
+            122.57968
+          ],
+          [
+            130.850815,
+            122.42928
+          ],
+          [
+            131.226907,
+            122.315194
+          ],
+          [
+            131.61237,
+            122.23852
+          ],
+          [
+            132.003493,
+            122.199998
+          ],
+          [
+            132.396507,
+            122.199998
+          ],
+          [
+            132.78763,
+            122.23852
+          ],
+          [
+            133.173093,
+            122.315194
+          ],
+          [
+            133.549185,
+            122.42928
+          ],
+          [
+            133.912284,
+            122.57968
+          ],
+          [
+            134.258892,
+            122.764946
+          ],
+          [
+            134.585672,
+            122.983294
+          ],
+          [
+            134.889477,
+            123.23262
+          ],
+          [
+            135.16738,
+            123.510523
+          ],
+          [
+            135.416706,
+            123.814328
+          ],
+          [
+            135.635054,
+            124.141108
+          ],
+          [
+            135.82032,
+            124.487716
+          ],
+          [
+            135.97072,
+            124.850815
+          ],
+          [
+            136.084806,
+            125.226907
+          ],
+          [
+            136.16148,
+            125.61237
+          ],
+          [
+            136.200002,
+            126.003493
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "TFT_M2_ENVELOPE_D7p2",
+        "uuid": "179b0f19-8491-47a5-97b6-9c9263df6209",
+        "vertices": [
+          [
+            194.200002,
+            126.396507
+          ],
+          [
+            194.16148,
+            126.78763
+          ],
+          [
+            194.084806,
+            127.173093
+          ],
+          [
+            193.97072,
+            127.549185
+          ],
+          [
+            193.82032,
+            127.912284
+          ],
+          [
+            193.635054,
+            128.258892
+          ],
+          [
+            193.416706,
+            128.585672
+          ],
+          [
+            193.16738,
+            128.889477
+          ],
+          [
+            192.889477,
+            129.16738
+          ],
+          [
+            192.585672,
+            129.416706
+          ],
+          [
+            192.258892,
+            129.635054
+          ],
+          [
+            191.912284,
+            129.82032
+          ],
+          [
+            191.549185,
+            129.97072
+          ],
+          [
+            191.173093,
+            130.084806
+          ],
+          [
+            190.78763,
+            130.16148
+          ],
+          [
+            190.396507,
+            130.200002
+          ],
+          [
+            190.003493,
+            130.200002
+          ],
+          [
+            189.61237,
+            130.16148
+          ],
+          [
+            189.226907,
+            130.084806
+          ],
+          [
+            188.850815,
+            129.97072
+          ],
+          [
+            188.487716,
+            129.82032
+          ],
+          [
+            188.141108,
+            129.635054
+          ],
+          [
+            187.814328,
+            129.416706
+          ],
+          [
+            187.510523,
+            129.16738
+          ],
+          [
+            187.23262,
+            128.889477
+          ],
+          [
+            186.983294,
+            128.585672
+          ],
+          [
+            186.764946,
+            128.258892
+          ],
+          [
+            186.57968,
+            127.912284
+          ],
+          [
+            186.42928,
+            127.549185
+          ],
+          [
+            186.315194,
+            127.173093
+          ],
+          [
+            186.23852,
+            126.78763
+          ],
+          [
+            186.199998,
+            126.396507
+          ],
+          [
+            186.199998,
+            126.003493
+          ],
+          [
+            186.23852,
+            125.61237
+          ],
+          [
+            186.315194,
+            125.226907
+          ],
+          [
+            186.42928,
+            124.850815
+          ],
+          [
+            186.57968,
+            124.487716
+          ],
+          [
+            186.764946,
+            124.141108
+          ],
+          [
+            186.983294,
+            123.814328
+          ],
+          [
+            187.23262,
+            123.510523
+          ],
+          [
+            187.510523,
+            123.23262
+          ],
+          [
+            187.814328,
+            122.983294
+          ],
+          [
+            188.141108,
+            122.764946
+          ],
+          [
+            188.487716,
+            122.57968
+          ],
+          [
+            188.850815,
+            122.42928
+          ],
+          [
+            189.226907,
+            122.315194
+          ],
+          [
+            189.61237,
+            122.23852
+          ],
+          [
+            190.003493,
+            122.199998
+          ],
+          [
+            190.396507,
+            122.199998
+          ],
+          [
+            190.78763,
+            122.23852
+          ],
+          [
+            191.173093,
+            122.315194
+          ],
+          [
+            191.549185,
+            122.42928
+          ],
+          [
+            191.912284,
+            122.57968
+          ],
+          [
+            192.258892,
+            122.764946
+          ],
+          [
+            192.585672,
+            122.983294
+          ],
+          [
+            192.889477,
+            123.23262
+          ],
+          [
+            193.16738,
+            123.510523
+          ],
+          [
+            193.416706,
+            123.814328
+          ],
+          [
+            193.635054,
+            124.141108
+          ],
+          [
+            193.82032,
+            124.487716
+          ],
+          [
+            193.97072,
+            124.850815
+          ],
+          [
+            194.084806,
+            125.226907
+          ],
+          [
+            194.16148,
+            125.61237
+          ],
+          [
+            194.200002,
+            126.003493
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "MOUNT_H2_CLEAR_R5_HARDWARE_OD8_MAX",
+        "uuid": "292151f4-f31b-4f70-9f1d-72a341ed2d29",
+        "vertices": [
+          [
+            187.01,
+            20.0
+          ],
+          [
+            186.985875,
+            20.491066
+          ],
+          [
+            186.913734,
+            20.977403
+          ],
+          [
+            186.794271,
+            21.454326
+          ],
+          [
+            186.628636,
+            21.917244
+          ],
+          [
+            186.418426,
+            22.361698
+          ],
+          [
+            186.165663,
+            22.783407
+          ],
+          [
+            185.872782,
+            23.17831
+          ],
+          [
+            185.542605,
+            23.542605
+          ],
+          [
+            185.17831,
+            23.872782
+          ],
+          [
+            184.783407,
+            24.165663
+          ],
+          [
+            184.361698,
+            24.418426
+          ],
+          [
+            183.917244,
+            24.628636
+          ],
+          [
+            183.454326,
+            24.794271
+          ],
+          [
+            182.977403,
+            24.913734
+          ],
+          [
+            182.491066,
+            24.985875
+          ],
+          [
+            182.0,
+            25.01
+          ],
+          [
+            181.508934,
+            24.985875
+          ],
+          [
+            181.022597,
+            24.913734
+          ],
+          [
+            180.545674,
+            24.794271
+          ],
+          [
+            180.082756,
+            24.628636
+          ],
+          [
+            179.638302,
+            24.418426
+          ],
+          [
+            179.216593,
+            24.165663
+          ],
+          [
+            178.82169,
+            23.872782
+          ],
+          [
+            178.457395,
+            23.542605
+          ],
+          [
+            178.127218,
+            23.17831
+          ],
+          [
+            177.834337,
+            22.783407
+          ],
+          [
+            177.581574,
+            22.361698
+          ],
+          [
+            177.371364,
+            21.917244
+          ],
+          [
+            177.205729,
+            21.454326
+          ],
+          [
+            177.086266,
+            20.977403
+          ],
+          [
+            177.014125,
+            20.491066
+          ],
+          [
+            176.99,
+            20.0
+          ],
+          [
+            177.014125,
+            19.508934
+          ],
+          [
+            177.086266,
+            19.022597
+          ],
+          [
+            177.205729,
+            18.545674
+          ],
+          [
+            177.371364,
+            18.082756
+          ],
+          [
+            177.581574,
+            17.638302
+          ],
+          [
+            177.834337,
+            17.216593
+          ],
+          [
+            178.127218,
+            16.82169
+          ],
+          [
+            178.457395,
+            16.457395
+          ],
+          [
+            178.82169,
+            16.127218
+          ],
+          [
+            179.216593,
+            15.834337
+          ],
+          [
+            179.638302,
+            15.581574
+          ],
+          [
+            180.082756,
+            15.371364
+          ],
+          [
+            180.545674,
+            15.205729
+          ],
+          [
+            181.022597,
+            15.086266
+          ],
+          [
+            181.508934,
+            15.014125
+          ],
+          [
+            182.0,
+            14.99
+          ],
+          [
+            182.491066,
+            15.014125
+          ],
+          [
+            182.977403,
+            15.086266
+          ],
+          [
+            183.454326,
+            15.205729
+          ],
+          [
+            183.917244,
+            15.371364
+          ],
+          [
+            184.361698,
+            15.581574
+          ],
+          [
+            184.783407,
+            15.834337
+          ],
+          [
+            185.17831,
+            16.127218
+          ],
+          [
+            185.542605,
+            16.457395
+          ],
+          [
+            185.872782,
+            16.82169
+          ],
+          [
+            186.165663,
+            17.216593
+          ],
+          [
+            186.418426,
+            17.638302
+          ],
+          [
+            186.628636,
+            18.082756
+          ],
+          [
+            186.794271,
+            18.545674
+          ],
+          [
+            186.913734,
+            19.022597
+          ],
+          [
+            186.985875,
+            19.508934
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "33ed6c0f-9887-44b0-919d-0088501058cf",
+        "vertices": [
+          [
+            132.25,
+            159.225
+          ],
+          [
+            131.137006,
+            161.912006
+          ],
+          [
+            128.45,
+            163.025
+          ],
+          [
+            125.762994,
+            161.912006
+          ],
+          [
+            124.65,
+            159.225
+          ],
+          [
+            125.762994,
+            156.537994
+          ],
+          [
+            128.45,
+            155.425
+          ],
+          [
+            131.137006,
+            156.537994
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "4e909156-dc80-46a8-88fc-f70d77bf6bbb",
+        "vertices": [
+          [
+            131.95,
+            120.925
+          ],
+          [
+            130.924874,
+            123.399874
+          ],
+          [
+            128.45,
+            124.425
+          ],
+          [
+            125.975126,
+            123.399874
+          ],
+          [
+            124.95,
+            120.925
+          ],
+          [
+            125.975126,
+            118.450126
+          ],
+          [
+            128.45,
+            117.425
+          ],
+          [
+            130.924874,
+            118.450126
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "66cd0a61-7cfc-412f-b442-dec007a9c4b4",
+        "vertices": [
+          [
+            197.75,
+            120.925
+          ],
+          [
+            196.637006,
+            123.612006
+          ],
+          [
+            193.95,
+            124.725
+          ],
+          [
+            191.262994,
+            123.612006
+          ],
+          [
+            190.15,
+            120.925
+          ],
+          [
+            191.262994,
+            118.237994
+          ],
+          [
+            193.95,
+            117.125
+          ],
+          [
+            196.637006,
+            118.237994
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "713aba50-9d59-4080-b94f-ed99b48eb0e3",
+        "vertices": [
+          [
+            132.25,
+            120.925
+          ],
+          [
+            131.137006,
+            123.612006
+          ],
+          [
+            128.45,
+            124.725
+          ],
+          [
+            125.762994,
+            123.612006
+          ],
+          [
+            124.65,
+            120.925
+          ],
+          [
+            125.762994,
+            118.237994
+          ],
+          [
+            128.45,
+            117.125
+          ],
+          [
+            131.137006,
+            118.237994
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "MOUNT_H4_CLEAR_R5_HARDWARE_OD8_MAX",
+        "uuid": "85ca66a5-c324-4606-a0b0-1007710c75b0",
+        "vertices": [
+          [
+            187.01,
+            172.0
+          ],
+          [
+            186.985875,
+            172.491066
+          ],
+          [
+            186.913734,
+            172.977403
+          ],
+          [
+            186.794271,
+            173.454326
+          ],
+          [
+            186.628636,
+            173.917244
+          ],
+          [
+            186.418426,
+            174.361698
+          ],
+          [
+            186.165663,
+            174.783407
+          ],
+          [
+            185.872782,
+            175.17831
+          ],
+          [
+            185.542605,
+            175.542605
+          ],
+          [
+            185.17831,
+            175.872782
+          ],
+          [
+            184.783407,
+            176.165663
+          ],
+          [
+            184.361698,
+            176.418426
+          ],
+          [
+            183.917244,
+            176.628636
+          ],
+          [
+            183.454326,
+            176.794271
+          ],
+          [
+            182.977403,
+            176.913734
+          ],
+          [
+            182.491066,
+            176.985875
+          ],
+          [
+            182.0,
+            177.01
+          ],
+          [
+            181.508934,
+            176.985875
+          ],
+          [
+            181.022597,
+            176.913734
+          ],
+          [
+            180.545674,
+            176.794271
+          ],
+          [
+            180.082756,
+            176.628636
+          ],
+          [
+            179.638302,
+            176.418426
+          ],
+          [
+            179.216593,
+            176.165663
+          ],
+          [
+            178.82169,
+            175.872782
+          ],
+          [
+            178.457395,
+            175.542605
+          ],
+          [
+            178.127218,
+            175.17831
+          ],
+          [
+            177.834337,
+            174.783407
+          ],
+          [
+            177.581574,
+            174.361698
+          ],
+          [
+            177.371364,
+            173.917244
+          ],
+          [
+            177.205729,
+            173.454326
+          ],
+          [
+            177.086266,
+            172.977403
+          ],
+          [
+            177.014125,
+            172.491066
+          ],
+          [
+            176.99,
+            172.0
+          ],
+          [
+            177.014125,
+            171.508934
+          ],
+          [
+            177.086266,
+            171.022597
+          ],
+          [
+            177.205729,
+            170.545674
+          ],
+          [
+            177.371364,
+            170.082756
+          ],
+          [
+            177.581574,
+            169.638302
+          ],
+          [
+            177.834337,
+            169.216593
+          ],
+          [
+            178.127218,
+            168.82169
+          ],
+          [
+            178.457395,
+            168.457395
+          ],
+          [
+            178.82169,
+            168.127218
+          ],
+          [
+            179.216593,
+            167.834337
+          ],
+          [
+            179.638302,
+            167.581574
+          ],
+          [
+            180.082756,
+            167.371364
+          ],
+          [
+            180.545674,
+            167.205729
+          ],
+          [
+            181.022597,
+            167.086266
+          ],
+          [
+            181.508934,
+            167.014125
+          ],
+          [
+            182.0,
+            166.99
+          ],
+          [
+            182.491066,
+            167.014125
+          ],
+          [
+            182.977403,
+            167.086266
+          ],
+          [
+            183.454326,
+            167.205729
+          ],
+          [
+            183.917244,
+            167.371364
+          ],
+          [
+            184.361698,
+            167.581574
+          ],
+          [
+            184.783407,
+            167.834337
+          ],
+          [
+            185.17831,
+            168.127218
+          ],
+          [
+            185.542605,
+            168.457395
+          ],
+          [
+            185.872782,
+            168.82169
+          ],
+          [
+            186.165663,
+            169.216593
+          ],
+          [
+            186.418426,
+            169.638302
+          ],
+          [
+            186.628636,
+            170.082756
+          ],
+          [
+            186.794271,
+            170.545674
+          ],
+          [
+            186.913734,
+            171.022597
+          ],
+          [
+            186.985875,
+            171.508934
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "9d33eaf7-8e56-421b-9eb7-375ba77421e0",
+        "vertices": [
+          [
+            197.75,
+            159.225
+          ],
+          [
+            196.637006,
+            161.912006
+          ],
+          [
+            193.95,
+            163.025
+          ],
+          [
+            191.262994,
+            161.912006
+          ],
+          [
+            190.15,
+            159.225
+          ],
+          [
+            191.262994,
+            156.537994
+          ],
+          [
+            193.95,
+            155.425
+          ],
+          [
+            196.637006,
+            156.537994
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "TFT_M2_ENVELOPE_D7p2",
+        "uuid": "c70ea191-e9c9-4543-9dde-a1a6b27c2e16",
+        "vertices": [
+          [
+            194.200002,
+            154.396507
+          ],
+          [
+            194.16148,
+            154.78763
+          ],
+          [
+            194.084806,
+            155.173093
+          ],
+          [
+            193.97072,
+            155.549185
+          ],
+          [
+            193.82032,
+            155.912284
+          ],
+          [
+            193.635054,
+            156.258892
+          ],
+          [
+            193.416706,
+            156.585672
+          ],
+          [
+            193.16738,
+            156.889477
+          ],
+          [
+            192.889477,
+            157.16738
+          ],
+          [
+            192.585672,
+            157.416706
+          ],
+          [
+            192.258892,
+            157.635054
+          ],
+          [
+            191.912284,
+            157.82032
+          ],
+          [
+            191.549185,
+            157.97072
+          ],
+          [
+            191.173093,
+            158.084806
+          ],
+          [
+            190.78763,
+            158.16148
+          ],
+          [
+            190.396507,
+            158.200002
+          ],
+          [
+            190.003493,
+            158.200002
+          ],
+          [
+            189.61237,
+            158.16148
+          ],
+          [
+            189.226907,
+            158.084806
+          ],
+          [
+            188.850815,
+            157.97072
+          ],
+          [
+            188.487716,
+            157.82032
+          ],
+          [
+            188.141108,
+            157.635054
+          ],
+          [
+            187.814328,
+            157.416706
+          ],
+          [
+            187.510523,
+            157.16738
+          ],
+          [
+            187.23262,
+            156.889477
+          ],
+          [
+            186.983294,
+            156.585672
+          ],
+          [
+            186.764946,
+            156.258892
+          ],
+          [
+            186.57968,
+            155.912284
+          ],
+          [
+            186.42928,
+            155.549185
+          ],
+          [
+            186.315194,
+            155.173093
+          ],
+          [
+            186.23852,
+            154.78763
+          ],
+          [
+            186.199998,
+            154.396507
+          ],
+          [
+            186.199998,
+            154.003493
+          ],
+          [
+            186.23852,
+            153.61237
+          ],
+          [
+            186.315194,
+            153.226907
+          ],
+          [
+            186.42928,
+            152.850815
+          ],
+          [
+            186.57968,
+            152.487716
+          ],
+          [
+            186.764946,
+            152.141108
+          ],
+          [
+            186.983294,
+            151.814328
+          ],
+          [
+            187.23262,
+            151.510523
+          ],
+          [
+            187.510523,
+            151.23262
+          ],
+          [
+            187.814328,
+            150.983294
+          ],
+          [
+            188.141108,
+            150.764946
+          ],
+          [
+            188.487716,
+            150.57968
+          ],
+          [
+            188.850815,
+            150.42928
+          ],
+          [
+            189.226907,
+            150.315194
+          ],
+          [
+            189.61237,
+            150.23852
+          ],
+          [
+            190.003493,
+            150.199998
+          ],
+          [
+            190.396507,
+            150.199998
+          ],
+          [
+            190.78763,
+            150.23852
+          ],
+          [
+            191.173093,
+            150.315194
+          ],
+          [
+            191.549185,
+            150.42928
+          ],
+          [
+            191.912284,
+            150.57968
+          ],
+          [
+            192.258892,
+            150.764946
+          ],
+          [
+            192.585672,
+            150.983294
+          ],
+          [
+            192.889477,
+            151.23262
+          ],
+          [
+            193.16738,
+            151.510523
+          ],
+          [
+            193.416706,
+            151.814328
+          ],
+          [
+            193.635054,
+            152.141108
+          ],
+          [
+            193.82032,
+            152.487716
+          ],
+          [
+            193.97072,
+            152.850815
+          ],
+          [
+            194.084806,
+            153.226907
+          ],
+          [
+            194.16148,
+            153.61237
+          ],
+          [
+            194.200002,
+            154.003493
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "ccb846c3-d463-4359-86cc-d5d6d4f1d555",
+        "vertices": [
+          [
+            131.95,
+            159.225
+          ],
+          [
+            130.924874,
+            161.699874
+          ],
+          [
+            128.45,
+            162.725
+          ],
+          [
+            125.975126,
+            161.699874
+          ],
+          [
+            124.95,
+            159.225
+          ],
+          [
+            125.975126,
+            156.750126
+          ],
+          [
+            128.45,
+            155.725
+          ],
+          [
+            130.924874,
+            156.750126
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "cebb714a-44a2-4cbe-83b5-d5eac72fb9d2",
+        "vertices": [
+          [
+            197.45,
+            120.925
+          ],
+          [
+            196.424874,
+            123.399874
+          ],
+          [
+            193.95,
+            124.425
+          ],
+          [
+            191.475126,
+            123.399874
+          ],
+          [
+            190.45,
+            120.925
+          ],
+          [
+            191.475126,
+            118.450126
+          ],
+          [
+            193.95,
+            117.425
+          ],
+          [
+            196.424874,
+            118.450126
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "",
+        "uuid": "d3d386c8-d804-44e4-a2f3-8f786c9a36ae",
+        "vertices": [
+          [
+            197.45,
+            159.225
+          ],
+          [
+            196.424874,
+            161.699874
+          ],
+          [
+            193.95,
+            162.725
+          ],
+          [
+            191.475126,
+            161.699874
+          ],
+          [
+            190.45,
+            159.225
+          ],
+          [
+            191.475126,
+            156.750126
+          ],
+          [
+            193.95,
+            155.725
+          ],
+          [
+            196.424874,
+            156.750126
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "TFT_M2_ENVELOPE_D7p2",
+        "uuid": "f6abe52b-d071-4dfa-9bff-2ca3bf987bb0",
+        "vertices": [
+          [
+            136.200002,
+            154.396507
+          ],
+          [
+            136.16148,
+            154.78763
+          ],
+          [
+            136.084806,
+            155.173093
+          ],
+          [
+            135.97072,
+            155.549185
+          ],
+          [
+            135.82032,
+            155.912284
+          ],
+          [
+            135.635054,
+            156.258892
+          ],
+          [
+            135.416706,
+            156.585672
+          ],
+          [
+            135.16738,
+            156.889477
+          ],
+          [
+            134.889477,
+            157.16738
+          ],
+          [
+            134.585672,
+            157.416706
+          ],
+          [
+            134.258892,
+            157.635054
+          ],
+          [
+            133.912284,
+            157.82032
+          ],
+          [
+            133.549185,
+            157.97072
+          ],
+          [
+            133.173093,
+            158.084806
+          ],
+          [
+            132.78763,
+            158.16148
+          ],
+          [
+            132.396507,
+            158.200002
+          ],
+          [
+            132.003493,
+            158.200002
+          ],
+          [
+            131.61237,
+            158.16148
+          ],
+          [
+            131.226907,
+            158.084806
+          ],
+          [
+            130.850815,
+            157.97072
+          ],
+          [
+            130.487716,
+            157.82032
+          ],
+          [
+            130.141108,
+            157.635054
+          ],
+          [
+            129.814328,
+            157.416706
+          ],
+          [
+            129.510523,
+            157.16738
+          ],
+          [
+            129.23262,
+            156.889477
+          ],
+          [
+            128.983294,
+            156.585672
+          ],
+          [
+            128.764946,
+            156.258892
+          ],
+          [
+            128.57968,
+            155.912284
+          ],
+          [
+            128.42928,
+            155.549185
+          ],
+          [
+            128.315194,
+            155.173093
+          ],
+          [
+            128.23852,
+            154.78763
+          ],
+          [
+            128.199998,
+            154.396507
+          ],
+          [
+            128.199998,
+            154.003493
+          ],
+          [
+            128.23852,
+            153.61237
+          ],
+          [
+            128.315194,
+            153.226907
+          ],
+          [
+            128.42928,
+            152.850815
+          ],
+          [
+            128.57968,
+            152.487716
+          ],
+          [
+            128.764946,
+            152.141108
+          ],
+          [
+            128.983294,
+            151.814328
+          ],
+          [
+            129.23262,
+            151.510523
+          ],
+          [
+            129.510523,
+            151.23262
+          ],
+          [
+            129.814328,
+            150.983294
+          ],
+          [
+            130.141108,
+            150.764946
+          ],
+          [
+            130.487716,
+            150.57968
+          ],
+          [
+            130.850815,
+            150.42928
+          ],
+          [
+            131.226907,
+            150.315194
+          ],
+          [
+            131.61237,
+            150.23852
+          ],
+          [
+            132.003493,
+            150.199998
+          ],
+          [
+            132.396507,
+            150.199998
+          ],
+          [
+            132.78763,
+            150.23852
+          ],
+          [
+            133.173093,
+            150.315194
+          ],
+          [
+            133.549185,
+            150.42928
+          ],
+          [
+            133.912284,
+            150.57968
+          ],
+          [
+            134.258892,
+            150.764946
+          ],
+          [
+            134.585672,
+            150.983294
+          ],
+          [
+            134.889477,
+            151.23262
+          ],
+          [
+            135.16738,
+            151.510523
+          ],
+          [
+            135.416706,
+            151.814328
+          ],
+          [
+            135.635054,
+            152.141108
+          ],
+          [
+            135.82032,
+            152.487716
+          ],
+          [
+            135.97072,
+            152.850815
+          ],
+          [
+            136.084806,
+            153.226907
+          ],
+          [
+            136.16148,
+            153.61237
+          ],
+          [
+            136.200002,
+            154.003493
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      },
+      {
+        "name": "MOUNT_H5_CLEAR_R5_HARDWARE_OD8_MAX",
+        "uuid": "fe58b9b4-6feb-4579-abf3-37a2be481e71",
+        "vertices": [
+          [
+            243.01,
+            20.0
+          ],
+          [
+            242.985875,
+            20.491065
+          ],
+          [
+            242.913734,
+            20.977402
+          ],
+          [
+            242.794271,
+            21.454326
+          ],
+          [
+            242.628636,
+            21.917243
+          ],
+          [
+            242.418425,
+            22.361697
+          ],
+          [
+            242.165662,
+            22.783406
+          ],
+          [
+            241.872782,
+            23.17831
+          ],
+          [
+            241.542604,
+            23.542604
+          ],
+          [
+            241.17831,
+            23.872782
+          ],
+          [
+            240.783406,
+            24.165662
+          ],
+          [
+            240.361697,
+            24.418425
+          ],
+          [
+            239.917243,
+            24.628636
+          ],
+          [
+            239.454326,
+            24.794271
+          ],
+          [
+            238.977402,
+            24.913734
+          ],
+          [
+            238.491065,
+            24.985875
+          ],
+          [
+            238.0,
+            25.009999
+          ],
+          [
+            237.508934,
+            24.985875
+          ],
+          [
+            237.022597,
+            24.913734
+          ],
+          [
+            236.545673,
+            24.794271
+          ],
+          [
+            236.082756,
+            24.628636
+          ],
+          [
+            235.638302,
+            24.418425
+          ],
+          [
+            235.216593,
+            24.165662
+          ],
+          [
+            234.821689,
+            23.872782
+          ],
+          [
+            234.457395,
+            23.542604
+          ],
+          [
+            234.127217,
+            23.17831
+          ],
+          [
+            233.834337,
+            22.783406
+          ],
+          [
+            233.581574,
+            22.361697
+          ],
+          [
+            233.371363,
+            21.917243
+          ],
+          [
+            233.205728,
+            21.454326
+          ],
+          [
+            233.086265,
+            20.977402
+          ],
+          [
+            233.014124,
+            20.491065
+          ],
+          [
+            232.99,
+            20.0
+          ],
+          [
+            233.014124,
+            19.508934
+          ],
+          [
+            233.086265,
+            19.022597
+          ],
+          [
+            233.205728,
+            18.545673
+          ],
+          [
+            233.371363,
+            18.082756
+          ],
+          [
+            233.581574,
+            17.638302
+          ],
+          [
+            233.834337,
+            17.216593
+          ],
+          [
+            234.127217,
+            16.821689
+          ],
+          [
+            234.457395,
+            16.457395
+          ],
+          [
+            234.821689,
+            16.127217
+          ],
+          [
+            235.216593,
+            15.834337
+          ],
+          [
+            235.638302,
+            15.581574
+          ],
+          [
+            236.082756,
+            15.371363
+          ],
+          [
+            236.545673,
+            15.205728
+          ],
+          [
+            237.022597,
+            15.086265
+          ],
+          [
+            237.508934,
+            15.014124
+          ],
+          [
+            238.0,
+            14.99
+          ],
+          [
+            238.491065,
+            15.014124
+          ],
+          [
+            238.977402,
+            15.086265
+          ],
+          [
+            239.454326,
+            15.205728
+          ],
+          [
+            239.917243,
+            15.371363
+          ],
+          [
+            240.361697,
+            15.581574
+          ],
+          [
+            240.783406,
+            15.834337
+          ],
+          [
+            241.17831,
+            16.127217
+          ],
+          [
+            241.542604,
+            16.457395
+          ],
+          [
+            241.872782,
+            16.821689
+          ],
+          [
+            242.165662,
+            17.216593
+          ],
+          [
+            242.418425,
+            17.638302
+          ],
+          [
+            242.628636,
+            18.082756
+          ],
+          [
+            242.794271,
+            18.545673
+          ],
+          [
+            242.913734,
+            19.022597
+          ],
+          [
+            242.985875,
+            19.508934
+          ]
+        ],
+        "layers": "00000000_00000000_00000000_00000005",
+        "no_tracks": true,
+        "no_vias": true,
+        "no_copper_pour": true,
+        "no_pads": false
+      }
+    ],
+    "models": [
+      {
+        "ref": "${KIPRJMOD}/3dmodels/Waveshare_18366_k01-2_official_nominal.stp",
+        "exists": true,
+        "bytes": 85631
+      },
+      {
+        "ref": "${KIPRJMOD}/3dmodels/TFT_M2x12_mounting_hardware_envelope.wrl",
+        "exists": true,
+        "bytes": 1214
+      }
+    ]
+  },
+  "current_mount_rule_coverage": [
+    {
+      "ref": "H7",
+      "xy": [
+        193.95,
+        159.225
+      ],
+      "rules": [
+        {
+          "uuid": "9d33eaf7-8e56-421b-9eb7-375ba77421e0",
+          "inradius_mm": 3.5107423747717155,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        },
+        {
+          "uuid": "d3d386c8-d804-44e4-a2f3-8f786c9a36ae",
+          "inradius_mm": 3.233578537462444,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        }
+      ],
+      "available_protected_radius_mm": 3.5107423747717155
+    },
+    {
+      "ref": "H8",
+      "xy": [
+        128.45,
+        159.225
+      ],
+      "rules": [
+        {
+          "uuid": "33ed6c0f-9887-44b0-919d-0088501058cf",
+          "inradius_mm": 3.510742374771709,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        },
+        {
+          "uuid": "ccb846c3-d463-4359-86cc-d5d6d4f1d555",
+          "inradius_mm": 3.2335785374624306,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        }
+      ],
+      "available_protected_radius_mm": 3.510742374771709
+    },
+    {
+      "ref": "H10",
+      "xy": [
+        128.45,
+        120.925
+      ],
+      "rules": [
+        {
+          "uuid": "4e909156-dc80-46a8-88fc-f70d77bf6bbb",
+          "inradius_mm": 3.2335785374624306,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        },
+        {
+          "uuid": "713aba50-9d59-4080-b94f-ed99b48eb0e3",
+          "inradius_mm": 3.510742374771709,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        }
+      ],
+      "available_protected_radius_mm": 3.510742374771709
+    },
+    {
+      "ref": "H9",
+      "xy": [
+        193.95,
+        120.925
+      ],
+      "rules": [
+        {
+          "uuid": "66cd0a61-7cfc-412f-b442-dec007a9c4b4",
+          "inradius_mm": 3.5107423747717155,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        },
+        {
+          "uuid": "cebb714a-44a2-4cbe-83b5-d5eac72fb9d2",
+          "inradius_mm": 3.233578537462444,
+          "no_tracks": true,
+          "no_vias": true,
+          "no_copper_pour": true,
+          "layers": "00000000_00000000_00000000_00000005"
+        }
+      ],
+      "available_protected_radius_mm": 3.5107423747717155
+    }
+  ]
+}
