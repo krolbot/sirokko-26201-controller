@@ -1,0 +1,27 @@
+{
+  "silk_revert_restores_mask_clipping": true,
+  "drc_exit": 5,
+  "silk_violation": {
+    "description": "Silkscreen clipped by solder mask",
+    "items": [
+      {
+        "description": "PCB text 'DRAFT / NOT FOR ORDER / NO FIRE / production_release=false' on F.Silkscreen",
+        "pos": {
+          "x": 120.0,
+          "y": 15.0
+        },
+        "uuid": "2242af18-c3d4-4edf-b20f-5b5c8523f86c"
+      },
+      {
+        "description": "PTH pad 2 [/+3V3] of J1",
+        "pos": {
+          "x": 104.4,
+          "y": 14.09
+        },
+        "uuid": "51ced445-cfc8-4b01-8be8-db1363a1e318"
+      }
+    ],
+    "severity": "warning",
+    "type": "silk_over_copper"
+  }
+}
