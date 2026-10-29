@@ -4,7 +4,17 @@
 
 Требования: [REQUIREMENTS_RU.md](REQUIREMENTS_RU.md). Часы и таймер референса: [RTC_TIMER_REFERENCE_RU.md](RTC_TIMER_REFERENCE_RU.md).
 
-## 2026-10-29 — самый новый PCB-checkpoint: сигнальные ветви REV_MID d3d80e54
+## 2026-10-29 — самый новый PCB-checkpoint: затворные резисторы у MOSFET 49978656
+
+[Кандидат gate_local_49978656_wip](../hardware/candidates/gate_local_49978656_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `49978656ab6bd0bb35a6134c59668fdaccbc0bd19b5f8057ae776193baa58416`; исходная PCB — `d3d80e54f3915a65ad33854c583e989fd6dc80cec0c5a2d4b046531dfd0250ae`. Остальные 63 файла и firmware не менялись.
+
+Существующие R90–R93 4,7 Ом перенесены непосредственно к Q1–Q4 и повёрнуты на 90°. Четыре отдельные пары R90.2↔Q1.1, R91.2↔Q2.1, R92.2↔Q3.1 и R93.2↔Q4.1 соединены сегментами F.Cu 0,25 × 3,9 мм без переходов. У восьми площадок изменились только мировые координаты и углы; UUID, сети, локальные размеры и сверления сохранены. Остальные корпуса, площадки, прежняя медь, SCH/PRO и 27 зон не менялись.
+
+Native: 699 площадок, 318→314 групп, 9636→9640 пар, потерь 0, четыре ожидаемых добавления; master содержит 1968 дорожек и переходов. KiCad CLI: исходник 104 несоединения / 26 предупреждений / 0 parity, кандидат и повторный master 100 / 25 / 0; все exit 5, `stderr` пуст. Новых нарушений нет, прежнее `silk_overlap` Q2/R92 устранено. Это **не PASS**; ERC не запускался.
+
+R90.1/R91.1 `DGATE` и R92.1/R93.1 `HGATE` ещё не подключены к контроллеру; VIN_FUSED/REV_MID/P24_PROTECTED не завершены. Динамика затворов, обратные пути, паразитные параметры, SOA, токовые, тепловые и ЭМС-режимы не квалифицированы. `production_release=false`, `firmware_integration_allowed=false`, `order_allowed=false`, `power_on_or_fire_test_allowed=false`. PNG показывает только фрагмент актуальной PCB, не общий вид, не 3D и не монтажный чертёж. **DRAFT / NOT FOR ORDER / NO POWER / NO FIRE.**
+
+## 2026-10-29 — предыдущий PCB-checkpoint: сигнальные ветви REV_MID d3d80e54
 
 [Кандидат rev_sense_d3d80e54_wip](../hardware/candidates/rev_sense_d3d80e54_wip/README_RU.md) опубликован отдельным immutable DRAFT-снимком. PCB SHA256 `d3d80e54f3915a65ad33854c583e989fd6dc80cec0c5a2d4b046531dfd0250ae`; исходная PCB — `2a7bf85c932b7a34290cc421144bb13fde5692e3202a427db335e094e8bb3b5b`. Остальные 63 файла и firmware не менялись.
 
