@@ -1,0 +1,18 @@
+{
+  "status": "READONLY AUDIT / DRAFT / NOT FOR ORDER / NO POWER / NO FIRE",
+  "pcb_changed": false,
+  "pcb_sha256": "73caf79a937a17212b3ac8eb9cc1576ef709ab6d5dfcc5c0ad40c8c0e71ab7cf",
+  "core_tracks": 3,
+  "core_vias": 1,
+  "outer_screen_objects": 48,
+  "outer_screen_pads": 7,
+  "svg_parse": true,
+  "png_decode": true,
+  "final_visual_inspection": true,
+  "stable_object_uuids": true,
+  "positive_sck_control": true,
+  "negative_empty_region": true,
+  "RF_performance_measured": false,
+  "layout_complete": false,
+  "production_release": false
+}
