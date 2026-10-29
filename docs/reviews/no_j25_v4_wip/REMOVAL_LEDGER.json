@@ -1,0 +1,82 @@
+[
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "symbol",
+    "uuid": [
+      "dad8d3ae-d4a2-4079-b650-45aba24ae31b"
+    ],
+    "original": "(symbol\n\t(lib_name \"Connector_Generic:Conn_01x04\")\n\t(lib_id \"Connector_Generic:Conn_01x04\")\n\t(at 505.46 360.68 0)\n\t(unit 1)\n\t(exclude_from_sim no)\n\t(in_bom yes)\n\t(on_board yes)\n\t(dnp no)\n\t(uuid \"dad8d3ae-d4a2-4079-b650-45aba24ae31b\")\n\t(property \"Reference\" \"J25\"\n\t\t(at 505.46 356.87 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n\t\t)\n\t)\n\t(property \"Value\" \"THERMAL_AND_HW_ENABLE_3V3_ONLY\"\n\t\t(at 505.46 372.11 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n\t\t)\n\t)\n\t(property \"Footprint\" \"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal\"\n\t\t(at 505.46 360.68 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n\t\t\t(hide yes)\n\t\t)\n\t)\n\t(property \"Datasheet\" \"~\"\n\t\t(at 505.46 360.68 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n\t\t\t(hide yes)\n\t\t)\n\t)\n\t(property \"MPN\" \"1715747\"\n\t(id 0)\n\t(at 505.46 360.68 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(hide yes)\n\t)\n)\n\t(pin \"1\"\n\t(uuid \"743f6db8-9429-4e55-b181-5a38ada95ea9\")\n)\n\t(pin \"2\"\n\t(uuid \"ba0a731b-d766-4fae-8b80-f04420088e8d\")\n)\n\t(pin \"3\"\n\t(uuid \"07f874d7-a6f5-49f6-86db-5cb7052ea9fe\")\n)\n\t(pin \"4\"\n\t(uuid \"bc9af848-c96c-4776-9e64-2d5250de129d\")\n)\n\t(instances\n\t\t(project \"Sirokko26201_control\"\n\t\t\t(path \"/d7270d3f-3491-4796-ae0a-c336632ea3f7\"\n\t\t\t\t(reference \"J25\")\n\t\t\t\t(unit 1)\n\t\t\t)\n\t\t)\n\t)\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "wire",
+    "uuid": [
+      "5ef7b8c4-841e-4ded-b763-3fa099c276bf"
+    ],
+    "original": "(wire\n\t(pts\n\t\t(xy 500.38 358.14) (xy 497.84 358.14)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"5ef7b8c4-841e-4ded-b763-3fa099c276bf\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "wire",
+    "uuid": [
+      "670f23a4-5ee6-43da-9c81-629f9e6bf722"
+    ],
+    "original": "(wire\n\t(pts\n\t\t(xy 500.38 363.22) (xy 497.84 363.22)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"670f23a4-5ee6-43da-9c81-629f9e6bf722\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "wire",
+    "uuid": [
+      "103c9525-3b7b-445c-90c8-12836ad8a95b"
+    ],
+    "original": "(wire\n\t(pts\n\t\t(xy 500.38 360.68) (xy 497.84 360.68)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"103c9525-3b7b-445c-90c8-12836ad8a95b\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "wire",
+    "uuid": [
+      "b601c5dc-5261-4bb8-aca2-2fb133a444e9"
+    ],
+    "original": "(wire\n\t(pts\n\t\t(xy 500.38 365.76) (xy 497.84 365.76)\n\t)\n\t(stroke\n\t\t(width 0)\n\t\t(type default)\n\t)\n\t(uuid \"b601c5dc-5261-4bb8-aca2-2fb133a444e9\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "label",
+    "uuid": [
+      "ea66fc70-5437-47a5-8655-4960acfdf89a"
+    ],
+    "original": "(label \"+3V3\"\n\t(at 497.84 358.14 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"ea66fc70-5437-47a5-8655-4960acfdf89a\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "label",
+    "uuid": [
+      "ed459e41-6c72-48e5-ba10-26dbfb68037a"
+    ],
+    "original": "(label \"GND\"\n\t(at 497.84 363.22 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"ed459e41-6c72-48e5-ba10-26dbfb68037a\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "label",
+    "uuid": [
+      "48009987-7f44-4226-a046-3b294c822ab5"
+    ],
+    "original": "(label \"THERMAL_OK\"\n\t(at 497.84 360.68 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"48009987-7f44-4226-a046-3b294c822ab5\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "tag": "label",
+    "uuid": [
+      "0ca0fedb-6b5c-4ddc-be8b-019439f36ff3"
+    ],
+    "original": "(label \"SAFETY_OK\"\n\t(at 497.84 365.76 0)\n\t(effects\n\t\t(font\n\t\t\t(size 1.27 1.27)\n\t\t)\n\t\t(justify right bottom)\n\t)\n\t(uuid \"0ca0fedb-6b5c-4ddc-be8b-019439f36ff3\")\n)"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_pcb",
+    "tag": "footprint",
+    "uuid": [
+      "440cd835-9e24-483d-9b41-05253b315827"
+    ],
+    "original": "(footprint \"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal\"\n\t\t(layer \"F.Cu\")\n\t\t(uuid \"440cd835-9e24-483d-9b41-05253b315827\")\n\t\t(at 130.48 174 180)\n\t\t(descr \"Terminal Block Phoenix MKDS-1,5-4-5.08, 4 pins, pitch 5.08mm, size 20.3x9.8mm, drill diameter 1.3mm, pad diameter 2.6mm, http://www.farnell.com/datasheets/100425.pdf\")\n\t\t(tags \"THT Terminal Block Phoenix MKDS-1,5-4-5.08 pitch 5.08mm size 20.3x9.8mm drill 1.3mm pad 2.6mm\")\n\t\t(property \"Reference\" \"J25\"\n\t\t\t(at 7.62 8 0)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"2edf779f-0e61-4874-8440-6d1ba9e54d4a\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property \"Value\" \"THERMAL_AND_HW_ENABLE_3V3_ONLY\"\n\t\t\t(at 7.62 5.72 0)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"8a14f300-3726-429a-9953-3800f7e1daab\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property \"Datasheet\" \"\"\n\t\t\t(at 0 0 180)\n\t\t\t(unlocked yes)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(hide yes)\n\t\t\t(uuid \"bc91df05-64b2-4044-be05-60594e32a398\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property \"Description\" \"\"\n\t\t\t(at 0 0 180)\n\t\t\t(unlocked yes)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(hide yes)\n\t\t\t(uuid \"307d44f5-3c31-459c-8264-5808f73184d7\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property \"KiLib_Generator\" \"terminal_block/Phoenix\"\n\t\t\t(at 0 0 0)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(hide yes)\n\t\t\t(uuid \"8d351b72-4831-45dd-a21c-b62fcd817156\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property \"MPN\" \"1715747\"\n\t\t\t(at 0 0 180)\n\t\t\t(unlocked yes)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(hide yes)\n\t\t\t(uuid \"06cbb6c7-97ae-44fd-9faa-fbfc060b93d7\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(property ki_fp_filters \"Connector*:*_1x??_*\")\n\t\t(path \"/dad8d3ae-d4a2-4079-b650-45aba24ae31b\")\n\t\t(sheetname \"/\")\n\t\t(sheetfile \"Sirokko26201_control_motor_candidate.kicad_sch\")\n\t\t(attr through_hole)\n\t\t(duplicate_pad_numbers_are_jumpers no)\n\t\t(fp_line\n\t\t\t(start 17.9 4.72)\n\t\t\t(end 0.3 4.72)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"0e98539e-ac0c-48d3-82d7-7ddadb2d18b9\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 17.9 -5.32)\n\t\t\t(end 17.9 4.72)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"49a1aaf1-e0bb-4feb-986e-e9b27f7cc62d\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -0.3 4.72)\n\t\t\t(end -2.66 4.72)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"a49834af-f515-4a1f-abc2-0858e0c0f447\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.66 4.72)\n\t\t\t(end -2.66 -5.32)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"500816f0-017d-484b-9899-ce31a1c99e1e\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.66 4.1)\n\t\t\t(end 17.9 4.1)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"9961d8ef-9d7b-4e26-8b6e-2c3f59b886dc\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.66 2.6)\n\t\t\t(end 17.9 2.6)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"1375ac06-2389-4cf2-b0b3-e569adc688b9\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.66 -2.3)\n\t\t\t(end 17.9 -2.3)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"15bd7c73-a752-4ec0-b414-bcc6fe2ba23f\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.66 -5.32)\n\t\t\t(end 17.9 -5.32)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"defec2b8-1aed-491a-bde3-67b93e624fd0\")\n\t\t)\n\t\t(fp_poly\n\t\t\t(pts\n\t\t\t\t(xy 0 4.72) (xy 0.44 5.33) (xy -0.44 5.33)\n\t\t\t)\n\t\t\t(stroke\n\t\t\t\t(width 0.12)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill yes)\n\t\t\t(layer \"F.SilkS\")\n\t\t\t(uuid \"585b1836-ec83-44e2-8817-b7606bc62a43\")\n\t\t)\n\t\t(fp_rect\n\t\t\t(start -3.04 -5.71)\n\t\t\t(end 18.28 5.1)\n\t\t\t(stroke\n\t\t\t\t(width 0.05)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill no)\n\t\t\t(layer \"F.CrtYd\")\n\t\t\t(uuid \"0197d39a-e098-45a1-a5a1-62abfcdd21d4\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 17.78 4.6)\n\t\t\t(end -2.04 4.6)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"7a4f3070-e10f-4c06-901c-f0b4cd6600ff\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 17.78 -5.2)\n\t\t\t(end 17.78 4.6)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"3840e606-63df-4184-92b8-5ea889501ac8\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 16.378 -0.955)\n\t\t\t(end 14.285 1.138)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"fafda6d1-d430-46f9-b05c-1f768b24159f\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 16.195 -1.138)\n\t\t\t(end 14.102 0.955)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"621cde7d-3d22-4dd6-9fa8-d258b8443a05\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 11.298 -0.955)\n\t\t\t(end 9.205 1.138)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"c6657355-e74f-47a1-a5e7-2d6877400310\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 11.115 -1.138)\n\t\t\t(end 9.022 0.955)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"a3bd8ce2-38f0-4737-b695-9bba7803b3c8\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 6.218 -0.955)\n\t\t\t(end 4.125 1.138)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"0210288f-ad4d-47f1-beb8-37d31753b3e1\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 6.035 -1.138)\n\t\t\t(end 3.942 0.955)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"769d3d95-e923-4535-9079-9a9267c2fc9c\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 1.138 -0.955)\n\t\t\t(end -0.955 1.138)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"cca1b1f0-daec-4572-b2c5-370cc75dd80d\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start 0.955 -1.138)\n\t\t\t(end -1.138 0.955)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"c88f3d01-fdc3-4d69-b1fa-44cdf52e323e\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.04 4.6)\n\t\t\t(end -2.54 4.1)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"2355296a-d68c-428d-b9ca-d96ab45ee097\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.54 4.1)\n\t\t\t(end 17.78 4.1)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"1ff4d393-90c3-4dc2-ad8b-37deadc8c234\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.54 4.1)\n\t\t\t(end -2.54 -5.2)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"f49f3c24-c3f9-4b89-aa31-c200b5bed559\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.54 2.6)\n\t\t\t(end 17.78 2.6)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"3a218d16-0e3e-49fc-bac6-c799209acf94\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.54 -2.3)\n\t\t\t(end 17.78 -2.3)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"8cebfa24-a400-4dae-b4aa-1810506b29a3\")\n\t\t)\n\t\t(fp_line\n\t\t\t(start -2.54 -5.2)\n\t\t\t(end 17.78 -5.2)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"eaf8d439-865e-4b9c-91b4-14668cb8576a\")\n\t\t)\n\t\t(fp_circle\n\t\t\t(center 15.24 0)\n\t\t\t(end 16.74 0)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill no)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"7f29c932-1005-4e51-8b96-52a89da22c0a\")\n\t\t)\n\t\t(fp_circle\n\t\t\t(center 10.16 0)\n\t\t\t(end 11.66 0)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill no)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"818a993b-868c-4a39-b0b2-ae954fb2882f\")\n\t\t)\n\t\t(fp_circle\n\t\t\t(center 5.08 0)\n\t\t\t(end 6.58 0)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill no)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"72429662-93d3-4f4a-8eb4-44a8beedee64\")\n\t\t)\n\t\t(fp_circle\n\t\t\t(center 0 0)\n\t\t\t(end 1.5 0)\n\t\t\t(stroke\n\t\t\t\t(width 0.1)\n\t\t\t\t(type solid)\n\t\t\t)\n\t\t\t(fill no)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"c3bdb196-330d-4f10-b995-a00e57da6b80\")\n\t\t)\n\t\t(fp_text user \"${REFERENCE}\"\n\t\t\t(at 7.62 3.2 0)\n\t\t\t(layer \"F.Fab\")\n\t\t\t(uuid \"b22d8935-b13e-4954-9311-abc6feb4e05b\")\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1 1)\n\t\t\t\t\t(thickness 0.15)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t\t(pad \"1\" thru_hole roundrect\n\t\t\t(at 0 0 180)\n\t\t\t(size 2.6 2.6)\n\t\t\t(drill 1.3)\n\t\t\t(layers \"*.Cu\" \"*.Mask\")\n\t\t\t(remove_unused_layers no)\n\t\t\t(roundrect_rratio 0.096154)\n\t\t\t(net \"/+3V3\")\n\t\t\t(uuid \"8ca3e359-9c0c-465a-a2eb-461018c2dd59\")\n\t\t)\n\t\t(pad \"2\" thru_hole circle\n\t\t\t(at 5.08 0 180)\n\t\t\t(size 2.6 2.6)\n\t\t\t(drill 1.3)\n\t\t\t(layers \"*.Cu\" \"*.Mask\")\n\t\t\t(remove_unused_layers no)\n\t\t\t(net \"/THERMAL_OK\")\n\t\t\t(uuid \"b4f89961-634a-4c70-b20a-11b8ef79fda9\")\n\t\t)\n\t\t(pad \"3\" thru_hole circle\n\t\t\t(at 10.16 0 180)\n\t\t\t(size 2.6 2.6)\n\t\t\t(drill 1.3)\n\t\t\t(layers \"*.Cu\" \"*.Mask\")\n\t\t\t(remove_unused_layers no)\n\t\t\t(net \"/GND\")\n\t\t\t(uuid \"4e21f3ef-2188-481e-9bef-673521d0ee91\")\n\t\t)\n\t\t(pad \"4\" thru_hole circle\n\t\t\t(at 15.24 0 180)\n\t\t\t(size 2.6 2.6)\n\t\t\t(drill 1.3)\n\t\t\t(layers \"*.Cu\" \"*.Mask\")\n\t\t\t(remove_unused_layers no)\n\t\t\t(net \"/SAFETY_OK\")\n\t\t\t(uuid \"59688f5b-e1db-43fb-8cf1-f2b580bdde4a\")\n\t\t)\n\t\t(embedded_fonts no)\n\t\t(model \"${KICAD10_3DMODEL_DIR}/TerminalBlock_Phoenix.3dshapes/TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal.step\"\n\t\t\t(offset\n\t\t\t\t(xyz 0 0 0)\n\t\t\t)\n\t\t\t(scale\n\t\t\t\t(xyz 1 1 1)\n\t\t\t)\n\t\t\t(rotate\n\t\t\t\t(xyz 0 0 0)\n\t\t\t)\n\t\t)\n\t)"
+  }
+]

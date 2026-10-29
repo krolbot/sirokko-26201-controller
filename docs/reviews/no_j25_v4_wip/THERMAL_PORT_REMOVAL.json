@@ -1,0 +1,26 @@
+[
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "original": "(wire (pts (xy 195.58 317.5) (xy 190.5 317.5)) (stroke (width 0) (type default)) (uuid \"dd1d6ef8-afd9-4195-8a6e-efee1ec195ac\"))"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "original": "(label \"THERMAL_OK\" (at 190.5 317.5 0) (effects (font (size 1 1)) (justify right bottom)) (uuid \"2b18bfaf-4ae8-49d9-9ed1-b335db95b84a\"))"
+  },
+  {
+    "file": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "original": "(pin \"THERMAL_OK\" input (at 195.58 317.5 180) (effects (font (size 1 1)) (justify left)) (uuid \"cf457174-3195-4f4e-97e3-9876fd639d2f\"))"
+  },
+  {
+    "file": "MinimalSafety.kicad_sch",
+    "original": "(hierarchical_label \"THERMAL_OK\" (shape input) (at 165.1 200.66 0) (effects (font (size 1 1)) (justify right)) (uuid \"e322c178-94ae-4517-bde4-139180c40f60\"))"
+  },
+  {
+    "file": "MinimalSafety.kicad_sch",
+    "original": "(wire (pts (xy 165.1 200.66) (xy 170.18 200.66)) (stroke (width 0) (type default)) (uuid \"f8d6d2fb-977d-4a36-a102-c04eefdfadbe\"))"
+  },
+  {
+    "file": "MinimalSafety.kicad_sch",
+    "original": "(label \"THERMAL_OK\" (at 170.18 200.66 0) (effects (font (size 1 1)) (justify left bottom)) (uuid \"a42eb0a0-2c1c-485d-9de3-767c99c31b3e\"))"
+  }
+]
