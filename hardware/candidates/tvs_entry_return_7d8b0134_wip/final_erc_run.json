@@ -1,0 +1,19 @@
+{
+  "command": [
+    "kicad-cli",
+    "sch",
+    "erc",
+    "--format",
+    "json",
+    "--severity-all",
+    "--exit-code-violations",
+    "-o",
+    "/projects/exports/sirokko_TVS_ENTRY_RETURN_check/final_erc.json",
+    "/projects/exports/sirokko_TVS_ENTRY_RETURN_check/delivery_project/Sirokko26201_control_motor_candidate.kicad_sch"
+  ],
+  "exit_code": 5,
+  "stdout": "Found 1 violations\nSaved ERC Report to /projects/exports/sirokko_TVS_ENTRY_RETURN_check/final_erc.json\n",
+  "stderr": "",
+  "errors": 0,
+  "warnings": 1
+}

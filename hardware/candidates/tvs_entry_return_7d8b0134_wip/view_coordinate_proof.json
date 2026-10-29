@@ -1,0 +1,20 @@
+{
+  "native_J13_2_mm": [
+    11.62,
+    110.48
+  ],
+  "TOP_J13_2_svg_mm": [
+    16.62,
+    100.48
+  ],
+  "TOP_native_to_plot_translation_mm": [
+    5,
+    -10
+  ],
+  "BOTTOM_J13_2_svg_mm": [
+    318.3552,
+    100.48
+  ],
+  "BOTTOM_mirror_axis_sum_x_mm": 334.9752,
+  "images_are_inspection_only": true
+}

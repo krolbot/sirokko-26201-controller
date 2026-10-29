@@ -1,0 +1,59 @@
+{
+  "source_SHA256": "4c86dc3057c78f4d95aab7d733341c5f1deb7d35804aa71c8d85bc67db3c661d",
+  "D1_position_old_mm": [
+    31,
+    145
+  ],
+  "D1_position_new_mm": [
+    16,
+    102
+  ],
+  "translation_mm": [
+    -15,
+    -43
+  ],
+  "moved_6_bank_tracks": [
+    "4e8db6d9-7b6f-4536-bb58-f196a3fd4234",
+    "80807402-a4bc-4ad2-9873-a59b5fb77763",
+    "d523b466-5649-4b41-bcae-4bd477dde1e6",
+    "a3019025-245b-46d1-8f6f-db4cf36f02f6",
+    "a42433d2-e746-4cbf-ac8b-da4d365c40de",
+    "ef5e41f9-2295-4e88-82b6-6f60a9d20702"
+  ],
+  "added_6_FCu_tracks": [
+    "77f9b738-f6a3-4cbe-a785-0291d1c9adf5",
+    "4057a41f-11a6-47b9-b7a2-179c7cc40700",
+    "e01e804a-ff6d-4484-8503-fb2ea9ffd847",
+    "f4ee6f47-c27b-421a-940a-b9cd335adfad",
+    "26c808d6-3603-4ed7-8899-845dc50dc6df",
+    "e1fc4873-80b4-4a70-8c33-972ce4c9b136"
+  ],
+  "added_2_FCu_zones": [
+    "a697aedc-729e-4683-8919-fb35c87eb5d5",
+    "a1cb6b29-2de7-42f2-96fe-e8248f6518db"
+  ],
+  "new_vias": 1,
+  "EP_stays_floating": true,
+  "preserved_functional_shared_VIN_feed": [
+    "a16e7eb8-cb04-4391-9af2-a5f70b1974dd",
+    "4af53963-afac-444c-ba24-4e92243b6ba7"
+  ],
+  "correction": "v1 removed one shared U13 feed incorrectly; exact source segment restored before acceptance",
+  "added_BCu_logic_return_tracks_1mm": [
+    "cc6fbd9f-f904-4836-a555-103336a17fb3",
+    "eb2c7188-4d0d-495f-9286-c11c93d62ca9"
+  ],
+  "added_logic_return_via": {
+    "uuid": "4ab74b63-7f93-420c-892f-33e7a4fdea4c",
+    "pos_mm": [
+      11.9,
+      90.24
+    ],
+    "diameter_mm": 0.8,
+    "drill_mm": 0.4
+  },
+  "note": "TVS shunt returns to J13.2 directly on F.Cu; low-current logic takes separate B.Cu branch from same J13.2; neither is qualified for full load current",
+  "removed_old_D1_VIN_lead": [
+    "bb88e68f-cf66-48eb-a0fa-1e74d59a1f5f"
+  ]
+}
