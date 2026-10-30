@@ -10304,87 +10304,6 @@
 	)
 )
 (symbol
-	(lib_name "Switch:SW_Push_DPDT")
-	(lib_id "Switch:SW_Push_DPDT")
-	(at 530.86 129.54 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "683915be-cf9f-491a-8cd4-61f74f9bb932")
-	(property "Reference" "J24"
-		(at 530.86 125.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "RESET NKK BB25AB-FA"
-		(at 530.86 133.35 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Sirokko_Panel:SW_NKK_BB25AB-FA_3D_ENVELOPE"
-		(at 530.86 129.54 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 530.86 129.54 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "BB25AB-FA"
-	(id 0)
-	(at 530.86 129.54 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "7fead626-6d7a-41b0-b868-7a155cefb000")
-)
-	(pin "2"
-	(uuid "16e31b1e-8687-42d5-af50-4348c2504514")
-)
-	(pin "3"
-	(uuid "f7abb079-50be-47ff-8f5d-b2be44dbb47d")
-)
-	(pin "4"
-	(uuid "013a9c64-e5e8-4289-bf55-d3a6677dad6d")
-)
-	(pin "5"
-	(uuid "6aba2ee0-f677-4be9-af47-9d54525769ce")
-)
-	(pin "6"
-	(uuid "49f4d68f-d28c-45be-9866-ed61928b3cdb")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "J24")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
 	(lib_name "Device:R")
 	(lib_id "Device:R")
 	(at 558.8 83.82 0)
@@ -12594,12 +12513,6 @@
 			(value "ENCODER EC11E15244G1 + KNOB 41001-1")
 			(footprint "Sirokko_Panel:RotaryEncoder_Alps_EC11E15244G1_Knob41001_3D_ENVELOPE")
 		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/683915be-cf9f-491a-8cd4-61f74f9bb932"
-			(reference "J24")
-			(unit 1)
-			(value "RESET NKK BB25AB-FA")
-			(footprint "Sirokko_Panel:SW_NKK_BB25AB-FA_3D_ENVELOPE")
-		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/99b8e38a-90e8-455c-bbb6-cf829b4f14a0"
 			(reference "R85")
 			(unit 1)
@@ -13983,16 +13896,6 @@
 )
 (wire
 	(pts
-		(xy 525.78 124.46) (xy 523.24 124.46)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "92b7c879-d56b-4090-927d-5273f11c8c43")
-)
-(wire
-	(pts
 		(xy 558.8 100.33) (xy 558.8 102.87)
 	)
 	(stroke
@@ -14100,16 +14003,6 @@
 		(type default)
 	)
 	(uuid "dd66cacc-80a3-40cd-b51b-3aad096abee0")
-)
-(wire
-	(pts
-		(xy 535.94 137.16) (xy 538.48 137.16)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "d9a05c12-da8a-49f1-9050-78e1f30db96c")
 )
 (wire
 	(pts
@@ -15509,16 +15402,6 @@
 		(uuid "4bd0f290-de73-4d06-8579-679fc400cf1c")
 	)
 (label "GND"
-		(at 523.24 124.46 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4d34b3c3-23fe-475c-949c-b882c505c200")
-	)
-(label "GND"
 		(at 558.8 102.87 270)
 		(effects
 			(font
@@ -15637,16 +15520,6 @@
 			(justify right bottom)
 		)
 		(uuid "9b19a0f0-c71a-4204-9fd5-6e8ae9f75ab3")
-	)
-(label "RESET_RELEASED"
-		(at 538.48 137.16 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0fef962b-7e60-4db4-a0c0-4db3ccd2800e")
 	)
 (label "GND"
 		(at 394.97 402.59 0)
@@ -16489,10 +16362,6 @@
 	(uuid "ede25a3a-06e9-4951-9429-c1ac96cb6b59")
 )
 (no_connect
-	(at 535.94 127)
-	(uuid "305cda3f-ce78-4af4-85b9-c78ca7b75066")
-)
-(no_connect
 	(at 377.19 139.7)
 	(uuid "9b2b5e87-2ade-4843-94ba-1f6400d35162")
 )
@@ -16563,15 +16432,6 @@
 	 (justify left top))
 	(uuid "0efdce91-6b1b-4bc4-9ca6-cddffc2f92e4")
 )
-(text "J24 RESET ACTUAL PIN CONTRACT (NKK BB25AB-FA)\n1=EN_CHIP_PU NO; 2=GND COM; 3=unused NC. Hardware RESET grounds DevKit EN.\n4=unused NO; 5=3V3 COM; 6=RESET_RELEASED NC, pulled LOW by R702 when open.\nJ25 REMOVED: no external power or permit interface.\nTemperature conditions belong to MCU_PERMIT, asserted only by the qualified control cycle.\nU6.1 and U6.2 both receive WD_OK; no permanently asserted new input. R701 removed. Reset timing is unqualified."
-	(at 25.4 375.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	 (justify left top))
-	(uuid "ffac4b6b-0c63-418a-89b3-ece37d5ecc0e")
-)
 (text "DRAFT: LM5013 5V is assigned to +5V_DEVKIT in this hierarchy. USB reverse-feed arbitration remains UNQUALIFIED. NO POWER."
 	(at 430 35 0)
 	(effects
@@ -16607,6 +16467,15 @@
 		)
 	 (justify left top))
 	(uuid "c6122bfe-2256-4882-8660-903a9cd09c0b")
+)
+(text "Manual RESET removed: no J24, external reset header, jumper or replacement button.\nAutomatic safety remains: watchdog, latch and CLEAR_N conditions are preserved.\nU6.4 is fixed HIGH by +3V3; valid arming requires a new ARM_PULSE from ESP32.\nEN_CHIP_PU remains at J1.3 for DevKit/USB service; firmware synchronization is pending."
+	(at 25.4 375.92 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "44fe1495-2ce2-4702-92c0-106d5300f217")
 )
 (junction
 	(at 114.46 59.69)
@@ -17197,9 +17066,6 @@
 	)
 (embedded_fonts no)
 (no_connect (at 251.46 76.2) (uuid "67863c2c-0251-4cd2-8588-4723d03f80b7"))
-(no_connect (at 535.94 132.08) (uuid "20f892cb-f39c-48e9-9ca7-5b3f6f1f8334"))
-(wire (pts (xy 525.78 134.62) (xy 520.7 134.62)) (stroke (width 0) (type default)) (uuid "235eba0b-85db-44a0-83ed-dcc09628e337"))
-(label "+3V3" (at 520.7 134.62 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "0f42e5bc-c70d-4c62-b30f-b11074a59eca"))
 (wire (pts (xy 195.58 279.4) (xy 190.5 279.4)) (stroke (width 0) (type default)) (uuid "dabd8568-12c2-4ba1-a64b-4b56883811c8"))
 (label "+3V3" (at 190.5 279.4 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "412f45fd-1b9b-45fa-ae03-d7fb275f70ba"))
 (wire (pts (xy 195.58 287.02) (xy 190.5 287.02)) (stroke (width 0) (type default)) (uuid "5ccb6255-aefb-4e6a-bca1-1a718894628f"))
@@ -17210,10 +17076,6 @@
 (label "P24_PRESENT" (at 190.5 302.26 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "a58f8270-7fad-468c-84f8-831353ecebff"))
 (wire (pts (xy 195.58 309.88) (xy 190.5 309.88)) (stroke (width 0) (type default)) (uuid "5b9ebbfc-2bae-4431-83f5-07db8df9340b"))
 (label "WD_HEARTBEAT" (at 190.5 309.88 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "a9691044-e44e-49e4-86d7-403cb76f1712"))
-
-
-(wire (pts (xy 195.58 325.12) (xy 190.5 325.12)) (stroke (width 0) (type default)) (uuid "e579c96f-3088-4317-81a6-43d2d8906b51"))
-(label "RESET_RELEASED" (at 190.5 325.12 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "ff8db6e9-63eb-43d4-87c8-2d6eccc3f3f7"))
 (wire (pts (xy 195.58 332.74) (xy 190.5 332.74)) (stroke (width 0) (type default)) (uuid "1360ee96-a393-4cc9-a63a-2b0f199ae954"))
 (label "MCU_PERMIT" (at 190.5 332.74 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "13c2f7db-d04e-4dd7-bca5-20955f8015aa"))
 (wire (pts (xy 195.58 340.36) (xy 190.5 340.36)) (stroke (width 0) (type default)) (uuid "9b47830a-472f-4fef-9534-fd7fcccecb9e"))
@@ -17230,10 +17092,8 @@
 (label "K_CLUTCH_RUN_COIL_LOW" (at 386.08 294.64 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "4a84f8a3-5374-483c-bca6-4cf395899a42"))
 (wire (pts (xy 381.0 302.26) (xy 386.08 302.26)) (stroke (width 0) (type default)) (uuid "deba839a-8b62-4a17-9166-b5e144c3d3c6"))
 (label "K_CLUTCH_SAFE_COIL_LOW" (at 386.08 302.26 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "192aa14d-78a6-4416-9437-97c03e5ab2f5"))
-(sheet (at 195.58 271.78) (size 185.42 91.44) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f0f0205c-c52c-4262-94bb-bebe167a6896") (property "Sheetname" "MinimalSafety" (at 195.58 270.51 0) (effects (font (size 1.27 1.27)) (justify left bottom))) (property "Sheetfile" "MinimalSafety.kicad_sch" (at 195.58 364.49 0) (effects (font (size 1 1)) (justify left top))) (pin "+3V3" input (at 195.58 279.4 180) (effects (font (size 1 1)) (justify left)) (uuid "8062c483-7329-4f61-9174-a61680e196cb")) (pin "GND" input (at 195.58 287.02 180) (effects (font (size 1 1)) (justify left)) (uuid "e4859722-2ac1-4ae2-ab55-30bade28478a")) (pin "P24_PROTECTED" input (at 195.58 294.64 180) (effects (font (size 1 1)) (justify left)) (uuid "ef46dd19-9f0a-42e1-92ce-08c353d0443c")) (pin "P24_PRESENT" input (at 195.58 302.26 180) (effects (font (size 1 1)) (justify left)) (uuid "aa4b48ae-4412-4aa2-a411-04be3b587083")) (pin "WD_HEARTBEAT" input (at 195.58 309.88 180) (effects (font (size 1 1)) (justify left)) (uuid "70e29fc5-436a-4e97-99aa-cd58f3e47c78"))  (pin "RESET_RELEASED" input (at 195.58 325.12 180) (effects (font (size 1 1)) (justify left)) (uuid "ce34a4a3-2ade-40fc-9a75-acdc82faa221")) (pin "MCU_PERMIT" input (at 195.58 332.74 180) (effects (font (size 1 1)) (justify left)) (uuid "bd52c630-91da-4e5e-a041-b6c4ab8eab9b")) (pin "ARM_PULSE" input (at 195.58 340.36 180) (effects (font (size 1 1)) (justify left)) (uuid "17ecbe93-8e8f-43d1-ba55-01039df39c98")) (pin "GLOW_CMD" input (at 195.58 347.98 180) (effects (font (size 1 1)) (justify left)) (uuid "0b3abcbd-4388-4cb4-90d6-390e4caf1d08")) (pin "FUEL_CMD" input (at 195.58 355.6 180) (effects (font (size 1 1)) (justify left)) (uuid "be54472d-e401-4e47-af44-621790964241")) (pin "SAFETY_OK" output (at 381.0 279.4 0) (effects (font (size 1 1)) (justify right)) (uuid "b0535701-1707-4b2b-8d40-8741ec8b12ec")) (pin "K_GLOW_COIL_LOW" output (at 381.0 287.02 0) (effects (font (size 1 1)) (justify right)) (uuid "f6676113-da35-43b7-b943-0bbb7b8a1093")) (pin "K_CLUTCH_RUN_COIL_LOW" output (at 381.0 294.64 0) (effects (font (size 1 1)) (justify right)) (uuid "1d976070-cc7d-433d-9906-0fd0ede9397b")) (pin "K_CLUTCH_SAFE_COIL_LOW" output (at 381.0 302.26 0) (effects (font (size 1 1)) (justify right)) (uuid "eddc86e5-088f-4038-b6fe-12845e89ab1a")))
+(sheet (at 195.58 271.78) (size 185.42 91.44) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f0f0205c-c52c-4262-94bb-bebe167a6896") (property "Sheetname" "MinimalSafety" (at 195.58 270.51 0) (effects (font (size 1.27 1.27)) (justify left bottom))) (property "Sheetfile" "MinimalSafety.kicad_sch" (at 195.58 364.49 0) (effects (font (size 1 1)) (justify left top))) (pin "+3V3" input (at 195.58 279.4 180) (effects (font (size 1 1)) (justify left)) (uuid "8062c483-7329-4f61-9174-a61680e196cb")) (pin "GND" input (at 195.58 287.02 180) (effects (font (size 1 1)) (justify left)) (uuid "e4859722-2ac1-4ae2-ab55-30bade28478a")) (pin "P24_PROTECTED" input (at 195.58 294.64 180) (effects (font (size 1 1)) (justify left)) (uuid "ef46dd19-9f0a-42e1-92ce-08c353d0443c")) (pin "P24_PRESENT" input (at 195.58 302.26 180) (effects (font (size 1 1)) (justify left)) (uuid "aa4b48ae-4412-4aa2-a411-04be3b587083")) (pin "WD_HEARTBEAT" input (at 195.58 309.88 180) (effects (font (size 1 1)) (justify left)) (uuid "70e29fc5-436a-4e97-99aa-cd58f3e47c78")) (pin "MCU_PERMIT" input (at 195.58 332.74 180) (effects (font (size 1 1)) (justify left)) (uuid "bd52c630-91da-4e5e-a041-b6c4ab8eab9b")) (pin "ARM_PULSE" input (at 195.58 340.36 180) (effects (font (size 1 1)) (justify left)) (uuid "17ecbe93-8e8f-43d1-ba55-01039df39c98")) (pin "GLOW_CMD" input (at 195.58 347.98 180) (effects (font (size 1 1)) (justify left)) (uuid "0b3abcbd-4388-4cb4-90d6-390e4caf1d08")) (pin "FUEL_CMD" input (at 195.58 355.6 180) (effects (font (size 1 1)) (justify left)) (uuid "be54472d-e401-4e47-af44-621790964241")) (pin "SAFETY_OK" output (at 381.0 279.4 0) (effects (font (size 1 1)) (justify right)) (uuid "b0535701-1707-4b2b-8d40-8741ec8b12ec")) (pin "K_GLOW_COIL_LOW" output (at 381.0 287.02 0) (effects (font (size 1 1)) (justify right)) (uuid "f6676113-da35-43b7-b943-0bbb7b8a1093")) (pin "K_CLUTCH_RUN_COIL_LOW" output (at 381.0 294.64 0) (effects (font (size 1 1)) (justify right)) (uuid "1d976070-cc7d-433d-9906-0fd0ede9397b")) (pin "K_CLUTCH_SAFE_COIL_LOW" output (at 381.0 302.26 0) (effects (font (size 1 1)) (justify right)) (uuid "eddc86e5-088f-4038-b6fe-12845e89ab1a")))
 (wire (pts (xy 180.34 76.2) (xy 175.26 76.2)) (stroke (width 0) (type default)) (uuid "586741eb-cd6b-4321-9c72-2bbda3450e91"))
 (label "P24_PRESENT" (at 175.26 76.2 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "ef688f72-9b92-458d-b48c-a48bc9b9020a"))
 (no_connect (at 251.46 101.6) (uuid "f27231fd-e488-4a59-92d0-873d454161f4"))
-(wire (pts (xy 535.94 121.92) (xy 541.02 121.92)) (stroke (width 0) (type default)) (uuid "40254d7d-1f9c-4242-9737-2e27d6427a71"))
-(label "EN_CHIP_PU" (at 541.02 121.92 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "7d32a337-4e84-41ed-a828-4e9c60d8503a"))
 )

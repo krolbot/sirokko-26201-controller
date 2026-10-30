@@ -7,13 +7,15 @@ The working tree contains one current, complete KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current PCB SHA-256: `f0cbceafcff1f6845bc850b090935e0a5f719f1fe8f087e952177cfb92e8722f`.
+- current PCB SHA-256: `18c19f6415c74e5b2ec4e1d33481a216533cde11e6ebb5407d7605f8e5c79261`.
 
-The current PCB contains 158 footprints, 603 physical pads, 1,384 segments and 401 vias. The latest native check reported 83 DRC violations and 80 unconnected items; ERC reported no violations. This is unfinished board state, not manufacturing acceptance.
+The current PCB contains 156 footprints, 591 physical pads, 1,523 segments and 448 vias. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
+
+The latest native KiCad 10.0.7 check reported 82 DRC warnings, 54 unconnected items, 51 schematic-parity issues and 2 ERC warnings. This is unfinished board state, not manufacturing acceptance.
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 
-There is no firmware in the working tree. The former bench implementation was rejected as a basis for the final product and is available only through Git history. New firmware must wait for final PCB and pin-map acceptance; no ILI9341 driver is implemented.
+There is no firmware in the working tree. The former bench implementation was rejected as a basis for the final product and is available only through Git history. Future firmware must not restore the old manual-RESET functions; arming uses `ARM_PULSE` only during an allowed start. No ILI9341 driver is implemented.
 
 Current documents:
 

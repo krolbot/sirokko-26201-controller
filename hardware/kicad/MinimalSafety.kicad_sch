@@ -2003,7 +2003,6 @@
 (wire (pts (xy 129.54 64.77) (xy 124.46 64.77)) (stroke (width 0) (type default)) (uuid "cb87495d-3613-4d7b-8881-009c86ba4968"))
 (label "HARD_CONDITIONS_OK" (at 124.46 64.77 0) (effects (font (size 1.0 1.0)) (justify right bottom)) (uuid "e0d0d50d-94d3-4f7c-86cd-0fb4f2a29270"))
 (wire (pts (xy 129.54 67.31) (xy 124.46 67.31)) (stroke (width 0) (type default)) (uuid "3e23a8d9-81b3-4481-bdfb-e6c84eef6502"))
-(label "RESET_RELEASED" (at 124.46 67.31 0) (effects (font (size 1.0 1.0)) (justify right bottom)) (uuid "cd74c125-7c88-4d37-8c88-01839cd87227"))
 (wire (pts (xy 129.54 69.85) (xy 124.46 69.85)) (stroke (width 0) (type default)) (uuid "e85bb069-4519-4328-8e75-f341f4503052"))
 (label "P24_PRESENT" (at 124.46 69.85 0) (effects (font (size 1.0 1.0)) (justify right bottom)) (uuid "8bf8e6ea-8c50-4fd2-aa4c-20aece94bc20"))
 (wire (pts (xy 149.86 67.31) (xy 154.94 67.31)) (stroke (width 0) (type default)) (uuid "f88c4550-b5ee-4503-b42c-6db6a6c076a0"))
@@ -3382,94 +3381,6 @@
 (label "ARM_PULSE" (at 223.52 166.37 0) (effects (font (size 1.0 1.0)) (justify left bottom)) (uuid "03461012-7f04-4c6f-88d5-0be03ebee5aa"))
 (wire (pts (xy 223.52 179.07) (xy 223.52 184.15)) (stroke (width 0) (type default)) (uuid "62851f83-9a35-459c-a7ca-d542f1fd982e"))
 (label "GND" (at 223.52 184.15 0) (effects (font (size 1.0 1.0)) (justify left bottom)) (uuid "87dd8b23-0996-4593-870f-d7d8f1a55602"))
-
-
-
-
-
-(symbol
-	(lib_name "Device:R")
-	(lib_id "Device:R")
-	(at 320.040000 175.260000 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "3172feb5-2b27-4e03-9526-e85bda8516c7")
-	(property "Reference" "R702"
-		(at 326.390000 173.355000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "10k"
-		(at 326.390000 177.165000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-		(at 320.040000 175.260000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-		(at 320.040000 175.260000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "MFR-25FBF52-10K"
-	(id 0)
-	(at 320.040000 175.260000 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(property "Manufacturer" "Yageo"
-	(id 1)
-	(at 320.040000 175.260000 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "1d2c32af-e4ee-4140-8079-aef93b27d7ed")
-)
-	(pin "2"
-	(uuid "8aa1576f-d15e-42b7-a220-6546bfea0ff3")
-)
-	(instances
-		(project "Sirokko26201_control"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/f0f0205c-c52c-4262-94bb-bebe167a6896"
-				(reference "R702")
-				(unit 1)
-			)
-		)
-	)
-)
-(wire (pts (xy 320.04 171.45) (xy 320.04 166.37)) (stroke (width 0) (type default)) (uuid "6dd08df7-df42-4e3f-8527-669005f06e81"))
-(label "RESET_RELEASED" (at 320.04 166.37 0) (effects (font (size 1.0 1.0)) (justify left bottom)) (uuid "50961ec9-9b9a-4dbc-bb89-c0d31bc28e28"))
-(wire (pts (xy 320.04 179.07) (xy 320.04 184.15)) (stroke (width 0) (type default)) (uuid "3d611b3f-6dde-416b-a87f-8a37a9cd5aee"))
-(label "GND" (at 320.04 184.15 0) (effects (font (size 1.0 1.0)) (justify left bottom)) (uuid "1c6d5045-35e8-427c-adef-937354e3621a"))
 (symbol
 	(lib_name "Device:R")
 	(lib_id "Device:R")
@@ -3555,13 +3466,29 @@
 (label "GND" (at 368.3 184.15 0) (effects (font (size 1.0 1.0)) (justify left bottom)) (uuid "c820e864-323a-40cc-9e20-21f0da2047d2"))
 (text "SIROKKO: MINIMAL SAFETY CORE - 3 IC + EXISTING RELAY DRIVER" (at 30.48 20.32 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "b09ddb60-1783-47af-bc44-39b5d93a2acc"))
 (text "DRAFT / NOT FOR ORDER / NO POWER / NO FIRE - hierarchy INTEGRATED in root SCH; PCB/firmware NOT synchronized" (at 30.48 27.94 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "af0e08dd-acb0-4920-9a7e-13401f16e47b"))
-(text "CLEAR_N = WD_OK & RELAY_DRIVER_OK & RESET_RELEASED & P24_PRESENT & MCU_PERMIT" (at 30.48 35.56 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "e8f83ac3-aee3-4728-aaa1-14ea57d26a4a"))
 (text "Positive ARM edge latches permission. Any CLEAR_N=0 removes permission; no automatic rearm." (at 30.48 96.52 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "9b686d3f-df34-4612-b762-f42b15200b36"))
 (text "Q -> safety relay IN3; /Q -> DRV8803 nENBL(8). GLOW_CMD and FUEL_CMD stay separate." (at 30.48 104.14 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "b18d6171-9e75-4ca3-aab3-be9d3267b78d"))
 (text "Process checks, timings, purge and software fault handling belong to ESP32; motor/purge power path is unchanged." (at 30.48 111.76 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "963b7ddd-7649-40b4-b039-b72aa1352889"))
-(text "Ports: RESET NC -> 3V3; ARM_PULSE=GPIO41; MCU_PERMIT=GPIO21; P24_PRESENT=GPIO6 INPUT ONLY." (at 30.48 246.38 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "0f2bf138-f800-467c-af2f-a96a13e50c1a"))
 (text "TPS3431 fixed WDT: 170..230ms; heartbeat falling-edge interval <=100ms. No peripheral-task heartbeat." (at 30.48 254.0 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "4b7be487-1461-45af-8ce9-280f91c65977"))
 (text "24V loss/recovery, startup dynamics, relay ratings and full safety acceptance remain OPEN." (at 30.48 261.62 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "913d948d-0a70-450c-aeb9-d89079e1fc09"))
+(text "CLEAR_N = WD_OK & RELAY_DRIVER_OK & P24_PRESENT & MCU_PERMIT"
+	(at 30.48 35.56 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "8b42c9e8-82dc-4068-a410-a60303495470")
+)
+(text "U6.4=+3V3; no manual RESET. ARM_PULSE=GPIO41; MCU_PERMIT=GPIO21; P24_PRESENT=GPIO6 INPUT ONLY."
+	(at 30.48 246.38 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "10613f96-ae07-409b-b342-5529adcc1bbf")
+)
 (wire (pts (xy 314.96 81.28) (xy 317.5 81.28)) (stroke (width 0) (type default)) (uuid "129b6245-6fb2-43f2-9d04-008c05f8a720"))
 (wire (pts (xy 317.5 81.28) (xy 320.04 81.28)) (stroke (width 0) (type default)) (uuid "1655436c-2932-44a1-8f9c-ec1e3e5530a0"))
 (wire (pts (xy 317.5 81.28) (xy 317.5 91.44)) (stroke (width 0) (type default)) (uuid "0ffb85f3-7b3d-414c-9283-923a54f4bda1"))
@@ -3584,12 +3511,6 @@
 (hierarchical_label "WD_HEARTBEAT" (shape input) (at 40.64 241.3 0) (effects (font (size 1 1)) (justify right)) (uuid "1ed68e3c-b0d6-4edf-bdbe-e789ca40b030"))
 (wire (pts (xy 40.64 241.3) (xy 45.72 241.3)) (stroke (width 0) (type default)) (uuid "1fc44e0f-85be-4169-9d78-70162026b7ad"))
 (label "WD_HEARTBEAT" (at 45.72 241.3 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "ecbb4c9a-1ad8-4ceb-8745-688bdf1fae13"))
-
-
-
-(hierarchical_label "RESET_RELEASED" (shape input) (at 165.1 210.82 0) (effects (font (size 1 1)) (justify right)) (uuid "2e45103c-945b-4f7f-b88e-daecfd80a878"))
-(wire (pts (xy 165.1 210.82) (xy 170.18 210.82)) (stroke (width 0) (type default)) (uuid "4c5f2f4c-4998-453f-9bd1-b9f9ed48b7f4"))
-(label "RESET_RELEASED" (at 170.18 210.82 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "52ad8c7f-5c0d-4294-8057-9fd5a2af9ecb"))
 (hierarchical_label "MCU_PERMIT" (shape input) (at 165.1 220.98 0) (effects (font (size 1 1)) (justify right)) (uuid "a3743eb1-2932-4f37-ba6e-7f3847b8cbd7"))
 (wire (pts (xy 165.1 220.98) (xy 170.18 220.98)) (stroke (width 0) (type default)) (uuid "1486a917-3898-4b98-8ab7-428db475e48f"))
 (label "MCU_PERMIT" (at 170.18 220.98 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "644a7dd1-7ac4-4ea1-98f4-b2dac6613002"))
@@ -3614,4 +3535,15 @@
 (hierarchical_label "K_CLUTCH_SAFE_COIL_LOW" (shape output) (at 289.56 241.3 0) (effects (font (size 1 1)) (justify right)) (uuid "110ef453-c4c2-4790-a315-a24f080ec7bf"))
 (wire (pts (xy 289.56 241.3) (xy 294.64 241.3)) (stroke (width 0) (type default)) (uuid "368e44c2-9b65-43a7-89bf-f57efd77004d"))
 (label "K_CLUTCH_SAFE_COIL_LOW" (at 294.64 241.3 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "479d1d53-84da-43f7-abb9-69efb0b6adf5"))
+(global_label "+3V3"
+		(shape input)
+		(at 124.46 67.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f6e0e509-0162-4f84-be8b-6de9c031b5d9")
+	)
 )
