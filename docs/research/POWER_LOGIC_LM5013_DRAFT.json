@@ -1,11 +1,47 @@
 {
   "status": "DRAFT_NOT_FOR_ORDER",
-  "schematic_server_path": "локальный проверочный артефакт, не включён",
-  "canonical_pcb_replaced": true,
+  "motor_q101_source_escape_dc_screen": {
+    "status": "CALCULATED_LAYOUT_INPUT_NOT_APPLIED_NOT_THERMAL_ACCEPTANCE",
+    "inputs": {"current_A": 15, "conductor_temperature_C": 80, "finished_copper_assumed_um": 35, "neck_width_mm": 1.905, "single_neck_budget_V": 0.01},
+    "rho_ohm_m": 2.125576e-8,
+    "formula": "R=rho*L/(w*t); U=I*R; P=I^2*R; Lmax=Ubudget*w*t/(rho*I)",
+    "rectangular_neck_results": [
+      {"length_mm": 1, "drop_mV": 4.781948256467942, "loss_W": 0.07172922384701913},
+      {"length_mm": 2, "drop_mV": 9.563896512935884, "loss_W": 0.14345844769403826},
+      {"length_mm": 3, "drop_mV": 14.345844769403826, "loss_W": 0.2151876715410574}
+    ],
+    "Lmax_single_rectangular_neck_mm": 2.091197868248418,
+    "assigned_layout_target_neck_max_mm": 1.0,
+    "native_source_pad_mm": [262.08, 145],
+    "native_force1_mm": [272.465, 144.105],
+    "native_force2_other_net_mm": [267.535, 144.105],
+    "source_to_force1_straight_mm": 10.423495095216374,
+    "warnings": ["1.905 mm is nominal pad width, not guaranteed solder/contact width", "No spreading, plating, solder or thermal solution", "Expand immediately after escape; all neck budgets sum into the same 0.10 V loop budget", "Do not route to nearer force2: that bypasses the shunt", "15 A is assigned interface current, not a measurement", "No power, flash, fire or production release"]
+  },
+  "motor_force_pad_escape_dc_screen": {
+    "status": "CALCULATED_LAYOUT_INPUT_NOT_APPLIED_NOT_THERMAL_ACCEPTANCE",
+    "inputs": {"current_A": 15, "conductor_temperature_C": 80, "finished_copper_assumed_um": 35, "neck_width_mm": 2.69, "single_neck_budget_V": 0.01},
+    "rho_ohm_m": 2.125576e-8,
+    "formula_rectangular": "R=rho*L/(w*t); U=I*R; P=I^2*R; Lmax=Ubudget*w*t/(rho*I)",
+    "Lmax_single_rectangular_neck_mm": 2.9529250737996042,
+    "assigned_layout_target_neck_max_mm": 2.0,
+    "assigned_target_drop_mV": 6.772945300053107,
+    "assigned_target_loss_W": 0.1015941795007966,
+    "taper_sensitivity": {
+      "formula": "R=rho*L*ln(wide/neck)/(t*(wide-neck)); quasi-one-dimensional strip approximation only",
+      "length_mm": 5, "neck_mm": 2.69, "wide_mm": 20,
+      "drop_mV_at_35um": 5.278920043247168,
+      "loss_W_at_35um": 0.07918380064870753,
+      "drop_mV_at_70um": 2.639460021623584
+    },
+    "limitations": "Nominal pad width, not qualified effective contact width. No current-crowding, solder, pad spreading or thermal verification. Taper model is not a rigorous bound. Each neck consumes part of total 0.10 V copper-loop budget; do not allocate that budget independently to every neck. No PCB edits or fabrication stack selection."
+  },
+  "schematic_server_path": "/projects/Sirokko26201_control/logic_power_24_5_DRAFT.kicad_sch",
+  "canonical_pcb_replaced": false,
   "footprint_parent_acceptance": {
     "scope": "GEOMETRY_ACCEPTED_FOR_DRAFT_INTEGRATION_NOT_MANUFACTURING_RELEASE",
     "U101_assignment": "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B",
-    "readback_netlist_server_path": "локальный проверочный артефакт, не включён",
+    "readback_netlist_server_path": "/projects/exports/logic_power_assigned_parent/logic_power_24_5_DRAFT.xml",
     "readback_verified": true,
     "parent_review": "Native pad coordinates/numbers/layers and rendered footprint compared with TI DDA0008B 4214849/B land pattern. EP copper 2.95x4.90 mm, mask/paste 2.71x3.40 mm.",
     "isolated_drc": "0 violations and 0 unconnected; report contains 5 default ignored checks, not a complete design/thermal validation",
@@ -57,6 +93,511 @@
     "UVLO_rise_max_V": 17.923232323232323,
     "input_power_budget_W": 6.25,
     "input_current_budget_A_at_24V": 0.2604166666666667
+  },
+  "input_ceramic_characteristic_review": {
+    "status": "EXACT_CHARACTERISTIC_SHEET_READ_AND_VISUALLY_CHECKED_SENSITIVITY_ONLY",
+    "references": [
+      "C101",
+      "C102"
+    ],
+    "MPN_from_published_schematic": "GRM32ER72A225KA35L",
+    "manufacturer_sheet_base_part": "GRM32ER72A225KA35",
+    "source_url": "https://pimapi.murata.com/public/api/pim/v1/characteristics/search/technical?partNum=GRM32ER72A225KA35%23&productCategoryId=ceramicCapacitorSMD&displayLanguage=en&languageRegion=en-us",
+    "source_sha256": "804881a6741d261c32be6aab66f147cffc98f30d092bc831ed3a5ac96155fc60",
+    "source_page": 1,
+    "source_statement": "This PDF has only typical specifications. Product specifications in this PDF are as of Oct. 2026.",
+    "nominal_each_F": 2.2e-06,
+    "rated_voltage_V": 100,
+    "dielectric": "X7R",
+    "initial_tolerance_fraction": 0.1,
+    "dimensions_mm": {
+      "L": [
+        3.2,
+        0.3
+      ],
+      "W": [
+        2.5,
+        0.2
+      ],
+      "T": [
+        2.5,
+        0.2
+      ]
+    },
+    "DC_bias_visual_readback": "At18/30/50V approximately -12/-27/-51 percent, reading uncertainty about2-3 percentage points. Measured1kHz/1Vrms; curves typical, not a guarantee.",
+    "model_assumptions": "Ideal CCM buck,Vout4.992V,Iout1A,f394936.7089Hz,Lmin26.4uH. C103 excluded entirely. Initial tolerance0.9,tempfactor0.85,and0.03 retained-fraction deduction are multiplied as sensitivity assumptions, not a guaranteed combined Cmin or simultaneousDC/temp model.",
+    "formulas": {
+      "Ctyp": "2*2.2uF*DCretained",
+      "Csensitivity": "2*2.2uF*(DCretained-0.03)*0.9*0.85",
+      "ICin_rms": "sqrt(Iout^2*D*(1-D)+D*deltaIL^2/12)",
+      "capacitive_ripple": "Iout*D*(1-D)/(f*Cin); excludesESR/ESL/PSM/startup/inputcable/filterimpedance"
+    },
+    "results": [
+      {
+        "Vin_V": 18,
+        "DC_bias_typical_retained_fraction": 0.88,
+        "C_pair_typical_uF": 3.8720000000000003,
+        "C_pair_sensitivity_uF": 2.8611,
+        "ICin_rms_A": 0.4507620103241216,
+        "capacitive_ripple_typical_Vpp": 0.13106213651668194,
+        "capacitive_ripple_sensitivity_Vpp": 0.1773697503032374
+      },
+      {
+        "Vin_V": 30,
+        "DC_bias_typical_retained_fraction": 0.73,
+        "C_pair_typical_uF": 3.2119999999999997,
+        "C_pair_sensitivity_uF": 2.3562000000000003,
+        "ICin_rms_A": 0.375393031951842,
+        "capacitive_ripple_typical_Vpp": 0.10934728102947282,
+        "capacitive_ripple_sensitivity_Vpp": 0.14906352035763798
+      },
+      {
+        "Vin_V": 50,
+        "DC_bias_typical_retained_fraction": 0.49,
+        "C_pair_typical_uF": 2.156,
+        "C_pair_sensitivity_uF": 1.54836,
+        "ICin_rms_A": 0.30235311035717366,
+        "capacitive_ripple_typical_Vpp": 0.1055475176252319,
+        "capacitive_ripple_sensitivity_Vpp": 0.14696869461882248
+      }
+    ],
+    "decision": "Retain current C101/C102 assignment. Nominal4.4uF is not effective4.4uF under DC bias. Characteristic-sheet verification resolves exact part identity and typical behavior, not hot RMS/lifetime or50Vtransient acceptance. Need final input-loop geometry and C103 disposition.",
+    "C103_research": "Current CAD mismatch remains: polarized22uF100V symbol and1210 footprint; published MPN GRM32ER72A226KE20L is not qualified. PanasonicEEUFC2A220 was documented but not selected because its260mA ripple rating is below the nominal full input-ripple screen450.762mA. Engineer now selects documented PanasonicEEUFR2A101,100uF100V radial10x20mm/P5mm,for next DRAFT integration. This deliberately changes an engineer-assigned bulk capacitance,not a user requirement. No CAD change while RESET writer owns project; no new release approval.",
+    "PCB_modified": false,
+    "production_release": false,
+    "C103_documented_bulk_selection": {
+      "status": "THT_PADS_IN_LIVE_PCB_CONFIRMED_COURTYARD_CORRECTION_AND_FULL_ACCEPTANCE_PENDING_NOT_POWER_QUALIFIED",
+      "native_partial_readback": {
+        "source": "Live KiCad MCP get_footprint_pads/get_footprint_bounds; canonical /projects/Sirokko26201_control/Sirokko26201_control_motor_candidate.kicad_pcb, during t_8981e79c running. Read-only; no SHA freeze or copper connectivity acceptance.",
+        "origin_mm": [120, 35],
+        "pad1_mm": [120, 35],
+        "pad1_net": "/P24_PROTECTED",
+        "pad2_mm": [125, 35],
+        "pad2_net": "/GND",
+        "pads": "2x2mm, thru_hole on *.Cu/*.Mask, pad1 roundrect, pad2 circle. Actual drill/value/MPN not returned by these calls; not claimed verified here.",
+        "observed_courtyard_bounds_mm": [117.25, 29.75, 127.75, 40.25],
+        "observed_courtyard_size_mm": [10.5, 10.5],
+        "max_body_diameter_mm": 10.5,
+        "observed_radial_margin_to_max_body_mm": 0,
+        "assigned_min_radial_assembly_margin_mm": 0.25,
+        "required_courtyard_min_size_mm": [11, 11],
+        "required_courtyard_min_bounds_mm": [117, 29.5, 128, 40.5],
+        "decision": "Pad polarity and pitch match required THT integration, but native courtyard only equals maximum body diameter. After current exclusive via repair, sole engineering writer must enlarge F.CrtYd to at least assigned diameter11mm around actual body centre122.5,35, check adjacent bodies, then refill/full DRC and parity. Do not silently alter shared standard footprint library; qualify local/project variant. No PCB writes by this read-only review."
+      },
+      "manufacturer": "Panasonic",
+      "MPN": "EEUFR2A101",
+      "manufacturer_product_url": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR2A101",
+      "manufacturer_datasheet_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1259.pdf",
+      "datasheet_revision": "01-Sep-25",
+      "selection_reason": "Retain local high-frequency C101/C102; use a documented radial bulk part with1.5A rated100kHz ripple rather than relying on precise current division to justify a260mA part. Nominal full-input CCM screening is not a fault or broadband thermal qualification.",
+      "capacitance_F": 0.0001,
+      "initial_tolerance_fraction_at120Hz20C": 0.2,
+      "rated_voltage_V": 100,
+      "category_temperature_C": [
+        -40,
+        105
+      ],
+      "ripple_rated_A_at100kHz105C": 1.5,
+      "impedance_max_ohm_at100kHz20C": 0.084,
+      "impedance_max_ohm_at100kHz_minus10C": 0.336,
+      "impedance_is_not_ESR": true,
+      "leakage_max_uA_after2min20C": 100,
+      "endurance_h_at105C_rated_conditions": 10000,
+      "endurance_is_not_board_service_life": true,
+      "mechanical": {
+        "body_diameter_nominal_mm": 10,
+        "body_diameter_max_mm": 10.5,
+        "body_length_nominal_mm": 20,
+        "body_length_max_mm": 22,
+        "lead_pitch_nominal_mm": 5,
+        "lead_pitch_tolerance_mm": 0.5,
+        "lead_diameter_nominal_mm": 0.6,
+        "lead_diameter_tolerance_mm": 0.05,
+        "required_footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+        "upstream_source": "https://raw.githubusercontent.com/KiCad/kicad-footprints/master/Capacitor_THT.pretty/CP_Radial_D10.0mm_P5.00mm.kicad_mod",
+        "upstream_pad_size_mm": [
+          2,
+          2
+        ],
+        "upstream_drill_mm": 1,
+        "upstream_pad_centres_mm": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ],
+        "pin_map": {
+          "1": "positive/P24_PROTECTED",
+          "2": "negative/GND"
+        },
+        "actual_installed_footprint_verified": false,
+        "integration_mechanical_review": {
+          "status": "ENGINEERING_ENVELOPE_AND_ASSEMBLY_REQUIREMENTS_ASSIGNED_NOT_IN_CAD",
+          "source": "Panasonic FR-A ABA0000C1259.pdf 01-Sep-25 dimensions and Matters to Be Observed When Using This Product; exact KiCad upstream CP_Radial_D10.0mm_P5.00mm source",
+          "live_C103": "Native PCB at120.5,57.5mm still has SMD pads119.025,57.5 and121.975,57.5; pin1=/P24_PROTECTED,pin2=/GND. Current footprint is NOT the radial selection.",
+          "manufacturer_requirements": "For6.3..16mm body diameters provide at least2mm space above pressure-relief valve; no high-current/high-voltage patterns above valve. Sleeve is not guaranteed insulation. Avoid routing below body on double-sided board and isolate case. Match lead/hole pitch; any lead readjustment must not stress body. Radial capacitors must NOT be reflow soldered.",
+          "body_max_diameter_mm": 10.5,
+          "body_max_length_mm": 22,
+          "minimum_vent_space_mm": 2,
+          "minimum_roof_height_from_body_bottom_mm": 24,
+          "height_reference": "24mm is measured from actual body bottom, not necessarily PCB surface; add actual assembly lift and mounting tolerances. Keep valve escape volume clear of TFT,DevKit,panel,wiring.",
+          "library_courtyard_radius_mm": 5.25,
+          "library_clearance_to_max_body_mm": 0,
+          "assigned_courtyard_radius_mm": 5.5,
+          "assigned_courtyard_diameter_mm": 11,
+          "courtyard_basis": "R=10.5/2+0.25=5.5mm;0.25mm is assigned assembly allowance beyond maximum can, not manufacturer value. Stock nominal10mm courtyard has zero allowance at10.5mm maximum. Use project variant or explicit envelope check; retain pads/polarity and validate installed library version.",
+          "integration_decision": "Keep selected EEUFR2A101; correct envelope and assembly instructions, not replace part for a nominal courtyard mismatch. Do not blindly substitute radial footprint at old SMD origin: body centre is offset2.5mm from pin1. Final XYZ location, drill/lead tolerance and physical copper remain pending sole CAD writer handoff."
+        },
+        "final_XYZ_clearance_verified": false
+      },
+      "supplier": {
+        "url": "https://www.chipdip.ru/product/eeufr2a101-kondensatory-alyuminievye-panasonic-8048099750",
+        "SKU": "8048099750",
+        "observed_available_pieces": 33,
+        "observed_price_RUB": 88,
+        "observed_minimum_quantity": 1,
+        "observed_lead_time_days": 9,
+        "purchase_authorized": false
+      },
+      "frequency_correction": {
+        "source": "datasheet page1,47..330uF row",
+        "frequencies_Hz": [
+          60,
+          120,
+          1000,
+          10000,
+          100000
+        ],
+        "factors": [
+          0.6,
+          0.7,
+          0.85,
+          0.95,
+          1.0
+        ],
+        "above100kHz": "No explicit correction column above100kHz; do not extrapolate guaranteed ESR or assert broadband temperature qualification."
+      },
+      "calculation": {
+        "scope": "Initial tolerance20C energy/charge; nominal CCM input-ripple screen from existing model,not a guaranteed fullPVT/fault or spectral bound.50V remains prohibited.",
+        "formulas": "Cmax=Cnom*1.2;Cmin=Cnom*0.8;Q=Cmax*V;E=0.5*Cmax*V^2;Icharge=Cmax*dVdt",
+        "Cmin_uF": 80,
+        "Cmax_uF": 120,
+        "points": [
+          {
+            "Vin_V": 18,
+            "charge_mC": 2.16,
+            "energy_mJ": 19.439999999999998
+          },
+          {
+            "Vin_V": 24,
+            "charge_mC": 2.8800000000000003,
+            "energy_mJ": 34.56
+          },
+          {
+            "Vin_V": 30,
+            "charge_mC": 3.6,
+            "energy_mJ": 54.0
+          },
+          {
+            "Vin_V": 50,
+            "charge_mC": 6.0,
+            "energy_mJ": 150.0
+          }
+        ],
+        "charge_energy_ratio_vs22uF": 4.545454545454546,
+        "extra_Cmax_uF": 93.6,
+        "Icharge_A_at_assumed_1V_per_ms": 0.12000000000000001,
+        "ripple_screen_A": 0.4507620103241216,
+        "rated_ripple_utilization_at100kHz": 0.30050800688274776,
+        "ripple_rating_A_at60Hz": 0.8999999999999999,
+        "actual_startup_slew_verified": false
+      },
+      "integration_contract": [
+        "Do not modify ready-made DevKit/TFT or replace C101/C102. Replace only C103 and its own local copper as required; keep other pad-net map.",
+        "After RESET writer RELEASED,read current C103 MPN and native library,replace actual1210 with correct radial footprint; no F8-wide footprint exchange or unused duplicate.",
+        "Choose actual location by body10.5mm and length22mm maxima,including valve clearance,venting,insulated case and assembly access; retain correct polarity and short positive/return paths.",
+        "Radial part is fitted after SMD reflow; follow manufacturer soldering instructions,not reflow profile of MLCC.",
+        "Recalculate input protection MOSFET linear-mode SOA/current ramp against measured or documented gate-slew and total downstream capacitance. At30V C103alone can store54mJ and needs3.6mC atCmax; not a claim that ramp is1V/ms.",
+        "Qualify mixed-frequency capacitor RMS,ESR/ESL,actual input source/harness,PSM/startup/fault/retry heating and permitted enclosure temperature.1A is a design load,not a hardware current limit.",
+        "Rebuild actual SCH/PCB/BOM/calculation once integrated and check full refill/DRC/ERC/parity. Do not order/power/flash/fire from selection."
+      ],
+      "startup_input_protection_review": {
+        "status": "NATIVE_SCHEMATIC_GAP_IDENTIFIED_NOT_FIXED_NOT_POWER_QUALIFIED",
+        "source": "https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf",
+        "document": "SNOSD95C, revised December2020, sections7.5 and9.3.2.2, printed pages6 and15-16",
+        "actual_controller": "U13 LM74800QDRRRQ1",
+        "native_sheet": "/projects/Sirokko26201_control/Sirokko_Input_Protection_WIP.kicad_sch",
+        "observations": "Full native sheet inventory has only C24 CAP-VS and C25 VS-GND. Native HGATE trace lists U13.8,R92.1,R93.1; R92/R93 are4.7ohm individual gate resistors for Q3/Q4 IPB017N10N5LFATMA1. No explicit external CdVdT series-R network is present on this sheet. This is not proof of uncontrolled current or a measured ramp: intrinsic gate/Miller charge and source impedance also affect startup.",
+        "HGATE_source_current_min_typ_max_uA": [39,55,75],
+        "formula_from_TI": "CdVdT=IHGATE*Cout/Iinrush; initial sizing model, not an active measured-current limiter",
+        "assigned_screen_target_capacitive_current_A": 0.25,
+        "scope": "Only proposed C103 plus existing C101/C102 initial tolerance at20C; not total downstream system capacitance, not fullPVT or transient model. No capacitor/series-resistor MPN, topology or location approved by this calculation.",
+        "partial_Cmax_uF": 124.84,
+        "partial_values_disposition": "Historical C103+C101+C102-only subtotal, NOT a system inrush bound. Superseded for current protected-rail screening by protected_rail_capacitance_audit below; do not size startup control from 37.452nF alone.",
+        "protected_rail_capacitance_audit": {
+          "status": "WHOLE_ROOT_DIRECT_RAIL_GROUP_CONFIRMED_SYSTEM_STARTUP_NOT_QUALIFIED",
+          "HGATE_ramp_design_screen": {
+            "status": "CONDITIONAL_CALCULATED_CANDIDATE_NOT_IN_CAD_NOT_SOA_ACCEPTED",
+            "source": "TI SNOSD95C section9.3.2.2 Figure9-3 page15 visually inspected; Equation2/page16; IHGATE39/55/75uA table7.5",
+            "topology_verified": "HGATE -> series R -> CdVdT -> GND. NOT HGATE-to-OUT. On this board HGATE is U13.8/R92.1/R93.1; individual4.7ohm gate resistors retained. Added seriesR value NOT selected: turnoff/discharge and gate stability need review.",
+            "assumptions": "Candidate C103100uF; direct-load Cmax520.95uF reference-temperature screen. Hypothetical CdVdT220nF ±10% EFFECTIVE198..242nF, not guaranteed by selecting a220nF MLCC. Ig39..75uA used as datasheet screen, not model of complete startup at all changing voltages. No downstream loads or intrinsic gate capacitance model.",
+            "formulas": "dVout/dt=IHGATE/CdVdT;Icap=Cload*dVout/dt;t=V/dVoutdt;Pinitial=V*Icap;EFET_cap=0.5*Cload*V^2",
+            "buck_load_during_ramp_sensitivity": {
+              "status": "ANALYTICAL_SENSITIVITY_ONLY_NOT_SOA_OR_STARTUP_ACCEPTANCE",
+              "inputs": "Vin=30V constant; direct C=520.95uF; hypothetical linear ramps from existing CdVdT screen; constant buck input power6.25W switched on at existing minimum UVLO15.446831683168316V. These are assigned model values, not actual boot measurements or guaranteed load bounds.",
+              "formula": "Epass_load=P/s*(Vin*ln(Vin/Venable)-(Vin-Venable)); Epass_total=0.5*C*Vin^2+Epass_load. s is V/s; integral covers Venable..Vin. Units W/(V/s)*V=J.",
+              "slew_V_per_ms": [0.16115702479338842,0.25,0.37878787878787873],
+              "extra_pass_energy_mJ": [207.89644998398182,134.01589337810398,88.45048962954863],
+              "total_pass_energy_screen_mJ": [442.32394998398183,368.443393378104,322.8779896295486],
+              "buck_current_at_enable_A": 0.4046137180875953,
+              "independent_verification": "At250V/s midpoint integration10000 intervals gives0.13401589317425672J versus analytic0.134015893378104J; difference2.0384727239530775e-10J. Zero power/zero interval limits give zero load term.",
+              "decision": "Do not size or accept input MOSFETs by capacitor-only234.4275mJ. Slower ramp lowers capacitor current but increases concurrent-load dissipation. Constant-power model omits real startup soft-start/current limit, downstream output-cap charging, relay/LM317 loads and intrinsic gate dynamics; actual waveform, initial temperature and per-device SOA remain required. No assumption of equal Q3/Q4 sharing and no CAD change."
+            },
+            "fixed_case_SOA_graphical_screen": {
+              "status": "CONDITIONAL_FIXED_CASE25C_SCREEN_CLEAR_NOT_ACTUAL_BOARD_STARTUP_ACCEPTANCE",
+              "source": "Exact IPB017N10N5LF Rev2.3 physical/printed page6 Diagram3; raster reviewed. Curves1us/10us/100us/1ms/10ms/DC; caption TC25C,D0. Diagram4 ZthJC parameter D=tp/T including singlepulse.",
+              "graph_readback": "At30V DC limit visually approximately8..10A; graphical estimate, not a precision guaranteed scalar. DC curve lies above0.602A throughout plotted0.1..30V. Graph does not literally cover0V; lowVDS conduction is a different limit.",
+              "model_inputs": "Prior conditional linear-ramp/C520.95uF/buck6.25W fromUVLO15.446831683V model only; one Q3 or Q4 conservatively carries all current, no sharing credit. Other loads, real boot and output charging omitted.",
+              "formula": "I=Cs+P/v for v>=UVLO; Ppass=(30-v)*(Cs+P/v). BelowUVLO Ppass=(30-v)*Cs. Both branches decrease with v, so branch maxima at0 orUVLO. deltaTj_to_FIXEDcase <= Ppeak*RthJCmax0.4K/W; NOT rise above ambient or thermal model of PCB.",
+              "slew_V_per_ms": [0.16115702479338842,0.25,0.37878787878787873],
+              "peak_pass_power_W": [7.110219180443913,7.7837798012912245,8.760181631511745],
+              "peak_model_current_A": 0.6019432635421407,
+              "junction_to_fixed_case_temperature_rise_K_upper_screen": [2.844087672177565,3.11351192051649,3.504072652604698],
+              "important_limit": "TC25C means case maintained at25C, not merely initially25C. Auxiliary image analysis conflated initial and maintained case; that inference is rejected. RthJC does not establish case temperature without heat path. This conditional model has no cold graphical SOA conflict, so keep selected linear FET rather than replace speculatively. Actual ramp, temperature, repeated restart, full load and gates remain unqualified. No CAD change, power or release."
+            },
+            "CdVdT_documented_part_candidate": {
+              "status": "DOCUMENTED_CANDIDATE_NOT_APPROVED_FOR_CAD_PENDING_SERIES_R_TURNOFF_SOA_AND_FULL_TEMPERATURE_CAPACITANCE",
+              "MPN": "MKS2D032201C00KSSD",
+              "manufacturer": "WIMA",
+              "datasheet": "https://www.wima.de/wp-content/uploads/media/e_WIMA_MKS_2.pdf",
+              "revision": "03.26; printed pages34-35, part-number system131",
+              "nominal_nF": 220,
+              "initial_tolerance_fraction": 0.1,
+              "rated_VDC": 100,
+              "dielectric": "PET film",
+              "body_W_H_L_mm_from_table": [3.5,8.5,7.2],
+              "pin_pitch_mm": 5,
+              "pin_diameter_mm": 0.5,
+              "mechanical_limit": "Text table read; full dimensional tolerances and actual footprint not yet accepted. No existing capacitor replaced; no reference allocated.",
+              "voltage_derating": "Manufacturer requires1.25percent/K above85C forDC; rated50V at125C. With30V output plus14.5V HGATE-OUT electrical maximum, screening44.5V is below50V. At unqualified50V output ceiling64.5V requires temperature <=113.4C by this DC model. Dynamic overshoot and actual operating-temperature envelope remain unchecked.",
+              "supplier_selected_offer": {
+                "SKU": "8075265513",
+                "url": "https://www.chipdip.ru/product/mks2d032201c00kssd-kondensator-poliefirnyy-220nf-63vac-wima-8075265513",
+                "observed_stock": 8460,
+                "observed_price_RUB": 210,
+                "observed_quantity": 1,
+                "observed_total_RUB": 210,
+                "observed_lead_time": "7-8weeks",
+                "purchase_authorized": false
+              },
+              "alternative_offer_check": "Native supplier search returned6 offers. SKU8024643308 at54RUB requires100pieces (5400RUB); SKU8009702583 at260RUB requires5pieces (1300RUB). Not comparable to single-piece210RUB offer. Browser reached DDoSGuard; clean extractor read native search and exact cards; no bypass.",
+              "electrical_limit": "PET avoids relying on an assumed X7R DC-bias curve, but initial +/-10percent alone does NOT guarantee198..242nF across temperature, aging and voltage. Existing hypothetical ramp bounds remain conditional. TI section9.3.2.2 specifies seriesR to improve turnoff but gives no universal numeric value; do not invent one or omit turnoff review."
+            },
+            "series_resistor_turnoff_screen": {
+              "status": "470_OHM_RECOMMENDED_FOR_RC_CANDIDATE_CURRENT_SCREEN_ONLY_NOT_CAD_OR_PULSE_ACCEPTANCE",
+              "reference_EVM": "TI SLVUBU3A October2020 sections2.6,3,6.2: LM74800EVM-CD uses R2=100ohm CRCW0603100RJNEA and C2=10nF. This documents an example, not universal100ohm approval with proposed220nF.",
+              "EVM_url": "https://www.ti.com/lit/pdf/slvubu3",
+              "controller_source": "TI SNOSD95C section7.5: HGATE source39/55/75uA; sink168mA min,260mA typ under VOV>VOVR. Sink number is not an absolute maximum and not a guarantee for every disable/brownout mode.",
+              "assigned_R_ohm": 470,
+              "documented_candidate_MPN": "PR01000104700JA100",
+              "resistor_source": "https://www.vishay.com/docs/28729/pr010203.pdf; revision08-Jul-2025, PR01 Cu0.58,1W at70C,5percent,250ppm/K; printedpage9 visually reviewed: PR01 periodic-pulse curve tp/ti=1000 gives roughly25..32W at1ms, safely read only as approximate graph. No temperature stated on this page; this does not qualify hot operation or the actual exponential waveform",
+              "model": "Rmin=470*0.95*0.975; Rmax=470*1.05*1.025. Assigned absDeltaT<=100K from25C; excludes endurance/drift. Cmax=242nF initial tolerance only, NOT fullPVT WIMA guarantee. Conservative step64.5V=50V output+14.5V gate drive; full discharge to ideal zero reference is a stress envelope, not actual LM74800 HGATE-to-OUT waveform. R>=Vstep/0.168A is an engineering criterion to keep capacitor current alone below published OV sink minimum, not a TI mandatory resistor-sizing equation.",
+              "R_screen_range_ohm": [435.3375,505.8375],
+              "minimum_R_at168mA_ohm": 383.9285714285714,
+              "capacitor_branch_Istep_max_mA": 148.16090963907314,
+              "resistor_peak_W": 9.556378671720218,
+              "full_discharge_energy_mJ": 0.5033902500000002,
+              "ideal_RC_tau_max_us": 122.41267500000001,
+              "ideal_RC_90percent_us": 281.86560064852495,
+              "ideal_RC_99percent_us": 563.7312012970499,
+              "R_drop_at75uA_max_V": 0.037937812499999994,
+              "supplier_offer": "ChipDip exact SKU8048334571:1360pieces,48RUB each,lot multiple5,240RUB minimum lot,6-7weeks. URL https://www.chipdip.ru/product/pr01000104700ja100-rezistor-power-metal-tht-470om-vishay-8048334571 . Native supplier search checked; generic exact-MPN card SKU8068928424 requires4000pieces and is not selected; import-only SKU8043820548 does not establish exactVishay MPN.",
+              "remaining": "Do not approve1W resistor from DC wattage alone: peak9.556W needs pulse/voltage/temperature/repetition qualification. MOSFET intrinsic gate charge adds sink current; ideal RC time is not total turnoff time. WIMA effectiveC/PVT and64.5V thermal derating unresolved. No nativeCAD change or power permission follows. Existing R92/R93=4.7ohm gate branches remain unchanged.",
+              "purchase_authorized": false,
+              "CAD_modified": false
+            },
+            "effective_CdVdT_nominal_nF": 220,
+            "ramp_V_per_ms_screen": [0.16115702479338842,0.37878787878787873],
+            "capacitor_current_A_screen": [0.08395475206611569,0.19732954545454542],
+            "time_to30V_ms_screen": [79.2,186.15384615384616],
+            "nominal_55uA_220nF": {"ramp_V_per_ms":0.25,"Icap_A":0.1302375,"time_to30V_ms":120},
+            "initial_linear_FET_power_if_one_carries_all_max_W":5.919886363636363,
+            "linear_FET_capacitive_energy_mJ_at30V":234.4275,
+            "important_limitation": "Slowing ramp lowers capacitive peak power but does NOT reduce0.5*C*V^2 charging loss in passFET for ideal constant supply. Load current during longer ramp adds energy. Do not assume equal sharing Q3/Q4. HGATE-to-GND capacitor sees Vout+Vgs, not just Vgs; qualify bias/temperature/dielectric and discharge pulse before choosing exactMPN/R or integrating. Existing C24 is charge-pump capacitor and MUST NOT be reused electrically as the ramp capacitor.",
+            "production_release":false
+          },
+          "whole_root_audit": {
+            "task": "t_1f3227c7",
+            "result": "Native whole-root kicadxml confirms /P24_PROTECTED28pins, unchanged versus pre-RESET. All51parity conflicts belong only to3V3 naming; protected rail has no split or alias detected. Current label correction verification t_3e5efa79 running; no parallel CAD writes here.",
+            "direct_capacitor_refs": ["C101", "C102", "C103", "C21", "C22"],
+            "C21_native_value": "100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS",
+            "C21_tolerance_source": "DigiKey exact MPN product4905550:0.1uF ±10%100V X7R. Murata product page fetch403; distributor specification, not a newly read manufacturer approval sheet.",
+            "C21_tolerance_source_url": "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR72A104KAC4L/4905550",
+            "candidate_direct_capacitance_screen": {
+              "assumption": "C103 proposed100uF±20% NOT integrated. Initial tolerance at reference temperature only; not guaranteed fullPVT Cmax. Includes C21max0.11uF; supersedes the excluding-C21 candidate subtotal below for this screen only.",
+              "formula_uF": "330*1.2+100*1.2+2*2.2*1.1+0.1*1.1",
+              "C_uF": 520.95,
+              "Q_at30V_mC": 15.6285,
+              "E_at30V_mJ": 234.4275,
+              "charge_time_at_assigned0_25A_ms": 62.514,
+              "effective_CdVdT_nF_at75uA": 156.285,
+              "scope": "Direct capacitor-only screening; ignores output charging, boot load and gate-plateau variation.0.25A illustrative capacitor current, NOT guaranteed total inrush. No RC selection/SOA PASS or CAD change authorized."
+            }
+          },
+          "commit": "7e85e8435b53998595e414b7301b5e0f8b0c14a6",
+          "PCB_sha256": "18c19f6415c74e5b2ec4e1d33481a216533cde11e6ebb5407d7605f8e5c79261",
+          "evidence": "Published PCB contains28 numbered pad assignments to /P24_PROTECTED. Native C22 and C21 readback confirms pin1=/P24_PROTECTED,pin2=/GND. All7child sheets discovered; native label-only schematic query misses some pins, so it is NOT a substitute for exported whole-root netlist.Audit t_1f3227c7 classified all51parity conflicts as3V3 naming-only with exact51pin-group equality; protected28pin whole-root group confirmed. Label-fix full verification remains separate.",
+          "previously_omitted_direct_capacitor": {
+            "reference": "C22",
+            "MPN": "EEUFS1J331L",
+            "manufacturer": "Panasonic",
+            "product_url": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFS1J331L",
+            "datasheet_url": "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1255.pdf",
+            "datasheet_revision": "01-Sep-25",
+            "capacitance_uF": 330,
+            "initial_tolerance_fraction_at120Hz20C": 0.2,
+            "rated_voltage_V": 63,
+            "source_scope": "Exact official product HTML specification and FS-A PDF initial tolerance text; no PDF-table graphical geometry acceptance claimed.",
+            "native_pads_mm": {"1": [258,19.5],"2": [263,19.5]}
+          },
+          "other_direct_capacitors": "C101 and C102 each2.2uF; C103 currently22uF with unresolved symbol/footprint/MPN mismatch; C21=100nF100V. Proposed C103100uF is still NOT integrated. C21 initial tolerance not newly checked and excluded from subtotal maximum below rather than silently assuming it.",
+          "noncapacitive_paths_observed_in_PCB": [
+            "U101.2 LM5013 VIN and R104.1 enable divider",
+            "U9007.3 LM317HV input supplying motor gate driver bias",
+            "U11.1,U11.2 DRV8803 supply/recirculation connection; verify full-root netlist",
+            "K1.30,K1.86,K2.30,K2.86,K3.86 relay contact supply and coil supply; not just logic power",
+            "Q101.2 motor high-side MOSFET drain",
+            "R120.1 power-presence detection"
+          ],
+          "screen_assumptions": "Initial20C capacitance tolerances only: C22max396uF + proposed C103max120uF + C101/C102max4.84uF. Excludes C21, downstream regulator-output charging and simultaneous loads. This is a subtotal, not a guaranteed complete system Cmax, peak-current bound or MOSFET SOA acceptance. No equal sharing between Q3/Q4 assumed.0.25A remains an assigned illustration of capacitor charging ONLY, not a measured/current-limited total input.",
+          "formulas": "Csubtotal=330uF*1.2+100uF*1.2+2*2.2uF*1.1;Q=Csubtotal*V;E=0.5*Csubtotal*V^2;t=Q/Icap;CdVdT=IHGATE*Csubtotal/Icap",
+          "Cmax_subtotal_excluding_C21_uF": 520.84,
+          "Q_at30V_mC": 15.6252,
+          "E_at30V_mJ": 234.378,
+          "charge_time_at_assigned0_25A_ms": 62.5008,
+          "minimum_effective_CdVdT_nF_at75uA_in_subtotal_model": 156.252,
+          "ratio_vs_old124_84uF_subtotal": 4.1720602371034925,
+          "decision": "Retain C22 and existing architecture. Old37.452nF partial sizing is not adequate authority for systemRC selection. No new RC or C103CAD change approved. Next qualify complete exported-root pin groups, startup loads and each MOSFET SOA over the actual ramp; a bulk capacitor already on the same rail cannot be omitted because it is physically near a different IC.",
+          "production_release": false
+        },
+        "partial_Q_at30V_mC": 3.7452,
+        "partial_E_at30V_mJ": 56.178,
+        "partial_charge_time_at0_25A_ms": 14.9808,
+        "minimum_effective_CdVdT_nF_at75uA": 37.452,
+        "remaining": "Read full downstream netlist/capacitances and boot load; use retrieved exact InfineonRev2.3 SOA with actual gate/ramp behavior,initial case temperature and restart/repetition. Do not assume two parallelQ3/Q4 share inrush equally. AddedCdVdT is conditional,not mandatory: if selected,visually verify TIFigure9-3/Eq2 and choose effectiveCdVdT/seriesR with turnoff verification. Existing4.7ohm gate resistors are not a specified inrush current limit. Do not modify CAD while RESET writer owns project.",
+        "exact_MOSFET_document_and_pinmap_review": {
+          "status": "EXACT_OPN_DOCUMENTATION_AND_NATIVE_Q3_Q4_PAD_MAPPING_VERIFIED_NOT_SOA_QUALIFIED",
+          "manufacturer_product_url": "https://www.infineon.com/part/IPB017N10N5LF",
+          "manufacturer_ordering_code": "IPB017N10N5LFATMA1",
+          "datasheet_source": "https://static.chipdip.ru/lib/078/DOC037078859.pdf",
+          "datasheet_identity": "Infineon IPB017N10N5LF Final Data Sheet Rev2.3 2022-09-09,11pages; downloaded from exact ChipDip product attachment, not claimed latest",
+          "datasheet_local": "/root/.hermes/profiles/engineer/cache/documents/sirokko_research/IPB017N10N5LF.pdf",
+          "datasheet_sha256": "08dc0bc383e45b96d2dbeb17604e668f302b28a69fbd989dc70c3d550b8d99e5",
+          "pinmap_datasheet_page1": "Gate1,Drain4/tab,Source2/3/5/6/7",
+          "native_Q3_Q4_PCB_padmap": "Both:1=individual Q3_GATE/Q4_GATE;4/tab=REV_MID;2/3/5/6/7=P24_PROTECTED. Matches datasheet and native schematic Source map. Does not assert copper connectivity or footprint mechanical acceptance.",
+          "electrical_table_page4": "RDSon_max1.7mOhm atVGS10V/ID100A/TJ25C;Qgd_typ141nC andQg_typ195nC atVDD50V/ID180A,VGS0..10V. Gate-charge values not guaranteed minima at actual startup load and voltage.",
+          "thermal_table_page3": "RthJC_max0.4K/W;RthJA_max62K/W minimalfootprint or40K/W for specified6cm2/70umFR4 testboard,not currentPCB",
+          "SOA_page6_review": "Diagram3 visually read:TC25C,singlepulse D0 curves1us/10us/100us/1ms/10ms andDC. No hot-case or repetitive-ramp qualification follows. Do not use auxiliary visual estimate of long-timeZth0.48K/W: conflicts with tableRthJCmax0.4K/W and was not adopted. Numerical SOA acceptance withheld pending actual waveform/case temperature.",
+          "decision": "Keep selected exact linear-mode-capable MOSFET,not replace it due to earlier empty websearch. No evidence that an added RC is mandatory solely because C103 changes; first qualify actual startup with intrinsic gate charge and full load. If ramp needs control,use TI CdVdT approach with actual SOA/turnoff verification rather than automatically adding hardware.",
+          "supplier_card": "https://www.chipdip.ru/product/ipb017n10n5lfatma1-100v-180a-1.7mohm-100a-10v-313w-infineon-8044731406",
+          "supplier_snapshot": "683pieces,1130RUB singlepiece,6-7weeks; not purchased, not a delivery promise",
+          "production_release": false
+        },
+        "production_release": false
+      },
+      "PCB_modified": false,
+      "production_release": false
+    }
+  },
+  "motor_driver_bias_live_review": {
+    "LTC7001_supply_and_recharge_review": {
+      "Q101_exact_gate_charge_review": {
+        "device": "IRFB4110PbF / Q101",
+        "identity_scope": "Q101 Value in previously read whole-root cleanup XML; not later writer freeze or verification of purchased part.",
+        "source_url": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-irfb4110-datasheet-en.pdf?download=true",
+        "revision": "2.1, 2026-07-31",
+        "source_sha256": "bb6ecb9e885f3ebe719f3c50023fb139e459feec4e8a6a88c45a05decb87a352",
+        "evidence": "Official PDF printedpage2 dynamic electrical table visually inspected; Qgtyp150nC,MAX210nC (not220). Conditions TJ25C,ID75A,VDS50V,VGS10V,footnote5 pulse<=400us/duty<=2percent describes measurement,not permittedapplication PWM ceiling. Printedpage3 Fig6 visually inspected: typical50V/80V curves endVGS10V, cannot read14V charge by extrapolation.",
+        "Qg_typ_nC_at_specified_point": 150,
+        "Qg_max_nC_at_specified_point": 210,
+        "retained_assigned_Qg_screen_nC": 300,
+        "assigned_to_spec_point_ratio": 1.4285714285714286,
+        "spec_point_comparison_at20kHz_D0_8": {
+          "period_average_current_mA": 4.2,
+          "average_current_in10us_recharge_window_mA": 21,
+          "droop_if_Ceffective642_6nF_V": 0.32679738562091504,
+          "droop_if_nominal1uF_V": 0.21
+        },
+        "decision": "Retain300nC sensitivity rather than replace it with210nC. Actual driver bias may11.880..13.411V and actualTJ neednot25C; MAX210nC at10V cannot guarantee this entire range. Fig6 does not extend to14V. No MOSFET substitution justified from this comparison. Existing300nC/6mA/30mA/0.466853V screen remains assigned and separate from specified210nC endpoint. Gate driver,diode,combinedCeffective,LM317 and thermal acceptance remain pending; no power/flash/fire/release."
+      },
+      "C9007_C9008_exact_characteristic_review": {
+        "status": "EXACT_MPN_TYPICAL_CURVE_REVIEW_AND_SENSITIVITY_NOT_GUARANTEED_CMIN",
+        "MPN": "GRM21BR71H105KA12L",
+        "references": ["C9007", "C9008"],
+        "identity_evidence": "Both exact MPN fields in native whole-root XML returned with t_83fb1568, matched to schematic SHAde1d5bac86dfc0caaa3977132cfce6c01fbea26147cdb8f3f45c1e23deacacdf. C9007 VCC bypass, C9008 BST-TS. Evidence does not freeze later writer changes.",
+        "source_url": "https://pimapi.murata.com/public/api/pim/v1/characteristics/search/technical?partNum=GRM21BR71H105KA12%23&productCategoryId=ceramicCapacitorSMD&displayLanguage=en&languageRegion=en-us",
+        "source_sha256": "96cabaa6e52b08bbc99a6010c5e505bf52e2e8c17f5a18560930916806354ed3",
+        "source_scope": "Murata Electrical Characteristics Data, onepage, asofOct2026; fullpage graph visually inspected. Footer explicitly onlytypical specifications; not an approved specification or combinedPVT guarantee.",
+        "nominal_F": 0.000001,
+        "initial_tolerance_fraction": 0.1,
+        "rated_voltage_VDC": 50,
+        "dielectric": "X7R",
+        "DC_bias_readback": "Graph4 at1kHz/1Vrms:10V approx-7percent,12V approx-10percent,13.4V approx-12.5..13percent,14V approx-13.5..14percent; visual uncertainty about1..1.5percentagepoints. Graph6 temperature measured1kHz/0.1Vrms, not sameACcondition. These individual curves do not guarantee simultaneousDC/temperature/AC dependence or aging.",
+        "model": "Use14V BST-TS datasheet electrical-table uppervalue only as bias-screen endpoint,not normal operating claim. Assigned retainedDC0.84 includes2percentagepoint graphical allowance beyond0.86. Cscreen=1uF*0.84*0.9*0.85.0.85 is assignedtemperature-sensitivity factor,not a guaranteed combinedCmin. Qscreen300nC remains assigned rather than provenQmax.",
+        "screen_Ceff_nF": 642.6,
+        "gate_charge_only_droop_V": 0.4668534080298787,
+        "conditional_required_nF_for1V_with_assigned_factor1_3": 390,
+        "screen_ratio_to_conditional_requirement": 1.6476923076923073,
+        "negative_control": "100nF with300nC yields3Vdroop instead of0.466853V; nominal1uF gives0.3V. Does not include recharge current/leakage or driver transient charges.",
+        "decision": "Retain existing C9007/C9008 and currentfootprints: exacttypical curve gives no reason to increasecapacitance or replacepart speculatively. Replace old purelyhypothetical400nF case with this part-specific sensitivity for engineering comparison, but retain400nF as priorillustration,not actualCmin. Do not claim CB accepted or fullgateVGS>=10V from this graph: need applicableQmax,combinedeffectiveC,diode/supplydrop,TS-low window andlayout. C9007 uses samepart but instantaneousrecharge/supplyresponse is a separatecriterion. CAD/firmware notchanged; no power/flash/fire/manufacturingrelease."
+      },
+      "status": "CURRENT_SCHEMATIC_READBACK_AND_CONDITIONAL_CHARGE_BUDGET_NOT_FULL_PVT_OR_THERMAL_ACCEPTANCE",
+      "driver_source": "LTC7001 Rev G November2021, printed/physical pages3,4,11,12; manufacturer document hosted at https://static.chipdip.ru/lib/647/DOC027647254.pdf ; SHA256 24d1065533b8db22be424e7b5c9698b0e9c9471e6058a8eff624d03acb2a2569. ADI official endpoint returned export-access-denial text, not a datasheet; distributor copy successfully parsed and p3 visually inspected.",
+      "quiescent_current_scope": "VCC current27typ/50max uA is specified without full-temperature dot: TA25C,VCC10V,BST-TS13V,INP4V or0.4V. Do NOT claim50uA maximum across actual11.880..13.411V supply and full temperature.225uA total supply is TYPICAL only and includes VCC+TS perNote7: do not add225uA and50uA as independent VCC loads. Dynamic gate current is additional perNote5. Charge pump source15uA minimum magnitude/30uA typical is dotted but atTS20V,BST-TS10V, not a full voltage-dependent regulation curve.",
+      "native_schematic_readback": "Read-only motor_pwm_REBUILD: VDRV12V=U9007.2,R9009.1,U9001.1,C9007.1,D9002.1(A); BST=U9001.9,C9008.1,D9002.3(K); GATE_Q101=U9001.6(TGDN),R9004.2,Q101.1(G). R9004=10ohm turn-on resistor; R9002=100kohm input-command pulldown and is NOT gate-to-source DC load. Label queries are not whole-root parity or proof of copper continuity. No CAD writes.",
+      "diode_source": "onsemi MMBD1501/D Rev8 October2026, https://www.onsemi.com/download/data-sheet/pdf/mmbd1501-d.pdf ; SHA256 4b15eda3e954fddf9dd45708d676373e21c931df6bd708b70f47e0d80f16630a. p2 visually inspected: IRmax1nA at125V/25C,3uA at125V/150C,10nA at180V/25C,5uA at180V/150C. Extracted hot unit mA is WRONG; original table is microampere. VFmax890mV at50mA/25C. IFAV200mA is an absolute maximum; manufacturerNote2 directs consultation for pulsed/low-duty operation. No repetitive-peak or recovery-time PASS follows from average6mA or nonrepetitive surge2A/1ms.",
+      "assigned_model": "Existing screen Qg300nC, PWM20kHz,D<=0.8. Actual Qg vsVGS/temperature and hot Iq are unresolved. For partial LM317 sensitivity only use Iq50uA as ASSIGNED parameter, not actual guaranteed maximum. All16 existing Vref/R1/R2/Iadj endpoint combinations atVin30V; excludes initial capacitor charging, leaks, hot drift, TS-sourced pump current and any undocumented load.",
+      "formulas": "T=1/f;toff=(1-D)/f;Igate=Qg*f;Irecharge_window=Qg/toff;deltaVB=Qg/Ceff. LM317 Iin=Vref/R1+Qg*f+Iq+Iadj;Vout=Vref*(1+R2/R1)+Iadj*R2;Pdevice=(Vin-Vout)*(Vref/R1+Qg*f+Iq)+Vin*Iadj. Charge window formula is necessary ideal average, NOT peak current or proof TS remains low for alltoff.",
+      "period_us": 50,
+      "off_time_us": 10,
+      "gate_average_mA": 6,
+      "required_average_recharge_during_ideal_offwindow_mA": 30,
+      "deltaVB_with_nominal1uF_V": 0.3,
+      "deltaVB_with_assigned400nF_V": 0.75,
+      "partial_LM317_input_current_screen_mA": [21.891584158415842,23.658417508417507],
+      "partial_LM317_dissipation_at30V_screen_W": [0.3919469227722772,0.3994547372722222],
+      "verification": "Charge percycle Igate/f equals300nC;30mA*10us equals300nC. Ceff400nF gives0.75V sag; negative control100nF gives3V. AtD approaching1 the offwindow model diverges: it is NOT applicable to static100percent. StaticON needs charge-pump versus totalhotleakage review independently.",
+      "decision": "Retain existing LTC7001/MMBD1501A and resistor values: current readback is consistent with manufacturer external-bootstrap-diode topology, and this screen establishes no reason for speculative replacement. Add this branch separately to buck-only startup energy/current model. Do not accept diode from200mA label, treat50uA as fullPVT guarantee, or approve LM317 temperature from0.4W without thermal path. Remaining actual TS-low window, D9002 transient/recovery, C9007 supply sag, C9008 Ceff, gate voltage/static100percent and hotleakage must be closed in existing hardware acceptance. No power/flash/fire or manufacturing release."
+    },
+    "status": "NATIVE_SCHEMATIC_AND_RESISTOR_CORNER_SCREEN_NOT_FULL_RAIL_OR_STARTUP_ACCEPTANCE",
+    "sheet": "/projects/Sirokko26201_control/motor_pwm_REBUILD.kicad_sch",
+    "observations": "Fresh native component inventory: U9007 LM317HVT/NOPB TO220,TJ0..125C; R9009=75ohm1percent0.125W OUT-ADJ; R9010=681ohm1percent0.75W ADJ-GND. VDRV12V local query returns U9007.2,R9009.1,C9007.1,U9001.1,D9002.1; VADJ returns U9007.1,R9009.2,R9010.1. Local query is not a whole-root netlist or physical copper check.",
+    "source": "https://www.ti.com/lit/ds/symlink/lm317hv.pdf;SNVS773D revisedSeptember2015,section7.5 printedpage6",
+    "source_conditions": "Vref1.2..1.3V at3V<=Vin-Vout<=60V,10mA<=Iout<=Imax,P<=Pmax; Iadj max100uA; minimum load max12mA atVin-Vout60V. Working junction temperature LM317HV0..125C, notLM117HV range.",
+    "model": "All16 endpoints of Vref[1.2,1.3],R9009=75*(1+/-0.01),R9010=681*(1+/-0.01),Iadj[0,100uA]. Zero lowerIadj is assigned conservative screen, not published minimum. Vout=Vref*(1+R9010/R9009)+Iadj*R9010; divider current=Vref/R9009; no-driver input contribution=divider current+Iadj; resistor powers=Vref^2/R9009 and(divider current+Iadj)^2*R9010. ExcludesTCR/aging/layout/regulator dynamics and allLTC7001/quiescent/gate-drive currents.",
+    "vout_static_screen_V": [11.880237623762376,13.411245646464648],
+    "headroom_and_thermal_envelope_review": {
+      "source": "TI LM317HV SNVS773D, sections 7.3/7.4/7.5 and 8.3.1; https://www.ti.com/lit/ds/symlink/lm317hv.pdf re-read successfully",
+      "scope": "48 endpoint combinations at actual regulator VIN=18,30,50V, with existing Vref/R1/R2/Iadj corners. 18..30V is the existing assigned continuous-input scenario;50V is only a hypothetical clamped transient endpoint, not permission for continuous50V or proof of upstream clamp. Includes assigned Qg300nC*f20kHz and Iq50uA; does not guarantee hot dynamic current.",
+      "formula": "headroom=VIN-VOUT; P=(VIN-VOUT)*(Vref/R1+Qg*f+Iq)+VIN*Iadj; Rtheta_total_allowed=(125C-TA)/P30max",
+      "minimum_headroom_at18V_V": 4.588754353535352,
+      "required_actual_VIN_for3V_headroom_at_screen_VOUTmax_V": 16.41124564646465,
+      "P_at18V_W": [0.10972416241880074,0.13429538437653663],
+      "P_at30V_W": [0.3919469227722772,0.3994547372722222],
+      "P_if50V_W": [0.8297786059405939,0.8726230874405724],
+      "maximum_total_Rtheta_to125C_K_per_W_at_assumed_TA": {"40C":212.79006622989132,"60C":162.72181535226983,"70C":137.68768991345908,"85C":100.13650175524297},
+      "temperature_scope": "TA40/60/70/85C are sensitivity cases, not measured board temperature or selected operating specification. LM317HV guaranteed operating TJ starts0C, unlike LM117HV. No cold-start below0C acceptance follows.",
+      "decision": "Within this conditional DC model, input18V at U9007.3 leaves >3V headroom and no resistor-ratio change is indicated. The tab/pin2 are VOUT, not GND: any heatsink/chassis attachment must respect live VDRV potential. Do not treat datasheet RthetaJA23K/W as the enclosure thermal path or multiply a short50V pulse by steady RthetaJA; duration/transient impedance and real mounting remain unqualified. No CAD change or power/flash/fire/release authorization."
+    },
+    "divider_current_A": [0.015841584158415842,0.017508417508417508],
+    "no_driver_input_contribution_A": [0.015841584158415842,0.017608417508417507],
+    "R9009_loss_W": [0.01900990099009901,0.022760942760942763],
+    "R9010_loss_W": [0.1691918831487109,0.2132598698899534],
+    "decision": "Retain resistor nominal values: divider alone exceeds12mA minimum-load screen. Actual voltage is not exact12V. This always-loaded branch must be counted separately from buck input6.25W; earlier buck-only startup screen remains partial. Do not treat0.75W resistor label as hot-board thermal qualification. No CAD/firmware changes."
   },
   "output_capacitors_selection": {
     "status": "TYPICAL_CURVE_BASED_SENSITIVITY_NOT_GUARANTEED_MINIMUM",
@@ -116,8 +657,123 @@
       "schematic_MPN_verified_at_commit": "b7aa0410546de123f3d26f21f648b45619e04850",
       "observed_Value": "47uF 16V X5R",
       "Value_conflicts_with_MPN_dielectric": false,
-      "metadata_correction_status": "APPLIED_NATIVELY_IN_PAIRED_SCHEMATIC_AND_PCB"
+      "required_metadata_correction": "Resolved in published commit d5d7a13e92656a140ef741d85e1a66500c746481; subsequent read-only native footprint inventory confirms both C105 and C106 Value 47uF 16V X5R. MPN and geometry unchanged."
     }
+  },
+  "inductor_exact_selection": {
+    "status": "EXACT_MPN_CONFIRMED_IN_PUBLISHED_SCHEMATIC_NOT_POWER_QUALIFIED",
+    "schematic_MPN_readback_commit": "6aa0d169a9a15ff42fc0ae6bbe2095e6d8a21ae5",
+    "schematic_MPN_readback_URL": "https://raw.githubusercontent.com/krolbot/sirokko-26201-controller/6aa0d169a9a15ff42fc0ae6bbe2095e6d8a21ae5/hardware/kicad/logic_power_24_5_DRAFT.kicad_sch",
+    "reference": "L101",
+    "manufacturer": "Bourns",
+    "mpn": "SRP1770TA-330M",
+    "source_url": "https://www.bourns.com/docs/product-datasheets/srp1770ta.pdf",
+    "document_revision": "REV.06/24 electrical/mechanical pages; legal page updated separately",
+    "page1_visually_reviewed": true,
+    "L_H": 3.3e-05,
+    "initial_tolerance_fraction": 0.2,
+    "DCR_max_25C_ohm": 0.044,
+    "Irms_A_for_40C_rise": 10.7,
+    "Isat1_A_at_20percent_drop_25C": 15,
+    "Isat2_A_at_30percent_drop_25C": 20,
+    "temperature_range_including_self_heating_C": [
+      -55,
+      150
+    ],
+    "footprint_acceptance": {
+      "status": "EXISTING_NATIVE_PAD_GEOMETRY_MATCHES_MANUFACTURER_RECOMMENDED_LAYOUT",
+      "footprint": "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm",
+      "native_origin_mm": [
+        154.5,
+        50
+      ],
+      "native_pad_centers_mm": [
+        [
+          146.825,
+          50
+        ],
+        [
+          162.175,
+          50
+        ]
+      ],
+      "native_pad_size_mm": [
+        3.15,
+        12.5
+      ],
+      "manufacturer_outer_span_mm": 18.5,
+      "manufacturer_inner_gap_mm": 12.2,
+      "manufacturer_pad_height_mm": 12.5,
+      "pad_width_formula": "(18.5-12.2)/2=3.15mm",
+      "pin_map": {
+        "1": "SW",
+        "2": "+5V_DEVKIT"
+      },
+      "placement_or_copper_change_needed_for_MPN_assignment": false
+    },
+    "CCM_screen": {
+      "assumptions": "Iout1A,Vout4.992V,f394936.7089Hz,Lmin26.4uH from initial tolerance only; no claim of guaranteed hot L(I), timing corners, startup or short-circuit peak",
+      "formulas": "dIL=Vout*(1-Vout/Vin)/(f*Lmin); ILrms=sqrt(Iout^2+dIL^2/12); Pcu=ILrms^2*DCRmax25C",
+      "Vin18V": {
+        "dIL_pp_A": 0.3460040404,
+        "Ipeak_A": 1.1730020202,
+        "ILrms_A": 1.0049759034,
+        "Pcu25C_W": 0.0444389689
+      },
+      "Vin30V": {
+        "dIL_pp_A": 0.3991175758,
+        "Ipeak_A": 1.1995587879,
+        "ILrms_A": 1.0066154032,
+        "Pcu25C_W": 0.0445840811
+      },
+      "Vin50V_requirement_not_admitted": {
+        "dIL_pp_A": 0.430985697,
+        "Ipeak_A": 1.2154928485,
+        "ILrms_A": 1.0077098074,
+        "Pcu25C_W": 0.0446810785
+      },
+      "exclusions": "Core/AC losses, hot saturation guarantee, thermal equilibrium, fault/retry and upstream protection are not qualified by copper-loss calculation."
+    },
+    "procurement_snapshot": {
+      "url": "https://www.chipdip.ru/product/srp1770ta-330m-power-inductors-smd-33uh-20-bourns-8005125913",
+      "sku": "8005125913",
+      "unit_price_RUB": 930,
+      "minimum_order_observed": 1,
+      "displayed_supplier_stock": 1402,
+      "displayed_lead_time": "7-8 weeks",
+      "not_a_purchase": true,
+      "rejected_first_offer": "8052842869 costs270RUB per part but requires35 pieces; not a single-board930RUB alternative"
+    },
+    "decision": "Published schematic already has hidden MPN SRP1770TA-330M and Manufacturer Bourns, read back at exact commit6aa0d169. No assignment change needed; manufacturing BOM remains unreleased. Existing pads match. Do not describe15A25C as a guaranteed hot saturation rating. Whole power-stage release remains prohibited."
+  },
+  "power_stage_review_disposition": {
+    "status": "PARTIAL_REVIEW_NOT_RELEASE",
+    "source": "https://www.ti.com/lit/ds/symlink/lm5013.pdf",
+    "native_values_observed": {
+      "C101": "2.2uF 100V X7R; Capacitor_SMD:C_1210_3225Metric",
+      "C102": "2.2uF 100V X7R; Capacitor_SMD:C_1210_3225Metric",
+      "C103": "22uF 100V BULK; Capacitor_SMD:C_1210_3225Metric",
+      "C104": "2.2nF 50V X7R; Capacitor_SMD:C_0603_1608Metric",
+      "L101": "33uH Isat>=10A; Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm",
+      "D101": "STPS5H100B-TR; Package_TO_SOT_SMD:TO-252-2"
+    },
+    "input_capacitor_disposition": "The CAD does specify nominal voltage and capacitance; absence in the earlier JSON is not absence from CAD. C101+C102 total nominal 4.4uF. Exact MPN, tolerance, DC-bias, temperature and layout qualification are not established by these Values. C103 BULK in a 1210 footprint requires exact part/package verification; do not count it as effective high-frequency ceramic capacitance without a datasheet.",
+    "TI_input_guidance": "Section9.2.2.6 recommends high-frequency input capacitance 4.4uF or higher, X7S/X7R, sufficient voltage rating and preferably twice maximum input voltage. Recommendations are not absolute maximum ratings. Assigned upstream ceiling50V remains an unqualified design requirement, not an achieved or revoked protective limit.",
+    "inductor_disposition": "Section9.2.2.3 recommends saturation current greater than7A and warns of reduction with core temperature. Exact schematic MPN SRP1770TA-330M is now confirmed; its25C curves do not prove guaranteed hot Isat. The generic10AValue is a design target, not a separately proven rating. Do not re-label the TI recommendation as a guaranteed7A threshold.",
+    "current_limit_disposition": "TI table7.5 gives IPEAK 3.7/4.2/5.0A min/typ/max at stated test conditions. The 1A design output target is not a hardware current limit. Do not accept the independent review estimate5.15A as a guaranteed peak: leading-edge blanking100ns is not a documented100ns comparator propagation delay to add after crossing5A; full current-limit timing and L(I,T) remain open.",
+    "capacitor_startup_disposition": "C*deltaV/t gives an average charging contribution for the assumed ramp, not a minimum or peak startup current guarantee. Nominal94uF and shortest soft-start alone do not bound startup against simultaneous load, tolerance, bias or controller timing.",
+    "published_schematic_hidden_MPN_readback": {
+      "commit": "6aa0d169a9a15ff42fc0ae6bbe2095e6d8a21ae5",
+      "L101": "SRP1770TA-330M",
+      "C101": "GRM32ER72A225KA35L",
+      "C102": "GRM32ER72A225KA35L",
+      "C103": "GRM32ER72A226KE20L",
+      "C104": "CC0603KRX7R9BB222",
+      "scope": "MPN strings confirmed in published schematic only; not independent proof that exact capacitor MPN exists or qualifies electrically. C103 polarized symbol/BULK value versus assigned Murata MPN is an unresolved metadata inconsistency, not authority to substitute an electrolytic blindly."
+    },
+    "next_required_engineering_action": "Validate the retrieved capacitor MPNs against manufacturer documentation, especially C103; verify package/effective capacitance, hot inductor current and loss. Preserve current component assignments until verification; do not claim50V qualification.",
+    "PCB_modified": false,
+    "production_release": false
   },
   "operating_points": [
     {
@@ -236,13 +892,13 @@
     "ERC_errors": 0,
     "ERC_warnings": 1,
     "ERC_warning": "lib_symbol_issues: Sirokko_Power library not registered",
-    "pdf_server_path": "локальный проверочный артефакт, не включён",
+    "pdf_server_path": "/projects/Sirokko26201_control/exports/logic_power_DRAFT/schematic/logic_power_24_5_DRAFT.pdf",
     "pdf_bytes": 96672,
-    "netlist_server_path": "локальный проверочный артефакт, не включён",
+    "netlist_server_path": "/projects/Sirokko26201_control/exports/logic_power_DRAFT/logic_power_24_5_DRAFT.xml",
     "netlist_bytes": 23633
   },
   "package_review": {
-    "datasheet_local": "локальный проверочный артефакт, не включён",
+    "datasheet_local": "/root/.hermes/profiles/engineer/cache/scratch/lm5013-footprint.pdf",
     "datasheet_pages": 40,
     "reviewed_package_pages": [
       34,
@@ -299,7 +955,7 @@
       "power_rating_reference_page": 6
     },
     "native_geometry_readback": {
-      "pcb": "локальный проверочный артефакт, не включён",
+      "pcb": "/projects/exports/sirokko_final_panel_candidate_v2/Sirokko26201_control_motor_candidate.kicad_pcb",
       "R101_origin_mm": [
         170,
         58
@@ -376,16 +1032,16 @@
     "Register project-specific symbol library without overwriting existing entries; repeat ERC and check full exclusions.",
     "Independently compare exported netlist to expected_netlist; PWR_FLAG nodes excluded from comparison.",
     "Review PDF visually and confirm physical pad mapping, especially diode and PowerPAD.",
-    "Choose the exact inductor MPN; independently verify output-capacitor temperature, DC-bias, frequency, ageing and guaranteed effective capacitance for the selected Murata MPN.",
+    "Choose exact inductor and capacitor MPNs; verify temperature, inductance/current ratings, MLCC DC-bias and effective capacitance.",
     "Complete loss/thermal analysis, timing tolerance analysis, dynamic and ripple-network DC regulation analysis.",
     "Input reverse polarity/overvoltage protection and 24-V loss detection are not on this sheet.",
     "USB reverse-feed prevention not on this sheet.",
-    "Repeat full-board native copper/pad-connected-component acceptance after each bounded routing step; the integrated LM5013 feedback network and WD_OK closure do not qualify the remaining board.",
+    "Integrate approved circuit into root schematic and PCB; local labels currently do not connect across sheets.",
     "No ESP32 or load hardware test performed; no fuel/fire operation authorized."
   ],
   "feedback_layout_native_readback": {
     "status": "NATIVE_PLACEMENT_READBACK_ONLY_NOT_FUNCTIONAL_ACCEPTANCE",
-    "pcb_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "pcb_path": "/projects/Sirokko26201_control/Sirokko26201_control_motor_candidate.kicad_pcb",
     "integration_published_commit": "8bcb3b68ab5b2b3c896fc8f287f2dbe2ba4b745d",
     "native_FB_pads_mm": {
       "R101.2": [
@@ -414,8 +1070,8 @@
   },
   "current_V8_native_power_stage_screen": {
     "status": "PARTIAL_ANALYTICAL_SCREEN_NOT_BOARD_OR_DYNAMIC_ACCEPTANCE",
-    "source_PCB": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-    "native_readback_PCB": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "source_PCB": "/root/.hermes/profiles/engineer/cache/scratch/c25-native-received/sirokko_C25_NATIVE_CANDIDATE/project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "native_readback_PCB": "/projects/exports/sirokko_C25_NATIVE_CANDIDATE/project/Sirokko26201_control_motor_candidate.kicad_pcb",
     "assumed_regulator_pin_input_range_V": [
       21.6,
       28.8
