@@ -42494,14 +42494,6 @@
 		(uuid "248166f9-cf1a-4d07-adb7-fafb23075779")
 	)
 	(segment
-		(start 286.1375 24.05)
-		(end 287.2 24.05)
-		(width 0.25)
-		(layer "F.Cu")
-		(net "/+3V3")
-		(uuid "248bebb3-e137-4f67-b1e3-b978ff56dd51")
-	)
-	(segment
 		(start 46 74.6)
 		(end 52.475 74.6)
 		(width 0.4)
