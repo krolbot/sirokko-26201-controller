@@ -9310,243 +9310,6 @@
 	)
 )
 (symbol
-	(lib_name "Device:R")
-	(lib_id "Device:R")
-	(at 60.96 248.92 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "da63f8a5-a700-4404-aad1-f792138f8d71")
-	(property "Reference" "R14"
-		(at 60.96 245.11 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "10k"
-		(at 60.96 252.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-		(at 60.96 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-		(at 60.96 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "MFR-25FBF52-10K"
-	(id 0)
-	(at 60.96 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(property "Manufacturer" "Yageo"
-	(id 1)
-	(at 60.96 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "0a88e44e-ed9f-47ce-8e86-f12447a33d22")
-)
-	(pin "2"
-	(uuid "6ca84d93-5e8f-443f-97c4-fe1deb274e08")
-)
-	(instances
-		(project "Sirokko26201_control"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "R14")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:R")
-	(lib_id "Device:R")
-	(at 121.92 248.92 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "ee9765ef-01d6-4977-a2ca-b791c85d106f")
-	(property "Reference" "R16"
-		(at 121.92 245.11 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "2.2k ENC_A_PULLUP"
-		(at 121.92 252.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-		(at 121.92 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-		(at 121.92 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "MFR-25FTE52-2K2"
-	(id 0)
-	(at 121.92 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(property "Manufacturer" "Yageo"
-	(id 1)
-	(at 121.92 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "af0838dd-c682-4d41-b7fb-6038c71b1a50")
-)
-	(pin "2"
-	(uuid "4446917e-a3bd-4465-9da5-670670bf741b")
-)
-	(instances
-		(project "Sirokko26201_control"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "R16")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:R")
-	(lib_id "Device:R")
-	(at 152.4 248.92 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "1d7ec2e5-be2b-477a-847d-5bb6f36a3cdf")
-	(property "Reference" "R17"
-		(at 152.4 245.11 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "2.2k ENC_B_PULLUP"
-		(at 152.4 252.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-		(at 152.4 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-		(at 152.4 248.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "MFR-25FTE52-2K2"
-	(id 0)
-	(at 152.4 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(property "Manufacturer" "Yageo"
-	(id 1)
-	(at 152.4 248.92 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "579ec5cd-d12e-4658-91a3-05a261f72de3")
-)
-	(pin "2"
-	(uuid "834499c3-44bb-420b-82b4-c5864b685021")
-)
-	(instances
-		(project "Sirokko26201_control"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "R17")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
 	(lib_name "power:PWR_FLAG")
 	(lib_id "power:PWR_FLAG")
 	(at 180.34 63.5 0)
@@ -10758,439 +10521,6 @@
 	)
 )
 (symbol
-	(lib_name "Switch:SW_Push")
-	(lib_id "Switch:SW_Push")
-	(at 530.86 60.96 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "6f182f25-ae3a-4eba-8d5f-292d11b45520")
-	(property "Reference" "J22"
-		(at 530.86 57.15 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "START_STOP B3F-4055 + B32-1380 RED"
-		(at 530.86 64.77 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Button_Switch_THT:SW_SPST_Omron_B3F-40xx"
-		(at 530.86 60.96 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 530.86 60.96 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "B3F-4055; B32-1380"
-	(id 0)
-	(at 530.86 60.96 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "63d67b8f-2c8e-483c-ae88-02329082774f")
-)
-	(pin "2"
-	(uuid "e8b64ee4-3a78-4e7b-953c-d5ed509d9c34")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "J22")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Connector_Generic:Conn_01x05")
-	(lib_id "Connector_Generic:Conn_01x05")
-	(at 530.86 91.44 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "a0140bca-3d8e-4e01-aed8-a2e4ee3848d4")
-	(property "Reference" "J23"
-		(at 530.86 87.63 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "ENCODER EC11E15244G1 + KNOB 41001-1"
-		(at 530.86 95.25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Sirokko_Panel:RotaryEncoder_Alps_EC11E15244G1_Knob41001_3D_ENVELOPE"
-		(at 530.86 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 530.86 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "EC11E15244G1"
-	(id 0)
-	(at 530.86 91.44 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "56ee9c15-7078-4209-9c69-db5ba4c06565")
-)
-	(pin "2"
-	(uuid "fbe5696b-b009-4fa3-b9a8-75cac0e34111")
-)
-	(pin "3"
-	(uuid "1c62e59a-f2ae-475d-8ef6-3d3796809679")
-)
-	(pin "4"
-	(uuid "9c4b8a69-4ff4-4651-92f5-4395b7390dbd")
-)
-	(pin "5"
-	(uuid "c5df92c0-d4c8-403c-a539-9ac54a7bd8d7")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "J23")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:R")
-	(lib_id "Device:R")
-	(at 558.8 83.82 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "99b8e38a-90e8-455c-bbb6-cf829b4f14a0")
-	(property "Reference" "R85"
-		(at 558.8 80.01 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "2.2k"
-		(at 558.8 87.63 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-		(at 558.8 83.82 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://static.chipdip.ru/lib/104/DOC032104908.pdf"
-		(at 558.8 83.82 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "RC0603FR-072K2L"
-	(id 0)
-	(at 558.8 83.82 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(property "Manufacturer" "Yageo"
-	(id 1)
-	(at 558.8 83.82 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "eeab191e-5b94-4c34-8048-d20bf4c6daed")
-)
-	(pin "2"
-	(uuid "96e70bce-1419-453f-8298-2efd88ac1b65")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "R85")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:C")
-	(lib_id "Device:C")
-	(at 558.8 96.52 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "d5a6c912-0534-43b2-a2e7-17cbcce51e36")
-	(property "Reference" "C75"
-		(at 558.8 92.71 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "10n"
-		(at 558.8 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-		(at 558.8 96.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 558.8 96.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "GRM188R71C103KA01D"
-	(id 0)
-	(at 558.8 96.52 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "8eb0c6f4-c02d-438d-bdcc-5f5cb1cd9968")
-)
-	(pin "2"
-	(uuid "c1f19222-8e9a-49e0-96fc-948f8ad93a5d")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "C75")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:C")
-	(lib_id "Device:C")
-	(at 121.92 269.24 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "a85b9f5f-186c-478f-9cb8-1e0e7282dca5")
-	(property "Reference" "C19"
-		(at 121.92 265.43 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "10n ENC_A_FILTER"
-		(at 121.92 273.05 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-		(at 121.92 269.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 121.92 269.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "GRM188R71C103KA01D"
-	(id 0)
-	(at 121.92 269.24 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "0dc6c5ee-4d98-474e-8039-68ce5e219323")
-)
-	(pin "2"
-	(uuid "900af376-9a5b-45cf-afad-604794733e40")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "C19")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Device:C")
-	(lib_id "Device:C")
-	(at 152.4 269.24 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "9092f55d-228a-4b99-967e-087ebf281355")
-	(property "Reference" "C20"
-		(at 152.4 265.43 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "10n ENC_B_FILTER"
-		(at 152.4 273.05 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-		(at 152.4 269.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 152.4 269.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "GRM188R71C103KA01D"
-	(id 0)
-	(at 152.4 269.24 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "4773e498-a490-46c5-801b-c903e6485e87")
-)
-	(pin "2"
-	(uuid "73463029-84c6-4675-93db-49bcaae348b7")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "C20")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
 	(lib_name "Connector_Generic:Conn_01x02")
 	(lib_id "Connector_Generic:Conn_01x02")
 	(at 400.05 400.05 0)
@@ -12269,140 +11599,6 @@
 		)
 	)
 )
-(symbol
-	(lib_name "Device:C")
-	(lib_id "Device:C")
-	(at 309.88 205.74 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "760ae074-f46f-41f2-ad7d-e66de5977df3")
-	(property "Reference" "C307"
-		(at 303.53 205.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "100nF"
-		(at 309.88 213.36 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-		(at 309.88 205.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "~"
-		(at 309.88 205.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "MPN" "GRM188R71E104KA01D"
-	(id 0)
-	(at 309.88 205.74 0)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-		(hide yes)
-	)
-)
-	(pin "1"
-	(uuid "11811d00-6d9e-4a51-8fda-9d9f31a83f8c")
-)
-	(pin "2"
-	(uuid "329c6e6c-7024-4676-92a3-fa75ee4aeb9a")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "C307")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
-	(lib_name "Connector_Generic:Conn_01x04")
-	(lib_id "Connector_Generic:Conn_01x04")
-	(at 340.36 203.2 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "dbea4d63-5a50-41de-a6ff-95908133554a")
-	(property "Reference" "DS1"
-		(at 345.44 198.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "OLED I2C 128x64 / ChipDip 9001709304"
-		(at 353.06 215.9 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
-		(at 340.36 203.2 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://www.chipdip.ru/product/oled-0-96-i2c-belyy-9001709304"
-		(at 340.36 203.2 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(pin "1"
-	(uuid "e6231ea5-8592-4fdb-aa2b-9c7cb81d8605")
-)
-	(pin "2"
-	(uuid "2b53f26d-0622-4746-9210-f93719a5deb0")
-)
-	(pin "3"
-	(uuid "5d979b79-c86f-4268-8ba0-eb58bdb3ebed")
-)
-	(pin "4"
-	(uuid "b90e89b8-21cf-4850-b3d0-1f786c1bc57a")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "DS1")
-				(unit 1)
-			)
-		)
-	)
-)
 (symbol_instances
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/f1729915-8f3b-4b4d-9a9a-ae2c20dbdb7b"
 			(reference "J1")
@@ -12506,28 +11702,10 @@
 			(value "10k")
 			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/da63f8a5-a700-4404-aad1-f792138f8d71"
-			(reference "R14")
-			(unit 1)
-			(value "10k")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/0b54a463-ad62-4cec-8082-c3a360beb226"
 			(reference "R15")
 			(unit 1)
 			(value "10k")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/ee9765ef-01d6-4977-a2ca-b791c85d106f"
-			(reference "R16")
-			(unit 1)
-			(value "2.2k ENC_A_PULLUP")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/1d7ec2e5-be2b-477a-847d-5bb6f36a3cdf"
-			(reference "R17")
-			(unit 1)
-			(value "2.2k ENC_B_PULLUP")
 			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/d5cad77e-56c8-4670-939a-ac888507cebe"
@@ -13040,42 +12218,6 @@
 			(value "100nF X7R 16V 10%; U9006 local bypass")
 			(footprint "Sirokko_TFT_Passives:C_Murata_GRM188_1608_Reflow")
 		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/6f182f25-ae3a-4eba-8d5f-292d11b45520"
-			(reference "J22")
-			(unit 1)
-			(value "START_STOP B3F-4055 + B32-1380 RED")
-			(footprint "Button_Switch_THT:SW_SPST_Omron_B3F-40xx")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/a0140bca-3d8e-4e01-aed8-a2e4ee3848d4"
-			(reference "J23")
-			(unit 1)
-			(value "ENCODER EC11E15244G1 + KNOB 41001-1")
-			(footprint "Sirokko_Panel:RotaryEncoder_Alps_EC11E15244G1_Knob41001_3D_ENVELOPE")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/99b8e38a-90e8-455c-bbb6-cf829b4f14a0"
-			(reference "R85")
-			(unit 1)
-			(value "2.2k")
-			(footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/d5a6c912-0534-43b2-a2e7-17cbcce51e36"
-			(reference "C75")
-			(unit 1)
-			(value "10n")
-			(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/a85b9f5f-186c-478f-9cb8-1e0e7282dca5"
-			(reference "C19")
-			(unit 1)
-			(value "10n ENC_A_FILTER")
-			(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/9092f55d-228a-4b99-967e-087ebf281355"
-			(reference "C20")
-			(unit 1)
-			(value "10n ENC_B_FILTER")
-			(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder")
-		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/738f1eb5-5037-42a1-995a-b2820277f936/0af1d60c-3b6d-4c5d-833c-43a8f5901fcf"
 			(reference "D9002")
 			(unit 1)
@@ -13436,18 +12578,6 @@
 			(value "100nF 100V X7R 10% GRM21BR72A104KAC4L")
 			(footprint "Capacitor_SMD:C_0805_2012Metric")
 		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/760ae074-f46f-41f2-ad7d-e66de5977df3"
-			(reference "C307")
-			(unit 1)
-			(value "100nF")
-			(footprint "Capacitor_SMD:C_0603_1608Metric")
-		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/dbea4d63-5a50-41de-a6ff-95908133554a"
-			(reference "DS1")
-			(unit 1)
-			(value "OLED I2C 128x64 / ChipDip 9001709304")
-			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical")
-		)
 )
 (wire
 	(pts
@@ -13709,16 +12839,7 @@
 	)
 	(uuid "f3e148de-dca9-4ccf-bdbb-8398b664f509")
 )
-(wire
-	(pts
-		(xy 180.34 78.74) (xy 175.26 78.74)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "593573d5-e3c7-4106-991c-116ab7c4527a")
-)
+
 (wire
 	(pts
 		(xy 180.34 111.76) (xy 175.26 111.76)
@@ -13789,86 +12910,14 @@
 	)
 	(uuid "d2b3ef53-bfcd-4260-b0fd-354098fbdf5b")
 )
-(wire
-	(pts
-		(xy 60.96 245.11) (xy 60.96 242.57)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "a30d5eec-10a8-45ad-ba05-3f2c7e7a5aa1")
-)
-(wire
-	(pts
-		(xy 121.92 245.11) (xy 121.92 242.57)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "c20730f8-12d1-40a9-9f0d-4a43d35cf5f0")
-)
-(wire
-	(pts
-		(xy 152.4 245.11) (xy 152.4 242.57)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "9cdae73d-c74a-4b46-9cc3-0b9aa3781bfa")
-)
-(wire
-	(pts
-		(xy 60.96 252.73) (xy 60.96 255.27)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "822af97f-05f7-4869-a843-c72437c5a742")
-)
-(wire
-	(pts
-		(xy 251.46 83.82) (xy 248.92 83.82)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "eaa0add8-cc54-4ca6-b392-f1b880059048")
-)
-(wire
-	(pts
-		(xy 121.92 252.73) (xy 121.92 255.27)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "cd7fbb1b-5537-4339-987f-dbc8b7b747f5")
-)
-(wire
-	(pts
-		(xy 251.46 81.28) (xy 248.92 81.28)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "ff275648-d8e8-4286-840f-703d02fdbe2a")
-)
-(wire
-	(pts
-		(xy 152.4 252.73) (xy 152.4 255.27)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "62c95248-e288-4aca-ae7e-daca4eb3493d")
-)
+
+
+
+
+
+
+
+
 
 
 
@@ -14335,156 +13384,21 @@
 	)
 	(uuid "fe8e3092-4e33-4f4a-bffc-a7894ac3bbd7")
 )
-(wire
-	(pts
-		(xy 525.78 60.96) (xy 523.24 60.96)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "c5814482-e2c7-4441-b634-7860cb146abf")
-)
-(wire
-	(pts
-		(xy 535.94 60.96) (xy 538.48 60.96)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "782e0726-5f38-4a27-9008-a42f12d5ec6b")
-)
-(wire
-	(pts
-		(xy 525.78 88.9) (xy 523.24 88.9)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "c4454db7-088d-4b07-bf91-0a0d3a3cd4a5")
-)
-(wire
-	(pts
-		(xy 525.78 96.52) (xy 523.24 96.52)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "ed048b7b-2778-4073-a420-fee1b07e7036")
-)
-(wire
-	(pts
-		(xy 558.8 100.33) (xy 558.8 102.87)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "a9275717-ef58-412c-8a59-49afba165346")
-)
-(wire
-	(pts
-		(xy 525.78 86.36) (xy 523.24 86.36)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "c1667c39-3d9c-48db-bb8d-c2f4e4df933a")
-)
-(wire
-	(pts
-		(xy 525.78 91.44) (xy 523.24 91.44)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "c5dc8bef-01e7-4ca0-be87-86f8e6e6134f")
-)
-(wire
-	(pts
-		(xy 525.78 93.98) (xy 523.24 93.98)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "213e41c1-1010-4244-ba1a-2c1645aa6cc4")
-)
-(wire
-	(pts
-		(xy 558.8 87.63) (xy 558.8 90.17)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "149178fc-951d-4d1e-aeb1-22ec31bdd629")
-)
-(wire
-	(pts
-		(xy 251.46 86.36) (xy 248.92 86.36)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "253975f5-393d-4d5a-afd6-25a5eda1eff6")
-)
-(wire
-	(pts
-		(xy 558.8 80.01) (xy 558.8 77.47)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "cbbf9e3a-e4a2-4a06-8d32-004760e3978d")
-)
-(wire
-	(pts
-		(xy 121.92 265.43) (xy 121.92 262.89)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "a02ef1be-7f9f-44a3-b767-ee7b3489ebca")
-)
-(wire
-	(pts
-		(xy 152.4 265.43) (xy 152.4 262.89)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "b5ed5c1d-ae6a-4fee-9c4a-1ea241df10ed")
-)
-(wire
-	(pts
-		(xy 121.92 273.05) (xy 121.92 275.59)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "2dac0960-931b-499e-a735-53fd86cf62bc")
-)
-(wire
-	(pts
-		(xy 152.4 273.05) (xy 152.4 275.59)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "dd66cacc-80a3-40cd-b51b-3aad096abee0")
-)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -14897,15 +13811,7 @@
 	)
 	(uuid "e2615747-ae16-4e14-98a6-d2e75b76ca5c")
 )
-(label "START_REQUEST"
-	(at 175.26 78.74 180)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "bbfbe566-8338-43f7-899c-3ee17de089cf")
-)
+
 (label "GLOW_CMD"
 	(at 175.26 111.76 180)
 	(effects
@@ -14951,42 +13857,10 @@
 	)
 	(uuid "74982711-83cf-48ef-b7d3-26da9c51b702")
 )
-(label "+3V3"
-	(at 60.96 242.57 90)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "541d22cc-3b74-4b3b-931b-0bdf32c40483")
-)
-(label "+3V3"
-	(at 121.92 242.57 90)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "f65b53eb-273e-46ee-833e-c8ff676d9661")
-)
-(label "+3V3"
-	(at 152.4 242.57 90)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "c350928d-431e-47f5-9300-315bd182738e")
-)
-(label "START_REQUEST"
-	(at 60.96 255.27 270)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "4727d503-d119-4e96-be02-bc368aa0471c")
-)
+
+
+
+
 
 
 
@@ -15471,27 +14345,9 @@
 		)
 		(uuid "5f535e9b-06e2-4315-98b6-bd45fcde3c50")
 	)
-(label "OLED_SCL"
-		(at 251.46 104.14 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "52aebab9-a587-4a82-a2de-2f9d1ee6a8b0")
-	)
 
-(label "OLED_SDA"
-		(at 180.34 91.44 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fe3d1b5d-65f4-432c-b9bb-22b35aa7b6ab")
-	)
+
+
 
 (label "P24_PROTECTED"
 		(at 427.99 22.86 180)
@@ -15583,206 +14439,26 @@
 		)
 		(uuid "a2cf5246-4090-4687-93b7-0ae004efb01a")
 	)
-(label "ENC_A"
-		(at 248.92 83.82 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "99bfc320-515b-48ae-a9a4-b4f3fe04a003")
-	)
-(label "ENC_A"
-		(at 121.92 255.27 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6aeaa58f-39fe-4a7b-981c-265c8681f71f")
-	)
-(label "ENC_B"
-		(at 248.92 81.28 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1ced1359-023e-4068-91e2-113f21a4d973")
-	)
-(label "ENC_B"
-		(at 152.4 255.27 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9bb6f83d-2f7c-49c0-8471-82c093b7d645")
-	)
-(label "START_REQUEST"
-		(at 523.24 60.96 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "34265374-0fb6-4483-85a5-0748cbf6e885")
-	)
-(label "GND"
-		(at 538.48 60.96 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e597b905-52d5-4e72-b836-4e6826a7d812")
-	)
-(label "GND"
-		(at 523.24 88.9 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a7845058-b2b8-464e-a162-70bded4b24a7")
-	)
-(label "GND"
-		(at 523.24 96.52 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4bd0f290-de73-4d06-8579-679fc400cf1c")
-	)
-(label "GND"
-		(at 558.8 102.87 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "1295e990-d79f-4644-ab98-3d92c1d3ec49")
-	)
-(label "ENC_A"
-		(at 523.24 86.36 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "7f7ec2b5-98d6-44b5-b4b7-2023fd6100e4")
-	)
-(label "ENC_B"
-		(at 523.24 91.44 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f45ad313-d2f1-4bff-8089-474032b92ecc")
-	)
-(label "ENC_SW"
-		(at 523.24 93.98 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "121925d4-884e-4084-9917-22ae9a1de9cd")
-	)
-(label "ENC_SW"
-		(at 558.8 90.17 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "010994bc-1306-420d-9629-fd1c64506460")
-	)
-(label "ENC_SW"
-		(at 558.8 92.71 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "8d62fcd4-eca3-46e9-8bec-db8fb96b098f")
-	)
-(label "ENC_SW"
-		(at 248.92 86.36 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e4b9c9e0-238f-4d7a-a064-62a5357574f0")
-	)
-(label "+3V3"
-		(at 558.8 77.47 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "48db1ca4-62b9-49e5-b2dc-d0a33df85c72")
-	)
-(label "ENC_A"
-		(at 121.92 262.89 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "7a164eae-bfef-46bd-abcd-a508b5375fdb")
-	)
-(label "ENC_B"
-		(at 152.4 262.89 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5bfba2d3-192e-4b93-9683-6733c5a42cdf")
-	)
-(label "GND"
-		(at 121.92 275.59 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "fe9f9f79-55d3-4709-bf30-279135375ae3")
-	)
-(label "GND"
-		(at 152.4 275.59 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9b19a0f0-c71a-4204-9fd5-6e8ae9f75ab3")
-	)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (label "GND"
 		(at 394.97 402.59 0)
 		(effects
@@ -16325,7 +15001,7 @@
 	 (justify left top))
 	(uuid "a26a683b-7ac9-4a62-9c63-46d72f52b918")
 )
-(text "DEFINED INPUTS / OUTPUTS\nR1: room-sensor pull-up; R2/R3: thermocouple CS pull-ups.\nR7/R8: fan/PWM pulldowns. Safety pull resistors are inside MinimalSafety.\nGPIO21 MCU_PERMIT and GPIO41 ARM_PULSE are outputs; GPIO6 P24_PRESENT is INPUT ONLY.\nGPIO8 = OLED_SDA; GPIO47 = OLED_SCL; GPIO48 remains for the DevKit RGB LED. No RGB jumper removal.\nGPIO42 / former SW_TRIP is unconnected. New firmware only after PCB completion."
+(text "DEFINED INPUTS / OUTPUTS - REMOTE CONTROL ONLY\nR1: room-sensor pull-up; R2/R3: thermocouple CS pull-ups.\nR7/R8: fan/PWM pulldowns. Relay driver resistors remain inside MinimalSafety.\nNo display, encoder or Start/Stop button. Their six former DevKit pins are NC.\nRemote commands are handled by ESP32; no new control connector is added.\nFirmware and remote link-loss behavior remain to be implemented and tested."
 	(at 25.4 269.24 0)
 	(effects
 		(font
@@ -16380,7 +15056,7 @@
 	 (justify left top))
 	(uuid "c6122bfe-2256-4882-8660-903a9cd09c0b")
 )
-(text "Manual RESET removed: no J24, external reset header, jumper or replacement button.\nAutomatic safety remains: watchdog, latch and CLEAR_N conditions are preserved.\nU6.4 is fixed HIGH by +3V3; valid arming requires a new ARM_PULSE from ESP32.\nLegacy external EN_CHIP_PU path removed; J1.3 is intentionally NC.\nDevKit internal EN/button/USB auto-reset remain; firmware synchronization is pending."
+(text "NO LOCAL USER CONTROLS / DRAFT\nNo display, Start/Stop, encoder or separate RESET on this carrier.\nNo replacement UI header, jumper or local arming control.\nOld external watchdog/latch circuitry is not restored.\nDevKit built-in EN/BOOT and USB programming circuitry are unchanged.\nNo automatic heater restart after reset or a restored remote link."
 	(at 25.4 375.92 0)
 	(effects
 		(font
@@ -16704,6 +15380,30 @@
 	(at 180.34 88.9)
 	(uuid "dfbc9f5e-ab0b-46f0-97d6-734170358523")
 )
+(no_connect
+	(at 180.34 78.74)
+	(uuid "860675a5-e4f4-4875-bf07-ac1ae816432a")
+)
+(no_connect
+	(at 180.34 91.44)
+	(uuid "27ada41f-b232-4661-92a5-75f280539428")
+)
+(no_connect
+	(at 251.46 81.28)
+	(uuid "212f6c16-8df0-4414-8680-f103c516a670")
+)
+(no_connect
+	(at 251.46 83.82)
+	(uuid "a4495722-2557-4120-94dd-114af3703f31")
+)
+(no_connect
+	(at 251.46 86.36)
+	(uuid "25acf886-2a0d-4e54-a0d3-54b43b031b1b")
+)
+(no_connect
+	(at 251.46 104.14)
+	(uuid "7a575c78-be51-4838-b162-4a445130a4e2")
+)
 
 
 
@@ -16731,45 +15431,27 @@
 
 
 
-(label "GND" (at 320.04 200.66 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "4f0cc622-b0a3-49ed-906f-b830e36d5f0c"))
-
-(label "+3V3" (at 320.04 203.2 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "60472422-1393-428e-8e96-4951a4df33bc"))
-
-(label "OLED_SCL" (at 320.04 205.74 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "a2f47b47-9cfa-4ea0-8c33-716e94accfdb"))
-
-(label "OLED_SDA" (at 320.04 208.28 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "a0e679d6-3485-4015-a474-a7fcb2f1b522"))
-
-(label "+3V3"
-		(at 309.88 201.93 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1b56fb4a-ef25-48d4-b264-b5f98da126c8")
-	)
-
-(label "GND"
-		(at 309.88 209.55 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "501de1fd-8490-4a90-98e3-6b56714ed96d")
-	)
 
 
 
 
 
-(wire (pts (xy 320.04 200.66) (xy 335.28 200.66)) (stroke (width 0) (type default)) (uuid "6334b3b4-4dee-40f3-bef2-395153112c31"))
 
-(wire (pts (xy 320.04 203.2) (xy 335.28 203.2)) (stroke (width 0) (type default)) (uuid "5f12de88-050f-4444-bc47-660aa57bd9ca"))
 
-(wire (pts (xy 320.04 205.74) (xy 335.28 205.74)) (stroke (width 0) (type default)) (uuid "ffff7e82-bff7-402c-b6e3-bbc597093809"))
 
-(wire (pts (xy 320.04 208.28) (xy 335.28 208.28)) (stroke (width 0) (type default)) (uuid "a27bb8ea-0725-4937-8d22-105baec47333"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 )
