@@ -13786,16 +13786,6 @@
 )
 (wire
 	(pts
-		(xy 180.34 68.58) (xy 177.8 68.58)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "88d32f6f-ab9a-4edd-9e2f-d938eb740cbf")
-)
-(wire
-	(pts
 		(xy 289.56 207.01) (xy 289.56 209.55)
 	)
 	(stroke
@@ -15134,16 +15124,6 @@
 		)
 		(uuid "fe3d1b5d-65f4-432c-b9bb-22b35aa7b6ab")
 	)
-(label "EN_CHIP_PU"
-		(at 177.8 68.58 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "eea6dc6e-aea8-4519-afa6-080c57f58391")
-	)
 (label "+3V3"
 		(at 289.56 209.55 270)
 		(effects
@@ -16411,14 +16391,14 @@
 	 (justify left top))
 	(uuid "c6122bfe-2256-4882-8660-903a9cd09c0b")
 )
-(text "Manual RESET removed: no J24, external reset header, jumper or replacement button.\nAutomatic safety remains: watchdog, latch and CLEAR_N conditions are preserved.\nU6.4 is fixed HIGH by +3V3; valid arming requires a new ARM_PULSE from ESP32.\nEN_CHIP_PU remains at J1.3 for DevKit/USB service; firmware synchronization is pending."
+(text "Manual RESET removed: no J24, external reset header, jumper or replacement button.\nAutomatic safety remains: watchdog, latch and CLEAR_N conditions are preserved.\nU6.4 is fixed HIGH by +3V3; valid arming requires a new ARM_PULSE from ESP32.\nLegacy external EN_CHIP_PU path removed; J1.3 is intentionally NC.\nDevKit internal EN/button/USB auto-reset remain; firmware synchronization is pending."
 	(at 25.4 375.92 0)
 	(effects
 		(font
 			(size 1.27 1.27)
 		)
 	)
-	(uuid "44fe1495-2ce2-4702-92c0-106d5300f217")
+	(uuid "34ed548b-0f50-4a2d-ab13-32d8843af3de")
 )
 (junction
 	(at 114.46 59.69)
@@ -17040,5 +17020,9 @@
 (no_connect
 	(at 251.46 78.74)
 	(uuid "f1da7479-ae7e-42bf-a718-241bec6a6578")
+)
+(no_connect
+	(at 180.34 68.58)
+	(uuid "02571220-e2ab-413e-a1ea-31534f9bcc6a")
 )
 )
