@@ -7,11 +7,11 @@ The working tree contains one current, complete KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current PCB SHA-256: `4e5793495346b1cd5446da1d905fd9fc4f0e50a9605c08d387d5d4d5c65c9f96`.
+- current PCB SHA-256: `418746c97621857153b64f49019fe2fe100b520871095aca19620fa5633d9ef1`.
 
-The current PCB contains 144 footprints, 1,494 segments, 440 vias and 35 zones. The latest WIP closes `ENC_A`, `ENC_SW` and `TFT_CS`; routing is still incomplete. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
+The current PCB contains 144 footprints, 1,501 segments, 442 vias and 35 zones. The latest WIP closes `ENC_A`, `ENC_SW` and `TFT_CS` and adds scoped `+3V3` routing; routing is still incomplete. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
 
-The latest native KiCad 10.0.7 check reported 76 DRC warnings and 43 unconnected items, with no schematic-parity issues. This is unfinished board state, not manufacturing acceptance.
+The latest native KiCad 10.0.7 check reported 72 DRC warnings and 38 unconnected items, with no schematic-parity issues. This is unfinished board state, not manufacturing acceptance.
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 
