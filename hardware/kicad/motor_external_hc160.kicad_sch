@@ -753,7 +753,7 @@
 			(hide yes)
 		)
 	)
-	(property "Datasheet" "~"
+	(property "Datasheet" "https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-4-508-1715747"
 		(at 101.6 76.2 0)
 		(effects
 			(font
@@ -762,6 +762,26 @@
 			(hide yes)
 		)
 	)
+	(property "MPN" "1715747"
+	(id 0)
+	(at 101.6 76.2 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Phoenix Contact"
+	(id 1)
+	(at 101.6 76.2 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 	(pin "1"
 	(uuid "76720110-770e-435b-b0ca-27a0a23d7a8d")
 )

@@ -421,7 +421,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-4-508-1715747"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -452,6 +452,32 @@
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "d7b0ada0-8d53-4e45-97ac-d95c96d12dcb")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "1715747"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b307420a-2cce-4a9a-b279-79c484f24c3a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Phoenix Contact"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8fc95fda-75da-40d6-b561-935979db80b8")
 			(effects
 				(font
 					(size 1 1)
