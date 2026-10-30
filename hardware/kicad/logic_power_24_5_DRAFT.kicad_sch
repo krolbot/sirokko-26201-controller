@@ -1831,7 +1831,7 @@
 			)
 		)
 	)
-	(property "Value" "22uF 100V BULK"
+	(property "Value" "100uF 100V EEU-FR2A101"
 		(at 40.64 80.01 0)
 		(effects
 			(font
@@ -1839,7 +1839,7 @@
 			)
 		)
 	)
-	(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+	(property "Footprint" "Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm"
 		(at 40.64 76.2 0)
 		(effects
 			(font
@@ -1857,8 +1857,18 @@
 			(hide yes)
 		)
 	)
-	(property "MPN" "GRM32ER72A226KE20L"
+	(property "MPN" "EEU-FR2A101"
 	(id 0)
+	(at 40.64 76.2 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Panasonic Industry"
+	(id 1)
 	(at 40.64 76.2 0)
 	(effects
 		(font

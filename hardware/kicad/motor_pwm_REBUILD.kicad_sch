@@ -5688,7 +5688,7 @@
 			)
 		)
 	)
-	(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
+	(property "Footprint" "Sirokko_Power:TO-247-3_Vertical_STPS30H100CW_Drill2.2mm"
 		(at 185.42 115.57 0)
 		(effects
 			(font

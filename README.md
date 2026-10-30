@@ -7,11 +7,11 @@ The working tree contains one current, complete KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current PCB SHA-256: `18c19f6415c74e5b2ec4e1d33481a216533cde11e6ebb5407d7605f8e5c79261`.
+- current PCB SHA-256: `b393d31c9a8771560ed429b38b06a13f5380e3f6543b7bca72a81c10add6061b`.
 
-The current PCB contains 156 footprints, 591 physical pads, 1,523 segments and 448 vias. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
+The current PCB contains 144 footprints, 1,478 segments, 432 vias and 35 zones. Routing is still incomplete. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
 
-The latest native KiCad 10.0.7 check reported 82 DRC warnings and 54 unconnected items, with no schematic-parity issues. ERC reports one `isolated_pin_label` warning for `EN_CHIP_PU`. This is unfinished board state, not manufacturing acceptance.
+The latest native KiCad 10.0.7 check reported 78 DRC warnings and 46 unconnected items, with no schematic-parity issues. This is unfinished board state, not manufacturing acceptance.
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 

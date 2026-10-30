@@ -13172,16 +13172,6 @@
 )
 (wire
 	(pts
-		(xy 180.34 73.66) (xy 175.26 73.66)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "23650671-f53f-4b3c-909e-00253e73ace7")
-)
-(wire
-	(pts
 		(xy 180.34 78.74) (xy 175.26 78.74)
 	)
 	(stroke
@@ -13259,26 +13249,6 @@
 		(type default)
 	)
 	(uuid "d2b3ef53-bfcd-4260-b0fd-354098fbdf5b")
-)
-(wire
-	(pts
-		(xy 180.34 88.9) (xy 175.26 88.9)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "0eb8d4c4-bc90-4294-bec2-d049cf131e80")
-)
-(wire
-	(pts
-		(xy 251.46 78.74) (xy 246.38 78.74)
-	)
-	(stroke
-		(width 0)
-		(type default)
-	)
-	(uuid "ecd6da47-8848-4385-9ec8-8f16df321b7f")
 )
 (wire
 	(pts
@@ -14560,15 +14530,6 @@
 	)
 	(uuid "e2615747-ae16-4e14-98a6-d2e75b76ca5c")
 )
-(label "SAFETY_OK"
-	(at 175.26 73.66 180)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "d00aaff5-a02d-4507-a2eb-7bd73141b658")
-)
 (label "START_REQUEST"
 	(at 175.26 78.74 180)
 	(effects
@@ -14622,24 +14583,6 @@
 		)
 	)
 	(uuid "74982711-83cf-48ef-b7d3-26da9c51b702")
-)
-(label "WD_HEARTBEAT"
-	(at 175.26 88.9 180)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "5956a419-7caa-47ee-a008-117337f3749e")
-)
-(label "ARM_PULSE"
-	(at 246.38 78.74 180)
-	(effects
-		(font
-			(size 1.27 1.27)
-		)
-	)
-	(uuid "52204444-2f43-4dc3-a187-2657d9f1eabf")
 )
 (label "+3V3"
 	(at 60.96 242.57 90)
@@ -17066,34 +17009,36 @@
 	)
 (embedded_fonts no)
 (no_connect (at 251.46 76.2) (uuid "67863c2c-0251-4cd2-8588-4723d03f80b7"))
-(wire (pts (xy 195.58 279.4) (xy 190.5 279.4)) (stroke (width 0) (type default)) (uuid "dabd8568-12c2-4ba1-a64b-4b56883811c8"))
-(label "+3V3" (at 190.5 279.4 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "412f45fd-1b9b-45fa-ae03-d7fb275f70ba"))
 (wire (pts (xy 195.58 287.02) (xy 190.5 287.02)) (stroke (width 0) (type default)) (uuid "5ccb6255-aefb-4e6a-bca1-1a718894628f"))
 (label "GND" (at 190.5 287.02 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "96b8cd20-5371-4be8-af76-a51df4cd3584"))
 (wire (pts (xy 195.58 294.64) (xy 190.5 294.64)) (stroke (width 0) (type default)) (uuid "9793bead-62d0-4542-9279-be9bd4d643b1"))
 (label "P24_PROTECTED" (at 190.5 294.64 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "f6156740-f9f5-45a8-a7f5-56e8402661ee"))
-(wire (pts (xy 195.58 302.26) (xy 190.5 302.26)) (stroke (width 0) (type default)) (uuid "2654cc97-2c30-4085-915a-24e635964b76"))
-(label "P24_PRESENT" (at 190.5 302.26 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "a58f8270-7fad-468c-84f8-831353ecebff"))
-(wire (pts (xy 195.58 309.88) (xy 190.5 309.88)) (stroke (width 0) (type default)) (uuid "5b9ebbfc-2bae-4431-83f5-07db8df9340b"))
-(label "WD_HEARTBEAT" (at 190.5 309.88 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "a9691044-e44e-49e4-86d7-403cb76f1712"))
 (wire (pts (xy 195.58 332.74) (xy 190.5 332.74)) (stroke (width 0) (type default)) (uuid "1360ee96-a393-4cc9-a63a-2b0f199ae954"))
 (label "MCU_PERMIT" (at 190.5 332.74 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "13c2f7db-d04e-4dd7-bca5-20955f8015aa"))
-(wire (pts (xy 195.58 340.36) (xy 190.5 340.36)) (stroke (width 0) (type default)) (uuid "9b47830a-472f-4fef-9534-fd7fcccecb9e"))
-(label "ARM_PULSE" (at 190.5 340.36 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "9082123f-01d2-41a0-86ef-2c5a430dfe20"))
 (wire (pts (xy 195.58 347.98) (xy 190.5 347.98)) (stroke (width 0) (type default)) (uuid "6eba176a-2fcf-42fd-b151-957ce0374515"))
 (label "GLOW_CMD" (at 190.5 347.98 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "72f9256b-ee0c-4541-acad-81a6903dbe55"))
 (wire (pts (xy 195.58 355.6) (xy 190.5 355.6)) (stroke (width 0) (type default)) (uuid "5f9911e1-1d71-4d63-92c4-7b35876c1385"))
 (label "FUEL_CMD" (at 190.5 355.6 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "a77a5a01-6021-40db-9620-ff68a9534d2a"))
-(wire (pts (xy 381.0 279.4) (xy 386.08 279.4)) (stroke (width 0) (type default)) (uuid "9e3de8b2-3890-4213-8685-93c7d7db9caa"))
-(label "SAFETY_OK" (at 386.08 279.4 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "ddb85ccf-1cdf-4c31-b32b-6ae4681207c4"))
 (wire (pts (xy 381.0 287.02) (xy 386.08 287.02)) (stroke (width 0) (type default)) (uuid "60d37b6d-a928-4189-8581-19e9da72164a"))
 (label "K_GLOW_COIL_LOW" (at 386.08 287.02 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "80147118-d4a6-4cc6-9ed3-fdc4b47421cf"))
 (wire (pts (xy 381.0 294.64) (xy 386.08 294.64)) (stroke (width 0) (type default)) (uuid "806462a6-d91e-44d7-bd87-fb7470ee98fa"))
 (label "K_CLUTCH_RUN_COIL_LOW" (at 386.08 294.64 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "4a84f8a3-5374-483c-bca6-4cf395899a42"))
 (wire (pts (xy 381.0 302.26) (xy 386.08 302.26)) (stroke (width 0) (type default)) (uuid "deba839a-8b62-4a17-9166-b5e144c3d3c6"))
 (label "K_CLUTCH_SAFE_COIL_LOW" (at 386.08 302.26 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "192aa14d-78a6-4416-9437-97c03e5ab2f5"))
-(sheet (at 195.58 271.78) (size 185.42 91.44) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f0f0205c-c52c-4262-94bb-bebe167a6896") (property "Sheetname" "MinimalSafety" (at 195.58 270.51 0) (effects (font (size 1.27 1.27)) (justify left bottom))) (property "Sheetfile" "MinimalSafety.kicad_sch" (at 195.58 364.49 0) (effects (font (size 1 1)) (justify left top))) (pin "+3V3" input (at 195.58 279.4 180) (effects (font (size 1 1)) (justify left)) (uuid "8062c483-7329-4f61-9174-a61680e196cb")) (pin "GND" input (at 195.58 287.02 180) (effects (font (size 1 1)) (justify left)) (uuid "e4859722-2ac1-4ae2-ab55-30bade28478a")) (pin "P24_PROTECTED" input (at 195.58 294.64 180) (effects (font (size 1 1)) (justify left)) (uuid "ef46dd19-9f0a-42e1-92ce-08c353d0443c")) (pin "P24_PRESENT" input (at 195.58 302.26 180) (effects (font (size 1 1)) (justify left)) (uuid "aa4b48ae-4412-4aa2-a411-04be3b587083")) (pin "WD_HEARTBEAT" input (at 195.58 309.88 180) (effects (font (size 1 1)) (justify left)) (uuid "70e29fc5-436a-4e97-99aa-cd58f3e47c78")) (pin "MCU_PERMIT" input (at 195.58 332.74 180) (effects (font (size 1 1)) (justify left)) (uuid "bd52c630-91da-4e5e-a041-b6c4ab8eab9b")) (pin "ARM_PULSE" input (at 195.58 340.36 180) (effects (font (size 1 1)) (justify left)) (uuid "17ecbe93-8e8f-43d1-ba55-01039df39c98")) (pin "GLOW_CMD" input (at 195.58 347.98 180) (effects (font (size 1 1)) (justify left)) (uuid "0b3abcbd-4388-4cb4-90d6-390e4caf1d08")) (pin "FUEL_CMD" input (at 195.58 355.6 180) (effects (font (size 1 1)) (justify left)) (uuid "be54472d-e401-4e47-af44-621790964241")) (pin "SAFETY_OK" output (at 381.0 279.4 0) (effects (font (size 1 1)) (justify right)) (uuid "b0535701-1707-4b2b-8d40-8741ec8b12ec")) (pin "K_GLOW_COIL_LOW" output (at 381.0 287.02 0) (effects (font (size 1 1)) (justify right)) (uuid "f6676113-da35-43b7-b943-0bbb7b8a1093")) (pin "K_CLUTCH_RUN_COIL_LOW" output (at 381.0 294.64 0) (effects (font (size 1 1)) (justify right)) (uuid "1d976070-cc7d-433d-9906-0fd0ede9397b")) (pin "K_CLUTCH_SAFE_COIL_LOW" output (at 381.0 302.26 0) (effects (font (size 1 1)) (justify right)) (uuid "eddc86e5-088f-4038-b6fe-12845e89ab1a")))
+(sheet (at 195.58 271.78) (size 185.42 91.44) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f0f0205c-c52c-4262-94bb-bebe167a6896") (property "Sheetname" "MinimalSafety" (at 195.58 270.51 0) (effects (font (size 1.27 1.27)) (justify left bottom))) (property "Sheetfile" "MinimalSafety.kicad_sch" (at 195.58 364.49 0) (effects (font (size 1 1)) (justify left top))) (pin "GND" input (at 195.58 287.02 180) (effects (font (size 1 1)) (justify left)) (uuid "e4859722-2ac1-4ae2-ab55-30bade28478a")) (pin "P24_PROTECTED" input (at 195.58 294.64 180) (effects (font (size 1 1)) (justify left)) (uuid "ef46dd19-9f0a-42e1-92ce-08c353d0443c")) (pin "MCU_PERMIT" input (at 195.58 332.74 180) (effects (font (size 1 1)) (justify left)) (uuid "bd52c630-91da-4e5e-a041-b6c4ab8eab9b")) (pin "GLOW_CMD" input (at 195.58 347.98 180) (effects (font (size 1 1)) (justify left)) (uuid "0b3abcbd-4388-4cb4-90d6-390e4caf1d08")) (pin "FUEL_CMD" input (at 195.58 355.6 180) (effects (font (size 1 1)) (justify left)) (uuid "be54472d-e401-4e47-af44-621790964241")) (pin "K_GLOW_COIL_LOW" output (at 381.0 287.02 0) (effects (font (size 1 1)) (justify right)) (uuid "f6676113-da35-43b7-b943-0bbb7b8a1093")) (pin "K_CLUTCH_RUN_COIL_LOW" output (at 381.0 294.64 0) (effects (font (size 1 1)) (justify right)) (uuid "1d976070-cc7d-433d-9906-0fd0ede9397b")) (pin "K_CLUTCH_SAFE_COIL_LOW" output (at 381.0 302.26 0) (effects (font (size 1 1)) (justify right)) (uuid "eddc86e5-088f-4038-b6fe-12845e89ab1a")))
 (wire (pts (xy 180.34 76.2) (xy 175.26 76.2)) (stroke (width 0) (type default)) (uuid "586741eb-cd6b-4321-9c72-2bbda3450e91"))
 (label "P24_PRESENT" (at 175.26 76.2 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "ef688f72-9b92-458d-b48c-a48bc9b9020a"))
 (no_connect (at 251.46 101.6) (uuid "f27231fd-e488-4a59-92d0-873d454161f4"))
+(no_connect
+	(at 180.34 73.66)
+	(uuid "cd9885a3-6058-4093-bd3e-3f75a61f3514")
+)
+(no_connect
+	(at 180.34 88.9)
+	(uuid "12408b50-9f30-4810-868b-63406d346aef")
+)
+(no_connect
+	(at 251.46 78.74)
+	(uuid "f1da7479-ae7e-42bf-a718-241bec6a6578")
+)
 )
