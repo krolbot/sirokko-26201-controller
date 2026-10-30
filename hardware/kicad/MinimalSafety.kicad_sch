@@ -3535,15 +3535,14 @@
 (hierarchical_label "K_CLUTCH_SAFE_COIL_LOW" (shape output) (at 289.56 241.3 0) (effects (font (size 1 1)) (justify right)) (uuid "110ef453-c4c2-4790-a315-a24f080ec7bf"))
 (wire (pts (xy 289.56 241.3) (xy 294.64 241.3)) (stroke (width 0) (type default)) (uuid "368e44c2-9b65-43a7-89bf-f57efd77004d"))
 (label "K_CLUTCH_SAFE_COIL_LOW" (at 294.64 241.3 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "479d1d53-84da-43f7-abb9-69efb0b6adf5"))
-(global_label "+3V3"
-		(shape input)
+(label "+3V3"
 		(at 124.46 67.31 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify left bottom)
 		)
-		(uuid "f6e0e509-0162-4f84-be8b-6de9c031b5d9")
+		(uuid "9e3526d1-e81c-421f-9763-58216b8ead72")
 	)
 )

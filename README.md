@@ -11,7 +11,7 @@ The working tree contains one current, complete KiCad project:
 
 The current PCB contains 156 footprints, 591 physical pads, 1,523 segments and 448 vias. The separate RESET button, J24, R702 and `RESET_RELEASED` net were removed without a replacement header, jumper or hidden button. U6.4 is tied to `+3V3`; the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
 
-The latest native KiCad 10.0.7 check reported 82 DRC warnings, 54 unconnected items, 51 schematic-parity issues and 2 ERC warnings. This is unfinished board state, not manufacturing acceptance.
+The latest native KiCad 10.0.7 check reported 82 DRC warnings and 54 unconnected items, with no schematic-parity issues. ERC reports one `isolated_pin_label` warning for `EN_CHIP_PU`. This is unfinished board state, not manufacturing acceptance.
 
 The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
 
