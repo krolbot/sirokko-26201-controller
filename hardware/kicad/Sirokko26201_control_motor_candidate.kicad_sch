@@ -12270,77 +12270,6 @@
 	)
 )
 (symbol
-	(lib_name "Connector_Generic:Conn_01x06")
-	(lib_id "Connector_Generic:Conn_01x06")
-	(at 340.36 205.74 0)
-	(unit 1)
-	(exclude_from_sim no)
-	(in_bom yes)
-	(on_board yes)
-	(dnp no)
-	(uuid "0afd5f5d-db2f-4154-824e-a82de3e3fe5c")
-	(property "Reference" "DS1"
-		(at 345.44 198.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Value" "DFRobot DFR0650 / I2C 0x3C / 3.3V"
-		(at 350.52 219.71 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical"
-		(at 340.36 205.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(property "Datasheet" "https://wiki.dfrobot.com/Monochrome_0.96_128x64_IIC_SPI_OLED_Display_SKU_DFR0650"
-		(at 340.36 205.74 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(hide yes)
-		)
-	)
-	(pin "1"
-	(uuid "87cafda5-8c3a-4625-a3af-d57fbc17f204")
-)
-	(pin "2"
-	(uuid "229721f5-ffe9-4e17-acd3-2aa90681df4f")
-)
-	(pin "3"
-	(uuid "fc02eab0-2321-491b-a945-ecd918e75716")
-)
-	(pin "4"
-	(uuid "7e7a3719-2368-4897-bcd1-db917c93413d")
-)
-	(pin "5"
-	(uuid "6852bc13-8a86-4bc5-b413-9a1c079c2d4f")
-)
-	(pin "6"
-	(uuid "d3ac434f-18d9-4bcf-bb7e-5b806699343e")
-)
-	(instances
-		(project "Sirokko26201_control_motor_candidate"
-			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
-				(reference "DS1")
-				(unit 1)
-			)
-		)
-	)
-)
-(symbol
 	(lib_name "Device:C")
 	(lib_id "Device:C")
 	(at 309.88 205.74 0)
@@ -12404,6 +12333,71 @@
 		(project "Sirokko26201_control_motor_candidate"
 			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
 				(reference "C307")
+				(unit 1)
+			)
+		)
+	)
+)
+(symbol
+	(lib_name "Connector_Generic:Conn_01x04")
+	(lib_id "Connector_Generic:Conn_01x04")
+	(at 340.36 203.2 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "dbea4d63-5a50-41de-a6ff-95908133554a")
+	(property "Reference" "DS1"
+		(at 345.44 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "OLED I2C 128x64 / ChipDip 9001709304"
+		(at 353.06 215.9 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
+		(at 340.36 203.2 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "https://www.chipdip.ru/product/oled-0-96-i2c-belyy-9001709304"
+		(at 340.36 203.2 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(pin "1"
+	(uuid "e6231ea5-8592-4fdb-aa2b-9c7cb81d8605")
+)
+	(pin "2"
+	(uuid "2b53f26d-0622-4746-9210-f93719a5deb0")
+)
+	(pin "3"
+	(uuid "5d979b79-c86f-4268-8ba0-eb58bdb3ebed")
+)
+	(pin "4"
+	(uuid "b90e89b8-21cf-4850-b3d0-1f786c1bc57a")
+)
+	(instances
+		(project "Sirokko26201_control_motor_candidate"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
+				(reference "DS1")
 				(unit 1)
 			)
 		)
@@ -13442,17 +13436,17 @@
 			(value "100nF 100V X7R 10% GRM21BR72A104KAC4L")
 			(footprint "Capacitor_SMD:C_0805_2012Metric")
 		)
-		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/0afd5f5d-db2f-4154-824e-a82de3e3fe5c"
-			(reference "DS1")
-			(unit 1)
-			(value "DFRobot DFR0650 / I2C 0x3C / 3.3V")
-			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical")
-		)
 		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/760ae074-f46f-41f2-ad7d-e66de5977df3"
 			(reference "C307")
 			(unit 1)
 			(value "100nF")
 			(footprint "Capacitor_SMD:C_0603_1608Metric")
+		)
+		(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/dbea4d63-5a50-41de-a6ff-95908133554a"
+			(reference "DS1")
+			(unit 1)
+			(value "OLED I2C 128x64 / ChipDip 9001709304")
+			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical")
 		)
 )
 (wire
@@ -16737,9 +16731,9 @@
 
 
 
-(label "+3V3" (at 320.04 200.66 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "4f0cc622-b0a3-49ed-906f-b830e36d5f0c"))
+(label "GND" (at 320.04 200.66 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "4f0cc622-b0a3-49ed-906f-b830e36d5f0c"))
 
-(label "GND" (at 320.04 203.2 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "60472422-1393-428e-8e96-4951a4df33bc"))
+(label "+3V3" (at 320.04 203.2 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "60472422-1393-428e-8e96-4951a4df33bc"))
 
 (label "OLED_SCL" (at 320.04 205.74 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "a2f47b47-9cfa-4ea0-8c33-716e94accfdb"))
 
@@ -16767,9 +16761,9 @@
 		(uuid "501de1fd-8490-4a90-98e3-6b56714ed96d")
 	)
 
-(no_connect (at 335.28 210.82) (uuid "dfdf3188-9c9f-4d4f-9441-1f3b2c666601"))
 
-(no_connect (at 335.28 213.36) (uuid "eb720f9b-bcee-47bb-aeeb-b5180de7b091"))
+
+
 
 (wire (pts (xy 320.04 200.66) (xy 335.28 200.66)) (stroke (width 0) (type default)) (uuid "6334b3b4-4dee-40f3-bef2-395153112c31"))
 
