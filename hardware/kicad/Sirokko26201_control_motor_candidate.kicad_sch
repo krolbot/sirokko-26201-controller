@@ -16594,6 +16594,16 @@
 				(justify right)
 			)
 		)
+		(pin "OCP_OK" output
+			(at 455.93 48.26 0)
+			(uuid "4b47b6fd-21d3-4a51-a01c-f1f34fffd016")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 		(instances
 			(project "Sirokko26201_control_motor_candidate"
 				(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7"
@@ -17007,15 +17017,51 @@
 (label "K_CLUTCH_SAFE_COIL_LOW" (at 386.08 302.26 0) (effects (font (size 1 1)) (justify left bottom)) (uuid "192aa14d-78a6-4416-9437-97c03e5ab2f5"))
 (sheet (at 195.58 271.78) (size 185.42 91.44) (stroke (width 0.1524) (type solid)) (fill (color 0 0 0 0)) (uuid "f0f0205c-c52c-4262-94bb-bebe167a6896") (property "Sheetname" "MinimalSafety" (at 195.58 270.51 0) (effects (font (size 1.27 1.27)) (justify left bottom))) (property "Sheetfile" "MinimalSafety.kicad_sch" (at 195.58 364.49 0) (effects (font (size 1 1)) (justify left top))) (pin "GND" input (at 195.58 287.02 180) (effects (font (size 1 1)) (justify left)) (uuid "e4859722-2ac1-4ae2-ab55-30bade28478a")) (pin "P24_PROTECTED" input (at 195.58 294.64 180) (effects (font (size 1 1)) (justify left)) (uuid "ef46dd19-9f0a-42e1-92ce-08c353d0443c")) (pin "MCU_PERMIT" input (at 195.58 332.74 180) (effects (font (size 1 1)) (justify left)) (uuid "bd52c630-91da-4e5e-a041-b6c4ab8eab9b")) (pin "GLOW_CMD" input (at 195.58 347.98 180) (effects (font (size 1 1)) (justify left)) (uuid "0b3abcbd-4388-4cb4-90d6-390e4caf1d08")) (pin "FUEL_CMD" input (at 195.58 355.6 180) (effects (font (size 1 1)) (justify left)) (uuid "be54472d-e401-4e47-af44-621790964241")) (pin "K_GLOW_COIL_LOW" output (at 381.0 287.02 0) (effects (font (size 1 1)) (justify right)) (uuid "f6676113-da35-43b7-b943-0bbb7b8a1093")) (pin "K_CLUTCH_RUN_COIL_LOW" output (at 381.0 294.64 0) (effects (font (size 1 1)) (justify right)) (uuid "1d976070-cc7d-433d-9906-0fd0ede9397b")) (pin "K_CLUTCH_SAFE_COIL_LOW" output (at 381.0 302.26 0) (effects (font (size 1 1)) (justify right)) (uuid "eddc86e5-088f-4038-b6fe-12845e89ab1a")))
 (wire (pts (xy 180.34 76.2) (xy 175.26 76.2)) (stroke (width 0) (type default)) (uuid "586741eb-cd6b-4321-9c72-2bbda3450e91"))
+(wire
+	(pts
+		(xy 180.34 88.9) (xy 177.8 88.9)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "7f54b69c-56f3-4baa-a5e9-dd33372373b7")
+)
+(wire
+	(pts
+		(xy 455.93 48.26) (xy 461.01 48.26)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "42a2d267-9d94-44f1-a365-2368de45c6f3")
+)
 (label "P24_PRESENT" (at 175.26 76.2 0) (effects (font (size 1 1)) (justify right bottom)) (uuid "ef688f72-9b92-458d-b48c-a48bc9b9020a"))
+(label "OCP_OK"
+		(at 177.8 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "071c3ad8-3f54-40cb-a530-81d8290ddb83")
+	)
+(label "OCP_OK"
+		(at 461.01 48.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9c557b1d-7cc9-45cf-89f8-69afb0dd9670")
+	)
 (no_connect (at 251.46 101.6) (uuid "f27231fd-e488-4a59-92d0-873d454161f4"))
 (no_connect
 	(at 180.34 73.66)
 	(uuid "cd9885a3-6058-4093-bd3e-3f75a61f3514")
-)
-(no_connect
-	(at 180.34 88.9)
-	(uuid "12408b50-9f30-4810-868b-63406d346aef")
 )
 (no_connect
 	(at 251.46 78.74)

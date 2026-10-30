@@ -2,26 +2,25 @@
 
 > **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE.** The board is unfinished and has not passed manufacturing or physical acceptance. Do not order it, power it, flash it, or connect it to a burner.
 
-The working tree contains one current, complete KiCad project:
+The working tree contains one current KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current PCB SHA-256: `aae5b6afbbb5283542778262591795df049b703988a5036539b7ebb61fa9f47a`.
+- current PCB SHA-256: `0f29b0eb52f23cd80000c642781b561ff389ced245c62f7621cfe1a4008e463f`.
 
-The current PCB contains 144 footprints, 1,522 segments, 442 vias and 35 zones. The revoked external `EN_CHIP_PU` path was removed address-by-address: exactly 14 target 0.25 mm segments and five target 0.6/0.3 mm vias were deleted, while J1.3 kept its pad UUID, geometry and position and now belongs to `unconnected-(J1-Pin_3-Pad3)`. The root schematic contains one NC flag on J1.3 and no `EN_CHIP_PU` label or stub wire. All other copper and pad assignments are unchanged, and the complete 5,684-pair PAD connectivity set remains identical. The DevKit's internal EN button and USB auto-reset were not changed. The separate RESET button, J24, R702 and `RESET_RELEASED` net remain removed; U6.4 stays tied to `+3V3`, and the watchdog, hardware latch, automatic reset and requirement for a new `ARM_PULSE` remain.
+The current PCB contains 144 footprints, 115 nets, 1,535 segments, 444 vias and 35 zones. `GPIO18 = J1.11 = /OCP_OK`: a high-impedance digital input where LOW reports a hardware overcurrent-cutoff event. The MCU must never drive the net or enable an internal pull-down. R9008 is the existing external pull-up to +3V3; no second pull-up is required. The hardware cutoff path through U9003 and U9005 remains independent of the MCU. J1.3 remains `unconnected-(J1-Pin_3-Pad3)`; the DevKit's internal EN circuit was not changed.
 
-The latest native KiCad 10.0.7 check reported 58 DRC warnings, 19 unconnected items, no schematic-parity issues and zero ERC violations. This is unfinished board state, not manufacturing acceptance.
+The accepted KiCad 10.0.7 readback reported zero ERC violations and a non-passing whole-board DRC with 58 warnings and 17 unconnected items. The OCP change added no shorts, clearance violations or opens. This is unfinished board state, not manufacturing acceptance.
 
-The revoked bare-TFT M2×12 fastener model has been removed. The official nominal Waveshare 18366 STEP remains, but the factory standoff thread and height, mating hardware and full Z-stack are not accepted.
-
-There is no firmware in the working tree. The former bench implementation was rejected as a basis for the final product and is available only through Git history. Future firmware must not restore the old manual-RESET functions; arming uses `ARM_PULSE` only during an allowed start. No ILI9341 driver is implemented.
+There is no firmware in the working tree. Future firmware must treat `/OCP_OK` as read-only, latch the fault in software, inhibit ignition and automatic restart, and disable FUEL/GLOW. Minimum OCP pulse width, GPIO capture and end-to-end reaction time still require a separate verification; purge must not be promised when the motor has failed.
 
 Current documents:
 
 - [`README_RU.md`](README_RU.md) — primary Russian entry point;
 - [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md) — requirements;
 - [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md) — current state and limitations;
+- [`docs/research/YD_V14_ELECTRICAL_INTEGRATION_RU.md`](docs/research/YD_V14_ELECTRICAL_INTEGRATION_RU.md) — active DevKit pin contract;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies.
 
 Revision copies, verification reports, renders, snapshots and archives are not kept beside the sources. Normal Git history is the only recovery path for earlier states.
