@@ -1,0 +1,25 @@
+{
+  "candidate_sha": "efdae16f81208a62a88358b7bf35f454e072378b686593ecc42d9b9f1dcfb700",
+  "positive_physical_pairs": 1906,
+  "required_old_pairs": 1773,
+  "tests": [
+    {
+      "test": "MOSI_J30",
+      "deleted_via_uuid": "1b69eb78-841e-44d3-baa3-771ebfabb22a",
+      "lost_pairs": 2,
+      "retained_old_pairs_lost": 0,
+      "unintended_added_pairs": 0,
+      "detected": true
+    },
+    {
+      "test": "GROUND_J31",
+      "deleted_via_uuid": "36374e43-bd0b-427f-b27a-eaa334bab1c7",
+      "lost_pairs": 49,
+      "retained_old_pairs_lost": 0,
+      "unintended_added_pairs": 0,
+      "detected": true
+    }
+  ],
+  "candidate_unchanged": true,
+  "physical_tests": false
+}

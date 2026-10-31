@@ -1,0 +1,2849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/projects/exports/sirokko_max31856_modules/project/Sirokko26201_control_motor_candidate.kicad_sch</source>
+    <date>2026-10-31T16:59:42</date>
+    <tool>Eeschema 10.0.7-10.0.7~ubuntu26.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Sirokko 262.01 - common controller interfaces</title>
+        <company/>
+        <rev>DRAFT-01</rev>
+        <date>2026-10-23</date>
+        <source>Sirokko26201_control_motor_candidate.kicad_sch</source>
+        <comment number="1" value="Interface circuit only; not a burner safety approval"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>logic_power_24_5_DRAFT.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/MOTOR_EXTERNAL_HC160/" tstamps="/738f1eb5-5037-42a1-995a-b2820277f936/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>motor_external_hc160.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>MinimalSafety.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="5" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>Sirokko_Input_Protection_WIP.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C28">
+      <value>100nF 100V X7R 10% GRM21BR72A104KAC4L</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://static.chipdip.ru/lib/972/DOC031972161.pdf SHA256 3dec2dab5c86eccf0079ac027405ecefbe05d998c2ff98b3a607dab5ef1e2426</datasheet>
+      <fields>
+        <field name="Manufacturer">Murata</field>
+        <field name="MPN">GRM21BR72A104KAC4L</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/972/DOC031972161.pdf SHA256 3dec2dab5c86eccf0079ac027405ecefbe05d998c2ff98b3a607dab5ef1e2426</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="MPN" value="GRM21BR72A104KAC4L"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d1efd013-5988-408a-b79c-d07e86b15e7b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D20">
+      <value>BZT52C15-7-F 15V 500mW</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <fields>
+        <field name="MPN">BZT52C15-7-F</field>
+        <field name="Manufacturer">Diodes Incorporated</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MPN" value="BZT52C15-7-F"/>
+      <property name="Manufacturer" value="Diodes Incorporated"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4908f273-86a2-49c6-9501-e3fc02f8955b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J1">
+      <value>DEVKITC1_J1</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="MPN">SSQ-122-01-G-S</field>
+        <field name="Footprint">Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x22" description="Generic connector, single row, 01x22, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="SSQ-122-01-G-S"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f1729915-8f3b-4b4d-9a9a-ae2c20dbdb7b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J3">
+      <value>DEVKITC1_J3</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="MPN">SSQ-122-01-G-S</field>
+        <field name="Footprint">Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x22" description="Generic connector, single row, 01x22, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="SSQ-122-01-G-S"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>44950968-bd88-40bb-bcfc-58b2d6784441</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J12">
+      <value>ROOM_DS18B20_HARNESS</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/723/DOC011723280.pdf</datasheet>
+      <fields>
+        <field name="MPN">1715734</field>
+        <field name="Manufacturer">Phoenix Contact</field>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/723/DOC011723280.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Conn_01x03_Sirokko" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="1715734"/>
+      <property name="Manufacturer" value="Phoenix Contact"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6e642070-51ff-43c3-a8b9-070d479707ee</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J13">
+      <value>24V_INPUT_PHOENIX_1756993_WIP</value>
+      <footprint>Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</footprint>
+      <datasheet>https://static.chipdip.ru/lib/509/DOC040509545.pdf</datasheet>
+      <fields>
+        <field name="MPN">1756993</field>
+        <field name="Manufacturer">Phoenix Contact</field>
+        <field name="Footprint">Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/509/DOC040509545.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Conn_01x02_Sirokko" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="1756993"/>
+      <property name="Manufacturer" value="Phoenix Contact"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8a74a372-9cb8-490f-84b6-6869d4f667d0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J27">
+      <value>GLOW_OUTPUT_PHOENIX_1756993</value>
+      <footprint>Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</footprint>
+      <fields>
+        <field name="MPN">1756993</field>
+        <field name="Footprint">Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Conn_01x02_Sirokko" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="1756993"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>32a5e6e9-5602-4b13-a973-d7a94057f86a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J28">
+      <value>CLUTCH_OUTPUT_PHOENIX_1756993</value>
+      <footprint>Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</footprint>
+      <fields>
+        <field name="MPN">1756993</field>
+        <field name="Footprint">Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Conn_01x02_Sirokko" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="1756993"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c7dad01b-df35-4527-b380-ab3d43991f52</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J30">
+      <value>MAX31856 EXHAUST</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x09_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_PinSocket_2.54mm:PinSocket_1x09_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x09" description="Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>213de4af-4bd2-4f1f-87c2-6963141bf44d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J31">
+      <value>MAX31856 AIR</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x09_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_PinSocket_2.54mm:PinSocket_1x09_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x09" description="Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b0e8858b-7816-445d-be6e-26d03bbcc7f9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="K1">
+      <value>DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW</value>
+      <footprint>Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE</footprint>
+      <datasheet>https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf</datasheet>
+      <description>Durakool DG85BM-5021-76-1024 relay, 24 V coil, 305 ohm +/-10%, no integrated suppressor; Durakool DZ85AB-5-PCB socket; DRAFT NOT FOR ORDER</description>
+      <fields>
+        <field name="MPN">DG85BM-5021-76-1024 + DZ85AB-5-PCB</field>
+        <field name="Manufacturer">Durakool + Durakool</field>
+        <field name="Footprint">Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE</field>
+        <field name="Datasheet">https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf</field>
+        <field name="Description">Durakool DG85BM-5021-76-1024 relay, 24 V coil, 305 ohm +/-10%, no integrated suppressor; Durakool DZ85AB-5-PCB socket; DRAFT NOT FOR ORDER</field>
+      </fields>
+      <libsource lib="" part="DG85BM_DZ85AB_5_PCB_PASSIVE85" description=""/>
+      <property name="MPN" value="DG85BM-5021-76-1024 + DZ85AB-5-PCB"/>
+      <property name="Manufacturer" value="Durakool + Durakool"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bfeb1bbd-879c-46c9-b0a1-b739fa5d28b2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="87"/>
+            <pin num="85"/>
+            <pin num="30"/>
+            <pin num="87a"/>
+            <pin num="86"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="K2">
+      <value>DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN</value>
+      <footprint>Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE</footprint>
+      <datasheet>https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf</datasheet>
+      <description>Durakool DG85BM-5021-76-1024 relay, 24 V coil, 305 ohm +/-10%, no integrated suppressor; Durakool DZ85AB-5-PCB socket; DRAFT NOT FOR ORDER</description>
+      <fields>
+        <field name="MPN">DG85BM-5021-76-1024 + DZ85AB-5-PCB</field>
+        <field name="Manufacturer">Durakool + Durakool</field>
+        <field name="Footprint">Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE</field>
+        <field name="Datasheet">https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf</field>
+        <field name="Description">Durakool DG85BM-5021-76-1024 relay, 24 V coil, 305 ohm +/-10%, no integrated suppressor; Durakool DZ85AB-5-PCB socket; DRAFT NOT FOR ORDER</field>
+      </fields>
+      <libsource lib="" part="DG85BM_DZ85AB_5_PCB_PASSIVE85" description=""/>
+      <property name="MPN" value="DG85BM-5021-76-1024 + DZ85AB-5-PCB"/>
+      <property name="Manufacturer" value="Durakool + Durakool"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ef540925-fa94-413b-bb3a-e57dd01999c4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="87"/>
+            <pin num="85"/>
+            <pin num="30"/>
+            <pin num="87a"/>
+            <pin num="86"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q20">
+      <value>BC847B,215</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <fields>
+        <field name="MPN">BC847B,215</field>
+        <field name="Manufacturer">Nexperia</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Transistor_BJT" part="Q_NPN_BEC" description="NPN transistor, base/emitter/collector"/>
+      <property name="MPN" value="BC847B,215"/>
+      <property name="Manufacturer" value="Nexperia"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="BJT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1b166099-433e-4072-a790-bc913e87c14d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R1">
+      <value>4k7</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FTE52-4K7</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FTE52-4K7"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>caf3f208-0cf8-4849-acea-534d677e6cff</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R2">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FBF52-10K</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FBF52-10K"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>342ecc54-4441-4b82-aff0-fdd3ba2e3fe4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R3">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FBF52-10K</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FBF52-10K"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1f9e53ea-9be4-40f7-92ed-dbb6a9229c59</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FBF52-10K</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FBF52-10K"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>40ced585-50cc-48e5-a3ac-4cf77c739728</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R8">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FBF52-10K</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FBF52-10K"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>014feeef-edb3-4bb7-9ec1-06587134a72a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R120">
+      <value>2.7k 1% 0.25W RC1206FR-072K7L</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">RC1206FR-072K7L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC1206FR-072K7L"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5d8e1977-39f9-48b1-ba51-080172335cd2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R121">
+      <value>2.7k 1% 0.25W RC1206FR-072K7L</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="MPN">RC1206FR-072K7L</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC1206FR-072K7L"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>716394cd-849a-463a-9784-f7d23773ba42</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R122">
+      <value>47k 1% 0.125W RC0805FR-0747KL</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://static.chipdip.ru/lib/496/DOC013496896.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Yageo</field>
+        <field name="MPN">RC0805FR-0747KL</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/496/DOC013496896.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-0747KL"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d59e13c6-0e95-4f6e-9b40-c69038a99900</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R123">
+      <value>100k 1% 0.125W RC0805FR-07100KL</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://static.chipdip.ru/lib/496/DOC013496896.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Yageo</field>
+        <field name="MPN">RC0805FR-07100KL</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/496/DOC013496896.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="MPN" value="RC0805FR-07100KL"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>577aa599-2acd-45bf-83e7-cc4ddf38a052</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U20">
+      <value>SN74LVC1G97DBVR</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-6</footprint>
+      <fields>
+        <field name="MPN">SN74LVC1G97DBVR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="74xGxx" part="74LVC1G57" description="Configurable Multi-Function Single Gate, Low-Voltage CMOS"/>
+      <property name="MPN" value="SN74LVC1G97DBVR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="Sheetname" value="Sirokko26201_control_motor_candidate"/>
+      <property name="Sheetfile" value="Sirokko26201_control_motor_candidate.kicad_sch"/>
+      <property name="ki_keywords" value="Configurable Single Gate LVC CMOS"/>
+      <property name="ki_fp_filters" value="SOT* SC*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>283f90bc-a427-4a04-89fd-40e363a4fede</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="3"/>
+            <pin num="1"/>
+            <pin num="6"/>
+            <pin num="5"/>
+            <pin num="2"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C101">
+      <value>2.2uF 100V X7R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="MPN">GRM32ER72A225KA35L</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM32ER72A225KA35L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>cbffa30e-d57a-41e7-859a-fe3e4941bb90</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C102">
+      <value>2.2uF 100V X7R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="MPN">GRM32ER72A225KA35L</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM32ER72A225KA35L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>ec077eb4-0b86-43ce-9162-7305257b16b3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C103">
+      <value>100uF 100V EEU-FR2A101</value>
+      <footprint>Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm</footprint>
+      <fields>
+        <field name="MPN">EEU-FR2A101</field>
+        <field name="Manufacturer">Panasonic Industry</field>
+        <field name="Footprint">Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="MPN" value="EEU-FR2A101"/>
+      <property name="Manufacturer" value="Panasonic Industry"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>f6ae9b6a-8ecb-4ee9-ad80-7bac47420e2f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C104">
+      <value>2.2nF 50V C0G 5%</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H222JA01-01A-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20260730162352</datasheet>
+      <fields>
+        <field name="MPN">GRM1885C1H222JA01D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H222JA01-01A-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20260730162352</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM1885C1H222JA01D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>ffd707b5-58b5-49f0-8698-79d59db44ab5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C105">
+      <value>47uF 16V X5R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="MPN">GRM32ER61C476KE15L</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM32ER61C476KE15L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>830df980-6a74-4468-bcba-60bd0eff4ebe</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C106">
+      <value>47uF 16V X5R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="MPN">GRM32ER61C476KE15L</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM32ER61C476KE15L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>7c829269-f3be-482a-8054-b0010ed8ca26</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C107">
+      <value>4.7nF 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">GRM1885C1H472JA01D</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM1885C1H472JA01D"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>b1647142-b707-40bf-936d-e69020b3c322</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C108">
+      <value>820pF 50V C0G</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">CC0603JRNPO9BN821</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="CC0603JRNPO9BN821"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>3ecc6881-742a-4e9e-8e95-da4b83d80917</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D101">
+      <value>STPS5H100B-TR</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <fields>
+        <field name="MPN">STPS5H100B-TR</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="STPS5H100B_DPAK_K2_A3" description=""/>
+      <property name="MPN" value="STPS5H100B-TR"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>75982e08-226c-4abd-954e-f44910cc5a90</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L101">
+      <value>33uH Isat&gt;=10A</value>
+      <footprint>Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm</footprint>
+      <fields>
+        <field name="MPN">SRP1770TA-330M</field>
+        <field name="Footprint">Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="MPN" value="SRP1770TA-330M"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>58665ba5-d0d5-4a21-b2b0-97031411c51d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R101">
+      <value>31.6k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0731K6L</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0731K6L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>936b7cf7-51c3-4a78-8c21-99b4b9edf254</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R102">
+      <value>10k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0710KL</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0710KL"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>ae91aa06-0125-466b-9a37-aff9611ca257</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R103">
+      <value>31.6k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0731K6L</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0731K6L"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>5357badb-5398-436b-a6e9-738d2292339e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R104">
+      <value>100k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-07100KL</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-07100KL"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>a632181e-e8f3-4b8b-b40b-6b5f1fc82149</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R105">
+      <value>10k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0710KL</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0710KL"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>dea93f29-737e-4bd3-aa24-27aab5392941</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R106">
+      <value>82k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0782KL</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0782KL"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>7b335fc4-3019-438e-896d-a765e7984aae</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R107">
+      <value>10k 1%</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <fields>
+        <field name="MPN">RC0603FR-0710KL</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0603FR-0710KL"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>6fe6fd73-2ed5-46b7-b0b4-1d3b014ffc80</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP101">
+      <value>PGOOD_5V_NOT_GPIO</value>
+      <footprint>TestPoint:TestPoint_Keystone_5015_Micro_Mini</footprint>
+      <fields>
+        <field name="MPN">5015</field>
+        <field name="Footprint">TestPoint:TestPoint_Keystone_5015_Micro_Mini</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="MPN" value="5015"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <property name="ki_keywords" value="test point tp"/>
+      <property name="ki_fp_filters" value="Pin* Test*"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>13a2dda8-3d54-46e6-8eeb-81a654ed6e1a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U101">
+      <value>LM5013DDAR</value>
+      <footprint>Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D</footprint>
+      <fields>
+        <field name="MPN">LM5013DDAR</field>
+        <field name="Footprint">Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="LM5013DDAR" description=""/>
+      <property name="MPN" value="LM5013DDAR"/>
+      <property name="Sheetname" value="LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER"/>
+      <property name="Sheetfile" value="logic_power_24_5_DRAFT.kicad_sch"/>
+      <sheetpath names="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/" tstamps="/803a47a9-bc89-4fae-91f4-92180f46587a/"/>
+      <tstamps>251a2dee-35a3-4839-8f24-ecbe71ebcf34</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="1"/>
+            <pin num="9"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J29">
+      <value>HC160_A1_A2_PA_G_CONTROL_ONLY</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal</footprint>
+      <datasheet>https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-4-508-1715747</datasheet>
+      <fields>
+        <field name="MPN">1715747</field>
+        <field name="Manufacturer">Phoenix Contact</field>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal</field>
+        <field name="Datasheet">https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-4-508-1715747</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Conn_01x04_Sirokko" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MPN" value="1715747"/>
+      <property name="Manufacturer" value="Phoenix Contact"/>
+      <property name="Sheetname" value="MOTOR_EXTERNAL_HC160"/>
+      <property name="Sheetfile" value="motor_external_hc160.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal"/>
+      <sheetpath names="/MOTOR_EXTERNAL_HC160/" tstamps="/738f1eb5-5037-42a1-995a-b2820277f936/"/>
+      <tstamps>a1b10e3f-3b7e-44ad-96df-90a99b5922ea</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C21">
+      <value>100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://static.chipdip.ru/lib/972/DOC031972161.pdf SHA256 3dec2dab5c86eccf0079ac027405ecefbe05d998c2ff98b3a607dab5ef1e2426</datasheet>
+      <fields>
+        <field name="MPN">GRM21BR72A104KAC4L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/972/DOC031972161.pdf SHA256 3dec2dab5c86eccf0079ac027405ecefbe05d998c2ff98b3a607dab5ef1e2426</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM21BR72A104KAC4L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="Sheetname" value="MinimalSafety"/>
+      <property name="Sheetfile" value="MinimalSafety.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/"/>
+      <tstamps>e66f0cfe-a2f5-4e54-8ecc-9f7513928d48</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C22">
+      <value>330uF 63V EEUFS1J331L BULK_DRAFT</value>
+      <footprint>Capacitor_THT:CP_Radial_D10.0mm_P5.00mm</footprint>
+      <datasheet>https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1255.pdf SHA256 d06213365eba12ed3737124b30bb8d0a29c40f0f2479fbb309cc36e963a71824</datasheet>
+      <fields>
+        <field name="MPN">EEUFS1J331L</field>
+        <field name="Manufacturer">Panasonic Industry</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D10.0mm_P5.00mm</field>
+        <field name="Datasheet">https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1255.pdf SHA256 d06213365eba12ed3737124b30bb8d0a29c40f0f2479fbb309cc36e963a71824</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="MPN" value="EEUFS1J331L"/>
+      <property name="Manufacturer" value="Panasonic Industry"/>
+      <property name="Sheetname" value="MinimalSafety"/>
+      <property name="Sheetfile" value="MinimalSafety.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/"/>
+      <tstamps>5646324f-c621-4e11-972e-2ebe16526657</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R86">
+      <value>4k7 DRV_IN1_PULLDOWN</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FTE52-4K7</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FTE52-4K7"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="MinimalSafety"/>
+      <property name="Sheetfile" value="MinimalSafety.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/"/>
+      <tstamps>3068432e-feca-4a8f-b17b-12d108f7f7d8</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R87">
+      <value>4k7 DRV_IN2_PULLDOWN</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>https://static.chipdip.ru/lib/534/DOC021534312.pdf</datasheet>
+      <fields>
+        <field name="MPN">MFR-25FTE52-4K7</field>
+        <field name="Manufacturer">Yageo</field>
+        <field name="Footprint">Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/534/DOC021534312.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="MFR-25FTE52-4K7"/>
+      <property name="Manufacturer" value="Yageo"/>
+      <property name="Sheetname" value="MinimalSafety"/>
+      <property name="Sheetfile" value="MinimalSafety.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/"/>
+      <tstamps>651587e7-7ce3-4af2-85ba-06716c9fce5e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U11">
+      <value>DRV8803PWPR</value>
+      <footprint>Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/drv8803.pdf</datasheet>
+      <fields>
+        <field name="MPN">DRV8803PWPR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="Footprint">Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/drv8803.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="DRV8803PWP_DRAFT" description=""/>
+      <property name="MPN" value="DRV8803PWPR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="Sheetname" value="MinimalSafety"/>
+      <property name="Sheetfile" value="MinimalSafety.kicad_sch"/>
+      <sheetpath names="/MinimalSafety/" tstamps="/f0f0205c-c52c-4262-94bb-bebe167a6896/"/>
+      <tstamps>9b59a3d6-0770-4b21-99f4-10b29d6c8bdb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="10"/>
+            <pin num="9"/>
+            <pin num="8"/>
+            <pin num="11"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="12"/>
+            <pin num="17"/>
+            <pin num="2"/>
+            <pin num="16"/>
+            <pin num="15"/>
+            <pin num="7"/>
+            <pin num="6"/>
+            <pin num="4"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C24">
+      <value>220nF 100V CVCAP GRM21BR72A224KA01L</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">GRM21BR72A224KA01L</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM21BR72A224KA01L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>faa0c4b9-9921-4d7d-b46b-162920a9c169</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C25">
+      <value>1uF 100V CVS GRM31CR72A105KA01L</value>
+      <footprint>Sirokko_Capacitor:GRM31_1206_Murata_Reflow</footprint>
+      <fields>
+        <field name="MPN">GRM31CR72A105KA01L</field>
+        <field name="Footprint">Sirokko_Capacitor:GRM31_1206_Murata_Reflow</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="C_Sirokko" description="Unpolarized capacitor"/>
+      <property name="MPN" value="GRM31CR72A105KA01L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="Sirokko_Capacitor:GRM31_1206_Murata_Reflow"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>5bbce0f3-b468-41cd-880a-e2b323d576db</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D1">
+      <value>TVS3301DRBR WIP</value>
+      <footprint>Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm</footprint>
+      <fields>
+        <field name="MPN">TVS3301DRBR</field>
+        <field name="Footprint">Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="TVS3301DRBR" description=""/>
+      <property name="MPN" value="TVS3301DRBR"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>083a6106-120b-4f51-8ade-4b4d3315279e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="9"/>
+            <pin num="8"/>
+            <pin num="7"/>
+            <pin num="6"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="F1">
+      <value>0997030.WXN / 30A WIP</value>
+      <footprint>Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE</footprint>
+      <fields>
+        <field name="MPN">0997030.WXN + 3568</field>
+        <field name="Footprint">Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Sirokko_Interface" part="Fuse_Sirokko" description="Fuse"/>
+      <property name="MPN" value="0997030.WXN + 3568"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>644ea982-7186-445e-affd-5edc899af60a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q1">
+      <value>IPB017N10N5LFATMA1 WIP</value>
+      <footprint>Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</footprint>
+      <fields>
+        <field name="MPN">IPB017N10N5LFATMA1</field>
+        <field name="Footprint">Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="IPB017N10N5LF_TO263_7_CORRECT_V2" description=""/>
+      <property name="MPN" value="IPB017N10N5LFATMA1"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>a7761d7e-37c8-4fcc-b321-9fbe4866e698</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q2">
+      <value>IPB017N10N5LFATMA1 WIP</value>
+      <footprint>Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</footprint>
+      <fields>
+        <field name="MPN">IPB017N10N5LFATMA1</field>
+        <field name="Footprint">Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="IPB017N10N5LF_TO263_7_CORRECT_V2" description=""/>
+      <property name="MPN" value="IPB017N10N5LFATMA1"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>d6e5bf9f-4791-4a07-a613-d7bb32e8d34d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q3">
+      <value>IPB017N10N5LFATMA1 WIP</value>
+      <footprint>Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</footprint>
+      <fields>
+        <field name="MPN">IPB017N10N5LFATMA1</field>
+        <field name="Footprint">Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="IPB017N10N5LF_TO263_7_CORRECT_V2" description=""/>
+      <property name="MPN" value="IPB017N10N5LFATMA1"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>b34a3b82-856a-4165-8e86-dabbbe31a18a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q4">
+      <value>IPB017N10N5LFATMA1 WIP</value>
+      <footprint>Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</footprint>
+      <fields>
+        <field name="MPN">IPB017N10N5LFATMA1</field>
+        <field name="Footprint">Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="IPB017N10N5LF_TO263_7_CORRECT_V2" description=""/>
+      <property name="MPN" value="IPB017N10N5LFATMA1"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>ec234659-9492-4673-bde9-cfedee032e43</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="4"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R90">
+      <value>4.7R Q1_GATE</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-074R7L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-074R7L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>e366960e-4f5b-4c29-b9d2-09059f07ac61</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R91">
+      <value>4.7R Q2_GATE</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-074R7L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-074R7L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>92c595f2-a45f-4f1f-bff6-a217abc0ea06</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R92">
+      <value>4.7R Q3_GATE</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-074R7L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-074R7L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>de9553bd-5215-48a7-a41c-7c5540ee9fae</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R93">
+      <value>4.7R Q4_GATE</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-074R7L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-074R7L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>a52fa90f-f9f0-4c11-9126-99bc0212d674</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R94">
+      <value>84.5k 1% OV_TOP</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-0784K5L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-0784K5L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>b7b14320-881c-4f77-aeaf-2111fc01087a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R95">
+      <value>3.48k 1% OV_BOT</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-073K48L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-073K48L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>2fbd672b-2ece-4476-9bb8-7749040c69ff</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R96">
+      <value>75k 1% EN_TOP</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-0775KL</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-0775KL"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>5d8c4473-1401-4ce8-a0ff-c206e86962ba</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R97">
+      <value>5.62k 1% EN_BOT</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="MPN">RC0805FR-075K62L</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MPN" value="RC0805FR-075K62L"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>eb017a25-0a5e-47d7-9939-7c7b634d4b42</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U13">
+      <value>LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED</value>
+      <footprint>Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf</datasheet>
+      <fields>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="MPN">LM74800QDRRRQ1</field>
+        <field name="Footprint">Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="" part="LM74800QDRRRQ1_DRR_CORRECT_V3" description=""/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="MPN" value="LM74800QDRRRQ1"/>
+      <property name="Sheetname" value="INPUT_PROTECTION_WIP_NOT_QUALIFIED"/>
+      <property name="Sheetfile" value="Sirokko_Input_Protection_WIP.kicad_sch"/>
+      <sheetpath names="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/" tstamps="/54d853be-42f4-4f79-887f-ce7e8e8dbac1/"/>
+      <tstamps>460abd52-3189-493f-96b0-5f3bb166bc39</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="11"/>
+            <pin num="10"/>
+            <pin num="9"/>
+            <pin num="8"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="" part="DG85BM_DZ85AB_5_PCB_PASSIVE85">
+      <docs>https://www.songchuan.com/product-datasheet/DG85BM.pdf</docs>
+      <fields>
+        <field name="Reference">K</field>
+        <field name="Value">DG85BM_DZ85AB_5_PCB_PASSIVE85</field>
+        <field name="Footprint">Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM</field>
+        <field name="Datasheet">https://www.songchuan.com/product-datasheet/DG85BM.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="30" name="30" type="passive"/>
+        <pin num="85" name="85" type="passive"/>
+        <pin num="86" name="86" type="passive"/>
+        <pin num="87" name="87" type="passive"/>
+        <pin num="87a" name="87a" type="no_connect"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="DRV8803PWP_DRAFT">
+      <docs>https://www.ti.com/lit/ds/symlink/drv8803.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">DRV8803PWP_DRAFT</field>
+        <field name="Footprint">Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/drv8803.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VM" type="power_in"/>
+        <pin num="2" name="VCLAMP" type="power_in"/>
+        <pin num="3" name="OUT1" type="open_collector"/>
+        <pin num="4" name="OUT2" type="open_collector"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="OUT3" type="open_collector"/>
+        <pin num="7" name="OUT4" type="open_collector"/>
+        <pin num="8" name="~{ENBL}" type="input"/>
+        <pin num="9" name="RESET" type="input"/>
+        <pin num="10" name="IN4" type="input"/>
+        <pin num="11" name="IN3" type="input"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="IN2" type="input"/>
+        <pin num="14" name="IN1" type="input"/>
+        <pin num="15" name="NC" type="no_connect"/>
+        <pin num="16" name="~{FAULT}" type="open_collector"/>
+        <pin num="17" name="EP" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="IPB017N10N5LF_TO263_7_CORRECT_V2">
+      <docs>https://static.chipdip.ru/lib/078/DOC037078859.pdf</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">IPB017N10N5LF_TO263_7_CORRECT_V2</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-263-7_TabPin4</field>
+        <field name="Datasheet">https://static.chipdip.ru/lib/078/DOC037078859.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+        <pin num="4" name="D_TAB" type="passive"/>
+        <pin num="5" name="S" type="passive"/>
+        <pin num="6" name="S" type="passive"/>
+        <pin num="7" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="LM5013DDAR">
+      <docs>https://www.ti.com/lit/ds/symlink/lm5013.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM5013DDAR</field>
+        <field name="Footprint">Package_SO:HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm5013.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="VIN" type="power_in"/>
+        <pin num="3" name="EN/UVLO" type="input"/>
+        <pin num="4" name="RON" type="passive"/>
+        <pin num="5" name="FB" type="input"/>
+        <pin num="6" name="PGOOD" type="open_collector"/>
+        <pin num="7" name="BST" type="passive"/>
+        <pin num="8" name="SW" type="power_out"/>
+        <pin num="9" name="EP" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="LM74800QDRRRQ1_DRR_CORRECT_V3">
+      <docs>https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM74800QDRRRQ1_DRR_CORRECT_V3</field>
+        <field name="Footprint">Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="DGATE" type="output"/>
+        <pin num="2" name="A" type="passive"/>
+        <pin num="3" name="VSNS" type="input"/>
+        <pin num="4" name="SW" type="passive"/>
+        <pin num="5" name="OV" type="input"/>
+        <pin num="6" name="EN/UVLO" type="input"/>
+        <pin num="7" name="GND" type="power_in"/>
+        <pin num="8" name="HGATE" type="output"/>
+        <pin num="9" name="OUT" type="passive"/>
+        <pin num="10" name="VS" type="power_in"/>
+        <pin num="11" name="CAP" type="power_out"/>
+        <pin num="12" name="C" type="passive"/>
+        <pin num="13" name="EP" type="no_connect"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="STPS5H100B_DPAK_K2_A3">
+      <docs>https://www.st.com/resource/en/datasheet/stps5h100.pdf</docs>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">STPS5H100B_DPAK_K2_A3</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet">https://www.st.com/resource/en/datasheet/stps5h100.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="2" name="K" type="passive"/>
+        <pin num="3" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="" part="TVS3301DRBR">
+      <docs>https://www.ti.com/lit/ds/symlink/tvs3301.pdf</docs>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">TVS3301DRBR</field>
+        <field name="Footprint">Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tvs3301.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="passive"/>
+        <pin num="2" name="VIN" type="passive"/>
+        <pin num="3" name="VIN" type="passive"/>
+        <pin num="4" name="VIN" type="passive"/>
+        <pin num="5" name="GND" type="passive"/>
+        <pin num="6" name="GND" type="passive"/>
+        <pin num="7" name="GND" type="passive"/>
+        <pin num="8" name="GND" type="passive"/>
+        <pin num="9" name="EP_NC" type="no_connect"/>
+      </pins>
+    </libpart>
+    <libpart lib="74xGxx" part="74LVC1G57">
+      <description>Configurable Multi-Function Single Gate, Low-Voltage CMOS</description>
+      <docs>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</docs>
+      <footprints>
+        <fp>SOT*</fp>
+        <fp>SC*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC1G57</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</field>
+        <field name="Description">Configurable Multi-Function Single Gate, Low-Voltage CMOS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN1" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="IN0" type="input"/>
+        <pin num="4" name="Y" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="IN2" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="TestPoint">
+      <description>test point</description>
+      <footprints>
+        <fp>Pin*</fp>
+        <fp>Test*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">test point</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x09">
+      <description>Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x09</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x22">
+      <description>Generic connector, single row, 01x22, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x22</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x22, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+        <pin num="17" name="Pin_17" type="passive"/>
+        <pin num="18" name="Pin_18" type="passive"/>
+        <pin num="19" name="Pin_19" type="passive"/>
+        <pin num="20" name="Pin_20" type="passive"/>
+        <pin num="21" name="Pin_21" type="passive"/>
+        <pin num="22" name="Pin_22" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Zener">
+      <description>Zener diode</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Zener</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L">
+      <description>Inductor</description>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Inductor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Sirokko_Interface" part="C_Sirokko">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>Sirokko_Capacitor:GRM31_1206_Murata_Reflow</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Sirokko_Interface" part="Conn_01x02_Sirokko">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</fp>
+        <fp>Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Sirokko_Interface" part="Conn_01x03_Sirokko">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Sirokko_Interface" part="Conn_01x04_Sirokko">
+      <description>Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x04</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Sirokko_Interface" part="Fuse_Sirokko">
+      <description>Fuse</description>
+      <footprints>
+        <fp>Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">F</field>
+        <field name="Value">Fuse</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Fuse</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_BJT" part="Q_NPN_BEC">
+      <description>NPN transistor, base/emitter/collector</description>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NPN_BEC</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">NPN transistor, base/emitter/collector</field>
+        <field name="Sim.Device">NPN</field>
+        <field name="Sim.Pins">1=B 2=E 3=C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>${KICAD10_SYMBOL_DIR}/74xGxx.kicad_sym</uri>
+    </library>
+    <library logical="Connector">
+      <uri>${KICAD10_SYMBOL_DIR}/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Sirokko_Interface">
+      <uri>${KIPRJMOD}/Sirokko_Interface.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_BJT">
+      <uri>${KICAD10_SYMBOL_DIR}/Transistor_BJT.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V_DEVKIT" class="Default">
+      <node ref="C105" pin="1" pintype="passive"/>
+      <node ref="C106" pin="1" pintype="passive"/>
+      <node ref="C107" pin="2" pintype="passive"/>
+      <node ref="J1" pin="21" pinfunction="Pin_21_21" pintype="passive"/>
+      <node ref="L101" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="R101" pin="1" pintype="passive"/>
+      <node ref="R107" pin="1" pintype="passive"/>
+    </net>
+    <net code="2" name="/+3V3" class="Default">
+      <node ref="C28" pin="1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J12" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J30" pin="9" pinfunction="Pin_9_9" pintype="passive"/>
+      <node ref="J31" pin="9" pinfunction="Pin_9_9" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="R122" pin="1" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="U20" pin="1" pinfunction="IN1_1" pintype="input"/>
+      <node ref="U20" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+    </net>
+    <net code="3" name="/CLUTCH_SWITCHED_POS" class="Default">
+      <node ref="J28" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="K2" pin="87" pinfunction="87_87" pintype="passive"/>
+    </net>
+    <net code="4" name="/FAN_REQUEST" class="Default">
+      <node ref="J1" pin="9" pinfunction="Pin_9_9" pintype="passive"/>
+      <node ref="J29" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="/FUEL_CMD" class="Default">
+      <node ref="J1" pin="8" pinfunction="Pin_8_8" pintype="passive"/>
+      <node ref="R87" pin="1" pintype="passive"/>
+      <node ref="U11" pin="13" pinfunction="IN2_13" pintype="input"/>
+    </net>
+    <net code="6" name="/GLOW_CMD" class="Default">
+      <node ref="J1" pin="20" pinfunction="Pin_20_20" pintype="passive"/>
+      <node ref="R86" pin="1" pintype="passive"/>
+      <node ref="U11" pin="14" pinfunction="IN1_14" pintype="input"/>
+    </net>
+    <net code="7" name="/GLOW_SWITCHED_POS" class="Default">
+      <node ref="J27" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="K1" pin="87" pinfunction="87_87" pintype="passive"/>
+    </net>
+    <net code="8" name="/GND" class="Default">
+      <node ref="C101" pin="2" pintype="passive"/>
+      <node ref="C102" pin="2" pintype="passive"/>
+      <node ref="C103" pin="2" pintype="passive"/>
+      <node ref="C105" pin="2" pintype="passive"/>
+      <node ref="C106" pin="2" pintype="passive"/>
+      <node ref="C21" pin="2" pintype="passive"/>
+      <node ref="C22" pin="2" pintype="passive"/>
+      <node ref="C25" pin="2" pintype="passive"/>
+      <node ref="C28" pin="2" pintype="passive"/>
+      <node ref="D1" pin="5" pinfunction="GND_5" pintype="passive"/>
+      <node ref="D1" pin="6" pinfunction="GND_6" pintype="passive"/>
+      <node ref="D1" pin="7" pinfunction="GND_7" pintype="passive"/>
+      <node ref="D1" pin="8" pinfunction="GND_8" pintype="passive"/>
+      <node ref="D101" pin="3" pinfunction="A_3" pintype="passive"/>
+      <node ref="J1" pin="22" pinfunction="Pin_22_22" pintype="passive"/>
+      <node ref="J12" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="J13" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J27" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J28" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J29" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J29" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J3" pin="21" pinfunction="Pin_21_21" pintype="passive"/>
+      <node ref="J3" pin="22" pinfunction="Pin_22_22" pintype="passive"/>
+      <node ref="J30" pin="7" pinfunction="Pin_7_7" pintype="passive"/>
+      <node ref="J31" pin="7" pinfunction="Pin_7_7" pintype="passive"/>
+      <node ref="Q20" pin="2" pinfunction="E_2" pintype="passive"/>
+      <node ref="R102" pin="2" pintype="passive"/>
+      <node ref="R103" pin="2" pintype="passive"/>
+      <node ref="R105" pin="2" pintype="passive"/>
+      <node ref="R123" pin="2" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="R86" pin="2" pintype="passive"/>
+      <node ref="R87" pin="2" pintype="passive"/>
+      <node ref="R95" pin="2" pintype="passive"/>
+      <node ref="R97" pin="2" pintype="passive"/>
+      <node ref="U101" pin="1" pinfunction="GND_1" pintype="power_in"/>
+      <node ref="U101" pin="9" pinfunction="EP_9" pintype="passive"/>
+      <node ref="U11" pin="10" pinfunction="IN4_10" pintype="input"/>
+      <node ref="U11" pin="11" pinfunction="IN3_11" pintype="input"/>
+      <node ref="U11" pin="12" pinfunction="GND_12" pintype="power_in"/>
+      <node ref="U11" pin="17" pinfunction="EP_17" pintype="power_in"/>
+      <node ref="U11" pin="5" pinfunction="GND_5" pintype="power_in"/>
+      <node ref="U11" pin="8" pinfunction="~{ENBL}_8" pintype="input"/>
+      <node ref="U11" pin="9" pinfunction="RESET_9" pintype="input"/>
+      <node ref="U13" pin="7" pinfunction="GND_7" pintype="power_in"/>
+      <node ref="U20" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U20" pin="3" pinfunction="IN0_3" pintype="input"/>
+    </net>
+    <net code="9" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET" class="Default">
+      <node ref="C24" pin="1" pintype="passive"/>
+      <node ref="U13" pin="11" pinfunction="CAP_11" pintype="power_out"/>
+    </net>
+    <net code="10" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE" class="Default">
+      <node ref="R90" pin="1" pintype="passive"/>
+      <node ref="R91" pin="1" pintype="passive"/>
+      <node ref="U13" pin="1" pinfunction="DGATE_1" pintype="output"/>
+    </net>
+    <net code="11" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV" class="Default">
+      <node ref="R96" pin="2" pintype="passive"/>
+      <node ref="R97" pin="1" pintype="passive"/>
+      <node ref="U13" pin="6" pinfunction="EN/UVLO_6" pintype="input"/>
+    </net>
+    <net code="12" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE" class="Default">
+      <node ref="R92" pin="1" pintype="passive"/>
+      <node ref="R93" pin="1" pintype="passive"/>
+      <node ref="U13" pin="8" pinfunction="HGATE_8" pintype="output"/>
+    </net>
+    <net code="13" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV" class="Default">
+      <node ref="R94" pin="2" pintype="passive"/>
+      <node ref="R95" pin="1" pintype="passive"/>
+      <node ref="U13" pin="5" pinfunction="OV_5" pintype="input"/>
+    </net>
+    <net code="14" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="R90" pin="2" pintype="passive"/>
+    </net>
+    <net code="15" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE" class="Default">
+      <node ref="Q2" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="R91" pin="2" pintype="passive"/>
+    </net>
+    <net code="16" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE" class="Default">
+      <node ref="Q3" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="R92" pin="2" pintype="passive"/>
+    </net>
+    <net code="17" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE" class="Default">
+      <node ref="Q4" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="R93" pin="2" pintype="passive"/>
+    </net>
+    <net code="18" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID" class="Default">
+      <node ref="C24" pin="2" pintype="passive"/>
+      <node ref="C25" pin="1" pintype="passive"/>
+      <node ref="Q1" pin="4" pinfunction="D_TAB_4" pintype="passive"/>
+      <node ref="Q2" pin="4" pinfunction="D_TAB_4" pintype="passive"/>
+      <node ref="Q3" pin="4" pinfunction="D_TAB_4" pintype="passive"/>
+      <node ref="Q4" pin="4" pinfunction="D_TAB_4" pintype="passive"/>
+      <node ref="R94" pin="1" pintype="passive"/>
+      <node ref="R96" pin="1" pintype="passive"/>
+      <node ref="U13" pin="10" pinfunction="VS_10" pintype="power_in"/>
+      <node ref="U13" pin="12" pinfunction="C_12" pintype="passive"/>
+      <node ref="U13" pin="3" pinfunction="VSNS_3" pintype="input"/>
+      <node ref="U13" pin="4" pinfunction="SW_4" pintype="passive"/>
+    </net>
+    <net code="19" name="/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED" class="Default">
+      <node ref="D1" pin="1" pinfunction="VIN_1" pintype="passive"/>
+      <node ref="D1" pin="2" pinfunction="VIN_2" pintype="passive"/>
+      <node ref="D1" pin="3" pinfunction="VIN_3" pintype="passive"/>
+      <node ref="D1" pin="4" pinfunction="VIN_4" pintype="passive"/>
+      <node ref="F1" pin="2" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q1" pin="5" pinfunction="S_5" pintype="passive"/>
+      <node ref="Q1" pin="6" pinfunction="S_6" pintype="passive"/>
+      <node ref="Q1" pin="7" pinfunction="S_7" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q2" pin="5" pinfunction="S_5" pintype="passive"/>
+      <node ref="Q2" pin="6" pinfunction="S_6" pintype="passive"/>
+      <node ref="Q2" pin="7" pinfunction="S_7" pintype="passive"/>
+      <node ref="U13" pin="2" pinfunction="A_2" pintype="passive"/>
+    </net>
+    <net code="20" name="/K_CLUTCH_RUN_COIL_LOW" class="Default">
+      <node ref="K2" pin="85" pinfunction="85_85" pintype="passive"/>
+      <node ref="U11" pin="4" pinfunction="OUT2_4" pintype="open_collector"/>
+    </net>
+    <net code="21" name="/K_GLOW_COIL_LOW" class="Default">
+      <node ref="K1" pin="85" pinfunction="85_85" pintype="passive"/>
+      <node ref="U11" pin="3" pinfunction="OUT1_3" pintype="open_collector"/>
+    </net>
+    <net code="22" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/BOOT" class="Default">
+      <node ref="C104" pin="1" pintype="passive"/>
+      <node ref="U101" pin="7" pinfunction="BST_7" pintype="passive"/>
+    </net>
+    <net code="23" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC" class="Default">
+      <node ref="R104" pin="2" pintype="passive"/>
+      <node ref="R105" pin="1" pintype="passive"/>
+      <node ref="U101" pin="3" pinfunction="EN/UVLO_3" pintype="input"/>
+    </net>
+    <net code="24" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB" class="Default">
+      <node ref="C108" pin="2" pintype="passive"/>
+      <node ref="R101" pin="2" pintype="passive"/>
+      <node ref="R102" pin="1" pintype="passive"/>
+      <node ref="U101" pin="5" pinfunction="FB_5" pintype="input"/>
+    </net>
+    <net code="25" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V" class="Default">
+      <node ref="R107" pin="2" pintype="passive"/>
+      <node ref="TP101" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="U101" pin="6" pinfunction="PGOOD_6" pintype="open_collector"/>
+    </net>
+    <net code="26" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP" class="Default">
+      <node ref="C107" pin="1" pintype="passive"/>
+      <node ref="C108" pin="1" pintype="passive"/>
+      <node ref="R106" pin="2" pintype="passive"/>
+    </net>
+    <net code="27" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON" class="Default">
+      <node ref="R103" pin="1" pintype="passive"/>
+      <node ref="U101" pin="4" pinfunction="RON_4" pintype="passive"/>
+    </net>
+    <net code="28" name="/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW" class="Default">
+      <node ref="C104" pin="2" pintype="passive"/>
+      <node ref="D101" pin="2" pinfunction="K_2" pintype="passive"/>
+      <node ref="L101" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="R106" pin="1" pintype="passive"/>
+      <node ref="U101" pin="8" pinfunction="SW_8" pintype="power_out"/>
+    </net>
+    <net code="29" name="/P24_BASE" class="Default">
+      <node ref="D20" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q20" pin="1" pinfunction="B_1" pintype="input"/>
+      <node ref="R123" pin="1" pintype="passive"/>
+    </net>
+    <net code="30" name="/P24_PRESENT" class="Default">
+      <node ref="J1" pin="6" pinfunction="Pin_6_6" pintype="passive"/>
+      <node ref="U20" pin="4" pinfunction="Y_4" pintype="output"/>
+    </net>
+    <net code="31" name="/P24_PROTECTED" class="Default">
+      <node ref="C101" pin="1" pintype="passive"/>
+      <node ref="C102" pin="1" pintype="passive"/>
+      <node ref="C103" pin="1" pintype="passive"/>
+      <node ref="C21" pin="1" pintype="passive"/>
+      <node ref="C22" pin="1" pintype="passive"/>
+      <node ref="K1" pin="30" pinfunction="30_30" pintype="passive"/>
+      <node ref="K1" pin="86" pinfunction="86_86" pintype="passive"/>
+      <node ref="K2" pin="30" pinfunction="30_30" pintype="passive"/>
+      <node ref="K2" pin="86" pinfunction="86_86" pintype="passive"/>
+      <node ref="Q3" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q3" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q3" pin="5" pinfunction="S_5" pintype="passive"/>
+      <node ref="Q3" pin="6" pinfunction="S_6" pintype="passive"/>
+      <node ref="Q3" pin="7" pinfunction="S_7" pintype="passive"/>
+      <node ref="Q4" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q4" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q4" pin="5" pinfunction="S_5" pintype="passive"/>
+      <node ref="Q4" pin="6" pinfunction="S_6" pintype="passive"/>
+      <node ref="Q4" pin="7" pinfunction="S_7" pintype="passive"/>
+      <node ref="R104" pin="1" pintype="passive"/>
+      <node ref="R120" pin="1" pintype="passive"/>
+      <node ref="U101" pin="2" pinfunction="VIN_2" pintype="power_in"/>
+      <node ref="U11" pin="1" pinfunction="VM_1" pintype="power_in"/>
+      <node ref="U11" pin="2" pinfunction="VCLAMP_2" pintype="power_in"/>
+      <node ref="U13" pin="9" pinfunction="OUT_9" pintype="passive"/>
+    </net>
+    <net code="32" name="/P24_SENSE_N" class="Default">
+      <node ref="Q20" pin="3" pinfunction="C_3" pintype="passive"/>
+      <node ref="R122" pin="2" pintype="passive"/>
+      <node ref="U20" pin="6" pinfunction="IN2_6" pintype="input"/>
+    </net>
+    <net code="33" name="/P24_SERIES_MID" class="Default">
+      <node ref="R120" pin="2" pintype="passive"/>
+      <node ref="R121" pin="1" pintype="passive"/>
+    </net>
+    <net code="34" name="/P24_ZENER_K" class="Default">
+      <node ref="D20" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="R121" pin="2" pintype="passive"/>
+    </net>
+    <net code="35" name="/ROOM_DQ" class="Default">
+      <node ref="J1" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="J12" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="36" name="/SPEED_CMD" class="Default">
+      <node ref="J1" pin="10" pinfunction="Pin_10_10" pintype="passive"/>
+      <node ref="J29" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+    </net>
+    <net code="37" name="/TC_AIR_CS" class="Default">
+      <node ref="J1" pin="15" pinfunction="Pin_15_15" pintype="passive"/>
+      <node ref="J31" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+    </net>
+    <net code="38" name="/TC_AIR_DRDY" class="Default">
+      <node ref="J3" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="J31" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+    </net>
+    <net code="39" name="/TC_EXH_CS" class="Default">
+      <node ref="J1" pin="16" pinfunction="Pin_16_16" pintype="passive"/>
+      <node ref="J30" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="40" name="/TC_EXH_DRDY" class="Default">
+      <node ref="J3" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="J30" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+    </net>
+    <net code="41" name="/TC_SCK" class="Default">
+      <node ref="J1" pin="18" pinfunction="Pin_18_18" pintype="passive"/>
+      <node ref="J30" pin="6" pinfunction="Pin_6_6" pintype="passive"/>
+      <node ref="J31" pin="6" pinfunction="Pin_6_6" pintype="passive"/>
+    </net>
+    <net code="42" name="/TC_SDI_MOSI" class="Default">
+      <node ref="J1" pin="17" pinfunction="Pin_17_17" pintype="passive"/>
+      <node ref="J30" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="J31" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+    </net>
+    <net code="43" name="/TC_SDO_MISO" class="Default">
+      <node ref="J1" pin="19" pinfunction="Pin_19_19" pintype="passive"/>
+      <node ref="J30" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="J31" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+    </net>
+    <net code="44" name="/VIN_RAW_24" class="Default">
+      <node ref="F1" pin="1" pintype="passive"/>
+      <node ref="J13" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+    </net>
+    <net code="45" name="unconnected-(D1-EP_NC-Pad9)" class="Default">
+      <node ref="D1" pin="9" pinfunction="EP_NC_9" pintype="no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(J1-Pin_3-Pad3)" class="Default">
+      <node ref="J1" pin="3" pinfunction="Pin_3_3" pintype="passive+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(J1-Pin_5-Pad5)" class="Default">
+      <node ref="J1" pin="5" pinfunction="Pin_5_5" pintype="passive+no_connect"/>
+    </net>
+    <net code="48" name="unconnected-(J1-Pin_7-Pad7)" class="Default">
+      <node ref="J1" pin="7" pinfunction="Pin_7_7" pintype="passive+no_connect"/>
+    </net>
+    <net code="49" name="unconnected-(J1-Pin_11-Pad11)" class="Default">
+      <node ref="J1" pin="11" pinfunction="Pin_11_11" pintype="passive+no_connect"/>
+    </net>
+    <net code="50" name="unconnected-(J1-Pin_12-Pad12)" class="Default">
+      <node ref="J1" pin="12" pinfunction="Pin_12_12" pintype="passive+no_connect"/>
+    </net>
+    <net code="51" name="unconnected-(J1-Pin_13-Pad13)" class="Default">
+      <node ref="J1" pin="13" pinfunction="Pin_13_13" pintype="passive+no_connect"/>
+    </net>
+    <net code="52" name="unconnected-(J1-Pin_14-Pad14)" class="Default">
+      <node ref="J1" pin="14" pinfunction="Pin_14_14" pintype="passive+no_connect"/>
+    </net>
+    <net code="53" name="unconnected-(J3-Pin_2-Pad2)" class="Default">
+      <node ref="J3" pin="2" pinfunction="Pin_2_2" pintype="passive+no_connect"/>
+    </net>
+    <net code="54" name="unconnected-(J3-Pin_3-Pad3)" class="Default">
+      <node ref="J3" pin="3" pinfunction="Pin_3_3" pintype="passive+no_connect"/>
+    </net>
+    <net code="55" name="unconnected-(J3-Pin_6-Pad6)" class="Default">
+      <node ref="J3" pin="6" pinfunction="Pin_6_6" pintype="passive+no_connect"/>
+    </net>
+    <net code="56" name="unconnected-(J3-Pin_7-Pad7)" class="Default">
+      <node ref="J3" pin="7" pinfunction="Pin_7_7" pintype="passive+no_connect"/>
+    </net>
+    <net code="57" name="unconnected-(J3-Pin_8-Pad8)" class="Default">
+      <node ref="J3" pin="8" pinfunction="Pin_8_8" pintype="passive+no_connect"/>
+    </net>
+    <net code="58" name="unconnected-(J3-Pin_9-Pad9)" class="Default">
+      <node ref="J3" pin="9" pinfunction="Pin_9_9" pintype="passive+no_connect"/>
+    </net>
+    <net code="59" name="unconnected-(J3-Pin_10-Pad10)" class="Default">
+      <node ref="J3" pin="10" pinfunction="Pin_10_10" pintype="passive+no_connect"/>
+    </net>
+    <net code="60" name="unconnected-(J3-Pin_11-Pad11)" class="Default">
+      <node ref="J3" pin="11" pinfunction="Pin_11_11" pintype="passive+no_connect"/>
+    </net>
+    <net code="61" name="unconnected-(J3-Pin_12-Pad12)" class="Default">
+      <node ref="J3" pin="12" pinfunction="Pin_12_12" pintype="passive+no_connect"/>
+    </net>
+    <net code="62" name="unconnected-(J3-Pin_13-Pad13)" class="Default">
+      <node ref="J3" pin="13" pinfunction="Pin_13_13" pintype="passive+no_connect"/>
+    </net>
+    <net code="63" name="unconnected-(J3-Pin_14-Pad14)" class="Default">
+      <node ref="J3" pin="14" pinfunction="Pin_14_14" pintype="passive+no_connect"/>
+    </net>
+    <net code="64" name="unconnected-(J3-Pin_15-Pad15)" class="Default">
+      <node ref="J3" pin="15" pinfunction="Pin_15_15" pintype="passive+no_connect"/>
+    </net>
+    <net code="65" name="unconnected-(J3-Pin_16-Pad16)" class="Default">
+      <node ref="J3" pin="16" pinfunction="Pin_16_16" pintype="passive+no_connect"/>
+    </net>
+    <net code="66" name="unconnected-(J3-Pin_17-Pad17)" class="Default">
+      <node ref="J3" pin="17" pinfunction="Pin_17_17" pintype="passive+no_connect"/>
+    </net>
+    <net code="67" name="unconnected-(J3-Pin_18-Pad18)" class="Default">
+      <node ref="J3" pin="18" pinfunction="Pin_18_18" pintype="passive+no_connect"/>
+    </net>
+    <net code="68" name="unconnected-(J3-Pin_19-Pad19)" class="Default">
+      <node ref="J3" pin="19" pinfunction="Pin_19_19" pintype="passive+no_connect"/>
+    </net>
+    <net code="69" name="unconnected-(J3-Pin_20-Pad20)" class="Default">
+      <node ref="J3" pin="20" pinfunction="Pin_20_20" pintype="passive+no_connect"/>
+    </net>
+    <net code="70" name="unconnected-(J30-Pin_2-Pad2)" class="Default">
+      <node ref="J30" pin="2" pinfunction="Pin_2_2" pintype="passive+no_connect"/>
+    </net>
+    <net code="71" name="unconnected-(J30-Pin_8-Pad8)" class="Default">
+      <node ref="J30" pin="8" pinfunction="Pin_8_8" pintype="passive+no_connect"/>
+    </net>
+    <net code="72" name="unconnected-(J31-Pin_2-Pad2)" class="Default">
+      <node ref="J31" pin="2" pinfunction="Pin_2_2" pintype="passive+no_connect"/>
+    </net>
+    <net code="73" name="unconnected-(J31-Pin_8-Pad8)" class="Default">
+      <node ref="J31" pin="8" pinfunction="Pin_8_8" pintype="passive+no_connect"/>
+    </net>
+    <net code="74" name="unconnected-(K1-Pad87a)" class="Default">
+      <node ref="K1" pin="87a" pinfunction="87a_87a" pintype="no_connect"/>
+    </net>
+    <net code="75" name="unconnected-(K2-Pad87a)" class="Default">
+      <node ref="K2" pin="87a" pinfunction="87a_87a" pintype="no_connect"/>
+    </net>
+    <net code="76" name="unconnected-(U11-NC-Pad15)" class="Default">
+      <node ref="U11" pin="15" pinfunction="NC_15" pintype="no_connect"/>
+    </net>
+    <net code="77" name="unconnected-(U11-OUT3-Pad6)" class="Default">
+      <node ref="U11" pin="6" pinfunction="OUT3_6" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="78" name="unconnected-(U11-OUT4-Pad7)" class="Default">
+      <node ref="U11" pin="7" pinfunction="OUT4_7" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="79" name="unconnected-(U11-~{FAULT}-Pad16)" class="Default">
+      <node ref="U11" pin="16" pinfunction="~{FAULT}_16" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="80" name="unconnected-(U13-EP-Pad13)" class="Default">
+      <node ref="U13" pin="13" pinfunction="EP_13" pintype="no_connect"/>
+    </net>
+  </nets>
+</export>

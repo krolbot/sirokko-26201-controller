@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "task": "t_bfe3c062",
+  "candidate": "after6",
+  "change_scope": "MinimalSafety title presentation only: added left justification to text UUID 42f3f734-17ec-4cce-a55a-9b50806ac100; no electrical objects changed",
+  "files": {
+    "minimal_safety": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/project/MinimalSafety.kicad_sch",
+      "size_bytes": 38524,
+      "sha256": "3419aa24e854817fa59c91646ded28834a511ab17568cda566763b223c3f3ef0"
+    },
+    "root_schematic": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/project/Sirokko26201_control_motor_candidate.kicad_sch",
+      "size_bytes": 186302,
+      "sha256": "cd57f2f4cb95d1837588f269e49d26bc122facc66959b843bc91a59548b22ec4",
+      "unchanged_from_accepted_after4": true
+    },
+    "pdf": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/bfe3c062_after6/pdf/Sirokko26201_control_motor_candidate.pdf",
+      "size_bytes": 289781,
+      "sha256": "fdffa077e360784c34e0d2bfa52cea9376f02cd838abffd45534d74d13ff55e7",
+      "pages": 5
+    },
+    "minimal_safety_svg": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/bfe3c062_after6/svg/Sirokko26201_control_motor_candidate-MinimalSafety.svg",
+      "size_bytes": 820062,
+      "sha256": "d346782b091a1559e93ea4b49489080fc7222e6c024fa53e41af7ad9d5efac9d"
+    },
+    "xml": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/bfe3c062_after6/netlist/Sirokko26201_control_motor_candidate.xml",
+      "size_bytes": 127882,
+      "sha256": "79c70397e057e0786a592243e37ba1f0a9378b3eeabad2cf984a7d256764f758"
+    },
+    "erc": {
+      "remote_path": "/projects/exports/sirokko_max31856_modules/bfe3c062_after6/erc/Sirokko26201_control_motor_candidate-erc.json",
+      "size_bytes": 1854,
+      "sha256": "d7c93113873d10d0c678939567580ad864eacb096e2f93dbb09ac26383b9f5b1"
+    },
+    "page4_png": {
+      "size_bytes": 130736,
+      "sha256": "7857e1b8294983e9ebf2e9831ec396d5de8bed51fc9e5500367955af007277bc",
+      "width": 2977,
+      "height": 2105,
+      "dpi": 180
+    }
+  },
+  "erc": {
+    "kicad_version": "10.0.7",
+    "sheets": 5,
+    "violations": 0,
+    "pass": true
+  },
+  "xml": {
+    "accepted_after4": "/root/.hermes/kanban/attachments/t_69ef6ca2/Sirokko26201_control_motor_candidate-after4.xml",
+    "after4_design_date": "2026-10-31T16:35:18",
+    "after6_design_date": "2026-10-31T16:59:42",
+    "raw_equal": false,
+    "equal_after_normalizing_only_design_date": true,
+    "normalization_method": "literal replacement of design/date content in otherwise byte-identical XML",
+    "normalized_sha256": "04d2901cb85ff75ea12cf558b58f567112df52b903163f5373b9b4ac3615ad9c",
+    "sheets": 5,
+    "components": 65,
+    "nets": 80,
+    "pin_to_net": 257
+  },
+  "visual_gate": {
+    "pass": true,
+    "full_title_inside_inner_frame": true,
+    "current_contract_inside_inner_frame": true,
+    "future_firmware_requirement_inside_inner_frame": true,
+    "old_3_ic_absent": true,
+    "obsolete_relay_permit_q_annotation_absent": true,
+    "obsolete_tps3431_fixed_wdt_annotation_absent": true,
+    "inner_frame_x_px": [84, 2892],
+    "title_x_px": [216, 695]
+  },
+  "unchanged_pcb": {
+    "remote_path": "/projects/exports/sirokko_max31856_modules/project/Sirokko26201_control_motor_candidate.kicad_pcb",
+    "sha256": "efdae16f81208a62a88358b7bf35f454e072378b686593ecc42d9b9f1dcfb700"
+  },
+  "transfer_to_publisher_allowed": true,
+  "holds": ["DRAFT", "NOT FOR ORDER", "NO POWER", "NO FLASH", "NO FIRE", "firmware HOLD"]
+}
