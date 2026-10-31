@@ -1,27 +1,27 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The tracked PCB and manufacturing package are the preceding discrete-MAX31856 draft, not the final construction selected by the user.
+> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic now contains the selected removable MAX31856 modules, but the tracked PCB and manufacturing package are still the preceding discrete-MAX31856 draft. The schematic and PCB do not currently match.
 
-The working tree contains one published KiCad snapshot:
+The working tree contains one intentionally incomplete KiCad WIP:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current schematic SHA-256: `93e7b1063e20527aa473c37a7c1c3760ab218979f3829dc23b469994a237ae1c`;
+- current schematic SHA-256: `cd57f2f4cb95d1837588f269e49d26bc122facc66959b843bc91a59548b22ec4`;
 - current PCB SHA-256: `4362789e7bde2e35e92555165d99881d5b8c3cc20fbc2b3b6068f5cde9a44623`;
 - current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
-The latest product decision selects two removable blue MAX31856 modules from <https://ozon.ru/t/3QtIbaX> instead of the on-board U9/U10 circuits. The exact module is not MAX31865. This module-based construction is not yet implemented in CAD: the carrier must provide mating sockets and mechanical retention, use a shared SPI bus with separate CS and DRDY signals, and leave the module's `3Vo` disconnected from the ESP supply. Exact module geometry, pin mapping and power entry must be verified from the selected execution before the next schematic/PCB/BOM revision; no dimensions are inferred from Adafruit boards or photographs.
+The latest product decision selects two removable blue MAX31856 modules from <https://ozon.ru/t/3QtIbaX> instead of the on-board U9/U10 circuits. The exact module is not MAX31865. The user accepted the official Adafruit 3263 Eagle geometry as the documented basis for these visually identical modules. The root schematic now implements J30/J31 on a shared SPI bus with separate CS and DRDY signals; FLT and `3Vo` are NC, and VIN is connected to +3V3. The PCB still has the old discrete circuits and must later receive the sockets, four mounting points, keepouts and routing before parity, DRC, BOM or CAM can be regenerated.
 
-The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is synchronized with the current schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
+The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is not synchronized with the new module schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
 
 The current revision keeps K1 for the glow plug and K2 for the clutch. K3 and R703 are removed; K2.87 connects directly to J28.1. GPIO21/MCU_PERMIT is now NC, while GPIO18 remains NC. The change and its safety limitation are recorded in [`hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md`](hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md).
 
-Fresh KiCad 10.0.7 checks report ERC=0 and DRC=0 violations, 0 unconnected items and 0 PCB↔schematic parity differences; DRC has `ignored_checks=[]`, while the four standard ERC ignored checks are listed in the report. The board has 86 footprints, 338 pads, 870 track segments and 255 vias. These are CAD checks, not electrical, thermal or manufacturing acceptance.
+Fresh KiCad 10.0.7 ERC of the new five-sheet module schematic reports 0 violations without new exclusions. The earlier DRC=0, 0 unconnected items and 0 parity differences apply only to the preceding discrete schematic/PCB pair. The unchanged PCB has 86 footprints, 338 pads, 870 track segments and 255 vias, but it has not been checked for parity against the new schematic. These are CAD checks, not electrical, thermal or manufacturing acceptance.
 
 Current C104 is Murata `GRM1885C1H222JA01D`, 2.2 nF, 50 V, C0G, ±5%. The accepted change and its limits are documented in [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md); it is not a physical qualification or manufacturing approval.
 
-The preceding discrete draft connects each MAX31856 BIAS output to T− and makes C9/C14 the 0.1 µF differential capacitors between T− and T+. The source-grounded review is [`docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md`](docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md); the firmware-facing acquisition contract is [`docs/research/THERMOCOUPLE_ACQUISITION_CONTRACT_RU.md`](docs/research/THERMOCOUPLE_ACQUISITION_CONTRACT_RU.md). Those files remain evidence for the discrete snapshot and interface behavior, not acceptance of the selected module construction. The local routing image is only an explanatory crop, not a full-board view or DRC/electrical evidence.
+The preceding discrete draft connects each MAX31856 BIAS output to T− and makes C9/C14 the 0.1 µF differential capacitors between T− and T+. The source-grounded review is [`docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md`](docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md); the firmware-facing acquisition contract is [`docs/research/THERMOCOUPLE_ACQUISITION_CONTRACT_RU.md`](docs/research/THERMOCOUPLE_ACQUISITION_CONTRACT_RU.md). The exact schematic replacement and its checks are recorded in [`docs/research/MAX31856_MODULE_SCHEMATIC_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_SCHEMATIC_INTEGRATION_RU.md); the five-sheet overview is [`docs/Sirokko26201_control_motor_candidate_DRAFT.pdf`](docs/Sirokko26201_control_motor_candidate_DRAFT.pdf). The older files remain evidence for the discrete snapshot and interface behavior, not acceptance of the selected module PCB construction.
 
 ## Current PCB views — WIP / DRAFT
 
