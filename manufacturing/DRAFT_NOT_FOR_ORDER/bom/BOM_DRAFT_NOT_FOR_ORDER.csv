@@ -17,7 +17,7 @@
 "C101","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","GRM32ER72A225KA35L","","1","",""
 "C102","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","GRM32ER72A225KA35L","","1","",""
 "C103","100uF 100V EEU-FR2A101","Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm","EEU-FR2A101","Panasonic Industry","1","",""
-"C104","2.2nF 50V X7R","Capacitor_SMD:C_0603_1608Metric","CC0603KRX7R9BB222","","1","",""
+"C104","2.2nF 50V C0G 5%","Capacitor_SMD:C_0603_1608Metric","GRM1885C1H222JA01D","Murata","1","","https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H222JA01-01A-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20260730162352"
 "C105","47uF 16V X5R","Capacitor_SMD:C_1210_3225Metric","GRM32ER61C476KE15L","","1","",""
 "C106","47uF 16V X5R","Capacitor_SMD:C_1210_3225Metric","GRM32ER61C476KE15L","","1","",""
 "C107","4.7nF 50V C0G","Capacitor_SMD:C_0603_1608Metric","GRM1885C1H472JA01D","","1","",""

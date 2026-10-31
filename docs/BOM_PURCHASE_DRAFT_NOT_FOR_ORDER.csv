@@ -9,7 +9,7 @@ MPN,Quantity_per_board,References,Manufacturer_from_source,Notes,Status
 "BC847B,215",1,Q20,Nexperia,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 BZT52C15-7-F,1,D20,Diodes Incorporated,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 CC0603JRNPO9BN821,1,C108,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
-CC0603KRX7R9BB222,1,C104,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
+GRM1885C1H222JA01D,1,C104,Murata,"2,2 нФ; 50 В; C0G; ±5%; ChipDip SKU 9000122092: https://www.chipdip.ru/product/2200pf-np0-50v-5-0603-grm1885c1h222ja01d-kondensator-murata-9000122092",DRAFT / NOT FOR ORDER
 DG85BM-5021-76-1024,2,K1; K2,Durakool,Вставное реле 24 В; не входит в пайку SMT,DRAFT / NOT FOR ORDER
 DRV8803PWPR,1,U11,Texas Instruments,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 DZ85AB-5-PCB,2,K1; K2,Durakool,"Колодка реле, пайка THT",DRAFT / NOT FOR ORDER

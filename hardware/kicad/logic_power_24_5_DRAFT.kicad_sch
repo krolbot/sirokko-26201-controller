@@ -4473,7 +4473,7 @@
 				)
 			)
 		)
-		(property "Value" "2.2nF 50V X7R"
+		(property "Value" "2.2nF 50V C0G 5%"
 			(at 119.38 46.99 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4494,7 +4494,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H222JA01-01A-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20260730162352"
 			(at 119.38 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -4515,7 +4515,7 @@
 				)
 			)
 		)
-		(property "MPN" "CC0603KRX7R9BB222"
+		(property "MPN" "GRM1885C1H222JA01D"
 			(at 119.38 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -4526,6 +4526,16 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Murata"
+	(id 0)
+	(at 119.38 43.18 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
 		(pin "1"
 			(uuid "57bb16cd-d81e-4538-ae3f-0004a99081c8")
 		)

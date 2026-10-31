@@ -1,0 +1,167 @@
+{
+  "status": "DRAFT_NOT_HARDWARE_QUALIFIED",
+  "relay": "DG85BM-5021-76-1024",
+  "suppression_option": "blank: no built-in resistor/diode; do NOT add 2200ohm optional resistor to selected coil model",
+  "source": "Durakool DG85BM 01-Jul-2026 FW p2 table1",
+  "source_sha256": "7a4447d30ad3d119f4af2b4919bd59215e55bff316a1f7dd46626483e433f8a5",
+  "coil_model": {
+    "R23_nom_ohm": 305,
+    "tolerance": 0.1,
+    "copper_alpha_assumption_per_K": 0.00393,
+    "maximum_continuous_supply_V": 28.8,
+    "driver_drop_for_current_upper_V": 0,
+    "temperature_is_winding_not_ambient": true,
+    "range_is_relay_comparison_not_controller_rating": true
+  },
+  "rows": [
+    {
+      "coil_temperature_C": -40,
+      "coil_resistance_min_ohm": 206.53654500000002,
+      "current_max_A": 0.13944263471629198,
+      "current_with_30pct_A": 0.18127542513117959,
+      "power_at_initial_fixed_temperature_W": 4.015947879829209
+    },
+    {
+      "coil_temperature_C": 0,
+      "coil_resistance_min_ohm": 249.687945,
+      "current_max_A": 0.11534397465604516,
+      "current_with_30pct_A": 0.1499471670528587,
+      "power_at_initial_fixed_temperature_W": 3.321906470094101
+    },
+    {
+      "coil_temperature_C": 23,
+      "coil_resistance_min_ohm": 274.5,
+      "current_max_A": 0.10491803278688525,
+      "current_with_30pct_A": 0.13639344262295083,
+      "power_at_initial_fixed_temperature_W": 3.021639344262295
+    },
+    {
+      "coil_temperature_C": 85,
+      "coil_resistance_min_ohm": 341.38466999999997,
+      "current_max_A": 0.08436231187533993,
+      "current_with_30pct_A": 0.10967100543794192,
+      "power_at_initial_fixed_temperature_W": 2.42963458200979
+    }
+  ],
+  "required_interface_with_30pct_A": 0.18127542513117959,
+  "recommended_screen_interface_A": 0.2,
+  "previous_interface_A": 0.15,
+  "interface_150mA_covers_full_comparison_range_with_30pct": false,
+  "driver_screen": {
+    "n_channels": 2,
+    "Ron_assumed_ohm": 1.5,
+    "Ivm_assumed_A": 0.003,
+    "P_with_25pct_W": 0.258,
+    "Tj_at_Ta85_theta39p6_C": 95.2168,
+    "Tj_at_Ta85_theta100_C": 110.8,
+    "not_datasheet_guaranteed": true
+  },
+  "bulk_screen": {
+    "assigned_step_A": 0.4,
+    "support_us": 100,
+    "capacitive_drop_budget_V": 0.4,
+    "ESR_budget_V": 0.1,
+    "C_required_with_25pct_uF": 125.0,
+    "C_screen_existing_uF": 198,
+    "drop_V": 0.302020202020202,
+    "ESR_required_max_ohm": 0.25,
+    "negative_control_1ms_drop_V": 2.1202020202020204,
+    "pass_conditional_only": true
+  },
+  "geometry_source_conflict": {
+    "p1_height_mm": 26.5,
+    "p2_figure1_height_mm": 26.7,
+    "proposed_envelope_body_height_mm": 26.7,
+    "socket_height_mm": 16.31,
+    "old_43p01_sum_is_NOT_conservative": true,
+    "relay_blade_length_max_mm": 11.0,
+    "full_free_relay_length_mm": 37.7,
+    "sum_socket_plus_full_free_relay_nominal_mm": 54.01,
+    "socket_mounting_datum_and_tolerances_unverified": true,
+    "provisional_collision_height_mm": 56.0,
+    "provisional_vertical_service_height_mm": 103.7,
+    "envelopes_are_design_allocations_not_manufacturer_assembly_max": true
+  },
+  "remaining": [
+    "coil temperature/self heating and must-operate across temperature",
+    "actual RON/IVM/diode VF temperature guarantees",
+    "inductive contact breaking and electrical lifetime at required DC voltage",
+    "procurement via ChipDip",
+    "socket blade geometry/mating and fresh CAD collision check",
+    "45V surge duration and winding energy"
+  ],
+  "cad_commit": "d680eab666bbcc578d0399d9b55f50b86615eeb2",
+  "relay_count": 2,
+  "calculations": {
+    "coil": {
+      "-40": {
+        "Rcoil_min_ohm": 206.53654500000002,
+        "Icoil_upper_A_ignore_driver_drop": 0.13944263471629198,
+        "I_two_coils_A": 0.27888526943258396,
+        "with_historical_30pct_A": 0.18127542513117959
+      },
+      "0": {
+        "Rcoil_min_ohm": 249.687945,
+        "Icoil_upper_A_ignore_driver_drop": 0.11534397465604516,
+        "I_two_coils_A": 0.23068794931209033,
+        "with_historical_30pct_A": 0.1499471670528587
+      },
+      "23": {
+        "Rcoil_min_ohm": 274.5,
+        "Icoil_upper_A_ignore_driver_drop": 0.10491803278688525,
+        "I_two_coils_A": 0.2098360655737705,
+        "with_historical_30pct_A": 0.13639344262295083
+      },
+      "85": {
+        "Rcoil_min_ohm": 341.38466999999997,
+        "Icoil_upper_A_ignore_driver_drop": 0.08436231187533993,
+        "I_two_coils_A": 0.16872462375067987,
+        "with_historical_30pct_A": 0.10967100543794192
+      }
+    },
+    "assumptions": {
+      "Vmax_V": 28.8,
+      "Vmin_V": 21.6,
+      "Rcoil23_ohm": 305,
+      "R_tolerance_fraction": 0.1,
+      "copper_alpha_per_K": 0.00393,
+      "n_relays": 2,
+      "I_budget_per_channel_A": 0.2,
+      "Ron_screen_ohm": 1.5,
+      "I_VM_screen_A": 0.003,
+      "C_screen_F": 0.00019800000000000002
+    },
+    "driver": {
+      "Pscreen_W": 0.258,
+      "Tj_at_Ta85_theta39_6_C": 95.2168,
+      "Tj_at_Ta85_theta100_C": 110.8,
+      "theta_limit_for_125C_C_per_W": 155.03875968992247
+    },
+    "bulk": {
+      "Istep_A": 0.4,
+      "C_req_with_25pct_F": 0.000125,
+      "droop100us_plus_ESR_V": 0.302020202020202,
+      "droop1ms_plus_ESR_V": 2.1202020202020204,
+      "ESR_budget_ohm": 0.25
+    },
+    "hot_pickup": {
+      "23": {
+        "pickup_model_V": 16.0,
+        "remaining_drop_from_21_6V": 5.600000000000001
+      },
+      "85": {
+        "pickup_model_V": 19.89856,
+        "remaining_drop_from_21_6V": 1.7014400000000016
+      },
+      "105": {
+        "pickup_model_V": 21.15616,
+        "remaining_drop_from_21_6V": 0.44384000000000157
+      },
+      "125": {
+        "pickup_model_V": 22.41376,
+        "remaining_drop_from_21_6V": -0.8137599999999985
+      }
+    },
+    "winding_limit_at_0_5V_path_drop_C": 104.10687022900765
+  }
+}

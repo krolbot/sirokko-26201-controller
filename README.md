@@ -8,7 +8,8 @@ The working tree contains one current KiCad project:
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
 - current schematic SHA-256: `8857489e2cb666875fa123cc92b904645efd90dff04d8d8b168e6403f9691649`;
-- current PCB SHA-256: `041a1be8a39f86fb170d85339437b5d042ab97284b2194ba92d137a9dec39b4e`.
+- current PCB SHA-256: `1905414e7b0e475155571546124c7522033b31af004a7bede8ba72e2ff1d1517`;
+- current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
 The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is synchronized with the current schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
 
@@ -16,7 +17,7 @@ The current revision keeps K1 for the glow plug and K2 for the clutch. K3 and R7
 
 Fresh KiCad 10.0.7 checks report ERC=0 and DRC=0 violations, 0 unconnected items and 0 PCB↔schematic parity differences; DRC has `ignored_checks=[]`, while the four standard ERC ignored checks are listed in the report. The board has 86 footprints, 338 pads, 861 track segments and 253 vias. These are CAD checks, not electrical, thermal or manufacturing acceptance.
 
-This metadata revision adds the Phoenix Contact J29 part number `1715747`, manufacturer and datasheet to the schematic and PCB. It does not establish the electrical compatibility of HC-160A inputs with 3.3 V GPIO or qualify the external motor module.
+Current C104 is Murata `GRM1885C1H222JA01D`, 2.2 nF, 50 V, C0G, ±5%. The accepted change and its limits are documented in [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md); it is not a physical qualification or manufacturing approval.
 
 ## Current PCB views — WIP / DRAFT
 
@@ -36,6 +37,8 @@ Current documents:
 - [`hardware/kicad/ELECTRICAL_INTERFACE_RU.md`](hardware/kicad/ELECTRICAL_INTERFACE_RU.md) — verified connection table, relay logic and interface limitations;
 - [`hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md`](hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md) — verified YD V1.4 power-path integration notes and unresolved qualification limits;
 - [`hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md`](hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md) and [`hardware/kicad/YD_3V3_LOAD_BUDGET.json`](hardware/kicad/YD_3V3_LOAD_BUDGET.json) — current partial 3.3 V load budget and its machine-readable source;
+- [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md) — accepted C104 C0G selection and its calculation and application limits;
+- [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md) and [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json) — current two-relay coil, driver and hot-pickup calculation;
 - [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 77 schematic instances; draft, not an orderable procurement BOM;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — current PCB verification and remaining acceptance work;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
