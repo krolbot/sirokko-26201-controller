@@ -4323,7 +4323,7 @@
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R101"
-			(at -0.5 -6.7 180)
+			(at -0.5 -9 180)
 			(layer "F.SilkS")
 			(uuid "63865a1c-1fff-4b8a-9364-f499cb73bdf1")
 			(effects
@@ -15129,7 +15129,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)")
 		(tags "capacitor")
 		(property "Reference" "C24"
-			(at -4 -0.1 0)
+			(at -4 -3 0)
 			(layer "F.SilkS")
 			(uuid "d277e10d-75b2-4f82-ad8d-c37142446188")
 			(effects
@@ -24213,36 +24213,9 @@
 		(layer "Dwgs.User")
 		(uuid "b9d4bb23-03c2-4084-9d64-f5137b695a40")
 	)
-	(gr_line
-		(start 68 98)
-		(end 68 182)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "2ace6356-cd79-4291-b54e-94ad2c2f2b61")
-	)
-	(gr_line
-		(start 128 117)
-		(end 194.4 117)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "7cc159dc-c5fa-420c-906c-14b86551b265")
-	)
-	(gr_line
-		(start 128 163)
-		(end 128 117)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "5ce14c5d-1732-4136-8001-c6d6f002a377")
-	)
+	
+	
+	
 	(gr_circle
 		(center 182 20)
 		(end 187 20)
@@ -24265,26 +24238,8 @@
 		(layer "Dwgs.User")
 		(uuid "85cdb736-7fa3-4a70-abd7-bc76b224ecf7")
 	)
-	(gr_line
-		(start 194.4 117)
-		(end 194.4 163)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "a33d90c9-d75e-43fb-98b9-6f2bf13d328c")
-	)
-	(gr_line
-		(start 194.4 163)
-		(end 128 163)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "46592438-8671-4c11-a57e-c85d547f49ec")
-	)
+	
+	
 	(gr_rect
 		(start 310.5 55.23)
 		(end 328.5 76.27)
@@ -24431,206 +24386,26 @@
 		(layer "B.Fab")
 		(uuid "604def3b-3e62-4777-895c-9f495d2a0abc")
 	)
-	(gr_line
-		(start 125.95 118.425)
-		(end 196.45 118.425)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "1cd90031-fec9-4da4-a293-cc114e51d436")
-	)
-	(gr_line
-		(start 125.95 118.425)
-		(end 196.45 118.425)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "3a7fd5f6-7baa-46eb-b59b-2b9e2698fda3")
-	)
-	(gr_line
-		(start 125.95 161.725)
-		(end 125.95 118.425)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "809c4e01-56cf-475b-be5a-4bd24f0ebab6")
-	)
-	(gr_line
-		(start 125.95 161.725)
-		(end 125.95 118.425)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "27409fe0-4296-4c15-8a0e-2df7bf8e47e8")
-	)
-	(gr_line
-		(start 127.45 120.925)
-		(end 129.45 120.925)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "07e94dce-50c0-4060-bbf2-149781e9771e")
-	)
-	(gr_line
-		(start 127.45 159.225)
-		(end 129.45 159.225)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "95038885-66e6-4e99-a8a6-fab39c272cec")
-	)
-	(gr_line
-		(start 128.45 119.925)
-		(end 128.45 121.925)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "3daa5af0-1c92-4be6-ac2c-dddbaae412f1")
-	)
-	(gr_line
-		(start 128.45 158.225)
-		(end 128.45 160.225)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "9c3bf0bb-e6a7-4b30-ae7f-a6a9151bbaf6")
-	)
-	(gr_line
-		(start 131.2566 129.621797)
-		(end 140.459797 129.621797)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "9a6de7a9-7a71-40d4-8363-dd0c322dbfbb")
-	)
-	(gr_line
-		(start 131.2566 150.524999)
-		(end 131.2566 129.621797)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "c8721006-9a7d-4c6a-ac34-509942597711")
-	)
-	(gr_line
-		(start 140.459797 129.621797)
-		(end 140.459797 150.524999)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "31e5365a-895a-4a5c-a862-f7f9af53d3a4")
-	)
-	(gr_line
-		(start 140.459797 150.524999)
-		(end 131.2566 150.524999)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "50535a8d-88f0-451e-881f-dff76bfbe0c3")
-	)
-	(gr_line
-		(start 192.95 120.925)
-		(end 194.95 120.925)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "c6ec0858-4900-4cf0-81dd-5895c8d33ccd")
-	)
-	(gr_line
-		(start 192.95 159.225)
-		(end 194.95 159.225)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "a2637cc7-4c9b-438f-b6f0-e21a482a6e4f")
-	)
-	(gr_line
-		(start 193.95 119.925)
-		(end 193.95 121.925)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "96e8bcd1-e3c3-458c-bcd1-6426118ce4af")
-	)
-	(gr_line
-		(start 193.95 158.225)
-		(end 193.95 160.225)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "1ea79edc-5e5f-4c22-8cb3-1c29726b2844")
-	)
-	(gr_line
-		(start 196.45 118.425)
-		(end 196.45 161.725)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "82a5ee18-9bb7-4be1-867e-bf1c4b2b5ea1")
-	)
-	(gr_line
-		(start 196.45 118.425)
-		(end 196.45 161.725)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "0fdb6e49-1e1b-44d0-90b0-aa5713768cef")
-	)
-	(gr_line
-		(start 196.45 161.725)
-		(end 125.95 161.725)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "0aa46e22-1078-4753-bbb1-f44274d54de6")
-	)
-	(gr_line
-		(start 196.45 161.725)
-		(end 125.95 161.725)
-		(stroke
-			(width 0.2)
-			(type default)
-		)
-		(layer "B.Fab")
-		(uuid "9074c4ca-5441-42f6-9f59-ff529ca8a4ec")
-	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	(gr_text "DRAFT / NOT FOR ORDER / NO POWER / NO FIRE / production_release=false"
 		(at 190 12 0)
 		(layer "F.SilkS")
@@ -24845,27 +24620,9 @@
 			)
 		)
 	)
-	(gr_text "PANEL WINDOW 72.5 x 45.3; OUTER ENVELOPE; Z NOT QUALIFIED"
-		(at 128 115 0)
-		(layer "Dwgs.User")
-		(uuid "403ebeba-1482-493b-b303-92432dfc58bf")
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(gr_text "CONTROL AXIS X=64.95; 60.00 FROM WINDOW OPERATOR-RIGHT"
-		(at 66 110 90)
-		(layer "Dwgs.User")
-		(uuid "ef54e0c6-ed8a-438e-b72d-f2c03dcf275f")
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(gr_text "J12/J13 OUTWARD CABLE EXIT TO X=8 EDGE"
+	
+	
+	(gr_text "J12/J13 CABLE EXIT: SEE TERMINAL ORIENTATION"
 		(at 10 145 90)
 		(layer "Cmts.User")
 		(uuid "f10448c1-1dba-498b-8d79-66f20fe47e9c")
@@ -24875,28 +24632,9 @@
 			)
 		)
 	)
-	(gr_text "J26 CABLE EXIT INSIDE PANEL WINDOW"
-		(at 129 140 90)
-		(layer "Cmts.User")
-		(uuid "07e04ef5-23b3-4a50-8e04-8b76b589baa1")
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-	)
-	(gr_text "WAVESHARE 18366 B-SIDE FRONT-0; 4x M2; G=12.0"
-		(at 168 140 0)
-		(layer "B.Fab")
-		(uuid "282ee518-5ca2-432c-b492-d11c5d0b35bd")
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "YD-ESP32-S3 N16R8 V1.4 | RGB 0R OPEN | IN-OUT OPEN | USB-OTG OPEN | 5V J1.21 BEFORE D3"
+	
+	
+	(gr_text "YD-ESP32-S3 N16R8 V1.4\nRGB: FACTORY LINK RETAINED\nIN-OUT: OPEN; USB-OTG: OPEN\n5V: J1.21 BEFORE D3"
 		(at 94.43 61.67 90)
 		(layer "B.Fab")
 		(uuid "308c7e53-2925-4daf-804c-8412d9acad30")
@@ -24907,18 +24645,8 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "PH2.0 / J26 CABLE SIDE"
-		(at 121 139.925 90)
-		(layer "B.Fab")
-		(uuid "014697f2-59bf-4c79-8a04-89e5a9012477")
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify mirror)
-		)
-	)
-	(gr_text "K1 GLOW - UNWIRED"
+	
+	(gr_text "K1 GLOW | RELAY + PCB SOCKET"
 		(at 216 63 0)
 		(layer "F.Fab")
 		(uuid "573702dd-ff0b-4947-9e19-ec20e598587a")
@@ -24929,7 +24657,7 @@
 			)
 		)
 	)
-	(gr_text "K2 CLUTCH RUN - UNWIRED"
+	(gr_text "K2 CLUTCH RUN | RELAY + PCB SOCKET"
 		(at 216 113 0)
 		(layer "F.Fab")
 		(uuid "27de35a8-2210-445a-8b00-0785bc7fd9a6")
@@ -24940,7 +24668,7 @@
 			)
 		)
 	)
-	(gr_text "K3 CLUTCH SAFETY - UNWIRED"
+	(gr_text "K3 CLUTCH ENABLE | RELAY + PCB SOCKET"
 		(at 216 163 0)
 		(layer "F.Fab")
 		(uuid "5a447600-5b24-45cb-a269-457ee6e19106")
@@ -24951,7 +24679,7 @@
 			)
 		)
 	)
-	(gr_text "J27 GLOW OUT | PIN1 SWITCHED+ | PIN2 GND | POWER PATH NOT CONNECTED"
+	(gr_text "J27 GLOW OUT | PIN1 SWITCHED+ | PIN2 GND"
 		(at 234 61 90)
 		(layer "F.Fab")
 		(uuid "f87e22c0-0993-46c8-92a1-1bee1a8d9d8a")
@@ -24961,7 +24689,7 @@
 			)
 		)
 	)
-	(gr_text "J28 CLUTCH OUT | PIN1 SWITCHED+ | PIN2 GND | POWER PATH NOT CONNECTED"
+	(gr_text "J28 CLUTCH OUT | PIN1 SWITCHED+ | PIN2 GND"
 		(at 234 111 90)
 		(layer "F.Fab")
 		(uuid "18221fe7-2343-4137-a348-23f2e3531a88")

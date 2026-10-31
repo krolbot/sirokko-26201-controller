@@ -8,7 +8,7 @@ The working tree contains one current KiCad project:
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
 - current schematic SHA-256: `2279ad71b4287f330ffd061f1218d8d945e80ca9d2caefb1292faf162a9a3bdd`;
-- current PCB SHA-256: `1a3e56e602c560094dbd2edd6c066aa0d0f7205fb0d4b3b15c99b5b8dcbcc8d4`.
+- current PCB SHA-256: `6ea5b392561a2a3ee505dbe6bb78ba373edfd27e1a791477c14c460238b4a169`.
 
 The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is synchronized with the current schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
 
