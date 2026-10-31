@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-31T13:26:33",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7",
+            "violations": []
+        },
+        {
+            "path": "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/803a47a9-bc89-4fae-91f4-92180f46587a",
+            "violations": []
+        },
+        {
+            "path": "/MOTOR_EXTERNAL_HC160/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/738f1eb5-5037-42a1-995a-b2820277f936",
+            "violations": []
+        },
+        {
+            "path": "/MinimalSafety/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/f0f0205c-c52c-4262-94bb-bebe167a6896",
+            "violations": []
+        },
+        {
+            "path": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/",
+            "uuid_path": "/d7270d3f-3491-4796-ae0a-c336632ea3f7/54d853be-42f4-4f79-887f-ce7e8e8dbac1",
+            "violations": []
+        }
+    ],
+    "source": "Sirokko26201_control_motor_candidate.kicad_sch"
+}

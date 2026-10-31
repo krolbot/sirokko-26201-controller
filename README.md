@@ -7,12 +7,14 @@ The working tree contains one current KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current schematic SHA-256: `2279ad71b4287f330ffd061f1218d8d945e80ca9d2caefb1292faf162a9a3bdd`;
-- current PCB SHA-256: `6ea5b392561a2a3ee505dbe6bb78ba373edfd27e1a791477c14c460238b4a169`.
+- current schematic SHA-256: `8857489e2cb666875fa123cc92b904645efd90dff04d8d8b168e6403f9691649`;
+- current PCB SHA-256: `041a1be8a39f86fb170d85339437b5d042ab97284b2194ba92d137a9dec39b4e`.
 
 The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is synchronized with the current schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
 
-Fresh KiCad 10.0.7 checks with all DRC rules enabled and `ignored_checks=[]` report ERC=0 and DRC=0 errors, 0 warnings, 0 unconnected items and 0 PCB↔schematic parity differences. All 2703 previously connected physical pad pairs remain connected. The board is two-layer, with 347 pads, 897 track segments and 261 vias. These are CAD geometry and connectivity checks, not electrical, thermal or manufacturing acceptance. See [`hardware/kicad/ALL_RULES_AUDIT_RU.md`](hardware/kicad/ALL_RULES_AUDIT_RU.md) and [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) for the exact scope and limitations.
+The current revision keeps K1 for the glow plug and K2 for the clutch. K3 and R703 are removed; K2.87 connects directly to J28.1. GPIO21/MCU_PERMIT is now NC, while GPIO18 remains NC. The change and its safety limitation are recorded in [`hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md`](hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md).
+
+Fresh KiCad 10.0.7 checks report ERC=0 and DRC=0 violations, 0 unconnected items and 0 PCB↔schematic parity differences; DRC has `ignored_checks=[]`, while the four standard ERC ignored checks are listed in the report. The board has 86 footprints, 338 pads, 861 track segments and 253 vias. These are CAD checks, not electrical, thermal or manufacturing acceptance.
 
 This metadata revision adds the Phoenix Contact J29 part number `1715747`, manufacturer and datasheet to the schematic and PCB. It does not establish the electrical compatibility of HC-160A inputs with 3.3 V GPIO or qualify the external motor module.
 
@@ -34,7 +36,7 @@ Current documents:
 - [`hardware/kicad/ELECTRICAL_INTERFACE_RU.md`](hardware/kicad/ELECTRICAL_INTERFACE_RU.md) — verified connection table, relay logic and interface limitations;
 - [`hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md`](hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md) — verified YD V1.4 power-path integration notes and unresolved qualification limits;
 - [`hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md`](hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md) and [`hardware/kicad/YD_3V3_LOAD_BUDGET.json`](hardware/kicad/YD_3V3_LOAD_BUDGET.json) — current partial 3.3 V load budget and its machine-readable source;
-- [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 79 schematic instances; draft, not an orderable procurement BOM;
+- [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 77 schematic instances; draft, not an orderable procurement BOM;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — current PCB verification and remaining acceptance work;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
 - [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — preliminary Gerber, drill, BOM and placement outputs; **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**.

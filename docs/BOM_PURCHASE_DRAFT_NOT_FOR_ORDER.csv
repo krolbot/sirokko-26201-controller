@@ -10,9 +10,9 @@ MPN,Quantity_per_board,References,Manufacturer_from_source,Notes,Status
 BZT52C15-7-F,1,D20,Diodes Incorporated,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 CC0603JRNPO9BN821,1,C108,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 CC0603KRX7R9BB222,1,C104,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
-DG85BM-5021-76-1024,3,K1; K2; K3,Durakool,Вставное реле 24 В; не входит в пайку SMT,DRAFT / NOT FOR ORDER
+DG85BM-5021-76-1024,2,K1; K2,Durakool,Вставное реле 24 В; не входит в пайку SMT,DRAFT / NOT FOR ORDER
 DRV8803PWPR,1,U11,Texas Instruments,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
-DZ85AB-5-PCB,3,K1; K2; K3,Durakool,"Колодка реле, пайка THT",DRAFT / NOT FOR ORDER
+DZ85AB-5-PCB,2,K1; K2,Durakool,"Колодка реле, пайка THT",DRAFT / NOT FOR ORDER
 EEU-FR2A101,1,C103,Panasonic Industry,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 EEUFS1J331L,1,C22,Panasonic Industry,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 GRM1885C1H472JA01D,1,C107,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
@@ -27,7 +27,7 @@ IPB017N10N5LFATMA1,4,Q1; Q2; Q3; Q4,,Схемная позиция; способ
 LM5013DDAR,1,U101,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 LM74800QDRRRQ1,1,U13,Texas Instruments,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 MAX31856MUD+,2,U10; U9,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
-MFR-25FBF52-10K,5,R2; R3; R7; R703; R8,Yageo,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
+MFR-25FBF52-10K,4,R2; R3; R7; R8,Yageo,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 MFR-25FTE52-4K7,3,R1; R86; R87,Yageo,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 RC0603FR-07100KL,1,R104,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 RC0603FR-0710KL,3,R102; R105; R107,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
