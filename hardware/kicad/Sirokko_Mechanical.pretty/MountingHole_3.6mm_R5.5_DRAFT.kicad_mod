@@ -7,7 +7,7 @@
 	(property "Reference" "REF**"
 		(at 0 -6.8 0)
 		(layer "F.SilkS")
-		(uuid "70fa7bef-bc7f-45e9-87b0-3b2df4dd1f6b")
+		(uuid "e5d58d10-89f2-402e-968d-dd9180c38b61")
 		(effects
 			(font
 				(size 1 1)
@@ -19,7 +19,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "5114e008-ed90-472e-93d2-41bc6d14ffa1")
+		(uuid "3264e587-dde4-43bd-b1bd-9dfe91a1e917")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -30,7 +30,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "29008f38-127e-4bde-9b82-0258ad0b5c05")
+		(uuid "f6434c2f-1e5e-4ae9-8662-cb3014de3892")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -41,7 +41,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "584b0ae1-1228-4c0c-a4b8-2c6a603f38e2")
+		(uuid "2c909b06-8242-40df-8e0d-8b654665f10a")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -59,18 +59,40 @@
 		)
 		(fill no)
 		(layer "Dwgs.User")
-		(uuid "28aaf546-81ed-41a0-858e-6ffebf578c4d")
+		(uuid "a8d2caee-a303-421f-b3db-42ed4622e611")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 4.25 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "B.CrtYd")
+		(uuid "b86fcdf9-0c35-408b-bb74-a8f55655bc09")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 4.25 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "40c22d2a-69e3-4fc5-9032-9fd2d44ad7f4")
 	)
 	(pad "" np_thru_hole circle
 		(at 0 0)
 		(size 3.6 3.6)
 		(drill 3.6)
 		(layers "*.Mask")
-		(uuid "7ab6e423-f313-484f-895a-fc83e661a957")
+		(uuid "564c7e89-2da6-4ec0-8767-ccf6a673e79f")
 	)
 	(zone
 		(layers "F.Cu" "B.Cu")
-		(uuid "1655d5c5-c332-4482-a936-1c5f84e280dd")
+		(uuid "8f976f71-e30a-4c48-8395-073e4bcb2f84")
 		(name "MOUNTING_R5p5_MIN_NO_COPPER_OR_FOREIGN_COMPONENTS")
 		(hatch edge 0.5)
 		(connect_pads

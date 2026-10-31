@@ -7,4 +7,6 @@
   (lib (name "Sirokko_Relay_Driver")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Relay_Driver.kicad_sym")(options "")(descr ""))
   (lib (name "Sirokko_Input_Protection")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Input_Protection.kicad_sym")(options "")(descr "WIP input protection symbols"))
   (lib (name "Sirokko_Mechanical")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Mechanical.kicad_sym")(options "")(descr "Sirokko mechanical/BOM symbols"))
+
+ (lib (name "Sirokko_Interface")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Interface.kicad_sym")(options "")(descr "Project-qualified footprint filters; original symbol pins retained"))
 )

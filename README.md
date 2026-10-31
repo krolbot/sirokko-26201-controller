@@ -7,12 +7,12 @@ The working tree contains one current KiCad project:
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- current schematic SHA-256: `229717825a8363ef08bf17ac713fe12f769c21b18ce333c26ee919302d7cc628`;
-- current PCB SHA-256: `d970b9c1b05feb83a9cfbd43aa8f479989029d94e54f5e67b6c9c3ff73073b36`.
+- current schematic SHA-256: `2279ad71b4287f330ffd061f1218d8d945e80ca9d2caefb1292faf162a9a3bdd`;
+- current PCB SHA-256: `1a3e56e602c560094dbd2edd6c066aa0d0f7205fb0d4b3b15c99b5b8dcbcc8d4`.
 
 The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. The main PCB is synchronized with the current schematic. Control, settings and diagnostics are now required only through a software remote interface implemented by the ESP32; the protocol and firmware are not yet accepted or implemented.
 
-Fresh KiCad 10.0.7 checks report ERC=0 and DRC=0 errors, 0 warnings, 0 unconnected items and 0 PCB↔schematic parity differences. All 2703 previously connected physical pad pairs remain connected. The board is two-layer, with 347 pads, 897 track segments and 261 vias. These are CAD geometry and connectivity checks, not electrical, thermal or manufacturing acceptance. See [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) for the exact scope and limitations.
+Fresh KiCad 10.0.7 checks with all DRC rules enabled and `ignored_checks=[]` report ERC=0 and DRC=0 errors, 0 warnings, 0 unconnected items and 0 PCB↔schematic parity differences. All 2703 previously connected physical pad pairs remain connected. The board is two-layer, with 347 pads, 897 track segments and 261 vias. These are CAD geometry and connectivity checks, not electrical, thermal or manufacturing acceptance. See [`hardware/kicad/ALL_RULES_AUDIT_RU.md`](hardware/kicad/ALL_RULES_AUDIT_RU.md) and [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) for the exact scope and limitations.
 
 This metadata revision adds the Phoenix Contact J29 part number `1715747`, manufacturer and datasheet to the schematic and PCB. It does not establish the electrical compatibility of HC-160A inputs with 3.3 V GPIO or qualify the external motor module.
 
