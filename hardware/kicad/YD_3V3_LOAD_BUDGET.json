@@ -1,8 +1,8 @@
 {
   "status": "DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; current remote-only PARTIAL budget, not total DevKit current",
-  "source_root_sch_sha256": "2279ad71b4287f330ffd061f1218d8d945e80ca9d2caefb1292faf162a9a3bdd",
-  "source_xml_sha256": "d97fadd908b4bfc53d812d07ce8d16484d57cbd92957efe6915d9e176c014494",
-  "source_xml_path": "/projects/exports/sirokko_remote_only/power_review/current.xml",
+  "source_root_sch_sha256": "93e7b1063e20527aa473c37a7c1c3760ab218979f3829dc23b469994a237ae1c",
+  "source_xml_sha256": "11c17b24574a8b0945ff58e0f20f35bfcf0383790c114bdb5ee45c5f1f3134df",
+  "source_xml_path": "/projects/exports/sirokko_tc_bias_review/after.xml",
   "rail_3v3_node_count": 18,
   "direct_ICs": [
     "U9",
@@ -97,17 +97,6 @@
       },
       "I_mA_3V3_nominal_ground_bound": 0.7021276595744681,
       "I_mA_3V6_Rminus5pct_ground_bound": 0.8062709966405376
-    },
-    {
-      "ref": "R703",
-      "value": "10k",
-      "ohms": 10000,
-      "nets": {
-        "2": "/GND",
-        "1": "/MCU_PERMIT"
-      },
-      "I_mA_3V3_nominal_ground_bound": 0.33,
-      "I_mA_3V6_Rminus5pct_ground_bound": 0.37894736842105264
     }
   ],
   "resistor_envelope_assumptions": {
@@ -118,15 +107,15 @@
     "not_a_measured_state": true,
     "not_a_claim_of_5pct_catalogue_tolerance": true
   },
-  "resistive_nominal_mA": 3.826595744680851,
-  "resistive_upper_scenario_mA": 4.39417693169093,
+  "resistive_nominal_mA": 3.4965957446808513,
+  "resistive_upper_scenario_mA": 4.015229563269877,
   "static_ic_mA_under_datasheet_test_conditions": {
     "U20": 0.01
   },
   "MAX31856_two_active_mA": 4,
-  "partial_subtotal_model_mA": 8.40417693169093,
+  "partial_subtotal_model_mA": 8.025229563269876,
   "DS18B20_assumed_mA_at_5V_datasheet_condition": 1.5,
-  "partial_with_DS18B20_assumption_mA": 9.90417693169093,
+  "partial_with_DS18B20_assumption_mA": 9.525229563269876,
   "excluded": [
     "ESP32/Flash/PSRAM and all DevKit internal loads, RGB, power/TX/RX indicators, CH343 VIO",
     "HC160 A1/PA input currents, unknown guaranteed limits",

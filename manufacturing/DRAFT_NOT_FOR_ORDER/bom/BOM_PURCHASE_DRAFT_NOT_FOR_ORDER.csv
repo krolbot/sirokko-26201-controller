@@ -17,7 +17,7 @@ EEU-FR2A101,1,C103,Panasonic Industry,Схемная позиция; спосо�
 EEUFS1J331L,1,C22,Panasonic Industry,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 GRM1885C1H472JA01D,1,C107,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 GRM188R71C103KA01D,4,C10; C11; C15; C16,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
-GRM188R71C104KA01D,6,C12; C13; C14; C17; C18; C9,Murata,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
+GRM188R71C104KA01D,6,C12; C13; C14; C17; C18; C9,Murata,"C9/C14 — дифференциальные фильтры T−↔T+; C12/C13/C17/C18 — развязка питания",DRAFT / NOT FOR ORDER
 GRM21BR72A104KAC4L,2,C21; C28,Murata,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 GRM21BR72A224KA01L,1,C24,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
 GRM31CR72A105KA01L,1,C25,,Схемная позиция; способ монтажа сверить по PCB,DRAFT / NOT FOR ORDER
