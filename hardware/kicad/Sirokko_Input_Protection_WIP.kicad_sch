@@ -3412,16 +3412,24 @@
 		)
 		(uuid "2db005e2-8e2e-4e23-abbc-df830c4d20cc")
 	)
-	(text "WIP / NOT TRANSIENT-QUALIFIED / NOT FOR PRODUCTION\\nVerify surge profile, fuse coordination, TVS energy and VCLAMP+VF against DRV8803 65 V abs max."
-		(exclude_from_sim no)
-		(at 45 25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
+	(text "CdVdT CANDIDATE: R108 + C109 (TI Fig. 9-3)\nWIP / STARTUP_NOT_QUALIFIED / NO POWER\n33 nF: ideal ramp 17.28 ms at 28.8 V, I_HGATE=55 uA.\nSOA, load, gate transient and repetition not yet qualified.\nNot a current limiter. Negative surge issue remains open."
+	(at 195 125 0)
+	(effects
+		(font
+			(size 1.27 1.27)
 		)
-		(uuid "c5a6f458-5779-4346-b3e0-c6a962b59114")
 	)
+	(uuid "ec350918-6bb5-447b-8fe7-92de4f763b67")
+)
+	(text "WIP / NOT TRANSIENT-QUALIFIED / NOT FOR PRODUCTION\nVerify surge profile, fuse coordination, TVS energy and VCLAMP+VF against DRV8803 65 V abs max."
+	(at 110 20 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "58f468c3-909d-4a28-acbc-1a9c67b356e5")
+)
 	(junction
 		(at 180.34 46.99)
 		(diameter 0)
@@ -3684,6 +3692,36 @@
 		)
 		(uuid "eef6c206-dfc3-4e6f-952e-28057161968a")
 	)
+	(wire
+	(pts
+		(xy 170.18 137.16) (xy 170.18 134.62)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "f04132ef-efe8-42eb-bb8a-71d359f2ccbc")
+)
+	(wire
+	(pts
+		(xy 170.18 144.78) (xy 170.18 156.21)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "9d256db2-a05b-47ba-86a9-97a5096d5e4f")
+)
+	(wire
+	(pts
+		(xy 170.18 163.83) (xy 170.18 166.37)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "d2282d6f-87e1-4e01-a8e9-2a3a9ae49d3e")
+)
 	(label "P24_PROTECTED"
 		(at 152.4 69.85 0)
 		(effects
@@ -4243,6 +4281,36 @@
 			(justify left bottom)
 		)
 		(uuid "fe50c314-4b25-428d-8b2c-0c0ec7e6ddc0")
+	)
+	(label "HGATE"
+		(at 170.18 134.62 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1fbab4a1-32fa-4bf0-a1ce-9f470e03ee90")
+	)
+	(label "Net-(R108-2)"
+		(at 170.18 144.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "af64c232-1ce3-45d2-86fc-7478defdf0b7")
+	)
+	(label "GND"
+		(at 170.18 166.37 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "bf3c3fd9-7f3e-4d19-a49c-423bb28e5d11")
 	)
 	(hierarchical_label "GND"
 		(shape passive)
@@ -6032,6 +6100,176 @@
 			)
 		)
 	)
+	(symbol
+	(lib_name "Device:R")
+	(lib_id "Device:R")
+	(at 170.18 140.97 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "11cea419-8a7c-428c-acb3-0a348049971e")
+	(property "Reference" "R108"
+		(at 170.18 137.16 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "22k 1% CdVdT isolation WIP"
+		(at 170.18 144.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Resistor_SMD:R_1210_3225Metric"
+		(at 170.18 140.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 170.18 140.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "RC1210FR-0722KL"
+	(id 0)
+	(at 170.18 140.97 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Yageo"
+	(id 1)
+	(at 170.18 140.97 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "23b5b29b-e3fb-4666-8a1e-e9ec43410cfc")
+)
+	(pin "2"
+	(uuid "2a2abd0c-da1a-4cb2-b526-b92857495264")
+)
+	(instances
+		(project "Sirokko26201_control_motor_candidate"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/54d853be-42f4-4f79-887f-ce7e8e8dbac1"
+				(reference "R108")
+				(unit 1)
+			)
+		)
+		(project "Sirokko26201_control_motor_candidate"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/54d853be-42f4-4f79-887f-ce7e8e8dbac1"
+				(reference "R108")
+				(unit 1)
+			)
+		)
+	)
+)
+	(symbol
+	(lib_name "Device:C")
+	(lib_id "Device:C")
+	(at 170.18 160.02 0)
+	(unit 1)
+	(exclude_from_sim no)
+	(in_bom yes)
+	(on_board yes)
+	(dnp no)
+	(uuid "2658e623-f20d-4e55-bb50-be80ca27f047")
+	(property "Reference" "C109"
+		(at 170.18 156.21 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "33nF 100V C0G 5% CdVdT WIP"
+		(at 170.18 163.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(at 170.18 160.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "Datasheet" "~"
+		(at 170.18 160.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(hide yes)
+		)
+	)
+	(property "MPN" "GRM2195C2A333JE01J"
+	(id 0)
+	(at 170.18 160.02 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(property "Manufacturer" "Murata"
+	(id 1)
+	(at 170.18 160.02 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+		(hide yes)
+	)
+)
+	(pin "1"
+	(uuid "91110751-966e-496b-a368-e6c67100da3e")
+)
+	(pin "2"
+	(uuid "92022a30-05b7-49eb-b5a7-350688da7f70")
+)
+	(instances
+		(project "Sirokko26201_control_motor_candidate"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/54d853be-42f4-4f79-887f-ce7e8e8dbac1"
+				(reference "C109")
+				(unit 1)
+			)
+		)
+		(project "Sirokko26201_control_motor_candidate"
+			(path "/d7270d3f-3491-4796-ae0a-c336632ea3f7/54d853be-42f4-4f79-887f-ce7e8e8dbac1"
+				(reference "C109")
+				(unit 1)
+			)
+		)
+	)
+)
 	(sheet_instances
 		(path "/"
 			(page "1")
