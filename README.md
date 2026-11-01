@@ -8,7 +8,7 @@ The working tree contains one intentionally incomplete KiCad WIP:
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
 - current schematic SHA-256: `902d0681f072a57559e78aff44cfd5b877478634b8bae62d3e4e834592a3c979`;
-- current PCB SHA-256: `293e1061c5bbf8816cde87192c54faf3557af64d90c881d1d9f387508180cc2a`;
+- current PCB SHA-256: `187c83155bc4691176a9a6213b830c2d6523f5ad3619ccc6a91872b2d866cdb8`;
 - current `fp-lib-table` SHA-256: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`;
 - current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
@@ -18,7 +18,9 @@ The display, local Start/Stop button, rotary encoder, their dedicated circuitry,
 
 The current revision keeps K1 for the glow plug and K2 for the clutch. K3 and R703 are removed; K2.87 connects directly to J28.1. GPIO21/MCU_PERMIT is now NC, while GPIO18 remains NC. The change and its safety limitation are recorded in [`hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md`](hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md).
 
-Fresh KiCad 10.0.8 checks of the socket-applied project report ERC=0 and DRC=0 with 0 unconnected items and 0 schematic-parity differences. DRC has `ignored_checks=[]`; ERC retains four named standard ignored classes and adds none. The PCB still has 78 footprints, 308 pads, 748 track segments, 210 vias and 27 zones. The exact change and preservation checks are recorded in [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md). These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
+The first accepted general-relayout step moves J29 from `(324.00, 164.76)` to `(115.00, 130.00)` mm without changing its angle, pin numbering or nets. Only `/FAN_REQUEST` and `/SPEED_CMD` were rerouted; the board-wide via count fell from 210 to 188. The outline and two-layer stack are unchanged, and the general relayout is not complete.
+
+Fresh KiCad 10.0.8 checks report ERC=0 and DRC=0 with 0 unconnected items and 0 schematic-parity differences. DRC has `ignored_checks=[]`; ERC retains four named standard ignored classes and adds none. The PCB has 78 footprints, 308 pads, 706 track segments, 188 vias and 32 zones: 894 track-and-via objects total. The current change and preservation checks are recorded in [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md), with machine results in [`docs/research/relayout/`](docs/research/relayout/). The socket report remains historical and its copper counts are not current. These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
 
 Current C104 is Murata `GRM1885C1H222JA01D`, 2.2 nF, 50 V, C0G, ±5%. The accepted change and its limits are documented in [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md); it is not a physical qualification or manufacturing approval.
 
@@ -30,7 +32,7 @@ Front view (not a 3D render or assembly drawing):
 
 ![Sirokko modular PCB front view — WIP / DRAFT](docs/board-front-module-wip.png)
 
-Pre-socket back view retained for orientation only; it is not the current PCB view, a 3D render or an assembly drawing:
+Current B.Cu view in board coordinates, not mirrored; it is not a 3D render or assembly drawing:
 
 ![Sirokko modular PCB back view — WIP / DRAFT](docs/board-back-module-wip.png)
 
@@ -44,10 +46,11 @@ Current documents:
 - [`hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md`](hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md) and [`hardware/kicad/YD_3V3_LOAD_BUDGET.json`](hardware/kicad/YD_3V3_LOAD_BUDGET.json) — preceding discrete 3.3 V load calculation; it must be recalculated for the exact modules before release;
 - [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md) — accepted C104 C0G selection and its calculation and application limits;
 - [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md) and [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json) — current two-relay coil, driver and hot-pickup calculation;
-- [`docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md) — current modular PCB routing, DRC/ERC and connectivity evidence;
-- [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md) — applied J30/J31 socket footprint, exact hashes, fresh checks and remaining limits;
+- [`docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md) — preceding modular PCB routing, DRC/ERC and connectivity evidence;
+- [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md) and [`docs/research/relayout/`](docs/research/relayout/) — current J29 move, exact hashes, DRC/ERC and preservation checks;
+- [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md) — historical J30/J31 socket acceptance before the current relayout;
 - [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 77 schematic instances in the preceding discrete snapshot; it does not match the current modular PCB and is not orderable;
-- [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — current PCB verification and remaining acceptance work;
+- [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — preceding modular PCB verification retained as history;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
 - [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — preliminary Gerber, drill, BOM and placement outputs for the preceding discrete snapshot; **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**.
 
