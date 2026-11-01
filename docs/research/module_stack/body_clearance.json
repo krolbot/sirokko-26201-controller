@@ -1,0 +1,49 @@
+{
+  "units": "mm",
+  "gap": "Body-to-body gap, worst-case only",
+  "spec": {
+    "min": 0.2,
+    "max": 2.0
+  },
+  "dimensions": [
+    {
+      "name": "SSW body height, drawing CM",
+      "nominal": 8.509,
+      "tol": 0.127,
+      "dir": -1
+    },
+    {
+      "name": "SSW solder seating controlled gap",
+      "nominal": 0.05,
+      "limits": [
+        0,
+        0.1
+      ],
+      "dir": -1
+    },
+    {
+      "name": "TSW effective body envelope CONTROLLED INPUT NOT DATASHEET",
+      "nominal": 2.55,
+      "limits": [
+        2.3,
+        2.8
+      ],
+      "dir": -1
+    },
+    {
+      "name": "TSW solder seating controlled gap",
+      "nominal": 0.05,
+      "limits": [
+        0,
+        0.1
+      ],
+      "dir": -1
+    },
+    {
+      "name": "Local PCB separation G",
+      "nominal": 12.0,
+      "tol": 0.1,
+      "dir": 1
+    }
+  ]
+}
