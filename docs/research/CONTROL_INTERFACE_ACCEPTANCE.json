@@ -238,8 +238,8 @@
     "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md manufacturer pin rows",
     "hardware/kicad/ELECTRICAL_INTERFACE_RU.md"
   ],
+  "external_HC160_qualification_scope": "Excluded from PCB completion criteria by explicit user clarification; provide J29 A1/A2/PA/G and R7/R8=10k pulldowns only. No additional interface hardware required. No functional HC-160 test was performed.",
   "not_proven": [
-    "HC160A input logic thresholds/backfeed/edge behavior",
     "boot and reset output waveforms",
     "relay contact and coil current/inductive load coordination",
     "power current and thermal qualification",
