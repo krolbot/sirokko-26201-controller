@@ -15,7 +15,7 @@ The working tree contains one intentionally incomplete KiCad WIP:
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
 - current root schematic SHA-256: `6c62c1d9fc13e621cfff8c6be2f9548082b5b4e7aaf046d7d7f454c1077fc76a`;
 - current input-protection sheet SHA-256: `334a081f26003351fcd2a1ead5d2d6be32adb3dded125e289fbb2d50c8b3cfde`;
-- current PCB SHA-256: `40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563`;
+- current PCB SHA-256: `55f7bc9ab78f482ab523208c198f7178c71b29f96c9c99016b4d6e50e4fa0384`;
 - current `fp-lib-table` SHA-256: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`;
 - current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
@@ -33,7 +33,7 @@ The following historical step rerouted only the relay command signals `/FUEL_CMD
 
 The 10 kΩ `/TC_AIR_CS` pull-up R3 remains at `(110, 36.95)` mm near the ESP32. After removal of the 24 V-presence detector, the current PCB contains 139 vias; the general relayout is still incomplete.
 
-Fresh KiCad 10.0.8 checks on the current sources report ERC=0, DRC=0, no unconnected PCB items and `validate_board=ok`. The native audit confirms exact removal of the eight target footprints and their dedicated copper while preserving every retained pad group, copper object, zone, keepout and connectivity pair. Negative controls reject both a restored target ref/net and a broken retained connection. R108/C109 are not routed. These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
+Fresh KiCad 10.0.8 checks on the current sources report ERC=0, DRC=0, no unconnected PCB items and `validate_board=ok`. The native audit confirms exact removal of the eight target footprints and their dedicated copper; the current cleanup additionally removes only three fully duplicated segments while preserving all 287 pads, all 1600 physical pairs and every other copper object exactly. Negative controls reject both a restored target ref/net and a broken retained connection. R108/C109 are not routed. These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
 
 Current C104 is Murata `GRM1885C1H222JA01D`, 2.2 nF, 50 V, C0G, ±5%. The accepted change and its limits are documented in [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md); it is not a physical qualification or manufacturing approval.
 
@@ -59,6 +59,7 @@ Current documents:
 - [`hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md`](hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md) — verified YD V1.4 power-path integration notes and unresolved qualification limits;
 - [`hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md`](hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md) and [`hardware/kicad/YD_3V3_LOAD_BUDGET.json`](hardware/kicad/YD_3V3_LOAD_BUDGET.json) — preceding discrete 3.3 V load calculation; it must be recalculated for the exact modules before release;
 - [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md) — accepted C104 C0G selection and its calculation and application limits;
+- [`docs/research/CONTROL_INTERFACE_ACCEPTANCE_RU.md`](docs/research/CONTROL_INTERFACE_ACCEPTANCE_RU.md) and [`docs/research/CONTROL_INTERFACE_ACCEPTANCE.json`](docs/research/CONTROL_INTERFACE_ACCEPTANCE.json) — current 75-pin/30-connection control and sensor topology check; not functional qualification;
 - [`docs/research/INPUT_STARTUP_MODEL_RU.md`](docs/research/INPUT_STARTUP_MODEL_RU.md) and [`docs/research/INPUT_STARTUP_MODEL.json`](docs/research/INPUT_STARTUP_MODEL.json) — the 33 nF/22 kΩ schematic WIP, conditional startup model and explicit `STARTUP_NOT_QUALIFIED` status;
 - [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md) and [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json) — current two-relay coil, driver and hot-pickup calculation;
 - [`docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md) — preceding modular PCB routing, DRC/ERC and connectivity evidence;
@@ -70,7 +71,7 @@ Current documents:
 - [`docs/BOM_PURCHASE_NOTES_RU.md`](docs/BOM_PURCHASE_NOTES_RU.md) — the current BOM index: 59 schematic references, 38 grouped PCB purchasing rows and 60 physical PCB items; R108/C109 are schematic-only, external modules/sensors and mechanical interfaces are separate, and none of these files is order approval;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — preceding modular PCB verification retained as history;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
-- [`manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip`](manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip) — the single current source/CAM/BOM package for PCB `40e9a141…5563`; **REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**, not a manufacturing release.
+- [`manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip`](manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip) — the single current source/CAM/BOM package for PCB `55f7bc9a…0384`; **REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**, not a manufacturing release.
 
 There is no approved firmware for this hardware contract. Firmware work remains blocked until the final remote-control contract and hardware acceptance are complete. Electrical and thermal acceptance and the manufacturing release remain unfinished; the preliminary manufacturing outputs above are not a release or permission to order, assemble, power, flash or operate the board.
 

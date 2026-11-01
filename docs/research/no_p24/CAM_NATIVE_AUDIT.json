@@ -8,10 +8,12 @@
   ],
   "bom_refs": 59,
   "canonical_project_promoted": true,
+  "copper_verification_report_in_archive": "checks/COPPER_VERIFICATION.json",
   "corrected_input_sheet_sha256": "334a081f26003351fcd2a1ead5d2d6be32adb3dded125e289fbb2d50c8b3cfde",
   "date": "2026-11-01",
   "drc_unconnected_items": 0,
   "drc_violations": 0,
+  "duplicate_segments_removed": 3,
   "erc_violations": 0,
   "gerber_files": 10,
   "gerber_job_files": 1,
@@ -23,7 +25,7 @@
     "restored_target_rejected": true
   },
   "negative_controls_pass": true,
-  "pcb_sha256": "40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563",
+  "pcb_sha256": "55f7bc9ab78f482ab523208c198f7178c71b29f96c9c99016b4d6e50e4fa0384",
   "review_required": true,
   "schematic_parity_descriptions": [
     "Missing footprint C109 (33nF 100V C0G 5% CdVdT WIP)",

@@ -1,0 +1,250 @@
+{
+  "status": "INTERFACE_TOPOLOGY_VERIFIED_NOT_FUNCTIONAL_QUALIFICATION",
+  "schematic_commit": "4ee4c58a1cdb3ea4d999fd43f5815f4f3249fc26",
+  "root_schematic_sha256": "6c62c1d9fc13e621cfff8c6be2f9548082b5b4e7aaf046d7d7f454c1077fc76a",
+  "native_netlist_sha256": "19d1af2200f5a546e59d72e62afdbd8b78f40745b12897d45e3ae02ed85f9810",
+  "source_pcb_sha256": "40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563",
+  "preserved_after_copper_cleanup_pcb_sha256": "55f7bc9ab78f482ab523208c198f7178c71b29f96c9c99016b4d6e50e4fa0384",
+  "netlist_generation": "KiCad 10.0.8 native kicadxml export, current successful run",
+  "input_sheet_comparison": "Canonical input sheet differs from export input only by text placement, label text orientation/effects, and component property text placement; native KiBot parser compared all other structure exactly. Other hierarchy sheets have identical SHA256.",
+  "contract_pin_assignments": {
+    "J1.21": "+5V_DEVKIT",
+    "J1.1": "/+3V3",
+    "J1.2": "/+3V3",
+    "J1.20": "/GLOW_CMD",
+    "U11.14": "/GLOW_CMD",
+    "R86.1": "/GLOW_CMD",
+    "R86.2": "/GND",
+    "U11.3": "/K_GLOW_COIL_LOW",
+    "K1.85": "/K_GLOW_COIL_LOW",
+    "K1.86": "/P24_PROTECTED",
+    "K1.30": "/P24_PROTECTED",
+    "K1.87": "/GLOW_SWITCHED_POS",
+    "J27.1": "/GLOW_SWITCHED_POS",
+    "J27.2": "/GND",
+    "J1.8": "/FUEL_CMD",
+    "U11.13": "/FUEL_CMD",
+    "R87.1": "/FUEL_CMD",
+    "R87.2": "/GND",
+    "U11.4": "/K_CLUTCH_RUN_COIL_LOW",
+    "K2.85": "/K_CLUTCH_RUN_COIL_LOW",
+    "K2.86": "/P24_PROTECTED",
+    "K2.30": "/P24_PROTECTED",
+    "K2.87": "/CLUTCH_SWITCHED_POS",
+    "J28.1": "/CLUTCH_SWITCHED_POS",
+    "J28.2": "/GND",
+    "U11.8": "/GND",
+    "U11.9": "/GND",
+    "U11.10": "/GND",
+    "U11.11": "/GND",
+    "J29.1": "/FAN_REQUEST",
+    "J1.9": "/FAN_REQUEST",
+    "R7.1": "/FAN_REQUEST",
+    "R7.2": "/GND",
+    "J29.2": "/GND",
+    "J29.3": "/SPEED_CMD",
+    "J1.10": "/SPEED_CMD",
+    "R8.1": "/SPEED_CMD",
+    "R8.2": "/GND",
+    "J29.4": "/GND",
+    "J12.1": "/+3V3",
+    "J12.2": "/ROOM_DQ",
+    "J12.3": "/GND",
+    "J1.4": "/ROOM_DQ",
+    "R1.1": "/+3V3",
+    "R1.2": "/ROOM_DQ",
+    "J1.15": "/TC_AIR_CS",
+    "J1.16": "/TC_EXH_CS",
+    "J1.17": "/TC_SDI_MOSI",
+    "J1.18": "/TC_SCK",
+    "J1.19": "/TC_SDO_MISO",
+    "J3.4": "/TC_EXH_DRDY",
+    "J3.5": "/TC_AIR_DRDY",
+    "J1.6": "NC",
+    "J1.11": "NC",
+    "J3.18": "NC",
+    "K1.87a": "NC",
+    "K2.87a": "NC",
+    "J30.1": "/TC_EXH_DRDY",
+    "J30.2": "NC",
+    "J30.3": "/TC_EXH_CS",
+    "J30.4": "/TC_SDI_MOSI",
+    "J30.5": "/TC_SDO_MISO",
+    "J30.6": "/TC_SCK",
+    "J30.7": "/GND",
+    "J30.8": "NC",
+    "J30.9": "/+3V3",
+    "J31.1": "/TC_AIR_DRDY",
+    "J31.2": "NC",
+    "J31.3": "/TC_AIR_CS",
+    "J31.4": "/TC_SDI_MOSI",
+    "J31.5": "/TC_SDO_MISO",
+    "J31.6": "/TC_SCK",
+    "J31.7": "/GND",
+    "J31.8": "NC",
+    "J31.9": "/+3V3"
+  },
+  "contract_pin_assignments_count": 75,
+  "physical_pairs_checked": [
+    [
+      "J1.20",
+      "U11.14"
+    ],
+    [
+      "U11.3",
+      "K1.85"
+    ],
+    [
+      "K1.87",
+      "J27.1"
+    ],
+    [
+      "J1.8",
+      "U11.13"
+    ],
+    [
+      "U11.4",
+      "K2.85"
+    ],
+    [
+      "K2.87",
+      "J28.1"
+    ],
+    [
+      "J1.9",
+      "J29.1"
+    ],
+    [
+      "J1.10",
+      "J29.3"
+    ],
+    [
+      "J1.4",
+      "J12.2"
+    ],
+    [
+      "R1.2",
+      "J12.2"
+    ],
+    [
+      "R1.1",
+      "J12.1"
+    ],
+    [
+      "J1.15",
+      "J31.3"
+    ],
+    [
+      "J1.16",
+      "J30.3"
+    ],
+    [
+      "J1.17",
+      "J30.4"
+    ],
+    [
+      "J30.4",
+      "J31.4"
+    ],
+    [
+      "J1.18",
+      "J30.6"
+    ],
+    [
+      "J30.6",
+      "J31.6"
+    ],
+    [
+      "J1.19",
+      "J30.5"
+    ],
+    [
+      "J30.5",
+      "J31.5"
+    ],
+    [
+      "J3.4",
+      "J30.1"
+    ],
+    [
+      "J3.5",
+      "J31.1"
+    ],
+    [
+      "J1.1",
+      "J30.9"
+    ],
+    [
+      "J30.9",
+      "J31.9"
+    ],
+    [
+      "J13.2",
+      "J12.3"
+    ],
+    [
+      "J13.2",
+      "J27.2"
+    ],
+    [
+      "J13.2",
+      "J28.2"
+    ],
+    [
+      "J13.2",
+      "J29.2"
+    ],
+    [
+      "J13.2",
+      "J29.4"
+    ],
+    [
+      "J13.2",
+      "J30.7"
+    ],
+    [
+      "J13.2",
+      "J31.7"
+    ]
+  ],
+  "physical_pairs_checked_count": 30,
+  "all_schematic_to_snapshot_pad_nets_match": true,
+  "physical_snapshot_provenance": "Published source40e9 at commit 4ee4c58a1cdb3ea4d999fd43f5815f4f3249fc26; the current archive preserves checks/pcb_after_snapshot.json, and independent COPPER_VERIFICATION.json proves all287 pads and all1600 physical pairs preserved in55f7 PCB; no new DRC is claimed by this report.",
+  "negative_controls": {
+    "swapped_DRV8803_outputs": "REJECTED_AS_EXPECTED",
+    "DS18B20_pullup_to_GND": "REJECTED_AS_EXPECTED"
+  },
+  "relay_refs": [
+    "K1",
+    "K2"
+  ],
+  "ds18b20_pullup": "R1=4k7 to /+3V3",
+  "firmware_gpio_contract": {
+    "GLOW_CMD": 14,
+    "FUEL_CMD": 15,
+    "FAN_REQUEST": 16,
+    "SPEED_CMD": 17,
+    "ROOM_DQ": 4,
+    "TC_AIR_CS": 9,
+    "TC_EXH_CS": 10,
+    "TC_SDI_MOSI": 11,
+    "TC_SCK": 12,
+    "TC_SDO_MISO": 13,
+    "TC_EXH_DRDY": 1,
+    "TC_AIR_DRDY": 2
+  },
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/drv8803.pdf §5 PWP table:IN1=14/OUT1=3,IN2=13/OUT2=4;§7 logic",
+    "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md manufacturer pin rows",
+    "hardware/kicad/ELECTRICAL_INTERFACE_RU.md"
+  ],
+  "not_proven": [
+    "HC160A input logic thresholds/backfeed/edge behavior",
+    "boot and reset output waveforms",
+    "relay contact and coil current/inductive load coordination",
+    "power current and thermal qualification",
+    "mechanical fit and real module interfaces",
+    "firmware implementation"
+  ],
+  "production_release": false
+}

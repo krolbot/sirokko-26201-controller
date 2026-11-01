@@ -8,7 +8,7 @@
 
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `6c62c1d9fc13e621cfff8c6be2f9548082b5b4e7aaf046d7d7f454c1077fc76a`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `55f7bc9ab78f482ab523208c198f7178c71b29f96c9c99016b4d6e50e4fa0384`;
 - `fp-lib-table`: SHA-256 `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`;
 - дочерний лист питания: [`hardware/kicad/logic_power_24_5_DRAFT.kicad_sch`](hardware/kicad/logic_power_24_5_DRAFT.kicad_sch), SHA-256 `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`;
 - дочерний лист защиты: [`hardware/kicad/MinimalSafety.kicad_sch`](hardware/kicad/MinimalSafety.kicad_sch), SHA-256 `3419aa24e854817fa59c91646ded28834a511ab17568cda566763b223c3f3ef0`.
@@ -30,13 +30,14 @@
 
 Подтяжка R3 10 кОм сигнала `/TC_AIR_CS` остаётся у ESP32 в `(110;36,95)` мм. После удаления узла контроля наличия 24 В текущая PCB содержит 139 переходов; общая перекомпоновка ещё не завершена.
 
-Свежие проверки текущих исходников KiCad 10.0.8: ERC=0, DRC=0, разрывы=0, `validate_board=ok`. Нативный аудит подтвердил точное удаление восьми посадочных мест и их меди при сохранении остальных площадок, проводников, зон, keepout и связности. Отрицательные контроли обнаружили возврат удалённого ref/net и искусственный разрыв сохранённой связи. R108/C109 ещё не разведены. Это проверка CAD, не электрический, тепловой, механический или производственный допуск.
+Свежие проверки текущих исходников KiCad 10.0.8: ERC=0, DRC=0, разрывы=0, `validate_board=ok`. Нативный аудит подтвердил точное удаление восьми посадочных мест и их меди; текущая чистка дополнительно удалила только три полностью дублирующих сегмента при точном сохранении всех 287 площадок, 1600 физических пар и остальной меди. Отрицательные контроли обнаружили возврат удалённого ref/net и искусственный разрыв сохранённой связи. R108/C109 ещё не разведены. Это проверка CAD, не электрический, тепловой, механический или производственный допуск.
 
 В предшествующей дискретной ревизии двух каналов MAX31856 BIAS соединён с T−, а C9/C14 по 0,1 мкФ включены между T− и T+. Основание и проверка: [`docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md`](docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md). Схемная замена на J30/J31: [`docs/research/MAX31856_MODULE_SCHEMATIC_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_SCHEMATIC_INTEGRATION_RU.md); назначение колодок: [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md). Существующий схемный PDF предшествует назначению Footprint/MPN и служит только обзором, а не точным актуальным экспортом или производственным файлом.
 
 Актуальные материалы:
 
 - [`hardware/kicad/ELECTRICAL_INTERFACE_RU.md`](hardware/kicad/ELECTRICAL_INTERFACE_RU.md) — действующая карта GPIO, клемм и релейной логики;
+- [`docs/research/CONTROL_INTERFACE_ACCEPTANCE_RU.md`](docs/research/CONTROL_INTERFACE_ACCEPTANCE_RU.md) и [`docs/research/CONTROL_INTERFACE_ACCEPTANCE.json`](docs/research/CONTROL_INTERFACE_ACCEPTANCE.json) — текущая проверка топологии 75 назначений контактов и 30 физических связей управления и датчиков; не функциональная квалификация;
 - [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md) — принятая C0G-позиция C104 и ограничения её проверки;
 - [`docs/research/INPUT_STARTUP_MODEL_RU.md`](docs/research/INPUT_STARTUP_MODEL_RU.md) и [`docs/research/INPUT_STARTUP_MODEL.json`](docs/research/INPUT_STARTUP_MODEL.json) — схемный WIP 33 нФ/22 кОм, условная модель пуска и явный статус `STARTUP_NOT_QUALIFIED`;
 - [`docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md`](docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md) — принятая коррекция BIAS и дифференциальных C9/C14;
@@ -53,6 +54,6 @@
 - [`docs/HISTORICAL_P24_RETIREMENT_RU.md`](docs/HISTORICAL_P24_RETIREMENT_RU.md) — вывод прежних данных P24/GPIO6 из применения без переписывания истории;
 - [`docs/BOM_PURCHASE_NOTES_RU.md`](docs/BOM_PURCHASE_NOTES_RU.md) — актуальная BOM: 59 схемных позиций, 38 сгруппированные закупочные строки и 60 физических изделий PCB; R108/C109 только в SCH, внешние модули/датчики и механические интерфейсы вынесены отдельно, разрешения заказа нет;
 - [`docs/board-front-module-wip.png`](docs/board-front-module-wip.png) и [`docs/board-back-module-wip.png`](docs/board-back-module-wip.png) — текущие сборочные виды PCB; задняя сторона показана зеркально и так подписана в комплекте;
-- [`manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip`](manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip) — единственный текущий комплект исходников/CAM/BOM для PCB `40e9a141…5563`; это **REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**, не производственный выпуск.
+- [`manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip`](manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/SIROKKO_NO_P24_2026-11-01_REVIEW_REQUIRED.zip) — единственный текущий комплект исходников/CAM/BOM для PCB `55f7bc9a…0384`; это **REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**, не производственный выпуск.
 
 Согласованной прошивки нет. Электрическая и тепловая квалификация, HC160, силовые режимы и физические испытания не закрыты. Ревизионные копии рядом с исходниками не хранятся; история — в Git.

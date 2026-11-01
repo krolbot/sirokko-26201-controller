@@ -20651,14 +20651,7 @@
 		(net "/GND")
 		(uuid "6cef0e87-5595-4263-a648-11223832ab5b")
 	)
-	(segment
-		(start 236.95 139)
-		(end 240.85 139)
-		(width 0.25)
-		(layer "F.Cu")
-		(net "/GND")
-		(uuid "6d6787b9-fca4-428e-b85d-e309014f0f8f")
-	)
+	
 	(segment
 		(start 22 124)
 		(end 27.84 120)
@@ -22379,14 +22372,7 @@
 		(net "/P24_PROTECTED")
 		(uuid "5733f591-dfe5-48a1-8fe3-2314d58ce84b")
 	)
-	(segment
-		(start 58 115)
-		(end 58 112)
-		(width 1)
-		(layer "F.Cu")
-		(net "/P24_PROTECTED")
-		(uuid "5e2a17fc-8eff-44c2-9581-07fd2baa64f2")
-	)
+	
 	(segment
 		(start 282 41)
 		(end 282 34)
@@ -22660,14 +22646,7 @@
 		(net "/P24_PROTECTED")
 		(uuid "fe7ba2ae-c45a-4802-8827-71fe2cdb9016")
 	)
-	(segment
-		(start 45 164.08)
-		(end 45 165.5)
-		(width 1)
-		(layer "F.Cu")
-		(net "/P24_PROTECTED")
-		(uuid "feb4d1db-c8a0-4cce-b092-3a9911625120")
-	)
+	
 	(via
 		(at 282 34)
 		(size 0.8)
