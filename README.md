@@ -1,22 +1,24 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** This repository is not a manufacturing release or evidence that the hardware works.
+> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** `production_release=false`. This repository is not a manufacturing release or evidence that the hardware works.
 
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
-- PCB SHA-256: `ede60af2ec3cc225c12836b2bf58f1e7a909507fb97195a61841afc22681ad20`;
+- PCB SHA-256: `9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444`;
 - board outline: 305 × 170 mm.
 
-The removable ESP32 DevKit headers are now at J1=(100.45, 100.9) mm and J3=(100.45, 75.5) mm, both at 90° on B.Cu. The current board contains 70 footprints, 287 pads, 615 segments, 140 vias and 27 zones. KiCad 10.0.8 native DRC reports 0 violations and 0 unconnected items; root ERC reports 0 violations. A separate full DRC with zone refill, all track errors and schematic parity returned exit code 5 only for the two known missing PCB footprints R108/C109; `ignored_checks` is empty and the PCB hash remained unchanged. Native connectivity readback preserved all 287 pad identities/nets and all 1600 physical pad pairs. These are CAD checks only.
+All 70 footprints are now on F.Cu, the relay side. The removable ESP32 DevKit headers are J1=(100.45, 75.5) mm and J3=(100.45, 100.9) mm, both at −90°. The board contains 287 pads, 633 segments, 145 vias, 77 nets and 27 zones. Native KiCad 10.0.8 DRC reports 0 violations and 0 unconnected items; root ERC reports 0 violations. The separate full DRC with zone refill, all track errors and schematic parity returned exit code 5: geometry and connectivity lists are empty, `ignored_checks=[]`, but R108/C109 remain schematic-only WIP without PCB footprints. This is not a complete PCB/schematic parity PASS.
 
 Current renders from this PCB:
 
 - [front](docs/board-front.png);
-- [back](docs/board-back.png), mirrored for viewing from the back side;
+- [back](docs/board-back.png), in board coordinates, not mirrored;
 - [oblique 3D](docs/board-3d-oblique.png);
 - [bottom 3D](docs/board-3d-bottom.png).
 
-The bounded acceptance report is [`docs/research/ESP_RELOCATION_ACCEPTANCE_RU.md`](docs/research/ESP_RELOCATION_ACCEPTANCE_RU.md); the current full DRC report is [`docs/research/ESP_RELOCATION_FULL_DRC.json`](docs/research/ESP_RELOCATION_FULL_DRC.json). Requirements remain in [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md); current limitations are summarized in [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md). No current manufacturing package or firmware release is included. Old revision projects, candidate copies, generated CAM archives and stale board exports are not kept in the working tree; Git history remains the recovery path.
+The applied front-side record is [`docs/research/ESP_FRONT_SIDE_CURRENT_RU.md`](docs/research/ESP_FRONT_SIDE_CURRENT_RU.md); machine details are in [`ESP_FRONT_SIDE_CURRENT.json`](docs/research/ESP_FRONT_SIDE_CURRENT.json), and the current full report is [`FRONT_SIDE_FULL_DRC.json`](docs/research/FRONT_SIDE_FULL_DRC.json). The single current manufacturing-data directory is [`manufacturing/current/`](manufacturing/current/): Gerber, separate PTH/NPTH Excellon, BOM, full top-side placement CSV and review PDFs. It is **DRAFT / NOT FOR ORDER**, not a release; an independent CAM-viewer review of the copper files was not performed.
+
+Requirements remain in [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md); current limitations are summarized in [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md). Startup, SOA and input-transient coordination remain **NOT QUALIFIED**; firmware remains on HOLD; physical tests were not performed. Bodies of ESP32/MAX31856 modules are not included in 3D, only their headers. Old revision projects, duplicate PCB snapshots and PCB ZIP copies are not kept in the working tree; Git history remains the recovery path.

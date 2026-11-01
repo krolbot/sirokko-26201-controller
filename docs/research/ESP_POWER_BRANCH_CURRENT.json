@@ -1,103 +1,15 @@
 {
-  "status": "APPLIED_NATIVE_DRC_PASS_NOT_COMPLETE_POWER_QUALIFICATION",
+  "status": "FRONT_SIDE_BRANCH_APPLIED_NOT_COMPLETE_POWER_QUALIFICATION",
   "production_release": false,
-  "canonical_pcb_path": "/projects/exports/sirokko_max31856_modules/no_p24_project/Sirokko26201_control_motor_candidate.kicad_pcb",
-  "source_pcb_sha256": "ede60af2ec3cc225c12836b2bf58f1e7a909507fb97195a61841afc22681ad20",
-  "current_pcb_sha256": "4346aff89fd445b9485b66ddaf8c46069cffbc0b86d29465b71c0e54980cdeef",
-  "published_base_commit": "a8ac704de7ac1ba3cc4bccd393f03ef9f67b7b92",
-  "publication_status": "PENDING",
-  "purpose": "Reduce DC loss in the already-routed ESP32 carrier power branch; no changes to DevKit or agreed module interfaces",
-  "branch_length_mm": 78.45000000000002,
-  "old_width_mm": 0.8,
-  "new_widths": [
-    {
-      "length_mm": 76.45000000000002,
-      "width_mm": 2.0
-    },
-    {
-      "length_mm": 2.0,
-      "width_mm": 1.2
-    }
-  ],
-  "route_centerlines_and_endpoints_unchanged": true,
-  "old_segments": [
-    {
-      "end_mm": [
-        113.0,
-        86.0
-      ],
-      "layer": "B.Cu",
-      "net": "+5V_DEVKIT",
-      "start_mm": [
-        106.0,
-        86.0
-      ],
-      "type": "segment",
-      "uuid": "0d370f90-678a-4d8f-a759-094d6895f976",
-      "width_mm": 0.8
-    },
-    {
-      "end_mm": [
-        106.0,
-        86.0
-      ],
-      "layer": "F.Cu",
-      "net": "+5V_DEVKIT",
-      "start_mm": [
-        49.65,
-        86.0
-      ],
-      "type": "segment",
-      "uuid": "5b5b44eb-bfcc-405a-b5df-1cb38e92701b",
-      "width_mm": 0.8
-    },
-    {
-      "end_mm": [
-        113.0,
-        85.8
-      ],
-      "layer": "B.Cu",
-      "net": "+5V_DEVKIT",
-      "start_mm": [
-        113.0,
-        86.0
-      ],
-      "type": "segment",
-      "uuid": "93f0977c-74dc-40fd-8d14-a9ef3a3fe4a9",
-      "width_mm": 0.8
-    },
-    {
-      "end_mm": [
-        49.65,
-        86.0
-      ],
-      "layer": "F.Cu",
-      "net": "+5V_DEVKIT",
-      "start_mm": [
-        49.65,
-        100.9
-      ],
-      "type": "segment",
-      "uuid": "d85bdbfc-53f5-4594-b4be-80ce63049852",
-      "width_mm": 0.8
-    }
-  ],
-  "new_segments": [
-    {
-      "end_mm": [
-        104.0,
-        86.0
-      ],
-      "layer": "F.Cu",
-      "net": "+5V_DEVKIT",
-      "start_mm": [
-        49.65,
-        86.0
-      ],
-      "type": "segment",
-      "uuid": "2efc1db8-c5fd-4c75-8d78-163a8a02d156",
-      "width_mm": 2.0
-    },
+  "physical_tests": false,
+  "canonical_pcb_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "current_pcb_sha256": "9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444",
+  "branch_length_mm": 69.36370849898476,
+  "length_by_width_mm": {
+    "2.0": 67.36370849898476,
+    "1.2": 2.0
+  },
+  "branch_segments": [
     {
       "end_mm": [
         113.0,
@@ -111,6 +23,21 @@
       ],
       "type": "segment",
       "uuid": "39fb8faf-c18c-4e29-b874-57bd9e0cab38",
+      "width_mm": 2.0
+    },
+    {
+      "end_mm": [
+        96.0,
+        78.0
+      ],
+      "layer": "F.Cu",
+      "net": "+5V_DEVKIT",
+      "start_mm": [
+        104.0,
+        86.0
+      ],
+      "type": "segment",
+      "uuid": "3affdb62-8590-4eec-aa63-400f7d24cdb7",
       "width_mm": 2.0
     },
     {
@@ -146,84 +73,44 @@
     {
       "end_mm": [
         49.65,
-        86.0
+        78.0
+      ],
+      "layer": "F.Cu",
+      "net": "+5V_DEVKIT",
+      "start_mm": [
+        96.0,
+        78.0
+      ],
+      "type": "segment",
+      "uuid": "b1774b8c-ac56-4f7c-af23-0703ca265bad",
+      "width_mm": 2.0
+    },
+    {
+      "end_mm": [
+        49.65,
+        75.5
       ],
       "layer": "F.Cu",
       "net": "+5V_DEVKIT",
       "start_mm": [
         49.65,
-        100.9
+        78.0
       ],
       "type": "segment",
-      "uuid": "d5ca07bb-34ce-4974-bee6-a34c3fb6b88a",
+      "uuid": "d7e67798-6f83-4357-81b4-8bd04da52015",
       "width_mm": 2.0
     }
   ],
-  "vias_added": 0,
-  "readback_counts": {
-    "footprints": 70,
-    "pads": 287,
-    "segments": 616,
-    "vias": 140,
-    "zones": 27
-  },
-  "native_drc_after_apply": {
-    "exit_code": 0,
-    "violations": [],
-    "unconnected_items": [],
-    "violation_count": 0,
-    "unconnected_count": 0
-  },
-  "native_drc_independent_readback": {
-    "exit_code": 0,
-    "violations": [],
-    "unconnected_items": [],
-    "violation_count": 0,
-    "unconnected_count": 0
-  },
-  "regression": {
-    "all_70_footprints_identical": true,
-    "all_287_pad_records_identical": true,
-    "retained_751_track_via_records_identical": true,
-    "retained_copper_SHA256": "7524efac57685913eec6c3a4aea07f9906e9d04d662922afc1a714fe10983e8e",
-    "zone_metadata_identical": true,
-    "full_physical_pad_pair_audit_repeated": false
-  },
-  "negative_control": {
-    "method": "Dry-run unchanged endpoints, all four tracks width2mm",
-    "source_unchanged": true,
-    "native_drc": {
-      "exit_code": 5,
-      "violations": [
-        {
-          "description": "Items shorting two nets (nets +5V_DEVKIT and /GND)",
-          "items": [
-            {
-              "description": "Track [+5V_DEVKIT] on F.Cu, length 56.3500 mm",
-              "pos": {
-                "x": 49.65,
-                "y": 86.0
-              },
-              "uuid": "88b4a6ca-f0fe-4946-8a9f-a03cad16ad07"
-            },
-            {
-              "description": "Track [/GND] on F.Cu, length 7.9196 mm",
-              "pos": {
-                "x": 104.4,
-                "y": 82.74
-              },
-              "uuid": "9a097291-64c1-454c-9141-3d5577608c4e"
-            }
-          ],
-          "severity": "error",
-          "type": "shorting_items"
-        }
-      ],
-      "unconnected_items": [],
-      "violation_count": 1,
-      "unconnected_count": 0
-    },
-    "action": "Rejected before apply;2mm long run ends atx104mm and final2mm beforevia106,86 is1.2mm wide"
+  "route_centerlines_and_endpoints_unchanged": false,
+  "branch_vias_total": 1,
+  "front_side_revision_added_5V_vias": 0,
+  "local_replaced_part": {
+    "old_removed_length_mm": 69.25,
+    "proposed_length_mm": 60.16370849898476,
+    "shorter_mm": 9.08629150101524,
+    "width_mm": 2.0,
+    "new_5V_vias": 0,
+    "not_current_applied_geometry": true
   },
   "formulas": {
     "rho_ohm_m": "1.72e-8*(1+0.00393*(T_C-20))",
@@ -233,66 +120,56 @@
   },
   "sensitivity_calculation": [
     {
-      "copper_temperature_assumed_C": 20,
-      "copper_thickness_assumed_um": 25.0,
-      "branch_resistance_before_ohm": 0.067467,
-      "branch_resistance_after_ohm": 0.027445466666666665,
-      "branch_drop_before_V_at_0_5A": 0.0337335,
-      "branch_drop_after_V_at_0_5A": 0.013722733333333332,
-      "branch_loss_before_W_at_0_5A": 0.01686675,
-      "branch_loss_after_W_at_0_5A": 0.006861366666666666,
-      "resistance_reduction_percent": 59.320161461652866
+      "T_C": 20,
+      "copper_um": 35,
+      "I_A": 0.5,
+      "R_mOhm": 17.371273135941017,
+      "drop_mV": 8.685636567970509,
+      "loss_mW": 4.342818283985254
     },
     {
-      "copper_temperature_assumed_C": 20,
-      "copper_thickness_assumed_um": 35.0,
-      "branch_resistance_before_ohm": 0.04819071428571429,
-      "branch_resistance_after_ohm": 0.019603904761904763,
-      "branch_drop_before_V_at_0_5A": 0.024095357142857144,
-      "branch_drop_after_V_at_0_5A": 0.009801952380952382,
-      "branch_loss_before_W_at_0_5A": 0.012047678571428572,
-      "branch_loss_after_W_at_0_5A": 0.004900976190476191,
-      "resistance_reduction_percent": 59.32016146165285
+      "T_C": 85,
+      "copper_um": 35,
+      "I_A": 0.5,
+      "R_mOhm": 21.80876485851715,
+      "drop_mV": 10.904382429258575,
+      "loss_mW": 5.452191214629288
     },
     {
-      "copper_temperature_assumed_C": 85,
-      "copper_thickness_assumed_um": 25.0,
-      "branch_resistance_before_ohm": 0.08470144515,
-      "branch_resistance_after_ohm": 0.03445641112666666,
-      "branch_drop_before_V_at_0_5A": 0.042350722575,
-      "branch_drop_after_V_at_0_5A": 0.01722820556333333,
-      "branch_loss_before_W_at_0_5A": 0.0211753612875,
-      "branch_loss_after_W_at_0_5A": 0.008614102781666666,
-      "resistance_reduction_percent": 59.320161461652866
+      "T_C": 20,
+      "copper_um": 25,
+      "I_A": 0.5,
+      "R_mOhm": 24.319782390317425,
+      "drop_mV": 12.159891195158712,
+      "loss_mW": 6.079945597579356
     },
     {
-      "copper_temperature_assumed_C": 85,
-      "copper_thickness_assumed_um": 35.0,
-      "branch_resistance_before_ohm": 0.06050103225,
-      "branch_resistance_after_ohm": 0.024611722233333338,
-      "branch_drop_before_V_at_0_5A": 0.030250516125,
-      "branch_drop_after_V_at_0_5A": 0.012305861116666669,
-      "branch_loss_before_W_at_0_5A": 0.0151252580625,
-      "branch_loss_after_W_at_0_5A": 0.0061529305583333345,
-      "resistance_reduction_percent": 59.32016146165285
+      "T_C": 85,
+      "copper_um": 25,
+      "I_A": 0.5,
+      "R_mOhm": 30.53227080192401,
+      "drop_mV": 15.266135400962005,
+      "loss_mW": 7.633067700481003
     }
   ],
-  "assumptions": [
-    "0.5A is an analysis case, not measured current or a qualified continuous rating",
-    "25/35um finished copper and20/85C conductor temperature are sensitivity inputs, not fabricated or measured properties"
-  ],
+  "assumptions": {
+    "I_A": 0.5,
+    "rho20_ohm_m": 1.72e-08,
+    "alpha_per_K": 0.00393,
+    "conductors_only": true,
+    "via_contact_and_other_circuit_losses_excluded": true
+  },
+  "native_drc": {
+    "exit_code": 0,
+    "violations": [],
+    "unconnected_items": [],
+    "violation_count": 0,
+    "unconnected_count": 0
+  },
   "limits": [
-    "Results cover only changed78.45mmbranch; no GNDreturn, upstream trunk, via barrel, socket contact, regulator tolerance/ripple or DevKit diode/LDO included",
-    "No IPC2152 or board-aware thermal qualification has been performed",
-    "No minimum final5Vpin voltage or successful startup inferred",
-    "No physical power/flash/fire tests permitted"
+    "Sensitivity calculation, not a current/temperature rating of the whole supply path",
+    "STARTUP_NOT_QUALIFIED",
+    "DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE"
   ],
-  "unchanged_interfaces": [
-    "J1/J3 ESP placement,pinmap",
-    "J30/J31 MAX31856 sockets and mounting",
-    "K1/K2 relay topology",
-    "externalHC160 control-only connector",
-    "R108/C109 remain schematic-only WIP"
-  ],
-  "images_status": "Previous images refer to source PCB;regeneration required before publishing as current"
+  "publication_status": "PUBLISHED_CURRENT_FRONT_SIDE_REVISION"
 }

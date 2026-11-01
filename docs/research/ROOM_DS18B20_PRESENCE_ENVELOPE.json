@@ -1,8 +1,8 @@
 {
   "status": "CURRENT_DOCUMENTARY_INTERFACE_AND_CONDITIONAL_RC_SCREEN_NOT_FIRMWARE_EXECUTION",
-  "pcb_source": "4346aff89fd445b9485b66ddaf8c46069cffbc0b86d29465b71c0e54980cdeef",
-  "canonical_pcb_path": "/projects/exports/sirokko_max31856_modules/no_p24_project/Sirokko26201_control_motor_candidate.kicad_pcb",
-  "pcb_modified": false,
+  "pcb_source": "9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444",
+  "canonical_pcb_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "pcb_modified": true,
   "firmware_executed": false,
   "physical_bus_measured": false,
   "cable_length_qualified": false,
@@ -30,9 +30,9 @@
       }
     ],
     "copper": {
-      "segments": 13,
+      "segments": 19,
       "vias": 2,
-      "length_mm": 160.86357686747527
+      "length_mm": 188.23607216091122
     }
   },
   "component": "espressif/onewire_bus==1.1.2",
@@ -151,7 +151,12 @@
     "sink_current_bound_mA": 0.8062709966405376,
     "power_wire_loop_Rmax_ohm_using_conditional_1p5mA": 90
   },
-  "valid_zero_temperature_control": {"full_frame_hex": "00004b467fff0c10c8", "configuration_valid": true, "expected_temperature_C": 0, "expected_action": "Accept only after successful fresh conversion;do not reject solely because numericaltemperatureiszero"},
+  "valid_zero_temperature_control": {
+    "full_frame_hex": "00004b467fff0c10c8",
+    "configuration_valid": true,
+    "expected_temperature_C": 0,
+    "expected_action": "Accept only after successful fresh conversion;do not reject solely because numericaltemperatureiszero"
+  },
   "additional_numeric_input_cases": [
     {
       "first_eight_bytes_hex": "0000000000000000",
@@ -189,5 +194,11 @@
     "GPIO voltage thresholds read from ESP32-S3v2.2 table5-4 at3.3V/25C; not a new whole-temperature guarantee",
     "300pF includes cable,PCB,sensor,connectors,protection; full capacitance not extracted or measured",
     "No physical power/flash/firetests; physical qualification is not a prerequisite newly assigned to user for project documentation"
-  ]
+  ],
+  "native_route_current": {
+    "segments": 19,
+    "vias": 2,
+    "length_mm": 188.23607216091122,
+    "source_sha256": "9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444"
+  }
 }
