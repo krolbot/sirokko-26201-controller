@@ -3404,7 +3404,7 @@
 	)
 	(text "REV_MID PWR_FLAG: real MOSFET power-path rail declaration for U13.VS ERC only; not transient qualification"
 		(exclude_from_sim no)
-		(at 170.18 57.15 0)
+		(at 160 112 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3763,12 +3763,12 @@
 		(uuid "0a90d921-478d-4757-9951-d4a1610131e3")
 	)
 	(label "REV_MID"
-		(at 137.16 80.01 0)
+		(at 137.16 80.01 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "10555ef7-99e9-4250-bd18-103f5343aefd")
 	)
@@ -3778,7 +3778,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "1874fcc9-7542-49c3-8407-797e38875b15")
 	)
@@ -3788,7 +3788,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "1e27e757-9ddb-423e-b35b-a9e5164a3439")
 	)
@@ -3808,7 +3808,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left top)
 		)
 		(uuid "2467cf5c-0297-427f-88ad-326669fd9460")
 	)
@@ -3818,7 +3818,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "262d5aa7-bfa5-4e91-a3ee-f77c8c0ef78f")
 	)
@@ -3828,7 +3828,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "2c6ab419-2456-45be-a89e-b12dfdc047b5")
 	)
@@ -3838,7 +3838,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "32aef19f-ac4f-409b-9219-63154b7b70e7")
 	)
@@ -3848,7 +3848,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "3cb84441-260e-43d7-bc34-fef242f3b1a4")
 	)
@@ -3898,12 +3898,12 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "56c915af-a1ce-4b5d-9657-e68280cce84c")
 	)
 	(label "P24_PROTECTED"
-		(at 229.87 85.09 0)
+		(at 229.87 85.09 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3918,7 +3918,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left top)
 		)
 		(uuid "5a88f7d5-2b55-4598-9c8e-e59a5f54bbfe")
 	)
@@ -3928,7 +3928,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "5cc96aea-fb41-4e51-a790-b4cf6ab45ede")
 	)
@@ -3948,7 +3948,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left top)
 		)
 		(uuid "67db0583-fe1e-4872-99b0-687a3c2448d8")
 	)
@@ -3978,7 +3978,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left top)
 		)
 		(uuid "71496463-1d04-4a0e-be62-bb7d297a6e21")
 	)
@@ -3998,7 +3998,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "72e2ea58-e68b-467d-9f1a-ae84b8de7d96")
 	)
@@ -4008,12 +4008,12 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left top)
 		)
 		(uuid "76f6ebd8-a60c-4b53-a58b-5ca8afe156cb")
 	)
 	(label "VIN_FUSED"
-		(at 180.34 85.09 0)
+		(at 180.34 85.09 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4033,7 +4033,7 @@
 		(uuid "7c603866-3784-481e-9823-6fac45b9f910")
 	)
 	(label "VIN_FUSED"
-		(at 180.34 44.45 0)
+		(at 180.34 44.45 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4068,7 +4068,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "89c715a5-32b9-4031-a84d-c13ac8ce5076")
 	)
@@ -4088,7 +4088,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "90a34f9e-6388-4767-9766-bbdcd4200245")
 	)
@@ -4098,7 +4098,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "9c28cbc8-a7dc-4f6b-9045-6ed87b6a4afd")
 	)
@@ -4113,7 +4113,7 @@
 		(uuid "a049d476-c96e-441d-9dd6-900c564905c8")
 	)
 	(label "P24_PROTECTED"
-		(at 229.87 44.45 0)
+		(at 229.87 44.45 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4138,7 +4138,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "b27f5611-1813-4492-9ae3-0718c163ddc7")
 	)
@@ -4188,7 +4188,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "c06b54e7-4837-400e-9ac6-2569ea530e4a")
 	)
@@ -4198,7 +4198,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "c1357521-f196-4b42-8879-9c3c1c964578")
 	)
@@ -4228,7 +4228,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "db4687ca-7b35-47ab-868b-a91285e73f1b")
 	)
@@ -4268,7 +4268,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "fc6decee-8286-404a-a3df-4cd599c21b38")
 	)
@@ -4278,7 +4278,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "fe50c314-4b25-428d-8b2c-0c0ec7e6ddc0")
 	)
@@ -4298,7 +4298,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right top)
 		)
 		(uuid "af64c232-1ce3-45d2-86fc-7478defdf0b7")
 	)
@@ -4314,18 +4314,18 @@
 	)
 	(hierarchical_label "GND"
 		(shape passive)
-		(at 30.48 80.01 0)
+		(at 30.48 80.01 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "10403dc1-583d-4984-823e-e7f2f737754f")
 	)
 	(hierarchical_label "P24_PROTECTED"
 		(shape output)
-		(at 25.4 30.48 180)
+		(at 25.4 30.48 90)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4358,7 +4358,7 @@
 		(dnp no)
 		(uuid "083a6106-120b-4f51-8ade-4b4d3315279e")
 		(property "Reference" "D1"
-			(at 85.09 66.04 0)
+			(at 77.47 62.23 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4368,7 +4368,7 @@
 			)
 		)
 		(property "Value" "TVS3301DRBR WIP"
-			(at 85.09 73.66 0)
+			(at 85.09 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4468,7 +4468,7 @@
 		(dnp no)
 		(uuid "2fbd672b-2ece-4476-9bb8-7749040c69ff")
 		(property "Reference" "R95"
-			(at 110.49 115.57 0)
+			(at 105.79 117.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4478,7 +4478,7 @@
 			)
 		)
 		(property "Value" "3.48k 1% OV_BOT"
-			(at 110.49 123.19 0)
+			(at 99.69 120.86 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4558,7 +4558,7 @@
 		(dnp no)
 		(uuid "460abd52-3189-493f-96b0-5f3bb166bc39")
 		(property "Reference" "U13"
-			(at 139.7 66.04 0)
+			(at 139.7 88.9 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4568,7 +4568,7 @@
 			)
 		)
 		(property "Value" "LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED"
-			(at 139.7 73.66 0)
+			(at 139.7 91.44 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4778,7 +4778,7 @@
 		(dnp no)
 		(uuid "5bbce0f3-b468-41cd-880a-e2b323d576db")
 		(property "Reference" "C25"
-			(at 149.86 101.6 0)
+			(at 154.47 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4788,7 +4788,7 @@
 			)
 		)
 		(property "Value" "1uF 100V CVS GRM31CR72A105KA01L"
-			(at 149.86 109.22 0)
+			(at 130 129 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4867,7 +4867,7 @@
 		(dnp no)
 		(uuid "5d8c4473-1401-4ce8-a0ff-c206e86962ba")
 		(property "Reference" "R96"
-			(at 129.54 96.52 0)
+			(at 125.18 98.93 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4877,7 +4877,7 @@
 			)
 		)
 		(property "Value" "75k 1% EN_TOP"
-			(at 129.54 104.14 0)
+			(at 139.05 101.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4956,7 +4956,7 @@
 		(dnp no)
 		(uuid "644ea982-7186-445e-affd-5edc899af60a")
 		(property "Reference" "F1"
-			(at 49.53 45.72 0)
+			(at 46.99 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4966,7 +4966,7 @@
 			)
 		)
 		(property "Value" "0997030.WXN / 30A WIP"
-			(at 49.53 53.34 0)
+			(at 49.53 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5045,7 +5045,7 @@
 		(dnp no)
 		(uuid "92c595f2-a45f-4f1f-bff6-a217abc0ea06")
 		(property "Reference" "R91"
-			(at 170.18 81.28 0)
+			(at 165.1 83.82 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5055,7 +5055,7 @@
 			)
 		)
 		(property "Value" "4.7R Q2_GATE"
-			(at 170.18 88.9 0)
+			(at 160.02 86.36 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5134,7 +5134,7 @@
 		(dnp no)
 		(uuid "a52fa90f-f9f0-4c11-9126-99bc0212d674")
 		(property "Reference" "R93"
-			(at 214.63 81.28 0)
+			(at 214.63 105.41 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5144,7 +5144,7 @@
 			)
 		)
 		(property "Value" "4.7R Q4_GATE"
-			(at 214.63 88.9 0)
+			(at 214.63 107.95 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5224,7 +5224,7 @@
 		(dnp no)
 		(uuid "a7761d7e-37c8-4fcc-b321-9fbe4866e698")
 		(property "Reference" "Q1"
-			(at 190.5 45.72 0)
+			(at 190.5 36.83 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5234,7 +5234,7 @@
 			)
 		)
 		(property "Value" "IPB017N10N5LFATMA1 WIP"
-			(at 190.5 53.34 0)
+			(at 190.5 39.37 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5335,7 +5335,7 @@
 		(dnp no)
 		(uuid "b34a3b82-856a-4165-8e86-dabbbe31a18a")
 		(property "Reference" "Q3"
-			(at 240.03 45.72 0)
+			(at 240.03 36.83 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5345,7 +5345,7 @@
 			)
 		)
 		(property "Value" "IPB017N10N5LFATMA1 WIP"
-			(at 240.03 53.34 0)
+			(at 240.03 39.37 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5445,7 +5445,7 @@
 		(dnp no)
 		(uuid "b7b14320-881c-4f77-aeaf-2111fc01087a")
 		(property "Reference" "R94"
-			(at 110.49 96.52 0)
+			(at 105.79 98.93 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5455,7 +5455,7 @@
 			)
 		)
 		(property "Value" "84.5k 1% OV_TOP"
-			(at 110.49 104.14 0)
+			(at 99.69 101.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5535,7 +5535,7 @@
 		(dnp no)
 		(uuid "d6e5bf9f-4791-4a07-a613-d7bb32e8d34d")
 		(property "Reference" "Q2"
-			(at 190.5 86.36 0)
+			(at 190.5 100.33 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5545,7 +5545,7 @@
 			)
 		)
 		(property "Value" "IPB017N10N5LFATMA1 WIP"
-			(at 190.5 93.98 0)
+			(at 190.5 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5645,7 +5645,7 @@
 		(dnp no)
 		(uuid "de9553bd-5215-48a7-a41c-7c5540ee9fae")
 		(property "Reference" "R92"
-			(at 214.63 40.64 0)
+			(at 214.63 31.75 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5655,7 +5655,7 @@
 			)
 		)
 		(property "Value" "4.7R Q3_GATE"
-			(at 214.63 48.26 0)
+			(at 214.63 34.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5734,7 +5734,7 @@
 		(dnp no)
 		(uuid "e366960e-4f5b-4c29-b9d2-09059f07ac61")
 		(property "Reference" "R90"
-			(at 170.18 40.64 0)
+			(at 165.1 43.18 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5744,7 +5744,7 @@
 			)
 		)
 		(property "Value" "4.7R Q1_GATE"
-			(at 170.18 48.26 0)
+			(at 160.02 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5823,7 +5823,7 @@
 		(dnp no)
 		(uuid "eb017a25-0a5e-47d7-9939-7c7b634d4b42")
 		(property "Reference" "R97"
-			(at 129.54 115.57 0)
+			(at 125.18 117.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5833,7 +5833,7 @@
 			)
 		)
 		(property "Value" "5.62k 1% EN_BOT"
-			(at 129.54 123.19 0)
+			(at 140 119.38 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5913,7 +5913,7 @@
 		(dnp no)
 		(uuid "ec234659-9492-4673-bde9-cfedee032e43")
 		(property "Reference" "Q4"
-			(at 240.03 86.36 0)
+			(at 240.03 100.33 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5923,7 +5923,7 @@
 			)
 		)
 		(property "Value" "IPB017N10N5LFATMA1 WIP"
-			(at 240.03 93.98 0)
+			(at 240.03 102.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6023,7 +6023,7 @@
 		(dnp no)
 		(uuid "faa0c4b9-9921-4d7d-b46b-162920a9c169")
 		(property "Reference" "C24"
-			(at 115.57 45.72 0)
+			(at 109.22 49.53 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6033,7 +6033,7 @@
 			)
 		)
 		(property "Value" "220nF 100V CVCAP GRM21BR72A224KA01L"
-			(at 115.57 53.34 0)
+			(at 115.57 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6111,7 +6111,7 @@
 	(dnp no)
 	(uuid "11cea419-8a7c-428c-acb3-0a348049971e")
 	(property "Reference" "R108"
-		(at 170.18 137.16 0)
+		(at 165.1 140.97 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6119,7 +6119,7 @@
 		)
 	)
 	(property "Value" "22k 1% CdVdT isolation WIP"
-		(at 170.18 144.78 0)
+		(at 155 148.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6196,7 +6196,7 @@
 	(dnp no)
 	(uuid "2658e623-f20d-4e55-bb50-be80ca27f047")
 	(property "Reference" "C109"
-		(at 170.18 156.21 0)
+		(at 165.1 160.02 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6204,7 +6204,7 @@
 		)
 	)
 	(property "Value" "33nF 100V C0G 5% CdVdT WIP"
-		(at 170.18 163.83 0)
+		(at 153.67 163.83 0)
 		(effects
 			(font
 				(size 1.27 1.27)
