@@ -31,7 +31,7 @@ DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE. Производстве�
 
 Из точной конечной PCB экспортированы и осмотрены front/back PNG: контур целиком, новая J29 и подписи видны, явного пересечения корпусов нет. B.Cu показан в координатах платы, без зеркалирования. Хеш финальной PCB повторно подтверждён после экспорта и передачи локальной копии.
 
-Машинные результаты: [`relayout/drc.json`](relayout/drc.json), [`relayout/erc.json`](relayout/erc.json), [`relayout/relayout_acceptance.json`](relayout/relayout_acceptance.json); изображения: [`../board-front-module-wip.png`](../board-front-module-wip.png), [`../board-back-module-wip.png`](../board-back-module-wip.png). Старые CAM/BOM/PDF платы не являются актуальным производственным комплектом.
+Машинные результаты шага: [`relayout/drc.json`](relayout/drc.json), [`relayout/erc.json`](relayout/erc.json), [`relayout/relayout_acceptance.json`](relayout/relayout_acceptance.json). Его прежние изображения удалены из рабочего дерева вместе с ревизионными экспортами; актуальные виды канонической PCB находятся в [`../board-front.png`](../board-front.png) и [`../board-back.png`](../board-back.png). Производственного комплекта нет.
 
 ## Отклонённые попытки и ограничения
 

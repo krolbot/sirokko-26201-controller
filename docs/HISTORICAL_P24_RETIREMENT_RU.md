@@ -18,7 +18,8 @@
 - `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`;
 - `hardware/kicad/ELECTRICAL_INTERFACE_RU.md`;
 - `docs/CURRENT_STATE_RU.md`;
-- `docs/BOM_PURCHASE_NOTES_RU.md`;
-- `manufacturing/REVIEW_REQUIRED_NO_P24_2026-11-01/`.
+- `docs/BOM_PURCHASE_NOTES_RU.md`.
+
+Производственного архива в текущем дереве нет; прежний комплект доступен только через историю Git.
 
 После загрузки ESP32 действующее требование — продувка при выключенных свече и муфте и ожидание нового START. Firmware implementation HOLD, NO POWER, NO FLASH и NO FIRE сохраняются.
