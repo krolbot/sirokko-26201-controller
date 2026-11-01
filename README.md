@@ -8,7 +8,7 @@ The working tree contains one intentionally incomplete KiCad WIP:
 - schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch);
 - PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb);
 - current schematic SHA-256: `902d0681f072a57559e78aff44cfd5b877478634b8bae62d3e4e834592a3c979`;
-- current PCB SHA-256: `187c83155bc4691176a9a6213b830c2d6523f5ad3619ccc6a91872b2d866cdb8`;
+- current PCB SHA-256: `a62d56d204ddeaf921c40d32d316c2e54b2712bf33597dcdb42afe4aaad1ed28`;
 - current `fp-lib-table` SHA-256: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`;
 - current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
@@ -20,7 +20,9 @@ The current revision keeps K1 for the glow plug and K2 for the clutch. K3 and R7
 
 The first accepted general-relayout step moves J29 from `(324.00, 164.76)` to `(115.00, 130.00)` mm without changing its angle, pin numbering or nets. Only `/FAN_REQUEST` and `/SPEED_CMD` were rerouted; the board-wide via count fell from 210 to 188. The outline and two-layer stack are unchanged, and the general relayout is not complete.
 
-Fresh KiCad 10.0.8 checks report ERC=0 and DRC=0 with 0 unconnected items and 0 schematic-parity differences. DRC has `ignored_checks=[]`; ERC retains four named standard ignored classes and adds none. The PCB has 78 footprints, 308 pads, 706 track segments, 188 vias and 32 zones: 894 track-and-via objects total. The current change and preservation checks are recorded in [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md), with machine results in [`docs/research/relayout/`](docs/research/relayout/). The socket report remains historical and its copper counts are not current. These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
+The next accepted step reroutes only `/ROOM_DQ`: 15→3 vias and 281.554→234.503 mm of segments. All J29 changes remain; component positions, schematic, libraries and rules are unchanged. The board now has 176 vias, 34 fewer than the original modular baseline.
+
+Fresh KiCad 10.0.8 checks report ERC=0 and DRC=0 with 0 unconnected items and 0 schematic-parity differences. DRC has `ignored_checks=[]`; ERC retains four named standard ignored classes and adds none. The PCB has 78 footprints, 308 pads, 696 track segments, 176 vias and 32 zones: 872 track-and-via objects total. The current change and preservation checks are recorded in [`docs/research/DS18B20_ROUTE_APPLIED_RU.md`](docs/research/DS18B20_ROUTE_APPLIED_RU.md), with machine results in [`docs/research/room/`](docs/research/room/). The HC160 report remains the history of the preceding accepted step. These are CAD checks, not electrical, thermal, mechanical or manufacturing acceptance.
 
 Current C104 is Murata `GRM1885C1H222JA01D`, 2.2 nF, 50 V, C0G, ±5%. The accepted change and its limits are documented in [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md); it is not a physical qualification or manufacturing approval.
 
@@ -47,7 +49,8 @@ Current documents:
 - [`docs/research/C104_BOOTSTRAP_REVIEW_RU.md`](docs/research/C104_BOOTSTRAP_REVIEW_RU.md) — accepted C104 C0G selection and its calculation and application limits;
 - [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md) and [`docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json`](docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW.json) — current two-relay coil, driver and hot-pickup calculation;
 - [`docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md`](docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md) — preceding modular PCB routing, DRC/ERC and connectivity evidence;
-- [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md) and [`docs/research/relayout/`](docs/research/relayout/) — current J29 move, exact hashes, DRC/ERC and preservation checks;
+- [`docs/research/DS18B20_ROUTE_APPLIED_RU.md`](docs/research/DS18B20_ROUTE_APPLIED_RU.md) and [`docs/research/room/`](docs/research/room/) — current ROOM_DQ reroute, exact hashes, DRC/ERC and preservation checks;
+- [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md) and [`docs/research/relayout/`](docs/research/relayout/) — historical acceptance of the preceding J29-relayout step;
 - [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md) — historical J30/J31 socket acceptance before the current relayout;
 - [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 77 schematic instances in the preceding discrete snapshot; it does not match the current modular PCB and is not orderable;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — preceding modular PCB verification retained as history;
