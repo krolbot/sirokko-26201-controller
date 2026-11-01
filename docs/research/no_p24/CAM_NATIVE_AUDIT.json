@@ -7,6 +7,8 @@
     "finalize_no_p24_package.py"
   ],
   "bom_refs": 59,
+  "canonical_project_promoted": true,
+  "corrected_input_sheet_sha256": "334a081f26003351fcd2a1ead5d2d6be32adb3dded125e289fbb2d50c8b3cfde",
   "date": "2026-11-01",
   "drc_unconnected_items": 0,
   "drc_violations": 0,
@@ -16,6 +18,11 @@
   "gerber_layer_files": 9,
   "manufacturing_ready": false,
   "native_connectivity_audit_pass": true,
+  "negative_controls": {
+    "broken_retained_connection_rejected": true,
+    "restored_target_rejected": true
+  },
+  "negative_controls_pass": true,
   "pcb_sha256": "40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563",
   "review_required": true,
   "schematic_parity_descriptions": [
@@ -32,5 +39,6 @@
   "step_file_bytes": 2936649,
   "target_refs_absent_from_all_positions": true,
   "target_refs_absent_from_bom": true,
-  "target_refs_absent_from_smd_positions": true
+  "target_refs_absent_from_smd_positions": true,
+  "validate_board_status": "ok"
 }

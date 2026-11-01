@@ -1,0 +1,16 @@
+{
+  "archive_entries": 79,
+  "archive_sha256": "2d8fe211ab7f2772fcd71eba013a3a00f31dcbe9fe4ef388e1bc74022f0345b0",
+  "input_sheet_sha256": "334a081f26003351fcd2a1ead5d2d6be32adb3dded125e289fbb2d50c8b3cfde",
+  "internal_checksums_pass": true,
+  "negative_controls_pass": true,
+  "old_cam_removed": true,
+  "pass": true,
+  "pcb_sha256": "40e9a141a28f8b52314d9bfcc539d3e099428d77adb3cad017719816a27e5563",
+  "purchase_grouped_rows": 38,
+  "purchase_physical_items": 60,
+  "schematic_bom_refs": 59,
+  "schematic_sha256": "6c62c1d9fc13e621cfff8c6be2f9548082b5b4e7aaf046d7d7f454c1077fc76a",
+  "target_nets_absent": true,
+  "target_refs_absent": true
+}
