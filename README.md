@@ -1,6 +1,6 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic and PCB now contain the selected removable MAX31856 modules and the assigned Samtec sockets, and pass the current CAD parity checks. The tracked manufacturing package is still the preceding discrete-MAX31856 draft and does not match the current PCB.
+> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic and PCB now contain the selected removable MAX31856 modules and the assigned Samtec sockets, and pass the current CAD parity checks. The tracked manufacturing CAM/assembly package is still the preceding discrete-MAX31856 draft and does not match the current PCB; its obsolete BOM copies were removed.
 
 The working tree contains one intentionally incomplete KiCad WIP:
 
@@ -12,7 +12,7 @@ The working tree contains one intentionally incomplete KiCad WIP:
 - current `fp-lib-table` SHA-256: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`;
 - current power-sheet SHA-256: `36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d`.
 
-The latest product decision selects two removable blue MAX31856 modules from <https://ozon.ru/t/3QtIbaX> instead of the on-board U9/U10 circuits. The exact module is not MAX31865. The user accepted the official Adafruit 3263 Eagle geometry as the documented basis for these visually identical modules. The schematic and PCB now implement J30/J31 on a shared SPI bus with separate CS and DRDY signals; FLT and `3Vo` are NC, and VIN is connected to +3V3. Both connectors now use `SSW-109-01-T-S` and the project footprint `Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm`; all 18 drills are Ø1.04 mm. Final fasteners, full 3D/mechanical acceptance, BOM and CAM remain unfinished.
+The latest product decision selects two removable blue MAX31856 modules from <https://ozon.ru/t/3QtIbaX> instead of the on-board U9/U10 circuits. The exact module is not MAX31865. The user accepted the official Adafruit 3263 Eagle geometry as the documented basis for these visually identical modules. The schematic and PCB now implement J30/J31 on a shared SPI bus with separate CS and DRDY signals; FLT and `3Vo` are NC, and VIN is connected to +3V3. Both connectors now use `SSW-109-01-T-S` and the project footprint `Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm`; all 18 drills are Ø1.04 mm. The modular BOM is published only as a draft: final fasteners, exact external variants, procurement readiness, full 3D/mechanical acceptance and current CAM remain unfinished.
 
 The display, local Start/Stop button, rotary encoder, their dedicated circuitry, PCB footprints, copper and display mounting holes are removed by the latest direct requirement. Six released ESP pins are marked NC. Control, settings and diagnostics are now required only through the ESP32 access point and browser panel; the firmware is not yet implemented and remains on HOLD.
 
@@ -58,10 +58,10 @@ Current documents:
 - [`docs/research/DS18B20_ROUTE_APPLIED_RU.md`](docs/research/DS18B20_ROUTE_APPLIED_RU.md) and [`docs/research/room/`](docs/research/room/) — historical acceptance of the preceding ROOM_DQ reroute;
 - [`docs/research/HC160_LAYOUT_APPLIED_RU.md`](docs/research/HC160_LAYOUT_APPLIED_RU.md) and [`docs/research/relayout/`](docs/research/relayout/) — historical acceptance of the J29-relayout step;
 - [`docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md) — historical J30/J31 socket acceptance before the current relayout;
-- [`docs/BOM_DRAFT_NOT_FOR_ORDER.csv`](docs/BOM_DRAFT_NOT_FOR_ORDER.csv) — KiCad CSV BOM with MPN for 77 schematic instances in the preceding discrete snapshot; it does not match the current modular PCB and is not orderable;
+- [`docs/BOM_PURCHASE_NOTES_RU.md`](docs/BOM_PURCHASE_NOTES_RU.md) — the single current modular BOM index: 65 schematic references, 44 grouped PCB purchasing rows and 68 physical PCB items; external modules/sensors and mechanical interfaces are separate, and none of these files is order approval;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — preceding modular PCB verification retained as history;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
-- [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — preliminary Gerber, drill, BOM and placement outputs for the preceding discrete snapshot; **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**.
+- [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — preliminary Gerber, drill, placement and assembly outputs for the preceding discrete snapshot; its obsolete BOM copies were removed, and the remaining files are **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**.
 
 There is no approved firmware for this hardware contract. Firmware work remains blocked until the final remote-control contract and hardware acceptance are complete. Electrical and thermal acceptance and the manufacturing release remain unfinished; the preliminary manufacturing outputs above are not a release or permission to order, assemble, power, flash or operate the board.
 

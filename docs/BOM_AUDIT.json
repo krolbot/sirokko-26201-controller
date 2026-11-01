@@ -1,0 +1,32 @@
+{
+  "pcb_sha256": "6042da2346f1ef873cda83086b57a3c0f69b981a6719fdd80eba219d4ae1b81a",
+  "root_schematic_sha256": "902d0681f072a57559e78aff44cfd5b877478634b8bae62d3e4e834592a3c979",
+  "schematic_components": 65,
+  "pcb_footprints": 78,
+  "pcb_only_mechanical_holes": [
+    "H1",
+    "H11",
+    "H12",
+    "H13",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6",
+    "H_TC1",
+    "H_TC2",
+    "H_TC3",
+    "H_TC4"
+  ],
+  "purchase_physical_items": 68,
+  "purchase_grouped_rows": 44,
+  "missing_mpn": [],
+  "native_netlist_schematic_pcb_fields_match": true,
+  "excluded_legacy_refs_absent": true,
+  "scope": "PCB procurement only; external modules/sensors/cabling/fasteners are separate; no current stock/price verification; production_release=false",
+  "files": {
+    "SCHEMATIC_BOM_DRAFT.csv": "64fcff6dd4bf6560fcfd53a13054ecf1001a8c8fb51fc636df2161d74a79258d",
+    "PCB_PURCHASE_ALLOCATION_DRAFT.csv": "ac567e82c2310df3926959151acbccf8af4c7caa811805486dea15048d9eeced",
+    "PCB_PURCHASE_GROUPED_DRAFT.csv": "823ca92d456ee5bf583c699e38e3ed3db8cf37e91a5bd43ee1fbbbf74eba0eec"
+  }
+}
