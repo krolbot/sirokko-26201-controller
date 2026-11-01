@@ -4,6 +4,8 @@
 
 The current input-protection acceptance is documented in [`docs/research/INPUT_PROTECTION_ACCEPTANCE_RU.md`](docs/research/INPUT_PROTECTION_ACCEPTANCE_RU.md), with machine-readable checks in [`docs/research/INPUT_PROTECTION_ACCEPTANCE.json`](docs/research/INPUT_PROTECTION_ACCEPTANCE.json). The pin map and selected copper connectivity passed; static ±28.8 V reverse polarity passed absolute-limit consistency only, while negative-pulse qualification with a charged output remains open (71.3 V calculated across a 70 V pin-to-pin limit). No PCB geometry or firmware changed, and this is not a functional, physical or manufacturing acceptance.
 
+The current startup-load inventory is documented in [`docs/research/INPUT_STARTUP_MODEL_RU.md`](docs/research/INPUT_STARTUP_MODEL_RU.md), with its arithmetic in [`docs/research/INPUT_STARTUP_MODEL.json`](docs/research/INPUT_STARTUP_MODEL.json). Five capacitors directly across `P24_PROTECTED` and GND total 434.5 µF nominal; at 28.8 V the idealized charge and stored energy are 12.5136 mC and 180.19584 mJ. The 1/5/10 ms currents are conditional sensitivity points, not measured startup times. No external CdVdT branch is present; 12 nF is only an idealized calculation candidate, not an assigned MPN, approved ECO, startup guarantee or SOA pass. Status: `STARTUP_NOT_QUALIFIED`; earlier single-branch startup calculations do not describe the complete protected bus. CAD, BOM, CAM and firmware are unchanged.
+
 The working tree contains one intentionally incomplete KiCad WIP:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);

@@ -1,0 +1,61 @@
+{
+  "status": "STARTUP_NOT_QUALIFIED",
+  "pcb_sha256": "6042da2346f1ef873cda83086b57a3c0f69b981a6719fdd80eba219d4ae1b81a",
+  "bom_sha256": "64fcff6dd4bf6560fcfd53a13054ecf1001a8c8fb51fc636df2161d74a79258d",
+  "capacitor_references_total": 13,
+  "direct_P24_PROTECTED_to_GND_uF": {
+    "C21": 0.1,
+    "C22": 330,
+    "C101": 2.2,
+    "C102": 2.2,
+    "C103": 100
+  },
+  "direct_nominal_uF": 434.5,
+  "nominal_charge_mC": 12.5136,
+  "nominal_energy_mJ": 180.19584,
+  "ramp_sensitivity": [
+    {
+      "ramp_ms": 1,
+      "capacitive_current_A": 12.5136,
+      "initial_MOSFET_pair_power_W": 360.39168
+    },
+    {
+      "ramp_ms": 5,
+      "capacitive_current_A": 2.50272,
+      "initial_MOSFET_pair_power_W": 72.078336
+    },
+    {
+      "ramp_ms": 10,
+      "capacitive_current_A": 1.25136,
+      "initial_MOSFET_pair_power_W": 36.039168
+    }
+  ],
+  "negative_control_omit_C22_nominal_uF": 104.49999999999999,
+  "counterexample_capacitance_C22_alone_ratio": 1.3166666666666667,
+  "inventory_excluded": {
+    "C24": "CAP_NET to REV_MID: charge pump, not slew control",
+    "C25": "REV_MID to GND: upstream of HGATE pair, separate charge path",
+    "C28": "+3V3 to GND",
+    "C104": "BOOT to SW",
+    "C105": "+5V_DEVKIT to GND",
+    "C106": "+5V_DEVKIT to GND",
+    "C107": "RAMP to +5V_DEVKIT",
+    "C108": "RAMP to FB"
+  },
+  "qualification_gaps": [
+    "No external CdVdT on present PCB inventory",
+    "Intrinsic MOSFET Qgd values are typical at a different test point; do not infer guaranteed startup slew",
+    "Startup input current of enabled DC/DC must be added separately",
+    "C25 upstream charging path through Q1/Q2/body diodes is not included in downstream capacitor total",
+    "Parallel MOSFET current sharing during linear operation must not be assumed 50/50",
+    "Capacitance tolerances, ESR, temperature, case starting temperature, repetition and source impedance need inclusion"
+  ],
+  "nominal_CdVdT_candidate": {
+    "not_integrated": true,
+    "MPN": null,
+    "CdVdT_nF": 12,
+    "nominal_Icap_A": 1.9914583333333333,
+    "nominal_ramp_ms": 6.283636363636363,
+    "model": "TI eq 2, nominal COUT and typical HGATE current, no intrinsic gate-capacitance/load corrections; NOT SOA PASS"
+  }
+}
