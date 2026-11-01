@@ -1,6 +1,6 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic and PCB now contain the selected removable MAX31856 modules and the assigned Samtec sockets, and pass the current CAD parity checks. The tracked manufacturing CAM/assembly package is still the preceding discrete-MAX31856 draft and does not match the current PCB; its obsolete BOM copies were removed.
+> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic and PCB now contain the selected removable MAX31856 modules and the assigned Samtec sockets, and pass the current CAD parity checks. The independently checked current-layout CAM/assembly package is published only as the frozen [`SIROKKO_CAM_CURRENT_DRAFT.zip`](manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip); it is a draft, not a manufacturing release.
 
 The working tree contains one intentionally incomplete KiCad WIP:
 
@@ -61,7 +61,7 @@ Current documents:
 - [`docs/BOM_PURCHASE_NOTES_RU.md`](docs/BOM_PURCHASE_NOTES_RU.md) — the single current modular BOM index: 65 schematic references, 44 grouped PCB purchasing rows and 68 physical PCB items; external modules/sensors and mechanical interfaces are separate, and none of these files is order approval;
 - [`hardware/kicad/PCB_REVIEW_RU.md`](hardware/kicad/PCB_REVIEW_RU.md) — preceding modular PCB verification retained as history;
 - [`hardware/kicad/README.md`](hardware/kicad/README.md) — project entry points and local dependencies;
-- [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — preliminary Gerber, drill, placement and assembly outputs for the preceding discrete snapshot; its obsolete BOM copies were removed, and the remaining files are **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**.
+- [`manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip`](manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip) and its exact [`README_RU.md`](manufacturing/DRAFT_NOT_FOR_ORDER/README_RU.md) — independently checked Gerber, Excellon, placement, assembly and BOM snapshot for current PCB `6042da23…b81a`; **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE**, not a manufacturing release.
 
 There is no approved firmware for this hardware contract. Firmware work remains blocked until the final remote-control contract and hardware acceptance are complete. Electrical and thermal acceptance and the manufacturing release remain unfinished; the preliminary manufacturing outputs above are not a release or permission to order, assemble, power, flash or operate the board.
 

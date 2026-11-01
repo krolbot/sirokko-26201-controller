@@ -1,6 +1,6 @@
 # Sirokko 262.01 — контроллер автоматики
 
-> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** Плата не закончена, не имеет производственного допуска и не прошла физическую приёмку. Её нельзя заказывать, включать, прошивать или подключать к горелке. Схема и PCB уже переведены на съёмные MAX31856 с назначенными колодками Samtec и проходят текущую проверку паритета CAD. Производственный комплект CAM и сборочные материалы остались от предшествующей дискретной ревизии и текущей PCB не соответствуют; устаревшие копии BOM из него удалены.
+> **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** Плата не закончена, не имеет производственного допуска и не прошла физическую приёмку. Её нельзя заказывать, включать, прошивать или подключать к горелке. Схема и PCB уже переведены на съёмные MAX31856 с назначенными колодками Samtec и проходят текущую проверку паритета CAD. Независимо проверенный CAM-комплект актуальной разводки опубликован только как замороженный [`SIROKKO_CAM_CURRENT_DRAFT.zip`](manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip); это черновик, а не производственный выпуск.
 
 В рабочем дереве оставлен один намеренно незавершённый проект KiCad:
 
@@ -48,7 +48,6 @@
 - [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md) — требования и незакрытые условия;
 - [`docs/BOM_PURCHASE_NOTES_RU.md`](docs/BOM_PURCHASE_NOTES_RU.md) — единственный актуальный указатель модульной BOM: 65 схемных позиций, 44 сгруппированные закупочные строки и 68 физических изделий PCB; внешние модули/датчики и механические интерфейсы вынесены отдельно, разрешения заказа нет;
 - [`docs/board-front-module-wip.png`](docs/board-front-module-wip.png) и [`docs/board-back-module-wip.png`](docs/board-back-module-wip.png) — текущие виды PCB после переноса R3; B.Cu показан в координатах платы без зеркалирования;
-- [`manufacturing/DRAFT_NOT_FOR_ORDER/`](manufacturing/DRAFT_NOT_FOR_ORDER/) — Gerber, Excellon, placement и сборочные PDF предшествующей дискретной PCB; устаревшие копии BOM удалены, остальные файлы не относятся к целевой модульной ревизии;
-- [`manufacturing/DRAFT_NOT_FOR_ORDER/SHA256SUMS`](manufacturing/DRAFT_NOT_FOR_ORDER/SHA256SUMS) — контрольные суммы комплекта.
+- [`manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip`](manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip) и точная копия его [`README_RU.md`](manufacturing/DRAFT_NOT_FOR_ORDER/README_RU.md) — проверенный снимок Gerber, Excellon, координат монтажа, сборочных материалов и BOM для текущей PCB `6042da23…b81a`; это **DRAFT / NOT FOR ORDER**, не производственный выпуск.
 
 Согласованной прошивки нет. Электрическая и тепловая квалификация, HC160, силовые режимы и физические испытания не закрыты. Ревизионные копии рядом с исходниками не хранятся; история — в Git.
