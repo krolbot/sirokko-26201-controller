@@ -1,0 +1,1364 @@
+{
+  "status": "FRONT_SIDE_PLACEMENT_NATIVE_CHECKED_NOT_APPLIED",
+  "requirement_ru": "Все вставляемые модули и колодки устанавливаются с лицевой стороны, на стороне реле. ESP32/MAX31856 тела в3D не нужны, колодки нужны.",
+  "canonical_pcb_path": "/projects/exports/sirokko_max31856_modules/no_p24_project/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "source_sha256": "bdc72ee69a1cfd1b19614f053f4a46525d647ff002e5968d7c4d61195b102c20",
+  "source_drc": {
+    "exit_code": 0,
+    "violations": [],
+    "unconnected_items": [],
+    "violation_count": 0,
+    "unconnected_count": 0
+  },
+  "source_counts": {
+    "footprints": 70,
+    "pads": 287,
+    "segments": 616,
+    "vias": 140,
+    "zones": 27
+  },
+  "all_back_side_footprints": [
+    "J1",
+    "J3"
+  ],
+  "connector_relay_sides": [
+    {
+      "layer": "B.Cu",
+      "position_mm": [
+        100.45,
+        100.9
+      ],
+      "reference": "J1",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        16.0,
+        140.16
+      ],
+      "reference": "J12",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        4.0,
+        120.0
+      ],
+      "reference": "J13",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        251.37,
+        60.99
+      ],
+      "reference": "J27",
+      "rotation_deg": -90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        251.37,
+        110.99
+      ],
+      "reference": "J28",
+      "rotation_deg": -90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        115.0,
+        130.0
+      ],
+      "reference": "J29",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "B.Cu",
+      "position_mm": [
+        100.45,
+        75.5
+      ],
+      "reference": "J3",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        22.0,
+        42.0
+      ],
+      "reference": "J30",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        52.0,
+        42.0
+      ],
+      "reference": "J31",
+      "rotation_deg": 90.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        212.5,
+        30.0
+      ],
+      "reference": "K1",
+      "rotation_deg": 0.0
+    },
+    {
+      "layer": "F.Cu",
+      "position_mm": [
+        212.5,
+        80.0
+      ],
+      "reference": "K2",
+      "rotation_deg": 0.0
+    }
+  ],
+  "native_flip_qualification": {
+    "source_sha256": "bdc72ee69a1cfd1b19614f053f4a46525d647ff002e5968d7c4d61195b102c20",
+    "source_unchanged": true,
+    "saved": false,
+    "method": "native FOOTPRINT.Flip around shared centre, horizontal flip; no connectivity rebuild or routing acceptance",
+    "centre_mm": [
+      100.45,
+      88.2
+    ],
+    "qualified_numbered_pad_reflections": 44,
+    "per_header_flip_negative_control_mismatched_pads": 44,
+    "candidate": {
+      "J1": {
+        "x_mm": 100.45,
+        "y_mm": 75.5,
+        "rotation_deg": -90.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "number": "1",
+            "net": "/+3V3",
+            "position_mm": [
+              100.45,
+              75.5
+            ]
+          },
+          {
+            "number": "2",
+            "net": "/+3V3",
+            "position_mm": [
+              97.91,
+              75.5
+            ]
+          },
+          {
+            "number": "3",
+            "net": "unconnected-(J1-Pin_3-Pad3)",
+            "position_mm": [
+              95.37,
+              75.5
+            ]
+          },
+          {
+            "number": "4",
+            "net": "/ROOM_DQ",
+            "position_mm": [
+              92.83,
+              75.5
+            ]
+          },
+          {
+            "number": "5",
+            "net": "unconnected-(J1-Pin_5-Pad5)",
+            "position_mm": [
+              90.29,
+              75.5
+            ]
+          },
+          {
+            "number": "6",
+            "net": "unconnected-(J1-Pin_6-Pad6)",
+            "position_mm": [
+              87.75,
+              75.5
+            ]
+          },
+          {
+            "number": "7",
+            "net": "unconnected-(J1-Pin_7-Pad7)",
+            "position_mm": [
+              85.21,
+              75.5
+            ]
+          },
+          {
+            "number": "8",
+            "net": "/FUEL_CMD",
+            "position_mm": [
+              82.67,
+              75.5
+            ]
+          },
+          {
+            "number": "9",
+            "net": "/FAN_REQUEST",
+            "position_mm": [
+              80.13,
+              75.5
+            ]
+          },
+          {
+            "number": "10",
+            "net": "/SPEED_CMD",
+            "position_mm": [
+              77.59,
+              75.5
+            ]
+          },
+          {
+            "number": "11",
+            "net": "unconnected-(J1-Pin_11-Pad11)",
+            "position_mm": [
+              75.05,
+              75.5
+            ]
+          },
+          {
+            "number": "12",
+            "net": "unconnected-(J1-Pin_12-Pad12)",
+            "position_mm": [
+              72.51,
+              75.5
+            ]
+          },
+          {
+            "number": "13",
+            "net": "unconnected-(J1-Pin_13-Pad13)",
+            "position_mm": [
+              69.97,
+              75.5
+            ]
+          },
+          {
+            "number": "14",
+            "net": "unconnected-(J1-Pin_14-Pad14)",
+            "position_mm": [
+              67.43,
+              75.5
+            ]
+          },
+          {
+            "number": "15",
+            "net": "/TC_AIR_CS",
+            "position_mm": [
+              64.89,
+              75.5
+            ]
+          },
+          {
+            "number": "16",
+            "net": "/TC_EXH_CS",
+            "position_mm": [
+              62.35,
+              75.5
+            ]
+          },
+          {
+            "number": "17",
+            "net": "/TC_SDI_MOSI",
+            "position_mm": [
+              59.81,
+              75.5
+            ]
+          },
+          {
+            "number": "18",
+            "net": "/TC_SCK",
+            "position_mm": [
+              57.27,
+              75.5
+            ]
+          },
+          {
+            "number": "19",
+            "net": "/TC_SDO_MISO",
+            "position_mm": [
+              54.73,
+              75.5
+            ]
+          },
+          {
+            "number": "20",
+            "net": "/GLOW_CMD",
+            "position_mm": [
+              52.19,
+              75.5
+            ]
+          },
+          {
+            "number": "21",
+            "net": "+5V_DEVKIT",
+            "position_mm": [
+              49.65,
+              75.5
+            ]
+          },
+          {
+            "number": "22",
+            "net": "/GND",
+            "position_mm": [
+              47.11,
+              75.5
+            ]
+          }
+        ]
+      },
+      "J3": {
+        "x_mm": 100.45,
+        "y_mm": 100.9,
+        "rotation_deg": -90.0,
+        "layer": "F.Cu",
+        "pads": [
+          {
+            "number": "1",
+            "net": "/GND",
+            "position_mm": [
+              100.45,
+              100.9
+            ]
+          },
+          {
+            "number": "2",
+            "net": "unconnected-(J3-Pin_2-Pad2)",
+            "position_mm": [
+              97.91,
+              100.9
+            ]
+          },
+          {
+            "number": "3",
+            "net": "unconnected-(J3-Pin_3-Pad3)",
+            "position_mm": [
+              95.37,
+              100.9
+            ]
+          },
+          {
+            "number": "4",
+            "net": "/TC_EXH_DRDY",
+            "position_mm": [
+              92.83,
+              100.9
+            ]
+          },
+          {
+            "number": "5",
+            "net": "/TC_AIR_DRDY",
+            "position_mm": [
+              90.29,
+              100.9
+            ]
+          },
+          {
+            "number": "6",
+            "net": "unconnected-(J3-Pin_6-Pad6)",
+            "position_mm": [
+              87.75,
+              100.9
+            ]
+          },
+          {
+            "number": "7",
+            "net": "unconnected-(J3-Pin_7-Pad7)",
+            "position_mm": [
+              85.21,
+              100.9
+            ]
+          },
+          {
+            "number": "8",
+            "net": "unconnected-(J3-Pin_8-Pad8)",
+            "position_mm": [
+              82.67,
+              100.9
+            ]
+          },
+          {
+            "number": "9",
+            "net": "unconnected-(J3-Pin_9-Pad9)",
+            "position_mm": [
+              80.13,
+              100.9
+            ]
+          },
+          {
+            "number": "10",
+            "net": "unconnected-(J3-Pin_10-Pad10)",
+            "position_mm": [
+              77.59,
+              100.9
+            ]
+          },
+          {
+            "number": "11",
+            "net": "unconnected-(J3-Pin_11-Pad11)",
+            "position_mm": [
+              75.05,
+              100.9
+            ]
+          },
+          {
+            "number": "12",
+            "net": "unconnected-(J3-Pin_12-Pad12)",
+            "position_mm": [
+              72.51,
+              100.9
+            ]
+          },
+          {
+            "number": "13",
+            "net": "unconnected-(J3-Pin_13-Pad13)",
+            "position_mm": [
+              69.97,
+              100.9
+            ]
+          },
+          {
+            "number": "14",
+            "net": "unconnected-(J3-Pin_14-Pad14)",
+            "position_mm": [
+              67.43,
+              100.9
+            ]
+          },
+          {
+            "number": "15",
+            "net": "unconnected-(J3-Pin_15-Pad15)",
+            "position_mm": [
+              64.89,
+              100.9
+            ]
+          },
+          {
+            "number": "16",
+            "net": "unconnected-(J3-Pin_16-Pad16)",
+            "position_mm": [
+              62.35,
+              100.9
+            ]
+          },
+          {
+            "number": "17",
+            "net": "unconnected-(J3-Pin_17-Pad17)",
+            "position_mm": [
+              59.81,
+              100.9
+            ]
+          },
+          {
+            "number": "18",
+            "net": "unconnected-(J3-Pin_18-Pad18)",
+            "position_mm": [
+              57.27,
+              100.9
+            ]
+          },
+          {
+            "number": "19",
+            "net": "unconnected-(J3-Pin_19-Pad19)",
+            "position_mm": [
+              54.73,
+              100.9
+            ]
+          },
+          {
+            "number": "20",
+            "net": "unconnected-(J3-Pin_20-Pad20)",
+            "position_mm": [
+              52.19,
+              100.9
+            ]
+          },
+          {
+            "number": "21",
+            "net": "/GND",
+            "position_mm": [
+              49.65,
+              100.9
+            ]
+          },
+          {
+            "number": "22",
+            "net": "/GND",
+            "position_mm": [
+              47.11,
+              100.9
+            ]
+          }
+        ]
+      }
+    },
+    "note": "Candidate placement only. Existing copper must be adjusted and full native checks passed before applying. No final routing/clearance acceptance."
+  },
+  "physical_drilling_coordinate_set_unchanged": true,
+  "pad_net_functions_changing_at_existing_hole_count": 42,
+  "hole_function_comparison": [
+    {
+      "new_ref": "J1",
+      "new_pad": "1",
+      "new_net": "/+3V3",
+      "old_ref": "J3",
+      "old_pad": "1",
+      "old_net": "/GND",
+      "position_mm": [
+        100.45,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "2",
+      "new_net": "/+3V3",
+      "old_ref": "J3",
+      "old_pad": "2",
+      "old_net": "unconnected-(J3-Pin_2-Pad2)",
+      "position_mm": [
+        97.91,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "3",
+      "new_net": "unconnected-(J1-Pin_3-Pad3)",
+      "old_ref": "J3",
+      "old_pad": "3",
+      "old_net": "unconnected-(J3-Pin_3-Pad3)",
+      "position_mm": [
+        95.37,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "4",
+      "new_net": "/ROOM_DQ",
+      "old_ref": "J3",
+      "old_pad": "4",
+      "old_net": "/TC_EXH_DRDY",
+      "position_mm": [
+        92.83,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "5",
+      "new_net": "unconnected-(J1-Pin_5-Pad5)",
+      "old_ref": "J3",
+      "old_pad": "5",
+      "old_net": "/TC_AIR_DRDY",
+      "position_mm": [
+        90.29,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "6",
+      "new_net": "unconnected-(J1-Pin_6-Pad6)",
+      "old_ref": "J3",
+      "old_pad": "6",
+      "old_net": "unconnected-(J3-Pin_6-Pad6)",
+      "position_mm": [
+        87.75,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "7",
+      "new_net": "unconnected-(J1-Pin_7-Pad7)",
+      "old_ref": "J3",
+      "old_pad": "7",
+      "old_net": "unconnected-(J3-Pin_7-Pad7)",
+      "position_mm": [
+        85.21,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "8",
+      "new_net": "/FUEL_CMD",
+      "old_ref": "J3",
+      "old_pad": "8",
+      "old_net": "unconnected-(J3-Pin_8-Pad8)",
+      "position_mm": [
+        82.67,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "9",
+      "new_net": "/FAN_REQUEST",
+      "old_ref": "J3",
+      "old_pad": "9",
+      "old_net": "unconnected-(J3-Pin_9-Pad9)",
+      "position_mm": [
+        80.13,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "10",
+      "new_net": "/SPEED_CMD",
+      "old_ref": "J3",
+      "old_pad": "10",
+      "old_net": "unconnected-(J3-Pin_10-Pad10)",
+      "position_mm": [
+        77.59,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "11",
+      "new_net": "unconnected-(J1-Pin_11-Pad11)",
+      "old_ref": "J3",
+      "old_pad": "11",
+      "old_net": "unconnected-(J3-Pin_11-Pad11)",
+      "position_mm": [
+        75.05,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "12",
+      "new_net": "unconnected-(J1-Pin_12-Pad12)",
+      "old_ref": "J3",
+      "old_pad": "12",
+      "old_net": "unconnected-(J3-Pin_12-Pad12)",
+      "position_mm": [
+        72.51,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "13",
+      "new_net": "unconnected-(J1-Pin_13-Pad13)",
+      "old_ref": "J3",
+      "old_pad": "13",
+      "old_net": "unconnected-(J3-Pin_13-Pad13)",
+      "position_mm": [
+        69.97,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "14",
+      "new_net": "unconnected-(J1-Pin_14-Pad14)",
+      "old_ref": "J3",
+      "old_pad": "14",
+      "old_net": "unconnected-(J3-Pin_14-Pad14)",
+      "position_mm": [
+        67.43,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "15",
+      "new_net": "/TC_AIR_CS",
+      "old_ref": "J3",
+      "old_pad": "15",
+      "old_net": "unconnected-(J3-Pin_15-Pad15)",
+      "position_mm": [
+        64.89,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "16",
+      "new_net": "/TC_EXH_CS",
+      "old_ref": "J3",
+      "old_pad": "16",
+      "old_net": "unconnected-(J3-Pin_16-Pad16)",
+      "position_mm": [
+        62.35,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "17",
+      "new_net": "/TC_SDI_MOSI",
+      "old_ref": "J3",
+      "old_pad": "17",
+      "old_net": "unconnected-(J3-Pin_17-Pad17)",
+      "position_mm": [
+        59.81,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "18",
+      "new_net": "/TC_SCK",
+      "old_ref": "J3",
+      "old_pad": "18",
+      "old_net": "unconnected-(J3-Pin_18-Pad18)",
+      "position_mm": [
+        57.27,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "19",
+      "new_net": "/TC_SDO_MISO",
+      "old_ref": "J3",
+      "old_pad": "19",
+      "old_net": "unconnected-(J3-Pin_19-Pad19)",
+      "position_mm": [
+        54.73,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "20",
+      "new_net": "/GLOW_CMD",
+      "old_ref": "J3",
+      "old_pad": "20",
+      "old_net": "unconnected-(J3-Pin_20-Pad20)",
+      "position_mm": [
+        52.19,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "21",
+      "new_net": "+5V_DEVKIT",
+      "old_ref": "J3",
+      "old_pad": "21",
+      "old_net": "/GND",
+      "position_mm": [
+        49.65,
+        75.5
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J1",
+      "new_pad": "22",
+      "new_net": "/GND",
+      "old_ref": "J3",
+      "old_pad": "22",
+      "old_net": "/GND",
+      "position_mm": [
+        47.11,
+        75.5
+      ],
+      "same_net": true
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "1",
+      "new_net": "/GND",
+      "old_ref": "J1",
+      "old_pad": "1",
+      "old_net": "/+3V3",
+      "position_mm": [
+        100.45,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "2",
+      "new_net": "unconnected-(J3-Pin_2-Pad2)",
+      "old_ref": "J1",
+      "old_pad": "2",
+      "old_net": "/+3V3",
+      "position_mm": [
+        97.91,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "3",
+      "new_net": "unconnected-(J3-Pin_3-Pad3)",
+      "old_ref": "J1",
+      "old_pad": "3",
+      "old_net": "unconnected-(J1-Pin_3-Pad3)",
+      "position_mm": [
+        95.37,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "4",
+      "new_net": "/TC_EXH_DRDY",
+      "old_ref": "J1",
+      "old_pad": "4",
+      "old_net": "/ROOM_DQ",
+      "position_mm": [
+        92.83,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "5",
+      "new_net": "/TC_AIR_DRDY",
+      "old_ref": "J1",
+      "old_pad": "5",
+      "old_net": "unconnected-(J1-Pin_5-Pad5)",
+      "position_mm": [
+        90.29,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "6",
+      "new_net": "unconnected-(J3-Pin_6-Pad6)",
+      "old_ref": "J1",
+      "old_pad": "6",
+      "old_net": "unconnected-(J1-Pin_6-Pad6)",
+      "position_mm": [
+        87.75,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "7",
+      "new_net": "unconnected-(J3-Pin_7-Pad7)",
+      "old_ref": "J1",
+      "old_pad": "7",
+      "old_net": "unconnected-(J1-Pin_7-Pad7)",
+      "position_mm": [
+        85.21,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "8",
+      "new_net": "unconnected-(J3-Pin_8-Pad8)",
+      "old_ref": "J1",
+      "old_pad": "8",
+      "old_net": "/FUEL_CMD",
+      "position_mm": [
+        82.67,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "9",
+      "new_net": "unconnected-(J3-Pin_9-Pad9)",
+      "old_ref": "J1",
+      "old_pad": "9",
+      "old_net": "/FAN_REQUEST",
+      "position_mm": [
+        80.13,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "10",
+      "new_net": "unconnected-(J3-Pin_10-Pad10)",
+      "old_ref": "J1",
+      "old_pad": "10",
+      "old_net": "/SPEED_CMD",
+      "position_mm": [
+        77.59,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "11",
+      "new_net": "unconnected-(J3-Pin_11-Pad11)",
+      "old_ref": "J1",
+      "old_pad": "11",
+      "old_net": "unconnected-(J1-Pin_11-Pad11)",
+      "position_mm": [
+        75.05,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "12",
+      "new_net": "unconnected-(J3-Pin_12-Pad12)",
+      "old_ref": "J1",
+      "old_pad": "12",
+      "old_net": "unconnected-(J1-Pin_12-Pad12)",
+      "position_mm": [
+        72.51,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "13",
+      "new_net": "unconnected-(J3-Pin_13-Pad13)",
+      "old_ref": "J1",
+      "old_pad": "13",
+      "old_net": "unconnected-(J1-Pin_13-Pad13)",
+      "position_mm": [
+        69.97,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "14",
+      "new_net": "unconnected-(J3-Pin_14-Pad14)",
+      "old_ref": "J1",
+      "old_pad": "14",
+      "old_net": "unconnected-(J1-Pin_14-Pad14)",
+      "position_mm": [
+        67.43,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "15",
+      "new_net": "unconnected-(J3-Pin_15-Pad15)",
+      "old_ref": "J1",
+      "old_pad": "15",
+      "old_net": "/TC_AIR_CS",
+      "position_mm": [
+        64.89,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "16",
+      "new_net": "unconnected-(J3-Pin_16-Pad16)",
+      "old_ref": "J1",
+      "old_pad": "16",
+      "old_net": "/TC_EXH_CS",
+      "position_mm": [
+        62.35,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "17",
+      "new_net": "unconnected-(J3-Pin_17-Pad17)",
+      "old_ref": "J1",
+      "old_pad": "17",
+      "old_net": "/TC_SDI_MOSI",
+      "position_mm": [
+        59.81,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "18",
+      "new_net": "unconnected-(J3-Pin_18-Pad18)",
+      "old_ref": "J1",
+      "old_pad": "18",
+      "old_net": "/TC_SCK",
+      "position_mm": [
+        57.27,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "19",
+      "new_net": "unconnected-(J3-Pin_19-Pad19)",
+      "old_ref": "J1",
+      "old_pad": "19",
+      "old_net": "/TC_SDO_MISO",
+      "position_mm": [
+        54.73,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "20",
+      "new_net": "unconnected-(J3-Pin_20-Pad20)",
+      "old_ref": "J1",
+      "old_pad": "20",
+      "old_net": "/GLOW_CMD",
+      "position_mm": [
+        52.19,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "21",
+      "new_net": "/GND",
+      "old_ref": "J1",
+      "old_pad": "21",
+      "old_net": "+5V_DEVKIT",
+      "position_mm": [
+        49.65,
+        100.9
+      ],
+      "same_net": false
+    },
+    {
+      "new_ref": "J3",
+      "new_pad": "22",
+      "new_net": "/GND",
+      "old_ref": "J1",
+      "old_pad": "22",
+      "old_net": "/GND",
+      "position_mm": [
+        47.11,
+        100.9
+      ],
+      "same_net": true
+    }
+  ],
+  "affected_named_nets": [
+    "+5V_DEVKIT",
+    "/+3V3",
+    "/FAN_REQUEST",
+    "/FUEL_CMD",
+    "/GLOW_CMD",
+    "/GND",
+    "/ROOM_DQ",
+    "/SPEED_CMD",
+    "/TC_AIR_CS",
+    "/TC_AIR_DRDY",
+    "/TC_EXH_CS",
+    "/TC_EXH_DRDY",
+    "/TC_SCK",
+    "/TC_SDI_MOSI",
+    "/TC_SDO_MISO"
+  ],
+  "incident_copper_endpoint_inventory_only_NOT_deletion": [
+    {
+      "end_mm": [
+        57.27,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_SCK",
+      "start_mm": [
+        61.1,
+        97.2
+      ],
+      "type": "segment",
+      "uuid": "07da04fc-2784-4643-ac7a-2eb25abd001a",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        64.3349,
+        88.7551
+      ],
+      "layer": "F.Cu",
+      "net": "/GLOW_CMD",
+      "start_mm": [
+        52.19,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "080766af-69b9-4e15-9449-fed530094481",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        64.89,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_AIR_CS",
+      "start_mm": [
+        64.89,
+        98.0
+      ],
+      "type": "segment",
+      "uuid": "15db8211-16cd-4d8e-8f37-64559b655cc4",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        62.35,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_EXH_CS",
+      "start_mm": [
+        62.35,
+        98.0
+      ],
+      "type": "segment",
+      "uuid": "2b4300c3-c4bf-43b9-8930-e581bd03a785",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        59.81,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_SDI_MOSI",
+      "start_mm": [
+        59.81,
+        99.29
+      ],
+      "type": "segment",
+      "uuid": "2f70a4be-c22b-4282-8a03-5af0823cc24a",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        77.59,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/SPEED_CMD",
+      "start_mm": [
+        78.7787,
+        102.0887
+      ],
+      "type": "segment",
+      "uuid": "3057da5a-0ef9-4dbb-94a5-5e284e14c106",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        100.45,
+        92.0
+      ],
+      "layer": "F.Cu",
+      "net": "/+3V3",
+      "start_mm": [
+        100.45,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "6543285b-48b9-4fda-b631-acc785fc9e2c",
+      "width_mm": 0.4
+    },
+    {
+      "end_mm": [
+        81.3284,
+        99.7016
+      ],
+      "layer": "F.Cu",
+      "net": "/FAN_REQUEST",
+      "start_mm": [
+        80.13,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "7a33dcc4-3ceb-4b8d-b1ea-fa783542174b",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        92.83,
+        75.5
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_EXH_DRDY",
+      "start_mm": [
+        75.2,
+        43.58
+      ],
+      "type": "segment",
+      "uuid": "957ba4e5-3f5f-4e44-9004-fd2059f97196",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        54.73,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_SDO_MISO",
+      "start_mm": [
+        54.73,
+        98.27
+      ],
+      "type": "segment",
+      "uuid": "c8a8a95c-c476-42c5-9330-872de2cb4447",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        104.4,
+        75.5
+      ],
+      "layer": "F.Cu",
+      "net": "/GND",
+      "start_mm": [
+        100.45,
+        75.5
+      ],
+      "type": "segment",
+      "uuid": "ce4f6457-3b97-4441-80f7-2b1dcdf2220c",
+      "width_mm": 0.5
+    },
+    {
+      "end_mm": [
+        82.67,
+        100.9
+      ],
+      "layer": "B.Cu",
+      "net": "/FUEL_CMD",
+      "start_mm": [
+        111.1522,
+        72.4178
+      ],
+      "type": "segment",
+      "uuid": "d325b400-15fd-45be-8c05-db9317804aaf",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        49.65,
+        86.0
+      ],
+      "layer": "F.Cu",
+      "net": "+5V_DEVKIT",
+      "start_mm": [
+        49.65,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "d5ca07bb-34ce-4974-bee6-a34c3fb6b88a",
+      "width_mm": 2.0
+    },
+    {
+      "end_mm": [
+        100.45,
+        100.9
+      ],
+      "layer": "F.Cu",
+      "net": "/+3V3",
+      "start_mm": [
+        97.91,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "e5932d93-d6ce-44ee-bcf3-22ca8000ef15",
+      "width_mm": 0.4
+    },
+    {
+      "end_mm": [
+        90.29,
+        75.5
+      ],
+      "layer": "B.Cu",
+      "net": "/TC_AIR_DRDY",
+      "start_mm": [
+        74.0205,
+        42.9798
+      ],
+      "type": "segment",
+      "uuid": "eb4bf292-320b-4c6f-92db-f71fa960130c",
+      "width_mm": 0.2
+    },
+    {
+      "end_mm": [
+        98.8382,
+        106.9082
+      ],
+      "layer": "F.Cu",
+      "net": "/ROOM_DQ",
+      "start_mm": [
+        92.83,
+        100.9
+      ],
+      "type": "segment",
+      "uuid": "edbc33d7-000e-4947-9c96-f07cbc97d3b4",
+      "width_mm": 0.2
+    }
+  ],
+  "limits": [
+    "No routing/clearance/installed-module acceptance for candidate.",
+    "Do not apply a footprint flip while leaving foreign-net copper at changed holes.",
+    "Endpoint inventory omits interior/filled-zone contacts and does NOT qualify removal.",
+    "Canonical PCB unchanged; no final front-side images yet."
+  ],
+  "atomic_batch_capability": {
+    "FootprintMove_fields_before": [
+      "reference",
+      "x_mm",
+      "y_mm",
+      "rotation_deg"
+    ],
+    "layer_supported_before": false,
+    "task_id": "t_22344df7",
+    "board": "default",
+    "assignee": "default",
+    "state_at_readback": "ready"
+  },
+  "production_release": false,
+  "physical_tests": false
+}
