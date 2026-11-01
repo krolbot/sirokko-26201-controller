@@ -1,0 +1,454 @@
+{
+  "baseline_sha256": "a62d56d204ddeaf921c40d32d316c2e54b2712bf33597dcdb42afe4aaad1ed28",
+  "pcb_sha256": "d3a2309891d33b544673444f742d51f9d25d4f772a056be35eb58de3918e22eb",
+  "pad_count": 308,
+  "moved_pad_count": 0,
+  "lost_physical_pairs": 0,
+  "added_physical_pairs": 0,
+  "physical_pairs": 1906,
+  "protected_copper_changed": [],
+  "removed_copper_uuids": [
+    "04409315-bf3d-4a9a-8c4a-e77d1f3642bd",
+    "0bb41a3a-10e4-433f-bea3-c8cbbf4b1fd6",
+    "0f32ad59-26fa-4f5b-aa6f-53b93d6e5a58",
+    "1c50d7bf-8119-4a3c-9edf-9e01e422606b",
+    "1d151a78-be40-4a24-a99b-1998417da020",
+    "1d1e6bc4-8209-43a1-b7bf-9b9dc9cd530f",
+    "21a77948-727a-4a95-bf50-b64b81afe824",
+    "29a52364-b911-4719-baa8-1960a8ebe9c6",
+    "40e533b6-d87a-41fc-8d39-e47fbb7a12b9",
+    "460c0c31-49ba-4d61-b28f-49617912181e",
+    "46232813-e8ad-49fc-a2f0-9b575736d1f8",
+    "4b78d973-adc8-4339-bb38-71fb71a1018f",
+    "4ef06cf3-884a-4ebe-915d-dcb68d6e2896",
+    "5792cd60-9279-407e-a3d4-48f4b9cc95e9",
+    "5f7efbcf-54b1-4575-87a2-d3831ee38408",
+    "67a43c75-7656-498a-ac9b-fcfaeb12169f",
+    "6ad752cd-c19e-4d54-9fc7-77008e53f1df",
+    "6f5cd540-92ce-47c6-a078-65f6fe563e4f",
+    "7287cc93-dfa5-4ce8-9352-54051489c692",
+    "78305a60-f085-4d38-a20e-67d3afaa864c",
+    "7c94e8c6-7b63-4cec-a2f7-242b02b05783",
+    "8325b3eb-4ad6-4878-a6fa-de331e47ba87",
+    "86ad2ff5-459d-4fa8-a8f5-ea2a963f76b5",
+    "93cf8579-2a41-45af-b18f-68764b161fc2",
+    "996846e8-369a-4bea-8c9b-33b95ce69114",
+    "9d4e33f5-fe8b-4252-8540-eaa3726667ef",
+    "b941565a-22f9-4db3-b965-0eb2263e0846",
+    "bba74ef6-156e-410d-aa04-6bced2d86399",
+    "bcee109f-e821-415a-8add-6d9e92fd24bf",
+    "be35c4e2-e47d-45e1-8ccf-caa11027356c",
+    "c8a0b866-9726-4c2c-b317-252a28f45e2f",
+    "caa42f41-c8d9-4c20-866d-5ee117d0da8e",
+    "cb185b4e-7d5c-4b18-8f5e-0d0b6604f020",
+    "ced40439-99ed-4de6-a5ad-25732c19bca4",
+    "cf021db2-0b19-495d-98c5-656255dffdad",
+    "d52e4727-1c3e-4556-a5ac-cf453e11f002",
+    "d5a686fb-ddc6-4efb-a33c-a3fb2ab8c390",
+    "dcc7826a-384a-46a0-835e-4d079fab12ae",
+    "e59f01db-9326-4d8a-bd0d-7f9b3fa1157f",
+    "ee2b96a8-b6be-4d73-93b3-b710fafa7b36",
+    "f36106bd-306c-4c05-b119-f4325dae6768",
+    "ff446ec3-1782-4493-9a10-1c61cc3e2fb8"
+  ],
+  "new_copper_uuids": [
+    "036a5805-d3c9-47b4-a550-18613604caac",
+    "042b0ee6-4289-40b4-be5f-c2389f30cace",
+    "0684047c-afc0-476a-bbaf-4506985477ad",
+    "1044b809-5e23-4d98-989f-736157eaef36",
+    "134b0be2-ef1c-4e8b-a5f9-039951cdb0cb",
+    "19ef9922-3a17-467e-8ad2-c6256e2b307f",
+    "2286a994-0266-4f11-977a-c8e49ad3d21c",
+    "22f730c0-f9a2-42cc-93e2-c748c0256dcb",
+    "23c473b7-8885-4a81-b480-c1ee8fa31555",
+    "2a0988f3-7581-4997-a074-a872892f9845",
+    "2ab8322b-931a-4668-95ab-05e65808f197",
+    "2d17625b-55ee-48ba-b5ad-f9f3f83810a1",
+    "497249dc-e895-4e72-8040-b3029d1959b2",
+    "4aeb7d0f-bb63-4732-8d40-07372c706ac2",
+    "4e89d873-3e09-4905-ad60-4e6ef86770dd",
+    "5813e333-05d5-42bd-a659-19e688c07bba",
+    "67dd5ff9-b1eb-4dde-964a-4a96f683b4f0",
+    "77838bfd-b1bb-4d49-94b3-bad4270dcc62",
+    "78615558-4aac-46f3-b91a-034d47f870c5",
+    "7fdf38ad-f74f-442d-b5d8-9ac99501c5e7",
+    "8357854c-ba8f-4b63-88a5-b30bead5debd",
+    "ad727aba-7b2b-4af7-8d96-674659b15399",
+    "bca7aac3-cf4d-4e7d-b015-554051f7354d",
+    "c3b0f313-2210-434e-be4f-e2a46320d0e4",
+    "c674fde3-0f15-4fbd-969f-e2b07f8dcb34",
+    "dcbd9225-a493-4763-babf-0cade21626f8",
+    "e2113066-d4a5-4cac-9bf2-aa8bf8ca5e28",
+    "ed9900f8-2d53-44bc-a1a7-691e33e6b0de",
+    "f01821ef-2844-4c84-a5f7-93d264281384",
+    "f16305fb-a5d6-4c42-a825-bbe018cb9b8e",
+    "f44edfb5-641e-4823-9038-53c29a2cbb5b",
+    "f77b972e-9faf-4742-9d27-a2a09b6f0359"
+  ],
+  "metrics_before_after": [
+    {
+      "via_total": 176,
+      "nets": {
+        "/P24_ZENER_K": {
+          "vias": 0,
+          "length_mm": 1.8875
+        },
+        "/P24_BASE": {
+          "vias": 0,
+          "length_mm": 8.741082823868027
+        },
+        "/FAN_REQUEST": {
+          "vias": 2,
+          "length_mm": 115.10560329774216
+        },
+        "/GND": {
+          "vias": 40,
+          "length_mm": 1435.1927657056592
+        },
+        "/SPEED_CMD": {
+          "vias": 1,
+          "length_mm": 128.17007073070067
+        },
+        "/P24_PROTECTED": {
+          "vias": 20,
+          "length_mm": 822.5955063940887
+        },
+        "/P24_SERIES_MID": {
+          "vias": 0,
+          "length_mm": 2.075
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP": {
+          "vias": 0,
+          "length_mm": 9.125001000000001
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB": {
+          "vias": 0,
+          "length_mm": 8.470001
+        },
+        "+5V_DEVKIT": {
+          "vias": 4,
+          "length_mm": 187.55140422924373
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW": {
+          "vias": 0,
+          "length_mm": 26.445871894402554
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV": {
+          "vias": 4,
+          "length_mm": 36.8625
+        },
+        "/K_GLOW_COIL_LOW": {
+          "vias": 2,
+          "length_mm": 71.09443569980765
+        },
+        "/GLOW_SWITCHED_POS": {
+          "vias": 0,
+          "length_mm": 156.0691883092037
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID": {
+          "vias": 8,
+          "length_mm": 55.78709505194559
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV": {
+          "vias": 2,
+          "length_mm": 29.760292206135784
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V": {
+          "vias": 2,
+          "length_mm": 44.75323499691905
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE": {
+          "vias": 5,
+          "length_mm": 31.7975
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC": {
+          "vias": 2,
+          "length_mm": 33.86372689194672
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON": {
+          "vias": 2,
+          "length_mm": 17.862754639099336
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/BOOT": {
+          "vias": 0,
+          "length_mm": 6.66
+        },
+        "/K_CLUTCH_RUN_COIL_LOW": {
+          "vias": 2,
+          "length_mm": 107.79
+        },
+        "/FUEL_CMD": {
+          "vias": 8,
+          "length_mm": 187.33832824356801
+        },
+        "/GLOW_CMD": {
+          "vias": 8,
+          "length_mm": 227.9752813742386
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/+3V3": {
+          "vias": 16,
+          "length_mm": 609.9111223993109
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE": {
+          "vias": 5,
+          "length_mm": 70.535
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE": {
+          "vias": 0,
+          "length_mm": 4.9725
+        },
+        "/TC_AIR_DRDY": {
+          "vias": 2,
+          "length_mm": 50.63360746433745
+        },
+        "/TC_AIR_CS": {
+          "vias": 5,
+          "length_mm": 208.93780304914085
+        },
+        "/TC_SDI_MOSI": {
+          "vias": 2,
+          "length_mm": 131.22527211550798
+        },
+        "/TC_SDO_MISO": {
+          "vias": 0,
+          "length_mm": 80.32373025832494
+        },
+        "/TC_SCK": {
+          "vias": 0,
+          "length_mm": 78.56458206819755
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED": {
+          "vias": 14,
+          "length_mm": 54.50067459305202
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET": {
+          "vias": 0,
+          "length_mm": 13.162500000000001
+        },
+        "/ROOM_DQ": {
+          "vias": 3,
+          "length_mm": 234.50253575086893
+        },
+        "/P24_SENSE_N": {
+          "vias": 0,
+          "length_mm": 24.35465314974299
+        },
+        "/TC_EXH_CS": {
+          "vias": 1,
+          "length_mm": 89.711142895188
+        },
+        "/CLUTCH_SWITCHED_POS": {
+          "vias": 0,
+          "length_mm": 157.92753026553993
+        },
+        "/TC_EXH_DRDY": {
+          "vias": 0,
+          "length_mm": 81.67199300450756
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/P24_PRESENT": {
+          "vias": 16,
+          "length_mm": 220.5160533905933
+        }
+      }
+    },
+    {
+      "via_total": 166,
+      "nets": {
+        "/P24_ZENER_K": {
+          "vias": 0,
+          "length_mm": 1.8875
+        },
+        "/P24_BASE": {
+          "vias": 0,
+          "length_mm": 8.741082823868027
+        },
+        "/FAN_REQUEST": {
+          "vias": 2,
+          "length_mm": 115.10560329774216
+        },
+        "/GND": {
+          "vias": 40,
+          "length_mm": 1435.1927657056592
+        },
+        "/SPEED_CMD": {
+          "vias": 1,
+          "length_mm": 128.17007073070067
+        },
+        "/P24_PROTECTED": {
+          "vias": 20,
+          "length_mm": 822.5955063940887
+        },
+        "/P24_SERIES_MID": {
+          "vias": 0,
+          "length_mm": 2.075
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RAMP": {
+          "vias": 0,
+          "length_mm": 9.125001000000001
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/FB": {
+          "vias": 0,
+          "length_mm": 8.470001
+        },
+        "+5V_DEVKIT": {
+          "vias": 4,
+          "length_mm": 187.55140422924373
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/SW": {
+          "vias": 0,
+          "length_mm": 26.445871894402554
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV": {
+          "vias": 4,
+          "length_mm": 36.8625
+        },
+        "/K_GLOW_COIL_LOW": {
+          "vias": 2,
+          "length_mm": 71.09443569980765
+        },
+        "/GLOW_SWITCHED_POS": {
+          "vias": 0,
+          "length_mm": 156.0691883092037
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID": {
+          "vias": 8,
+          "length_mm": 55.78709505194559
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV": {
+          "vias": 2,
+          "length_mm": 29.760292206135784
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V": {
+          "vias": 2,
+          "length_mm": 44.75323499691905
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE": {
+          "vias": 5,
+          "length_mm": 31.7975
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q3_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC": {
+          "vias": 2,
+          "length_mm": 33.86372689194672
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON": {
+          "vias": 2,
+          "length_mm": 17.862754639099336
+        },
+        "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/BOOT": {
+          "vias": 0,
+          "length_mm": 6.66
+        },
+        "/K_CLUTCH_RUN_COIL_LOW": {
+          "vias": 2,
+          "length_mm": 107.79
+        },
+        "/FUEL_CMD": {
+          "vias": 2,
+          "length_mm": 182.53506332295842
+        },
+        "/GLOW_CMD": {
+          "vias": 4,
+          "length_mm": 180.97369629459706
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q4_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/+3V3": {
+          "vias": 16,
+          "length_mm": 609.9111223993109
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE": {
+          "vias": 5,
+          "length_mm": 70.535
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q1_GATE": {
+          "vias": 0,
+          "length_mm": 4.9725
+        },
+        "/TC_AIR_DRDY": {
+          "vias": 2,
+          "length_mm": 50.63360746433745
+        },
+        "/TC_AIR_CS": {
+          "vias": 5,
+          "length_mm": 208.93780304914085
+        },
+        "/TC_SDI_MOSI": {
+          "vias": 2,
+          "length_mm": 131.22527211550798
+        },
+        "/TC_SDO_MISO": {
+          "vias": 0,
+          "length_mm": 80.32373025832494
+        },
+        "/TC_SCK": {
+          "vias": 0,
+          "length_mm": 78.56458206819755
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED": {
+          "vias": 14,
+          "length_mm": 54.50067459305202
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/CAP_NET": {
+          "vias": 0,
+          "length_mm": 13.162500000000001
+        },
+        "/ROOM_DQ": {
+          "vias": 3,
+          "length_mm": 234.50253575086893
+        },
+        "/P24_SENSE_N": {
+          "vias": 0,
+          "length_mm": 24.35465314974299
+        },
+        "/TC_EXH_CS": {
+          "vias": 1,
+          "length_mm": 89.711142895188
+        },
+        "/CLUTCH_SWITCHED_POS": {
+          "vias": 0,
+          "length_mm": 157.92753026553993
+        },
+        "/TC_EXH_DRDY": {
+          "vias": 0,
+          "length_mm": 81.67199300450756
+        },
+        "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/Q2_GATE": {
+          "vias": 0,
+          "length_mm": 3.9
+        },
+        "/P24_PRESENT": {
+          "vias": 16,
+          "length_mm": 220.5160533905933
+        }
+      }
+    }
+  ],
+  "status": "electrically_verified_WIP_no_release",
+  "negative_removed_target_routes_lost_pairs": 6,
+  "wire_corridor_bbox_mm": [
+    119.54,
+    111.18,
+    148.56,
+    133.6
+  ],
+  "wire_corridor_body_collisions": [],
+  "limitation": "2D service corridor; no enclosure/installed cable 3D test; no production release"
+}
