@@ -1,5 +1,7 @@
 # Sirokko — модульные MAX31856: разводка PCB
 
+Актуальная ревизия с назначенными колодками J30/J31: [`MAX31856_SOCKET_PCB_APPLIED_RU.md`](MAX31856_SOCKET_PCB_APPLIED_RU.md). Ниже сохранена приёмка предшествующей модульной базы.
+
 Статус: DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE. production_release=false.
 
 ## Актуальный инженерный результат

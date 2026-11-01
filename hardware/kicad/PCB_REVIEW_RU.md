@@ -1,5 +1,7 @@
 # Sirokko — проверка модульной PCB
 
+Актуальная ревизия после назначения колодок J30/J31: [`../../docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](../../docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md). Ниже сохранена приёмка предшествующей модульной базы до замены посадочных мест.
+
 **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.**
 
 ## Актуальная пара исходников

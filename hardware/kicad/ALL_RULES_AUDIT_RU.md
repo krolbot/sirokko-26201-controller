@@ -1,5 +1,7 @@
 # Sirokko — проверка PCB без отключённых правил DRC
 
+Актуальная ревизия после назначения колодок J30/J31: [`../../docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md`](../../docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md). Ниже сохранён аудит предшествующей модульной базы.
+
 **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.**
 
 ## Точная ревизия
