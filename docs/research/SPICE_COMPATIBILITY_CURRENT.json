@@ -1,0 +1,70 @@
+{
+  "status": "FUNCTIONAL_VALIDATION_FAILED_NOT_SIROKKO_QUALIFICATION",
+  "production_release": false,
+  "physical_tests": false,
+  "engine": "ngspice45.2",
+  "actual_solver_from_logs": "SPARSE1.3",
+  "ngbehavior": "ps",
+  "TI_model_sha256": "20bb96ce944c898f48e7bae96b8075a1014a0558e394ab659c51a96a9d6b6193",
+  "canonical_pcb_sha256": "bdc72ee69a1cfd1b19614f053f4a46525d647ff002e5968d7c4d61195b102c20",
+  "fixture": "Derived from SNVU754A, NOT the native TI DSN testbench",
+  "tstop_s": 0.005,
+  "max_step_s": 1e-07,
+  "TEMP_degC": 27,
+  "expected_nominal_VOUT_V": 12,
+  "sources": {
+    "vendor_model": "https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/196/LM5013_2D00_Q1_5F00_TRANS.LIB",
+    "evm": "https://www.ti.com/lit/ug/snvu754a/snvu754a.pdf",
+    "PSpice": "https://www.ti.com/tool/PSPICE-FOR-TI"
+  },
+  "new_runs": [
+    {
+      "case": "lm5013_q1evm_no_uic",
+      "rows": 157620,
+      "tfinal_s": 0.005,
+      "vout_final_V": 0.000105697638,
+      "vout_max_V": 5.68055344,
+      "last_ms_vout_min_V": 0.000105697638,
+      "last_ms_vout_max_V": 0.00183209367,
+      "last_ms_timeweighted_vout_V": 0.0006055485886029452,
+      "inductor_max_A": 4.51402139,
+      "input_draw_max_A": 178.852409,
+      "csv_sha256": "ce27c161fa47dafe3b18428e936b7cbaedd24af99f03586f3f25464eabe45c7d",
+      "status": {
+        "status": "complete",
+        "rows": 157620,
+        "final_time_s": 0.005,
+        "expected_stop_s": 0.005,
+        "ngspice_rc": 0
+      }
+    },
+    {
+      "case": "lm5013_q1evm_steady_param",
+      "rows": 152442,
+      "tfinal_s": 0.005,
+      "vout_final_V": 5.7148824e-05,
+      "vout_max_V": 5.04746469,
+      "last_ms_vout_min_V": 5.7148824e-05,
+      "last_ms_vout_max_V": 0.000993571946,
+      "last_ms_timeweighted_vout_V": 0.00032826649075712885,
+      "inductor_max_A": 4.51362329,
+      "input_draw_max_A": 178.852408,
+      "csv_sha256": "c945cc3c10c1a716d0292491e927f0637ae98f28ad4921eb0ef759dd9eba9417",
+      "status": {
+        "status": "complete",
+        "rows": 152442,
+        "final_time_s": 0.005,
+        "expected_stop_s": 0.005,
+        "ngspice_rc": 0
+      }
+    }
+  ],
+  "interpretation": [
+    "Removing UIC did not restore 12V operation.",
+    "Native model parameter STEADY_STATE=1 did not restore 12V operation; this would not qualify startup even if it succeeded.",
+    "No unique physical cause or general incompatibility of all TI models is established by these derived-fixture failures.",
+    "Rejected fixture currents must NOT be used as Sirokko input-current bounds or MOSFET SOA evidence.",
+    "No model conversion or vendor library edits were performed.",
+    "ngspice bug883 concerns AC and is not evidence that an engine upgrade fixes this transient."
+  ]
+}
