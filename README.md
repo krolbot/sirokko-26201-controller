@@ -2,6 +2,8 @@
 
 > **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** The board is unfinished, has no manufacturing release, and has not passed physical acceptance. Do not order it, power it, flash it, or connect it to a burner. The schematic and PCB now contain the selected removable MAX31856 modules and the assigned Samtec sockets, and pass the current CAD parity checks. The independently checked current-layout CAM/assembly package is published only as the frozen [`SIROKKO_CAM_CURRENT_DRAFT.zip`](manufacturing/DRAFT_NOT_FOR_ORDER/SIROKKO_CAM_CURRENT_DRAFT.zip); it is a draft, not a manufacturing release.
 
+The current input-protection acceptance is documented in [`docs/research/INPUT_PROTECTION_ACCEPTANCE_RU.md`](docs/research/INPUT_PROTECTION_ACCEPTANCE_RU.md), with machine-readable checks in [`docs/research/INPUT_PROTECTION_ACCEPTANCE.json`](docs/research/INPUT_PROTECTION_ACCEPTANCE.json). The pin map and selected copper connectivity passed; static ±28.8 V reverse polarity passed absolute-limit consistency only, while negative-pulse qualification with a charged output remains open (71.3 V calculated across a 70 V pin-to-pin limit). No PCB geometry or firmware changed, and this is not a functional, physical or manufacturing acceptance.
+
 The working tree contains one intentionally incomplete KiCad WIP:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
