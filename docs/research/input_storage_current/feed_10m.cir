@@ -1,0 +1,54 @@
+* Sirokko diagnostic: imposed fastest candidate input slew ONLY
+* With actual nominal bus capacitances and assigned feed resistance SENSITIVITY.
+* NOT full LM74800/gate/SOA/DevKit qualification. No physical PCB change.
+* Canonical PCB sha256: 9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444
+* TI Q1 model is a functional proxy for the installed LM5013, not exact qualification.
+* 28.8 V, CdVdT lower envelope 29.430391 nF, IHGATE 75 uA -> 11.301270144 ms.
+* Ideal L/C and generic diode retained from verified diagnostic. Resistive load 5 ohm.
+.include LM5013-Q1_TRANS_ngspice45-adapted.LIB
+VINPUT SUPPLY 0 PWL(0 0 1u 0 0.011302270144 28.8 16m 28.8)
+* R_FEED is a lumped assigned model parameter, NOT a new PCB resistor.
+* Electrolytic series R values are RC proxy choices equal to |Z|max@100kHz/20C,
+* NOT guaranteed frequency-independent ESR values. Ceramic C nominal/ideal, no ESL.
+R_FEED SUPPLY FEED 0.01
+V_FEED FEED P24 0
+R_C22 P24 C22P 0.033
+C22 C22P 0 330u ic=0
+R_C103 P24 C103P 0.084
+C103 C103P 0 100u ic=0
+C101 P24 0 2.2u ic=0
+C102 P24 0 2.2u ic=0
+C21 P24 0 100n ic=0
+V_BUCK P24 VIN 0
+R104 VIN EN 100k
+R105 EN 0 10k
+R103 RON 0 31.6k
+C104 BST SW 2.2n
+D101 0 SW D_GENERIC_SCHOTTKY
+L101 SW VOUT 33u
+C105 VOUT 0 47u ic=0
+C106 VOUT 0 47u ic=0
+R_DIAGNOSTIC_LOAD VOUT 0 5
+R101 VOUT FB 31.6k
+R102 FB 0 10k
+R106 SW RAMP 82k
+C107 RAMP VOUT 4.7n
+C108 RAMP FB 820p
+R107 VOUT PGOOD 10k
+XU101 BST EN FB 0 0 PGOOD RON SW VIN LM5013-Q1_TRANS
+.model D_GENERIC_SCHOTTKY D(Is=10u Rs=20m N=1.05 Cjo=300p Bv=100 Ibv=100u Tt=20n)
+.temp 27
+.options method=gear reltol=0.005 abstol=1n vntol=10u gmin=1e-10
+.save v(vin) v(vout) v(supply) i(L101) i(V_BUCK) i(V_FEED)
+.tran 100n 16m 0 50n
+.control
+set ngbehavior=ps
+set numdgt=15
+set wr_singlescale
+set wr_vecnames
+run
+wrdata feed_10m.csv v(vin) v(vout) v(supply) i(L101) i(V_BUCK) i(V_FEED)
+print v(vout)[length(v(vout))-1]
+quit
+.endc
+.end

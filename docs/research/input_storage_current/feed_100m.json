@@ -1,0 +1,55 @@
+{
+  "case": "feed_100m",
+  "run": {
+    "case": "feed_100m",
+    "ngspice_rc": 0,
+    "started_ns": 1793599443867917216,
+    "ended_ns": 1793599651783218007,
+    "elapsed_s": 207.915300791,
+    "csv_fresh": true,
+    "log_fresh": true,
+    "netlist_sha256": "85194dd123e8fc58dfbb0682d04112be9834ac7915068e02c68f9a32885e309f",
+    "stdout": "******\n** ngspice-45.2 : Circuit level simulation program\n** Compiled with KLU Direct Linear Solver\n** The U. C. Berkeley CAD Group\n** Copyright 1985-1994, Regents of the University of California.\n** Copyright 2001-2025, The ngspice team.\n** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html\n** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html\n** Creation Date: Fri Sep 12 11:58:13 UTC 2025\n******\n\nBatch mode\n\nComments and warnings go to log-file: feed_100m.log\n\n",
+    "stderr": ""
+  },
+  "rows": 2615756,
+  "logged_rows": 2615756,
+  "finite": true,
+  "monotonic_time": true,
+  "last_time_s": 0.016,
+  "final_vout_V": 5.037273841545103,
+  "first_4p75_s_vin": [
+    0.009368038625497465,
+    23.74007690246338
+  ],
+  "last_below_4p75_s": 0.009367988625497465,
+  "peak_feed_A_time": [
+    1.566764823921773,
+    0.009521229774029319
+  ],
+  "peak_buck_A_time": [
+    108.2447402849793,
+    0.01576584174603495
+  ],
+  "peak_L_A_time": [
+    1.308653606130172,
+    0.009521230967540243
+  ],
+  "peak_Vout_V_time": [
+    5.037413579328184,
+    0.01319569318822512
+  ],
+  "final_ms_min_V": 5.034425606372759,
+  "final_ms_max_V": 5.037380041179382,
+  "final_ms_mean_V": 5.036509387475002,
+  "conditional_single_FET_peak_W_time_vin_ifeed": [
+    30.931559864147154,
+    0.0002870749999999812,
+    0.618838998746778,
+    1.101905612070327
+  ],
+  "conditional_single_FET_energy_J": 0.1816335365504673,
+  "errors": [],
+  "csv_sha256": "68f511f98ac82f98714c40df293edabee9448ba8528ddcff034b3aac35d74d8e",
+  "log_sha256": "ab30035c742197a5af38b72923223606ea64f2444f05840590e8736f21d233c6"
+}

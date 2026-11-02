@@ -1,0 +1,147 @@
+{
+  "status": "DIAGNOSTIC_INPUT_STORAGE_SENSITIVITY_COMPLETED",
+  "source_board_sha256": "9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444",
+  "inputs": {
+    "supply_final_V": 28.8,
+    "imposed_ramp_s": 0.011301270144,
+    "bus_capacitors_nominal_uF": {
+      "C21": 0.1,
+      "C22": 330,
+      "C101": 2.2,
+      "C102": 2.2,
+      "C103": 100
+    },
+    "bulk_proxy_series_R_ohm": {
+      "C22": 0.033,
+      "C103": 0.084
+    },
+    "bulk_proxy_basis": "assigned RC approximation using manufacturer |Z|max at100kHz/20C, not a guaranteed constant ESR",
+    "feed_impedance_sensitivity_ohm": [
+      0.01,
+      0.1
+    ],
+    "temperature_C": 27,
+    "load_ohm": 5,
+    "maxstep_s": 5e-08,
+    "stop_s": 0.016,
+    "saved_vector_precision_digits": 15
+  },
+  "cases": [
+    {
+      "case": "feed_10m",
+      "rows": 2620693,
+      "logged_rows": 2620693,
+      "finite": true,
+      "monotonic_time": true,
+      "last_time_s": 0.016,
+      "final_vout_V": 5.037320673751668,
+      "first_4p75_s_vin": [
+        0.009328675819685713,
+        23.75868483553256
+      ],
+      "last_below_4p75_s": 0.009328648347549278,
+      "peak_feed_A_time": [
+        2.099474278653815,
+        0.009482245898981162
+      ],
+      "peak_buck_A_time": [
+        108.0539701282978,
+        0.01428340204546089
+      ],
+      "peak_L_A_time": [
+        1.307822691016433,
+        0.00948224725994079
+      ],
+      "peak_Vout_V_time": [
+        5.037435370671543,
+        0.01351099984862958
+      ],
+      "final_ms_min_V": 5.034064493099962,
+      "final_ms_max_V": 5.037394560398441,
+      "final_ms_mean_V": 5.036652382019048,
+      "conditional_single_FET_peak_W_time_vin_ifeed": [
+        31.572209475052926,
+        9.866864915571468e-05,
+        0.2378392899096052,
+        1.105814018837076
+      ],
+      "conditional_single_FET_energy_J": 0.18300098571764664,
+      "errors": [],
+      "csv_sha256": "0ab6949fe14272bd4685641905a2ba27c72d437adeb8ec7a2aba1c0c5510030c",
+      "log_sha256": "e53fe21e684845b64c65ecd785c4aed611b42282ddaee9f5d121613f4b190db9",
+      "run": {
+        "case": "feed_10m",
+        "ngspice_rc": 0,
+        "started_ns": 1793599228589734238,
+        "ended_ns": 1793599442691273552,
+        "elapsed_s": 214.101539314,
+        "csv_fresh": true,
+        "log_fresh": true,
+        "netlist_sha256": "6e5825e230cd78969ac83cc87331c04f82f57940ddc458425855e9cfa49e953f"
+      }
+    },
+    {
+      "case": "feed_100m",
+      "rows": 2615756,
+      "logged_rows": 2615756,
+      "finite": true,
+      "monotonic_time": true,
+      "last_time_s": 0.016,
+      "final_vout_V": 5.037273841545103,
+      "first_4p75_s_vin": [
+        0.009368038625497465,
+        23.74007690246338
+      ],
+      "last_below_4p75_s": 0.009367988625497465,
+      "peak_feed_A_time": [
+        1.566764823921773,
+        0.009521229774029319
+      ],
+      "peak_buck_A_time": [
+        108.2447402849793,
+        0.01576584174603495
+      ],
+      "peak_L_A_time": [
+        1.308653606130172,
+        0.009521230967540243
+      ],
+      "peak_Vout_V_time": [
+        5.037413579328184,
+        0.01319569318822512
+      ],
+      "final_ms_min_V": 5.034425606372759,
+      "final_ms_max_V": 5.037380041179382,
+      "final_ms_mean_V": 5.036509387475002,
+      "conditional_single_FET_peak_W_time_vin_ifeed": [
+        30.931559864147154,
+        0.0002870749999999812,
+        0.618838998746778,
+        1.101905612070327
+      ],
+      "conditional_single_FET_energy_J": 0.1816335365504673,
+      "errors": [],
+      "csv_sha256": "68f511f98ac82f98714c40df293edabee9448ba8528ddcff034b3aac35d74d8e",
+      "log_sha256": "ab30035c742197a5af38b72923223606ea64f2444f05840590e8736f21d233c6",
+      "run": {
+        "case": "feed_100m",
+        "ngspice_rc": 0,
+        "started_ns": 1793599443867917216,
+        "ended_ns": 1793599651783218007,
+        "elapsed_s": 207.915300791,
+        "csv_fresh": true,
+        "log_fresh": true,
+        "netlist_sha256": "85194dd123e8fc58dfbb0682d04112be9834ac7915068e02c68f9a32885e309f"
+      }
+    }
+  ],
+  "limits": [
+    "LM74800 charge pump, actual MOSFET gates and SOA are not modelled",
+    "Nominal MLCC capacitance; DC bias, ESL and PCB distributed impedance omitted",
+    "Feed resistance is assigned sensitivity, not measured nor a new PCB component",
+    "Conditional MOSFET stress assumes imposed output slew and all stress in one FET; not SOA qualification",
+    "One time step only; feed sensitivity does not prove numerical convergence",
+    "No physical tests, no power, no flashing, no fire; R108/C109 schematic-only WIP; firmware HOLD"
+  ],
+  "production_release": false,
+  "physical_tests": false
+}
