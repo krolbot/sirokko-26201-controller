@@ -30,20 +30,37 @@ jobs:
             /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py build'
       - name: Prepare exact build artifact
         run: |
-          mkdir -p firmware/release-artifact
+          mkdir -p firmware/release-artifact/bootloader firmware/release-artifact/partition_table
           cp \
-            firmware/build/bootloader/bootloader.bin \
-            firmware/build/partition_table/partition-table.bin \
             firmware/build/sirokko_26201_controller.bin \
+            firmware/build/ota_data_initial.bin \
             firmware/build/flash_args \
             firmware/build/flasher_args.json \
             firmware/build/project_description.json \
             firmware/build/config/sdkconfig.json \
             firmware/dependencies.lock \
             firmware/release-artifact/
+          cp firmware/build/bootloader/bootloader.bin firmware/release-artifact/bootloader/
+          cp firmware/build/partition_table/partition-table.bin firmware/release-artifact/partition_table/
           printf '%s\n' "$GITHUB_SHA" > firmware/release-artifact/GIT_COMMIT
           printf '%s\n' 'ESP-IDF v5.2.3 / espressif/idf linux-amd64 sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380' > firmware/release-artifact/BUILD_ENVIRONMENT
-          (cd firmware/release-artifact && sha256sum * > SHA256SUMS)
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("firmware/release-artifact").resolve()
+          flash_files = json.loads((root / "flasher_args.json").read_text())["flash_files"]
+          for offset, relative in flash_files.items():
+              image = (root / relative).resolve()
+              if root not in image.parents or not image.is_file():
+                  raise SystemExit(f"unresolved flash image {offset}: {relative}")
+              print(f"{offset} {relative}")
+          PY
+          (cd firmware/release-artifact && sha256sum \
+            BUILD_ENVIRONMENT GIT_COMMIT dependencies.lock flash_args flasher_args.json \
+            ota_data_initial.bin project_description.json sdkconfig.json \
+            bootloader/bootloader.bin partition_table/partition-table.bin \
+            sirokko_26201_controller.bin > SHA256SUMS)
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: sirokko-esp32s3-${{ github.sha }}
