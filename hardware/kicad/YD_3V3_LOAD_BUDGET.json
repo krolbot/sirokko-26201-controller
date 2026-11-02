@@ -1,15 +1,7 @@
 {
   "status": "CURRENT_PARTIAL_REFERENCE_MODEL_NOT_TOTAL_DEVKIT_NOT_LDO_QUALIFICATION",
   "date": "2026-11-02",
-  "published_basis_commit": "5db2b582bf8be4c168b4bd8d8095044429e3deee",
-  "live_readback": {
-    "footprints": 72,
-    "tracks": 639,
-    "vias": 147,
-    "nets": 78,
-    "zones": 27,
-    "sha256": null
-  },
+  "published_basis_commit": "63826ee89a973cbedecdaba7f492ef8063722545",
   "assumptions": {
     "V_nom_V": 3.3,
     "V_upper_scenario_V": 3.6,
@@ -135,5 +127,319 @@
     "U20",
     "R122",
     "R703"
-  ]
+  ],
+  "historical_MCP_readback_not_current": {
+    "footprints": 72,
+    "tracks": 639,
+    "vias": 147,
+    "nets": 78,
+    "zones": 27,
+    "sha256": null
+  },
+  "source_readback": {
+    "method": "full pyparsing.nested_expr(parse_all=True) of exact published PCB, not a fresh native DRC or live MCP run",
+    "archive_sha256": "ffc6e717a736e467ba7753fc8a3ede15e71182ba715682733d8601ccfedb88cb",
+    "PCB_sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a",
+    "footprints": 72,
+    "pads": 291,
+    "segments": 639,
+    "vias": 146,
+    "physical_5V_pad_members": [
+      {
+        "ref": "C106",
+        "pin": "1",
+        "net": "+5V_DEVKIT",
+        "value": "47uF 16V X5R",
+        "MPN": "GRM32ER61C476KE15L"
+      },
+      {
+        "ref": "R101",
+        "pin": "1",
+        "net": "+5V_DEVKIT",
+        "value": "31.6k 1%",
+        "MPN": "RC0603FR-0731K6L"
+      },
+      {
+        "ref": "C105",
+        "pin": "1",
+        "net": "+5V_DEVKIT",
+        "value": "47uF 16V X5R",
+        "MPN": "GRM32ER61C476KE15L"
+      },
+      {
+        "ref": "J1",
+        "pin": "21",
+        "net": "+5V_DEVKIT",
+        "value": "DEVKITC1_J1",
+        "MPN": "SSQ-122-01-T-S"
+      },
+      {
+        "ref": "C107",
+        "pin": "2",
+        "net": "+5V_DEVKIT",
+        "value": "4.7nF 50V C0G",
+        "MPN": "GRM1885C1H472JA01D"
+      },
+      {
+        "ref": "R107",
+        "pin": "1",
+        "net": "+5V_DEVKIT",
+        "value": "10k 1%",
+        "MPN": "RC0603FR-0710KL"
+      },
+      {
+        "ref": "L101",
+        "pin": "2",
+        "net": "+5V_DEVKIT",
+        "value": "33uH Isat>=10A",
+        "MPN": "SRP1770TA-330M"
+      }
+    ],
+    "physical_3V3_pad_members": [
+      {
+        "ref": "J31",
+        "pin": "9",
+        "net": "/+3V3",
+        "value": "MAX31856 AIR",
+        "MPN": "SSW-109-01-T-S"
+      },
+      {
+        "ref": "J12",
+        "pin": "1",
+        "net": "/+3V3",
+        "value": "ROOM_DS18B20_HARNESS",
+        "MPN": "1715734"
+      },
+      {
+        "ref": "R2",
+        "pin": "1",
+        "net": "/+3V3",
+        "value": "10k",
+        "MPN": "MFR-25FBF52-10K"
+      },
+      {
+        "ref": "R3",
+        "pin": "1",
+        "net": "/+3V3",
+        "value": "10k",
+        "MPN": "MFR-25FBF52-10K"
+      },
+      {
+        "ref": "J30",
+        "pin": "9",
+        "net": "/+3V3",
+        "value": "MAX31856 EXHAUST",
+        "MPN": "SSW-109-01-T-S"
+      },
+      {
+        "ref": "R1",
+        "pin": "1",
+        "net": "/+3V3",
+        "value": "4k7",
+        "MPN": "MFR-25FTE52-4K7"
+      },
+      {
+        "ref": "J1",
+        "pin": "1",
+        "net": "/+3V3",
+        "value": "DEVKITC1_J1",
+        "MPN": "SSQ-122-01-T-S"
+      },
+      {
+        "ref": "J1",
+        "pin": "2",
+        "net": "/+3V3",
+        "value": "DEVKITC1_J1",
+        "MPN": "SSQ-122-01-T-S"
+      }
+    ],
+    "carrier_resistor_pad_net_records": {
+      "R1": {
+        "pad_nets": {
+          "1": "/+3V3",
+          "2": "/ROOM_DQ"
+        },
+        "MPN": "MFR-25FTE52-4K7",
+        "Value": "4k7"
+      },
+      "R2": {
+        "pad_nets": {
+          "1": "/+3V3",
+          "2": "/TC_EXH_CS"
+        },
+        "MPN": "MFR-25FBF52-10K",
+        "Value": "10k"
+      },
+      "R3": {
+        "pad_nets": {
+          "1": "/+3V3",
+          "2": "/TC_AIR_CS"
+        },
+        "MPN": "MFR-25FBF52-10K",
+        "Value": "10k"
+      },
+      "R7": {
+        "pad_nets": {
+          "1": "/FAN_REQUEST",
+          "2": "/GND"
+        },
+        "MPN": "MFR-25FBF52-10K",
+        "Value": "10k"
+      },
+      "R8": {
+        "pad_nets": {
+          "1": "/SPEED_CMD",
+          "2": "/GND"
+        },
+        "MPN": "MFR-25FBF52-10K",
+        "Value": "10k"
+      },
+      "R86": {
+        "pad_nets": {
+          "1": "/GLOW_CMD",
+          "2": "/GND"
+        },
+        "MPN": "MFR-25FTE52-4K7",
+        "Value": "4k7 DRV_IN1_PULLDOWN"
+      },
+      "R87": {
+        "pad_nets": {
+          "1": "/FUEL_CMD",
+          "2": "/GND"
+        },
+        "MPN": "MFR-25FTE52-4K7",
+        "Value": "4k7 DRV_IN2_PULLDOWN"
+      }
+    }
+  },
+  "carrier_5V_boundary_review": {
+    "status": "STATIC_BOUNDARY_MODEL_REVIEWED_NOT_SOURCE_OR_DEVKIT_QUALIFICATION",
+    "interface_path": "P24_PROTECTED -> U101 LM5013 -> L101 -> +5V_DEVKIT -> J1.21 -> intact YD DevKit -> J1.1/J1.2 +3V3 -> carrier peripherals",
+    "actual_feedback_R101_R102": {
+      "R101_MPN": "RC0603FR-0731K6L",
+      "R102_MPN": "RC0603FR-0710KL",
+      "nominal_ohm": [
+        31600,
+        10000
+      ],
+      "initial_tolerance_fraction": 0.01,
+      "unapplied_0_1_percent_proposal_not_used": true
+    },
+    "LM5013_source": {
+      "url": "https://www.ti.com/lit/ds/symlink/lm5013.pdf",
+      "document": "SNVSCB3 October2022",
+      "pdf_pages": 40,
+      "sha256": "beec86d875b2932808932bb100a3a9036d834e0b487ea83cb393cddce2c8bc0f",
+      "electrical_table_page": 6,
+      "VREF_min_typ_max_V": [
+        1.181,
+        1.2,
+        1.218
+      ],
+      "conditions": "TJ=-40..150C; VIN=24V, unless individually specified. Initial resistor tolerance only; not guaranteed full VIN18..30V rail regulation.",
+      "visually_checked": true,
+      "IQ_ACTIVE_uA": {
+        "min": null,
+        "typ": 450,
+        "max": null,
+        "conditions": "VEN2.5V; main table conditions"
+      }
+    },
+    "V5_static_initial_corners_V": [
+      4.839059801980198,
+      5.144635151515152
+    ],
+    "non_DevKit_output_loads": {
+      "formula": "Iaux_upper=V5max/(R101min+R102min)+V5max/R107min; R107 assumed continuously LOW at PGOOD; R102 not added again",
+      "FB_divider_upper_A": 0.00012491829719102446,
+      "PGOOD_upper_A": 0.0005196601163146618,
+      "Iaux_upper_A": 0.0006445784135056862,
+      "capacitors": "C105/C106/C107 dynamic charging/ripple, no invented steady resistive current; leakage not qualified",
+      "not_extra_loads": "L101 is source; J1.21 is whole DevKit branch"
+    },
+    "design_allocation": {
+      "existing_buck_design_target_A": 1.0,
+      "target_not_proven_thermal_rating_or_current_limit": true,
+      "carrier_power_reserve_coefficient": 1.25,
+      "scope": "reserve only of the carrier supply being designed; no internal reserve requirement on ready-made DevKit",
+      "formula": "Pcapacity_model=V5min*1A; Pload_upper_model=V5max*(Ibranch_allocation+Iaux_upper); require Pcapacity_model>=1.25*Pload_upper_model",
+      "conditional_capacity_model_W": 4.839059801980198,
+      "maximum_allocation_in_this_model_A": 0.7518379062664883,
+      "boundary_0_75A": {
+        "load_upper_W": 3.861792484400393,
+        "capacity_load_ratio": 1.2530605467609797,
+        "disposition": "passes only this narrow initial-tolerance model; too close to 1.25 to promote as final rating with unbounded TCR/ripple/line/load/dynamics"
+      },
+      "proposed_budget_allocation_A": 0.7,
+      "proposed_load_upper_W": 3.6045607268246354,
+      "proposed_capacity_load_ratio": 1.3424825294157465,
+      "disposition": "engineering allocation for further power-stage analysis, not measured DevKit demand, firmware current limit, completed thermal analysis or new user requirement",
+      "proposed_0_70A_independent_check": false
+    },
+    "no_double_counting": {
+      "identity": "I5V_DevKit = I3V3_total + Iq_LDO + I5V_direct in the simple linear-regulator DC model; all native module loads and carrier loads belong inside its complete input branch",
+      "do_not_add_11_708287mA_to_an_already_total_DevKit_input_branch": true,
+      "do_not_scale_LDO_current_by_3_3_over_5_as_if_it_were_an_ideal_buck": true,
+      "partial_3V3_subtotal_retained_mA": 11.70828667413214,
+      "not_total_DevKit_current": true
+    },
+    "ready_DevKit_boundary": {
+      "selected": "YD-ESP32-S3 N16R8 V1.4 unchanged",
+      "native_schematic_U3": "CJ6107A33GW, not an assumed AMS1117",
+      "schematic_url": "https://raw.githubusercontent.com/vcc-gnd/YD-ESP32-S3/main/5-public-YD-ESP32-S3-Hardware%20info/YD-ESP32-S3-SCH-V1.4.pdf",
+      "CJ6107_document_url": "https://datasheet.lcsc.com/datasheet/pdf/e045508fb5fecaf6dc6de97ced24a696.pdf?productCode=C2829350",
+      "CJ6107_document": "JSCJ CJ6107 series Rev1.3, distributor-hosted manufacturer document; not claimed newest",
+      "CJ6107_pdf_sha256": "bf97e9d401455f3353324c9de7c8a710d78aee99224e5602d6748ab0c1ec1b05",
+      "CJ6107_page3_values_are_typical_not_guaranteed": {
+        "supply_current_uA": 70,
+        "output_current_mA": 1000,
+        "dropout_mV_at_300mA": 150,
+        "dropout_mV_at_1000mA": 500,
+        "table_conditions": "VIN=VOUT+1V; CIN=COUT1uF; TA25C unless individually stated"
+      },
+      "no_internal_margin_or_redesign_requirement_added": true,
+      "no_D3_exact_MPN_or_guaranteed_hot_dropout_invented": true
+    },
+    "verification": {
+      "resistive_3V3_sum_recalculated_with_Decimal": true,
+      "all_7_carrier_resistor_net_pairs_match": true,
+      "exact_rail_membership_5V_count": 7,
+      "exact_rail_membership_3V3_count": 8,
+      "negative_controls": [
+        "omit R107 => missing physical branch detected",
+        "add R102 current a second time => double-count sum rejected",
+        "add removed TFT or internal motor regulator => not a current rail member",
+        "call a 1A DevKit load compliant with the 1A source target and 1.25 reserve => fails arithmetic"
+      ],
+      "independent_review": {
+        "delegation_id": "deleg_af0b4c58",
+        "status": "ACCEPTED_FOR_THE_EXPLICIT_STATIC_MODEL_ONLY",
+        "child_numbers_verified_by_parent_Decimal": true,
+        "checked_0_75A_model": {
+          "residual_after_1_25_reserve_W": 0.011819196479706947,
+          "extra_allocation_A": 0.001837906266488276,
+          "capacity_load_ratio": 1.2530605467609797
+        },
+        "no_double_count_3V3_boundary_confirmed": true,
+        "proposed_0_70A": "parent calculation only; steering arrived too late and child did not check it",
+        "not_closed": [
+          "actual complete DevKit input current",
+          "buck1A thermal/current/dynamic ability",
+          "startup/SOA/transient coordination",
+          "full system power budget"
+        ],
+        "files_or_external_state_changed_by_child": false
+      }
+    },
+    "remaining": [
+      "Actual complete input-current profile of the intact DevKit branch and carrier peripherals is not given by this partial sum",
+      "Ripple-network DC shift, resistor TCR/lifetime, full input voltage/load regulation, cable/contact/via drops and dynamic load steps remain outside this static model",
+      "The existing 1A buck design target still needs applicable current/thermal/dynamic and upstream startup/SOA/transient checks; this model does not prove the target",
+      "Full operating temperature and enclosure thermal conditions remain to be specified/checked at the system interface, without demanding arbitrary internal DevKit percentage reserves"
+    ],
+    "CAD_modified": false,
+    "firmware_started": false,
+    "physical_tests": false,
+    "production_release": false
+  }
 }

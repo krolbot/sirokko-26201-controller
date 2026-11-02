@@ -86,11 +86,10 @@
     "coil temperature/self heating and must-operate across temperature",
     "actual RON/IVM/diode VF temperature guarantees",
     "inductive contact breaking and electrical lifetime at required DC voltage",
-    "procurement via ChipDip",
     "socket blade geometry/mating and fresh CAD collision check",
     "45V surge duration and winding energy"
   ],
-  "cad_commit": "d680eab666bbcc578d0399d9b55f50b86615eeb2",
+  "cad_commit": "63826ee89a973cbedecdaba7f492ef8063722545",
   "relay_count": 2,
   "calculations": {
     "coil": {
@@ -163,5 +162,447 @@
       }
     },
     "winding_limit_at_0_5V_path_drop_C": 104.10687022900765
-  }
+  },
+  "initial_calculation_commit": "d680eab666bbcc578d0399d9b55f50b86615eeb2",
+  "current_revalidation": {
+    "status": "PASS_CURRENT_PINMAP_AND_EXISTING_MODEL_RECALC_NOT_HARDWARE_QUALIFIED",
+    "commit": "63826ee89a973cbedecdaba7f492ef8063722545",
+    "pcb_sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a",
+    "root_sch_sha256": "3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099",
+    "all_7_CAD_sources_unchanged_from_b0b8c0f": true,
+    "pcb_full_parse_counts": {
+      "footprints": 72,
+      "pads": 291,
+      "segments": 639,
+      "vias": 146,
+      "zones": 27
+    },
+    "matching_pin_assignments": 41,
+    "pin_assignments": [
+      {
+        "reference": "U11",
+        "pin": "1",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "2",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "3",
+        "expected": "/K_GLOW_COIL_LOW",
+        "actual": "/K_GLOW_COIL_LOW",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "4",
+        "expected": "/K_CLUTCH_RUN_COIL_LOW",
+        "actual": "/K_CLUTCH_RUN_COIL_LOW",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "5",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "6",
+        "expected": "unconnected-(U11-OUT3-Pad6)",
+        "actual": "unconnected-(U11-OUT3-Pad6)",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "7",
+        "expected": "unconnected-(U11-OUT4-Pad7)",
+        "actual": "unconnected-(U11-OUT4-Pad7)",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "8",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "9",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "10",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "11",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "12",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "13",
+        "expected": "/FUEL_CMD",
+        "actual": "/FUEL_CMD",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "14",
+        "expected": "/GLOW_CMD",
+        "actual": "/GLOW_CMD",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "15",
+        "expected": "unconnected-(U11-NC-Pad15)",
+        "actual": "unconnected-(U11-NC-Pad15)",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "16",
+        "expected": "unconnected-(U11-~{FAULT}-Pad16)",
+        "actual": "unconnected-(U11-~{FAULT}-Pad16)",
+        "pass": true
+      },
+      {
+        "reference": "U11",
+        "pin": "17",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "K1",
+        "pin": "30",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "K1",
+        "pin": "85",
+        "expected": "/K_GLOW_COIL_LOW",
+        "actual": "/K_GLOW_COIL_LOW",
+        "pass": true
+      },
+      {
+        "reference": "K1",
+        "pin": "86",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "K1",
+        "pin": "87",
+        "expected": "/GLOW_SWITCHED_POS",
+        "actual": "/GLOW_SWITCHED_POS",
+        "pass": true
+      },
+      {
+        "reference": "K1",
+        "pin": "87a",
+        "expected": "unconnected-(K1-Pad87a)",
+        "actual": "unconnected-(K1-Pad87a)",
+        "pass": true
+      },
+      {
+        "reference": "K2",
+        "pin": "30",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "K2",
+        "pin": "85",
+        "expected": "/K_CLUTCH_RUN_COIL_LOW",
+        "actual": "/K_CLUTCH_RUN_COIL_LOW",
+        "pass": true
+      },
+      {
+        "reference": "K2",
+        "pin": "86",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "K2",
+        "pin": "87",
+        "expected": "/CLUTCH_SWITCHED_POS",
+        "actual": "/CLUTCH_SWITCHED_POS",
+        "pass": true
+      },
+      {
+        "reference": "K2",
+        "pin": "87a",
+        "expected": "unconnected-(K2-Pad87a)",
+        "actual": "unconnected-(K2-Pad87a)",
+        "pass": true
+      },
+      {
+        "reference": "R86",
+        "pin": "1",
+        "expected": "/GLOW_CMD",
+        "actual": "/GLOW_CMD",
+        "pass": true
+      },
+      {
+        "reference": "R86",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "R87",
+        "pin": "1",
+        "expected": "/FUEL_CMD",
+        "actual": "/FUEL_CMD",
+        "pass": true
+      },
+      {
+        "reference": "R87",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "C21",
+        "pin": "1",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "C21",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "C22",
+        "pin": "1",
+        "expected": "/P24_PROTECTED",
+        "actual": "/P24_PROTECTED",
+        "pass": true
+      },
+      {
+        "reference": "C22",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "J1",
+        "pin": "8",
+        "expected": "/FUEL_CMD",
+        "actual": "/FUEL_CMD",
+        "pass": true
+      },
+      {
+        "reference": "J1",
+        "pin": "20",
+        "expected": "/GLOW_CMD",
+        "actual": "/GLOW_CMD",
+        "pass": true
+      },
+      {
+        "reference": "J27",
+        "pin": "1",
+        "expected": "/GLOW_SWITCHED_POS",
+        "actual": "/GLOW_SWITCHED_POS",
+        "pass": true
+      },
+      {
+        "reference": "J27",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      },
+      {
+        "reference": "J28",
+        "pin": "1",
+        "expected": "/CLUTCH_SWITCHED_POS",
+        "actual": "/CLUTCH_SWITCHED_POS",
+        "pass": true
+      },
+      {
+        "reference": "J28",
+        "pin": "2",
+        "expected": "/GND",
+        "actual": "/GND",
+        "pass": true
+      }
+    ],
+    "native_MCP_references_read": [
+      "U11",
+      "K1",
+      "K2",
+      "R86",
+      "R87",
+      "C21",
+      "C22",
+      "J1"
+    ],
+    "four_command_combinations": [
+      {
+        "GLOW_CMD": 0,
+        "FUEL_CMD": 0,
+        "K1_coil_command_on": false,
+        "K2_coil_command_on": false,
+        "model_only": true
+      },
+      {
+        "GLOW_CMD": 0,
+        "FUEL_CMD": 1,
+        "K1_coil_command_on": false,
+        "K2_coil_command_on": true,
+        "model_only": true
+      },
+      {
+        "GLOW_CMD": 1,
+        "FUEL_CMD": 0,
+        "K1_coil_command_on": true,
+        "K2_coil_command_on": false,
+        "model_only": true
+      },
+      {
+        "GLOW_CMD": 1,
+        "FUEL_CMD": 1,
+        "K1_coil_command_on": true,
+        "K2_coil_command_on": true,
+        "model_only": true
+      }
+    ],
+    "negative_controls": [
+      {
+        "case": "OUT1_OUT2_swap",
+        "detected_mismatching_pins": [
+          "U11.3",
+          "U11.4"
+        ],
+        "rejected": true,
+        "source_modified": false
+      },
+      {
+        "case": "VCLAMP_grounded",
+        "detected_mismatching_pins": [
+          "U11.2"
+        ],
+        "rejected": true,
+        "source_modified": false
+      },
+      {
+        "case": "pulldown_to_supply",
+        "detected_mismatching_pins": [
+          "R86.2"
+        ],
+        "rejected": true,
+        "source_modified": false
+      }
+    ],
+    "coil_recalculation": {
+      "-40": {
+        "Rcoil_min_ohm": 206.536545,
+        "Icoil_upper_A_ignore_driver_drop": 0.13944263471629198,
+        "I_two_coils_A": 0.27888526943258396,
+        "with_historical_30pct_A": 0.18127542513117956
+      },
+      "0": {
+        "Rcoil_min_ohm": 249.687945,
+        "Icoil_upper_A_ignore_driver_drop": 0.11534397465604516,
+        "I_two_coils_A": 0.23068794931209033,
+        "with_historical_30pct_A": 0.1499471670528587
+      },
+      "23": {
+        "Rcoil_min_ohm": 274.5,
+        "Icoil_upper_A_ignore_driver_drop": 0.10491803278688525,
+        "I_two_coils_A": 0.2098360655737705,
+        "with_historical_30pct_A": 0.13639344262295083
+      },
+      "85": {
+        "Rcoil_min_ohm": 341.38467,
+        "Icoil_upper_A_ignore_driver_drop": 0.08436231187533992,
+        "I_two_coils_A": 0.16872462375067984,
+        "with_historical_30pct_A": 0.10967100543794189
+      }
+    },
+    "gpio_static_data_point": {
+      "supply_V": 3.3,
+      "external_R_nom_ohm": 4700,
+      "R_tolerance_fraction": 0.01,
+      "R_min_ohm": 4653.0,
+      "DRV_IIH_max_A_at_Vin3p3_TA25": 0.0001,
+      "gpio_high_load_A_at_3p3_with_Rmin_and_IIHmax": 0.0008092198581560284,
+      "VOH_high_impedance_min_V": 2.64,
+      "VOL_high_impedance_max_V": 0.33,
+      "unloaded_high_margin_V": 0.64,
+      "unloaded_low_margin_V": 0.37,
+      "IOH_40mA_is_typical_not_guaranteed": true,
+      "VOH_VOL_specified_at_high_impedance_load": true,
+      "loaded_full_temperature_margin_qualified": false,
+      "double_count_internal_RPD": false,
+      "load_scope": "3.3V,25C data point only; IIH already includes input pulldown; do not add 3.3V/100kOhm a second time"
+    },
+    "DRV_source": {
+      "document": "SLVSAW5D RevD December2024",
+      "sha256": "650164fad4d69b0767063f05472bdc31b2f3ce0d683ae9905e8a3637f6752036",
+      "physical_pages": [
+        4,
+        6,
+        7,
+        11,
+        12
+      ],
+      "p7_visually_checked": true
+    },
+    "ESP_source": {
+      "document": "ESP32-S3 Series Datasheet v2.2",
+      "sha256": "2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f",
+      "physical_page": 65,
+      "table": "5-4",
+      "visually_checked": true,
+      "source_scope": "existing local source, not claim of latest revision"
+    },
+    "new_native_DRC_run_by_chat": false,
+    "new_root_netlist_export_by_chat": false,
+    "physical_tests": false,
+    "production_release": false,
+    "firmware_hold": true,
+    "changes_to_CAD_or_firmware": false
+  },
+  "relay_procurement": "K1/K2 user buys from another shop; ChipDip sourcing not required for these two relays; PCB sockets unchanged"
 }
