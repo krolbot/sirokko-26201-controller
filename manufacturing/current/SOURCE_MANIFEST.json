@@ -155,9 +155,14 @@
   },
   "files": [
     {
+      "path": "FABRICATION_REQUIREMENTS_RU.md",
+      "bytes": 9507,
+      "sha256": "aa1c52c735ff77da1ee5e7433797f05a2cae4de9f06290e9fa589824160e1a21"
+    },
+    {
       "path": "README_RU.md",
-      "bytes": 4689,
-      "sha256": "2001726e94cd282fd73699cf6a2b08122809d5455b825f75a13c321dfeb0b516"
+      "bytes": 5444,
+      "sha256": "bf45ce6b763ce5e5cd8297c5833d9ae1b7010667253bb33ee3cea76a4661a359"
     },
     {
       "path": "assembly/Sirokko26201_control_motor_candidate-pos.csv",
