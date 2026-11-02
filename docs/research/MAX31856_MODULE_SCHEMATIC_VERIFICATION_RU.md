@@ -1,6 +1,6 @@
 # Sirokko MinimalSafety after6 — инженерная приёмка
 
-Результат: **PASS. Комплект after6 разрешён к передаче publisher t_574641f7 как DRAFT/WIP.**
+Результат исторического прохода: **PASS. Комплект after6 был разрешён к передаче publisher t_574641f7 как DRAFT/WIP.** Приведённые ниже SHA, пути и слова «текущая» относятся только к этому снимку; действующие исходники указаны в [`../../hardware/kicad/README.md`](../../hardware/kicad/README.md).
 
 Ограничения сохраняются: **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** Это не разрешение на заказ, питание, прошивку или огневые испытания.
 

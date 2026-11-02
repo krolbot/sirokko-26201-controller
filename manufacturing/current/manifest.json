@@ -2,7 +2,7 @@
   "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE",
   "production_release": false,
   "physical_tests": false,
-  "source_commit": "b459f066b95efbfa205e608dbc69e0e4f8d06ea5",
+  "source_commit": "c012da276d03c1a101b7dc3bb5f492131f977838",
   "generator": {
     "kicad": "10.0.8",
     "native_project_context": true,
@@ -138,13 +138,13 @@
   "files": [
     {
       "path": "FABRICATION_REQUIREMENTS_RU.md",
-      "bytes": 12277,
-      "sha256": "aa6f05b07cb3f7dc16996ea5baf1d9392ee3ea19952fccfbf33e491644dfe741"
+      "bytes": 12281,
+      "sha256": "3e2b1f6a26aebe17b2cf3a982d4d35298aa42fb0b0b5719c53bc350420597c6b"
     },
     {
       "path": "README_RU.md",
-      "bytes": 6701,
-      "sha256": "4ab2ca84a3cbe620a154629cc2290f2f07496f3c161ad0bb68c89d46e9155ae9"
+      "bytes": 6724,
+      "sha256": "7c9adbd363aef4a32e3b6b2d3ad1a171dff9a00b0ed2e247d1aee94f4de224c9"
     },
     {
       "path": "bom.csv",
@@ -164,12 +164,12 @@
     {
       "path": "checks/drc.json",
       "bytes": 416,
-      "sha256": "ee72a25aae410b877c872536420722fa2140eb24f805dfd5eea869a47b9bd009"
+      "sha256": "ca6ec4a412a6143b0d1fad501e5341f7847cb8ced9ec9c9803452c4a8458a041"
     },
     {
       "path": "checks/erc.json",
       "bytes": 1854,
-      "sha256": "078e9501881c4e30ef1dc941a5e043ba40ac063e8413e18301de87aaa180ffe1"
+      "sha256": "3069f9a5d0aac9fab2a4db9db2435d82f758ac7ce8d8ab1bceef4a29446c301b"
     },
     {
       "path": "checks/j1-j3-metadata-verification.json",

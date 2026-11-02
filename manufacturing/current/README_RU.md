@@ -5,7 +5,7 @@
 
 ## Источник
 
-Производные файлы ниже проверены штатным KiCad 10.0.8 на Lab по канонической паре коммита [`b459f066b95efbfa205e608dbc69e0e4f8d06ea5`](https://github.com/krolbot/sirokko-26201-controller/commit/b459f066b95efbfa205e608dbc69e0e4f8d06ea5). После metadata-правки J1/J3 заново получены DRC, ERC, BOM, схемный netlist и полный PDF схемы; геометрически незатронутые Gerber, Excellon, CPL и виды сохранены:
+Производные файлы ниже проверены штатным KiCad 10.0.8 на Lab по канонической CAD-паре исходного коммита [`c012da276d03c1a101b7dc3bb5f492131f977838`](https://github.com/krolbot/sirokko-26201-controller/commit/c012da276d03c1a101b7dc3bb5f492131f977838). После metadata-правки J1/J3 заново получены DRC, ERC, BOM, схемный netlist и полный PDF схемы; геометрически незатронутые Gerber, Excellon, CPL и виды сохранены:
 
 - PCB SHA-256: `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`;
 - корневая схема SHA-256: `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`;

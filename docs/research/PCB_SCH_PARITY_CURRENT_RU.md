@@ -5,7 +5,7 @@
 
 ## Проверенная редакция
 
-- Коммит исходников: [`b459f066b95efbfa205e608dbc69e0e4f8d06ea5`](https://github.com/krolbot/sirokko-26201-controller/commit/b459f066b95efbfa205e608dbc69e0e4f8d06ea5).
+- Коммит CAD-исходников: [`c012da276d03c1a101b7dc3bb5f492131f977838`](https://github.com/krolbot/sirokko-26201-controller/commit/c012da276d03c1a101b7dc3bb5f492131f977838).
 - PCB: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`.
 - Корневая схема: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`, SHA256 `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`.
 - Дочерний лист входной защиты: SHA256 `d3686cfc00b28a220041f71b53705924d24c83587c78d9480d03799f1375887d`.
