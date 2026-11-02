@@ -161,7 +161,7 @@ private:
     Block start_guard(const Sensors& sensors, uint64_t now_ms) const;
     void transition(State state, uint64_t now_ms);
     void begin_purge(State state, uint64_t now_ms);
-    bool purge_ready(const Sensors& sensors, uint64_t now_ms, uint64_t minimum_ms) const;
+    bool purge_ready(const Sensors& sensors, uint64_t now_ms) const;
     void begin_start(uint64_t now_ms, const Sensors& sensors);
     void begin_stop(uint64_t now_ms);
     void latch_fault(uint32_t faults, uint64_t now_ms);
@@ -180,11 +180,13 @@ private:
     uint64_t arm_id_{};
     uint64_t purge_id_{};
     uint64_t purge_started_ms_{};
+    uint64_t purge_minimum_ms_{};
     uint64_t duration_deadline_ms_{};
     uint64_t delayed_due_ms_{};
     int32_t ignition_baseline_milli_c_{};
     bool duration_active_{};
     bool delayed_armed_{};
+    uint32_t previous_external_faults_{};
 };
 
 int32_t decode_max31856_signed19(uint8_t msb, uint8_t mid, uint8_t lsb);

@@ -1,4 +1,5 @@
 #include "runtime_api.hpp"
+#include "bounded_receive.hpp"
 
 #include <array>
 #include <cerrno>
@@ -19,6 +20,8 @@
 
 namespace {
 constexpr size_t kBodyLimit = 768;
+constexpr uint64_t kCommandBodyReadBudgetMs = 3000;
+constexpr uint64_t kOtaBodyReadBudgetMs = 120000;
 char g_password[21]{};
 char g_session[33]{};
 uint64_t g_last_login_ms{};
@@ -61,6 +64,35 @@ async function uploadOta(){try{let file=q('ota').files[0];if(!file)throw Error('
 
 uint64_t now_ms() { return static_cast<uint64_t>(esp_timer_get_time() / 1000); }
 
+uint64_t receive_clock(void*) { return now_ms(); }
+
+int http_receive(void* context, char* buffer, size_t capacity) {
+    return httpd_req_recv(static_cast<httpd_req_t*>(context), buffer, capacity);
+}
+
+struct BodySink {
+    char* output;
+    size_t capacity;
+    size_t size;
+};
+
+bool consume_body(void* context, const char* buffer, size_t size) {
+    auto& sink = *static_cast<BodySink*>(context);
+    if (sink.size >= sink.capacity || size >= sink.capacity - sink.size) return false;
+    std::memcpy(sink.output + sink.size, buffer, size);
+    sink.size += size;
+    return true;
+}
+
+struct OtaSink {
+    esp_ota_handle_t handle;
+};
+
+bool consume_ota(void* context, const char* buffer, size_t size) {
+    const auto& sink = *static_cast<OtaSink*>(context);
+    return runtime_maintenance_safe() && esp_ota_write(sink.handle, buffer, size) == ESP_OK;
+}
+
 bool constant_equal(const char* a, const char* b, size_t size) {
     uint8_t difference = 0;
     for (size_t i = 0; i < size; ++i) difference |= static_cast<uint8_t>(a[i] ^ b[i]);
@@ -91,15 +123,15 @@ esp_err_t reject(httpd_req_t* request, const char* reason, httpd_err_code_t code
 
 bool read_body(httpd_req_t* request, char* output, size_t capacity) {
     if (request->content_len <= 0 || static_cast<size_t>(request->content_len) >= capacity) return false;
-    size_t offset = 0;
-    while (offset < static_cast<size_t>(request->content_len)) {
-        const int received = httpd_req_recv(request, output + offset, request->content_len - offset);
-        if (received == HTTPD_SOCK_ERR_TIMEOUT) continue;
-        if (received <= 0) return false;
-        offset += received;
-    }
-    output[offset] = 0;
-    return true;
+    std::array<char, 256> chunk{};
+    BodySink sink{output, capacity, 0};
+    const auto result = receive_exact_bounded(
+        static_cast<size_t>(request->content_len), kCommandBodyReadBudgetMs,
+        HTTPD_SOCK_ERR_TIMEOUT, chunk.data(), chunk.size(), request, http_receive,
+        &sink, consume_body, nullptr, receive_clock);
+    if (result != BoundedReceiveResult::COMPLETE) return false;
+    output[sink.size] = 0;
+    return sink.size == static_cast<size_t>(request->content_len);
 }
 
 bool json_u64(const cJSON* root, const char* key, uint64_t* value) {
@@ -393,20 +425,19 @@ esp_err_t ota_handler(httpd_req_t* request) {
         runtime_exit_maintenance(); return reject(request, "OTA_BEGIN", HTTPD_500_INTERNAL_SERVER_ERROR);
     }
     std::array<char, 4096> buffer{};
-    int remaining = request->content_len;
-    bool ok = true;
-    while (ok && remaining > 0) {
-        const int received = httpd_req_recv(request, buffer.data(), std::min<int>(remaining, buffer.size()));
-        if (received == HTTPD_SOCK_ERR_TIMEOUT) continue;
-        if (received <= 0 || !runtime_maintenance_safe()) { ok = false; break; }
-        ok = esp_ota_write(handle, buffer.data(), received) == ESP_OK;
-        remaining -= received;
-    }
+    OtaSink sink{handle};
+    const auto receive_result = receive_exact_bounded(
+        static_cast<size_t>(request->content_len), kOtaBodyReadBudgetMs,
+        HTTPD_SOCK_ERR_TIMEOUT, buffer.data(), buffer.size(), request, http_receive,
+        &sink, consume_ota, nullptr, receive_clock);
     std::fill(buffer.begin(), buffer.end(), 0);
-    if (!ok || remaining != 0 || esp_ota_end(handle) != ESP_OK || esp_ota_set_boot_partition(partition) != ESP_OK) {
+    if (receive_result != BoundedReceiveResult::COMPLETE || esp_ota_end(handle) != ESP_OK ||
+        esp_ota_set_boot_partition(partition) != ESP_OK) {
         esp_ota_abort(handle);
         runtime_exit_maintenance();
-        return reject(request, "OTA_VERIFY", HTTPD_500_INTERNAL_SERVER_ERROR);
+        return reject(request,
+            receive_result == BoundedReceiveResult::DEADLINE_EXCEEDED ? "OTA_TIMEOUT" : "OTA_VERIFY",
+            HTTPD_500_INTERNAL_SERVER_ERROR);
     }
     no_store(request);
     httpd_resp_set_type(request, "application/json");
@@ -426,7 +457,7 @@ bool web_start(const char* ap_password) {
     config.max_uri_handlers = 8;
     config.max_open_sockets = 5;
     config.lru_purge_enable = true;
-    config.recv_wait_timeout = 5;
+    config.recv_wait_timeout = 1;
     config.send_wait_timeout = 5;
     httpd_handle_t server{};
     if (httpd_start(&server, &config) != ESP_OK) return false;

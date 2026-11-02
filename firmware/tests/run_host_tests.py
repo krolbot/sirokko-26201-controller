@@ -8,7 +8,9 @@ binary.parent.mkdir(exist_ok=True)
 subprocess.run([
     "g++", "-std=c++20", "-O2", "-Wall", "-Wextra", "-Werror",
     "-I", str(root / "components/control_core/include"),
+    "-I", str(root / "main"),
     str(root / "components/control_core/control.cpp"),
+    str(root / "main/bounded_receive.cpp"),
     str(root / "tests/test_control.cpp"),
     "-o", str(binary),
 ], check=True)

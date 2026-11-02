@@ -1,5 +1,5 @@
 idf_component_register(
-  SRCS "app_main.cpp" "sensors.cpp" "web.cpp"
+  SRCS "app_main.cpp" "sensors.cpp" "web.cpp" "bounded_receive.cpp"
   INCLUDE_DIRS "."
   REQUIRES control_core driver esp_event esp_http_server esp_netif esp_partition esp_timer esp_wifi app_update nvs_flash json
 )

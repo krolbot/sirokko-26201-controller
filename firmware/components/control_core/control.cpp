@@ -63,6 +63,7 @@ Controller::Controller(ProcessProfile profile, Settings settings, uint64_t boot_
     }
     if (!valid_timer(settings_.duration_ms)) settings_.duration_ms = 3600000;
     purge_id_ = next_id_++;
+    purge_minimum_ms_ = profile_.recovery_purge_ms;
 }
 
 bool Controller::sensors_fresh(const Sensors& sensors, uint64_t now_ms) const {
@@ -114,15 +115,17 @@ void Controller::transition(State state, uint64_t now_ms) {
 void Controller::begin_purge(State state, uint64_t now_ms) {
     if (!purging(state_)) {
         purge_started_ms_ = now_ms;
+        purge_minimum_ms_ = state == State::RECOVERY_PURGE
+            ? profile_.recovery_purge_ms : profile_.postpurge_ms;
         purge_id_ = next_id_++;
         if (next_id_ == 0) next_id_ = 1;
     }
     transition(state, now_ms);
 }
 
-bool Controller::purge_ready(const Sensors& sensors, uint64_t now_ms, uint64_t minimum_ms) const {
+bool Controller::purge_ready(const Sensors& sensors, uint64_t now_ms) const {
     return profile_.qualified && now_ms >= purge_started_ms_ &&
-           now_ms - purge_started_ms_ >= minimum_ms && sensors_fresh(sensors, now_ms) &&
+           now_ms - purge_started_ms_ >= purge_minimum_ms_ && sensors_fresh(sensors, now_ms) &&
            sensors.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
            sensors.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
 }
@@ -190,8 +193,11 @@ Snapshot Controller::tick(const TickInput& input) {
     last_sensors_ = input.sensors;
 
     const uint32_t current_sensor_faults = sensor_faults(input.sensors, now);
-    if (input.external_faults) latch_fault(input.external_faults, now);
-    else if (active(state_) && current_sensor_faults) latch_fault(current_sensor_faults, now);
+    const uint32_t new_external_faults = input.external_faults & ~previous_external_faults_;
+    previous_external_faults_ = input.external_faults;
+    uint32_t new_faults = new_external_faults;
+    if (active(state_)) new_faults |= current_sensor_faults;
+    if (new_faults) latch_fault(new_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued/armed starts and never writes GPIO directly.
     if (input.stop) begin_stop(now);
@@ -212,7 +218,8 @@ Snapshot Controller::tick(const TickInput& input) {
     }
 
     bool reset_barrier = false;
-    if (input.reset_fault && state_ == State::FAULT && current_sensor_faults == FAULT_NONE) {
+    if (input.reset_fault && state_ == State::FAULT && current_sensor_faults == FAULT_NONE &&
+        input.external_faults == FAULT_NONE) {
         faults_ = FAULT_NONE;
         delayed_armed_ = false;
         arm_id_ = 0;
@@ -245,7 +252,7 @@ Snapshot Controller::tick(const TickInput& input) {
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
     switch (state_) {
         case State::RECOVERY_PURGE:
-            if (purge_ready(input.sensors, now, profile_.recovery_purge_ms)) {
+            if (purge_ready(input.sensors, now)) {
                 transition(State::IDLE, now);
                 purge_id_ = 0;
             }
@@ -279,13 +286,13 @@ Snapshot Controller::tick(const TickInput& input) {
                 begin_stop(now);
             break;
         case State::STOP_PURGE:
-            if (purge_ready(input.sensors, now, profile_.postpurge_ms)) {
+            if (purge_ready(input.sensors, now)) {
                 transition(State::IDLE, now);
                 purge_id_ = 0;
             }
             break;
         case State::FAULT_PURGE:
-            if (purge_ready(input.sensors, now, profile_.postpurge_ms)) {
+            if (purge_ready(input.sensors, now)) {
                 transition(State::FAULT, now);
                 purge_id_ = 0;
             }
@@ -311,9 +318,8 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.delayed_remaining_ms = delayed_armed_ ? remaining(now_ms, delayed_due_ms_) : 0;
     result.purge_active = purging(state_);
     result.purge_id = result.purge_active ? purge_id_ : 0;
-    const uint64_t purge_minimum = state_ == State::RECOVERY_PURGE ? profile_.recovery_purge_ms : profile_.postpurge_ms;
-    const uint64_t purge_deadline = purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_minimum
-        ? std::numeric_limits<uint64_t>::max() : purge_started_ms_ + purge_minimum;
+    const uint64_t purge_deadline = purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_minimum_ms_
+        ? std::numeric_limits<uint64_t>::max() : purge_started_ms_ + purge_minimum_ms_;
     result.purge_minimum_remaining_ms = result.purge_active ? remaining(now_ms, purge_deadline) : 0;
     result.purge_sensors_fresh = result.purge_active && sensors_fresh(last_sensors_, now_ms);
     result.purge_temperature_ready = result.purge_sensors_fresh && profile_.qualified &&

@@ -1,6 +1,6 @@
 # Sirokko 262.01 — контроллер автоматики
 
-> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** Это не производственный выпуск и не доказательство работоспособности устройства. Плату нельзя заказывать, включать, прошивать или подключать к горелке.
+> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO PHYSICAL FLASH / NO FIRE.** Это не производственный выпуск и не доказательство работоспособности устройства. Плату нельзя заказывать, включать, физически прошивать или подключать к горелке. Программный DRAFT и target-сборка разрешены только для разработки.
 
 В репозитории оставлен один канонический проект KiCad:
 
@@ -26,3 +26,7 @@ F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном де�
 Проверочный CAM/BOM пересобран в [`manufacturing/current/`](manufacturing/current/) из этой же пары SCH/PCB и остаётся **NOT FOR ORDER**. Действующие требования: [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md), [текущее состояние](docs/CURRENT_STATE_RU.md), [требования изготовления](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md). Пуск, DC-bias, горячая SOA, импульсная координация и физические испытания не квалифицированы; восстановление прежних состояний — через историю Git.
 
 Механическая ведомость [`docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv`](docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv) использует нативные базы Edge.Cuts `left=-5.000` и `top=10.000` мм. Все 13 производных `Y_from_top_mm` проверены правилом `Y_mm-10.000`; машинный отчёт — [`docs/research/CAM_DRILL_GEOMETRY_FINAL.json`](docs/research/CAM_DRILL_GEOMETRY_FINAL.json). CAD при исправлении ведомости не менялся.
+
+## Программный DRAFT
+
+Единый текущий исходный набор состоит из аппаратного проекта выше и каталога [`firmware/`](firmware/) в том же Git-дереве. Прошивка для YD-ESP32-S3 N16R8 V1.4 поднимает собственную AP и браузерную панель, содержит один автомат, два MAX31856, DS18B20, команды двух реле и HC-160A S2. Огневой профиль намеренно не квалифицирован, поэтому топливо программно заблокировано. Сборка, состав бинарного комплекта, AP, пароль, ограничения и список не выполненных физических проверок: [`firmware/README_RU.md`](firmware/README_RU.md).

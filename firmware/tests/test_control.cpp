@@ -1,9 +1,11 @@
 #include "sirokko/control.hpp"
+#include "bounded_receive.hpp"
 
 #include <algorithm>
 #include <cassert>
 #include <charconv>
 #include <cstdint>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -322,6 +324,154 @@ void test_verify_failure_and_purge_conditions() {
     assert(after.state == State::RECOVERY_PURGE && after.purge_id == before.purge_id);
 }
 
+void test_recovery_fault_preserves_purge_contract() {
+    Controller machine(profile(), {}, 7);
+    TickInput in{};
+    in.now_ms = 0;
+    in.sensors = good(0);
+    const auto initial = machine.tick(in);
+    assert(initial.state == State::RECOVERY_PURGE && initial.purge_minimum_remaining_ms == 100);
+    const uint64_t purge_id = initial.purge_id;
+
+    in.now_ms = 50;
+    in.sensors = good(50);
+    in.external_faults = FAULT_CONTROL_WATCHDOG;
+    auto state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id == purge_id &&
+           state.purge_minimum_remaining_ms == 50);
+
+    in.external_faults = 0;
+    in.now_ms = 99;
+    in.sensors = good(99);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id == purge_id &&
+           state.purge_minimum_remaining_ms == 1);
+
+    in.now_ms = 100;
+    in.sensors = good(100, 200000);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && !state.purge_temperature_ready);
+
+    in.now_ms = 101;
+    in.sensors = good(101);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT && !state.purge_active);
+}
+
+void test_external_fault_incident_edges() {
+    Controller machine(profile(), {}, 8);
+    TickInput in{};
+    in.now_ms = 100;
+    in.sensors = good(100);
+    assert(machine.tick(in).state == State::IDLE);
+
+    in.now_ms = 101;
+    in.sensors = good(101);
+    in.external_faults = FAULT_CONTROL_WATCHDOG;
+    auto state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE);
+    const uint64_t first_purge_id = state.purge_id;
+
+    in.now_ms = 121;
+    in.sensors = good(121);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT);
+    const uint64_t fault_version = state.state_version;
+
+    in.reset_fault = true;
+    for (uint64_t now = 122; now < 126; ++now) {
+        in.now_ms = now;
+        in.sensors = good(now);
+        state = machine.tick(in);
+        assert(state.state == State::FAULT && state.state_version == fault_version &&
+               !state.purge_active && state.purge_id == 0);
+    }
+
+    in.reset_fault = false;
+    in.external_faults = 0;
+    in.now_ms = 126;
+    in.sensors = good(126);
+    assert(machine.tick(in).state == State::FAULT);
+
+    in.external_faults = FAULT_CONTROL_WATCHDOG;
+    in.now_ms = 127;
+    in.sensors = good(127);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id != 0 &&
+           state.purge_id != first_purge_id && state.purge_minimum_remaining_ms == 20);
+}
+
+struct ReceiveStep {
+    int result;
+    uint64_t advance_ms;
+    const char* bytes;
+};
+
+struct ReceiveScript {
+    uint64_t now_ms{};
+    std::vector<ReceiveStep> steps;
+    size_t next{};
+};
+
+int scripted_receive(void* context, char* buffer, size_t capacity) {
+    auto& script = *static_cast<ReceiveScript*>(context);
+    assert(script.next < script.steps.size());
+    const auto& step = script.steps[script.next++];
+    script.now_ms += step.advance_ms;
+    if (step.result > 0) {
+        assert(static_cast<size_t>(step.result) <= capacity);
+        assert(std::strlen(step.bytes) >= static_cast<size_t>(step.result));
+        std::memcpy(buffer, step.bytes, static_cast<size_t>(step.result));
+    }
+    return step.result;
+}
+
+uint64_t scripted_clock(void* context) {
+    return static_cast<ReceiveScript*>(context)->now_ms;
+}
+
+struct ReceiveSink {
+    std::string bytes;
+    bool accept{true};
+};
+
+bool scripted_consume(void* context, const char* buffer, size_t size) {
+    auto& sink = *static_cast<ReceiveSink*>(context);
+    if (!sink.accept) return false;
+    sink.bytes.append(buffer, size);
+    return true;
+}
+
+void test_bounded_receive_policy() {
+    constexpr int timeout = -7;
+    char chunk[4]{};
+    ReceiveScript success{0, {{timeout, 1, ""}, {2, 1, "ab"},
+                              {timeout, 1, ""}, {2, 0, "cd"}}};
+    ReceiveSink sink{};
+    auto result = receive_exact_bounded(4, 5, timeout, chunk, sizeof(chunk),
+        &success, scripted_receive, &sink, scripted_consume, &success, scripted_clock);
+    assert(result == BoundedReceiveResult::COMPLETE && sink.bytes == "abcd");
+
+    ReceiveScript timeout_loop{100, {{timeout, 2, ""}, {timeout, 3, ""}}};
+    sink = {};
+    result = receive_exact_bounded(1, 5, timeout, chunk, sizeof(chunk),
+        &timeout_loop, scripted_receive, &sink, scripted_consume, &timeout_loop, scripted_clock);
+    assert(result == BoundedReceiveResult::DEADLINE_EXCEEDED && sink.bytes.empty());
+
+    ReceiveScript late_bytes{200, {{2, 5, "xy"}}};
+    sink = {};
+    result = receive_exact_bounded(2, 5, timeout, chunk, sizeof(chunk),
+        &late_bytes, scripted_receive, &sink, scripted_consume, &late_bytes, scripted_clock);
+    assert(result == BoundedReceiveResult::DEADLINE_EXCEEDED && sink.bytes.empty());
+
+    ReceiveScript consume_error{300, {{2, 1, "zz"}}};
+    sink = {};
+    sink.accept = false;
+    result = receive_exact_bounded(2, 5, timeout, chunk, sizeof(chunk),
+        &consume_error, scripted_receive, &sink, scripted_consume, &consume_error, scripted_clock);
+    assert(result == BoundedReceiveResult::CONSUME_ERROR && sink.bytes.empty());
+}
+
 struct OutputLog {
     std::vector<std::string> events;
     bool fail_pwm{};
@@ -377,8 +527,12 @@ int main(int argc, char** argv) {
     test_duration_exact_boundary();
     test_output_driver_fault_is_safe();
     test_verify_failure_and_purge_conditions();
+    test_recovery_fault_preserves_purge_contract();
+    test_external_fault_incident_edges();
     test_output_driver_fail_closed_order();
     test_max31856_deadline_boundaries();
+    test_bounded_receive_policy();
     std::cout << "PASS: 352 MAX31856 vectors + deadline edges; 31 DS18B20 vectors (25 accepted/6 rejected); "
-                 "command freshness; state/timer/fault/STOP/purge barriers; fail-closed output order\n";
+                 "command freshness; state/timer/fault/STOP/purge barriers; external-fault incident edges; "
+                 "bounded HTTP/OTA receive policy; fail-closed output order\n";
 }

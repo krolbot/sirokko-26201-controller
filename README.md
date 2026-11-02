@@ -1,6 +1,6 @@
 # Sirokko 262.01 controller
 
-> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE; firmware HOLD.** `production_release=false`. This repository is not a manufacturing release or evidence that the hardware works.
+> **DRAFT / REVIEW REQUIRED / NOT FOR ORDER / NO POWER / NO PHYSICAL FLASH / NO FIRE.** `production_release=false`, `physical_tests=false`. Firmware source, software tests and target builds are allowed for development only. This repository is not a manufacturing release or evidence that the hardware works.
 
 The repository contains one canonical KiCad project:
 
@@ -29,4 +29,4 @@ The EVM-derived ngspice fixture now produces about 12.22 V after correcting its 
 
 The current [ChipDip snapshot](docs/Sirokko_components_ChipDip.html) and [CSV](docs/Sirokko_components_ChipDip.csv) cover 40 board/insertable rows and 5 external items. C24, R108 and C109 are reflected in CAD but remain not authorized for ordering. Prices and stock are a dated website snapshot, not a guarantee.
 
-Requirements remain in [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md); current limitations are summarized in [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md). Full startup, model accuracy, SOA and input-transient coordination remain **NOT QUALIFIED**; firmware is not present in this tree and remains on HOLD; physical tests were not performed. Bodies of ESP32/MAX31856 modules are not included in 3D, only their headers. Old revision projects, duplicate PCB snapshots and PCB ZIP copies are not kept in the working tree; Git history remains the recovery path.
+Requirements remain in [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md); current limitations are summarized in [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md). The current source set combines this hardware project with the software DRAFT in [`firmware/`](firmware/); build, AP and binary-package instructions are in [`firmware/README_RU.md`](firmware/README_RU.md). The fire profile is deliberately unqualified and fuel remains software-blocked. Full startup, model accuracy, SOA, input-transient coordination and all physical firmware/radio/GPIO/load tests remain **NOT QUALIFIED**. Bodies of ESP32/MAX31856 modules are not included in 3D, only their headers. Old revision projects, duplicate PCB snapshots and PCB ZIP copies are not kept in the working tree; Git history remains the recovery path.
