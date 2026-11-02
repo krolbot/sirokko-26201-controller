@@ -16,12 +16,12 @@
 ## Проверки
 
 - Root ERC: код 0, 0 нарушений — [`checks/erc.json`](checks/erc.json).
-- Native DRC после перезаливки и повторного открытия с `--all-track-errors --schematic-parity`: код 0, 0 нарушений, 0 несоединений, 0 расхождений PCB↔SCH, `ignored_checks=[]` — [`checks/drc.json`](checks/drc.json).
+- Свежая нативная DRC на Lab сначала после `--refill-zones`, затем после повторного открытия: оба раза код 0, 0 нарушений, 0 несоединений, 0 расхождений PCB↔SCH, `ignored_checks=[]` — [`checks/drc.json`](checks/drc.json) и [`checks/native-reopen-refill.json`](checks/native-reopen-refill.json).
 - F1 metadata-only: Value/MPN обновлены до `0997015.WXN`, а посадка, 4 площадки, координаты, сети, 639 сегментов, 146 переходов и 27 зон сохранены — [`checks/f1-metadata-preservation.json`](checks/f1-metadata-preservation.json).
 - Проверка выполнялась из полного каталога проекта, поэтому проектные `fp-lib-table`/`sym-lib-table` были доступны. Отдельная сводка зависимостей — [`checks/dependency-audit.json`](checks/dependency-audit.json).
 - Отрицательный контроль с удалением одного сегмента `/TC_SDI_MOSI` дал 2 нарушения и 1 несоединение; он не сохранён в комплекте. Применённый результат и отклонённые пробы — [`../../docs/research/VIA_REDUCTION_APPLIED_CURRENT.json`](../../docs/research/VIA_REDUCTION_APPLIED_CURRENT.json).
 - Сверловка проверена по нативным объектам PCB: PTH 253 = 107 отверстий площадок + 146 переходов; NPTH 17. Все 270 отверстий совпали с раздельными Excellon по координатам, диаметрам и металлизации — [`../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json`](../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json).
-- Та же машинная проверка подтверждает все 13 строк [`../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv`](../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv) относительно нативного контура: `X_from_left_mm=X_mm+5.000`, `Y_from_top_mm=Y_mm-10.000`. Старый расчёт от `Y=10.2` даёт 13/13 ожидаемых расхождений; PCB и отверстия не перемещались.
+- Та же машинная проверка подтверждает все 13 строк [`../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv`](../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv) относительно нативного контура: `X_from_left_mm=X_mm+5.000`, `Y_from_top_mm=Y_mm-10.000`. Размерный PDF пересобран из этой же PCB/CSV с базой `(-5.000; 10.000)`: новый PDF даёт 13/13 совпадений, а отрицательный контроль старого PDF — 13/13 ожидаемых расхождений. Текстовая и визуальная проверка — [`checks/mechanical-pdf-verification.json`](checks/mechanical-pdf-verification.json); PCB и отверстия не перемещались.
 - Все 72 посадочных места находятся на F.Cu. В `cpl.csv` оставлены ровно 59 электрических позиций из BOM, все `Side=top`; крепёжные отверстия исключены.
 
 ## Состав

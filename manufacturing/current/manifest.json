@@ -34,7 +34,10 @@
       "violations": 0,
       "unconnected_items": 0,
       "schematic_parity_issues": 0,
-      "ignored_checks": []
+      "ignored_checks": [],
+      "refill_passed": true,
+      "reopen_passed": true,
+      "report": "checks/native-reopen-refill.json"
     },
     "drill_geometry": {
       "pth": 253,
@@ -101,6 +104,17 @@
       "cad_geometry_unchanged": true,
       "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
     },
+    "mechanical_pdf": {
+      "path": "pdf/Sirokko26201_mechanical_holes.pdf",
+      "sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd",
+      "edge_cuts_base_mm": [-5.0, 10.0],
+      "current_rows_matching": 13,
+      "old_pdf_mismatching_rows": 13,
+      "text_review": "PASS",
+      "visual_review": "PASS",
+      "cad_geometry_unchanged": true,
+      "report": "checks/mechanical-pdf-verification.json"
+    },
     "f1_metadata": {
       "Value": "0997015.WXN / 15A",
       "MPN": "0997015.WXN + 3568",
@@ -166,8 +180,8 @@
     },
     {
       "path": "README_RU.md",
-      "bytes": 7643,
-      "sha256": "b19486ec5892ed4f1a3fbfd84ba32442900ea6e46568d929ccc08106bb6abe32"
+      "bytes": 8079,
+      "sha256": "06b9b0af243cb669f0ab648a75116475bd5bef8bf3e855da136fb38281b766cb"
     },
     {
       "path": "bom.csv",
@@ -187,12 +201,12 @@
     {
       "path": "checks/drc.json",
       "bytes": 416,
-      "sha256": "6867d801105cc390f8a0ca5ae74441c02ad55e63c7f0b4a8fdc35ec260f05575"
+      "sha256": "96c6e2235e5abda0c648c7e1e5e05beb7bb76979af08743b5158d078a8d346e6"
     },
     {
       "path": "checks/erc.json",
       "bytes": 1854,
-      "sha256": "978f9440283fde29b7999b7cbc3843a34103850f575d7409430302540a12776c"
+      "sha256": "f6c2ad2679d25c57ace20061d309889a43d8e52e8c11636eba85a7279b55ed90"
     },
     {
       "path": "checks/f1-metadata-preservation.json",
@@ -203,6 +217,16 @@
       "path": "checks/j1-j3-metadata-verification.json",
       "bytes": 4393,
       "sha256": "d9e1c97e6267a77eda6c03a3c104c512f1855b184ef19a9c6c67d09b9249a1b0"
+    },
+    {
+      "path": "checks/mechanical-pdf-verification.json",
+      "bytes": 3856,
+      "sha256": "3cc03d0bf77624835afe7c6d95ed19b675e61b1ec0fd3a425bdc70f53d3fa579"
+    },
+    {
+      "path": "checks/native-reopen-refill.json",
+      "bytes": 2304,
+      "sha256": "fb278ddbb9ae5934feea4c6c091840913c157d7555b49b286fa4cdccd4a29c62"
     },
     {
       "path": "cpl.csv",
@@ -306,8 +330,8 @@
     },
     {
       "path": "pdf/Sirokko26201_mechanical_holes.pdf",
-      "bytes": 43056,
-      "sha256": "e6fd68874e30dacd489e88d57bc6ce98429645460d2090bc86804f9294a471bd"
+      "bytes": 43524,
+      "sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd"
     },
     {
       "path": "renders/assembly-back.png",
