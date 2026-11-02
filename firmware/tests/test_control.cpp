@@ -214,6 +214,20 @@ void test_duration_exact_boundary() {
     assert(machine.tick(in).state == State::STOP_PURGE);
 }
 
+void test_output_driver_fault_is_safe() {
+    Controller machine(profile(), {}, 4);
+    TickInput in{};
+    in.now_ms = 100;
+    in.sensors = good(100);
+    assert(machine.tick(in).state == State::IDLE);
+    in.now_ms = 101;
+    in.external_faults = FAULT_CONTROL_WATCHDOG;
+    const auto state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE);
+    assert((state.faults & FAULT_CONTROL_WATCHDOG) != 0);
+    assert(!state.outputs.glow && !state.outputs.fuel);
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -225,5 +239,6 @@ int main(int argc, char** argv) {
     test_state_machine_and_priority();
     test_delayed_stop_and_fault_barriers();
     test_duration_exact_boundary();
+    test_output_driver_fault_is_safe();
     std::cout << "PASS: 352 MAX31856 vectors; DS18B20 format/CRC; command freshness; state/timer/fault/STOP barriers\n";
 }

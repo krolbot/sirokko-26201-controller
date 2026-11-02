@@ -163,8 +163,8 @@ Snapshot Controller::tick(const TickInput& input) {
     const uint64_t now = input.now_ms;
 
     const uint32_t current_sensor_faults = sensor_faults(input.sensors, now);
-    if (active(state_) && (current_sensor_faults || input.external_faults))
-        latch_fault(current_sensor_faults | input.external_faults, now);
+    if (input.external_faults) latch_fault(input.external_faults, now);
+    else if (active(state_) && current_sensor_faults) latch_fault(current_sensor_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued/armed starts and never writes GPIO directly.
     if (input.stop) begin_stop(now);

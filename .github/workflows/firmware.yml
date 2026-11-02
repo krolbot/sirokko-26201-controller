@@ -1,0 +1,52 @@
+name: Firmware checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "firmware/**"
+      - ".github/workflows/firmware.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+      - name: Host tests
+        run: python3 firmware/tests/run_host_tests.py
+      - name: ESP-IDF v5.2.3 target build
+        run: |
+          docker run --rm \
+            -e IDF_TARGET=esp32s3 \
+            -e IDF_COMPONENT_MANAGER=1 \
+            -v "$GITHUB_WORKSPACE:/project" \
+            -w /project/firmware \
+            espressif/idf@sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380 \
+            /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py build'
+      - name: Prepare exact build artifact
+        run: |
+          mkdir -p firmware/release-artifact
+          cp \
+            firmware/build/bootloader/bootloader.bin \
+            firmware/build/partition_table/partition-table.bin \
+            firmware/build/sirokko_26201_controller.bin \
+            firmware/build/flash_args \
+            firmware/build/flasher_args.json \
+            firmware/build/project_description.json \
+            firmware/build/config/sdkconfig.json \
+            firmware/dependencies.lock \
+            firmware/release-artifact/
+          printf '%s\n' "$GITHUB_SHA" > firmware/release-artifact/GIT_COMMIT
+          printf '%s\n' 'ESP-IDF v5.2.3 / espressif/idf linux-amd64 sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380' > firmware/release-artifact/BUILD_ENVIRONMENT
+          (cd firmware/release-artifact && sha256sum * > SHA256SUMS)
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sirokko-esp32s3-${{ github.sha }}
+          path: firmware/release-artifact/
+          if-no-files-found: error
+          retention-days: 30
