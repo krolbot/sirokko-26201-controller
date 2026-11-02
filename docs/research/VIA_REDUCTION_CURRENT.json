@@ -1,7 +1,7 @@
 {
   "schema": "sirokko.via-reduction-audit.v1",
   "status": "VERIFIED_APPLIED_ONE_VIA_REDUCTION",
-  "source_commit": "eadad5de02062fea6009871ee03c63b9a983c735",
+  "source_commit": "627775d0f8a08450f2b3e3bb6c965edd6a4e4a98",
   "source_pcb_sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820",
   "source_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
   "native_kicad_version": "10.0.8",

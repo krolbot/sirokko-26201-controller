@@ -5,9 +5,9 @@
 
 ## Проверенная редакция
 
-- Коммит исходников и производных: [`4b757e9749ca410d8b6b8b7ce2d5e41c01692e7b`](https://github.com/krolbot/sirokko-26201-controller/commit/4b757e9749ca410d8b6b8b7ce2d5e41c01692e7b).
-- PCB: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820`.
-- Корневая схема: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`, SHA256 `c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b`.
+- Коммит исходников: [`b459f066b95efbfa205e608dbc69e0e4f8d06ea5`](https://github.com/krolbot/sirokko-26201-controller/commit/b459f066b95efbfa205e608dbc69e0e4f8d06ea5).
+- PCB: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`.
+- Корневая схема: `hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`, SHA256 `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`.
 - Дочерний лист входной защиты: SHA256 `d3686cfc00b28a220041f71b53705924d24c83587c78d9480d03799f1375887d`.
 - KiCad 10.0.8; один действующий проект, второй PCB не создавался.
 
@@ -25,7 +25,7 @@ R108 и C109 добавлены штатным native KiCad writer на F.Cu р�
 - C109.2 → `/GND`;
 - U13.13 остаётся отдельной сетью `unconnected-(U13-EP-Pad13)` и не заземлён.
 
-Добавлены только шесть сегментов и два перехода, необходимые этой ветви. После перезаливки PCB содержит 72 посадочных места, 291 площадку, 639 сегментов, 147 переходов, 78 сетей и 27 зон.
+Ветка R108/C109 ранее добавила шесть сегментов и два перехода. После отдельного проверенного сокращения `/TC_SDI_MOSI` и metadata-правки J1/J3 текущая PCB содержит 72 посадочных места, 291 площадку, 639 сегментов, 146 переходов, 78 сетей и 27 зон. Правка J1/J3 изменила только MPN/Manufacturer; 44 площадки и медь сохранены.
 
 Одновременно C24 штатно заменён на Samsung `CL21B224KCFSFNE`: `220 nF ±10% X7R 100 Vdc`, прежнее `Capacitor_SMD:C_0805_2012Metric`, без изменения площадок, сетей, координат, угла и меди. Ошибочное описание 100 В AC из карточки магазина не используется. Эта замена не квалифицирует DC-bias или пуск.
 

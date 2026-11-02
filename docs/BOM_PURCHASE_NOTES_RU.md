@@ -4,9 +4,9 @@
 
 ## Ревизия и границы
 
-- Коммит исходников: [`4b757e9749ca410d8b6b8b7ce2d5e41c01692e7b`](https://github.com/krolbot/sirokko-26201-controller/commit/4b757e9749ca410d8b6b8b7ce2d5e41c01692e7b).
-- Корневая схема SHA256: `c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b`.
-- PCB SHA256: `46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820`.
+- Коммит исходников: [`b459f066b95efbfa205e608dbc69e0e4f8d06ea5`](https://github.com/krolbot/sirokko-26201-controller/commit/b459f066b95efbfa205e608dbc69e0e4f8d06ea5).
+- Корневая схема SHA256: `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`.
+- PCB SHA256: `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`.
 - Схема содержит 59 электрических позиций; все 59 присутствуют на PCB. R108/C109 больше не являются схемными-only позициями.
 - PCB содержит 72 посадочных места: 59 электрических и 13 механических отверстий.
 - C24: Samsung `CL21B224KCFSFNE`, 220 нФ ±10%, X7R, 100 Vdc, 0805. Посадка и сети не менялись; DC-bias и пуск не квалифицированы.

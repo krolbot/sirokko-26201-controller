@@ -1,5 +1,5 @@
 Drill report for Sirokko26201_control_motor_candidate.kicad_pcb
-Created on 2026-11-02T11:05:59
+Created on 2026-11-02T11:54:25
 
 Copper Layer Stackup:
     =============================================================
@@ -10,7 +10,7 @@ Copper Layer Stackup:
 Drill file 'Sirokko26201_control_motor_candidate-PTH.drl' contains
     plated through holes:
     =============================================================
-    T1  0.300mm  0.0118"  (106 holes))
+    T1  0.300mm  0.0118"  (105 holes))
     T2  0.400mm  0.0157"  (35 holes))
     T3  0.500mm  0.0197"  (6 holes))
     T4  0.800mm  0.0315"  (14 holes))
@@ -20,7 +20,7 @@ Drill file 'Sirokko26201_control_motor_candidate-PTH.drl' contains
     T8  1.700mm  0.0669"  (4 holes))
     T9  2.340mm  0.0921"  (10 holes))
 
-    Total plated holes count 254
+    Total plated holes count 253
 
 
 Drill file 'Sirokko26201_control_motor_candidate-NPTH.drl' contains

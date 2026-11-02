@@ -2,7 +2,7 @@
   "status": "FINAL_NATIVE_DRILL_GEOMETRY_MATCHES",
   "source": {
     "pcb": "repo/hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-    "pcb_sha256": "4a5093ef614989879bbfb0596f96afb1b34f41ba15901a59844b0ebda81dbb09",
+    "pcb_sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a",
     "drill_sha256": {
       "Sirokko26201_control_motor_candidate-NPTH.drl": "4e8e1c1a211c8c371746099bb96ed94bd3c8364b096070296a31cd06bd198e10",
       "Sirokko26201_control_motor_candidate-PTH.drl": "3d2bf0df6aa97133794f6c4628987dca7905b60da1725bc62d914b6d7234679b"

@@ -2,11 +2,91 @@
   "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE",
   "production_release": false,
   "physical_tests": false,
-  "source_commit": "eadad5de02062fea6009871ee03c63b9a983c735",
+  "source_commit": "b459f066b95efbfa205e608dbc69e0e4f8d06ea5",
   "generator": {
     "kicad": "10.0.8",
     "native_project_context": true,
-    "source_modified": false
+    "source_modified_by_export": false
+  },
+  "validation": {
+    "erc": {
+      "violations": 0,
+      "ignored_checks": [
+        {
+          "description": "Global label only appears once in the schematic",
+          "key": "single_global_label"
+        },
+        {
+          "description": "Four connection points are joined together",
+          "key": "four_way_junction"
+        },
+        {
+          "description": "SPICE model issue",
+          "key": "simulation_model_issue"
+        },
+        {
+          "description": "Assigned footprint doesn't match footprint filters",
+          "key": "footprint_filter"
+        }
+      ]
+    },
+    "drc": {
+      "violations": 0,
+      "unconnected_items": 0,
+      "schematic_parity_issues": 0,
+      "ignored_checks": []
+    },
+    "drill_geometry": {
+      "pth": 253,
+      "npth": 17,
+      "total": 270,
+      "parity": true,
+      "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
+    },
+    "board": {
+      "footprints": 72,
+      "segments": 639,
+      "vias": 146,
+      "nets": 78,
+      "zones": 27,
+      "thickness_mm": 1.6
+    },
+    "bom_cpl": {
+      "electrical_references": 59,
+      "mechanical_holes_excluded": 13,
+      "position_rotation_side_mismatches": 0
+    },
+    "visual_review": {
+      "schematic_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "pdfs": [
+        "assembly_front",
+        "assembly_back",
+        "assembly_front_lower_left_detail",
+        "mechanical_holes",
+        "PTH_drill_map",
+        "NPTH_drill_map"
+      ],
+      "renders": [
+        "assembly-front.png",
+        "assembly-back.png",
+        "board-3d-top.png",
+        "board-3d-bottom.png"
+      ]
+    },
+    "j1_j3_metadata": {
+      "MPN": "SSQ-122-01-T-S",
+      "Manufacturer": "Samtec",
+      "pad_records_verified_unchanged": 44,
+      "all_other_MPN_unchanged": true,
+      "physical_fit_tested": false,
+      "report": "checks/j1-j3-metadata-verification.json"
+    }
   },
   "sources": [
     {
@@ -16,33 +96,33 @@
     },
     {
       "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch",
-      "bytes": 173900,
-      "sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b"
+      "bytes": 174324,
+      "sha256": "3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099"
     },
     {
       "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-      "bytes": 981818,
-      "sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820"
+      "bytes": 982133,
+      "sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a"
     },
     {
       "path": "hardware/kicad/MinimalSafety.kicad_sch",
-      "bytes": 38524,
-      "sha256": "3419aa24e854817fa59c91646ded28834a511ab17568cda566763b223c3f3ef0"
+      "bytes": 37529,
+      "sha256": "d848e3bdbd230189229350c5d70616f05690d37c8bc10b55033660e1448c1a82"
     },
     {
       "path": "hardware/kicad/logic_power_24_5_DRAFT.kicad_sch",
-      "bytes": 77718,
-      "sha256": "36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d"
+      "bytes": 77717,
+      "sha256": "67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd"
     },
     {
       "path": "hardware/kicad/motor_external_hc160.kicad_sch",
-      "bytes": 16804,
-      "sha256": "fae39327263102616ed1276727cb5fd9a88352298e8309af89d49b542f24f5d1"
+      "bytes": 16807,
+      "sha256": "588306c87a49cd58a5691a0a2a2f85ceb4380b67d180da0f0688d54d64b6d300"
     },
     {
       "path": "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch",
-      "bytes": 103999,
-      "sha256": "d3686cfc00b28a220041f71b53705924d24c83587c78d9480d03799f1375887d"
+      "bytes": 104757,
+      "sha256": "4a35099141453f364147c567d8b08f0ee1324c24b494df9f6d6fc541fcdababa"
     },
     {
       "path": "hardware/kicad/fp-lib-table",
@@ -58,188 +138,169 @@
   "files": [
     {
       "path": "FABRICATION_REQUIREMENTS_RU.md",
-      "bytes": 12307,
-      "sha256": "5aa49e9bce7d468bcef4037592d54be4c75f671c70095b8412f45eea843af2ee"
+      "bytes": 12277,
+      "sha256": "aa6f05b07cb3f7dc16996ea5baf1d9392ee3ea19952fccfbf33e491644dfe741"
     },
     {
       "path": "README_RU.md",
-      "bytes": 6890,
-      "sha256": "dcca897e9fe7863a376a5fa513d17e0bc12ff591adba8cff5af43c9db6385c52"
+      "bytes": 6701,
+      "sha256": "4ab2ca84a3cbe620a154629cc2290f2f07496f3c161ad0bb68c89d46e9155ae9"
     },
     {
       "path": "bom.csv",
-      "bytes": 7677,
-      "sha256": "f44d56992f8c4d75b3d91ccd0c892f43b054a149a4a8e5b900d544f1c4e7dc0a"
+      "bytes": 7773,
+      "sha256": "f34fe7ddd2554a60d252a29a8432462fe970e67c0030ef4845e100ff31bf0a95"
+    },
+    {
+      "path": "checks/board-stats.json",
+      "bytes": 4195,
+      "sha256": "dac49cd114e51db5129c9a148feee8ebe3190209615161435eafcf5c31a66586"
     },
     {
       "path": "checks/dependency-audit.json",
       "bytes": 2059,
-      "sha256": "e7f92f5c24346ce15c528f54de04e6bf1d6f54eb41b1a3abbd76d202495ad0ea"
+      "sha256": "3e452e6ff0b891f31afd1c770e804afc3fc20e776b01bc77080f96e07f4a1d8f"
     },
     {
       "path": "checks/drc.json",
       "bytes": 416,
-      "sha256": "0eaf5e2d363aa2c93f6d782fc1993eda003756169821abcb1f4c2b632a76d12d"
-    },
-    {
-      "path": "checks/drill-parity.json",
-      "bytes": 1358,
-      "sha256": "f2069f78c077a43bc4ed39ad5fb8989494de768901df8a880595792ed8e61c09"
+      "sha256": "ee72a25aae410b877c872536420722fa2140eb24f805dfd5eea869a47b9bd009"
     },
     {
       "path": "checks/erc.json",
       "bytes": 1854,
-      "sha256": "e410c1178c3e50ea6095bf89e1947b74a06531ae895d5a4841a7b1ff65ce70e4"
+      "sha256": "078e9501881c4e30ef1dc941a5e043ba40ac063e8413e18301de87aaa180ffe1"
     },
     {
-      "path": "checks/prefab-gate-staged.json",
-      "bytes": 7387,
-      "sha256": "a3d0965bb6bd5d846066192815bee3189b81c76702a1e0a3bbfa821fca994cef"
-    },
-    {
-      "path": "checks/project-opencheck-drc.json",
-      "bytes": 416,
-      "sha256": "a525a385fce673d51af655b583e4803ded2908e4c114863287f98720eeba9698"
-    },
-    {
-      "path": "checks/project-opencheck-erc.json",
-      "bytes": 1854,
-      "sha256": "58ad722975682ea869a0b2f8abe20b435e776c537c008e385d7794210309dfe9"
+      "path": "checks/j1-j3-metadata-verification.json",
+      "bytes": 4393,
+      "sha256": "d9e1c97e6267a77eda6c03a3c104c512f1855b184ef19a9c6c67d09b9249a1b0"
     },
     {
       "path": "cpl.csv",
-      "bytes": 5244,
-      "sha256": "3e454f9f8c7699ec6ba27b16a07082ba0f533141995c4d9d0d7c934753c4e5d2"
+      "bytes": 5594,
+      "sha256": "1f0eb18a2cd2ff40664ce4ea21eda547186cb4d49e4f4a7fc4961bb9b985b4e7"
     },
     {
       "path": "drill/Sirokko26201_control_motor_candidate-NPTH-drl_map.pdf",
       "bytes": 14086,
-      "sha256": "bcaa8bca0909f672bde58302de7b07b5f644dc10569130c8c157c2b573d90715"
+      "sha256": "4608eada5af8810f15246eba8b68aa49b34a39420dac5b899fd0b516450d5cb6"
     },
     {
       "path": "drill/Sirokko26201_control_motor_candidate-NPTH.drl",
       "bytes": 798,
-      "sha256": "c7168105aa43367c34b18e417c470fde5f7ede01a75e57e60755821c630d6f8d"
+      "sha256": "4e8e1c1a211c8c371746099bb96ed94bd3c8364b096070296a31cd06bd198e10"
     },
     {
       "path": "drill/Sirokko26201_control_motor_candidate-PTH-drl_map.pdf",
-      "bytes": 23945,
-      "sha256": "88c2b85e788c242992b53e752ef9075c4f853dcec1501b566d3d2b95ff3602d6"
+      "bytes": 23908,
+      "sha256": "2bd110b30403feb8bb11cfcfcb97c7c6d0e6ea7bd8443b0d8393ebc582b6100f"
     },
     {
       "path": "drill/Sirokko26201_control_motor_candidate-PTH.drl",
-      "bytes": 4302,
-      "sha256": "5bb648e2f7f0d1ac20b9245cb44e62e8e32c9999c3064706dc1032eaef88b5d4"
+      "bytes": 4290,
+      "sha256": "3d2bf0df6aa97133794f6c4628987dca7905b60da1725bc62d914b6d7234679b"
     },
     {
       "path": "drill/drill-report.txt",
       "bytes": 1150,
-      "sha256": "61f2d7045edabe19f97bdc29b9849515e6450461fddab3aadb1a95bd24209f6e"
+      "sha256": "142d7ea280449285c19f8bdddc1f79a036ae09ced664eaaac794c3a15f948749"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbl",
-      "bytes": 248559,
-      "sha256": "6ca7572ba49ca3dfdb867f92e7f2495b098554722170ac2f25b63eea7c3571e4"
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbr",
+      "bytes": 252638,
+      "sha256": "5b6ee3dbbeecb4d2ccd3015d3aac7e93b69dc1fc4f3d0864831a157ec8034924"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbs",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbr",
       "bytes": 5545,
-      "sha256": "ec47ef9fd8e3aa9b36b2ee0b0027920a3821809dd68e4e4f4088d331a867734e"
+      "sha256": "30a56a5ef46fb5ff9dc3c7a2b1343bc5792432b640ed964e3569b66c39afe88c"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbp",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbr",
       "bytes": 523,
-      "sha256": "7d1b24c014d9f5c30532b379e4f4d2d0b7ead3d427cdb14391c3891277b1ead7"
+      "sha256": "2f7fa5f0a732a64cee777b9f81a292d8510a36b9e6e377273382af11839a3a82"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbo",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
       "bytes": 524,
-      "sha256": "163097cf06ac9824e05c9f0583f02412b5d6a8943d4348ddf9e045f279d0ec00"
+      "sha256": "a35dde1f3ec7ffa595e15e21e34ace8fbcf80bd679563980d172cee082fffe67"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gm1",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
       "bytes": 753,
-      "sha256": "fa98a92d25d71aa622fad95926abe5559a737805b0feb3d0699f0febf601347c"
+      "sha256": "edfaf8f9ec93fe1a885267fe971eec500957d2251ae5babc27b0e88417360cfa"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gtl",
-      "bytes": 228107,
-      "sha256": "71db8fe003ea38dbf2fce504b68fdac3d8a1acc7cf8ef216cc832283cf038b36"
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gbr",
+      "bytes": 228327,
+      "sha256": "f7c899b3b64004cd8ed6e8f740682c16c5d817277a244bc7e85c6bba65b19c99"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gts",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gbr",
       "bytes": 12553,
-      "sha256": "7e7ca9575dfc632a649e0ed3ed290f7d59457b2afef8b0be52722abfba154265"
+      "sha256": "92020d291806e7101bdb1725693822ed2dc09c67b1db960e32bd47f7acb5388b"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gtp",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gbr",
       "bytes": 8821,
-      "sha256": "5da9f6542c18769823643f352ce697903c4523873b9447f6955154a521c2b120"
+      "sha256": "8e97ffdc9864ce71eb2a04010e811186282c6443394741959c5a130a5de79f10"
     },
     {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gto",
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
       "bytes": 185521,
-      "sha256": "473536add0428d7c22fbb6b97eb3c1df3fb7b0406a309550962fd173433db557"
+      "sha256": "5729a6a60a6ccf96a4437cabd37f005eedc3b0dcddf3bdc4c75bd36c3da95adb"
     },
     {
       "path": "gerbers/Sirokko26201_control_motor_candidate-job.gbrjob",
       "bytes": 2991,
-      "sha256": "17ada7ef4f207b489dc695094a1426f598084fa0f1363769bbb2d4680c4af2e4"
+      "sha256": "afe9eb42d8a140c7261243d1d832997a6a4f40f50338c66ef49068f3054dfbb0"
     },
     {
       "path": "pdf/Sirokko26201_assembly_back.pdf",
       "bytes": 67804,
-      "sha256": "bc4263476d59fe52a0fab8342b06b3233e87bdf36649d461aad6874de5c35c14"
+      "sha256": "81ccfa9ab7d00ed70e1357053d2bc3abcd5a69e31827184d3869488201f523bb"
     },
     {
       "path": "pdf/Sirokko26201_assembly_front.pdf",
-      "bytes": 246142,
-      "sha256": "0bbc094fc6be0d9fb13d5551fbb28a17043dd436c28e9f79467725a1188d1dea"
+      "bytes": 231087,
+      "sha256": "b0d0d955f4463656dc9ee6cd36e5f0eca9897ec88a159edd166e3c7b6653ebf2"
+    },
+    {
+      "path": "pdf/Sirokko26201_assembly_front_lower_left_detail.pdf",
+      "bytes": 142051,
+      "sha256": "df255189ece01ab198e1e41a8bbb2a9cb63de7112e0de8fffd76b46c20b1d7ac"
     },
     {
       "path": "pdf/Sirokko26201_full_schematic.pdf",
-      "bytes": 281619,
-      "sha256": "26f1346b7aa8ecfdc45a3c7bb81c881df64bde0f446b0f4b1273b5c5eabeefc8"
+      "bytes": 158512,
+      "sha256": "0323422e1eab4599fb3526e45c54db8b737f28f1fb04a5ccb89cb430b7494578"
     },
     {
       "path": "pdf/Sirokko26201_mechanical_holes.pdf",
-      "bytes": 246564,
-      "sha256": "2c2f57ccfdbdc7d1fefb4d4cfad5ca07a1b2e0c4e797dd2b967d5991036e3abf"
+      "bytes": 43056,
+      "sha256": "e6fd68874e30dacd489e88d57bc6ce98429645460d2090bc86804f9294a471bd"
     },
     {
       "path": "renders/assembly-back.png",
-      "bytes": 136809,
-      "sha256": "dae12ecbbe1d941848a62033a71231b3e591e3f5beaef2f2d17aa846333aa429"
+      "bytes": 61931,
+      "sha256": "1aea8c1856cb0d8dbdae49b03c0beb93fa698e2ce92f526139fc90a5b9e52c5d"
     },
     {
       "path": "renders/assembly-front.png",
-      "bytes": 273914,
-      "sha256": "6dbc6910a1f46d4af956b43c33f01c3f2f44f23d1c00d6cc21ee0dd466610a31"
+      "bytes": 125398,
+      "sha256": "d1550ff063ce58cfbaa4abaa3eac11c4fa9a9cf89420ed075c490bbb4af30bfe"
     },
     {
       "path": "renders/board-3d-bottom.png",
-      "bytes": 307293,
-      "sha256": "8a626ce181fe0f69524874f6afdeaa892086a8aa15d3d7d41b2311abacfdca2a"
-    },
-    {
-      "path": "renders/board-3d-oblique.png",
-      "bytes": 768596,
-      "sha256": "747648b950943397311b90f30615301279f5325c5028429a75d06862c6c07ac8"
+      "bytes": 199936,
+      "sha256": "e3baad03ad7599d2d3e9d886290d4e79574bbb9b2b8ae8a5cc5988dcdbacc203"
     },
     {
       "path": "renders/board-3d-top.png",
-      "bytes": 469396,
-      "sha256": "02d4bc4baf31187b22eb89b7b98608028396593f8e868f7035a10561c823dd94"
-    },
-    {
-      "path": "renders/board-back.png",
-      "bytes": 287661,
-      "sha256": "c4422faa8f9a0e546cb46bd356a939ea8c451623adab4abc98da1e3244c4ec10"
-    },
-    {
-      "path": "renders/board-front.png",
-      "bytes": 385207,
-      "sha256": "e9a168f41e2867e32a1ad740c72e0d17e8d01109b9dbcb3acf6beafbccdc6b7d"
+      "bytes": 318159,
+      "sha256": "3bf7373aa09b74ab92ec38687d1babaec4defd54eb82f115427ee4691be2d691"
     }
-  ]
+  ],
+  "firmware_hold": true
 }

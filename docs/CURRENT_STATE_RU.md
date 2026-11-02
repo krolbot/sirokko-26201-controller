@@ -7,8 +7,8 @@
 Единственный действующий CAD-путь — [`../hardware/kicad/`](../hardware/kicad/):
 
 - `.kicad_pro`: `11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6`;
-- root SCH: `9b0b16a24ee0e82d626c7c859677663ca6b0d6a9dad2d32169ad8ded8f1130e5`;
-- PCB: `4a5093ef614989879bbfb0596f96afb1b34f41ba15901a59844b0ebda81dbb09`;
+- root SCH: `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`;
+- PCB: `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`;
 - `Sirokko_Input_Protection_WIP.kicad_sch`: `4a35099141453f364147c567d8b08f0ee1324c24b494df9f6d6fc541fcdababa`;
 - `logic_power_24_5_DRAFT.kicad_sch`: `67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd`;
 - `fp-lib-table`: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`.

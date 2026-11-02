@@ -1,0 +1,176 @@
+{
+  "schema": "sirokko.j1_j3_metadata_verification.v1",
+  "status": "VERIFIED_METADATA_ONLY",
+  "source_before": {
+    "commit": "cba4dd5ccc55d636528edffc05b1383d315079a6",
+    "pcb_sha256": "4a5093ef614989879bbfb0596f96afb1b34f41ba15901a59844b0ebda81dbb09",
+    "root_schematic_sha256": "9b0b16a24ee0e82d626c7c859677663ca6b0d6a9dad2d32169ad8ded8f1130e5"
+  },
+  "source_after": {
+    "commit": "b459f066b95efbfa205e608dbc69e0e4f8d06ea5",
+    "pcb_sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a",
+    "root_schematic_sha256": "3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099"
+  },
+  "authorized_change": {
+    "references": [
+      "J1",
+      "J3"
+    ],
+    "MPN": {
+      "from": "SSQ-122-01-G-S",
+      "to": "SSQ-122-01-T-S"
+    },
+    "Manufacturer": {
+      "from": "",
+      "to": "Samtec"
+    }
+  },
+  "footprints": [
+    {
+      "reference": "J1",
+      "footprint_library_id": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+      "footprint_uuid": "c7b845a3-5065-4eb4-883f-9f43a9852f07",
+      "layer": "F.Cu",
+      "placement": "100.45 75.5 -90",
+      "pads": 22,
+      "pad_records_sha256": "ed2acae3683502d5e02a47f8f43f00f0aee83a19ba22da8953e28b18d9e87e09",
+      "pad_numbers": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22"
+      ],
+      "pad_records_identical": true,
+      "before": {
+        "MPN": "SSQ-122-01-G-S",
+        "Manufacturer": null
+      },
+      "after": {
+        "MPN": "SSQ-122-01-T-S",
+        "Manufacturer": "Samtec"
+      }
+    },
+    {
+      "reference": "J3",
+      "footprint_library_id": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+      "footprint_uuid": "915a416a-7ebc-48b7-a679-87861cb49513",
+      "layer": "F.Cu",
+      "placement": "100.45 100.9 -90",
+      "pads": 22,
+      "pad_records_sha256": "b5b5c3e0e6e74dc78a875202e2d5771599036ad841177b8817270532d8f4c2d3",
+      "pad_numbers": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22"
+      ],
+      "pad_records_identical": true,
+      "before": {
+        "MPN": "SSQ-122-01-G-S",
+        "Manufacturer": null
+      },
+      "after": {
+        "MPN": "SSQ-122-01-T-S",
+        "Manufacturer": "Samtec"
+      }
+    }
+  ],
+  "invariants": {
+    "pcb_byte_identical_after_inverse_authorized_patch": true,
+    "schematic_byte_identical_after_inverse_authorized_patch": true,
+    "all_other_MPN_unchanged": true,
+    "footprint_ids_unchanged": true,
+    "pad_records_identical": true,
+    "pad_count": 44,
+    "pin_to_net_xy_drill_unchanged": true,
+    "placement_layer_rotation_unchanged": true,
+    "tracks_vias_zones_copper_unchanged": true,
+    "board_counts": {
+      "footprints": 72,
+      "segments": 639,
+      "vias": 146,
+      "nets": 78,
+      "zones": 27
+    }
+  },
+  "native_checks": {
+    "kicad_version": "10.0.8",
+    "drc": {
+      "violations": 0,
+      "unconnected_items": 0,
+      "schematic_parity": 0,
+      "ignored_checks": []
+    },
+    "erc": {
+      "violations": 0
+    }
+  },
+  "exports": {
+    "bom_rows": 59,
+    "cpl_rows": 59,
+    "bom_cpl_reference_parity": true,
+    "position_rotation_side_mismatches": 0,
+    "bom_J1_J3_readback": true,
+    "schematic_netlist_J1_J3_readback": true,
+    "full_schematic_pdf_regenerated": true
+  },
+  "procurement_basis": {
+    "part": "Samtec SSQ-122-01-T-S",
+    "chipdip_sku": "8065631635",
+    "observed_unit_price_rub": 890,
+    "quantity": 2,
+    "observed_total_rub_excluding_delivery": 1780,
+    "moq": 1,
+    "supplier_stock_observed": 221,
+    "lead_time_observed": "7–8 недель",
+    "local_availability_asserted": false,
+    "purchase_performed": false,
+    "temperature_range_C": [
+      -55,
+      105
+    ],
+    "physical_fit_tested": false
+  },
+  "release": {
+    "production_release": false,
+    "physical_tests": false,
+    "firmware_hold": true,
+    "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE"
+  }
+}

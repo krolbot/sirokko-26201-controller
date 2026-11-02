@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "10.0.8-10.0.8~ubuntu26.04.1"
     },
-    "CreationDate": "2026-11-02T11:05:58+03:00"
+    "CreationDate": "2026-11-02T11:54:24+03:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -34,47 +34,47 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "Sirokko26201_control_motor_candidate-F_Cu.gtl",
+      "Path": "Sirokko26201_control_motor_candidate-F_Cu.gbr",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-B_Cu.gbl",
+      "Path": "Sirokko26201_control_motor_candidate-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-F_Paste.gtp",
+      "Path": "Sirokko26201_control_motor_candidate-F_Paste.gbr",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-B_Paste.gbp",
+      "Path": "Sirokko26201_control_motor_candidate-B_Paste.gbr",
       "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-F_Silkscreen.gto",
+      "Path": "Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-B_Silkscreen.gbo",
+      "Path": "Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-F_Mask.gts",
+      "Path": "Sirokko26201_control_motor_candidate-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-B_Mask.gbs",
+      "Path": "Sirokko26201_control_motor_candidate-B_Mask.gbr",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-Edge_Cuts.gm1",
+      "Path": "Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }
