@@ -193,7 +193,8 @@ void control_task(void*) {
         sirokko::TickInput input{};
         input.now_ms = now_ms();
         input.sensors = sensors;
-        input.external_faults = g_output_driver_fault.load() ? sirokko::FAULT_CONTROL_WATCHDOG : 0;
+        input.external_faults = g_output_driver_fault.load()
+            ? static_cast<uint32_t>(sirokko::FAULT_CONTROL_WATCHDOG) : 0U;
         input.stop = g_stop.exchange(false);
 
         bool gate_locked = false;

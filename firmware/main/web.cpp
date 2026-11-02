@@ -3,6 +3,7 @@
 #include <array>
 #include <cerrno>
 #include <cinttypes>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
