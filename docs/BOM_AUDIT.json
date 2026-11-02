@@ -1,11 +1,11 @@
 {
   "files": {
-    "BOM_DRAFT_NOT_FOR_ORDER.csv": "6a9cb0e4e44ff0180a9cb060a9124a629e2162bea025194edfbe613cd22fba0a",
-    "BOM_PURCHASE_ALLOCATION_DRAFT.csv": "798e50134beb0e02b9f5872b72cebd8a42cf0d21152d2188e7c668aee435507e",
-    "BOM_PURCHASE_DRAFT_NOT_FOR_ORDER.csv": "b9ddb69b9620bd17aab753e9c181a7e472911043cadd2f03ac003bc6c30a3b86"
+    "BOM_DRAFT_NOT_FOR_ORDER.csv": "286fb5a10300b71b044600a11699fd850d3dfa5cf1b51f75a14b5e7d093d0282",
+    "BOM_PURCHASE_ALLOCATION_DRAFT.csv": "e2d269e51a8c43748ae1915af6eb45b9e98b06ad7641daee505d7f8b7d344d0c",
+    "BOM_PURCHASE_DRAFT_NOT_FOR_ORDER.csv": "2c8b46cf91984118bfc96292e7b647a5d27e63ca116e58aa8825e6daeacc6bd9"
   },
-  "pcb_electrical_footprints": 57,
-  "pcb_footprints": 70,
+  "pcb_electrical_footprints": 59,
+  "pcb_footprints": 72,
   "pcb_only_mechanical_holes": [
     "H1",
     "H11",
@@ -21,16 +21,13 @@
     "H_TC3",
     "H_TC4"
   ],
-  "pcb_sha256": "55f7bc9ab78f482ab523208c198f7178c71b29f96c9c99016b4d6e50e4fa0384",
+  "pcb_sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820",
   "production_release": false,
-  "purchase_grouped_rows": 38,
-  "purchase_physical_items": 60,
-  "root_schematic_sha256": "6c62c1d9fc13e621cfff8c6be2f9548082b5b4e7aaf046d7d7f454c1077fc76a",
+  "purchase_grouped_rows": 40,
+  "purchase_physical_items": 62,
+  "root_schematic_sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b",
   "schematic_components": 59,
-  "schematic_only_refs": [
-    "R108",
-    "C109"
-  ],
-  "scope": "Current no-P24 PCB procurement only; R108/C109 are schematic-only; external modules/sensors/cabling/fasteners are separate; no stock/price verification",
-  "target_refs_absent": true
+  "schematic_only_refs": [],
+  "scope": "Current no-P24 PCB procurement draft; R108/C109 and C24 are integrated but NOT FOR ORDER; external modules/sensors/cabling/fasteners are separate; prices and stock are a dated snapshot",
+  "target_refs_absent": false
 }

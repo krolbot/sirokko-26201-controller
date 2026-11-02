@@ -1,7 +1,7 @@
 "Refs","Value","Footprint","Qty","DNP"
 "C21","100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS","Capacitor_SMD:C_0805_2012Metric","1",""
 "C22","330uF 63V EEUFS1J331L BULK_DRAFT","Capacitor_THT:CP_Radial_D10.0mm_P5.00mm","1",""
-"C24","220nF 100V CVCAP GRM21BR72A224KA01L","Capacitor_SMD:C_0805_2012Metric","1",""
+"C24","220nF 100V X7R 10% CL21B224KCFSFNE","Capacitor_SMD:C_0805_2012Metric","1",""
 "C25","1uF 100V CVS GRM31CR72A105KA01L","Sirokko_Capacitor:GRM31_1206_Murata_Reflow","1",""
 "C101","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","1",""
 "C102","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","1",""
