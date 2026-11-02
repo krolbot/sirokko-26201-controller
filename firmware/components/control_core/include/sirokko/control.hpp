@@ -70,6 +70,8 @@ struct ProcessProfile {
     uint64_t ignition_ms{};
     uint64_t verify_ms{};
     uint64_t postpurge_ms{};
+    int32_t maximum_purge_exit_exhaust_milli_c{};
+    int32_t maximum_purge_exit_air_milli_c{};
     int32_t maximum_exhaust_milli_c{};
     int32_t maximum_air_milli_c{};
     int32_t minimum_ignition_rise_milli_c{};
@@ -118,6 +120,11 @@ struct Snapshot {
     uint64_t duration_remaining_ms{};
     bool delayed_armed{};
     uint64_t delayed_remaining_ms{};
+    bool purge_active{};
+    uint64_t purge_id{};
+    uint64_t purge_minimum_remaining_ms{};
+    bool purge_sensors_fresh{};
+    bool purge_temperature_ready{};
     bool profile_qualified{};
 };
 
@@ -153,6 +160,8 @@ private:
     uint32_t sensor_faults(const Sensors& sensors, uint64_t now_ms) const;
     Block start_guard(const Sensors& sensors, uint64_t now_ms) const;
     void transition(State state, uint64_t now_ms);
+    void begin_purge(State state, uint64_t now_ms);
+    bool purge_ready(const Sensors& sensors, uint64_t now_ms, uint64_t minimum_ms) const;
     void begin_start(uint64_t now_ms, const Sensors& sensors);
     void begin_stop(uint64_t now_ms);
     void latch_fault(uint32_t faults, uint64_t now_ms);
@@ -160,6 +169,7 @@ private:
 
     ProcessProfile profile_;
     Settings settings_;
+    Sensors last_sensors_;
     State state_{State::RECOVERY_PURGE};
     uint32_t faults_{};
     uint64_t state_started_ms_{};
@@ -168,6 +178,8 @@ private:
     uint64_t next_id_{1};
     uint64_t run_id_{};
     uint64_t arm_id_{};
+    uint64_t purge_id_{};
+    uint64_t purge_started_ms_{};
     uint64_t duration_deadline_ms_{};
     uint64_t delayed_due_ms_{};
     int32_t ignition_baseline_milli_c_{};
@@ -180,6 +192,20 @@ int32_t max31856_milli_c(uint8_t msb, uint8_t mid, uint8_t lsb);
 uint8_t onewire_crc8(const uint8_t* data, size_t size);
 bool decode_ds18b20_scratchpad(const uint8_t frame[9], unsigned requested_resolution_bits,
                                bool conversion_completed, int32_t* milli_c);
+bool max31856_sample_within_deadline(uint64_t started_ms, uint64_t ready_observed_ms,
+                                     uint64_t processing_completed_ms);
+
+enum class OutputLine : uint8_t { FAN_REQUEST, GLOW, FUEL };
+using DigitalWriter = bool (*)(void* context, OutputLine line, bool enabled);
+using PwmWriter = bool (*)(void* context, uint16_t speed_code);
+
+class FailClosedOutputDriver {
+public:
+    bool apply(const Outputs& requested, void* context, DigitalWriter digital_write, PwmWriter pwm_write);
+    Outputs current() const { return current_; }
+private:
+    Outputs current_{};
+};
 const char* state_name(State state);
 const char* block_name(Block block);
 

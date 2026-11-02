@@ -1,5 +1,6 @@
 #include "sirokko/control.hpp"
 
+#include <algorithm>
 #include <cassert>
 #include <charconv>
 #include <cstdint>
@@ -30,7 +31,23 @@ Sensors good(uint64_t now, int32_t exhaust = 100000, int32_t room = 15000) {
 }
 
 ProcessProfile profile() {
-    return {true, 100, 10, 10, 10, 10, 20, 500000, 400000, 20000, 110000, 2000, 3000};
+    ProcessProfile value{};
+    value.qualified = true;
+    value.recovery_purge_ms = 100;
+    value.prepurge_ms = 10;
+    value.preheat_ms = 10;
+    value.ignition_ms = 10;
+    value.verify_ms = 10;
+    value.postpurge_ms = 20;
+    value.maximum_purge_exit_exhaust_milli_c = 150000;
+    value.maximum_purge_exit_air_milli_c = 120000;
+    value.maximum_exhaust_milli_c = 500000;
+    value.maximum_air_milli_c = 400000;
+    value.minimum_ignition_rise_milli_c = 20000;
+    value.minimum_run_exhaust_milli_c = 110000;
+    value.purge_speed_code = 2000;
+    value.run_speed_code = 3000;
+    return value;
 }
 
 void test_temperature_vectors(const char* path) {
@@ -138,7 +155,8 @@ void test_state_machine_and_priority() {
     assert(machine.tick(in).state == State::IGNITION);
     in.now_ms = 131;
     in.sensors = good(131, 130000);
-    assert(machine.tick(in).state == State::VERIFY);
+    s = machine.tick(in);
+    assert(s.state == State::VERIFY && s.outputs.fuel && !s.outputs.glow);
     in.now_ms = 141;
     in.sensors = good(141, 130000);
     s = machine.tick(in);
@@ -241,6 +259,111 @@ void test_output_driver_fault_is_safe() {
     assert(!state.outputs.glow && !state.outputs.fuel);
 }
 
+void test_verify_failure_and_purge_conditions() {
+    Controller machine(profile(), {}, 5);
+    TickInput in{};
+    in.now_ms = 100;
+    in.sensors = good(100);
+    assert(machine.tick(in).state == State::IDLE);
+    in.start = true;
+    in.now_ms = 101;
+    in.sensors = good(101);
+    machine.tick(in);
+    in.start = false;
+    in.now_ms = 111;
+    in.sensors = good(111);
+    machine.tick(in);
+    in.now_ms = 121;
+    in.sensors = good(121);
+    machine.tick(in);
+    in.now_ms = 131;
+    in.sensors = good(131, 130000);
+    auto state = machine.tick(in);
+    assert(state.state == State::VERIFY && !state.outputs.glow && state.outputs.fuel);
+    in.now_ms = 141;
+    in.sensors = good(141, 100000);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && !state.outputs.glow && !state.outputs.fuel);
+    const uint64_t purge_id = state.purge_id;
+    in.stop = true;
+    in.now_ms = 170;
+    in.sensors = good(170, 200000);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id == purge_id &&
+           !state.purge_temperature_ready);
+    in.stop = false;
+    in.external_faults = FAULT_CONTROL_WATCHDOG;
+    in.now_ms = 171;
+    in.sensors = good(171, 200000);
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id == purge_id &&
+           state.purge_minimum_remaining_ms == 0);
+    in.external_faults = 0;
+    in.now_ms = 172;
+    in.sensors = good(172);
+    in.sensors.exhaust.valid = false;
+    state = machine.tick(in);
+    assert(state.state == State::FAULT_PURGE && state.purge_id == purge_id &&
+           !state.purge_sensors_fresh);
+    in.now_ms = 173;
+    in.sensors = good(173);
+    assert(machine.tick(in).state == State::FAULT);
+
+    Controller recovery(profile(), {}, 6);
+    in = {};
+    in.now_ms = 50;
+    in.sensors = good(50);
+    in.stop = true;
+    const auto before = recovery.tick(in);
+    assert(before.state == State::RECOVERY_PURGE && before.purge_id != 0);
+    in.now_ms = 60;
+    in.sensors = good(60);
+    const auto after = recovery.tick(in);
+    assert(after.state == State::RECOVERY_PURGE && after.purge_id == before.purge_id);
+}
+
+struct OutputLog {
+    std::vector<std::string> events;
+    bool fail_pwm{};
+};
+
+bool fake_digital(void* context, OutputLine line, bool enabled) {
+    auto& log = *static_cast<OutputLog*>(context);
+    const char* name = line == OutputLine::FUEL ? "FUEL" : line == OutputLine::GLOW ? "GLOW" : "FAN";
+    log.events.emplace_back(std::string(name) + (enabled ? "=1" : "=0"));
+    return true;
+}
+
+bool fake_pwm(void* context, uint16_t speed_code) {
+    auto& log = *static_cast<OutputLog*>(context);
+    log.events.emplace_back("PWM=" + std::to_string(speed_code));
+    return !log.fail_pwm;
+}
+
+void test_output_driver_fail_closed_order() {
+    FailClosedOutputDriver driver;
+    OutputLog log{};
+    log.fail_pwm = true;
+    assert(!driver.apply({true, 2000, true, true}, &log, fake_digital, fake_pwm));
+    for (const auto& event : log.events) assert(event != "GLOW=1" && event != "FUEL=1");
+    assert(!driver.current().glow && !driver.current().fuel);
+
+    log = {};
+    assert(driver.apply({true, 2000, true, true}, &log, fake_digital, fake_pwm));
+    const auto fan = std::find(log.events.begin(), log.events.end(), "FAN=1");
+    const auto pwm = std::find(log.events.begin(), log.events.end(), "PWM=2000");
+    const auto glow = std::find(log.events.begin(), log.events.end(), "GLOW=1");
+    const auto fuel = std::find(log.events.begin(), log.events.end(), "FUEL=1");
+    assert(fan < pwm && pwm < glow && glow < fuel);
+}
+
+void test_max31856_deadline_boundaries() {
+    assert(max31856_sample_within_deadline(1000, 1210, 1210));
+    assert(!max31856_sample_within_deadline(1000, 1211, 1211));
+    assert(!max31856_sample_within_deadline(1000, 1209, 1211));
+    assert(!max31856_sample_within_deadline(1000, 999, 1000));
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -253,6 +376,9 @@ int main(int argc, char** argv) {
     test_delayed_stop_and_fault_barriers();
     test_duration_exact_boundary();
     test_output_driver_fault_is_safe();
-    std::cout << "PASS: 352 MAX31856 vectors; 31 DS18B20 vectors (25 accepted/6 rejected); "
-                 "command freshness; state/timer/fault/STOP barriers\n";
+    test_verify_failure_and_purge_conditions();
+    test_output_driver_fail_closed_order();
+    test_max31856_deadline_boundaries();
+    std::cout << "PASS: 352 MAX31856 vectors + deadline edges; 31 DS18B20 vectors (25 accepted/6 rejected); "
+                 "command freshness; state/timer/fault/STOP/purge barriers; fail-closed output order\n";
 }

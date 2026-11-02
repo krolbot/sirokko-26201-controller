@@ -56,6 +56,7 @@ SemaphoreHandle_t g_gate_mutex{};
 RuntimeView g_view{};
 sirokko::Controller* g_controller{};
 sirokko::CommandGate g_gate;
+sirokko::FailClosedOutputDriver g_output_driver;
 std::atomic<bool> g_stop{};
 std::atomic<bool> g_exit_maintenance{};
 std::atomic<bool> g_output_driver_fault{};
@@ -151,17 +152,20 @@ bool output_begin() {
     return ledc_channel_config(&channel) == ESP_OK;
 }
 
+bool digital_write(void*, sirokko::OutputLine line, bool enabled) {
+    gpio_num_t pin = board::kFanRequest;
+    if (line == sirokko::OutputLine::GLOW) pin = board::kGlow;
+    else if (line == sirokko::OutputLine::FUEL) pin = board::kFuel;
+    return gpio_set_level(pin, enabled ? 1 : 0) == ESP_OK;
+}
+
+bool pwm_write(void*, uint16_t speed_code) {
+    return ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, speed_code) == ESP_OK &&
+           ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0) == ESP_OK;
+}
+
 bool output_apply(const sirokko::Outputs& requested) {
-    const uint32_t duty = std::min<uint16_t>(requested.speed_code, sirokko::kPwmMaximum);
-    // Dangerous commands are removed first. Fan/PWM are then updated, and only then may relays turn on.
-    if (!requested.fuel) gpio_set_level(board::kFuel, 0);
-    if (!requested.glow) gpio_set_level(board::kGlow, 0);
-    gpio_set_level(board::kFanRequest, requested.fan_request ? 1 : 0);
-    bool ok = ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty) == ESP_OK &&
-              ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0) == ESP_OK;
-    if (requested.glow) gpio_set_level(board::kGlow, 1);
-    if (requested.fuel) gpio_set_level(board::kFuel, 1);
-    return ok;
+    return g_output_driver.apply(requested, nullptr, digital_write, pwm_write);
 }
 
 void sensor_task(void*) {

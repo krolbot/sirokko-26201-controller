@@ -12,6 +12,10 @@ bool active(State state) {
            state == State::VERIFY || state == State::RUN;
 }
 
+bool purging(State state) {
+    return state == State::RECOVERY_PURGE || state == State::STOP_PURGE || state == State::FAULT_PURGE;
+}
+
 bool valid_timer(uint64_t value) {
     return value > 0 && value <= kMaximumTimerMs;
 }
@@ -49,10 +53,16 @@ void CommandGate::invalidate() { current_ = {}; }
 
 Controller::Controller(ProcessProfile profile, Settings settings, uint64_t boot_id)
     : profile_(profile), settings_(settings), boot_id_(boot_id ? boot_id : 1) {
-    if (profile_.purge_speed_code > kPwmMaximum || profile_.run_speed_code > kPwmMaximum) {
+    if (profile_.purge_speed_code > kPwmMaximum || profile_.run_speed_code > kPwmMaximum ||
+        !valid_timer(profile_.recovery_purge_ms) || !valid_timer(profile_.prepurge_ms) ||
+        !valid_timer(profile_.preheat_ms) || !valid_timer(profile_.ignition_ms) ||
+        !valid_timer(profile_.verify_ms) || !valid_timer(profile_.postpurge_ms) ||
+        profile_.maximum_purge_exit_exhaust_milli_c <= 0 ||
+        profile_.maximum_purge_exit_air_milli_c <= 0) {
         profile_.qualified = false;
     }
     if (!valid_timer(settings_.duration_ms)) settings_.duration_ms = 3600000;
+    purge_id_ = next_id_++;
 }
 
 bool Controller::sensors_fresh(const Sensors& sensors, uint64_t now_ms) const {
@@ -101,6 +111,22 @@ void Controller::transition(State state, uint64_t now_ms) {
     if (state_version_ == 0) state_version_ = 1;
 }
 
+void Controller::begin_purge(State state, uint64_t now_ms) {
+    if (!purging(state_)) {
+        purge_started_ms_ = now_ms;
+        purge_id_ = next_id_++;
+        if (next_id_ == 0) next_id_ = 1;
+    }
+    transition(state, now_ms);
+}
+
+bool Controller::purge_ready(const Sensors& sensors, uint64_t now_ms, uint64_t minimum_ms) const {
+    return profile_.qualified && now_ms >= purge_started_ms_ &&
+           now_ms - purge_started_ms_ >= minimum_ms && sensors_fresh(sensors, now_ms) &&
+           sensors.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
+           sensors.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
+}
+
 void Controller::begin_start(uint64_t now_ms, const Sensors& sensors) {
     run_id_ = next_id_++;
     if (next_id_ == 0) next_id_ = 1;
@@ -119,7 +145,7 @@ void Controller::begin_stop(uint64_t now_ms) {
     delayed_armed_ = false;
     delayed_due_ms_ = 0;
     arm_id_ = 0;
-    if (active(state_) || state_ == State::RECOVERY_PURGE) transition(State::STOP_PURGE, now_ms);
+    if (active(state_)) begin_purge(State::STOP_PURGE, now_ms);
 }
 
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
@@ -128,7 +154,7 @@ void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
     delayed_armed_ = false;
     duration_deadline_ms_ = delayed_due_ms_ = 0;
     run_id_ = arm_id_ = 0;
-    transition(State::FAULT_PURGE, now_ms);
+    begin_purge(State::FAULT_PURGE, now_ms);
 }
 
 Outputs Controller::outputs() const {
@@ -146,9 +172,9 @@ Outputs Controller::outputs() const {
             result = {true, purge, true, false};
             break;
         case State::IGNITION:
-        case State::VERIFY:
             result = {true, profile_.run_speed_code, true, true};
             break;
+        case State::VERIFY:
         case State::RUN:
             result = {true, profile_.run_speed_code, false, true};
             break;
@@ -161,6 +187,7 @@ Outputs Controller::outputs() const {
 
 Snapshot Controller::tick(const TickInput& input) {
     const uint64_t now = input.now_ms;
+    last_sensors_ = input.sensors;
 
     const uint32_t current_sensor_faults = sensor_faults(input.sensors, now);
     if (input.external_faults) latch_fault(input.external_faults, now);
@@ -218,8 +245,10 @@ Snapshot Controller::tick(const TickInput& input) {
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
     switch (state_) {
         case State::RECOVERY_PURGE:
-            if (profile_.qualified && elapsed >= profile_.recovery_purge_ms && sensors_fresh(input.sensors, now))
+            if (purge_ready(input.sensors, now, profile_.recovery_purge_ms)) {
                 transition(State::IDLE, now);
+                purge_id_ = 0;
+            }
             break;
         case State::PREPURGE:
             if (elapsed >= profile_.prepurge_ms) transition(State::PREHEAT, now);
@@ -250,10 +279,16 @@ Snapshot Controller::tick(const TickInput& input) {
                 begin_stop(now);
             break;
         case State::STOP_PURGE:
-            if (profile_.qualified && elapsed >= profile_.postpurge_ms) transition(State::IDLE, now);
+            if (purge_ready(input.sensors, now, profile_.postpurge_ms)) {
+                transition(State::IDLE, now);
+                purge_id_ = 0;
+            }
             break;
         case State::FAULT_PURGE:
-            if (profile_.qualified && elapsed >= profile_.postpurge_ms) transition(State::FAULT, now);
+            if (purge_ready(input.sensors, now, profile_.postpurge_ms)) {
+                transition(State::FAULT, now);
+                purge_id_ = 0;
+            }
             break;
         default:
             break;
@@ -274,6 +309,16 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.duration_remaining_ms = duration_active_ ? remaining(now_ms, duration_deadline_ms_) : 0;
     result.delayed_armed = delayed_armed_;
     result.delayed_remaining_ms = delayed_armed_ ? remaining(now_ms, delayed_due_ms_) : 0;
+    result.purge_active = purging(state_);
+    result.purge_id = result.purge_active ? purge_id_ : 0;
+    const uint64_t purge_minimum = state_ == State::RECOVERY_PURGE ? profile_.recovery_purge_ms : profile_.postpurge_ms;
+    const uint64_t purge_deadline = purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_minimum
+        ? std::numeric_limits<uint64_t>::max() : purge_started_ms_ + purge_minimum;
+    result.purge_minimum_remaining_ms = result.purge_active ? remaining(now_ms, purge_deadline) : 0;
+    result.purge_sensors_fresh = result.purge_active && sensors_fresh(last_sensors_, now_ms);
+    result.purge_temperature_ready = result.purge_sensors_fresh && profile_.qualified &&
+        last_sensors_.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
+        last_sensors_.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
     result.profile_qualified = profile_.qualified;
     if (!profile_.qualified) result.start_block = Block::PROFILE_NOT_QUALIFIED;
     else if (faults_) result.start_block = Block::FAULT_LATCHED;
@@ -326,6 +371,52 @@ bool decode_ds18b20_scratchpad(const uint8_t frame[9], unsigned requested_resolu
     const int16_t raw = static_cast<int16_t>((static_cast<uint16_t>(frame[1]) << 8) | lsb);
     *milli_c = static_cast<int32_t>((static_cast<int64_t>(raw) * 1000) / 16);
     return true;
+}
+
+bool max31856_sample_within_deadline(uint64_t started_ms, uint64_t ready_observed_ms,
+                                     uint64_t processing_completed_ms) {
+    return ready_observed_ms >= started_ms && processing_completed_ms >= ready_observed_ms &&
+           ready_observed_ms - started_ms <= 210 && processing_completed_ms - started_ms <= 210;
+}
+
+bool FailClosedOutputDriver::apply(const Outputs& requested, void* context,
+                                   DigitalWriter digital_write, PwmWriter pwm_write) {
+    if (!digital_write || !pwm_write) return false;
+    bool ok = requested.speed_code <= kPwmMaximum &&
+              ((!requested.glow && !requested.fuel) || (requested.fan_request && requested.speed_code > 0));
+    if (!requested.fuel) {
+        ok = digital_write(context, OutputLine::FUEL, false) && ok;
+        current_.fuel = false;
+    }
+    if (!requested.glow) {
+        ok = digital_write(context, OutputLine::GLOW, false) && ok;
+        current_.glow = false;
+    }
+    ok = digital_write(context, OutputLine::FAN_REQUEST, requested.fan_request) && ok;
+    current_.fan_request = requested.fan_request;
+    if (ok) ok = pwm_write(context, requested.speed_code);
+    if (!ok) {
+        digital_write(context, OutputLine::FUEL, false);
+        digital_write(context, OutputLine::GLOW, false);
+        current_.fuel = current_.glow = false;
+        current_.speed_code = 0;
+        return false;
+    }
+    current_.speed_code = requested.speed_code;
+    if (requested.glow && !current_.glow) {
+        ok = digital_write(context, OutputLine::GLOW, true);
+        current_.glow = ok;
+    }
+    if (ok && requested.fuel && !current_.fuel) {
+        ok = digital_write(context, OutputLine::FUEL, true);
+        current_.fuel = ok;
+    }
+    if (!ok) {
+        digital_write(context, OutputLine::FUEL, false);
+        digital_write(context, OutputLine::GLOW, false);
+        current_.fuel = current_.glow = false;
+    }
+    return ok;
 }
 
 const char* state_name(State state) {

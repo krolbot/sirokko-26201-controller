@@ -8,6 +8,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 #include "onewire_bus.h"
 #include "onewire_bus_impl_rmt.h"
 #include "onewire_device.h"
@@ -15,6 +16,7 @@
 namespace {
 constexpr char kTag[] = "sensors";
 constexpr spi_host_device_t kSpiHost = SPI2_HOST;
+uint64_t clock_ms() { return static_cast<uint64_t>(esp_timer_get_time() / 1000); }
 
 class Max31856Channel {
 public:
@@ -59,30 +61,42 @@ public:
                 next_start_ms_ = now_ms + 250;
                 return;
             }
-            started_ms_ = now_ms;
-            next_start_ms_ = now_ms + 250;
+            started_ms_ = clock_ms();  // actual completion of the 1SHOT write/CS-up transaction
+            next_start_ms_ = started_ms_ + 250;
             saw_high_ = gpio_get_level(drdy_) != 0;
             waiting_ = true;
             return;
         }
 
+        const uint64_t observed_ms = clock_ms();
         const int level = gpio_get_level(drdy_);
         if (level != 0) saw_high_ = true;
         if (level == 0 && saw_high_) {
+            if (!sirokko::max31856_sample_within_deadline(started_ms_, observed_ms, observed_ms)) {
+                invalidate(0xFC);
+                waiting_ = false;
+                return;
+            }
             uint8_t before{};
             std::array<uint8_t, 6> packet{};
             if (!read_registers(0x0F, &before, 1) ||
                 !read_registers(0x0A, packet.data(), packet.size())) {
                 invalidate(0xFD);
             } else {
+                const uint64_t completed_ms = clock_ms();
                 const uint8_t after = packet[5];
                 sample_.status = before | after;
-                sample_.valid = sample_.status == 0;
-                sample_.milli_c = sirokko::max31856_milli_c(packet[2], packet[3], packet[4]);
-                sample_.sample_ms = now_ms;
+                sample_.valid = sample_.status == 0 &&
+                    sirokko::max31856_sample_within_deadline(started_ms_, observed_ms, completed_ms);
+                if (sample_.valid) {
+                    sample_.milli_c = sirokko::max31856_milli_c(packet[2], packet[3], packet[4]);
+                    sample_.sample_ms = completed_ms;
+                } else if (sample_.status == 0) {
+                    sample_.status = 0xFC;
+                }
             }
             waiting_ = false;
-        } else if (now_ms - started_ms_ >= 210) {
+        } else if (observed_ms >= started_ms_ && observed_ms - started_ms_ > 210) {
             invalidate(0xFC);  // DRDY did not complete a new HIGH->LOW cycle by its deadline
             waiting_ = false;
         }

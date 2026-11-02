@@ -40,20 +40,22 @@ constexpr char kPage[] = R"HTML(<!doctype html>
 <div id="login" class="card"><label>Пароль точки доступа<input id="password" type="password" autocomplete="current-password"></label><br><button onclick="login()">Войти</button><span id="loginResult"></span></div>
 <div id="panel" hidden>
 <div class="card"><div class="grid"><div>Состояние<div id="state" class="value">—</div></div><div>Запрет пуска<div id="block" class="value">—</div></div><div>Версия<div id="version">—</div></div></div><pre id="faults"></pre></div>
+<div class="card"><div class="grid"><div>Срок сеанса<div id="runRemaining" class="value">—</div></div><div>Отложенный пуск<div id="armRemaining" class="value">—</div></div><div>Продувка<div id="purgeRemaining" class="value">—</div></div></div><div id="purgeConditions"></div></div>
 <div class="card"><div class="grid"><div>Помещение<div id="room" class="value">—</div></div><div>Выхлоп<div id="exhaust" class="value">—</div></div><div>Воздух<div id="air" class="value">—</div></div></div></div>
 <div class="card grid"><button class="start" onclick="command('start')">ПУСК</button><button class="stop" onclick="command('stop')">СТОП</button><button onclick="command('reset_fault')">Сбросить аварию</button></div>
-<div class="card"><div class="grid"><label>Длительность, мин<input id="duration" type="number" min="1" max="10080" value="60"></label><label>Отложить, мин<input id="delay" type="number" min="1" max="10080" value="10"></label><label>Уставка, °C<input id="setpoint" type="number" min="5" max="40" step="0.1" value="20"></label></div><br><button onclick="command('settings')">Сохранить настройки</button> <button onclick="command('arm')">Взвести отложенный пуск</button></div>
+<div class="card"><div class="grid"><label>Длительность, мин<input id="duration" type="number" min="1" max="10080" value="60" oninput="dirty.add('duration')"></label><label>Отложить, мин<input id="delay" type="number" min="1" max="10080" value="10"></label><label>Уставка, °C<input id="setpoint" type="number" min="5" max="40" step="0.1" value="20" oninput="dirty.add('setpoint')"></label></div><br><button onclick="command('settings')">Сохранить настройки</button> <button onclick="command('arm')">Взвести отложенный пуск</button></div>
 <div class="card"><label>Локальный OTA-образ<input id="ota" type="file" accept=".bin"></label><br><button onclick="uploadOta()">Загрузить только из безопасного IDLE</button></div>
 <div id="last"></div><pre id="result"></pre></div>
 <script>
-const q=id=>document.getElementById(id);let timer;
+const q=id=>document.getElementById(id);let timer;const dirty=new Set();
 async function login(){let r=await fetch('/api/login',{method:'POST',headers:{'X-Sirokko-Password':q('password').value}});q('loginResult').textContent=r.ok?' OK':' ОТКАЗ';if(r.ok){q('password').value='';q('login').hidden=true;q('panel').hidden=false;poll();timer=setInterval(poll,1000)}}
 const temp=s=>s.valid?(s.milli_c/1000).toFixed(1)+' °C':'ОШИБКА ('+s.status+')';
-async function poll(){try{let r=await fetch('/api/state',{cache:'no-store'});if(!r.ok){clearInterval(timer);q('panel').hidden=true;q('login').hidden=false;return}let s=await r.json();q('state').textContent=s.state;q('state').className='value';q('block').textContent=s.start_block;q('version').textContent=s.version;q('faults').textContent='faults=0x'+s.faults.toString(16)+'\nGLOW='+s.outputs.glow+' FUEL='+s.outputs.fuel+' FAN='+s.outputs.fan+' PWM='+s.outputs.speed_code+'\nrun_id='+s.run_id+' arm_id='+s.arm_id;q('room').textContent=temp(s.room);q('exhaust').textContent=temp(s.exhaust);q('air').textContent=temp(s.air);q('duration').value=Math.round(s.settings.duration_ms/60000);q('setpoint').value=(s.settings.setpoint_milli_c/1000).toFixed(1);q('last').textContent='Последнее подтверждение: '+new Date().toLocaleTimeString()}catch(e){q('state').textContent='СВЯЗЬ ПОТЕРЯНА — СОСТОЯНИЕ НЕИЗВЕСТНО';q('state').className='value bad';q('last').textContent='Последние значения устарели: '+new Date().toLocaleTimeString()}}
+const interval=ms=>Math.ceil(ms/1000)+' с';
+async function poll(){try{let r=await fetch('/api/state',{cache:'no-store'});if(!r.ok){clearInterval(timer);q('panel').hidden=true;q('login').hidden=false;return}let s=await r.json();q('state').textContent=s.state;q('state').className='value';q('block').textContent=s.start_block;q('version').textContent=s.version;q('faults').textContent='faults=0x'+s.faults.toString(16)+'\nGLOW='+s.outputs.glow+' FUEL='+s.outputs.fuel+' FAN='+s.outputs.fan+' PWM='+s.outputs.speed_code+'\nrun_id='+s.run_id+' arm_id='+s.arm_id;q('runRemaining').textContent=s.duration_active?interval(s.duration_remaining_ms):'не активен';q('armRemaining').textContent=s.delayed_armed?interval(s.delayed_remaining_ms):'не взведён';q('purgeRemaining').textContent=s.purge.active?interval(s.purge.minimum_remaining_ms):'не активна';q('purgeConditions').textContent=s.purge.active?'датчики: '+(s.purge.sensors_fresh?'актуальны':'недостоверны')+', температура: '+(s.purge.temperature_ready?'допустима':'не допускает завершение'):'';q('room').textContent=temp(s.room);q('exhaust').textContent=temp(s.exhaust);q('air').textContent=temp(s.air);if(!dirty.has('duration'))q('duration').value=Math.round(s.settings.duration_ms/60000);if(!dirty.has('setpoint'))q('setpoint').value=(s.settings.setpoint_milli_c/1000).toFixed(1);q('last').textContent='Последнее подтверждение: '+new Date().toLocaleTimeString()}catch(e){q('state').textContent='СВЯЗЬ ПОТЕРЯНА — СОСТОЯНИЕ НЕИЗВЕСТНО';q('state').className='value bad';q('last').textContent='Последние значения устарели: '+new Date().toLocaleTimeString()}}
 function values(action){return {action,delay_ms:Math.round(Number(q('delay').value)*60000),duration_ms:Math.round(Number(q('duration').value)*60000),setpoint_milli_c:Math.round(Number(q('setpoint').value)*1000),hysteresis_milli_c:1000}}
 async function challenge(v){let p=new URLSearchParams(v);let r=await fetch('/api/challenge?'+p);if(!r.ok)throw Error(await r.text());return r.json()}
 function commandId(){let a=new Uint32Array(2);crypto.getRandomValues(a);return a[0].toString(16).padStart(8,'0')+a[1].toString(16).padStart(8,'0')}
-async function command(action){try{let v=values(action);if(action==='stop'){let r=await fetch('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,command_id:commandId()})});q('result').textContent=await r.text();return}let g=await challenge(v);let body={...v,...g,command_id:commandId()};let r=await fetch('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});q('result').textContent=await r.text();poll()}catch(e){q('result').textContent=String(e)}}
+async function command(action){try{let v=values(action);if(action==='stop'){let r=await fetch('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,command_id:commandId()})});q('result').textContent=await r.text();return}let g=await challenge(v);let body={...v,...g,command_id:commandId()};let r=await fetch('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});q('result').textContent=await r.text();if(r.ok&&action==='settings'){dirty.delete('duration');dirty.delete('setpoint')}poll()}catch(e){q('result').textContent=String(e)}}
 async function uploadOta(){try{let file=q('ota').files[0];if(!file)throw Error('Выберите .bin');let g=await challenge(values('ota'));let r=await fetch('/api/ota',{method:'POST',headers:{'X-Action-Token':g.token,'X-State-Version':g.state_version,'X-Expires':g.expires_ms},body:file});q('result').textContent=await r.text()}catch(e){q('result').textContent=String(e)}}
 </script></body></html>)HTML";
 
@@ -238,6 +240,8 @@ esp_err_t state_handler(httpd_req_t* request) {
         "\"faults\":%lu,\"state_version\":\"%llx\",\"run_id\":\"%llx\",\"arm_id\":\"%llx\","
         "\"profile_qualified\":%s,\"duration_active\":%s,\"duration_remaining_ms\":%llu,"
         "\"delayed_armed\":%s,\"delayed_remaining_ms\":%llu,"
+        "\"purge\":{\"active\":%s,\"id\":\"%llx\",\"minimum_remaining_ms\":%llu,"
+        "\"sensors_fresh\":%s,\"temperature_ready\":%s},"
         "\"outputs\":{\"fan\":%s,\"speed_code\":%u,\"glow\":%s,\"fuel\":%s},"
         "\"settings\":{\"duration_ms\":%llu,\"setpoint_milli_c\":%ld,\"hysteresis_milli_c\":%ld},"
         "\"exhaust\":%s,\"air\":%s,\"room\":%s}",
@@ -247,7 +251,11 @@ esp_err_t state_handler(httpd_req_t* request) {
         static_cast<unsigned long long>(view.control.run_id), static_cast<unsigned long long>(view.control.arm_id),
         view.control.profile_qualified ? "true" : "false", view.control.duration_active ? "true" : "false",
         static_cast<unsigned long long>(view.control.duration_remaining_ms), view.control.delayed_armed ? "true" : "false",
-        static_cast<unsigned long long>(view.control.delayed_remaining_ms), view.control.outputs.fan_request ? "true" : "false",
+        static_cast<unsigned long long>(view.control.delayed_remaining_ms), view.control.purge_active ? "true" : "false",
+        static_cast<unsigned long long>(view.control.purge_id),
+        static_cast<unsigned long long>(view.control.purge_minimum_remaining_ms),
+        view.control.purge_sensors_fresh ? "true" : "false", view.control.purge_temperature_ready ? "true" : "false",
+        view.control.outputs.fan_request ? "true" : "false",
         view.control.outputs.speed_code, view.control.outputs.glow ? "true" : "false", view.control.outputs.fuel ? "true" : "false",
         static_cast<unsigned long long>(view.settings.duration_ms), static_cast<long>(view.settings.room_setpoint_milli_c),
         static_cast<long>(view.settings.room_hysteresis_milli_c), exhaust, air, room);
