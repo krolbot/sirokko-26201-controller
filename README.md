@@ -5,8 +5,8 @@
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`;
+- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
 - board outline: 305 × 170 mm.
 
 All 72 footprints are on F.Cu. The board contains 291 pads, 639 segments, 146 vias, 78 nets and 27 zones. One `/TC_SDI_MOSI` via was removed without increasing net length; additional candidates were rejected by DRC/connectivity checks. R108/C109 and Samsung `CL21B224KCFSFNE` remain unchanged.

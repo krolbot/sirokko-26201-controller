@@ -5,8 +5,8 @@
 В репозитории оставлен один канонический проект KiCad:
 
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`;
+- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
 - контур платы: 305 × 170 мм.
 
 Все 72 посадочных места находятся на F.Cu. Плата содержит 291 площадку, 639 сегментов, 146 переходов, 78 сетей и 27 зон. В `/TC_SDI_MOSI` удалён один переход без увеличения длины сети; остальные проверенные кандидаты отклонены по DRC/связности. R108/C109 и Samsung `CL21B224KCFSFNE` сохранены.

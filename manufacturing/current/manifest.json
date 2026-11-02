@@ -2,7 +2,7 @@
   "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE",
   "production_release": false,
   "physical_tests": false,
-  "source_commit": "c012da276d03c1a101b7dc3bb5f492131f977838",
+  "source_commit": "9405cabb3955a39df3351b2abdfdc21defeb73f5",
   "generator": {
     "kicad": "10.0.8",
     "native_project_context": true,
@@ -83,9 +83,9 @@
       "MPN": "SSQ-122-01-T-S",
       "Manufacturer": "Samtec",
       "pad_records_verified_unchanged": 44,
-      "all_other_MPN_unchanged": true,
       "physical_fit_tested": false,
-      "report": "checks/j1-j3-metadata-verification.json"
+      "report": "checks/j1-j3-metadata-verification.json",
+      "subsequent_non_j1_j3_change": "F1 Value/MPN metadata only; J1/J3 remain unchanged."
     },
     "mechanical_csv": {
       "path": "docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv",
@@ -100,6 +100,15 @@
       "non_target_fields_unchanged": true,
       "cad_geometry_unchanged": true,
       "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
+    },
+    "f1_metadata": {
+      "Value": "0997015.WXN / 15A",
+      "MPN": "0997015.WXN + 3568",
+      "footprint": "Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE",
+      "pads_verified_unchanged": 4,
+      "geometry_and_nets_unchanged": true,
+      "physical_fit_tested": false,
+      "report": "checks/f1-metadata-preservation.json"
     }
   },
   "sources": [
@@ -110,13 +119,13 @@
     },
     {
       "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch",
-      "bytes": 174324,
-      "sha256": "3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099"
+      "bytes": 174320,
+      "sha256": "0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e"
     },
     {
       "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-      "bytes": 982133,
-      "sha256": "e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a"
+      "bytes": 982129,
+      "sha256": "57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b"
     },
     {
       "path": "hardware/kicad/MinimalSafety.kicad_sch",
@@ -135,8 +144,8 @@
     },
     {
       "path": "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch",
-      "bytes": 104757,
-      "sha256": "4a35099141453f364147c567d8b08f0ee1324c24b494df9f6d6fc541fcdababa"
+      "bytes": 104753,
+      "sha256": "f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5"
     },
     {
       "path": "hardware/kicad/fp-lib-table",
@@ -152,18 +161,18 @@
   "files": [
     {
       "path": "FABRICATION_REQUIREMENTS_RU.md",
-      "bytes": 13115,
-      "sha256": "5afad0965277851248320245fb258e989117d570dc0cc2bfe2944522e89ef05d"
+      "bytes": 14081,
+      "sha256": "553bc9ffa00b5664c6392677b25f5db11860ae4f7e987c720e3540c4c65fcfef"
     },
     {
       "path": "README_RU.md",
-      "bytes": 7188,
-      "sha256": "1e7796234f1faf430f71b7de692f880f3ea585b509f764988c277b85d61bc83a"
+      "bytes": 7643,
+      "sha256": "b19486ec5892ed4f1a3fbfd84ba32442900ea6e46568d929ccc08106bb6abe32"
     },
     {
       "path": "bom.csv",
-      "bytes": 7773,
-      "sha256": "f34fe7ddd2554a60d252a29a8432462fe970e67c0030ef4845e100ff31bf0a95"
+      "bytes": 7769,
+      "sha256": "566995e90a288fa83bac2be8354d983eb24e402734326217a2fd8f7b4202c946"
     },
     {
       "path": "checks/board-stats.json",
@@ -173,17 +182,22 @@
     {
       "path": "checks/dependency-audit.json",
       "bytes": 2059,
-      "sha256": "3e452e6ff0b891f31afd1c770e804afc3fc20e776b01bc77080f96e07f4a1d8f"
+      "sha256": "51eaf3550fcfe5961b93a815c9b3a6c9dd21fd58ec62f963e38a7152cfa63534"
     },
     {
       "path": "checks/drc.json",
-      "bytes": 415,
-      "sha256": "5ba6fc7652711b011438e85e5c41ff43676a1bd4f018d69eeefaf348f96d801a"
+      "bytes": 416,
+      "sha256": "6867d801105cc390f8a0ca5ae74441c02ad55e63c7f0b4a8fdc35ec260f05575"
     },
     {
       "path": "checks/erc.json",
-      "bytes": 1853,
-      "sha256": "eebb956fec463e19bdf6622deb230a4f38e0479c088555d04f9b87770e227d2e"
+      "bytes": 1854,
+      "sha256": "978f9440283fde29b7999b7cbc3843a34103850f575d7409430302540a12776c"
+    },
+    {
+      "path": "checks/f1-metadata-preservation.json",
+      "bytes": 2208,
+      "sha256": "b493a2a365fc7fffcbac97e21f8ff2ad789b9aa7c6520efb0ea4aacd8c73f2b3"
     },
     {
       "path": "checks/j1-j3-metadata-verification.json",
@@ -192,8 +206,8 @@
     },
     {
       "path": "cpl.csv",
-      "bytes": 5594,
-      "sha256": "1f0eb18a2cd2ff40664ce4ea21eda547186cb4d49e4f4a7fc4961bb9b985b4e7"
+      "bytes": 5590,
+      "sha256": "9fd299114dbeef0719f8943ab2c2a96129c0dcf40f46b682a1e4eb6de8492c2e"
     },
     {
       "path": "drill/Sirokko26201_control_motor_candidate-NPTH-drl_map.pdf",
@@ -287,8 +301,8 @@
     },
     {
       "path": "pdf/Sirokko26201_full_schematic.pdf",
-      "bytes": 158512,
-      "sha256": "0323422e1eab4599fb3526e45c54db8b737f28f1fb04a5ccb89cb430b7494578"
+      "bytes": 290554,
+      "sha256": "03e9153e9393937b4dfff7e6ca171461a64063f04e7aaf9d3aa05e958ed32ff6"
     },
     {
       "path": "pdf/Sirokko26201_mechanical_holes.pdf",

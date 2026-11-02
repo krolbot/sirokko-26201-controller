@@ -7,9 +7,9 @@
 Единственный действующий CAD-путь — [`../hardware/kicad/`](../hardware/kicad/):
 
 - `.kicad_pro`: `11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6`;
-- root SCH: `3d070ff0906b189e17cc64012f4d825b7061a06cc46fd9682760691568c8c099`;
-- PCB: `e5d01fe08851ff88f95de827f8453104086dce22bd73e09e76b82110d9cf654a`;
-- `Sirokko_Input_Protection_WIP.kicad_sch`: `4a35099141453f364147c567d8b08f0ee1324c24b494df9f6d6fc541fcdababa`;
+- root SCH: `0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e`;
+- PCB: `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
+- `Sirokko_Input_Protection_WIP.kicad_sch`: `f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5`;
 - `logic_power_24_5_DRAFT.kicad_sch`: `67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd`;
 - `fp-lib-table`: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`.
 
@@ -63,11 +63,11 @@ F1 заменён на Littelfuse `0997015.WXN`, 15 А / 58 В DC; держат�
 
 ## Производственные материалы
 
-Каталог [`../manufacturing/current/`](../manufacturing/current/) пересобран из проверенной редакции PCB SHA `4a5093ef…`: Gerber, Excellon, BOM, позиции, manifest и четыре изображения относятся к одной паре SCH/PCB. Native DRC пройден с проверкой соответствия схеме и `ignored_checks=[]`; комплект остаётся **NOT FOR ORDER**.
+Каталог [`../manufacturing/current/`](../manufacturing/current/) пересобран из проверенной редакции PCB SHA `57f4b943…`: Gerber, Excellon, BOM, позиции, manifest и четыре изображения относятся к одной паре SCH/PCB. Native DRC пройден с проверкой соответствия схеме и `ignored_checks=[]`; комплект остаётся **NOT FOR ORDER**.
 
 Отдельно опубликованы [текущие требования обычного хоббийного изготовления и самостоятельной сборки](research/FABRICATION_REQUIREMENTS_CURRENT_RU.md): обычная FR-4 1,6 мм, два слоя, наружная медь 35 мкм номинально, стандартное доступное покрытие. ENIG не обязателен; окончательный выбор покрытия не закрыт. Промышленные микрошлифы каждой партии и специальный процесс не назначены. Это не ослабляет DRC, силовые расчёты, DFM, проверку маски и сопряжений.
 
-Каноническая PCB имеет SHA `4a5093ef…`; корневая схема — `9b0b16a2…`. Прежние производные удалены из действующего каталога и остаются только в истории Git.
+Каноническая PCB имеет SHA `57f4b943…`; корневая схема — `0f62b976…`. Прежние производные удалены из действующего каталога и остаются только в истории Git.
 
 [Текущая проверка SCH/PCB](research/PCB_SCH_PARITY_CURRENT_RU.md) и [машинная сводка](research/RC_INTEGRATION_CURRENT.json) фиксируют R108/C109, C24, сохранность прежней меди и результаты ERC/DRC/parity. Второй PCB не создавался.
 

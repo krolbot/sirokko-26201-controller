@@ -14,7 +14,7 @@
 "C109","33nF 100V C0G 5% CdVdT WIP","Capacitor_SMD:C_0805_2012Metric","Murata","GRM2195C2A333JE01J","","~"
 "D1","TVS3301DRBR WIP","Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm","","TVS3301DRBR","",""
 "D101","STPS5H100B-TR","Package_TO_SOT_SMD:TO-252-2","","STPS5H100B-TR","",""
-"F1","0997030.WXN / 30A WIP","Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE","","0997030.WXN + 3568","",""
+"F1","0997015.WXN / 15A","Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE","","0997015.WXN + 3568","",""
 "J1","DEVKITC1_J1","Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical","Samtec","SSQ-122-01-T-S","",""
 "J3","DEVKITC1_J3","Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical","Samtec","SSQ-122-01-T-S","",""
 "J12","ROOM_DS18B20_HARNESS","TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal","Phoenix Contact","1715734","","https://static.chipdip.ru/lib/723/DOC011723280.pdf"

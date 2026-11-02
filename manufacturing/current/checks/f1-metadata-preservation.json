@@ -1,0 +1,87 @@
+{
+  "normalized_whole_file_equal": {
+    "pcb": true,
+    "root_sch": true,
+    "input_sch": true
+  },
+  "f1_footprint_normalized_equal": true,
+  "f1_pad_records_equal": true,
+  "f1_pad_records_sha256": "38f76bb57465c2bb4a8631c302a05c7e3c93122b8e21648bdd167da6a1f05d0c",
+  "allowed_changes": {
+    "Value": [
+      "0997030.WXN / 30A WIP",
+      "0997015.WXN / 15A"
+    ],
+    "MPN": [
+      "0997030.WXN + 3568",
+      "0997015.WXN + 3568"
+    ]
+  },
+  "pcb_syntax_counts_before": {
+    "footprints": 72,
+    "pads": 291,
+    "segments": 639,
+    "track_arcs": 0,
+    "vias": 146,
+    "all_zone_objects": 32
+  },
+  "pcb_syntax_counts_after": {
+    "footprints": 72,
+    "pads": 291,
+    "segments": 639,
+    "track_arcs": 0,
+    "vias": 146,
+    "all_zone_objects": 32
+  },
+  "pcb_syntax_counts_equal": true,
+  "native_board_info_after": {
+    "footprints": 72,
+    "segments": 639,
+    "vias": 146,
+    "nets_including_unconnected": 78,
+    "copper_zones": 27,
+    "thickness_mm": 1.6
+  },
+  "native_f1_pads_after": [
+    {
+      "pad": "1",
+      "board_xy_mm": [
+        4.3,
+        100.96
+      ],
+      "net": "/VIN_RAW_24"
+    },
+    {
+      "pad": "1",
+      "board_xy_mm": [
+        7.7,
+        100.96
+      ],
+      "net": "/VIN_RAW_24"
+    },
+    {
+      "pad": "2",
+      "board_xy_mm": [
+        4.3,
+        91.04
+      ],
+      "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+    },
+    {
+      "pad": "2",
+      "board_xy_mm": [
+        7.7,
+        91.04
+      ],
+      "net": "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED"
+    }
+  ],
+  "source_commit": "9405cabb3955a39df3351b2abdfdc21defeb73f5",
+  "current_source_sha256": {
+    "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb": "57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b",
+    "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch": "0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e",
+    "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch": "f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5"
+  },
+  "result": "PASS",
+  "scope": "Only F1 Value and MPN metadata changed; footprint, pads, placement, nets, tracks, vias and zones are preserved."
+}
