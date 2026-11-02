@@ -1,0 +1,83 @@
+{
+  "ngspice_rc": 0,
+  "rows": 2619638,
+  "logged_rows": 2619638,
+  "all_finite": true,
+  "last_time_s": 0.016,
+  "final_vout_V": 5.0371703,
+  "first_vout_4p75": [
+    0.00932478073,
+    23.7605934
+  ],
+  "last_below_4p75_s": 0.00932473073,
+  "maximum_vout_V_and_time": [
+    5.03747354,
+    0.0145373412
+  ],
+  "final_ms_minimum_V_and_time": [
+    5.03365776,
+    0.0150480332
+  ],
+  "final_ms_maximum_V_and_time": [
+    5.0374237,
+    0.0152263247
+  ],
+  "final_ms_time_weighted_mean_V": 5.03654334062056,
+  "peak_buck_input_A_and_time": [
+    108.131859,
+    0.0143782574
+  ],
+  "peak_inductor_A_and_time": [
+    1.30809585,
+    0.00947782254
+  ],
+  "conditional_550uF_cap_charging_A": 1.4016123672974645,
+  "conditional_single_FET_peak_W_time_vin_buckA_capA": [
+    772.5403703191356,
+    0.00661801654,
+    16.8627131,
+    63.3149666,
+    1.4016123672974645
+  ],
+  "conditional_single_FET_energy_J": 0.23134394187592255,
+  "log_errors": [],
+  "source_board_sha256": "9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444",
+  "netlist_sha256": "4829f3cd58f9885891cc0428f9c7495ae74dacaa39afb38ae03eb93d0eff46af",
+  "full_csv_sha256": "a4db2e5a323c26c55d8b3e9b309bf1f10051f66f558b1f13552228f5f175b732",
+  "started_utc": "2026-11-02T05:38:28Z",
+  "ended_utc": "2026-11-02T05:42:02Z",
+  "parameters": {
+    "voltage_V": 28.8,
+    "ramp_start_s": 1e-06,
+    "ramp_duration_s": 0.011301270144,
+    "Cgate_envelope_min_F": 2.9430391e-08,
+    "Igate_max_A": 7.5e-05,
+    "load_ohm": 5,
+    "maxstep_s": 5e-08,
+    "temperature_C": 27
+  },
+  "input_current_100us_averages": {
+    "peak_100us_buck_mean_A": [
+      0.0094,
+      0.2627600914535848
+    ],
+    "peak_100us_buck_mean_during_ramp_A": [
+      0.0094,
+      0.2627600914535848
+    ],
+    "final_100us_buck_mean_A": [
+      0.0159,
+      0.20013624445418782
+    ]
+  },
+  "qualification": {
+    "voltage_startup_only": "PASS for the imposed ramp, nominal ideal passive components and 5 ohm load",
+    "full_input_stage": "NOT MODELLED",
+    "MOSFET_SOA": "NOT QUALIFIED",
+    "single_FET_power_fields": "algebraic raw waveform screening only; ideal-source narrow current spikes invalidate direct use as physical MOSFET stress",
+    "model_precision": "CSV time quantization limits sub-nanosecond pulse/charge analysis; no convergence study for current peaks",
+    "R108_C109": "schematic-only WIP unchanged",
+    "production_release": false,
+    "physical_tests": false
+  }
+}
