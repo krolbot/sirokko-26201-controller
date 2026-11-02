@@ -13,8 +13,8 @@ C107,PCB_COMPONENT,GRM1885C1H472JA01D,,1,4.7nF 50V C0G,Capacitor_SMD:C_0603_1608
 C108,PCB_COMPONENT,CC0603JRNPO9BN821,,1,820pF 50V C0G,Capacitor_SMD:C_0603_1608Metric,Деталь схемы,DRAFT_NOT_FOR_ORDER
 D1,PCB_COMPONENT,TVS3301DRBR,,1,TVS3301DRBR WIP,Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm,Деталь схемы,DRAFT_NOT_FOR_ORDER
 D101,PCB_COMPONENT,STPS5H100B-TR,,1,STPS5H100B-TR,Package_TO_SOT_SMD:TO-252-2,Деталь схемы,DRAFT_NOT_FOR_ORDER
-F1,PLUG_IN_FUSE,0997030.WXN,,1,0997030.WXN / 30A WIP,Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE,"Плавкая вставка 30 А; номинал WIP, не допуск заказа",DRAFT_NOT_FOR_ORDER
-F1,PCB_FUSE_HOLDER,3568,,1,0997030.WXN / 30A WIP,Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE,Держатель F1; footprint Keystone_3568,DRAFT_NOT_FOR_ORDER
+F1,PLUG_IN_FUSE,0997015.WXN,Littelfuse,1,0997015.WXN / 15A,Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE,"Плавкая вставка 15 А, 58 В DC; назначена проектной токовой оболочкой",DRAFT_NOT_FOR_ORDER
+F1,PCB_FUSE_HOLDER,3568,Keystone Electronics,1,0997015.WXN / 15A,Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE,Держатель F1; footprint Keystone_3568 сохранён,DRAFT_NOT_FOR_ORDER
 J1,PCB_DEVKIT_SOCKET,SSQ-122-01-T-S,Samtec,1,DEVKITC1_J1,Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical,Только ответная колодка; сам ESP32 в отдельном перечне,DRAFT_NOT_FOR_ORDER
 J3,PCB_DEVKIT_SOCKET,SSQ-122-01-T-S,Samtec,1,DEVKITC1_J3,Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical,Только ответная колодка; сам ESP32 в отдельном перечне,DRAFT_NOT_FOR_ORDER
 J12,PCB_COMPONENT,1715734,Phoenix Contact,1,ROOM_DS18B20_HARNESS,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",Деталь схемы,DRAFT_NOT_FOR_ORDER

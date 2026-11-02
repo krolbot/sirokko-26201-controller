@@ -13,6 +13,8 @@ All 72 footprints are on F.Cu. The board contains 291 pads, 639 segments, 146 vi
 
 KiCad 10.0.8 checks: root ERC 0; native DRC 0 violations/0 unconnected items; Pre-fab Gate passed with schematic parity enabled and `ignored_checks=[]`. The [current verification report](docs/research/PCB_SCH_PARITY_CURRENT_RU.md) and [machine summary](docs/research/RC_INTEGRATION_CURRENT.json) do not authorize manufacturing or power-up.
 
+F1 is Littelfuse `0997015.WXN`, 15 A / 58 V DC, in the unchanged Keystone 3568 holder. The assigned interface envelope is: glow 7 A continuous / 10 A for at most 1 s; clutch 2 A / 3 A for at most 1 s; common J13/F1 input 10 A / 13 A for at most 1 s; ambient at F1 at most 80 °C. The provisional 5 V continuous budget is 0.70 A. See the [engineering basis](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md); physical qualification remains required.
+
 Current renders and connection data:
 
 - [front assembly](manufacturing/current/renders/assembly-front.png);

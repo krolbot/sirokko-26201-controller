@@ -4965,7 +4965,7 @@
 				)
 			)
 		)
-		(property "Value" "0997030.WXN / 30A WIP"
+		(property "Value" "0997015.WXN / 15A"
 			(at 49.53 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5007,7 +5007,7 @@
 				)
 			)
 		)
-		(property "MPN" "0997030.WXN + 3568"
+		(property "MPN" "0997015.WXN + 3568"
 			(at 49.53 49.53 0)
 			(hide yes)
 			(show_name no)

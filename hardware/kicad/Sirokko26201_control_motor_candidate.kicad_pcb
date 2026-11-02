@@ -17463,7 +17463,7 @@
 				)
 			)
 		)
-		(property "Value" "0997030.WXN / 30A WIP"
+		(property "Value" "0997015.WXN / 15A"
 			(at 0 5 90)
 			(layer "F.Fab")
 			(uuid "eda98d1f-5fa3-4872-880b-d2d2ce30da7a")
@@ -17500,7 +17500,7 @@
 				)
 			)
 		)
-		(property "MPN" "0997030.WXN + 3568"
+		(property "MPN" "0997015.WXN + 3568"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
