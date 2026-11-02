@@ -1,14 +1,14 @@
 {
-  "generated": "2026-11-02T07:22:35.215799+00:00",
+  "generated": "2026-11-02T07:44:50.581902+00:00",
   "kicad_cli_version": "10.0.8",
   "policy": {
     "strict": false,
-    "out_dir": "/projects/exports/t_ac604619_prefab_package/fab"
+    "out_dir": "/projects/exports/t_ac604619_prefab_package_final/fab"
   },
   "board": {
     "path": "Sirokko26201_control_motor_candidate.kicad_pcb",
-    "sha256": "3dd1bd4acb2e183d527319e9445f0f967e56123af23a8ad8cb7d51d4db8e6dce",
-    "checked_sha256": "3dd1bd4acb2e183d527319e9445f0f967e56123af23a8ad8cb7d51d4db8e6dce"
+    "sha256": "971ba54cb2e90889c72c319e80bbece437ae0782d5c20c8b134b5f2e83f8881f",
+    "checked_sha256": "971ba54cb2e90889c72c319e80bbece437ae0782d5c20c8b134b5f2e83f8881f"
   },
   "schematic": {
     "path": "Sirokko26201_control_motor_candidate.kicad_sch",
@@ -255,7 +255,7 @@
     "ignored_checks": [],
     "parity": {
       "ran": true,
-      "schematic": "/projects/exports/t_ac604619_prefab_package/.toolkit-bd8s00wh/Sirokko26201_control_motor_candidate.kicad_sch",
+      "schematic": "/projects/exports/t_ac604619_prefab_package_final/.toolkit-4j7g2uhv/Sirokko26201_control_motor_candidate.kicad_sch",
       "reason": "",
       "waived": false
     }
@@ -271,51 +271,51 @@
     },
     {
       "name": "drill/Sirokko26201_control_motor_candidate-drl_map.pdf",
-      "sha256": "10aa853b6147b9c92284ce1103ff9e86cabad041b8d3ad653f2d434a52ca1991"
+      "sha256": "5c7f669d05b7a57b145e3e7a1894d56dab515e54479bb1d5e39c636e1330a735"
     },
     {
       "name": "drill/Sirokko26201_control_motor_candidate.drl",
-      "sha256": "7c912e2c70bf77bd8a0257928aa5d92fc74a609927a4bd89a7cfdfa7dbf149d2"
+      "sha256": "c6d592f4f445e900f77d08b9c34bf5649b555a9d1dd712ca55a69cc6aa094969"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbr",
-      "sha256": "71d5792f807b9487abcc0b83d7c69da0d3152dcf32b685866241113af22d4d06"
+      "sha256": "7c40e6dafcc6278fd97fb51ed3e88ee4640f3f7674318ee0f4d691596c1328de"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbr",
-      "sha256": "4730b2d314d533fdb83504cdb7fbb345a76b2d33c9f7a9e928667359fe433b5f"
+      "sha256": "a20751576657afc7b01a87f8a1d3d0d398b7c4db9905121a6fe5ebb6f5c21f28"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbr",
-      "sha256": "5f645aa898cd6dc86d600d2cb60bce67611c695da0db03ad311f3a056d7439d6"
+      "sha256": "447aadc43328d9d6fbcbfb0e044a36dacaaa4a39b5b1af492cd1c5ebc4440e95"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
-      "sha256": "a84b3f3ceeaa4a811bddb0251988cbfcbcb26dd74786c5a44b9dd99b160add5b"
+      "sha256": "747eb180c7c96a70ec0fc22f451455f736813a196b10e793ed6a6743242c257d"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
-      "sha256": "b596199d5f45ba3ec732892359af8bc79c84a9920f521d6c7958bf1a8edd52a9"
+      "sha256": "7958c08f7eb10f4e39458e162b6c466eec87179d4cfe502f4a22283e241e4de0"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gbr",
-      "sha256": "057e65530c10d0f0ae36a7481912219f55af16c1923ac7371807bf83aabb88a6"
+      "sha256": "ba4d2993c43816b20a5428cee448ee326ac105ab858e8231dd2948bda6d95131"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gbr",
-      "sha256": "fa24637cb757204677251d08b4c498aa89c4548477132116ab526694d98c44af"
+      "sha256": "f043fb473abd9e67eb4f8106fcf343dbab552d96d1d7dc50c77908df59813fb6"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gbr",
-      "sha256": "d905fc0fc049e586b53b435125b5b8681bfa1db383584f3e4b560a07c7db2a7a"
+      "sha256": "d25fabfe96167ba9d9bc464748e42ab138d1d985c03df6b7c9699756d3a05064"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
-      "sha256": "beaefc397d1d21774f955ba2921ce1268295399fefd86a39d5733cc4d6881376"
+      "sha256": "00b35337d2756d8d2f1a1a6f54b6c1854b77f3c574909c351018d6a80aaacccc"
     },
     {
       "name": "gerbers/Sirokko26201_control_motor_candidate-job.gbrjob",
-      "sha256": "2cf63a7c2eab0397e29698ecffd0625dbbd5f9accc00a4f9319090081e284049"
+      "sha256": "d18068d7f2ec259d79911ab672bff9119d5df76b281f24ad37580ff7e4109898"
     }
   ]
 }
