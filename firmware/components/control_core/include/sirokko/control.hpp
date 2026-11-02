@@ -178,7 +178,8 @@ private:
 int32_t decode_max31856_signed19(uint8_t msb, uint8_t mid, uint8_t lsb);
 int32_t max31856_milli_c(uint8_t msb, uint8_t mid, uint8_t lsb);
 uint8_t onewire_crc8(const uint8_t* data, size_t size);
-bool decode_ds18b20_scratchpad(const uint8_t frame[9], int32_t* milli_c);
+bool decode_ds18b20_scratchpad(const uint8_t frame[9], unsigned requested_resolution_bits,
+                               bool conversion_completed, int32_t* milli_c);
 const char* state_name(State state);
 const char* block_name(Block block);
 

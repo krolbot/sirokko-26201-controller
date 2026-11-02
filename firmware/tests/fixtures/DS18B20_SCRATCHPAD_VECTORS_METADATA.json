@@ -1,0 +1,95 @@
+{
+  "status": "CALCULATED_REFERENCE_FIXTURES_NOT_EXECUTED_FIRMWARE_TESTS",
+  "scope": "DS18B20 scratchpad decoding and current-conversion precondition only; not application control limits or START permission",
+  "source": {
+    "manufacturer": "Maxim Integrated",
+    "device": "DS18B20",
+    "title": "Programmable Resolution 1-Wire Digital Thermometer",
+    "revision": "REV: 042208",
+    "url": "https://cdn-shop.adafruit.com/datasheets/DS18B20.pdf",
+    "source_role": "manufacturer PDF mirrored by Adafruit; not asserted latest revision",
+    "sha256": "39d191cd1fb657e43eac061f605bbd375d3c42dc40e7839c17fa0675bb0404d8",
+    "bytes": 261896,
+    "physical_pages": 22,
+    "verified_at_utc": "2026-11-02T15:07:00Z",
+    "evidence": [
+      {
+        "physical_page": 3,
+        "printed_page": 3,
+        "section": "OPERATION—MEASURING TEMPERATURE",
+        "facts": [
+          "signed16 temperature encoding",
+          "undefined temperature bits at 9/10/11-bit resolution",
+          "Convert T and externally powered completion polling"
+        ],
+        "read_method": "pdftotext -layout"
+      },
+      {
+        "physical_page": 4,
+        "printed_page": 4,
+        "section": "Figure 2 / Table 1",
+        "facts": [
+          "10 literal temperature/HEX reference pairs",
+          "85 C power-on value"
+        ],
+        "read_method": "text and independently inspected rendered table"
+      },
+      {
+        "physical_page": 7,
+        "printed_page": 7,
+        "section": "MEMORY / Figure 7",
+        "facts": [
+          "scratchpad byte order",
+          "CRC in byte 8 covers bytes 0 through 7"
+        ],
+        "read_method": "pdftotext -layout"
+      },
+      {
+        "physical_page": 8,
+        "printed_page": 8,
+        "section": "Figure 8 / Table 2 / CRC GENERATION",
+        "facts": [
+          "config bit7=0 and bits4:0=11111",
+          "resolution bits R1/R0 at bits6/5",
+          "CRC x^8+x^5+x^4+1; initial zero; LSB first"
+        ],
+        "read_method": "text and independently inspected rendered table"
+      }
+    ]
+  },
+  "csv": {
+    "filename": "DS18B20_SCRATCHPAD_VECTORS.csv",
+    "encoding": "UTF-8",
+    "line_ending": "LF",
+    "sha256": "6b7459cbef2cd402e2b30cf2127bccdceb154c6b54bebc174726b35f45912c25",
+    "bytes": 3045,
+    "case_count": 31,
+    "expected_usable": 25,
+    "expected_rejected": 6,
+    "datasheet_table1_anchors": 10,
+    "undefined_lsb_combinations": 14
+  },
+  "field_semantics": {
+    "scratchpad_hex": "18 lowercase HEX characters, nine bytes in bus byte order; byte0=temp LSB, byte1=temp MSB, byte4=config, byte8=received CRC. TH/TL=4b/46 and reserved=ff/0c/10 are chosen fixture contents, not required universal values.",
+    "conversion_completed_for_this_sample": "Logical test precondition supplied separately from the frame. True means completion belongs to the current addressed sensor/acquisition, not an old conversion. It cannot be inferred from 85 C or from CRC.",
+    "requested_resolution_bits": "Resolution chosen in this test context. 9/10/11-bit vectors test the generic frame decoder and do NOT change the project runtime selection of 12 bits or permit a configuration mismatch.",
+    "expected_crc_match": "CRC8/Maxim of bytes0..7 equals byte8. Correct CRC is necessary but insufficient for frame or sample validity.",
+    "expected_format_valid": "For these exact nine-byte fixtures, checks only config reserved bits: (byte4 & 0x9f)==0x1f. Not a substitute for ROM, line-state, current-cycle or sample-age checks.",
+    "expected_resolution_bits": "9+R1R0 only when configuration is valid. Empty means no valid resolution should be published.",
+    "expected_temperature_C": "Exact decoded C value only if CRC and configuration are valid; can still be stale. Empty means no valid temperature may be published, not numeric zero.",
+    "expected_protocol_sample_usable": "Only with CRC+configuration+current conversion+requested resolution matching. Assumes a valid addressed ROM/family/ROM CRC and no expired sample age. Not permission to energize outputs or bypass process safety."
+  },
+  "checks": {
+    "temperature": "Two exact rational expressions (signed integer /16 and weighted bit sum /16), checked against literal Table1 reference pairs and independently assigned 25 C resolution cases",
+    "crc": "Two equivalent but independent arithmetic forms: reflected LSB-first 0x8c recurrence and normal polynomial 0x131 division after byte bit reflection; checked on every frame. Nine-byte zero-residue verification also checked. Three existing project frame literals match exactly.",
+    "undefined_bits": "All 8 combinations for9-bit, all4 for10-bit and both2 for11-bit at25 C are included; only explicitly undefined temperature bits are ignored, not reserved config bits.",
+    "same_bytes_different_validity": "DS_T12_PLUS85 and DS_POWERUP_85_NO_CONVERSION have identical nine-byte frames but opposite usability due solely to completed-current-conversion context."
+  },
+  "limits": [
+    "These are generated mathematical test inputs, not observed sensor packets or fabricated measurements.",
+    "No DS18B20 driver/firmware implementation was executed by this calculation. Actual implementation must be run against fixtures by the existing default firmware task.",
+    "No code, driver, general generator, hardware, GPIO, process setpoints or frozen operational control contract is changed.",
+    "No power, physical flash, relay, motor or combustion test was performed.",
+    "Do not publish the third-party source PDF automatically; retain its URL and attribution."
+  ]
+}

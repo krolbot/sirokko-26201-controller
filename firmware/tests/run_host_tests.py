@@ -12,4 +12,8 @@ subprocess.run([
     str(root / "tests/test_control.cpp"),
     "-o", str(binary),
 ], check=True)
-subprocess.run([str(binary), str(root / "tests/fixtures/MAX31856_TEMPERATURE_VECTORS.csv")], check=True)
+subprocess.run([
+    str(binary),
+    str(root / "tests/fixtures/MAX31856_TEMPERATURE_VECTORS.csv"),
+    str(root / "tests/fixtures/DS18B20_SCRATCHPAD_VECTORS.csv"),
+], check=True)

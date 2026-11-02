@@ -314,12 +314,13 @@ uint8_t onewire_crc8(const uint8_t* data, size_t size) {
     return crc;
 }
 
-bool decode_ds18b20_scratchpad(const uint8_t frame[9], int32_t* milli_c) {
-    if (!frame || !milli_c || onewire_crc8(frame, 8) != frame[8]) return false;
-    const bool format = (frame[4] == 0x1F || frame[4] == 0x3F || frame[4] == 0x5F || frame[4] == 0x7F) &&
-                        frame[5] == 0xFF && frame[6] == 0x0C && frame[7] == 0x10;
-    if (!format) return false;
+bool decode_ds18b20_scratchpad(const uint8_t frame[9], unsigned requested_resolution_bits,
+                               bool conversion_completed, int32_t* milli_c) {
+    if (!frame || !milli_c || !conversion_completed || requested_resolution_bits < 9 ||
+        requested_resolution_bits > 12 || onewire_crc8(frame, 8) != frame[8] ||
+        (frame[4] & 0x9FU) != 0x1FU) return false;
     const unsigned resolution = (frame[4] >> 5) & 0x03U;
+    if (requested_resolution_bits != resolution + 9) return false;
     constexpr std::array<uint8_t, 4> mask{{0x07, 0x03, 0x01, 0x00}};
     const uint8_t lsb = frame[0] & static_cast<uint8_t>(~mask[resolution]);
     const int16_t raw = static_cast<int16_t>((static_cast<uint16_t>(frame[1]) << 8) | lsb);

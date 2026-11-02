@@ -53,21 +53,34 @@ void test_temperature_vectors(const char* path) {
     assert(cases == 352);
 }
 
-void test_ds18b20() {
-    uint8_t valid_zero[9]{0x00, 0x00, 0x4b, 0x46, 0x7f, 0xff, 0x0c, 0x10, 0xc8};
-    int32_t value = 1;
-    assert(decode_ds18b20_scratchpad(valid_zero, &value) && value == 0);
-
-    uint8_t invalid_config[9]{0x90, 0x01, 0x4b, 0x46, 0xff, 0xff, 0x0c, 0x10, 0xea};
-    assert(onewire_crc8(invalid_config, 8) == invalid_config[8]);
-    assert(!decode_ds18b20_scratchpad(invalid_config, &value));
-
-    uint8_t zeros[9]{};
-    assert(onewire_crc8(zeros, 8) == 0);
-    assert(!decode_ds18b20_scratchpad(zeros, &value));
-
-    valid_zero[8] ^= 1;
-    assert(!decode_ds18b20_scratchpad(valid_zero, &value));
+void test_ds18b20(const char* path) {
+    std::ifstream input(path);
+    assert(input.good());
+    std::string line;
+    std::getline(input, line);
+    size_t cases = 0;
+    size_t usable = 0;
+    while (std::getline(input, line)) {
+        const auto f = split(line);
+        assert(f.size() == 10 && f[1].size() == 18);
+        uint8_t frame[9]{};
+        for (size_t i = 0; i < 9; ++i) frame[i] = hex_byte(f[1].substr(i * 2, 2));
+        const bool completed = f[2] == "1";
+        const unsigned requested_resolution = std::stoul(f[3]);
+        const bool expected_crc = f[4] == "1";
+        const bool expected_usable = f[8] == "1";
+        assert((onewire_crc8(frame, 8) == frame[8]) == expected_crc);
+        int32_t value{};
+        const bool actual = decode_ds18b20_scratchpad(frame, requested_resolution, completed, &value);
+        assert(actual == expected_usable);
+        if (actual) {
+            assert(!f[7].empty());
+            assert(value == static_cast<int32_t>(std::stod(f[7]) * 1000.0));
+            ++usable;
+        }
+        ++cases;
+    }
+    assert(cases == 31 && usable == 25);
 }
 
 void test_gate() {
@@ -231,14 +244,15 @@ void test_output_driver_fault_is_safe() {
 }  // namespace
 
 int main(int argc, char** argv) {
-    assert(argc == 2);
+    assert(argc == 3);
     test_temperature_vectors(argv[1]);
-    test_ds18b20();
+    test_ds18b20(argv[2]);
     test_gate();
     test_safe_closed();
     test_state_machine_and_priority();
     test_delayed_stop_and_fault_barriers();
     test_duration_exact_boundary();
     test_output_driver_fault_is_safe();
-    std::cout << "PASS: 352 MAX31856 vectors; DS18B20 format/CRC; command freshness; state/timer/fault/STOP barriers\n";
+    std::cout << "PASS: 352 MAX31856 vectors; 31 DS18B20 vectors (25 accepted/6 rejected); "
+                 "command freshness; state/timer/fault/STOP barriers\n";
 }

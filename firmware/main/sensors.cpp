@@ -189,7 +189,7 @@ public:
             invalidate(0xFD);
         } else {
             int32_t milli_c{};
-            if (sirokko::decode_ds18b20_scratchpad(frame, &milli_c)) {
+            if (sirokko::decode_ds18b20_scratchpad(frame, 12, true, &milli_c)) {
                 sample_ = {milli_c, now_ms, 0, true};
             } else {
                 invalidate(0xFC);
