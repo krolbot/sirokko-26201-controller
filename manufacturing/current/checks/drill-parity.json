@@ -1,0 +1,72 @@
+{
+  "pcb_path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+  "board": {
+    "footprints": 72,
+    "pads": 291,
+    "nets_including_unconnected": 78,
+    "connected_nets": 77,
+    "segments": 639,
+    "vias": 147,
+    "zones": 27,
+    "footprint_sides": {
+      "top": 72
+    }
+  },
+  "native_holes": {
+    "PTH": {
+      "0.300": 106,
+      "0.400": 35,
+      "0.500": 6,
+      "0.800": 14,
+      "1.000": 48,
+      "1.040": 18,
+      "1.300": 13,
+      "1.700": 4,
+      "2.340": 10
+    },
+    "NPTH": {
+      "2.110": 4,
+      "2.200": 4,
+      "3.200": 4,
+      "3.600": 5
+    },
+    "plated_pad_holes": 107,
+    "via_holes": 147,
+    "npth_pad_holes": 17,
+    "PTH_total": 254,
+    "NPTH_total": 17
+  },
+  "drill_report": {
+    "counts": {
+      "PTH": {
+        "0.300": 106,
+        "0.400": 35,
+        "0.500": 6,
+        "0.800": 14,
+        "1.000": 48,
+        "1.040": 18,
+        "1.300": 13,
+        "1.700": 4,
+        "2.340": 10
+      },
+      "NPTH": {
+        "2.110": 4,
+        "2.200": 4,
+        "3.200": 4,
+        "3.600": 5
+      }
+    },
+    "totals": {
+      "PTH": 254,
+      "NPTH": 17
+    }
+  },
+  "checks": {
+    "PTH_distribution_matches": true,
+    "NPTH_distribution_matches": true,
+    "PTH_total_matches": true,
+    "NPTH_total_matches": true,
+    "all_footprints_top": true
+  },
+  "passed": true
+}

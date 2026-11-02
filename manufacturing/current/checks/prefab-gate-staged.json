@@ -238,7 +238,7 @@
   "parity": {
     "ran": true,
     "reason": "",
-    "schematic": "/projects/exports/t_ac604619_prefab_package_final/.toolkit-4j7g2uhv/Sirokko26201_control_motor_candidate.kicad_sch",
+    "schematic": "<staged-copy>/Sirokko26201_control_motor_candidate.kicad_sch",
     "waived": false
   },
   "passed": true

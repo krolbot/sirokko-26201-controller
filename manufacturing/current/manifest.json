@@ -1,321 +1,245 @@
 {
-  "generated": "2026-11-02T07:44:50.581902+00:00",
-  "kicad_cli_version": "10.0.8",
-  "policy": {
-    "strict": false,
-    "out_dir": "/projects/exports/t_ac604619_prefab_package_final/fab"
+  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE",
+  "production_release": false,
+  "physical_tests": false,
+  "source_commit": "eadad5de02062fea6009871ee03c63b9a983c735",
+  "generator": {
+    "kicad": "10.0.8",
+    "native_project_context": true,
+    "source_modified": false
   },
-  "board": {
-    "path": "Sirokko26201_control_motor_candidate.kicad_pcb",
-    "sha256": "971ba54cb2e90889c72c319e80bbece437ae0782d5c20c8b134b5f2e83f8881f",
-    "checked_sha256": "971ba54cb2e90889c72c319e80bbece437ae0782d5c20c8b134b5f2e83f8881f"
-  },
-  "schematic": {
-    "path": "Sirokko26201_control_motor_candidate.kicad_sch",
-    "sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b",
-    "checked_sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b"
-  },
-  "verdict": {
-    "passed": true,
-    "blocking": [],
-    "cosmetic": [
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Relay_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint K1"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint H12"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Capacitor' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint C25"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint U101"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Connector_Sirokko_Module' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint J31"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint Q1"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint J27"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint H13"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint C103"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Relay_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint K2"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint H11"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint Q3"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint J13"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint H3"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Connector_Sirokko_Module' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint J30"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint Q2"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint F1"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint J28"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint H1"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "violation",
-        "type": "lib_footprint_issues",
-        "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
-        "severity": "warning",
-        "items": [
-          "Footprint Q4"
-        ],
-        "blocking": false,
-        "reason": "DRC severity is warning"
-      },
-      {
-        "kind": "ampacity",
-        "type": "fuse_trip_unknown",
-        "description": "F1 looks like a fuse but records no trip current, so its nets (/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED, /VIN_RAW_24) cannot be checked against it. Add a Spec property containing e.g. 'IT 3.8 A'.",
-        "severity": "warning",
-        "items": [
-          "Fuse F1"
-        ],
-        "blocking": false,
-        "reason": "cannot verify an invariant without the trip current"
-      }
-    ],
-    "excluded": 0,
-    "ignored_checks": [],
-    "parity": {
-      "ran": true,
-      "schematic": "/projects/exports/t_ac604619_prefab_package_final/.toolkit-4j7g2uhv/Sirokko26201_control_motor_candidate.kicad_sch",
-      "reason": "",
-      "waived": false
+  "sources": [
+    {
+      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro",
+      "bytes": 9926,
+      "sha256": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6"
+    },
+    {
+      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch",
+      "bytes": 173900,
+      "sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b"
+    },
+    {
+      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+      "bytes": 981818,
+      "sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820"
+    },
+    {
+      "path": "hardware/kicad/MinimalSafety.kicad_sch",
+      "bytes": 38524,
+      "sha256": "3419aa24e854817fa59c91646ded28834a511ab17568cda566763b223c3f3ef0"
+    },
+    {
+      "path": "hardware/kicad/logic_power_24_5_DRAFT.kicad_sch",
+      "bytes": 77718,
+      "sha256": "36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d"
+    },
+    {
+      "path": "hardware/kicad/motor_external_hc160.kicad_sch",
+      "bytes": 16804,
+      "sha256": "fae39327263102616ed1276727cb5fd9a88352298e8309af89d49b542f24f5d1"
+    },
+    {
+      "path": "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch",
+      "bytes": 103999,
+      "sha256": "d3686cfc00b28a220041f71b53705924d24c83587c78d9480d03799f1375887d"
+    },
+    {
+      "path": "hardware/kicad/fp-lib-table",
+      "bytes": 1890,
+      "sha256": "8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac"
+    },
+    {
+      "path": "hardware/kicad/sym-lib-table",
+      "bytes": 1167,
+      "sha256": "b964e439016a2309684d97da34287f3db3be5571c18b323ad53b0bedb7cb2a15"
     }
-  },
+  ],
   "files": [
     {
-      "name": "bom.csv",
+      "path": "FABRICATION_REQUIREMENTS_RU.md",
+      "bytes": 12307,
+      "sha256": "5aa49e9bce7d468bcef4037592d54be4c75f671c70095b8412f45eea843af2ee"
+    },
+    {
+      "path": "README_RU.md",
+      "bytes": 6890,
+      "sha256": "dcca897e9fe7863a376a5fa513d17e0bc12ff591adba8cff5af43c9db6385c52"
+    },
+    {
+      "path": "bom.csv",
+      "bytes": 7677,
       "sha256": "f44d56992f8c4d75b3d91ccd0c892f43b054a149a4a8e5b900d544f1c4e7dc0a"
     },
     {
-      "name": "cpl.csv",
-      "sha256": "1f0eb18a2cd2ff40664ce4ea21eda547186cb4d49e4f4a7fc4961bb9b985b4e7"
+      "path": "checks/dependency-audit.json",
+      "bytes": 2059,
+      "sha256": "e7f92f5c24346ce15c528f54de04e6bf1d6f54eb41b1a3abbd76d202495ad0ea"
     },
     {
-      "name": "drill/Sirokko26201_control_motor_candidate-drl_map.pdf",
-      "sha256": "5c7f669d05b7a57b145e3e7a1894d56dab515e54479bb1d5e39c636e1330a735"
+      "path": "checks/drc.json",
+      "bytes": 416,
+      "sha256": "0eaf5e2d363aa2c93f6d782fc1993eda003756169821abcb1f4c2b632a76d12d"
     },
     {
-      "name": "drill/Sirokko26201_control_motor_candidate.drl",
-      "sha256": "c6d592f4f445e900f77d08b9c34bf5649b555a9d1dd712ca55a69cc6aa094969"
+      "path": "checks/drill-parity.json",
+      "bytes": 1358,
+      "sha256": "f2069f78c077a43bc4ed39ad5fb8989494de768901df8a880595792ed8e61c09"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbr",
-      "sha256": "7c40e6dafcc6278fd97fb51ed3e88ee4640f3f7674318ee0f4d691596c1328de"
+      "path": "checks/erc.json",
+      "bytes": 1854,
+      "sha256": "e410c1178c3e50ea6095bf89e1947b74a06531ae895d5a4841a7b1ff65ce70e4"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbr",
-      "sha256": "a20751576657afc7b01a87f8a1d3d0d398b7c4db9905121a6fe5ebb6f5c21f28"
+      "path": "checks/prefab-gate-staged.json",
+      "bytes": 7387,
+      "sha256": "a3d0965bb6bd5d846066192815bee3189b81c76702a1e0a3bbfa821fca994cef"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbr",
-      "sha256": "447aadc43328d9d6fbcbfb0e044a36dacaaa4a39b5b1af492cd1c5ebc4440e95"
+      "path": "checks/project-opencheck-drc.json",
+      "bytes": 416,
+      "sha256": "a525a385fce673d51af655b583e4803ded2908e4c114863287f98720eeba9698"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
-      "sha256": "747eb180c7c96a70ec0fc22f451455f736813a196b10e793ed6a6743242c257d"
+      "path": "checks/project-opencheck-erc.json",
+      "bytes": 1854,
+      "sha256": "58ad722975682ea869a0b2f8abe20b435e776c537c008e385d7794210309dfe9"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
-      "sha256": "7958c08f7eb10f4e39458e162b6c466eec87179d4cfe502f4a22283e241e4de0"
+      "path": "cpl.csv",
+      "bytes": 5244,
+      "sha256": "3e454f9f8c7699ec6ba27b16a07082ba0f533141995c4d9d0d7c934753c4e5d2"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gbr",
-      "sha256": "ba4d2993c43816b20a5428cee448ee326ac105ab858e8231dd2948bda6d95131"
+      "path": "drill/Sirokko26201_control_motor_candidate-NPTH-drl_map.pdf",
+      "bytes": 14086,
+      "sha256": "bcaa8bca0909f672bde58302de7b07b5f644dc10569130c8c157c2b573d90715"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gbr",
-      "sha256": "f043fb473abd9e67eb4f8106fcf343dbab552d96d1d7dc50c77908df59813fb6"
+      "path": "drill/Sirokko26201_control_motor_candidate-NPTH.drl",
+      "bytes": 798,
+      "sha256": "c7168105aa43367c34b18e417c470fde5f7ede01a75e57e60755821c630d6f8d"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gbr",
-      "sha256": "d25fabfe96167ba9d9bc464748e42ab138d1d985c03df6b7c9699756d3a05064"
+      "path": "drill/Sirokko26201_control_motor_candidate-PTH-drl_map.pdf",
+      "bytes": 23945,
+      "sha256": "88c2b85e788c242992b53e752ef9075c4f853dcec1501b566d3d2b95ff3602d6"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
-      "sha256": "00b35337d2756d8d2f1a1a6f54b6c1854b77f3c574909c351018d6a80aaacccc"
+      "path": "drill/Sirokko26201_control_motor_candidate-PTH.drl",
+      "bytes": 4302,
+      "sha256": "5bb648e2f7f0d1ac20b9245cb44e62e8e32c9999c3064706dc1032eaef88b5d4"
     },
     {
-      "name": "gerbers/Sirokko26201_control_motor_candidate-job.gbrjob",
-      "sha256": "d18068d7f2ec259d79911ab672bff9119d5df76b281f24ad37580ff7e4109898"
+      "path": "drill/drill-report.txt",
+      "bytes": 1150,
+      "sha256": "61f2d7045edabe19f97bdc29b9849515e6450461fddab3aadb1a95bd24209f6e"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbl",
+      "bytes": 248559,
+      "sha256": "6ca7572ba49ca3dfdb867f92e7f2495b098554722170ac2f25b63eea7c3571e4"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbs",
+      "bytes": 5545,
+      "sha256": "ec47ef9fd8e3aa9b36b2ee0b0027920a3821809dd68e4e4f4088d331a867734e"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbp",
+      "bytes": 523,
+      "sha256": "7d1b24c014d9f5c30532b379e4f4d2d0b7ead3d427cdb14391c3891277b1ead7"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbo",
+      "bytes": 524,
+      "sha256": "163097cf06ac9824e05c9f0583f02412b5d6a8943d4348ddf9e045f279d0ec00"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gm1",
+      "bytes": 753,
+      "sha256": "fa98a92d25d71aa622fad95926abe5559a737805b0feb3d0699f0febf601347c"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gtl",
+      "bytes": 228107,
+      "sha256": "71db8fe003ea38dbf2fce504b68fdac3d8a1acc7cf8ef216cc832283cf038b36"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gts",
+      "bytes": 12553,
+      "sha256": "7e7ca9575dfc632a649e0ed3ed290f7d59457b2afef8b0be52722abfba154265"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gtp",
+      "bytes": 8821,
+      "sha256": "5da9f6542c18769823643f352ce697903c4523873b9447f6955154a521c2b120"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gto",
+      "bytes": 185521,
+      "sha256": "473536add0428d7c22fbb6b97eb3c1df3fb7b0406a309550962fd173433db557"
+    },
+    {
+      "path": "gerbers/Sirokko26201_control_motor_candidate-job.gbrjob",
+      "bytes": 2991,
+      "sha256": "17ada7ef4f207b489dc695094a1426f598084fa0f1363769bbb2d4680c4af2e4"
+    },
+    {
+      "path": "pdf/Sirokko26201_assembly_back.pdf",
+      "bytes": 67804,
+      "sha256": "bc4263476d59fe52a0fab8342b06b3233e87bdf36649d461aad6874de5c35c14"
+    },
+    {
+      "path": "pdf/Sirokko26201_assembly_front.pdf",
+      "bytes": 246142,
+      "sha256": "0bbc094fc6be0d9fb13d5551fbb28a17043dd436c28e9f79467725a1188d1dea"
+    },
+    {
+      "path": "pdf/Sirokko26201_full_schematic.pdf",
+      "bytes": 281619,
+      "sha256": "26f1346b7aa8ecfdc45a3c7bb81c881df64bde0f446b0f4b1273b5c5eabeefc8"
+    },
+    {
+      "path": "pdf/Sirokko26201_mechanical_holes.pdf",
+      "bytes": 246564,
+      "sha256": "2c2f57ccfdbdc7d1fefb4d4cfad5ca07a1b2e0c4e797dd2b967d5991036e3abf"
+    },
+    {
+      "path": "renders/assembly-back.png",
+      "bytes": 136809,
+      "sha256": "dae12ecbbe1d941848a62033a71231b3e591e3f5beaef2f2d17aa846333aa429"
+    },
+    {
+      "path": "renders/assembly-front.png",
+      "bytes": 273914,
+      "sha256": "6dbc6910a1f46d4af956b43c33f01c3f2f44f23d1c00d6cc21ee0dd466610a31"
+    },
+    {
+      "path": "renders/board-3d-bottom.png",
+      "bytes": 307293,
+      "sha256": "8a626ce181fe0f69524874f6afdeaa892086a8aa15d3d7d41b2311abacfdca2a"
+    },
+    {
+      "path": "renders/board-3d-oblique.png",
+      "bytes": 768596,
+      "sha256": "747648b950943397311b90f30615301279f5325c5028429a75d06862c6c07ac8"
+    },
+    {
+      "path": "renders/board-3d-top.png",
+      "bytes": 469396,
+      "sha256": "02d4bc4baf31187b22eb89b7b98608028396593f8e868f7035a10561c823dd94"
+    },
+    {
+      "path": "renders/board-back.png",
+      "bytes": 287661,
+      "sha256": "c4422faa8f9a0e546cb46bd356a939ea8c451623adab4abc98da1e3244c4ec10"
+    },
+    {
+      "path": "renders/board-front.png",
+      "bytes": 385207,
+      "sha256": "e9a168f41e2867e32a1ad740c72e0d17e8d01109b9dbcb3acf6beafbccdc6b7d"
     }
   ]
 }

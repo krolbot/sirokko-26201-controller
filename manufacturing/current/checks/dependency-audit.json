@@ -1,0 +1,66 @@
+{
+  "source": {
+    "commit": "eadad5de02062fea6009871ee03c63b9a983c735",
+    "pcb_sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820",
+    "root_schematic_sha256": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b",
+    "project_sha256": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6"
+  },
+  "project_context": {
+    "kicad_version": "10.0.8",
+    "root_sheet_count": 5,
+    "required_child_sheets_present": true,
+    "fp_lib_table_present": true,
+    "sym_lib_table_present": true,
+    "single_canonical_pcb": true,
+    "single_canonical_project": true
+  },
+  "dependency_scan": {
+    "items": 193,
+    "resolved_standard": 140,
+    "resolved_project_local": 48,
+    "missing_optional_standard_3d_models": [
+      {
+        "reference": "TP101",
+        "model": "TestPoint_Keystone_5015_Micro_Mini.step"
+      },
+      {
+        "reference": "U11",
+        "model": "HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm.step"
+      },
+      {
+        "reference": "U13",
+        "model": "WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm.step"
+      },
+      {
+        "reference": "D1",
+        "model": "VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm.step"
+      },
+      {
+        "reference": "L101",
+        "model": "L_Bourns_SRP1770TA_16.9x16.9mm.step"
+      }
+    ],
+    "all_project_local_dependencies_resolved": true,
+    "complete_standard_3d_model_coverage": false
+  },
+  "native_project_context_checks": {
+    "erc_exit_code": 0,
+    "erc_violations": 0,
+    "drc_exit_code": 0,
+    "drc_violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity_issues": 0,
+    "rules_weakened": false
+  },
+  "staged_prefab_gate": {
+    "ignored_checks": [],
+    "excluded": 0,
+    "parity_ran": true,
+    "lib_footprint_issue_warnings": 20,
+    "fuse_trip_unknown_warnings": 1,
+    "passed_field_not_used_as_library_verification": true
+  },
+  "editable_project_verdict": "electrical_and_project_local_dependencies_verified; optional_standard_3d_coverage_incomplete",
+  "production_release": false,
+  "physical_tests": false
+}
