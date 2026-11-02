@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-11-02T09:48:56",
+    "ignored_checks": [],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.8",
+    "schematic_parity": [
+        {
+            "description": "Missing footprint C109 (33nF 100V C0G 5% CdVdT WIP)",
+            "items": [],
+            "severity": "warning",
+            "type": "missing_footprint"
+        },
+        {
+            "description": "Missing footprint R108 (22k 1% CdVdT isolation WIP)",
+            "items": [],
+            "severity": "warning",
+            "type": "missing_footprint"
+        }
+    ],
+    "source": "Sirokko26201_control_motor_candidate.kicad_pcb",
+    "unconnected_items": [],
+    "violations": []
+}
