@@ -2,6 +2,8 @@
 
 Статус: DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE. production_release=false.
 
+> **Исторический отчёт снимка.** Слова «актуальный» и «текущий» ниже относятся только к зафиксированному здесь этапу и не описывают действующую PCB. Действующий источник — [`../../hardware/kicad/README.md`](../../hardware/kicad/README.md); в действующей PCB сеть `/P24_PRESENT` отсутствует.
+
 ## Актуальный источник
 
 Полный проверочный проект Lab: `/projects/exports/sirokko_max31856_modules/logic_route_project/`.
