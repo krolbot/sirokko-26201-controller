@@ -20,6 +20,7 @@ credentials/
 
 # Build output and caches
 build/
+build-host/
 dist/
 out/
 .cache/
