@@ -1,0 +1,175 @@
+{
+  "status": "DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE",
+  "generated_utc": "2026-11-02T17:00:05.203198+00:00",
+  "production_release": false,
+  "physical_tests": false,
+  "scope": "Copper-layer illustrations only; no SCH/PCB/CAM geometry or firmware changed",
+  "source_commit": "42e3fe853f37ca86bba4f099051cf6634f463d89",
+  "hardware_base_commit": "6355f1b6e5cc8125d11e6f9f1e596a3bceb7b013",
+  "source_pcb_sha256": "57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b",
+  "source_hardware_archive_sha256": "2ed71bd91a6a2a3fcf631a6a42ed3bf58649710973d62a38d7ee1e7a8ad78791",
+  "source_urls_base": "https://raw.githubusercontent.com/krolbot/sirokko-26201-controller/42e3fe853f37ca86bba4f099051cf6634f463d89/",
+  "inputs_verified_against_exact_git_blobs": true,
+  "input_sha256_verified_inside_browser": true,
+  "inputs": [
+    {
+      "path": "manufacturing/current/drill/Sirokko26201_control_motor_candidate-NPTH.drl",
+      "sha256": "4e8e1c1a211c8c371746099bb96ed94bd3c8364b096070296a31cd06bd198e10",
+      "size": 798
+    },
+    {
+      "path": "manufacturing/current/drill/Sirokko26201_control_motor_candidate-PTH.drl",
+      "sha256": "3d2bf0df6aa97133794f6c4628987dca7905b60da1725bc62d914b6d7234679b",
+      "size": 4290
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbr",
+      "sha256": "5b6ee3dbbeecb4d2ccd3015d3aac7e93b69dc1fc4f3d0864831a157ec8034924",
+      "size": 252638
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbr",
+      "sha256": "30a56a5ef46fb5ff9dc3c7a2b1343bc5792432b640ed964e3569b66c39afe88c",
+      "size": 5545
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbr",
+      "sha256": "2f7fa5f0a732a64cee777b9f81a292d8510a36b9e6e377273382af11839a3a82",
+      "size": 523
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
+      "sha256": "a35dde1f3ec7ffa595e15e21e34ace8fbcf80bd679563980d172cee082fffe67",
+      "size": 524
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
+      "sha256": "edfaf8f9ec93fe1a885267fe971eec500957d2251ae5babc27b0e88417360cfa",
+      "size": 753
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Cu.gbr",
+      "sha256": "f7c899b3b64004cd8ed6e8f740682c16c5d817277a244bc7e85c6bba65b19c99",
+      "size": 228327
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Mask.gbr",
+      "sha256": "92020d291806e7101bdb1725693822ed2dc09c67b1db960e32bd47f7acb5388b",
+      "size": 12553
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Paste.gbr",
+      "sha256": "8e97ffdc9864ce71eb2a04010e811186282c6443394741959c5a130a5de79f10",
+      "size": 8821
+    },
+    {
+      "path": "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
+      "sha256": "5729a6a60a6ccf96a4437cabd37f005eedc3b0dcddf3bdc4c75bd36c3da95adb",
+      "size": 185521
+    }
+  ],
+  "viewer": {
+    "url": "https://tracespace.io/view/",
+    "source": "https://github.com/tracespace/tracespace/tree/main/apps/view",
+    "license": "MIT",
+    "stable_branch": "main (v4)",
+    "upstream_maintenance": "development paused",
+    "bundle": "bundle.6993bd2578e2580b63e4.js",
+    "processing": "Client-side Gerber/NC-drill conversion; no source upload to renderer server",
+    "format_overrides": false,
+    "omitted_empty_inputs": [
+      "B_Silkscreen.gbr",
+      "B_Paste.gbr"
+    ],
+    "empty_inputs_verified_by_native_gerber": "0 D01 / 0 D03 in both files; G01/M02 only; not missing copper"
+  },
+  "rasterizer": {
+    "name": "rsvg-convert",
+    "version": "2.58.0",
+    "installed_by_this_task": false,
+    "dpi": [
+      203.2,
+      203.2
+    ]
+  },
+  "outputs": [
+    {
+      "layer": "F_Cu",
+      "source_svg_sha256": "15047c773aef0bc4d5591d20e2c64b7b643d7df089a9ee9fd9fb5c60ab47505d",
+      "svg_size": 213451,
+      "png_size": 139017,
+      "png_sha256": "34dc6b800488fcc232b2f5867ecd31756d6389e04d5fde2f01efd7b429380c8d",
+      "pixels": [
+        2440,
+        1360
+      ],
+      "board_mm": [
+        305,
+        170
+      ],
+      "copper_bbox_mm": [
+        303.999,
+        168.999
+      ],
+      "framing_offset_mm": [
+        0.5005,
+        0.5005
+      ],
+      "view": "from_F_Cu_side_unmirrored",
+      "drill_or_outline_overlay": false,
+      "renderer_exit_code": 0,
+      "png_crc_valid": true,
+      "svg_references_resolve": true,
+      "svg_display_transforms": [
+        "translate(0,-190000) scale(1,-1)"
+      ],
+      "visual_review": "Reviewed with vision tool: no obvious clipping or gross rendering loss; copper-only view, not electrical verification",
+      "svg_file": "routing-F_Cu.svg",
+      "png_file": "routing-F_Cu.png",
+      "renderer_command": "rsvg-convert --dpi-x 203.2 --dpi-y 203.2 --page-width 305mm --page-height 170mm --left 0.5005mm --top 0.5005mm --background-color white --output routing-F_Cu.png routing-F_Cu.svg"
+    },
+    {
+      "layer": "B_Cu",
+      "source_svg_sha256": "7b96c61313bff8b2cde92fc552078f944d1a84f79623ef0c3b2cd90ed14e9bbc",
+      "svg_size": 223950,
+      "png_size": 147089,
+      "png_sha256": "85ef049f63cbe6a5dc0d2c5caf944d0fcfb14c0fe7fbd9936d34b9a2aeace2b6",
+      "pixels": [
+        2440,
+        1360
+      ],
+      "board_mm": [
+        305,
+        170
+      ],
+      "copper_bbox_mm": [
+        303.999,
+        168.999
+      ],
+      "framing_offset_mm": [
+        0.5005,
+        0.5005
+      ],
+      "view": "from_F_Cu_side_unmirrored",
+      "drill_or_outline_overlay": false,
+      "renderer_exit_code": 0,
+      "png_crc_valid": true,
+      "svg_references_resolve": true,
+      "svg_display_transforms": [
+        "translate(0,-190000) scale(1,-1)"
+      ],
+      "visual_review": "Reviewed with vision tool: no obvious clipping or gross rendering loss; copper-only view, not electrical verification",
+      "svg_file": "routing-B_Cu.svg",
+      "png_file": "routing-B_Cu.png",
+      "renderer_command": "rsvg-convert --dpi-x 203.2 --dpi-y 203.2 --page-width 305mm --page-height 170mm --left 0.5005mm --top 0.5005mm --background-color white --output routing-B_Cu.png routing-B_Cu.svg"
+    }
+  ],
+  "limitations": [
+    "Both layers are in front-side coordinates, not a physical mirrored bottom view",
+    "Copper-only: no drill, outline, silk or soldermask overlay; white copper voids do not prove drilled holes",
+    "PNG/SVG illustrations are not manufacturing masters and do not prove DRC/DFM/connectivity",
+    "No native project changes, new DRC, firmware change, physical test or production approval in this step",
+    "Historical docs/research/CAM_REVIEW_CURRENT.png is not a current-revision routing image"
+  ],
+  "publication": "Integrated into the same current hardware+firmware source tree; exact publication commit is recorded by Git history"
+}

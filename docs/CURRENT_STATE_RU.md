@@ -37,7 +37,7 @@ KiCad 10.0.8:
 - полный native DRC с `--all-track-errors --schematic-parity`: 0 нарушений, 0 несоединений, 0 расхождений PCB↔SCH, `ignored_checks=[]`;
 - текущая проверка: [PCB_SCH_PARITY_CURRENT_RU.md](research/PCB_SCH_PARITY_CURRENT_RU.md) и [RC_INTEGRATION_CURRENT.json](research/RC_INTEGRATION_CURRENT.json). Прежняя via-проверка остаётся историей базовой ревизии, а не отчётом новой RC-интеграции.
 
-Изображения заново получены из PCB с SHA выше: [сборка спереди](../manufacturing/current/renders/assembly-front.png), [сборка сзади](../manufacturing/current/renders/assembly-back.png), [3D сверху](../manufacturing/current/renders/board-3d-top.png), [3D снизу](../manufacturing/current/renders/board-3d-bottom.png). В 3D показаны колодки ESP32 и MAX31856, но не тела готовых модулей; условные модели колодок не являются квалификацией производителя. Требования к стойкам и винтам не назначались.
+Изображения заново получены из PCB с SHA выше: [сборка спереди](../manufacturing/current/renders/assembly-front.png), [сборка сзади](../manufacturing/current/renders/assembly-back.png), [3D сверху](../manufacturing/current/renders/board-3d-top.png), [3D снизу](../manufacturing/current/renders/board-3d-bottom.png), [медь F.Cu](../manufacturing/current/renders/routing-F_Cu.png) и [медь B.Cu](../manufacturing/current/renders/routing-B_Cu.png). Нижний слой меди показан без зеркалирования; PNG/SVG не заменяют Gerber/Excellon. [Происхождение и проверка](research/COPPER_IMAGES_CURRENT_RU.md). В 3D показаны колодки ESP32 и MAX31856, но не тела готовых модулей; условные модели колодок не являются квалификацией производителя. Требования к стойкам и винтам не назначались.
 
 ## Проектная оболочка силовых нагрузок
 

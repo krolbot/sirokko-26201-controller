@@ -11,9 +11,10 @@
 - принятый аппаратный проект: [`../hardware/kicad/`](../hardware/kicad/);
 - действующий контракт автомата: [`../docs/Sirokko_26201_CONTROL_CONCEPT.md`](../docs/Sirokko_26201_CONTROL_CONCEPT.md);
 - прошивка: этот каталог `firmware/`;
+- текущие CAD, CAM/BOM, сборочные виды и изображения меди: [`../hardware/kicad/`](../hardware/kicad/) и [`../manufacturing/current/`](../manufacturing/current/);
 - точный commit каждого бинарного комплекта записывается в `GIT_COMMIT`, а контрольные суммы — в `SHA256SUMS`.
 
-Не смешивать бинарники и аппаратные файлы из разных commit.
+Итоговый DRAFT-комплект собирается только из одного exact commit после успешной целевой CI-сборки. Не смешивать бинарники и аппаратные файлы из разных commit.
 
 ## Целевая конфигурация
 

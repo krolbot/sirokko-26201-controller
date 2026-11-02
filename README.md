@@ -21,6 +21,7 @@ Current renders and connection data:
 - [back assembly](manufacturing/current/renders/assembly-back.png);
 - [top 3D](manufacturing/current/renders/board-3d-top.png);
 - [bottom 3D](manufacturing/current/renders/board-3d-bottom.png);
+- [F.Cu routing](manufacturing/current/renders/routing-F_Cu.png) and [B.Cu routing](manufacturing/current/renders/routing-B_Cu.png), with the bottom layer shown unmirrored;
 - [external connection map](docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md) and [pinout image](docs/research/CONTROL_CONNECTIONS_CURRENT.png).
 
 The current draft CAM/BOM package is in [`manufacturing/current/`](manufacturing/current/) and remains **NOT FOR ORDER**. Current hobby-fabrication guidance is in [FABRICATION_REQUIREMENTS_CURRENT_RU.md](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md).

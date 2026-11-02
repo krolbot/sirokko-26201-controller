@@ -79,8 +79,16 @@
         "assembly-front.png",
         "assembly-back.png",
         "board-3d-top.png",
-        "board-3d-bottom.png"
-      ]
+        "board-3d-bottom.png",
+        "routing-F_Cu.png",
+        "routing-B_Cu.png"
+      ],
+      "vector_renders": [
+        "routing-F_Cu.svg",
+        "routing-B_Cu.svg"
+      ],
+      "copper_report": "../../docs/research/COPPER_IMAGES_CURRENT_RU.md",
+      "copper_verification": "checks/copper-images-current.json"
     },
     "j1_j3_metadata": {
       "MPN": "SSQ-122-01-T-S",
@@ -107,7 +115,10 @@
     "mechanical_pdf": {
       "path": "pdf/Sirokko26201_mechanical_holes.pdf",
       "sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd",
-      "edge_cuts_base_mm": [-5.0, 10.0],
+      "edge_cuts_base_mm": [
+        -5.0,
+        10.0
+      ],
       "current_rows_matching": 13,
       "old_pdf_mismatching_rows": 13,
       "text_review": "PASS",
@@ -180,8 +191,8 @@
     },
     {
       "path": "README_RU.md",
-      "bytes": 8079,
-      "sha256": "06b9b0af243cb669f0ab648a75116475bd5bef8bf3e855da136fb38281b766cb"
+      "bytes": 8439,
+      "sha256": "b40f01327b55f255488db3c74e4b7be2852634b7e63a6884f789665d6987d2b8"
     },
     {
       "path": "bom.csv",
@@ -192,6 +203,11 @@
       "path": "checks/board-stats.json",
       "bytes": 4195,
       "sha256": "dac49cd114e51db5129c9a148feee8ebe3190209615161435eafcf5c31a66586"
+    },
+    {
+      "path": "checks/copper-images-current.json",
+      "bytes": 7055,
+      "sha256": "1272acc0aede31057407649b0ab3ba5856cbcb558cb5659c904cc9a08c513786"
     },
     {
       "path": "checks/dependency-audit.json",
@@ -352,7 +368,28 @@
       "path": "renders/board-3d-top.png",
       "bytes": 318159,
       "sha256": "3bf7373aa09b74ab92ec38687d1babaec4defd54eb82f115427ee4691be2d691"
+    },
+    {
+      "path": "renders/routing-B_Cu.png",
+      "bytes": 147089,
+      "sha256": "85ef049f63cbe6a5dc0d2c5caf944d0fcfb14c0fe7fbd9936d34b9a2aeace2b6"
+    },
+    {
+      "path": "renders/routing-B_Cu.svg",
+      "bytes": 223950,
+      "sha256": "7b96c61313bff8b2cde92fc552078f944d1a84f79623ef0c3b2cd90ed14e9bbc"
+    },
+    {
+      "path": "renders/routing-F_Cu.png",
+      "bytes": 139017,
+      "sha256": "34dc6b800488fcc232b2f5867ecd31756d6389e04d5fde2f01efd7b429380c8d"
+    },
+    {
+      "path": "renders/routing-F_Cu.svg",
+      "bytes": 213451,
+      "sha256": "15047c773aef0bc4d5591d20e2c64b7b643d7df089a9ee9fd9fb5c60ab47505d"
     }
   ],
-  "firmware_hold": true
+  "firmware_hold": false,
+  "firmware_status": "DRAFT_REVIEW_REQUIRED_NO_PHYSICAL_TESTS_PROFILE_NOT_QUALIFIED"
 }

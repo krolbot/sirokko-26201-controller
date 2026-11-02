@@ -21,6 +21,7 @@ F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном де�
 - [сборочный вид сзади](manufacturing/current/renders/assembly-back.png);
 - [3D-вид сверху](manufacturing/current/renders/board-3d-top.png);
 - [3D-вид снизу](manufacturing/current/renders/board-3d-bottom.png);
+- [рисунок меди F.Cu](manufacturing/current/renders/routing-F_Cu.png) и [B.Cu](manufacturing/current/renders/routing-B_Cu.png), без зеркалирования нижнего слоя;
 - [карта внешних подключений](docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md) и [изображение контактов](docs/research/CONTROL_CONNECTIONS_CURRENT.png).
 
 Проверочный CAM/BOM пересобран в [`manufacturing/current/`](manufacturing/current/) из этой же пары SCH/PCB и остаётся **NOT FOR ORDER**. Действующие требования: [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md), [текущее состояние](docs/CURRENT_STATE_RU.md), [требования изготовления](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md). Пуск, DC-bias, горячая SOA, импульсная координация и физические испытания не квалифицированы; восстановление прежних состояний — через историю Git.
