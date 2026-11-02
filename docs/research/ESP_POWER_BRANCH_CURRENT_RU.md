@@ -1,5 +1,7 @@
 # Sirokko — действующая ветвь +5V_DEVKIT
 
+> **Исторический снимок.** Старые commit/SHA/Lab-пути и слова «current», «текущий», «действующий», «актуальный» и «канонический» ниже относятся только к этапу этой проверки. Единственный текущий аппаратный источник — exact remote `main`, PCB `57f4b943…`, root SCH `0f62b976…` и PRO `11029d86…`, указанные в [README аппаратного проекта](../../hardware/kicad/README.md); в выдаваемом архиве это также фиксирует корневой `README_CURRENT_ARCHIVE_RU.md`.
+
 DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE. production_release=false.
 
 Источник: единственная canonical PCB `../../hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `9e10942d0e3e27358864b34ea380bc3fc3f7fcc24002788059a10cb5a8bf0444`. ESP теперь устанавливается на F.Cu, вместе с реле.

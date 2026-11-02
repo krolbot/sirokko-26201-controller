@@ -1,5 +1,7 @@
 # Sirokko: упрощена цепь DS18B20
 
+> **Исторический снимок.** Старые commit/SHA/Lab-пути и слова «current», «текущий», «действующий», «актуальный» и «канонический» ниже относятся только к этапу этой проверки. Единственный текущий аппаратный источник — exact remote `main`, PCB `57f4b943…`, root SCH `0f62b976…` и PRO `11029d86…`, указанные в [README аппаратного проекта](../../hardware/kicad/README.md); в выдаваемом архиве это также фиксирует корневой `README_CURRENT_ARCHIVE_RU.md`.
+
 DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE. Общий проект не завершён, производственный выпуск не разрешён.
 
 Актуальный проверочный проект Lab: `/projects/exports/sirokko_max31856_modules/room_route_project/`. PCB `Sirokko26201_control_motor_candidate.kicad_pcb`, SHA256 `a62d56d204ddeaf921c40d32d316c2e54b2712bf33597dcdb42afe4aaad1ed28`.

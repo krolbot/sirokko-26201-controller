@@ -1,5 +1,7 @@
 # Sirokko — интеграция R108/C109 и соответствие SCH/PCB
 
+> **Исторический снимок.** Старые commit/SHA/Lab-пути и слова «current», «текущий», «действующий», «актуальный» и «канонический» ниже относятся только к этапу этой проверки. Единственный текущий аппаратный источник — exact remote `main`, PCB `57f4b943…`, root SCH `0f62b976…` и PRO `11029d86…`, указанные в [README аппаратного проекта](../../hardware/kicad/README.md); в выдаваемом архиве это также фиксирует корневой `README_CURRENT_ARCHIVE_RU.md`.
+
 **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE.**
 `production_release=false`; `physical_tests=false`; прошивка остаётся на HOLD до инженерной приёмки платы.
 
