@@ -11282,12 +11282,25 @@
 				)
 			)
 		)
-		(property "MPN" "SSQ-122-01-G-S"
+		(property "MPN" "SSQ-122-01-T-S"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "505a6986-241f-47bd-961c-ce2a8ddb3939")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samtec"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0232e149-3ca7-494b-b5cf-9cf04d346133")
 			(effects
 				(font
 					(size 1 1)
@@ -16023,12 +16036,25 @@
 				)
 			)
 		)
-		(property "MPN" "SSQ-122-01-G-S"
+		(property "MPN" "SSQ-122-01-T-S"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d3ef9a31-bbbf-4a28-9218-f1356fcb949f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Samtec"
+			(at 0 0 90)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4b01eebc-aee2-4545-a3e9-c5d448e9566f")
 			(effects
 				(font
 					(size 1 1)
