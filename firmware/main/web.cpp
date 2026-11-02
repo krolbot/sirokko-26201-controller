@@ -209,7 +209,8 @@ esp_err_t login_handler(httpd_req_t* request) {
     }
     g_failed_logins = 0;
     if (!g_session[0]) {
-        for (size_t i = 0; i < 16; ++i) std::snprintf(g_session + i * 2, 3, "%02x", esp_random() & 0xFFU);
+        for (size_t i = 0; i < 16; ++i)
+            std::snprintf(g_session + i * 2, 3, "%02x", static_cast<unsigned>(esp_random() & 0xFFU));
     }
     char cookie[96]{};
     std::snprintf(cookie, sizeof(cookie), "sirokko_session=%s; HttpOnly; SameSite=Strict; Path=/", g_session);
