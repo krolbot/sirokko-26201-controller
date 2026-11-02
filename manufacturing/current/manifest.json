@@ -86,6 +86,20 @@
       "all_other_MPN_unchanged": true,
       "physical_fit_tested": false,
       "report": "checks/j1-j3-metadata-verification.json"
+    },
+    "mechanical_csv": {
+      "path": "docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv",
+      "sha256": "cd6e56dbec04d81f45d4c8db7065b6fd82136046971132f4d3ea58bc61a66433",
+      "rows": 13,
+      "edge_cuts_left_mm": -5.0,
+      "edge_cuts_top_mm": 10.0,
+      "x_from_left_rule": "X_mm + 5.000",
+      "y_from_top_rule": "Y_mm - 10.000",
+      "matching_rows": 13,
+      "old_10p2_base_mismatches": 13,
+      "non_target_fields_unchanged": true,
+      "cad_geometry_unchanged": true,
+      "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
     }
   },
   "sources": [
@@ -138,13 +152,13 @@
   "files": [
     {
       "path": "FABRICATION_REQUIREMENTS_RU.md",
-      "bytes": 12281,
-      "sha256": "3e2b1f6a26aebe17b2cf3a982d4d35298aa42fb0b0b5719c53bc350420597c6b"
+      "bytes": 13115,
+      "sha256": "5afad0965277851248320245fb258e989117d570dc0cc2bfe2944522e89ef05d"
     },
     {
       "path": "README_RU.md",
-      "bytes": 6724,
-      "sha256": "7c9adbd363aef4a32e3b6b2d3ad1a171dff9a00b0ed2e247d1aee94f4de224c9"
+      "bytes": 7188,
+      "sha256": "1e7796234f1faf430f71b7de692f880f3ea585b509f764988c277b85d61bc83a"
     },
     {
       "path": "bom.csv",
@@ -163,13 +177,13 @@
     },
     {
       "path": "checks/drc.json",
-      "bytes": 416,
-      "sha256": "ca6ec4a412a6143b0d1fad501e5341f7847cb8ced9ec9c9803452c4a8458a041"
+      "bytes": 415,
+      "sha256": "5ba6fc7652711b011438e85e5c41ff43676a1bd4f018d69eeefaf348f96d801a"
     },
     {
       "path": "checks/erc.json",
-      "bytes": 1854,
-      "sha256": "3069f9a5d0aac9fab2a4db9db2435d82f758ac7ce8d8ab1bceef4a29446c301b"
+      "bytes": 1853,
+      "sha256": "eebb956fec463e19bdf6622deb230a4f38e0479c088555d04f9b87770e227d2e"
     },
     {
       "path": "checks/j1-j3-metadata-verification.json",

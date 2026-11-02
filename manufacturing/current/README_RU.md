@@ -20,6 +20,7 @@
 - Проверка выполнялась из полного каталога проекта, поэтому проектные `fp-lib-table`/`sym-lib-table` были доступны. Отдельная сводка зависимостей — [`checks/dependency-audit.json`](checks/dependency-audit.json).
 - Отрицательный контроль с удалением одного сегмента `/TC_SDI_MOSI` дал 2 нарушения и 1 несоединение; он не сохранён в комплекте. Применённый результат и отклонённые пробы — [`../../docs/research/VIA_REDUCTION_APPLIED_CURRENT.json`](../../docs/research/VIA_REDUCTION_APPLIED_CURRENT.json).
 - Сверловка проверена по нативным объектам PCB: PTH 253 = 107 отверстий площадок + 146 переходов; NPTH 17. Все 270 отверстий совпали с раздельными Excellon по координатам, диаметрам и металлизации — [`../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json`](../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json).
+- Та же машинная проверка подтверждает все 13 строк [`../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv`](../../docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv) относительно нативного контура: `X_from_left_mm=X_mm+5.000`, `Y_from_top_mm=Y_mm-10.000`. Старый расчёт от `Y=10.2` даёт 13/13 ожидаемых расхождений; PCB и отверстия не перемещались.
 - Все 72 посадочных места находятся на F.Cu. В `cpl.csv` оставлены ровно 59 электрических позиций из BOM, все `Side=top`; крепёжные отверстия исключены.
 
 ## Состав
