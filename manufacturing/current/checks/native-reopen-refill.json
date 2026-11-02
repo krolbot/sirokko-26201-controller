@@ -16,7 +16,7 @@
     "project_sha256": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6"
   },
   "erc": {
-    "date": "2026-11-02T15:46:07",
+    "date": "2026-11-02T15:54:42",
     "exit_code": 0,
     "violations": 0,
     "ignored_checks": [
@@ -26,10 +26,10 @@
       "footprint_filter"
     ],
     "report": "erc.json",
-    "report_sha256": "f6c2ad2679d25c57ace20061d309889a43d8e52e8c11636eba85a7279b55ed90"
+    "report_sha256": "3a58dc448e861038ecaeaa666abf05aa361f51585823115e9c9fde949864d362"
   },
   "drc_refill": {
-    "date": "2026-11-02T15:46:10",
+    "date": "2026-11-02T15:54:46",
     "flags": [
       "--refill-zones",
       "--all-track-errors",
@@ -42,10 +42,10 @@
     "unconnected_items": 0,
     "schematic_parity_issues": 0,
     "ignored_checks": [],
-    "temporary_report_sha256": "8244713963ece33e21a706aa596fa585d724fcc39545ccd2ddaac5c5ef78006d"
+    "temporary_report_sha256": "4d281b36d13795b0eebb646e353f63408bf2ed3604d2d3c034b37dbc3a83d48c"
   },
   "drc_reopen": {
-    "date": "2026-11-02T15:46:13",
+    "date": "2026-11-02T15:54:48",
     "flags": [
       "--all-track-errors",
       "--schematic-parity",
@@ -58,7 +58,11 @@
     "schematic_parity_issues": 0,
     "ignored_checks": [],
     "report": "drc.json",
-    "report_sha256": "96c6e2235e5abda0c648c7e1e5e05beb7bb76979af08743b5158d078a8d346e6"
+    "report_sha256": "46ce78cb55b6d2df14c934538580bb1acbbd6641748ca72426a8654ece412fba"
+  },
+  "dependency_closure": {
+    "unused_missing_sirokko_display_entry_removed": true,
+    "all_remaining_kiprjmod_paths_present": true
   },
   "rules_weakened": false,
   "cad_modified": false,

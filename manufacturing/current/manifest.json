@@ -163,8 +163,8 @@
     },
     {
       "path": "hardware/kicad/fp-lib-table",
-      "bytes": 1890,
-      "sha256": "8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac"
+      "bytes": 1718,
+      "sha256": "c35e63ee4ee827fe81aeac1b0c232e65df929c9dd8eb3dcb357258ef391c0ca2"
     },
     {
       "path": "hardware/kicad/sym-lib-table",
@@ -201,12 +201,12 @@
     {
       "path": "checks/drc.json",
       "bytes": 416,
-      "sha256": "96c6e2235e5abda0c648c7e1e5e05beb7bb76979af08743b5158d078a8d346e6"
+      "sha256": "46ce78cb55b6d2df14c934538580bb1acbbd6641748ca72426a8654ece412fba"
     },
     {
       "path": "checks/erc.json",
       "bytes": 1854,
-      "sha256": "f6c2ad2679d25c57ace20061d309889a43d8e52e8c11636eba85a7279b55ed90"
+      "sha256": "3a58dc448e861038ecaeaa666abf05aa361f51585823115e9c9fde949864d362"
     },
     {
       "path": "checks/f1-metadata-preservation.json",
@@ -225,8 +225,8 @@
     },
     {
       "path": "checks/native-reopen-refill.json",
-      "bytes": 2304,
-      "sha256": "fb278ddbb9ae5934feea4c6c091840913c157d7555b49b286fa4cdccd4a29c62"
+      "bytes": 2442,
+      "sha256": "f1718716fded36f54f9e57c9bc61565b9a07ff6f51cfaee4bfef65234cab0dd5"
     },
     {
       "path": "cpl.csv",

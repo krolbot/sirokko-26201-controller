@@ -11,7 +11,7 @@
 - PCB: `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
 - `Sirokko_Input_Protection_WIP.kicad_sch`: `f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5`;
 - `logic_power_24_5_DRAFT.kicad_sch`: `67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd`;
-- `fp-lib-table`: `8e9cf2caf9090ad7d5e78625f981dc0fe8f22895f48515eb55261a27f1c247ac`.
+- `fp-lib-table`: `c35e63ee4ee827fe81aeac1b0c232e65df929c9dd8eb3dcb357258ef391c0ca2`; неиспользуемая ссылка на отсутствующую `Sirokko_Display.pretty` удалена, все оставшиеся `${KIPRJMOD}`-пути существуют.
 
 Контур PCB: 305 × 170 мм. В `/TC_SDI_MOSI` удалён один переход без увеличения длины сети. R108/C109 и C24 `CL21B224KCFSFNE` сохранены; другие проверенные варианты сокращения переходов не прошли DRC/связность и не приняты.
 
