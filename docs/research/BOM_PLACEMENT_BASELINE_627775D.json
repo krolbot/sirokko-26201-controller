@@ -1,0 +1,2402 @@
+{
+  "status": "EXACT_627775D_BOM_AND_PLACEMENT_MATCH__METADATA_NOT_COMPLETE__NOT_FINAL_RELEASE",
+  "source": {
+    "commit": "627775d0f8a08450f2b3e3bb6c965edd6a4e4a98",
+    "archive_path": "/root/.hermes/kanban/attachments/t_de6e7a30/Sirokko26201_current_complete_627775d.tar.gz",
+    "archive_sha256": "714545696a3b243914142d1a1e775de17a75f6cb12b6362fc80e638865665506",
+    "pcb_sha256": "46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820",
+    "schematic_sha256": {
+      "motor_external_hc160.kicad_sch": "fae39327263102616ed1276727cb5fd9a88352298e8309af89d49b542f24f5d1",
+      "Sirokko26201_control_motor_candidate.kicad_sch": "c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b",
+      "logic_power_24_5_DRAFT.kicad_sch": "36248b3d5b1e4c93b9551ad1ab19b3abd59f357226a311998b310b7e8ac1514d",
+      "MinimalSafety.kicad_sch": "3419aa24e854817fa59c91646ded28834a511ab17568cda566763b223c3f3ef0",
+      "Sirokko_Input_Protection_WIP.kicad_sch": "d3686cfc00b28a220041f71b53705924d24c83587c78d9480d03799f1375887d"
+    },
+    "member_sha256": {
+      "docs/BOM_EXTERNAL_COMPONENTS_DRAFT.csv": "2f52103283db8d0b4aac228869229f25bcc074ca48a6223dfb6bcc00cc7d8713",
+      "docs/BOM_PURCHASE_DRAFT_NOT_FOR_ORDER.csv": "2c8b46cf91984118bfc96292e7b647a5d27e63ca116e58aa8825e6daeacc6bd9",
+      "docs/BOM_PURCHASE_ALLOCATION_DRAFT.csv": "e2d269e51a8c43748ae1915af6eb45b9e98b06ad7641daee505d7f8b7d344d0c",
+      "docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv": "95d14329b8073b5c5ccf9be618894cbb8084e8024786b272f1b46001c30e30b5",
+      "docs/BOM_DRAFT_NOT_FOR_ORDER.csv": "286fb5a10300b71b044600a11699fd850d3dfa5cf1b51f75a14b5e7d093d0282",
+      "docs/Sirokko_components_ChipDip.csv": "63ecad374a017bb464ce6518566e822d78855eff1fc8dd5272a12a0027f2c90b",
+      "manufacturing/current/bom.csv": "f44d56992f8c4d75b3d91ccd0c892f43b054a149a4a8e5b900d544f1c4e7dc0a",
+      "manufacturing/current/cpl.csv": "3e454f9f8c7699ec6ba27b16a07082ba0f533141995c4d9d0d7c934753c4e5d2"
+    }
+  },
+  "method": {
+    "scope": "read-only structural inspection of every placed symbol in 5 source sheets; all PCB footprints; every CSV record; no local KiCad export or ERC/DRC run",
+    "electrical_coverage": "59 placed non-power-symbol references equal 59 non-mechanical PCB references; all 13 remaining PCB references checked earlier as mechanical holes",
+    "position_convention": "export origin equals native PCB origin; xCSV=xPCB; yCSV=-yPCB; degrees matched modulo360; all top; not a bottom-side mirror",
+    "position_comparison_allowance_mm": 5.01e-07,
+    "rotation_comparison_allowance_deg": 5.01e-07,
+    "allowance_meaning": "CSV last-place rounding only, not physical placement tolerances",
+    "mpn_comparison": "literal equality including all suffixes; fuse/relay compound items allocated explicitly; no heuristic split on plus sign"
+  },
+  "results": {
+    "source_sheets": 5,
+    "pcb_footprints": 72,
+    "electrical_references": 59,
+    "source_DNP_references": [],
+    "bom_export_vs_source_properties_differences": [],
+    "pcb_vs_source_properties_differences": [
+      {
+        "reference": "Q1",
+        "field": "Manufacturer",
+        "pcb": "Infineon Technologies",
+        "schematic": ""
+      },
+      {
+        "reference": "Q2",
+        "field": "Manufacturer",
+        "pcb": "Infineon Technologies",
+        "schematic": ""
+      },
+      {
+        "reference": "Q3",
+        "field": "Manufacturer",
+        "pcb": "Infineon Technologies",
+        "schematic": ""
+      },
+      {
+        "reference": "Q4",
+        "field": "Manufacturer",
+        "pcb": "Infineon Technologies",
+        "schematic": ""
+      }
+    ],
+    "all_assembly_CPL_rows": 59,
+    "all_assembly_CPL_differences": [],
+    "max_position_axis_error_mm": 0.0,
+    "SMD_attribute_and_no_drill_rows": 38,
+    "THT_rows": 21,
+    "grouped_purchase_rows": 40,
+    "allocation_rows": 62,
+    "physical_purchase_items": 62,
+    "grouped_vs_allocation_item_multiset_matches": true,
+    "supplier_vs_allocation_literal_reference_MPN_multiset_matches": true,
+    "supplier_board_purchase_rows": 40,
+    "external_rows": [
+      {
+        "Item": "ESP32_MODULE",
+        "Quantity": "1",
+        "Model": "Согласованный ESP32 DevKit",
+        "Interface": "J1 + J3; питание от Sirokko; USB Type-C только сервис прошивки",
+        "Procurement_status": "Точный заказной артикул готовой платы сверить с принятым исполнением; колодки уже учтены в PCB BOM"
+      },
+      {
+        "Item": "MAX31856_MODULES",
+        "Quantity": "2",
+        "Model": "Синий 9-контактный MAX31856; согласованная геометрия Adafruit 3263",
+        "Interface": "J30 + J31; термопары подключаются к модулям",
+        "Procurement_status": "Принятые предложения пользователя; безымянный модуль не выдаётся за фирменный Adafruit; колодки уже учтены в PCB BOM"
+      },
+      {
+        "Item": "ROOM_SENSOR",
+        "Quantity": "1",
+        "Model": "DS18B20",
+        "Interface": "J12: 3.3V / DQ / GND; подтяжка на Sirokko",
+        "Procurement_status": "Исполнение зонда и кабеля не зафиксировано"
+      },
+      {
+        "Item": "MOTOR_PWM",
+        "Quantity": "1",
+        "Model": "HC-160A S2",
+        "Interface": "J29: A1 / A2 / PA / G; полностью внешний; моторные провода не проходят через PCB",
+        "Procurement_status": "Не позиция монтажа PCB; не крепится к Sirokko"
+      },
+      {
+        "Item": "THERMOCOUPLES",
+        "Quantity": "2",
+        "Model": "Тип K, рабочий диапазон 0–600 °C",
+        "Interface": "Клеммы двух MAX31856",
+        "Procurement_status": "Механическое исполнение зондов и заказной артикул не зафиксированы"
+      }
+    ]
+  },
+  "known_metadata_findings": {
+    "empty_Manufacturer_in_source_and_bom": [
+      "C25",
+      "C101",
+      "C102",
+      "C105",
+      "C106",
+      "C107",
+      "C108",
+      "D1",
+      "D101",
+      "F1",
+      "J1",
+      "J3",
+      "J27",
+      "J28",
+      "J30",
+      "J31",
+      "L101",
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "R90",
+      "R91",
+      "R92",
+      "R93",
+      "R94",
+      "R95",
+      "R96",
+      "R97",
+      "R101",
+      "R102",
+      "R103",
+      "R104",
+      "R105",
+      "R106",
+      "R107",
+      "TP101",
+      "U101"
+    ],
+    "supported_Manufacturer_fill_from_existing_exact_MPN_supplier_rows": [
+      {
+        "reference": "C25",
+        "MPN": "GRM31CR72A105KA01L",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C101",
+        "MPN": "GRM32ER72A225KA35L",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C102",
+        "MPN": "GRM32ER72A225KA35L",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C105",
+        "MPN": "GRM32ER61C476KE15L",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C106",
+        "MPN": "GRM32ER61C476KE15L",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C107",
+        "MPN": "GRM1885C1H472JA01D",
+        "manufacturer_from_existing_supplier_csv": "Murata Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "C108",
+        "MPN": "CC0603JRNPO9BN821",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "D1",
+        "MPN": "TVS3301DRBR",
+        "manufacturer_from_existing_supplier_csv": "Texas Instruments",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "D101",
+        "MPN": "STPS5H100B-TR",
+        "manufacturer_from_existing_supplier_csv": "STMicroelectronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "J27",
+        "MPN": "1756993",
+        "manufacturer_from_existing_supplier_csv": "Phoenix Contact",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "J28",
+        "MPN": "1756993",
+        "manufacturer_from_existing_supplier_csv": "Phoenix Contact",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "J30",
+        "MPN": "SSW-109-01-T-S",
+        "manufacturer_from_existing_supplier_csv": "Samtec",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "J31",
+        "MPN": "SSW-109-01-T-S",
+        "manufacturer_from_existing_supplier_csv": "Samtec",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "L101",
+        "MPN": "SRP1770TA-330M",
+        "manufacturer_from_existing_supplier_csv": "Bourns",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "Q1",
+        "MPN": "IPB017N10N5LFATMA1",
+        "manufacturer_from_existing_supplier_csv": "INFINEON TECHNOLOGIES AG.",
+        "pcb_current_manufacturer": "Infineon Technologies"
+      },
+      {
+        "reference": "Q2",
+        "MPN": "IPB017N10N5LFATMA1",
+        "manufacturer_from_existing_supplier_csv": "INFINEON TECHNOLOGIES AG.",
+        "pcb_current_manufacturer": "Infineon Technologies"
+      },
+      {
+        "reference": "Q3",
+        "MPN": "IPB017N10N5LFATMA1",
+        "manufacturer_from_existing_supplier_csv": "INFINEON TECHNOLOGIES AG.",
+        "pcb_current_manufacturer": "Infineon Technologies"
+      },
+      {
+        "reference": "Q4",
+        "MPN": "IPB017N10N5LFATMA1",
+        "manufacturer_from_existing_supplier_csv": "INFINEON TECHNOLOGIES AG.",
+        "pcb_current_manufacturer": "Infineon Technologies"
+      },
+      {
+        "reference": "R90",
+        "MPN": "RC0805FR-074R7L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R91",
+        "MPN": "RC0805FR-074R7L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R92",
+        "MPN": "RC0805FR-074R7L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R93",
+        "MPN": "RC0805FR-074R7L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R94",
+        "MPN": "RC0805FR-0784K5L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R95",
+        "MPN": "RC0805FR-073K48L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R96",
+        "MPN": "RC0805FR-0775KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R97",
+        "MPN": "RC0805FR-075K62L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R101",
+        "MPN": "RC0603FR-0731K6L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R102",
+        "MPN": "RC0603FR-0710KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R103",
+        "MPN": "RC0603FR-0731K6L",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R104",
+        "MPN": "RC0603FR-07100KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R105",
+        "MPN": "RC0603FR-0710KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R106",
+        "MPN": "RC0603FR-0782KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "R107",
+        "MPN": "RC0603FR-0710KL",
+        "manufacturer_from_existing_supplier_csv": "Yageo",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "TP101",
+        "MPN": "5015",
+        "manufacturer_from_existing_supplier_csv": "Keystone Electronics",
+        "pcb_current_manufacturer": ""
+      },
+      {
+        "reference": "U101",
+        "MPN": "LM5013DDAR",
+        "manufacturer_from_existing_supplier_csv": "Texas Instruments",
+        "pcb_current_manufacturer": ""
+      }
+    ],
+    "fuse_split_manufacturers": [
+      {
+        "MPN": "0997030.WXN",
+        "Manufacturer": "Littelfuse"
+      },
+      {
+        "MPN": "3568",
+        "Manufacturer": "Keystone Electronics"
+      }
+    ],
+    "unresolved_single_Manufacturer_refs": [
+      "J1",
+      "J3"
+    ],
+    "Q1_Q4_resolution": "PCB Manufacturer Infineon Technologies already populated; schematic/BOM blank; synchronize metadata without any geometry or pin/net change",
+    "missing_audit_link": {
+      "document": "docs/BOM_PURCHASE_NOTES_RU.md",
+      "linked_name": "BOM_AUDIT.json",
+      "file_absent_from_delivered_archive": true
+    },
+    "external_ESP_note": "External CSV must not reopen an already user-agreed DevKit choice; supplier table already states the accepted N16R8 selection"
+  },
+  "user_procurement_update": {
+    "exact_user_words": "реле сам куплю / В другом магазине",
+    "scope": [
+      "K1 PLUG_IN_RELAY",
+      "K2 PLUG_IN_RELAY"
+    ],
+    "current_MPN": "DG85BM-5021-76-1024",
+    "quantity": 2,
+    "responsibility": "покупает заказчик в другом магазине",
+    "ChipDip_exact_link_not_required_for_these_relays": true,
+    "sockets_remain_in_board_purchase_BOM": true,
+    "part_or_footprint_substitution_authorized": false,
+    "original_immutable_archive_precedes_update": true
+  },
+  "negative_controls_in_memory_only": {
+    "CPL_Rot": {
+      "detected": true,
+      "findings": [
+        {
+          "reference": "C21",
+          "field": "rotation_deg"
+        }
+      ]
+    },
+    "CPL_PosX": {
+      "detected": true,
+      "findings": [
+        {
+          "reference": "C21",
+          "field": "x_mm"
+        }
+      ]
+    },
+    "CPL_Side": {
+      "detected": true,
+      "findings": [
+        {
+          "reference": "C21",
+          "field": "side"
+        }
+      ]
+    },
+    "CPL_same_total_duplicate_and_omission": {
+      "detected": true,
+      "findings": [
+        {
+          "reference": "U101",
+          "field": "missing_reference"
+        },
+        {
+          "reference": "C21",
+          "field": "reference_multiplicity",
+          "count": 2
+        }
+      ]
+    },
+    "BOM_wrong_MPN": {
+      "detected": true,
+      "references": [
+        "C21"
+      ]
+    },
+    "PURCHASE_missing_K1_socket": {
+      "detected": true,
+      "missing_keys": [
+        [
+          "K1",
+          "PCB_RELAY_SOCKET",
+          "DZ85AB-5-PCB"
+        ]
+      ]
+    }
+  },
+  "created_SMT_artifact": {
+    "path": "/root/.hermes/profiles/engineer/cache/documents/sirokko_research/CPL_SMT_CURRENT.csv",
+    "sha256": "80d289a748db9f8ec8f5dc53a825d151474cf5d224f541bae59038fbab084967",
+    "rows": 38,
+    "all_top": true,
+    "through_hole_refs": [],
+    "source_revision_must_be_refreshed_by_final_publisher": true
+  },
+  "full_reference_ledger": [
+    {
+      "reference": "C101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "2.2uF 100V X7R",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "MPN": "GRM32ER72A225KA35L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C101",
+        "Val": "2.2uF 100V X7R",
+        "Package": "C_1210_3225Metric",
+        "PosX": "120.500000",
+        "PosY": "-46.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM32ER72A225KA35L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "2.2uF 100V X7R",
+          "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C102",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "2.2uF 100V X7R",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "MPN": "GRM32ER72A225KA35L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C102",
+        "Val": "2.2uF 100V X7R",
+        "Package": "C_1210_3225Metric",
+        "PosX": "120.500000",
+        "PosY": "-52.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C102",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM32ER72A225KA35L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "2.2uF 100V X7R",
+          "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C103",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "100uF 100V EEU-FR2A101",
+      "footprint": "Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm",
+      "MPN": "EEU-FR2A101",
+      "source_Manufacturer": "Panasonic Industry",
+      "pcb_Manufacturer": "Panasonic Industry",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "C103",
+        "Val": "100uF 100V EEU-FR2A101",
+        "Package": "CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm",
+        "PosX": "120.000000",
+        "PosY": "-35.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C103",
+          "Role": "PCB_COMPONENT",
+          "MPN": "EEU-FR2A101",
+          "Manufacturer": "Panasonic Industry",
+          "Quantity": "1",
+          "Value": "100uF 100V EEU-FR2A101",
+          "Footprint": "Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C104",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "2.2nF 50V C0G 5%",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "MPN": "GRM1885C1H222JA01D",
+      "source_Manufacturer": "Murata",
+      "pcb_Manufacturer": "Murata",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C104",
+        "Val": "2.2nF 50V C0G 5%",
+        "Package": "C_0603_1608Metric",
+        "PosX": "133.500000",
+        "PosY": "-54.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C104",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM1885C1H222JA01D",
+          "Manufacturer": "Murata",
+          "Quantity": "1",
+          "Value": "2.2nF 50V C0G 5%",
+          "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C105",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "47uF 16V X5R",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "MPN": "GRM32ER61C476KE15L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C105",
+        "Val": "47uF 16V X5R",
+        "Package": "C_1210_3225Metric",
+        "PosX": "168.000000",
+        "PosY": "-45.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C105",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM32ER61C476KE15L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "47uF 16V X5R",
+          "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C106",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "47uF 16V X5R",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "MPN": "GRM32ER61C476KE15L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C106",
+        "Val": "47uF 16V X5R",
+        "Package": "C_1210_3225Metric",
+        "PosX": "173.000000",
+        "PosY": "-45.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C106",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM32ER61C476KE15L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "47uF 16V X5R",
+          "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C107",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "4.7nF 50V C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "MPN": "GRM1885C1H472JA01D",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C107",
+        "Val": "4.7nF 50V C0G",
+        "Package": "C_0603_1608Metric",
+        "PosX": "134.000000",
+        "PosY": "-58.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C107",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM1885C1H472JA01D",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "4.7nF 50V C0G",
+          "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C108",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "820pF 50V C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "MPN": "CC0603JRNPO9BN821",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C108",
+        "Val": "820pF 50V C0G",
+        "Package": "C_0603_1608Metric",
+        "PosX": "130.699999",
+        "PosY": "-58.300000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C108",
+          "Role": "PCB_COMPONENT",
+          "MPN": "CC0603JRNPO9BN821",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "820pF 50V C0G",
+          "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C109",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "33nF 100V C0G 5% CdVdT WIP",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "MPN": "GRM2195C2A333JE01J",
+      "source_Manufacturer": "Murata",
+      "pcb_Manufacturer": "Murata",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C109",
+        "Val": "33nF 100V C0G 5% CdVdT WIP",
+        "Package": "C_0805_2012Metric",
+        "PosX": "30.000000",
+        "PosY": "-148.200000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C109",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM2195C2A333JE01J",
+          "Manufacturer": "Murata Electronics",
+          "Quantity": "1",
+          "Value": "33nF 100V C0G 5% CdVdT WIP",
+          "Footprint": "Capacitor_SMD:C_0805_2012Metric",
+          "Note": "Интегрировано в PCB; NOT FOR ORDER до инженерной приёмки",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C21",
+      "source_sheet": "MinimalSafety.kicad_sch",
+      "value": "100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "MPN": "GRM21BR72A104KAC4L",
+      "source_Manufacturer": "Murata",
+      "pcb_Manufacturer": "Murata",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C21",
+        "Val": "100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS",
+        "Package": "C_0805_2012Metric",
+        "PosX": "246.000000",
+        "PosY": "-19.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C21",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM21BR72A104KAC4L",
+          "Manufacturer": "Murata",
+          "Quantity": "1",
+          "Value": "100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS",
+          "Footprint": "Capacitor_SMD:C_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C22",
+      "source_sheet": "MinimalSafety.kicad_sch",
+      "value": "330uF 63V EEUFS1J331L BULK_DRAFT",
+      "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+      "MPN": "EEUFS1J331L",
+      "source_Manufacturer": "Panasonic Industry",
+      "pcb_Manufacturer": "Panasonic Industry",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "C22",
+        "Val": "330uF 63V EEUFS1J331L BULK_DRAFT",
+        "Package": "CP_Radial_D10.0mm_P5.00mm",
+        "PosX": "258.000000",
+        "PosY": "-19.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C22",
+          "Role": "PCB_COMPONENT",
+          "MPN": "EEUFS1J331L",
+          "Manufacturer": "Panasonic Industry",
+          "Quantity": "1",
+          "Value": "330uF 63V EEUFS1J331L BULK_DRAFT",
+          "Footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C24",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "220nF 100V X7R 10% CL21B224KCFSFNE",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "MPN": "CL21B224KCFSFNE",
+      "source_Manufacturer": "Samsung",
+      "pcb_Manufacturer": "Samsung",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C24",
+        "Val": "220nF 100V X7R 10% CL21B224KCFSFNE",
+        "Package": "C_0805_2012Metric",
+        "PosX": "31.000000",
+        "PosY": "-135.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C24",
+          "Role": "PCB_COMPONENT",
+          "MPN": "CL21B224KCFSFNE",
+          "Manufacturer": "Samsung",
+          "Quantity": "1",
+          "Value": "220nF 100V X7R 10% CL21B224KCFSFNE",
+          "Footprint": "Capacitor_SMD:C_0805_2012Metric",
+          "Note": "Интегрировано в SCH/PCB; производственный и закупочный допуск не выдан",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "C25",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "1uF 100V CVS GRM31CR72A105KA01L",
+      "footprint": "Sirokko_Capacitor:GRM31_1206_Murata_Reflow",
+      "MPN": "GRM31CR72A105KA01L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "C25",
+        "Val": "1uF 100V CVS GRM31CR72A105KA01L",
+        "Package": "GRM31_1206_Murata_Reflow",
+        "PosX": "31.000000",
+        "PosY": "-132.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "C25",
+          "Role": "PCB_COMPONENT",
+          "MPN": "GRM31CR72A105KA01L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "1uF 100V CVS GRM31CR72A105KA01L",
+          "Footprint": "Sirokko_Capacitor:GRM31_1206_Murata_Reflow",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "D1",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "TVS3301DRBR WIP",
+      "footprint": "Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm",
+      "MPN": "TVS3301DRBR",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "D1",
+        "Val": "TVS3301DRBR WIP",
+        "Package": "VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm",
+        "PosX": "16.000000",
+        "PosY": "-102.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "D1",
+          "Role": "PCB_COMPONENT",
+          "MPN": "TVS3301DRBR",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "TVS3301DRBR WIP",
+          "Footprint": "Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "D101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "STPS5H100B-TR",
+      "footprint": "Package_TO_SOT_SMD:TO-252-2",
+      "MPN": "STPS5H100B-TR",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "D101",
+        "Val": "STPS5H100B-TR",
+        "Package": "TO-252-2",
+        "PosX": "138.000000",
+        "PosY": "-48.000000",
+        "Rot": "180.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "D101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "STPS5H100B-TR",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "STPS5H100B-TR",
+          "Footprint": "Package_TO_SOT_SMD:TO-252-2",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "F1",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "0997030.WXN / 30A WIP",
+      "footprint": "Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE",
+      "MPN": "0997030.WXN + 3568",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "F1",
+        "Val": "0997030.WXN / 30A WIP",
+        "Package": "Keystone_3568_MINI_Blade_3D_ENVELOPE",
+        "PosX": "6.000000",
+        "PosY": "-96.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "F1",
+          "Role": "PLUG_IN_FUSE",
+          "MPN": "0997030.WXN",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "0997030.WXN / 30A WIP",
+          "Footprint": "Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE",
+          "Note": "Плавкая вставка 30 А; номинал WIP, не допуск заказа",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        },
+        {
+          "Reference": "F1",
+          "Role": "PCB_FUSE_HOLDER",
+          "MPN": "3568",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "0997030.WXN / 30A WIP",
+          "Footprint": "Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE",
+          "Note": "Держатель F1; footprint Keystone_3568",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J1",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "DEVKITC1_J1",
+      "footprint": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+      "MPN": "SSQ-122-01-G-S",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J1",
+        "Val": "DEVKITC1_J1",
+        "Package": "PinSocket_1x22_P2.54mm_Vertical",
+        "PosX": "100.450000",
+        "PosY": "-75.500000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J1",
+          "Role": "PCB_DEVKIT_SOCKET",
+          "MPN": "SSQ-122-01-G-S",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "DEVKITC1_J1",
+          "Footprint": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+          "Note": "Только ответная колодка; сам ESP32 в отдельном перечне",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J12",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "ROOM_DS18B20_HARNESS",
+      "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",
+      "MPN": "1715734",
+      "source_Manufacturer": "Phoenix Contact",
+      "pcb_Manufacturer": "Phoenix Contact",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J12",
+        "Val": "ROOM_DS18B20_HARNESS",
+        "Package": "TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",
+        "PosX": "16.000000",
+        "PosY": "-140.160000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J12",
+          "Role": "PCB_COMPONENT",
+          "MPN": "1715734",
+          "Manufacturer": "Phoenix Contact",
+          "Quantity": "1",
+          "Value": "ROOM_DS18B20_HARNESS",
+          "Footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J13",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "24V_INPUT_PHOENIX_1756993_WIP",
+      "footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+      "MPN": "1756993",
+      "source_Manufacturer": "Phoenix Contact",
+      "pcb_Manufacturer": "Phoenix Contact",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J13",
+        "Val": "24V_INPUT_PHOENIX_1756993_WIP",
+        "Package": "Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+        "PosX": "4.000000",
+        "PosY": "-120.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J13",
+          "Role": "PCB_COMPONENT",
+          "MPN": "1756993",
+          "Manufacturer": "Phoenix Contact",
+          "Quantity": "1",
+          "Value": "24V_INPUT_PHOENIX_1756993_WIP",
+          "Footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J27",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "GLOW_OUTPUT_PHOENIX_1756993",
+      "footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+      "MPN": "1756993",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J27",
+        "Val": "GLOW_OUTPUT_PHOENIX_1756993",
+        "Package": "Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+        "PosX": "251.370000",
+        "PosY": "-60.990000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J27",
+          "Role": "PCB_COMPONENT",
+          "MPN": "1756993",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "GLOW_OUTPUT_PHOENIX_1756993",
+          "Footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J28",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "CLUTCH_OUTPUT_PHOENIX_1756993",
+      "footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+      "MPN": "1756993",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J28",
+        "Val": "CLUTCH_OUTPUT_PHOENIX_1756993",
+        "Package": "Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+        "PosX": "251.370000",
+        "PosY": "-110.990000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J28",
+          "Role": "PCB_COMPONENT",
+          "MPN": "1756993",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "CLUTCH_OUTPUT_PHOENIX_1756993",
+          "Footprint": "Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J29",
+      "source_sheet": "motor_external_hc160.kicad_sch",
+      "value": "HC160_A1_A2_PA_G_CONTROL_ONLY",
+      "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal",
+      "MPN": "1715747",
+      "source_Manufacturer": "Phoenix Contact",
+      "pcb_Manufacturer": "Phoenix Contact",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J29",
+        "Val": "HC160_A1_A2_PA_G_CONTROL_ONLY",
+        "Package": "TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal",
+        "PosX": "115.000000",
+        "PosY": "-130.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J29",
+          "Role": "PCB_COMPONENT",
+          "MPN": "1715747",
+          "Manufacturer": "Phoenix Contact",
+          "Quantity": "1",
+          "Value": "HC160_A1_A2_PA_G_CONTROL_ONLY",
+          "Footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J3",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "DEVKITC1_J3",
+      "footprint": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+      "MPN": "SSQ-122-01-G-S",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J3",
+        "Val": "DEVKITC1_J3",
+        "Package": "PinSocket_1x22_P2.54mm_Vertical",
+        "PosX": "100.450000",
+        "PosY": "-100.900000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J3",
+          "Role": "PCB_DEVKIT_SOCKET",
+          "MPN": "SSQ-122-01-G-S",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "DEVKITC1_J3",
+          "Footprint": "Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical",
+          "Note": "Только ответная колодка; сам ESP32 в отдельном перечне",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J30",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "MAX31856 EXHAUST",
+      "footprint": "Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+      "MPN": "SSW-109-01-T-S",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J30",
+        "Val": "MAX31856 EXHAUST",
+        "Package": "Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+        "PosX": "22.000000",
+        "PosY": "-42.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J30",
+          "Role": "PCB_THERMOCOUPLE_SOCKET",
+          "MPN": "SSW-109-01-T-S",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "MAX31856 EXHAUST",
+          "Footprint": "Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+          "Note": "Только SSW-109-01-T-S; модуль MAX31856 в отдельном перечне",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "J31",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "MAX31856 AIR",
+      "footprint": "Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+      "MPN": "SSW-109-01-T-S",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "J31",
+        "Val": "MAX31856 AIR",
+        "Package": "Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+        "PosX": "52.000000",
+        "PosY": "-42.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "J31",
+          "Role": "PCB_THERMOCOUPLE_SOCKET",
+          "MPN": "SSW-109-01-T-S",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "MAX31856 AIR",
+          "Footprint": "Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm",
+          "Note": "Только SSW-109-01-T-S; модуль MAX31856 в отдельном перечне",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "K1",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW",
+      "footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+      "MPN": "DG85BM-5021-76-1024 + DZ85AB-5-PCB",
+      "source_Manufacturer": "Durakool + Durakool",
+      "pcb_Manufacturer": "Durakool + Durakool",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "K1",
+        "Val": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW",
+        "Package": "DZ85AB_5_PCB_DG85BM_ENVELOPE",
+        "PosX": "212.500000",
+        "PosY": "-30.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "K1",
+          "Role": "PLUG_IN_RELAY",
+          "MPN": "DG85BM-5021-76-1024",
+          "Manufacturer": "Durakool",
+          "Quantity": "1",
+          "Value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW",
+          "Footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+          "Note": "Реле 24 В; вставляется в колодку",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        },
+        {
+          "Reference": "K1",
+          "Role": "PCB_RELAY_SOCKET",
+          "MPN": "DZ85AB-5-PCB",
+          "Manufacturer": "Durakool",
+          "Quantity": "1",
+          "Value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW",
+          "Footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+          "Note": "Колодка реле; впаивается в PCB",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "K2",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN",
+      "footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+      "MPN": "DG85BM-5021-76-1024 + DZ85AB-5-PCB",
+      "source_Manufacturer": "Durakool + Durakool",
+      "pcb_Manufacturer": "Durakool + Durakool",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "K2",
+        "Val": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN",
+        "Package": "DZ85AB_5_PCB_DG85BM_ENVELOPE",
+        "PosX": "212.500000",
+        "PosY": "-80.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "K2",
+          "Role": "PLUG_IN_RELAY",
+          "MPN": "DG85BM-5021-76-1024",
+          "Manufacturer": "Durakool",
+          "Quantity": "1",
+          "Value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN",
+          "Footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+          "Note": "Реле 24 В; вставляется в колодку",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        },
+        {
+          "Reference": "K2",
+          "Role": "PCB_RELAY_SOCKET",
+          "MPN": "DZ85AB-5-PCB",
+          "Manufacturer": "Durakool",
+          "Quantity": "1",
+          "Value": "DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN",
+          "Footprint": "Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE",
+          "Note": "Колодка реле; впаивается в PCB",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "L101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "33uH Isat>=10A",
+      "footprint": "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm",
+      "MPN": "SRP1770TA-330M",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "L101",
+        "Val": "33uH Isat>=10A",
+        "Package": "L_Bourns_SRP1770TA_16.9x16.9mm",
+        "PosX": "154.500000",
+        "PosY": "-50.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "L101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "SRP1770TA-330M",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "33uH Isat>=10A",
+          "Footprint": "Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "Q1",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "IPB017N10N5LFATMA1 WIP",
+      "footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+      "MPN": "IPB017N10N5LFATMA1",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "Infineon Technologies",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "Q1",
+        "Val": "IPB017N10N5LFATMA1 WIP",
+        "Package": "Infineon_PG_TO263_7_IPB017N10N5LF",
+        "PosX": "8.000000",
+        "PosY": "-150.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "Q1",
+          "Role": "PCB_COMPONENT",
+          "MPN": "IPB017N10N5LFATMA1",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "IPB017N10N5LFATMA1 WIP",
+          "Footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "Q2",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "IPB017N10N5LFATMA1 WIP",
+      "footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+      "MPN": "IPB017N10N5LFATMA1",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "Infineon Technologies",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "Q2",
+        "Val": "IPB017N10N5LFATMA1 WIP",
+        "Package": "Infineon_PG_TO263_7_IPB017N10N5LF",
+        "PosX": "48.000000",
+        "PosY": "-150.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "Q2",
+          "Role": "PCB_COMPONENT",
+          "MPN": "IPB017N10N5LFATMA1",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "IPB017N10N5LFATMA1 WIP",
+          "Footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "Q3",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "IPB017N10N5LFATMA1 WIP",
+      "footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+      "MPN": "IPB017N10N5LFATMA1",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "Infineon Technologies",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "Q3",
+        "Val": "IPB017N10N5LFATMA1 WIP",
+        "Package": "Infineon_PG_TO263_7_IPB017N10N5LF",
+        "PosX": "48.000000",
+        "PosY": "-134.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "Q3",
+          "Role": "PCB_COMPONENT",
+          "MPN": "IPB017N10N5LFATMA1",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "IPB017N10N5LFATMA1 WIP",
+          "Footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "Q4",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "IPB017N10N5LFATMA1 WIP",
+      "footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+      "MPN": "IPB017N10N5LFATMA1",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "Infineon Technologies",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "Q4",
+        "Val": "IPB017N10N5LFATMA1 WIP",
+        "Package": "Infineon_PG_TO263_7_IPB017N10N5LF",
+        "PosX": "48.000000",
+        "PosY": "-117.500000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "Q4",
+          "Role": "PCB_COMPONENT",
+          "MPN": "IPB017N10N5LFATMA1",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "IPB017N10N5LFATMA1 WIP",
+          "Footprint": "Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R1",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "4k7",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FTE52-4K7",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R1",
+        "Val": "4k7",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "125.000000",
+        "PosY": "-85.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R1",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FTE52-4K7",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "4k7",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "31.6k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0731K6L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R101",
+        "Val": "31.6k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "133.000000",
+        "PosY": "-55.800000",
+        "Rot": "180.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0731K6L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "31.6k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R102",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "10k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0710KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R102",
+        "Val": "10k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "128.500000",
+        "PosY": "-55.800000",
+        "Rot": "180.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R102",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0710KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "10k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R103",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "31.6k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0731K6L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R103",
+        "Val": "31.6k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "121.500000",
+        "PosY": "-62.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R103",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0731K6L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "31.6k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R104",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-07100KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R104",
+        "Val": "100k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "120.000000",
+        "PosY": "-68.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R104",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-07100KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "100k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R105",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "10k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0710KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R105",
+        "Val": "10k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "125.000000",
+        "PosY": "-68.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R105",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0710KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "10k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R106",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "82k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0782KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R106",
+        "Val": "82k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "137.000000",
+        "PosY": "-56.500000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R106",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0782KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "82k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R107",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "10k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "MPN": "RC0603FR-0710KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R107",
+        "Val": "10k 1%",
+        "Package": "R_0603_1608Metric",
+        "PosX": "164.000000",
+        "PosY": "-62.000000",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R107",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0603FR-0710KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "10k 1%",
+          "Footprint": "Resistor_SMD:R_0603_1608Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R108",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "22k 1% CdVdT isolation WIP",
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "MPN": "RC1210FR-0722KL",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R108",
+        "Val": "22k 1% CdVdT isolation WIP",
+        "Package": "R_1210_3225Metric",
+        "PosX": "30.000000",
+        "PosY": "-144.000000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R108",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC1210FR-0722KL",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "22k 1% CdVdT isolation WIP",
+          "Footprint": "Resistor_SMD:R_1210_3225Metric",
+          "Note": "Интегрировано в PCB; NOT FOR ORDER до инженерной приёмки",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R2",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "10k",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FBF52-10K",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R2",
+        "Val": "10k",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "14.340000",
+        "PosY": "-46.430000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R2",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FBF52-10K",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "10k",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R3",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "10k",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FBF52-10K",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R3",
+        "Val": "10k",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "110.000000",
+        "PosY": "-36.950000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R3",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FBF52-10K",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "10k",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R7",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "10k",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FBF52-10K",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R7",
+        "Val": "10k",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "125.000000",
+        "PosY": "-95.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R7",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FBF52-10K",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "10k",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R8",
+      "source_sheet": "Sirokko26201_control_motor_candidate.kicad_sch",
+      "value": "10k",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FBF52-10K",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R8",
+        "Val": "10k",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "145.000000",
+        "PosY": "-95.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R8",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FBF52-10K",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "10k",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R86",
+      "source_sheet": "MinimalSafety.kicad_sch",
+      "value": "4k7 DRV_IN1_PULLDOWN",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FTE52-4K7",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R86",
+        "Val": "4k7 DRV_IN1_PULLDOWN",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "245.000000",
+        "PosY": "-42.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R86",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FTE52-4K7",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "4k7 DRV_IN1_PULLDOWN",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R87",
+      "source_sheet": "MinimalSafety.kicad_sch",
+      "value": "4k7 DRV_IN2_PULLDOWN",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "MPN": "MFR-25FTE52-4K7",
+      "source_Manufacturer": "Yageo",
+      "pcb_Manufacturer": "Yageo",
+      "physical_mounting": "through_hole",
+      "CPL": {
+        "Ref": "R87",
+        "Val": "4k7 DRV_IN2_PULLDOWN",
+        "Package": "R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+        "PosX": "260.000000",
+        "PosY": "-42.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R87",
+          "Role": "PCB_COMPONENT",
+          "MPN": "MFR-25FTE52-4K7",
+          "Manufacturer": "Yageo",
+          "Quantity": "1",
+          "Value": "4k7 DRV_IN2_PULLDOWN",
+          "Footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R90",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "4.7R Q1_GATE",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-074R7L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R90",
+        "Val": "4.7R Q1_GATE",
+        "Package": "R_0805_2012Metric",
+        "PosX": "-3.500000",
+        "PosY": "-146.400000",
+        "Rot": "-90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R90",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-074R7L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "4.7R Q1_GATE",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R91",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "4.7R Q2_GATE",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-074R7L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R91",
+        "Val": "4.7R Q2_GATE",
+        "Package": "R_0805_2012Metric",
+        "PosX": "36.450000",
+        "PosY": "-147.102500",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R91",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-074R7L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "4.7R Q2_GATE",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R92",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "4.7R Q3_GATE",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-074R7L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R92",
+        "Val": "4.7R Q3_GATE",
+        "Package": "R_0805_2012Metric",
+        "PosX": "36.450000",
+        "PosY": "-131.602500",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R92",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-074R7L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "4.7R Q3_GATE",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R93",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "4.7R Q4_GATE",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-074R7L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R93",
+        "Val": "4.7R Q4_GATE",
+        "Package": "R_0805_2012Metric",
+        "PosX": "36.450000",
+        "PosY": "-114.602500",
+        "Rot": "90.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R93",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-074R7L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "4.7R Q4_GATE",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R94",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "84.5k 1% OV_TOP",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-0784K5L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R94",
+        "Val": "84.5k 1% OV_TOP",
+        "Package": "R_0805_2012Metric",
+        "PosX": "31.000000",
+        "PosY": "-127.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R94",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-0784K5L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "84.5k 1% OV_TOP",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R95",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "3.48k 1% OV_BOT",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-073K48L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R95",
+        "Val": "3.48k 1% OV_BOT",
+        "Package": "R_0805_2012Metric",
+        "PosX": "31.000000",
+        "PosY": "-123.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R95",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-073K48L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "3.48k 1% OV_BOT",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R96",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "75k 1% EN_TOP",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-0775KL",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R96",
+        "Val": "75k 1% EN_TOP",
+        "Package": "R_0805_2012Metric",
+        "PosX": "31.000000",
+        "PosY": "-119.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R96",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-0775KL",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "75k 1% EN_TOP",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "R97",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "5.62k 1% EN_BOT",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "MPN": "RC0805FR-075K62L",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "R97",
+        "Val": "5.62k 1% EN_BOT",
+        "Package": "R_0805_2012Metric",
+        "PosX": "31.000000",
+        "PosY": "-115.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "R97",
+          "Role": "PCB_COMPONENT",
+          "MPN": "RC0805FR-075K62L",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "5.62k 1% EN_BOT",
+          "Footprint": "Resistor_SMD:R_0805_2012Metric",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "TP101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "PGOOD_5V_NOT_GPIO",
+      "footprint": "TestPoint:TestPoint_Keystone_5015_Micro_Mini",
+      "MPN": "5015",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "TP101",
+        "Val": "PGOOD_5V_NOT_GPIO",
+        "Package": "TestPoint_Keystone_5015_Micro_Mini",
+        "PosX": "168.000000",
+        "PosY": "-65.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "TP101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "5015",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "PGOOD_5V_NOT_GPIO",
+          "Footprint": "TestPoint:TestPoint_Keystone_5015_Micro_Mini",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "U101",
+      "source_sheet": "logic_power_24_5_DRAFT.kicad_sch",
+      "value": "LM5013DDAR",
+      "footprint": "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D",
+      "MPN": "LM5013DDAR",
+      "source_Manufacturer": "",
+      "pcb_Manufacturer": "",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "U101",
+        "Val": "LM5013DDAR",
+        "Package": "DDA0008B_LM5013DDAR_TI4214849B_3D",
+        "PosX": "128.000000",
+        "PosY": "-50.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "U101",
+          "Role": "PCB_COMPONENT",
+          "MPN": "LM5013DDAR",
+          "Manufacturer": "",
+          "Quantity": "1",
+          "Value": "LM5013DDAR",
+          "Footprint": "Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "U11",
+      "source_sheet": "MinimalSafety.kicad_sch",
+      "value": "DRV8803PWPR",
+      "footprint": "Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm",
+      "MPN": "DRV8803PWPR",
+      "source_Manufacturer": "Texas Instruments",
+      "pcb_Manufacturer": "Texas Instruments",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "U11",
+        "Val": "DRV8803PWPR",
+        "Package": "HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm",
+        "PosX": "247.000000",
+        "PosY": "-25.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "U11",
+          "Role": "PCB_COMPONENT",
+          "MPN": "DRV8803PWPR",
+          "Manufacturer": "Texas Instruments",
+          "Quantity": "1",
+          "Value": "DRV8803PWPR",
+          "Footprint": "Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    },
+    {
+      "reference": "U13",
+      "source_sheet": "Sirokko_Input_Protection_WIP.kicad_sch",
+      "value": "LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED",
+      "footprint": "Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm",
+      "MPN": "LM74800QDRRRQ1",
+      "source_Manufacturer": "Texas Instruments",
+      "pcb_Manufacturer": "Texas Instruments",
+      "physical_mounting": "no_drilled_pad",
+      "CPL": {
+        "Ref": "U13",
+        "Val": "LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED",
+        "Package": "WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm",
+        "PosX": "31.000000",
+        "PosY": "-139.000000",
+        "Rot": "0.000000",
+        "Side": "top"
+      },
+      "purchase_items": [
+        {
+          "Reference": "U13",
+          "Role": "PCB_COMPONENT",
+          "MPN": "LM74800QDRRRQ1",
+          "Manufacturer": "Texas Instruments",
+          "Quantity": "1",
+          "Value": "LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED",
+          "Footprint": "Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm",
+          "Note": "Деталь схемы",
+          "Status": "DRAFT_NOT_FOR_ORDER"
+        }
+      ]
+    }
+  ],
+  "not_claimed": [
+    "full native root XML netlist export or connectivity acceptance",
+    "current stock/price or orderability for every component",
+    "future optimized PCB and regenerated BOM/CPL acceptance",
+    "pick-and-place machine orientation/nozzle or process qualification",
+    "physical compatibility, power, firmware, heating tests or production release"
+  ]
+}

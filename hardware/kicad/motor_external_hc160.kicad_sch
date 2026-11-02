@@ -945,7 +945,7 @@
 	(dnp no)
 	(uuid "a1b10e3f-3b7e-44ad-96df-90a99b5922ea")
 	(property "Reference" "J29"
-		(at 101.6 72.39 0)
+		(at 91.44 69.85 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -953,7 +953,7 @@
 		)
 	)
 	(property "Value" "HC160_A1_A2_PA_G_CONTROL_ONLY"
-		(at 101.6 80.01 0)
+		(at 114.3 69.85 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1026,7 +1026,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "69678605-5598-42d7-8d6f-d11afa55a655")
 	)
@@ -1037,7 +1037,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "6e85e61b-7b60-4dee-83f1-4c7702455764")
 	)
@@ -1048,7 +1048,7 @@
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "bb856df4-c2a3-40ca-be3b-1e1032dfab51")
 	)

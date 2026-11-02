@@ -5,20 +5,20 @@
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `c8c5bd6e2bc0cb61428037c93b54b6c5d26ea97d9e6529f3facb100935ee3b3b`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `46b84ef09d00a724962753ac0e83492b63a43177d69b33a519c890d5be9a0820`;
+- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `43078361e69e0cd694a292a28f372a9c3cc3c6005958a670cd8718e32e35fa28`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `4a5093ef614989879bbfb0596f96afb1b34f41ba15901a59844b0ebda81dbb09`;
 - board outline: 305 × 170 mm.
 
-All 72 footprints are on F.Cu. The board contains 291 pads, 639 segments, 147 vias, 78 nets and 27 zones. R108/C109 are integrated next to U13; C24 is Samsung `CL21B224KCFSFNE` with its footprint and nets unchanged. All 70 prior footprints, 633 segments, 145 vias and existing pads were preserved; only R108/C109, six segments and two vias were added.
+All 72 footprints are on F.Cu. The board contains 291 pads, 639 segments, 146 vias, 78 nets and 27 zones. One `/TC_SDI_MOSI` via was removed without increasing net length; additional candidates were rejected by DRC/connectivity checks. R108/C109 and Samsung `CL21B224KCFSFNE` remain unchanged.
 
 KiCad 10.0.8 checks: root ERC 0; native DRC 0 violations/0 unconnected items; Pre-fab Gate passed with schematic parity enabled and `ignored_checks=[]`. The [current verification report](docs/research/PCB_SCH_PARITY_CURRENT_RU.md) and [machine summary](docs/research/RC_INTEGRATION_CURRENT.json) do not authorize manufacturing or power-up.
 
 Current renders and connection data:
 
-- [front](docs/board-front.png);
-- [back](docs/board-back.png), mirrored as viewed from below;
-- [top 3D](docs/board-3d-oblique.png);
-- [bottom 3D](docs/board-3d-bottom.png);
+- [front assembly](manufacturing/current/renders/assembly-front.png);
+- [back assembly](manufacturing/current/renders/assembly-back.png);
+- [top 3D](manufacturing/current/renders/board-3d-top.png);
+- [bottom 3D](manufacturing/current/renders/board-3d-bottom.png);
 - [external connection map](docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md) and [pinout image](docs/research/CONTROL_CONNECTIONS_CURRENT.png).
 
 The current draft CAM/BOM package is in [`manufacturing/current/`](manufacturing/current/) and remains **NOT FOR ORDER**. Current hobby-fabrication guidance is in [FABRICATION_REQUIREMENTS_CURRENT_RU.md](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md).

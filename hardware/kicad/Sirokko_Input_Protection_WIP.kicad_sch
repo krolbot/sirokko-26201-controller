@@ -5286,6 +5286,17 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Infineon Technologies"
+			(at 190.5 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "38ccf98f-a80d-4bc3-8134-000785cc4f19")
 		)
@@ -5387,6 +5398,17 @@
 			)
 		)
 		(property "MPN" "IPB017N10N5LFATMA1"
+			(at 240.03 49.53 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Infineon Technologies"
 			(at 240.03 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -5587,6 +5609,17 @@
 			)
 		)
 		(property "MPN" "IPB017N10N5LFATMA1"
+			(at 190.5 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Infineon Technologies"
 			(at 190.5 90.17 0)
 			(hide yes)
 			(show_name no)
@@ -5965,6 +5998,17 @@
 			)
 		)
 		(property "MPN" "IPB017N10N5LFATMA1"
+			(at 240.03 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Infineon Technologies"
 			(at 240.03 90.17 0)
 			(hide yes)
 			(show_name no)
