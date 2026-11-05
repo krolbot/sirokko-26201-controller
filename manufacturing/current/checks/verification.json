@@ -35,7 +35,7 @@
     "/TFT_DC": 41,
     "/TFT_CS": 42
   },
-  "functional_gpio_negative_control_detected_gpio46": true,
+  "functional_gpio_negative_control_detected_wrong_header_mapping": true,
   "prior_pin_assignments_changed": {
     "J1.14": [
       "/TFT_CS",
@@ -60,5 +60,8 @@
   "production_release": false,
   "physical_tests": false,
   "firmware_changed": false,
-  "cam_viewer": "pending review of corrected v4 files"
+  "cam_viewer": "tracespace: corrected v4 top, bottom and separate outline+drill inspected; see CAM_REVIEW_RU.md",
+  "gpio_audit_basis": "YD-ESP32-S3 V1.4 header-to-GPIO map and ESP32-S3 datasheet v2.2 table 2-4; GPIO46 supports I/O, old input-only claim withdrawn",
+  "hardware_source_commit": "7519b5b4e4fe549d4126ed899daa9fa8898e2364",
+  "github_hardware_published": true
 }

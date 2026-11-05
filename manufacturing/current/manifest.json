@@ -18,7 +18,7 @@
     "hardware/kicad/Sirokko_Mechanical.kicad_sym": "1fd3c8dedacc5da7c2b1ada9b7022ef2bb36f71ccdd2c0d972bcb42840c9799d",
     "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6",
     "hardware/kicad/Sirokko_Input_Protection.kicad_sym": "1fae30478f921cc42f65ae0a946b2d3a42894aff7f78fe9023850a66a5b53d65",
-    "hardware/kicad/README.md": "143a5049dd5bfdaf1a09698e1824bc0deb7bbcb71e70f856e72e4e6f5b807a65",
+    "hardware/kicad/README.md": "0c6834e525d0962cc8dd9478859481d2c70ee3523b1213c50a3740e658297249",
     "hardware/kicad/Sirokko_Safety.kicad_sym": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f",
     "hardware/kicad/KICAD_SYMBOLS_LICENSE.md": "285b027a721577d0bc0198f36e948c6c282ddaa4b58fef8ed826749576eb0aef",
     "hardware/kicad/HC160_INTERFACE_RU.md": "9533e70d44260286d2ec79567571ea2fe36abce2ca29f45d92685bfd4ae91b74",
@@ -73,7 +73,7 @@
   "outputs": {
     "manufacturing/current/bom.csv": "05efb1ef91653b1f81bc3c0adfa9105675762d6b90354edaf2d7222dc2de1b04",
     "manufacturing/current/cpl.csv": "16c272e081044066efe6911e0927627b6e4b53d81c92df2d7a34c00823841e16",
-    "manufacturing/current/README_RU.md": "e74d41512468adf2d563e78b363f2ff93e944d0a0dd077621eaa1a1e9da1e288",
+    "manufacturing/current/README_RU.md": "a77fbc0b6b1427a60e4a83b01078cf12f30d607298ec0ed04dc2ffdb0ac2c3a6",
     "manufacturing/current/cam.zip": "e108bfd0b9d6132fa56c9b6bed06664707ac339b9587fc4aae1b61d1972802d6",
     "manufacturing/current/native-bom.csv": "3d0c56862e977a2b945dbc6dd4e0bafdeba29d0b6ac86302a72acc86b312e1c2",
     "manufacturing/current/netlist.xml": "fd9d91cd61c4b5e97ee9a742892cb1844802f8b84b39515e7da3b200af0fa538",
@@ -103,13 +103,17 @@
     "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Cu.gtl": "d732af22dc356f617966382e3d7c971bbb8261efbc0fa85be5b1192789c42d5b",
     "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbo": "c494b7eefe082c223c26dc0df4890e4e0048b413e5bde92e1f92bc0fde76dc0a",
     "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-job.gbrjob": "1ec9ebb5dcae9e3c2e4b557f4a5ac5a848bc210719c24694c4b889e14eb2a4aa",
-    "manufacturing/current/checks/verification.json": "c289b6436ad243a363ba317bbd56cad51dd6ff8c6a89d3d846830787b07fc67d",
+    "manufacturing/current/checks/verification.json": "3b4cd3bd5706cabc9e91c6b750333e9cebe9c5f9d2019b6d3635cf22828d8b14",
     "manufacturing/current/checks/erc.json": "50c12ec4e21d94bbdbbca9280f468a8e4582ee00c9e0c09fff2372c42ff669b0",
+    "manufacturing/current/checks/cam-bottom.png": "94a8dd1b976f28b5a0864ca19ffe60cc0707ca94d18c474230307be64796842b",
     "manufacturing/current/checks/pad-audit.json": "07b30ccaf46ea5080ded321cac897f5c694fc1391526f5ef64db7cef81e271d7",
+    "manufacturing/current/checks/CAM_REVIEW_RU.md": "cf508e96045d319a76ee2ec687abd6626753f08702b63de0d76161c8b554eb01",
     "manufacturing/current/checks/mechanical-preserved.json": "ee4b2ded4b94838006cb8930919e8665e8a295733cbb18df2555c939387858b1",
     "manufacturing/current/checks/negative-open.json": "31f62d95bb53190e30180fdbf1c49947a7a443ce691940c3fbbf13162c24fe03",
     "manufacturing/current/checks/drc.json": "618aa63b356f185bcadd36093e272debeded1cf28932aed29ec76bef6655e218",
-    "manufacturing/current/checks/board-state.json": "75c8c945f13dd887e6525c942e2830c584fa405875cb7ad5827bc6e56fbfb676"
+    "manufacturing/current/checks/board-state.json": "75c8c945f13dd887e6525c942e2830c584fa405875cb7ad5827bc6e56fbfb676",
+    "manufacturing/current/checks/cam-top.png": "8c6aae770fe59177ca56dd671a96d0df275c62acb0d8cc1e58d642756ea5d702",
+    "manufacturing/current/checks/cam-outline-drill.png": "32102b8648701af50ac10e75a90e77c5ebe17137128c297c48b4b1b0a8c9434b"
   },
   "production_release": false,
   "physical_tests": false
