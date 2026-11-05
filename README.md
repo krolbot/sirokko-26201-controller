@@ -1,17 +1,17 @@
 # Sirokko 262.01 controller
 
-> **Hardware v6: digital fabrication package with KEY0.** Bare PCB fabrication and component assembly are separate. See [current manufacturing instructions](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: no physical qualification or operational release is claimed. Firmware development remains on HOLD pending agreement on functions, menus and overall logic; the unpublished KEY0 draft is not included in this commit.
+> **Hardware v7 candidate: verified digital package with 115 vias; optimization acceptance remains open.** Bare PCB fabrication and component assembly are separate. See [current manufacturing instructions](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: no physical qualification or operational release is claimed. Firmware development remains on HOLD pending agreement on functions, menus and overall logic; the unpublished KEY0 draft is not included in this commit.
 
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `0b85bf2f4921b25a1c3126348eb176a88c7e3b29ca474c2d7229c4367e0a5cf5`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `88f2459caeddaece2577aa9685bec969e2997f6bbda6fc0931fae324b8b0ff33`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `0ed3728e0cd427c01e9509a6aff25a2870087f775708396bfdd9fabb0b346e82`;
 - board outline: 281 × 170 mm.
 
-All 73 footprints are on F.Cu:303pads,667segments,147vias,25zones. Ready-made TFT2.4+EC11 connects through J32. [Exact pin map](docs/TFT24_INTERFACE_RU.md). No custom panel PCB.
+All 73 footprints are on F.Cu:303pads,663segments,115vias,25zones. Ready-made TFT2.4+EC11 connects through J32. [Exact pin map](docs/TFT24_INTERFACE_RU.md). No custom panel PCB.
 
-KiCad10.0.8:ERC0 with four retained ignored checks; nativeDRC0/opens0 with ignored=[]. Independently compared252electricalpin-net assignments,283drill hits and60placement rows. [Current checks](manufacturing/current/checks/verification.json). Prior research reports naming other hashes are historical, not acceptance of this revision.
+KiCad10.0.8:ERC0 with four retained ignored checks; nativeDRC0/opens0 with ignored=[]. Independently compared252electricalpin-net assignments,251drill hits and60placement rows. [Current checks](manufacturing/current/checks/verification.json). Prior research reports naming other hashes are historical, not acceptance of this revision.
 
 F1 is Littelfuse `0997015.WXN`, 15 A / 58 V DC, in the unchanged Keystone 3568 holder. The assigned interface envelope is: glow 7 A continuous / 10 A for at most 1 s; clutch 2 A / 3 A for at most 1 s; common J13/F1 input 10 A / 13 A for at most 1 s; ambient at F1 at most 80 °C. The provisional 5 V continuous budget is 0.70 A. See the [engineering basis](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md); physical qualification remains required.
 

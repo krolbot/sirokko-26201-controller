@@ -1,0 +1,25 @@
+{
+  "blocking": [],
+  "cosmetic": [
+    {
+      "blocking": false,
+      "description": "F1 looks like a fuse but records no trip current, so its nets (/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED, /VIN_RAW_24) cannot be checked against it. Add a Spec property containing e.g. 'IT 3.8 A'.",
+      "items": [
+        "Fuse F1"
+      ],
+      "kind": "ampacity",
+      "reason": "cannot verify an invariant without the trip current",
+      "severity": "warning",
+      "type": "fuse_trip_unknown"
+    }
+  ],
+  "excluded": 0,
+  "ignored_checks": [],
+  "parity": {
+    "ran": true,
+    "reason": "",
+    "schematic": "/tmp/kicad-job-f0su4e0_/Sirokko26201_control_motor_candidate.kicad_sch",
+    "waived": false
+  },
+  "passed": true
+}

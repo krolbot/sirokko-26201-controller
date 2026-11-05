@@ -1,12 +1,12 @@
 %TF.GenerationSoftware,KiCad,Pcbnew,10.0.8-10.0.8~ubuntu26.04.1*%
-%TF.CreationDate,2026-11-05T14:49:50+00:00*%
+%TF.CreationDate,2026-11-05T21:58:24+00:00*%
 %TF.ProjectId,Sirokko26201_control_motor_candidate,5369726f-6b6b-46f3-9236-3230315f636f,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Soldermask,Top*%
 %TF.FilePolarity,Negative*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 10.0.8-10.0.8~ubuntu26.04.1) date 2026-11-05 14:49:50*
+G04 Created by KiCad (PCBNEW 10.0.8-10.0.8~ubuntu26.04.1) date 2026-11-05 21:58:24*
 %MOMM*%
 %LPD*%
 G01*
@@ -219,8 +219,8 @@ X121975000Y-46500000D03*
 %TD*%
 D31*
 %TO.C,R8*%
-X145000000Y-95000000D03*
-X155160000Y-95000000D03*
+X123000000Y-105000000D03*
+X133160000Y-105000000D03*
 %TD*%
 D25*
 %TO.C,R93*%
@@ -451,8 +451,8 @@ X234950000Y-19500000D03*
 %TD*%
 D31*
 %TO.C,R7*%
-X125000000Y-95000000D03*
-X135160000Y-95000000D03*
+X123000000Y-140000000D03*
+X133160000Y-140000000D03*
 %TD*%
 D40*
 %TO.C,C22*%

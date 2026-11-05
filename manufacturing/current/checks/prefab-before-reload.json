@@ -1,0 +1,246 @@
+{
+  "blocking": [
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Relay_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint K1"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint H12"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Capacitor' is not enabled in the current configuration",
+      "items": [
+        "Footprint C25"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
+      "items": [
+        "Footprint U101"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Connector_Sirokko_Module' is not enabled in the current configuration",
+      "items": [
+        "Footprint J31"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
+      "items": [
+        "Footprint Q1"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
+      "items": [
+        "Footprint J27"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint H13"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
+      "items": [
+        "Footprint C103"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Relay_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint K2"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint H11"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
+      "items": [
+        "Footprint Q3"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
+      "items": [
+        "Footprint J13"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint H3"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Connector_Sirokko_Module' is not enabled in the current configuration",
+      "items": [
+        "Footprint J30"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
+      "items": [
+        "Footprint Q2"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
+      "items": [
+        "Footprint F1"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Power' is not enabled in the current configuration",
+      "items": [
+        "Footprint J28"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Mechanical' is not enabled in the current configuration",
+      "items": [
+        "Footprint H1"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    },
+    {
+      "blocking": true,
+      "description": "The footprint library 'Sirokko_Input' is not enabled in the current configuration",
+      "items": [
+        "Footprint Q4"
+      ],
+      "kind": "violation",
+      "reason": "DRC severity is warning (promoted by --strict)",
+      "severity": "warning",
+      "type": "lib_footprint_issues"
+    }
+  ],
+  "cosmetic": [
+    {
+      "blocking": false,
+      "description": "F1 looks like a fuse but records no trip current, so its nets (/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED, /VIN_RAW_24) cannot be checked against it. Add a Spec property containing e.g. 'IT 3.8 A'.",
+      "items": [
+        "Fuse F1"
+      ],
+      "kind": "ampacity",
+      "reason": "cannot verify an invariant without the trip current",
+      "severity": "warning",
+      "type": "fuse_trip_unknown"
+    }
+  ],
+  "excluded": 0,
+  "ignored_checks": [],
+  "parity": {
+    "ran": true,
+    "reason": "",
+    "schematic": "/tmp/kicad-job-r1g82u3l/Sirokko26201_control_motor_candidate.kicad_sch",
+    "waived": false
+  },
+  "passed": false
+}
