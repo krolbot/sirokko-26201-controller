@@ -1,395 +1,125 @@
 {
-  "status": "DRAFT_NOT_FOR_ORDER_NO_POWER_NO_FLASH_NO_FIRE",
+  "sources": {
+    "hardware/kicad/motor_external_hc160.kicad_sch": "588306c87a49cd58a5691a0a2a2f85ceb4380b67d180da0f0688d54d64b6d300",
+    "hardware/kicad/PCB_REVIEW_RU.md": "3513bfd1c243fb0e9ad29b10231f4ed1d760e92449b56146e8e158f940b6ef33",
+    "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch": "57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a",
+    "hardware/kicad/Sirokko_thermal.kicad_sym": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1",
+    "hardware/kicad/Sirokko_Power.kicad_sym": "249ff6f0496f1a446ca62321263d603a46df3b5edadbd45ec9d975bf7ade6eb1",
+    "hardware/kicad/REMOTE_ONLY_REQUIREMENTS_RU.md": "b37812adbdfd0df4fcee8fe598f491f8c3f88f27460b40dc43ab2a62c8c0e717",
+    "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb": "312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e",
+    "hardware/kicad/logic_power_24_5_DRAFT.kicad_sch": "67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd",
+    "hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md": "52821bf1bae82d2cbc04830a42408d929d15f208cacc4d685ddc5ee96a84b4a3",
+    "hardware/kicad/MinimalSafety.kicad_sch": "d848e3bdbd230189229350c5d70616f05690d37c8bc10b55033660e1448c1a82",
+    "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch": "f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5",
+    "hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md": "bb702f3f448b07df3235c7542aedea4e06b8f4789a0e6ac91f94b3dfbede327a",
+    "hardware/kicad/YD_3V3_LOAD_BUDGET.json": "38a68b109383e509d883a9a859b258c88d191cde094ca7df109277aebe372705",
+    "hardware/kicad/ALL_RULES_AUDIT_RU.md": "3c4df0448d04cab68c705d81ff588ab14fc42e827784775662400ad4918f2807",
+    "hardware/kicad/sym-lib-table": "b964e439016a2309684d97da34287f3db3be5571c18b323ad53b0bedb7cb2a15",
+    "hardware/kicad/Sirokko_Mechanical.kicad_sym": "1fd3c8dedacc5da7c2b1ada9b7022ef2bb36f71ccdd2c0d972bcb42840c9799d",
+    "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6",
+    "hardware/kicad/Sirokko_Input_Protection.kicad_sym": "1fae30478f921cc42f65ae0a946b2d3a42894aff7f78fe9023850a66a5b53d65",
+    "hardware/kicad/README.md": "3367fc675be7be3fce3c771d686ceb0f085e21dd02e78d1f3d0bad50b7a918e4",
+    "hardware/kicad/Sirokko_Safety.kicad_sym": "13be3a00472b3db7c10831b16f4416d4cb0b575f6edd189e3cf9002492b1e01f",
+    "hardware/kicad/KICAD_SYMBOLS_LICENSE.md": "285b027a721577d0bc0198f36e948c6c282ddaa4b58fef8ed826749576eb0aef",
+    "hardware/kicad/HC160_INTERFACE_RU.md": "9533e70d44260286d2ec79567571ea2fe36abce2ca29f45d92685bfd4ae91b74",
+    "hardware/kicad/Sirokko_Relay_Driver.kicad_sym": "1a3ae568a43dbd068d51139c794f2e5d4fb4341728c8ffd9e60b79054eb0ab45",
+    "hardware/kicad/Sirokko_Interface.kicad_sym": "b56bdd0179d34cf0771bb577fb7aa5d09ea66815d7cb38fcef5e45747b5bda48",
+    "hardware/kicad/fp-lib-table": "c35e63ee4ee827fe81aeac1b0c232e65df929c9dd8eb3dcb357258ef391c0ca2",
+    "hardware/kicad/ELECTRICAL_INTERFACE_RU.md": "6e4dbc5c77a79b6609c04b9dcae18c9dc65b2f67bdbe976912f154a4e8b186a0",
+    "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md": "1e1c03fab6618c72c48c01013a5a3dcb3fdea358b6019f0327f7e038e1f0e5a2",
+    "hardware/kicad/Sirokko_Panel.pretty/Connfly_DS1023_1x07S21_P2.54mm.kicad_mod": "fc84d6bbfe7abe12b1634f4affbc6706961de0dd6711e0dc3f4240228a136b67",
+    "hardware/kicad/Sirokko_Panel.pretty/RotaryEncoder_Alps_EC11E15244G1_Knob41001_3D_ENVELOPE.kicad_mod": "78674fbf20c7888fa6c633b1845d92b3039aa8b4edb7085cab7b0af60ed49553",
+    "hardware/kicad/Sirokko_Panel.pretty/TFT_GMT020-02-7P_Envelope_62x37.1.kicad_mod": "c1c36050ee52679c2a5eaa91929ad00e1baebf026a77f0bd49b7e42a821b233d",
+    "hardware/kicad/Sirokko_Panel.pretty/SW_NKK_BB25AB-FA_3D_ENVELOPE.kicad_mod": "8aee07255258627dac1ae0d74fedf0b623ac06e08ca7d082e3b96470ebd9b968",
+    "hardware/kicad/Sirokko_Panel.pretty/RotaryEncoder_Alps_EC11E15244G1.kicad_mod": "7a2a26956b6c6824a471300ee62523eb3137a8ea51f8797093e449634c00ae87",
+    "hardware/kicad/Sirokko_Panel.pretty/SW_NKK_BB25AB-FA.kicad_mod": "b4d03b4695e30381d0dae481c339323919dd17ca383a52e743e84bf96f8c7547",
+    "hardware/kicad/Sirokko_Capacitor.pretty/GRM31_1206_Murata_Reflow.kicad_mod": "833a5986ea8096c10f1701a18b732b026d683bfdd99ee60f8f553fe057b439cc",
+    "hardware/kicad/tft_spi_isolation_DRAFT/sirokko_tft_interface_review_20261027.kicad_sym": "6b0041075b1ba5d8e553e789428f412299e282caa4290907f17892ff486e86a1",
+    "hardware/kicad/Sirokko_Connectors.pretty/Harwin_M20_9960845_1x08_P2.54mm_RA_THT_Bside.kicad_mod": "156f0c0ef6c8755fab8b8c711727cec05dd0ab3266833f2d2ccbd3b809a77a07",
+    "hardware/kicad/Sirokko_Module.pretty/Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm.kicad_mod": "260d45f5e863eee10621de0565eeb0b6287794edee19caddc13d6232e9ff03b6",
+    "hardware/kicad/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_MECHANICAL_PINMAP_HOLD.kicad_mod": "93dbfee1534bbc07a4b52e9934e5e2f8588a41025af32d0b9fadcee8d078183d",
+    "hardware/kicad/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_DG85BM.kicad_mod": "7f6e9f095b0a7de090bf993da4925b79dd3be0a2c7cc4ab4b7b809bcfc03f1c8",
+    "hardware/kicad/Sirokko_Relay_Mechanical.pretty/DZ85AB_5_PCB_DG85BM_ENVELOPE.kicad_mod": "a3c79a51e8f374a8ab74e916686d6ab6f42ccf29bbdf26e6e0f640f02fedd976",
+    "hardware/kicad/Sirokko_Mechanical.pretty/Waveshare_18366_Module_Bside_Envelope_NO_CY.kicad_mod": "83d498059647a9dfbcec7d2058cde589b608dde40433ef3b701acf3ee21677fa",
+    "hardware/kicad/Sirokko_Mechanical.pretty/MountingHole_2.4mm_M2_DRAFT.kicad_mod": "ec579ba5264178d16d92bd8114c87110dacbbc54292de64e630a3293cc70ac35",
+    "hardware/kicad/Sirokko_Mechanical.pretty/MountingHole_3.6mm_R5.5_DRAFT.kicad_mod": "4bfd029de3573af4b4e7d26088aaec473a1e41d5398ae54e10acb931c40f909c",
+    "hardware/kicad/Sirokko_Mechanical.pretty/Waveshare_18366_Module_Bside_Envelope.kicad_mod": "d85f480806c823d9549cf650535d7c01a3ec26ef4d248ee387577f9cb2bf0e31",
+    "hardware/kicad/Sirokko_Input.pretty/Keystone_3568_MINI_Blade_DRAFT.kicad_mod": "27f65864bc168b4c158d426d6fcb3ad4b6147478605c1bd60707c7998d8c0d43",
+    "hardware/kicad/Sirokko_Input.pretty/Infineon_PG_TO263_7_IPB017N10N5LF.kicad_mod": "0696d58046a31d863913c9e83690b45ab43f6f64d8360fae8f03e1d43a71f371",
+    "hardware/kicad/Sirokko_Input.pretty/Keystone_3568_MINI_Blade_3D_ENVELOPE.kicad_mod": "9253ee505db8acfa64630db8134c7eda9c38d338f49d5079f898c989c9fc88b5",
+    "hardware/kicad/3dmodels/EC11E15244G1_Knob41001-1_envelope.wrl": "b10350761140279788ab41d23ad375e3d2ee166668f1000a92d1639641ae5b4b",
+    "hardware/kicad/3dmodels/Harwin_M20_9960845_8x1P_cable_service_envelope.wrl": "77fbaa95edd7b89abc82ffee9c801cdd791da7434fbe69458ca1f86d8230250e",
+    "hardware/kicad/3dmodels/Phoenix_1756993_envelope.wrl": "da1ef444a46d96425f77fa2ba34b43d8ec79f2696933a31eeb8e8348943fe97f",
+    "hardware/kicad/3dmodels/NKK_BB25AB-FA_envelope.wrl": "5ce6be268d127e63282fdf7892057b10adbb28bcb8f91a345f5e76801f551ab5",
+    "hardware/kicad/3dmodels/Harwin_M20_9960845_RA_THT_envelope.wrl": "3927fa7c664ca454d2e72e8c54898f1b0097f1aa3be464e9b52ff7f341451fce",
+    "hardware/kicad/3dmodels/Keystone3568_Littelfuse0997030_envelope.wrl": "3e172babcfb34c60ef2038febdd2b986ab6f5fc6067d773faa941673388e7158",
+    "hardware/kicad/3dmodels/DG85BM_DZ85AB_installed_envelope.wrl": "767c9afa56b1b66f8ad1bc0baa5b89c676fbcd05e6821491ab474599a3b5d81f",
+    "hardware/kicad/3dmodels/Waveshare_18366_k01-2_official_nominal.stp": "d9e9413c50a60669df2ef43b073dfbf53e6d1c185e5a234705566d3178a29187",
+    "hardware/kicad/Sirokko_Safety.pretty/TPS3431_DRB0008A_3D.kicad_mod": "43acb1cdd7d86ad78e1d33c0909ae56de9cb932c4457c6823d0a185e47b2e189",
+    "hardware/kicad/Sirokko_Safety.pretty/TPS3431_DRB0008A.kicad_mod": "f6617d430df6ec2596055e3da0aa02421b8201f905586f24d462e8e7c8c2e0ab",
+    "hardware/kicad/Sirokko_Power.pretty/TO-247-3_Vertical_STPS30H100CW_Drill2.2mm.kicad_mod": "f86b2ee60b4e1a311db8f7bff281e8a0b9bd9a604728715d5d3c684d78bd8c3b",
+    "hardware/kicad/Sirokko_Power.pretty/Phoenix_1756993_MKDS5HV_2_9.52_ZSZS.kicad_mod": "162a196f419af9961762c27db9b8c4253ecb8a3a2e230ab0ac0e0d1bc5e072f7",
+    "hardware/kicad/Sirokko_Power.pretty/CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm.kicad_mod": "4e3ee76b93d80b0c034645c8e1ef3b3bd6e8ccdbae6e7695ec0c13ee47ca0650",
+    "hardware/kicad/Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B.kicad_mod": "324d7ec3faa2b6df84d861bb197388c17ead8c1e22b0139826a8a445b6b20998",
+    "hardware/kicad/Sirokko_Power.pretty/DDA0008B_LM5013DDAR_TI4214849B_3D.kicad_mod": "2eb5569e6be21b9ee26e358973949c34c41f2498d13c84284ff80abb56d9c173",
+    "hardware/kicad/Sirokko_Power.pretty/WSLP2726.kicad_mod": "9600cc312f81a9c4a07490523e593f487f1ccbe2aaf01505d499880735628821",
+    "hardware/kicad/Sirokko_Power.pretty/Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE.kicad_mod": "c88b7c18f3be696e1505497823339f2a96663c8dcedabbf88961ffce63bd418e",
+    "hardware/kicad/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM21B_2012_Reflow.kicad_mod": "8bc9e9f3bd850cfbb4acee0f7c8cb500b04a4f0c3b582869fcd94b69c547c0da",
+    "hardware/kicad/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/R_Yageo_RC0603_1608_Reflow.kicad_mod": "0096bf26d0515feda234e76995be7956d41c9695361268d4f478aefad17e834a",
+    "hardware/kicad/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/L_Wuerth_744025003_2828_Reflow.kicad_mod": "0af77026ac56536515f8bd695e66996bfae0eeeb2cacbac0f9cab91c84b98c54",
+    "hardware/kicad/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM188_1608_Reflow.kicad_mod": "a31df4074837ebdb2e17c84462371b148507209240b3f8f4c19000584d0fa5c5",
+    "hardware/kicad/tft_power_tps62162_standalone_DRAFT/passives_v3/Sirokko_TFT_Passives.pretty/C_Murata_GRM32E_3225_Reflow.kicad_mod": "54b3f66b322802ed88060948bb28da8e210e8f7ec59bb132d911b454cdc43a1c"
+  },
+  "outputs": {
+    "manufacturing/current/bom.csv": "05efb1ef91653b1f81bc3c0adfa9105675762d6b90354edaf2d7222dc2de1b04",
+    "manufacturing/current/cpl.csv": "16c272e081044066efe6911e0927627b6e4b53d81c92df2d7a34c00823841e16",
+    "manufacturing/current/README_RU.md": "6558a82b64be50e88dd7584574e2f01f03edda57f121754bd56c1ab2289baf47",
+    "manufacturing/current/cam.zip": "518a13b7c7994f51689f39e927fcb78bc745568302844e218b1d906d5510feb5",
+    "manufacturing/current/native-bom.csv": "3d0c56862e977a2b945dbc6dd4e0bafdeba29d0b6ac86302a72acc86b312e1c2",
+    "manufacturing/current/netlist.xml": "3baa0cc957ea296aa49ce6389ba02c648bb3fedf107fceaa3b6786a8bba28165",
+    "manufacturing/current/FABRICATION_REQUIREMENTS_RU.md": "effda2e47bc1c0b6adb7a4f74365d56e3701701470fe5bd80a7fecc4f5106f8b",
+    "manufacturing/current/drill/Sirokko26201_control_motor_candidate.drl": "c1e0b36e4c7cb50ee96ad503c04abad3f3299cbf040254dfb3db92d2f3ef1796",
+    "manufacturing/current/pdf/Sirokko26201_assembly_front.pdf": "27cb2669635dd24164e1f8bbb51b390fa2e940cc7047bda3380bcd6c6e2fec36",
+    "manufacturing/current/pdf/Sirokko26201_assembly_back.pdf": "040c4b90f5be7f82d475d6d9686cf1cc050e5ab4422136027d34ac6cfddc9cbb",
+    "manufacturing/current/pdf/Sirokko26201_full_schematic.pdf": "b5f17d178442891266680151369f07ff078990bfc4e7bb8c24effa6b00b969d6",
+    "manufacturing/current/pdf/Sirokko26201_mechanical_holes.pdf": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd",
+    "manufacturing/current/renders/board-3d-bottom.png": "e290df717df3b9d389691af4f04cc3d4a46b968fb559d469d4ba0bdbd04ca868",
+    "manufacturing/current/renders/assembly-back.svg": "41ee582344251be071b495ec5446f62bc62f3cb6376345f70ad08831489f7095",
+    "manufacturing/current/renders/assembly-front.svg": "c44c717afc7b0c64146c2cf5d6787897db58a4654f4feec8281da2e08091d83c",
+    "manufacturing/current/renders/board-3d-top.png": "f10774d31e01f49d16a9869521de979165efc7e2e5f853af48710997dea9ee2f",
+    "manufacturing/current/renders/assembly-front.png": "df9687f988e51074f968287260fd37cc484e1cfaa695a65dff900367e25c3291",
+    "manufacturing/current/renders/assembly-back.png": "6ec3ffe7220484321057d450f563ef351073d58fef08dd2e2bb985f08097affd",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_Eco1.gbr": "e141664551709857520b1d60a54b81ddd1eebefda438bae9083e3fb497be5a06",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Mask.gts": "2f2f56a1564f33f44e3447b4d07aa1ccd950cb75277c5dd0eb9910b5009508c9",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Fab.gbr": "f582983adc08055e23cd34f869dfe91a174d48a7400773a30bd28fadaa1cfc80",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbp": "bb4b1e7692f581cb0844065b787e5a248ba64950c82c0bea474f43cf2462e10e",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Adhesive.gta": "97a525da32bdf2d0dd1eb8c95550f972420594421d3cf5c500d577de8708f920",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_1.gbr": "496f5c97662f72361811bbd904249f68d8329516713fcb35efc110280f48e880",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Paste.gtp": "39fadcd2e8d822e89cc7364215e30d81181938f5693e9639125f8503702c44d7",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Courtyard.gbr": "d0635d583315414c78cd6e5b96f23ae2949fe37b2557ebecd8aa1a8a09522baa",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gto": "f6f48af3525f4705636ce5213ad6f979517655f1265221c954aaa06db3bfda18",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gm1": "56b0de587c2945dad4a02ebd0cb6f284f1243be7671d4f5d414d6903a9b61ed6",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_Eco2.gbr": "4052c2f8770a42689ab0ec93bf2cff38dee918d5702ed55d1f84aed1503c5391",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Fab.gbr": "baea6805f80c986a04c5842627fcf00817a105ff7973ecd112f445d12438c582",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbl": "8f7f9932ca95df75b103b1e0402def6d6a0f2e065c0519f4384e5bdfe0ced32e",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_Drawings.gbr": "174536a976dd12ba2fada46500d64497c4bc06ecd952c0be45eed45ff84d1fc8",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_Comments.gbr": "eedf0ad6ddfde6c8fc8b6a04a69e73bc9a130a3bcaa3f76f687b48d9d54c0674",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Adhesive.gba": "a540e7d9639cae723b192788a259f7156bfb05806e5a71ac57b9a0f3b1c49666",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-Margin.gbr": "496f5c97662f72361811bbd904249f68d8329516713fcb35efc110280f48e880",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_2.gbr": "496f5c97662f72361811bbd904249f68d8329516713fcb35efc110280f48e880",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbs": "9d8f65ee8e941db6a88be90a359a3b755e7305e9c7bda40270cb394c2b1c2c41",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_4.gbr": "496f5c97662f72361811bbd904249f68d8329516713fcb35efc110280f48e880",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Cu.gtl": "d6a776a8f368d8a071ceb96c55132361e647e31dc74829b8c36366653948ad4c",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-User_3.gbr": "496f5c97662f72361811bbd904249f68d8329516713fcb35efc110280f48e880",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbo": "bdf42d6301665a19560ed3b088b884964930ef2380d1a37cb51595679a6cc73e",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-F_Courtyard.gbr": "2c3d9f143215f498f1f6149f08d7085a3d5d180e73e5bc5daebd5b444a2989b2",
+    "manufacturing/current/gerbers/Sirokko26201_control_motor_candidate-job.gbrjob": "70a09ebc829bbd46d7db6410dfb73c804f4a98c993e6cc84e6ffb7e69d52c17c",
+    "manufacturing/current/checks/verification.json": "2770c3e6279d19e065e52817cee12f598b3cd3b028ac31fc750d82493ca7696f",
+    "manufacturing/current/checks/erc.json": "1b9e249245761ff5b828cece621c07d3da00e075013b43b8921a62fce1751f28",
+    "manufacturing/current/checks/mechanical-preserved.json": "ee4b2ded4b94838006cb8930919e8665e8a295733cbb18df2555c939387858b1",
+    "manufacturing/current/checks/drc.json": "ecd6a6566bc2534c0cf49cf9f6f8342a34cb06e28170eba666813155fc0d3162",
+    "manufacturing/current/checks/board-state.json": "e25d03bd602d61800edca0b15bdd7ad447c1553beca1275bb65f7458cdd6426d"
+  },
   "production_release": false,
-  "physical_tests": false,
-  "source_commit": "9405cabb3955a39df3351b2abdfdc21defeb73f5",
-  "generator": {
-    "kicad": "10.0.8",
-    "native_project_context": true,
-    "source_modified_by_export": false
-  },
-  "validation": {
-    "erc": {
-      "violations": 0,
-      "ignored_checks": [
-        {
-          "description": "Global label only appears once in the schematic",
-          "key": "single_global_label"
-        },
-        {
-          "description": "Four connection points are joined together",
-          "key": "four_way_junction"
-        },
-        {
-          "description": "SPICE model issue",
-          "key": "simulation_model_issue"
-        },
-        {
-          "description": "Assigned footprint doesn't match footprint filters",
-          "key": "footprint_filter"
-        }
-      ]
-    },
-    "drc": {
-      "violations": 0,
-      "unconnected_items": 0,
-      "schematic_parity_issues": 0,
-      "ignored_checks": [],
-      "refill_passed": true,
-      "reopen_passed": true,
-      "report": "checks/native-reopen-refill.json"
-    },
-    "drill_geometry": {
-      "pth": 253,
-      "npth": 17,
-      "total": 270,
-      "parity": true,
-      "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
-    },
-    "board": {
-      "footprints": 72,
-      "segments": 639,
-      "vias": 146,
-      "nets": 78,
-      "zones": 27,
-      "thickness_mm": 1.6
-    },
-    "bom_cpl": {
-      "electrical_references": 59,
-      "mechanical_holes_excluded": 13,
-      "position_rotation_side_mismatches": 0
-    },
-    "visual_review": {
-      "schematic_pages": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "pdfs": [
-        "assembly_front",
-        "assembly_back",
-        "assembly_front_lower_left_detail",
-        "mechanical_holes",
-        "PTH_drill_map",
-        "NPTH_drill_map"
-      ],
-      "renders": [
-        "assembly-front.png",
-        "assembly-back.png",
-        "board-3d-top.png",
-        "board-3d-bottom.png",
-        "routing-F_Cu.png",
-        "routing-B_Cu.png"
-      ],
-      "vector_renders": [
-        "routing-F_Cu.svg",
-        "routing-B_Cu.svg"
-      ],
-      "copper_report": "../../docs/research/COPPER_IMAGES_CURRENT_RU.md",
-      "copper_verification": "checks/copper-images-current.json"
-    },
-    "j1_j3_metadata": {
-      "MPN": "SSQ-122-01-T-S",
-      "Manufacturer": "Samtec",
-      "pad_records_verified_unchanged": 44,
-      "physical_fit_tested": false,
-      "report": "checks/j1-j3-metadata-verification.json",
-      "subsequent_non_j1_j3_change": "F1 Value/MPN metadata only; J1/J3 remain unchanged."
-    },
-    "mechanical_csv": {
-      "path": "docs/BOM_MECHANICAL_INTERFACES_DRAFT.csv",
-      "sha256": "cd6e56dbec04d81f45d4c8db7065b6fd82136046971132f4d3ea58bc61a66433",
-      "rows": 13,
-      "edge_cuts_left_mm": -5.0,
-      "edge_cuts_top_mm": 10.0,
-      "x_from_left_rule": "X_mm + 5.000",
-      "y_from_top_rule": "Y_mm - 10.000",
-      "matching_rows": 13,
-      "old_10p2_base_mismatches": 13,
-      "non_target_fields_unchanged": true,
-      "cad_geometry_unchanged": true,
-      "report": "../../docs/research/CAM_DRILL_GEOMETRY_FINAL.json"
-    },
-    "mechanical_pdf": {
-      "path": "pdf/Sirokko26201_mechanical_holes.pdf",
-      "sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd",
-      "edge_cuts_base_mm": [
-        -5.0,
-        10.0
-      ],
-      "current_rows_matching": 13,
-      "old_pdf_mismatching_rows": 13,
-      "text_review": "PASS",
-      "visual_review": "PASS",
-      "cad_geometry_unchanged": true,
-      "report": "checks/mechanical-pdf-verification.json"
-    },
-    "f1_metadata": {
-      "Value": "0997015.WXN / 15A",
-      "MPN": "0997015.WXN + 3568",
-      "footprint": "Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE",
-      "pads_verified_unchanged": 4,
-      "geometry_and_nets_unchanged": true,
-      "physical_fit_tested": false,
-      "report": "checks/f1-metadata-preservation.json"
-    }
-  },
-  "sources": [
-    {
-      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro",
-      "bytes": 9926,
-      "sha256": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6"
-    },
-    {
-      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch",
-      "bytes": 174320,
-      "sha256": "0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e"
-    },
-    {
-      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
-      "bytes": 982129,
-      "sha256": "57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b"
-    },
-    {
-      "path": "hardware/kicad/MinimalSafety.kicad_sch",
-      "bytes": 37529,
-      "sha256": "d848e3bdbd230189229350c5d70616f05690d37c8bc10b55033660e1448c1a82"
-    },
-    {
-      "path": "hardware/kicad/logic_power_24_5_DRAFT.kicad_sch",
-      "bytes": 77717,
-      "sha256": "67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd"
-    },
-    {
-      "path": "hardware/kicad/motor_external_hc160.kicad_sch",
-      "bytes": 16807,
-      "sha256": "588306c87a49cd58a5691a0a2a2f85ceb4380b67d180da0f0688d54d64b6d300"
-    },
-    {
-      "path": "hardware/kicad/Sirokko_Input_Protection_WIP.kicad_sch",
-      "bytes": 104753,
-      "sha256": "f5ea76a43d2092e3b78a46baba4fa46686af1efa409f0565bc9a614a5b7c5af5"
-    },
-    {
-      "path": "hardware/kicad/fp-lib-table",
-      "bytes": 1718,
-      "sha256": "c35e63ee4ee827fe81aeac1b0c232e65df929c9dd8eb3dcb357258ef391c0ca2"
-    },
-    {
-      "path": "hardware/kicad/sym-lib-table",
-      "bytes": 1167,
-      "sha256": "b964e439016a2309684d97da34287f3db3be5571c18b323ad53b0bedb7cb2a15"
-    }
-  ],
-  "files": [
-    {
-      "path": "FABRICATION_REQUIREMENTS_RU.md",
-      "bytes": 14081,
-      "sha256": "553bc9ffa00b5664c6392677b25f5db11860ae4f7e987c720e3540c4c65fcfef"
-    },
-    {
-      "path": "README_RU.md",
-      "bytes": 8439,
-      "sha256": "b40f01327b55f255488db3c74e4b7be2852634b7e63a6884f789665d6987d2b8"
-    },
-    {
-      "path": "bom.csv",
-      "bytes": 7769,
-      "sha256": "566995e90a288fa83bac2be8354d983eb24e402734326217a2fd8f7b4202c946"
-    },
-    {
-      "path": "checks/board-stats.json",
-      "bytes": 4195,
-      "sha256": "dac49cd114e51db5129c9a148feee8ebe3190209615161435eafcf5c31a66586"
-    },
-    {
-      "path": "checks/copper-images-current.json",
-      "bytes": 7055,
-      "sha256": "1272acc0aede31057407649b0ab3ba5856cbcb558cb5659c904cc9a08c513786"
-    },
-    {
-      "path": "checks/dependency-audit.json",
-      "bytes": 2059,
-      "sha256": "51eaf3550fcfe5961b93a815c9b3a6c9dd21fd58ec62f963e38a7152cfa63534"
-    },
-    {
-      "path": "checks/drc.json",
-      "bytes": 416,
-      "sha256": "46ce78cb55b6d2df14c934538580bb1acbbd6641748ca72426a8654ece412fba"
-    },
-    {
-      "path": "checks/erc.json",
-      "bytes": 1854,
-      "sha256": "3a58dc448e861038ecaeaa666abf05aa361f51585823115e9c9fde949864d362"
-    },
-    {
-      "path": "checks/f1-metadata-preservation.json",
-      "bytes": 2208,
-      "sha256": "b493a2a365fc7fffcbac97e21f8ff2ad789b9aa7c6520efb0ea4aacd8c73f2b3"
-    },
-    {
-      "path": "checks/j1-j3-metadata-verification.json",
-      "bytes": 4393,
-      "sha256": "d9e1c97e6267a77eda6c03a3c104c512f1855b184ef19a9c6c67d09b9249a1b0"
-    },
-    {
-      "path": "checks/mechanical-pdf-verification.json",
-      "bytes": 3856,
-      "sha256": "3cc03d0bf77624835afe7c6d95ed19b675e61b1ec0fd3a425bdc70f53d3fa579"
-    },
-    {
-      "path": "checks/native-reopen-refill.json",
-      "bytes": 2442,
-      "sha256": "f1718716fded36f54f9e57c9bc61565b9a07ff6f51cfaee4bfef65234cab0dd5"
-    },
-    {
-      "path": "cpl.csv",
-      "bytes": 5590,
-      "sha256": "9fd299114dbeef0719f8943ab2c2a96129c0dcf40f46b682a1e4eb6de8492c2e"
-    },
-    {
-      "path": "drill/Sirokko26201_control_motor_candidate-NPTH-drl_map.pdf",
-      "bytes": 14086,
-      "sha256": "4608eada5af8810f15246eba8b68aa49b34a39420dac5b899fd0b516450d5cb6"
-    },
-    {
-      "path": "drill/Sirokko26201_control_motor_candidate-NPTH.drl",
-      "bytes": 798,
-      "sha256": "4e8e1c1a211c8c371746099bb96ed94bd3c8364b096070296a31cd06bd198e10"
-    },
-    {
-      "path": "drill/Sirokko26201_control_motor_candidate-PTH-drl_map.pdf",
-      "bytes": 23908,
-      "sha256": "2bd110b30403feb8bb11cfcfcb97c7c6d0e6ea7bd8443b0d8393ebc582b6100f"
-    },
-    {
-      "path": "drill/Sirokko26201_control_motor_candidate-PTH.drl",
-      "bytes": 4290,
-      "sha256": "3d2bf0df6aa97133794f6c4628987dca7905b60da1725bc62d914b6d7234679b"
-    },
-    {
-      "path": "drill/drill-report.txt",
-      "bytes": 1150,
-      "sha256": "142d7ea280449285c19f8bdddc1f79a036ae09ced664eaaac794c3a15f948749"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Cu.gbr",
-      "bytes": 252638,
-      "sha256": "5b6ee3dbbeecb4d2ccd3015d3aac7e93b69dc1fc4f3d0864831a157ec8034924"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Mask.gbr",
-      "bytes": 5545,
-      "sha256": "30a56a5ef46fb5ff9dc3c7a2b1343bc5792432b640ed964e3569b66c39afe88c"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Paste.gbr",
-      "bytes": 523,
-      "sha256": "2f7fa5f0a732a64cee777b9f81a292d8510a36b9e6e377273382af11839a3a82"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-B_Silkscreen.gbr",
-      "bytes": 524,
-      "sha256": "a35dde1f3ec7ffa595e15e21e34ace8fbcf80bd679563980d172cee082fffe67"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-Edge_Cuts.gbr",
-      "bytes": 753,
-      "sha256": "edfaf8f9ec93fe1a885267fe971eec500957d2251ae5babc27b0e88417360cfa"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Cu.gbr",
-      "bytes": 228327,
-      "sha256": "f7c899b3b64004cd8ed6e8f740682c16c5d817277a244bc7e85c6bba65b19c99"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Mask.gbr",
-      "bytes": 12553,
-      "sha256": "92020d291806e7101bdb1725693822ed2dc09c67b1db960e32bd47f7acb5388b"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Paste.gbr",
-      "bytes": 8821,
-      "sha256": "8e97ffdc9864ce71eb2a04010e811186282c6443394741959c5a130a5de79f10"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-F_Silkscreen.gbr",
-      "bytes": 185521,
-      "sha256": "5729a6a60a6ccf96a4437cabd37f005eedc3b0dcddf3bdc4c75bd36c3da95adb"
-    },
-    {
-      "path": "gerbers/Sirokko26201_control_motor_candidate-job.gbrjob",
-      "bytes": 2991,
-      "sha256": "afe9eb42d8a140c7261243d1d832997a6a4f40f50338c66ef49068f3054dfbb0"
-    },
-    {
-      "path": "pdf/Sirokko26201_assembly_back.pdf",
-      "bytes": 67804,
-      "sha256": "81ccfa9ab7d00ed70e1357053d2bc3abcd5a69e31827184d3869488201f523bb"
-    },
-    {
-      "path": "pdf/Sirokko26201_assembly_front.pdf",
-      "bytes": 231087,
-      "sha256": "b0d0d955f4463656dc9ee6cd36e5f0eca9897ec88a159edd166e3c7b6653ebf2"
-    },
-    {
-      "path": "pdf/Sirokko26201_assembly_front_lower_left_detail.pdf",
-      "bytes": 142051,
-      "sha256": "df255189ece01ab198e1e41a8bbb2a9cb63de7112e0de8fffd76b46c20b1d7ac"
-    },
-    {
-      "path": "pdf/Sirokko26201_full_schematic.pdf",
-      "bytes": 290554,
-      "sha256": "03e9153e9393937b4dfff7e6ca171461a64063f04e7aaf9d3aa05e958ed32ff6"
-    },
-    {
-      "path": "pdf/Sirokko26201_mechanical_holes.pdf",
-      "bytes": 43524,
-      "sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd"
-    },
-    {
-      "path": "renders/assembly-back.png",
-      "bytes": 61931,
-      "sha256": "1aea8c1856cb0d8dbdae49b03c0beb93fa698e2ce92f526139fc90a5b9e52c5d"
-    },
-    {
-      "path": "renders/assembly-front.png",
-      "bytes": 125398,
-      "sha256": "d1550ff063ce58cfbaa4abaa3eac11c4fa9a9cf89420ed075c490bbb4af30bfe"
-    },
-    {
-      "path": "renders/board-3d-bottom.png",
-      "bytes": 199936,
-      "sha256": "e3baad03ad7599d2d3e9d886290d4e79574bbb9b2b8ae8a5cc5988dcdbacc203"
-    },
-    {
-      "path": "renders/board-3d-top.png",
-      "bytes": 318159,
-      "sha256": "3bf7373aa09b74ab92ec38687d1babaec4defd54eb82f115427ee4691be2d691"
-    },
-    {
-      "path": "renders/routing-B_Cu.png",
-      "bytes": 147089,
-      "sha256": "85ef049f63cbe6a5dc0d2c5caf944d0fcfb14c0fe7fbd9936d34b9a2aeace2b6"
-    },
-    {
-      "path": "renders/routing-B_Cu.svg",
-      "bytes": 223950,
-      "sha256": "7b96c61313bff8b2cde92fc552078f944d1a84f79623ef0c3b2cd90ed14e9bbc"
-    },
-    {
-      "path": "renders/routing-F_Cu.png",
-      "bytes": 139017,
-      "sha256": "34dc6b800488fcc232b2f5867ecd31756d6389e04d5fde2f01efd7b429380c8d"
-    },
-    {
-      "path": "renders/routing-F_Cu.svg",
-      "bytes": 213451,
-      "sha256": "15047c773aef0bc4d5591d20e2c64b7b643d7df089a9ee9fd9fb5c60ab47505d"
-    }
-  ],
-  "firmware_hold": false,
-  "firmware_status": "DRAFT_REVIEW_REQUIRED_NO_PHYSICAL_TESTS_PROFILE_NOT_QUALIFIED"
+  "physical_tests": false
 }

@@ -5,13 +5,13 @@
 В репозитории оставлен один канонический проект KiCad:
 
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
+- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e`;
 - контур платы: 305 × 170 мм.
 
-Все 72 посадочных места находятся на F.Cu. Плата содержит 291 площадку, 639 сегментов, 146 переходов, 78 сетей и 27 зон. В `/TC_SDI_MOSI` удалён один переход без увеличения длины сети; остальные проверенные кандидаты отклонены по DRC/связности. R108/C109 и Samsung `CL21B224KCFSFNE` сохранены.
+Все 73 посадочных места находятся на F.Cu. Плата содержит 303 площадки, 757 сегментов, 170 переходов и 27 зон. Готовая TFT2.4+EC11 подключается через J32; отдельной собственной PCB панели нет. [Распиновка](docs/TFT24_INTERFACE_RU.md).
 
-KiCad 10.0.8: root ERC 0, native DRC 0 нарушений/0 несоединений, Pre-fab Gate пройден с реально включённой проверкой соответствия схеме и `ignored_checks=[]`. [Текущая проверка](docs/research/PCB_SCH_PARITY_CURRENT_RU.md) и [машинная сводка](docs/research/RC_INTEGRATION_CURRENT.json) не являются разрешением производства или питания.
+KiCad10.0.8: rootERC0 при четырёх сохранённых ignored checks; nativeDRC0/opens0, DRC ignored=[]. Отдельно сопоставлены252электрическихpin-net с XML,306отверстий и60позиций установки. [Текущие проверки](manufacturing/current/checks/verification.json) не являются разрешением производства или питания. Прежние исследовательские отчёты с иными SHA относятся к истории, не к новой ревизии.
 
 F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном держателе Keystone 3568. Назначенная оболочка интерфейсов: свеча 7 А непрерывно / 10 А не более 1 с; муфта 2 А / 3 А не более 1 с; общий вход J13/F1 10 А / 13 А не более 1 с; воздух у F1 не выше 80 °C. Предварительный непрерывный бюджет 5 В — 0,70 А. [Инженерное основание](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md) не заменяет физическую квалификацию.
 
@@ -21,7 +21,7 @@ F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном де�
 - [сборочный вид сзади](manufacturing/current/renders/assembly-back.png);
 - [3D-вид сверху](manufacturing/current/renders/board-3d-top.png);
 - [3D-вид снизу](manufacturing/current/renders/board-3d-bottom.png);
-- [рисунок меди F.Cu](manufacturing/current/renders/routing-F_Cu.png) и [B.Cu](manufacturing/current/renders/routing-B_Cu.png), без зеркалирования нижнего слоя;
+- [CAM Gerber/Excellon](manufacturing/current/cam.zip);
 - [карта внешних подключений](docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md) и [изображение контактов](docs/research/CONTROL_CONNECTIONS_CURRENT.png).
 
 Проверочный CAM/BOM пересобран в [`manufacturing/current/`](manufacturing/current/) из этой же пары SCH/PCB и остаётся **NOT FOR ORDER**. Действующие требования: [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md), [согласованное управление отдельной панелью](docs/PANEL_CONTROL_RU.md), [текущее состояние](docs/CURRENT_STATE_RU.md), [требования изготовления](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md). Пуск, DC-bias, горячая SOA, импульсная координация и физические испытания не квалифицированы; восстановление прежних состояний — через историю Git.
@@ -30,4 +30,4 @@ F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном де�
 
 ## Программный DRAFT
 
-Единый текущий исходный набор состоит из аппаратного проекта выше и каталога [`firmware/`](firmware/) в том же Git-дереве. Существующий DRAFT для YD-ESP32-S3 N16R8 V1.4 поднимает собственную AP и браузерную панель, содержит один автомат, два MAX31856, DS18B20, команды двух реле и HC-160A S2. Огневой профиль намеренно не квалифицирован, поэтому топливо программно заблокировано. Отдельная местная панель с экраном и одним нажимным энкодером согласована только на уровне [жестов и соединения не более 10 см](docs/PANEL_CONTROL_RU.md); прежние органы на основной плате не возвращаются, AP/браузер сохраняются, а дальнейшая разработка прошивки запрещена до нового согласования с Никитой. Существующий состав и ограничения DRAFT: [`firmware/README_RU.md`](firmware/README_RU.md).
+Единый текущий исходный набор состоит из аппаратного проекта выше и каталога [`firmware/`](firmware/) в том же Git-дереве. Существующий DRAFT для YD-ESP32-S3 N16R8 V1.4 поднимает собственную AP и браузерную панель, содержит один автомат, два MAX31856, DS18B20, команды двух реле и HC-160A S2. Огневой профиль намеренно не квалифицирован, поэтому топливо программно заблокировано. Аппаратное подключение покупной TFT2.4+EC11 реализовано, но прошивка этой панели не менялась. [Согласованные жесты](docs/PANEL_CONTROL_RU.md); AP/браузер сохраняются, дальнейшая разработка прошивки — HOLD. Существующий состав и ограничения DRAFT: [`firmware/README_RU.md`](firmware/README_RU.md).

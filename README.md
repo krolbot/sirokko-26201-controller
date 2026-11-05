@@ -5,13 +5,13 @@
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `0f62b97606d5220ebe1cb630b59fd2050777e6d9020e623b93a4c5518774f76e`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `57f4b9437de4176f61e99d71ef923711f1368ba13d1de3b72c6fd13d82a4d09b`;
+- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e`;
 - board outline: 305 × 170 mm.
 
-All 72 footprints are on F.Cu. The board contains 291 pads, 639 segments, 146 vias, 78 nets and 27 zones. One `/TC_SDI_MOSI` via was removed without increasing net length; additional candidates were rejected by DRC/connectivity checks. R108/C109 and Samsung `CL21B224KCFSFNE` remain unchanged.
+All 73 footprints are on F.Cu:303pads,757segments,170vias,27zones. Ready-made TFT2.4+EC11 connects through J32. [Exact pin map](docs/TFT24_INTERFACE_RU.md). No custom panel PCB.
 
-KiCad 10.0.8 checks: root ERC 0; native DRC 0 violations/0 unconnected items; Pre-fab Gate passed with schematic parity enabled and `ignored_checks=[]`. The [current verification report](docs/research/PCB_SCH_PARITY_CURRENT_RU.md) and [machine summary](docs/research/RC_INTEGRATION_CURRENT.json) do not authorize manufacturing or power-up.
+KiCad10.0.8:ERC0 with four retained ignored checks; nativeDRC0/opens0 with ignored=[]. Independently compared252electricalpin-net assignments,306drill hits and60placement rows. [Current checks](manufacturing/current/checks/verification.json). Prior research reports naming other hashes are historical, not acceptance of this revision.
 
 F1 is Littelfuse `0997015.WXN`, 15 A / 58 V DC, in the unchanged Keystone 3568 holder. The assigned interface envelope is: glow 7 A continuous / 10 A for at most 1 s; clutch 2 A / 3 A for at most 1 s; common J13/F1 input 10 A / 13 A for at most 1 s; ambient at F1 at most 80 °C. The provisional 5 V continuous budget is 0.70 A. See the [engineering basis](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md); physical qualification remains required.
 
@@ -21,7 +21,7 @@ Current renders and connection data:
 - [back assembly](manufacturing/current/renders/assembly-back.png);
 - [top 3D](manufacturing/current/renders/board-3d-top.png);
 - [bottom 3D](manufacturing/current/renders/board-3d-bottom.png);
-- [F.Cu routing](manufacturing/current/renders/routing-F_Cu.png) and [B.Cu routing](manufacturing/current/renders/routing-B_Cu.png), with the bottom layer shown unmirrored;
+- [Gerber/Excellon CAM](manufacturing/current/cam.zip);
 - [external connection map](docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md) and [pinout image](docs/research/CONTROL_CONNECTIONS_CURRENT.png).
 
 The current draft CAM/BOM package is in [`manufacturing/current/`](manufacturing/current/) and remains **NOT FOR ORDER**. Current hobby-fabrication guidance is in [FABRICATION_REQUIREMENTS_CURRENT_RU.md](docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md).
@@ -30,6 +30,6 @@ The EVM-derived ngspice fixture now produces about 12.22 V after correcting its 
 
 The current [ChipDip snapshot](docs/Sirokko_components_ChipDip.html) and [CSV](docs/Sirokko_components_ChipDip.csv) cover 40 board/insertable rows and 5 external items. C24, R108 and C109 are reflected in CAD but remain not authorized for ordering. Prices and stock are a dated website snapshot, not a guarantee.
 
-A separate local panel is now planned: a display and one pressable encoder, with no separate buttons and a connection no longer than 10 cm. This does not restore the removed display or controls on the main PCB, and the AP/browser interface remains. The agreed gestures, unresolved hardware choices and firmware HOLD are recorded in [`docs/PANEL_CONTROL_RU.md`](docs/PANEL_CONTROL_RU.md).
+A ready-made TFT2.4+EC11 local panel is connected through J32 with a cable no longer than100mm; KEY0 is unused. This replaces the custom panel PCB. AP/browser behavior is unchanged. The panel firmware is not implemented in this hardware update; firmware HOLD remains. [Gestures](docs/PANEL_CONTROL_RU.md), [hardware pin map](docs/TFT24_INTERFACE_RU.md).
 
 Requirements remain in [`docs/REQUIREMENTS_RU.md`](docs/REQUIREMENTS_RU.md); current limitations are summarized in [`docs/CURRENT_STATE_RU.md`](docs/CURRENT_STATE_RU.md). The current source set combines this hardware project with the software DRAFT in [`firmware/`](firmware/); build, AP and binary-package instructions are in [`firmware/README_RU.md`](firmware/README_RU.md). The fire profile is deliberately unqualified and fuel remains software-blocked. Full startup, model accuracy, SOA, input-transient coordination and all physical firmware/radio/GPIO/load tests remain **NOT QUALIFIED**. Bodies of ESP32/MAX31856 modules are not included in 3D, only their headers. Old revision projects, duplicate PCB snapshots and PCB ZIP copies are not kept in the working tree; Git history remains the recovery path.

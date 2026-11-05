@@ -1,0 +1,39 @@
+{
+  "pcb_sha256": "312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e",
+  "schematic_sha256": "57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a",
+  "pcb_counts": {
+    "footprints": 73,
+    "pads": 303,
+    "segments": 757,
+    "vias": 170,
+    "zones": 27
+  },
+  "drc": {
+    "exit_code": 0,
+    "violations": [],
+    "unconnected_items": [],
+    "violation_count": 0,
+    "unconnected_count": 0
+  },
+  "drc_ignored_checks": [],
+  "electrical_pin_map_matches": 252,
+  "electrical_components": 60,
+  "pcb_only_mounting_footprints": 13,
+  "drill": {
+    "hits": 306,
+    "pth": 289,
+    "npth": 17,
+    "coordinate_rounding_mm": 0.0005,
+    "negative_shift_delete_plating_detected": true
+  },
+  "positions_checked": 60,
+  "negative_open_res_detected": true,
+  "production_release": false,
+  "physical_tests": false,
+  "firmware_changed": false,
+  "github_published": false,
+  "visual_open_issue": null,
+  "symbol_field_layout_fixed": true,
+  "assembly_viewport_fixed": true,
+  "cam_viewer": "pending external viewer review"
+}

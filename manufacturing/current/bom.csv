@@ -1,60 +1,61 @@
-"Reference","Value","Footprint","Manufacturer","MPN","Role","Datasheet"
-"C21","100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS","Capacitor_SMD:C_0805_2012Metric","Murata","GRM21BR72A104KAC4L","","https://static.chipdip.ru/lib/972/DOC031972161.pdf SHA256 3dec2dab5c86eccf0079ac027405ecefbe05d998c2ff98b3a607dab5ef1e2426"
-"C22","330uF 63V EEUFS1J331L BULK_DRAFT","Capacitor_THT:CP_Radial_D10.0mm_P5.00mm","Panasonic Industry","EEUFS1J331L","","https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1255.pdf SHA256 d06213365eba12ed3737124b30bb8d0a29c40f0f2479fbb309cc36e963a71824"
-"C24","220nF 100V X7R 10% CL21B224KCFSFNE","Capacitor_SMD:C_0805_2012Metric","Samsung","CL21B224KCFSFNE","",""
-"C25","1uF 100V CVS GRM31CR72A105KA01L","Sirokko_Capacitor:GRM31_1206_Murata_Reflow","","GRM31CR72A105KA01L","",""
-"C101","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","","GRM32ER72A225KA35L","",""
-"C102","2.2uF 100V X7R","Capacitor_SMD:C_1210_3225Metric","","GRM32ER72A225KA35L","",""
-"C103","100uF 100V EEU-FR2A101","Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm","Panasonic Industry","EEU-FR2A101","",""
-"C104","2.2nF 50V C0G 5%","Capacitor_SMD:C_0603_1608Metric","Murata","GRM1885C1H222JA01D","","https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H222JA01-01A-EN_PDF_CERAMICCAPACITORSMD?lastModifiedDatetime=20260730162352"
-"C105","47uF 16V X5R","Capacitor_SMD:C_1210_3225Metric","","GRM32ER61C476KE15L","",""
-"C106","47uF 16V X5R","Capacitor_SMD:C_1210_3225Metric","","GRM32ER61C476KE15L","",""
-"C107","4.7nF 50V C0G","Capacitor_SMD:C_0603_1608Metric","","GRM1885C1H472JA01D","",""
-"C108","820pF 50V C0G","Capacitor_SMD:C_0603_1608Metric","","CC0603JRNPO9BN821","",""
-"C109","33nF 100V C0G 5% CdVdT WIP","Capacitor_SMD:C_0805_2012Metric","Murata","GRM2195C2A333JE01J","","~"
-"D1","TVS3301DRBR WIP","Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm","","TVS3301DRBR","",""
-"D101","STPS5H100B-TR","Package_TO_SOT_SMD:TO-252-2","","STPS5H100B-TR","",""
-"F1","0997015.WXN / 15A","Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE","","0997015.WXN + 3568","",""
-"J1","DEVKITC1_J1","Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical","Samtec","SSQ-122-01-T-S","",""
-"J3","DEVKITC1_J3","Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical","Samtec","SSQ-122-01-T-S","",""
-"J12","ROOM_DS18B20_HARNESS","TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal","Phoenix Contact","1715734","","https://static.chipdip.ru/lib/723/DOC011723280.pdf"
-"J13","24V_INPUT_PHOENIX_1756993_WIP","Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE","Phoenix Contact","1756993","","https://static.chipdip.ru/lib/509/DOC040509545.pdf"
-"J27","GLOW_OUTPUT_PHOENIX_1756993","Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE","","1756993","",""
-"J28","CLUTCH_OUTPUT_PHOENIX_1756993","Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE","","1756993","",""
-"J29","HC160_A1_A2_PA_G_CONTROL_ONLY","TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal","Phoenix Contact","1715747","","https://www.phoenixcontact.com/en-pc/products/pcb-terminal-block-mkds-15-4-508-1715747"
-"J30","MAX31856 EXHAUST","Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm","","SSW-109-01-T-S","",""
-"J31","MAX31856 AIR","Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm","","SSW-109-01-T-S","",""
-"K1","DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW","Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE","Durakool + Durakool","DG85BM-5021-76-1024 + DZ85AB-5-PCB","","https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf"
-"K2","DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN","Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE","Durakool + Durakool","DG85BM-5021-76-1024 + DZ85AB-5-PCB","","https://www.durakool.com/media/zatabdby/dg85bm-durakool-automotive-industrial-relay-datasheet-010726.pdf ; https://www.durakool.com/media/dxojkprn/dz-durakool-sockets-catalogue-for-automotive-relays.pdf"
-"L101","33uH Isat>=10A","Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm","","SRP1770TA-330M","",""
-"Q1","IPB017N10N5LFATMA1 WIP","Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF","Infineon Technologies","IPB017N10N5LFATMA1","",""
-"Q2","IPB017N10N5LFATMA1 WIP","Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF","Infineon Technologies","IPB017N10N5LFATMA1","",""
-"Q3","IPB017N10N5LFATMA1 WIP","Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF","Infineon Technologies","IPB017N10N5LFATMA1","",""
-"Q4","IPB017N10N5LFATMA1 WIP","Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF","Infineon Technologies","IPB017N10N5LFATMA1","",""
-"R1","4k7","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FTE52-4K7","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R2","10k","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FBF52-10K","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R3","10k","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FBF52-10K","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R7","10k","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FBF52-10K","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R8","10k","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FBF52-10K","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R86","4k7 DRV_IN1_PULLDOWN","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FTE52-4K7","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R87","4k7 DRV_IN2_PULLDOWN","Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal","Yageo","MFR-25FTE52-4K7","","https://static.chipdip.ru/lib/534/DOC021534312.pdf"
-"R90","4.7R Q1_GATE","Resistor_SMD:R_0805_2012Metric","","RC0805FR-074R7L","",""
-"R91","4.7R Q2_GATE","Resistor_SMD:R_0805_2012Metric","","RC0805FR-074R7L","",""
-"R92","4.7R Q3_GATE","Resistor_SMD:R_0805_2012Metric","","RC0805FR-074R7L","",""
-"R93","4.7R Q4_GATE","Resistor_SMD:R_0805_2012Metric","","RC0805FR-074R7L","",""
-"R94","84.5k 1% OV_TOP","Resistor_SMD:R_0805_2012Metric","","RC0805FR-0784K5L","",""
-"R95","3.48k 1% OV_BOT","Resistor_SMD:R_0805_2012Metric","","RC0805FR-073K48L","",""
-"R96","75k 1% EN_TOP","Resistor_SMD:R_0805_2012Metric","","RC0805FR-0775KL","",""
-"R97","5.62k 1% EN_BOT","Resistor_SMD:R_0805_2012Metric","","RC0805FR-075K62L","",""
-"R101","31.6k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0731K6L","",""
-"R102","10k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0710KL","",""
-"R103","31.6k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0731K6L","",""
-"R104","100k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-07100KL","",""
-"R105","10k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0710KL","",""
-"R106","82k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0782KL","",""
-"R107","10k 1%","Resistor_SMD:R_0603_1608Metric","","RC0603FR-0710KL","",""
-"R108","22k 1% CdVdT isolation WIP","Resistor_SMD:R_1210_3225Metric","Yageo","RC1210FR-0722KL","","~"
-"TP101","PGOOD_5V_NOT_GPIO","TestPoint:TestPoint_Keystone_5015_Micro_Mini","","5015","",""
-"U11","DRV8803PWPR","Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm","Texas Instruments","DRV8803PWPR","","https://www.ti.com/lit/ds/symlink/drv8803.pdf"
-"U13","LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED","Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm","Texas Instruments","LM74800QDRRRQ1","","https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf"
-"U101","LM5013DDAR","Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D","","LM5013DDAR","",""
+Reference,Value,Footprint,MPN,Manufacturer
+J1,DEVKITC1_J1,Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical,SSQ-122-01-T-S,Samtec
+J3,DEVKITC1_J3,Connector_PinSocket_2.54mm:PinSocket_1x22_P2.54mm_Vertical,SSQ-122-01-T-S,Samtec
+J12,ROOM_DS18B20_HARNESS,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",1715734,Phoenix Contact
+J13,24V_INPUT_PHOENIX_1756993_WIP,Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE,1756993,Phoenix Contact
+J27,GLOW_OUTPUT_PHOENIX_1756993,Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE,1756993,
+J28,CLUTCH_OUTPUT_PHOENIX_1756993,Sirokko_Power:Phoenix_1756993_MKDS5HV_2_9.52_ZSZS_3D_ENVELOPE,1756993,
+J30,MAX31856 EXHAUST,Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm,SSW-109-01-T-S,
+J31,MAX31856 AIR,Connector_Sirokko_Module:Samtec_SSW-109-01-T-S_1x09_P2.54mm_D1.04mm,SSW-109-01-T-S,
+J32,TFT_2.4_EC11_SPI_3V3_100mm_MAX,Connector_IDC:IDC-Header_2x06_P2.54mm_Vertical,,
+K1,DG85BM-5021-76-1024 + DZ85AB-5-PCB / GLOW,Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE,DG85BM-5021-76-1024 + DZ85AB-5-PCB,Durakool + Durakool
+K2,DG85BM-5021-76-1024 + DZ85AB-5-PCB / CLUTCH_RUN,Sirokko_Relay_Mechanical:DZ85AB_5_PCB_DG85BM_ENVELOPE,DG85BM-5021-76-1024 + DZ85AB-5-PCB,Durakool + Durakool
+R1,4k7,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FTE52-4K7,Yageo
+R2,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FBF52-10K,Yageo
+R3,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FBF52-10K,Yageo
+R7,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FBF52-10K,Yageo
+R8,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FBF52-10K,Yageo
+C101,2.2uF 100V X7R,Capacitor_SMD:C_1210_3225Metric,GRM32ER72A225KA35L,
+C102,2.2uF 100V X7R,Capacitor_SMD:C_1210_3225Metric,GRM32ER72A225KA35L,
+C103,100uF 100V EEU-FR2A101,Sirokko_Power:CP_Radial_D10.0mm_P5.00mm_Courtyard_D11.0mm,EEU-FR2A101,Panasonic Industry
+C104,2.2nF 50V C0G 5%,Capacitor_SMD:C_0603_1608Metric,GRM1885C1H222JA01D,Murata
+C105,47uF 16V X5R,Capacitor_SMD:C_1210_3225Metric,GRM32ER61C476KE15L,
+C106,47uF 16V X5R,Capacitor_SMD:C_1210_3225Metric,GRM32ER61C476KE15L,
+C107,4.7nF 50V C0G,Capacitor_SMD:C_0603_1608Metric,GRM1885C1H472JA01D,
+C108,820pF 50V C0G,Capacitor_SMD:C_0603_1608Metric,CC0603JRNPO9BN821,
+D101,STPS5H100B-TR,Package_TO_SOT_SMD:TO-252-2,STPS5H100B-TR,
+L101,33uH Isat>=10A,Inductor_SMD:L_Bourns_SRP1770TA_16.9x16.9mm,SRP1770TA-330M,
+R101,31.6k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0731K6L,
+R102,10k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0710KL,
+R103,31.6k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0731K6L,
+R104,100k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-07100KL,
+R105,10k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0710KL,
+R106,82k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0782KL,
+R107,10k 1%,Resistor_SMD:R_0603_1608Metric,RC0603FR-0710KL,
+TP101,PGOOD_5V_NOT_GPIO,TestPoint:TestPoint_Keystone_5015_Micro_Mini,5015,
+U101,LM5013DDAR,Sirokko_Power:DDA0008B_LM5013DDAR_TI4214849B_3D,LM5013DDAR,
+J29,HC160_A1_A2_PA_G_CONTROL_ONLY,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal",1715747,Phoenix Contact
+C21,100nF 100V X7R GRM21BR72A104KAC4L VM_BYPASS,Capacitor_SMD:C_0805_2012Metric,GRM21BR72A104KAC4L,Murata
+C22,330uF 63V EEUFS1J331L BULK_DRAFT,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,EEUFS1J331L,Panasonic Industry
+R86,4k7 DRV_IN1_PULLDOWN,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FTE52-4K7,Yageo
+R87,4k7 DRV_IN2_PULLDOWN,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,MFR-25FTE52-4K7,Yageo
+U11,DRV8803PWPR,Package_SO:HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm,DRV8803PWPR,Texas Instruments
+C24,220nF 100V X7R 10% CL21B224KCFSFNE,Capacitor_SMD:C_0805_2012Metric,CL21B224KCFSFNE,Samsung
+C25,1uF 100V CVS GRM31CR72A105KA01L,Sirokko_Capacitor:GRM31_1206_Murata_Reflow,GRM31CR72A105KA01L,
+C109,33nF 100V C0G 5% CdVdT WIP,Capacitor_SMD:C_0805_2012Metric,GRM2195C2A333JE01J,Murata
+D1,TVS3301DRBR WIP,Package_SON:VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm,TVS3301DRBR,
+F1,0997015.WXN / 15A,Sirokko_Input:Keystone_3568_MINI_Blade_3D_ENVELOPE,0997015.WXN + 3568,
+Q1,IPB017N10N5LFATMA1 WIP,Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF,IPB017N10N5LFATMA1,Infineon Technologies
+Q2,IPB017N10N5LFATMA1 WIP,Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF,IPB017N10N5LFATMA1,Infineon Technologies
+Q3,IPB017N10N5LFATMA1 WIP,Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF,IPB017N10N5LFATMA1,Infineon Technologies
+Q4,IPB017N10N5LFATMA1 WIP,Sirokko_Input:Infineon_PG_TO263_7_IPB017N10N5LF,IPB017N10N5LFATMA1,Infineon Technologies
+R90,4.7R Q1_GATE,Resistor_SMD:R_0805_2012Metric,RC0805FR-074R7L,
+R91,4.7R Q2_GATE,Resistor_SMD:R_0805_2012Metric,RC0805FR-074R7L,
+R92,4.7R Q3_GATE,Resistor_SMD:R_0805_2012Metric,RC0805FR-074R7L,
+R93,4.7R Q4_GATE,Resistor_SMD:R_0805_2012Metric,RC0805FR-074R7L,
+R94,84.5k 1% OV_TOP,Resistor_SMD:R_0805_2012Metric,RC0805FR-0784K5L,
+R95,3.48k 1% OV_BOT,Resistor_SMD:R_0805_2012Metric,RC0805FR-073K48L,
+R96,75k 1% EN_TOP,Resistor_SMD:R_0805_2012Metric,RC0805FR-0775KL,
+R97,5.62k 1% EN_BOT,Resistor_SMD:R_0805_2012Metric,RC0805FR-075K62L,
+R108,22k 1% CdVdT isolation WIP,Resistor_SMD:R_1210_3225Metric,RC1210FR-0722KL,Yageo
+U13,LM74800QDRRRQ1 WIP_NOT_TRANSIENT_QUALIFIED,Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm,LM74800QDRRRQ1,Texas Instruments
