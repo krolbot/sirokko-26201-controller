@@ -1,11 +1,11 @@
 {
-  "pcb_sha256": "312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e",
-  "schematic_sha256": "57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a",
+  "pcb_sha256": "3c414eb66da7ff7c6b44399a5515e97417703ccb50feea8ab9f17e66db17ab7f",
+  "schematic_sha256": "10234cffe31a597494a45f9b3eb786bf3658f1df8872bafbda235fc0618970fd",
   "pcb_counts": {
     "footprints": 73,
     "pads": 303,
-    "segments": 757,
-    "vias": 170,
+    "segments": 753,
+    "vias": 172,
     "zones": 27
   },
   "drc": {
@@ -15,25 +15,50 @@
     "violation_count": 0,
     "unconnected_count": 0
   },
-  "drc_ignored_checks": [],
   "electrical_pin_map_matches": 252,
   "electrical_components": 60,
-  "pcb_only_mounting_footprints": 13,
+  "positions_checked": 60,
   "drill": {
-    "hits": 306,
-    "pth": 289,
+    "hits": 308,
+    "pth": 291,
     "npth": 17,
-    "coordinate_rounding_mm": 0.0005,
+    "coordinate_rounding_mm": 0.0005000000000023874,
     "negative_shift_delete_plating_detected": true
   },
-  "positions_checked": 60,
-  "negative_open_res_detected": true,
+  "gpio_map": {
+    "/PANEL_SDA": 7,
+    "/PANEL_SCL": 8,
+    "/ENC_A": 5,
+    "/ENC_B": 38,
+    "/ENC_SW": 47,
+    "/TFT_RES": 6,
+    "/TFT_DC": 41,
+    "/TFT_CS": 42
+  },
+  "functional_gpio_negative_control_detected_gpio46": true,
+  "prior_pin_assignments_changed": {
+    "J1.14": [
+      "/TFT_CS",
+      "unconnected-(J1-Pin_14-Pad14)"
+    ],
+    "J1.13": [
+      "/TFT_DC",
+      "unconnected-(J1-Pin_13-Pad13)"
+    ],
+    "J3.6": [
+      "unconnected-(J3-Pin_6-Pad6)",
+      "/TFT_CS"
+    ],
+    "J3.7": [
+      "unconnected-(J3-Pin_7-Pad7)",
+      "/TFT_DC"
+    ]
+  },
+  "unrelated_copper_objects_preserved": 891,
+  "pad_uuids_preserved": 303,
+  "negative_open_detected": true,
   "production_release": false,
   "physical_tests": false,
   "firmware_changed": false,
-  "github_published": false,
-  "visual_open_issue": null,
-  "symbol_field_layout_fixed": true,
-  "assembly_viewport_fixed": true,
-  "cam_viewer": "pending external viewer review"
+  "cam_viewer": "pending review of corrected v4 files"
 }

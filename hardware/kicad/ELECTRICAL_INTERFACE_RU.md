@@ -1,4 +1,6 @@
-# Sirokko — электрические интерфейсы текущей платы
+# Sirokko — электрические интерфейсы
+
+**Актуальное дополнение, заменяющее старые NC и назначения панели ниже:** [TFT24_INTERFACE_RU.md](../../docs/TFT24_INTERFACE_RU.md). J1.5/GPIO5 = ENC_A, J1.6/GPIO6 = TFT_RES, J1.7/GPIO7 = MOSI, J1.12/GPIO8 = SCK; J3.6/GPIO42 = TFT_CS, J3.7/GPIO41 = TFT_DC, J3.10/GPIO38 = ENC_B, J3.17/GPIO47 = ENC_SW. J1.13/GPIO3 и J1.14/GPIO46 — NC. J1.15/GPIO9 и J1.16/GPIO10 остаются CS термопар. [Текущие SHA и состав](README.md). Остальной текст — исходный контракт до добавления панели, а не повторная приёмка этой ревизии.
 
 **DRAFT / NOT FOR ORDER / NO POWER / NO FLASH / NO FIRE.**
 

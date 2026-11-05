@@ -5,13 +5,13 @@
 The repository contains one canonical KiCad project:
 
 - project: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e`;
+- root schematic: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA-256 `10234cffe31a597494a45f9b3eb786bf3658f1df8872bafbda235fc0618970fd`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA-256 `3c414eb66da7ff7c6b44399a5515e97417703ccb50feea8ab9f17e66db17ab7f`;
 - board outline: 305 × 170 mm.
 
-All 73 footprints are on F.Cu:303pads,757segments,170vias,27zones. Ready-made TFT2.4+EC11 connects through J32. [Exact pin map](docs/TFT24_INTERFACE_RU.md). No custom panel PCB.
+All 73 footprints are on F.Cu:303pads,753segments,172vias,27zones. Ready-made TFT2.4+EC11 connects through J32. [Exact pin map](docs/TFT24_INTERFACE_RU.md). No custom panel PCB.
 
-KiCad10.0.8:ERC0 with four retained ignored checks; nativeDRC0/opens0 with ignored=[]. Independently compared252electricalpin-net assignments,306drill hits and60placement rows. [Current checks](manufacturing/current/checks/verification.json). Prior research reports naming other hashes are historical, not acceptance of this revision.
+KiCad10.0.8:ERC0 with four retained ignored checks; nativeDRC0/opens0 with ignored=[]. Independently compared252electricalpin-net assignments,308drill hits and60placement rows. [Current checks](manufacturing/current/checks/verification.json). Prior research reports naming other hashes are historical, not acceptance of this revision.
 
 F1 is Littelfuse `0997015.WXN`, 15 A / 58 V DC, in the unchanged Keystone 3568 holder. The assigned interface envelope is: glow 7 A continuous / 10 A for at most 1 s; clutch 2 A / 3 A for at most 1 s; common J13/F1 input 10 A / 13 A for at most 1 s; ambient at F1 at most 80 °C. The provisional 5 V continuous budget is 0.70 A. See the [engineering basis](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md); physical qualification remains required.
 

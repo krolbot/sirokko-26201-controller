@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "10.0.8-10.0.8~ubuntu26.04.1"
     },
-    "CreationDate": "2026-11-04T22:24:59+00:00"
+    "CreationDate": "2026-11-05T00:24:20+00:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -44,16 +44,6 @@
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-F_Adhesive.gta",
-      "FileFunction": "Glue,Top",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-B_Adhesive.gba",
-      "FileFunction": "Glue,Bot",
-      "FilePolarity": "Positive"
-    },
-    {
       "Path": "Sirokko26201_control_motor_candidate-F_Paste.gtp",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
@@ -84,58 +74,8 @@
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Sirokko26201_control_motor_candidate-User_Drawings.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_Comments.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_Eco1.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_Eco2.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
       "Path": "Sirokko26201_control_motor_candidate-Edge_Cuts.gm1",
       "FileFunction": "Profile",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-F_Fab.gbr",
-      "FileFunction": "AssemblyDrawing,Top",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-B_Fab.gbr",
-      "FileFunction": "AssemblyDrawing,Bot",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_1.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_2.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_3.gbr",
-      "FileFunction": "Other,User",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "Sirokko26201_control_motor_candidate-User_4.gbr",
-      "FileFunction": "Other,User",
       "FilePolarity": "Positive"
     }
   ],

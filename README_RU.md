@@ -5,13 +5,13 @@
 В репозитории оставлен один канонический проект KiCad:
 
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
-- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `57b143c8d76b98db9b43095fe06f13b8a31dd04b6ff711fbb7193e03d9b76a6a`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e`;
+- корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `10234cffe31a597494a45f9b3eb786bf3658f1df8872bafbda235fc0618970fd`;
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `3c414eb66da7ff7c6b44399a5515e97417703ccb50feea8ab9f17e66db17ab7f`;
 - контур платы: 305 × 170 мм.
 
-Все 73 посадочных места находятся на F.Cu. Плата содержит 303 площадки, 757 сегментов, 170 переходов и 27 зон. Готовая TFT2.4+EC11 подключается через J32; отдельной собственной PCB панели нет. [Распиновка](docs/TFT24_INTERFACE_RU.md).
+Все 73 посадочных места находятся на F.Cu. Плата содержит 303 площадки, 753 сегмента, 172 перехода и 27 зон. Готовая TFT2.4+EC11 подключается через J32; отдельной собственной PCB панели нет. [Распиновка](docs/TFT24_INTERFACE_RU.md).
 
-KiCad10.0.8: rootERC0 при четырёх сохранённых ignored checks; nativeDRC0/opens0, DRC ignored=[]. Отдельно сопоставлены252электрическихpin-net с XML,306отверстий и60позиций установки. [Текущие проверки](manufacturing/current/checks/verification.json) не являются разрешением производства или питания. Прежние исследовательские отчёты с иными SHA относятся к истории, не к новой ревизии.
+KiCad10.0.8: rootERC0 при четырёх сохранённых ignored checks; nativeDRC0/opens0, DRC ignored=[]. Отдельно сопоставлены252электрическихpin-net с XML,308отверстий и60позиций установки. [Текущие проверки](manufacturing/current/checks/verification.json) не являются разрешением производства или питания. Прежние исследовательские отчёты с иными SHA относятся к истории, не к новой ревизии.
 
 F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном держателе Keystone 3568. Назначенная оболочка интерфейсов: свеча 7 А непрерывно / 10 А не более 1 с; муфта 2 А / 3 А не более 1 с; общий вход J13/F1 10 А / 13 А не более 1 с; воздух у F1 не выше 80 °C. Предварительный непрерывный бюджет 5 В — 0,70 А. [Инженерное основание](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md) не заменяет физическую квалификацию.
 

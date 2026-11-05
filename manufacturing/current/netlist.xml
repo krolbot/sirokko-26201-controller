@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/projects/exports/sirokko_max31856_modules/no_p24_project/Sirokko26201_control_motor_candidate.kicad_sch</source>
-    <date>2026-11-04T23:57:37</date>
+    <date>2026-11-05T00:24:05</date>
     <tool>Eeschema 10.0.8-10.0.8~ubuntu26.04.1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -2571,11 +2571,11 @@
       <node ref="J31" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
     </net>
     <net code="45" name="/TFT_CS" class="Default">
-      <node ref="J1" pin="14" pinfunction="Pin_14_14" pintype="passive"/>
+      <node ref="J3" pin="6" pinfunction="Pin_6_6" pintype="passive"/>
       <node ref="J32" pin="11" pinfunction="Pin_11_11" pintype="passive"/>
     </net>
     <net code="46" name="/TFT_DC" class="Default">
-      <node ref="J1" pin="13" pinfunction="Pin_13_13" pintype="passive"/>
+      <node ref="J3" pin="7" pinfunction="Pin_7_7" pintype="passive"/>
       <node ref="J32" pin="10" pinfunction="Pin_10_10" pintype="passive"/>
     </net>
     <net code="47" name="/TFT_RES" class="Default">
@@ -2595,17 +2595,17 @@
     <net code="51" name="unconnected-(J1-Pin_11-Pad11)" class="Default">
       <node ref="J1" pin="11" pinfunction="Pin_11_11" pintype="passive+no_connect"/>
     </net>
-    <net code="52" name="unconnected-(J3-Pin_2-Pad2)" class="Default">
+    <net code="52" name="unconnected-(J1-Pin_13-Pad13)" class="Default">
+      <node ref="J1" pin="13" pinfunction="Pin_13_13" pintype="passive+no_connect"/>
+    </net>
+    <net code="53" name="unconnected-(J1-Pin_14-Pad14)" class="Default">
+      <node ref="J1" pin="14" pinfunction="Pin_14_14" pintype="passive+no_connect"/>
+    </net>
+    <net code="54" name="unconnected-(J3-Pin_2-Pad2)" class="Default">
       <node ref="J3" pin="2" pinfunction="Pin_2_2" pintype="passive+no_connect"/>
     </net>
-    <net code="53" name="unconnected-(J3-Pin_3-Pad3)" class="Default">
+    <net code="55" name="unconnected-(J3-Pin_3-Pad3)" class="Default">
       <node ref="J3" pin="3" pinfunction="Pin_3_3" pintype="passive+no_connect"/>
-    </net>
-    <net code="54" name="unconnected-(J3-Pin_6-Pad6)" class="Default">
-      <node ref="J3" pin="6" pinfunction="Pin_6_6" pintype="passive+no_connect"/>
-    </net>
-    <net code="55" name="unconnected-(J3-Pin_7-Pad7)" class="Default">
-      <node ref="J3" pin="7" pinfunction="Pin_7_7" pintype="passive+no_connect"/>
     </net>
     <net code="56" name="unconnected-(J3-Pin_8-Pad8)" class="Default">
       <node ref="J3" pin="8" pinfunction="Pin_8_8" pintype="passive+no_connect"/>
