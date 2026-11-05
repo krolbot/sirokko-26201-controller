@@ -1,11 +1,11 @@
 {
-  "pcb_sha256": "3c414eb66da7ff7c6b44399a5515e97417703ccb50feea8ab9f17e66db17ab7f",
-  "schematic_sha256": "10234cffe31a597494a45f9b3eb786bf3658f1df8872bafbda235fc0618970fd",
+  "pcb_sha256": "b3b362293f5ffa07d500e8ea5fb0803b0cfec9ad1677f83ba6e37456d3e26bf6",
+  "schematic_sha256": "0b85bf2f4921b25a1c3126348eb176a88c7e3b29ca474c2d7229c4367e0a5cf5",
   "pcb_counts": {
     "footprints": 73,
     "pads": 303,
-    "segments": 753,
-    "vias": 172,
+    "segments": 785,
+    "vias": 178,
     "zones": 27
   },
   "drc": {
@@ -19,8 +19,8 @@
   "electrical_components": 60,
   "positions_checked": 60,
   "drill": {
-    "hits": 308,
-    "pth": 291,
+    "hits": 314,
+    "pth": 297,
     "npth": 17,
     "coordinate_rounding_mm": 0.0005000000000023874,
     "negative_shift_delete_plating_detected": true
@@ -33,35 +33,28 @@
     "/ENC_SW": 47,
     "/TFT_RES": 6,
     "/TFT_DC": 41,
-    "/TFT_CS": 42
+    "/TFT_CS": 42,
+    "/PANEL_KEY0": 40
   },
-  "functional_gpio_negative_control_detected_wrong_header_mapping": true,
   "prior_pin_assignments_changed": {
-    "J1.14": [
-      "/TFT_CS",
-      "unconnected-(J1-Pin_14-Pad14)"
+    "J3.8": [
+      "unconnected-(J3-Pin_8-Pad8)",
+      "/PANEL_KEY0"
     ],
-    "J1.13": [
-      "/TFT_DC",
-      "unconnected-(J1-Pin_13-Pad13)"
-    ],
-    "J3.6": [
-      "unconnected-(J3-Pin_6-Pad6)",
-      "/TFT_CS"
-    ],
-    "J3.7": [
-      "unconnected-(J3-Pin_7-Pad7)",
-      "/TFT_DC"
+    "J32.12": [
+      "unconnected-(J32-Pin_12-Pad12)",
+      "/PANEL_KEY0"
     ]
   },
-  "unrelated_copper_objects_preserved": 891,
+  "unrelated_copper_objects_preserved": 925,
   "pad_uuids_preserved": 303,
-  "negative_open_detected": true,
+  "all_pad_geometry_preserved": true,
+  "negative_KEY0_open_detected": true,
   "production_release": false,
   "physical_tests": false,
   "firmware_changed": false,
-  "cam_viewer": "tracespace: corrected v4 top, bottom and separate outline+drill inspected; see CAM_REVIEW_RU.md",
-  "gpio_audit_basis": "YD-ESP32-S3 V1.4 header-to-GPIO map and ESP32-S3 datasheet v2.2 table 2-4; GPIO46 supports I/O, old input-only claim withdrawn",
-  "hardware_source_commit": "7519b5b4e4fe549d4126ed899daa9fa8898e2364",
-  "github_hardware_published": true
+  "local_firmware_draft_excluded_from_publication": true,
+  "key0_contact_polarity": "expected NO to GND; not electrically confirmed on bought module",
+  "cam_review": "completed: current local cam.zip loaded into TraceSpace; top/bottom/outline+drill visually inspected; see CAM_REVIEW_RU.md",
+  "cam_sha256": "0fdf360c48de3bd2eb359eafc8b0717fd22b003ee65443805c5442488008004e"
 }
