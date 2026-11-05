@@ -17,15 +17,15 @@
     "hardware/kicad/3dmodels/NKK_BB25AB-FA_envelope.wrl": "5ce6be268d127e63282fdf7892057b10adbb28bcb8f91a345f5e76801f551ab5",
     "hardware/kicad/3dmodels/Phoenix_1756993_envelope.wrl": "da1ef444a46d96425f77fa2ba34b43d8ec79f2696933a31eeb8e8348943fe97f",
     "hardware/kicad/3dmodels/Waveshare_18366_k01-2_official_nominal.stp": "d9e9413c50a60669df2ef43b073dfbf53e6d1c185e5a234705566d3178a29187",
-    "hardware/kicad/ALL_RULES_AUDIT_RU.md": "3c4df0448d04cab68c705d81ff588ab14fc42e827784775662400ad4918f2807",
-    "hardware/kicad/ELECTRICAL_INTERFACE_RU.md": "ea349cda8b163cb7db6834df2256f18c1bbf3503b49cf19ebcd99a2f3456d590",
-    "hardware/kicad/HC160_INTERFACE_RU.md": "9533e70d44260286d2ec79567571ea2fe36abce2ca29f45d92685bfd4ae91b74",
+    "hardware/kicad/ALL_RULES_AUDIT_RU.md": "c34b39c758a93e5eb1159aee3c308bdd4ad91eeb0a0b368b8fed1a55c1436f74",
+    "hardware/kicad/ELECTRICAL_INTERFACE_RU.md": "8a7870f9e7340cfd9f8776dabe9d8bb8e63fc772d3909a55218289f7a33951bd",
+    "hardware/kicad/HC160_INTERFACE_RU.md": "4f2fa4bd33c02d59c8193d54819069b051b20ee2381be714ae4bd7555437a638",
     "hardware/kicad/KICAD_SYMBOLS_LICENSE.md": "285b027a721577d0bc0198f36e948c6c282ddaa4b58fef8ed826749576eb0aef",
     "hardware/kicad/MinimalSafety.kicad_sch": "d848e3bdbd230189229350c5d70616f05690d37c8bc10b55033660e1448c1a82",
-    "hardware/kicad/PCB_REVIEW_RU.md": "3513bfd1c243fb0e9ad29b10231f4ed1d760e92449b56146e8e158f940b6ef33",
-    "hardware/kicad/README.md": "9a6c47ba9070a54cf0f3dc0468b154eef0c9cac56789084ec474494f01fa6156",
-    "hardware/kicad/REMOTE_ONLY_REQUIREMENTS_RU.md": "b37812adbdfd0df4fcee8fe598f491f8c3f88f27460b40dc43ab2a62c8c0e717",
-    "hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md": "52821bf1bae82d2cbc04830a42408d929d15f208cacc4d685ddc5ee96a84b4a3",
+    "hardware/kicad/PCB_REVIEW_RU.md": "e922649f51ac04fc299202a3d6ea8832fa39da8b0e8a656366303fb45555dc14",
+    "hardware/kicad/README.md": "d194972cd3823a69719d7ee0873245b6076f2de292bd95f19e787ef74fdae27c",
+    "hardware/kicad/REMOTE_ONLY_REQUIREMENTS_RU.md": "6941200472ae0809c159d8e6bc96981973bce9e93a885e7ccfa40bbc54595c93",
+    "hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md": "c5436d21a5df9e3cd9ede72448738b58b9d0d5f4064f2c188da39f97e897554c",
     "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb": "0ed3728e0cd427c01e9509a6aff25a2870087f775708396bfdd9fabb0b346e82",
     "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro": "11029d86464484cea63d73aa802bad95c1a6805aee11e841fc78322e9d2bc0d6",
     "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch": "0b85bf2f4921b25a1c3126348eb176a88c7e3b29ca474c2d7229c4367e0a5cf5",
@@ -66,8 +66,8 @@
     "hardware/kicad/Sirokko_Safety.pretty/TPS3431_DRB0008A_3D.kicad_mod": "43acb1cdd7d86ad78e1d33c0909ae56de9cb932c4457c6823d0a185e47b2e189",
     "hardware/kicad/Sirokko_thermal.kicad_sym": "08cb191e45af4533b14896052a02e242c83c87daedee2858256cb504e51410b1",
     "hardware/kicad/YD_3V3_LOAD_BUDGET.json": "38a68b109383e509d883a9a859b258c88d191cde094ca7df109277aebe372705",
-    "hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md": "bb702f3f448b07df3235c7542aedea4e06b8f4789a0e6ac91f94b3dfbede327a",
-    "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md": "1e1c03fab6618c72c48c01013a5a3dcb3fdea358b6019f0327f7e038e1f0e5a2",
+    "hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md": "c25356a78da71d0f51801eccd4adb110c42662371564f1076c8f85f3638b6368",
+    "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md": "ad8b1ea8834773dfa88676beb72d684539677883d908d9629c3404764f80884f",
     "hardware/kicad/fp-lib-table": "c35e63ee4ee827fe81aeac1b0c232e65df929c9dd8eb3dcb357258ef391c0ca2",
     "hardware/kicad/logic_power_24_5_DRAFT.kicad_sch": "67f3af3b818ae37a1654a13d95cc5b8dd15c5473bf1623dc454f4fc8897290dd",
     "hardware/kicad/motor_external_hc160.kicad_sch": "588306c87a49cd58a5691a0a2a2f85ceb4380b67d180da0f0688d54d64b6d300",
@@ -80,8 +80,8 @@
     "hardware/kicad/tft_spi_isolation_DRAFT/sirokko_tft_interface_review_20261027.kicad_sym": "6b0041075b1ba5d8e553e789428f412299e282caa4290907f17892ff486e86a1"
   },
   "outputs": {
-    "manufacturing/current/FABRICATION_REQUIREMENTS_RU.md": "3eb5edeae829b36885a068d681b81d9d372ad3129e546cfefd35b3c6d0ae6e9f",
-    "manufacturing/current/README_RU.md": "89c3169adcd8c54266e51ac68e8e85ba306edb8b00abd2f3fba6604cafe0720e",
+    "manufacturing/current/FABRICATION_REQUIREMENTS_RU.md": "04f61df4f3b4c1a78069a8b08da609b92d74876e6cc6693a8c899563688f230b",
+    "manufacturing/current/README_RU.md": "5d29c1fdc34411c02eb77e0eb83444247608f6e491640f451bfbb704ee1ae404",
     "manufacturing/current/bom.csv": "05efb1ef91653b1f81bc3c0adfa9105675762d6b90354edaf2d7222dc2de1b04",
     "manufacturing/current/cam.zip": "4f8b02e8b50431d1a17d113fc4117ad4c489567af9d73264a8903ddbff32145d",
     "manufacturing/current/checks/CAM_REVIEW_RU.md": "ff2a06e8ecac9e5da12380181f524139f0aee6cca8646e74432eca77226bf0db",
@@ -102,7 +102,7 @@
     "manufacturing/current/checks/prefab-v6-control.json": "17dd437479761cbc39cb17d4217bd44914e78fed30922b3bd9c1ce86e8db84b5",
     "manufacturing/current/checks/return-path-review.json": "7f747e640aa6fb9cfcfbf84c44b74bb14cae0ab4ccf290da6c89ada66797b13c",
     "manufacturing/current/checks/terminal-move-rejected.json": "1b88066a27b43f0fcd12e5c694f3895e41500c80ddddc7555e27a8e68c9f9e72",
-    "manufacturing/current/checks/verification.json": "64abfcd5e4f8881330fe77dd3cffa623d675d5074bf947630eac5c938adac88d",
+    "manufacturing/current/checks/verification.json": "45c533c6281f795321baa371e144228e5eb850da26b6c1f642f2ee29f0e18a1b",
     "manufacturing/current/checks/via-optimization.json": "6e9112ad1b3a3b161c494bec0a29a02d92c7080b146960058a8eb147dedc1721",
     "manufacturing/current/cpl.csv": "b80830acf47e03d219b4ac55fa90a91516a38b94da697e3de8f4751878af45ba",
     "manufacturing/current/drill/Sirokko26201_control_motor_candidate.drl": "596062b2353203cca193f46faf75bb1a945463ad4fe5e814cd9d53d304374965",
@@ -134,16 +134,30 @@
     "manufacturing/current/renders/routing-F_Cu.svg": "19a470460da7760143019a9b299ab0edd8b6126b32310bb4578ac1c67d83740d"
   },
   "documentation": {
-    "README.md": "fdf97d737301a8c4ad85d6df23878608abc1951eeff594ff7432f959a45e2b9f",
-    "README_RU.md": "44f27cec074026c8dfde0fc7b5e9ad05864cdd312c6739bf9cd775227266794d",
-    "docs/CURRENT_STATE_RU.md": "3e55b748d0bd46dcb8f97229681e0ec056fb8f3f39388c058bde44ef4394c4a6",
+    "README.md": "f2d92a9cac30ba66d33ee3a9f4521428a82dfd526162019a7e85442434482242",
+    "README_RU.md": "d4e34dbd91905025791e530110628e0c4f4340a0d9e855c00a3075b4438ef7f8",
+    "docs/CURRENT_STATE_RU.md": "d061643c05658e19c02c44a11894ad53e2e0257781233799b153e0b62b58a2da",
     "docs/PANEL_CONTROL_RU.md": "3f758534312eeb123fc2b33fa5dcf6d74467cff04324721d295465c6cafd2727",
-    "docs/TFT24_INTERFACE_RU.md": "7013ae36ceb2c349d12fc70da347a9b766f2c50b55fe8ac1519f492ecd5afa0b"
+    "docs/TFT24_INTERFACE_RU.md": "7013ae36ceb2c349d12fc70da347a9b766f2c50b55fe8ac1519f492ecd5afa0b",
+    "docs/PROJECT_STAGES_RU.md": "5e4b06ca036ea2f22d4dfe017a4c3cba0bee3cfec6610478016c0290789deab7",
+    "docs/STATUS_SCOPE.json": "d3b47695928b59550edd01bfd923c08f482de2b8d767ee0c6897b97c4a444f82",
+    "docs/REQUIREMENTS_RU.md": "f2016ed3f423bba7b53781792e0835bfd74637c63e932e8fed81303103799b2a"
   },
   "user_acceptance": {
     "quote": "считаю этого достаточно одобряю",
     "accepted_vias": 115,
     "hardware_commit": "c9c52ce4ee0f19dd2f9d1e39260331a0c0849d6a",
     "further_minimization_required": false
-  }
+  },
+  "project_stages": {
+    "pcb_design": "COMPLETED_ACCEPTED",
+    "fabrication_package": "COMPLETED_VERIFIED",
+    "prototype_fabrication": "NOT_PERFORMED",
+    "prototype_assembly": "NOT_PERFORMED",
+    "firmware": "FUNCTIONAL_AGREEMENT_NEXT_IMPLEMENTATION_ON_HOLD",
+    "physical_tests": "AFTER_PROTOTYPE_ASSEMBLY_NOT_PERFORMED",
+    "missing_physical_tests_blocks_bare_prototype_fabrication": false
+  },
+  "status_policy": "docs/PROJECT_STAGES_RU.md",
+  "production_release_scope": "Qualified operational/series product, not bare prototype fabrication"
 }

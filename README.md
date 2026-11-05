@@ -1,3 +1,5 @@
+> **Stage status:** PCB design/layout and fabrication files are completed and accepted. Prototype manufacture/assembly, firmware implementation and physical tests are separate subsequent stages. Missing physical tests or firmware do not block bare-prototype fabrication by themselves. Next: agree firmware functionality before coding. [Подробнее / Stage definitions](docs/PROJECT_STAGES_RU.md).
+
 # Sirokko 262.01 controller
 
 > **Hardware v7 candidate: verified digital package with 115 vias; optimization accepted by the user; further minimization is not required.** Bare PCB fabrication and component assembly are separate. See [current manufacturing instructions](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: no physical qualification or operational release is claimed. Firmware development remains on HOLD pending agreement on functions, menus and overall logic; the unpublished KEY0 draft is not included in this commit.

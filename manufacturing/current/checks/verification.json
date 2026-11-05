@@ -129,5 +129,16 @@
     "accepted_vias": 115,
     "hardware_commit": "c9c52ce4ee0f19dd2f9d1e39260331a0c0849d6a",
     "further_minimization_required": false
-  }
+  },
+  "project_stages": {
+    "pcb_design": "COMPLETED_ACCEPTED",
+    "fabrication_package": "COMPLETED_VERIFIED",
+    "prototype_fabrication": "NOT_PERFORMED",
+    "prototype_assembly": "NOT_PERFORMED",
+    "firmware": "FUNCTIONAL_AGREEMENT_NEXT_IMPLEMENTATION_ON_HOLD",
+    "physical_tests": "AFTER_PROTOTYPE_ASSEMBLY_NOT_PERFORMED",
+    "missing_physical_tests_blocks_bare_prototype_fabrication": false
+  },
+  "status_policy": "docs/PROJECT_STAGES_RU.md",
+  "production_release_scope": "Qualified operational/series product, not bare prototype fabrication"
 }

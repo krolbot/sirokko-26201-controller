@@ -1,0 +1,557 @@
+{
+  "current_policy": "docs/PROJECT_STAGES_RU.md",
+  "cad_modified": false,
+  "firmware_modified": false,
+  "artifacts": [
+    {
+      "path": "docs/BOM_AUDIT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/BOM_PURCHASE_ALLOCATION_DRAFT.csv",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/BOM_PURCHASE_DRAFT_NOT_FOR_ORDER.csv",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/BOM_PURCHASE_NOTES_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/CURRENT_STATE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/D9002_BOOTSTRAP_CORRECTION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/DS1023_MANUFACTURER_FOLLOWUP_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/OCP_TLV9020_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/REQUIREMENTS_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/Sirokko_26201_CONTROL_CONCEPT.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/Sirokko_components_ChipDip.csv",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/Sirokko_components_ChipDip.html",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/UI_RIGHT_COLUMN_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/BOM_PLACEMENT_BASELINE_627775D.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/BUCK_STARTUP_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/C104_BOOTSTRAP_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/CAM_DRILL_GEOMETRY_FINAL.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/CAM_REVIEW_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/CONTROL_CONNECTIONS_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/CONTROL_INTERFACE_ACCEPTANCE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/COPPER_IMAGES_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/DOCUMENTATION_REVIEW_BASELINE_627775D_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/DS18B20_ROUTE_APPLIED_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP32_SOCKET_CHIPDIP_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_FRONT_SIDE_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_FRONT_SIDE_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_POWER_BRANCH_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_POWER_BRANCH_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_RELAYOUT_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ESP_RELOCATION_ACCEPTANCE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/FABRICATION_REQUIREMENTS_BASELINE_627775D_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/FABRICATION_REQUIREMENTS_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/HC160A_S2_RESEARCH_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/HC160_LAYOUT_APPLIED_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_POWER_4FE3_SCHEMATIC_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_POWER_INTERFACE_AUDIT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_PROTECTION_ACCEPTANCE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_SLEW_BUCK_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_STARTUP_FOLLOWUP_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_STARTUP_MODEL_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_STATIC_CHECK_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/INPUT_STORAGE_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_CS_PULLUP_LAYOUT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_PCB_INTEGRATION_ERC.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_PCB_INTEGRATION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SCHEMATIC_ERC.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SCHEMATIC_INTEGRATION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SCHEMATIC_MINIMAL_SAFETY.svg",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SCHEMATIC_VERIFICATION.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SCHEMATIC_VERIFICATION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_MODULE_SOCKET_MECHANICS_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/MAX31856_SOCKET_PCB_APPLIED_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/PCB_SCH_PARITY_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/POWER_LOGIC_LM5013_DRAFT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/R9001_REVIEW_HOLD_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/RC_INTEGRATION_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/RELAY_CHIPDIP_SOURCING.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/RELAY_COMMAND_ROUTES_APPLIED_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/RELAY_DG85BM_COIL_ENVELOPE_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/RESET_PANEL_CLEARANCE_CALC.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/ROOM_DS18B20_INTERFACE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/SESSION_DECISIONS_RECOVERY_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/TFT_3V3_TPS62162_SELECTED_DESIGN_CALC_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/TFT_RESET_LOCAL_SUPERVISOR_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/TFT_SPI_IDLE_BIAS_DECISION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/TFT_SPI_POWER_OFF_BUFFER_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/THERMOCOUPLE_ACQUISITION_CONTRACT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/THERMOCOUPLE_BIAS_CORRECTION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/UI_CONTROLS_DIMENSIONED_SELECTION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/VIA_REDUCTION_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/VIA_REDUCTION_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/VIA_RING_NATIVE_ACCEPTANCE_CURRENT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/VIA_RING_NATIVE_CHANGES_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/VIA_RING_OBJECT_PRESERVATION_CURRENT.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/WAVESHARE_18366_CARRIER_HEADER_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/WAVESHARE_18366_INTEGRATION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/WAVESHARE_18366_POWER_SCREEN_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/WAVESHARE_18366_SPI_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/logic/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/logic/logic_route_acceptance.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/relayout/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/relayout/relayout_acceptance.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/room/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/room/room_route_acceptance.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/socket/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/tc_cs/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/research/tc_cs/tc_cs_acceptance.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/reviews/minimal_safety_3ic_draft/PROTECTION_BASIS_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/reviews/v8-relay-ui-tft/TFT_FACTORY_MOUNT_RECHECK_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "docs/reviews/v8-relay-ui-tft/UI_BUTTONS_V8_ELECTRICAL_CONTRACT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/ALL_RULES_AUDIT_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/ELECTRICAL_INTERFACE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/HC160_INTERFACE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/MinimalSafety.kicad_sch",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/PCB_REVIEW_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/REMOTE_ONLY_REQUIREMENTS_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/SIROKKO_TWO_RELAYS_CHANGE_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/YD_3V3_LOAD_BUDGET.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/YD_3V3_LOAD_BUDGET_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/kicad/YD_V14_ELECTRICAL_INTEGRATION_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/notes/D101_PINMAP_RECHECK.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "hardware/notes/SIROKKO_DG85B_RELAY_DECISION.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "manufacturing/current/FABRICATION_REQUIREMENTS_RU.md",
+      "classification": "scoped_document",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "manufacturing/current/checks/board-state.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "manufacturing/current/checks/erc.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "manufacturing/current/checks/via-optimization.json",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    },
+    {
+      "path": "manufacturing/current/renders/assembly-front.svg",
+      "classification": "retained_source_or_evidence",
+      "interpretation": "Technical contents and original revision retained; not an independent current-stage gate. See PROJECT_STAGES_RU.md."
+    }
+  ]
+}
