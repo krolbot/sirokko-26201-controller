@@ -1,12 +1,12 @@
 {
-  "pcb_sha256": "b3b362293f5ffa07d500e8ea5fb0803b0cfec9ad1677f83ba6e37456d3e26bf6",
+  "pcb_sha256": "88f2459caeddaece2577aa9685bec969e2997f6bbda6fc0931fae324b8b0ff33",
   "schematic_sha256": "0b85bf2f4921b25a1c3126348eb176a88c7e3b29ca474c2d7229c4367e0a5cf5",
   "pcb_counts": {
     "footprints": 73,
     "pads": 303,
-    "segments": 785,
-    "vias": 178,
-    "zones": 27
+    "segments": 667,
+    "vias": 147,
+    "zones": 25
   },
   "drc": {
     "exit_code": 0,
@@ -19,8 +19,8 @@
   "electrical_components": 60,
   "positions_checked": 60,
   "drill": {
-    "hits": 314,
-    "pth": 297,
+    "hits": 283,
+    "pth": 266,
     "npth": 17,
     "coordinate_rounding_mm": 0.0005000000000023874,
     "negative_shift_delete_plating_detected": true
@@ -36,25 +36,354 @@
     "/TFT_CS": 42,
     "/PANEL_KEY0": 40
   },
-  "prior_pin_assignments_changed": {
-    "J3.8": [
-      "unconnected-(J3-Pin_8-Pad8)",
-      "/PANEL_KEY0"
+  "pad_uuids_preserved": 303,
+  "pad_local_geometry_and_nets_preserved": true,
+  "footprint_relocations": {
+    "C21": [
+      [
+        246.0,
+        19.5
+      ],
+      [
+        234.0,
+        19.5
+      ]
     ],
-    "J32.12": [
-      "unconnected-(J32-Pin_12-Pad12)",
-      "/PANEL_KEY0"
+    "C22": [
+      [
+        258.0,
+        19.5
+      ],
+      [
+        246.0,
+        19.5
+      ]
+    ],
+    "H11": [
+      [
+        292.0,
+        138.0
+      ],
+      [
+        268.0,
+        138.0
+      ]
+    ],
+    "H12": [
+      [
+        292.0,
+        172.0
+      ],
+      [
+        268.0,
+        172.0
+      ]
+    ],
+    "H13": [
+      [
+        292.0,
+        20.0
+      ],
+      [
+        268.0,
+        20.0
+      ]
+    ],
+    "H2": [
+      [
+        182.0,
+        20.0
+      ],
+      [
+        175.0,
+        20.0
+      ]
+    ],
+    "H4": [
+      [
+        182.0,
+        172.0
+      ],
+      [
+        175.0,
+        172.0
+      ]
+    ],
+    "H5": [
+      [
+        238.0,
+        20.0
+      ],
+      [
+        226.0,
+        20.0
+      ]
+    ],
+    "H6": [
+      [
+        238.0,
+        172.0
+      ],
+      [
+        226.0,
+        172.0
+      ]
+    ],
+    "J27": [
+      [
+        251.37,
+        60.99
+      ],
+      [
+        239.37,
+        60.99
+      ]
+    ],
+    "J28": [
+      [
+        251.37,
+        110.99
+      ],
+      [
+        239.37,
+        110.99
+      ]
+    ],
+    "J32": [
+      [
+        170.0,
+        115.0
+      ],
+      [
+        85.0,
+        63.0
+      ]
+    ],
+    "K1": [
+      [
+        212.5,
+        30.0
+      ],
+      [
+        200.5,
+        30.0
+      ]
+    ],
+    "K2": [
+      [
+        212.5,
+        80.0
+      ],
+      [
+        200.5,
+        80.0
+      ]
+    ],
+    "R86": [
+      [
+        245.0,
+        42.0
+      ],
+      [
+        233.0,
+        42.0
+      ]
+    ],
+    "R87": [
+      [
+        260.0,
+        42.0
+      ],
+      [
+        248.0,
+        42.0
+      ]
+    ],
+    "U11": [
+      [
+        247.0,
+        25.0
+      ],
+      [
+        235.0,
+        25.0
+      ]
     ]
   },
-  "unrelated_copper_objects_preserved": 925,
-  "pad_uuids_preserved": 303,
-  "all_pad_geometry_preserved": true,
   "negative_KEY0_open_detected": true,
+  "critical_copper_preservation": {
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED": 29,
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID": 35,
+    "U11_GND_vias": 9,
+    "U101_GND_vias": 3
+  },
+  "before": {
+    "vias": 178,
+    "segments": 785,
+    "drills": 314,
+    "width_mm": 305,
+    "height_mm": 170
+  },
+  "after": {
+    "vias": 147,
+    "segments": 667,
+    "drills": 283,
+    "width_mm": 281,
+    "height_mm": 170
+  },
+  "via_reduction_percent": 17.415730337078653,
+  "area_reduction_percent": 7.868852459016394,
   "production_release": false,
   "physical_tests": false,
   "firmware_changed": false,
-  "local_firmware_draft_excluded_from_publication": true,
-  "key0_contact_polarity": "expected NO to GND; not electrically confirmed on bought module",
-  "cam_review": "completed: current local cam.zip loaded into TraceSpace; top/bottom/outline+drill visually inspected; see CAM_REVIEW_RU.md",
-  "cam_sha256": "0fdf360c48de3bd2eb359eafc8b0717fd22b003ee65443805c5442488008004e"
+  "global_minimum_proven": false,
+  "cam_review": "PASS: current CAM top, bottom and separate outline/drill viewed in TraceSpace",
+  "via_counts_by_net": {
+    "+5V_DEVKIT": {
+      "before": 5,
+      "after": 5
+    },
+    "/+3V3": {
+      "before": 13,
+      "after": 14
+    },
+    "/ENC_A": {
+      "before": 3,
+      "after": 1
+    },
+    "/ENC_B": {
+      "before": 2,
+      "after": 2
+    },
+    "/ENC_SW": {
+      "before": 2,
+      "after": 1
+    },
+    "/FAN_REQUEST": {
+      "before": 2,
+      "after": 2
+    },
+    "/FUEL_CMD": {
+      "before": 3,
+      "after": 3
+    },
+    "/GLOW_CMD": {
+      "before": 5,
+      "after": 5
+    },
+    "/GND": {
+      "before": 38,
+      "after": 32
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/DGATE": {
+      "before": 5,
+      "after": 3
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/EN_DIV": {
+      "before": 4,
+      "after": 4
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/HGATE": {
+      "before": 6,
+      "after": 4
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/OV_DIV": {
+      "before": 2,
+      "after": 2
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/REV_MID": {
+      "before": 8,
+      "after": 8
+    },
+    "/INPUT_PROTECTION_WIP_NOT_QUALIFIED/VIN_FUSED": {
+      "before": 14,
+      "after": 14
+    },
+    "/K_CLUTCH_RUN_COIL_LOW": {
+      "before": 2,
+      "after": 2
+    },
+    "/K_GLOW_COIL_LOW": {
+      "before": 2,
+      "after": 2
+    },
+    "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/EN_LOGIC": {
+      "before": 2,
+      "after": 2
+    },
+    "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/PGOOD_5V": {
+      "before": 2,
+      "after": 2
+    },
+    "/LOGIC_POWER_24_TO_5V__DRAFT_NOT_FOR_ORDER/RON": {
+      "before": 2,
+      "after": 2
+    },
+    "/P24_PROTECTED": {
+      "before": 20,
+      "after": 15
+    },
+    "/PANEL_KEY0": {
+      "before": 6,
+      "after": 3
+    },
+    "/PANEL_SCL": {
+      "before": 3,
+      "after": 1
+    },
+    "/PANEL_SDA": {
+      "before": 4,
+      "after": 1
+    },
+    "/ROOM_DQ": {
+      "before": 2,
+      "after": 2
+    },
+    "/SPEED_CMD": {
+      "before": 2,
+      "after": 2
+    },
+    "/TC_AIR_CS": {
+      "before": 2,
+      "after": 1
+    },
+    "/TC_AIR_DRDY": {
+      "before": 2,
+      "after": 2
+    },
+    "/TC_EXH_CS": {
+      "before": 1,
+      "after": 1
+    },
+    "/TC_EXH_DRDY": {
+      "before": 1,
+      "after": 1
+    },
+    "/TC_SDI_MOSI": {
+      "before": 1,
+      "after": 1
+    },
+    "/TFT_CS": {
+      "before": 4,
+      "after": 3
+    },
+    "/TFT_DC": {
+      "before": 5,
+      "after": 3
+    },
+    "/TFT_RES": {
+      "before": 3,
+      "after": 1
+    }
+  },
+  "cam_sha256": "45024ff8643e9f0cf441ec6eeb0a3113479c99898f1da1af16f6471980979f98",
+  "erc": {
+    "source": "Sirokko26201_control_motor_candidate.kicad_sch",
+    "kicad_version": "10.0.8",
+    "violation_count": 0,
+    "violations": [],
+    "note": null
+  },
+  "mechanical_report": "regenerated from current native pad coordinates; mounting locations changed",
+  "back_assembly_export": "native CLI timed out twice; obsolete back assembly views removed; current back copper and 3D views included"
 }

@@ -1,24 +1,24 @@
 # Sirokko 262.01 — контроллер автоматики
 
-> **Аппаратная ревизия v5: цифровой комплект изготовления с KEY0.** Можно передавать на изготовление голой платы; монтаж компонентов — отдельно. [Актуальный комплект и условия](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: физическая квалификация и допуск эксплуатации не заявляются. Прошивка остаётся на HOLD до согласования функций, меню и общей логики; неопубликованный черновик KEY0 в этот коммит не входит.
+> **Аппаратная ревизия v6: цифровой комплект изготовления с KEY0.** Можно передавать на изготовление голой платы; монтаж компонентов — отдельно. [Актуальный комплект и условия](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: физическая квалификация и допуск эксплуатации не заявляются. Прошивка остаётся на HOLD до согласования функций, меню и общей логики; неопубликованный черновик KEY0 в этот коммит не входит.
 
 В репозитории оставлен один канонический проект KiCad:
 
 - проект: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pro);
 - корневая схема: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_sch), SHA256 `0b85bf2f4921b25a1c3126348eb176a88c7e3b29ca474c2d7229c4367e0a5cf5`;
-- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `b3b362293f5ffa07d500e8ea5fb0803b0cfec9ad1677f83ba6e37456d3e26bf6`;
-- контур платы: 305 × 170 мм.
+- PCB: [`hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb`](hardware/kicad/Sirokko26201_control_motor_candidate.kicad_pcb), SHA256 `88f2459caeddaece2577aa9685bec969e2997f6bbda6fc0931fae324b8b0ff33`;
+- контур платы: 281 × 170 мм.
 
-Все 73 посадочных места находятся на F.Cu. Плата содержит 303 площадки, 785 сегментов, 178 переходов и 27 зон. Готовая TFT2.4+EC11 подключается через J32; отдельной собственной PCB панели нет. [Распиновка](docs/TFT24_INTERFACE_RU.md).
+Все 73 посадочных места находятся на F.Cu. Плата содержит 303 площадки, 667 сегментов, 147 переходов и 25 зон. Готовая TFT2.4+EC11 подключается через J32; отдельной собственной PCB панели нет. [Распиновка](docs/TFT24_INTERFACE_RU.md).
 
-KiCad10.0.8: rootERC0 при четырёх сохранённых ignored checks; nativeDRC0/opens0, DRC ignored=[]. Отдельно сопоставлены252электрическихpin-net с XML,314отверстий и60позиций установки. [Текущие проверки](manufacturing/current/checks/verification.json) подтверждают цифровую проверку, но не физическую работоспособность. Прежние исследовательские отчёты с иными SHA относятся к истории, не к новой ревизии.
+KiCad10.0.8: rootERC0 при четырёх сохранённых ignored checks; nativeDRC0/opens0, DRC ignored=[]. Отдельно сопоставлены252электрическихpin-net с XML,283отверстий и60позиций установки. [Текущие проверки](manufacturing/current/checks/verification.json) подтверждают цифровую проверку, но не физическую работоспособность. Прежние исследовательские отчёты с иными SHA относятся к истории, не к новой ревизии.
 
 F1 — Littelfuse `0997015.WXN`, 15 А / 58 В DC, в неизменном держателе Keystone 3568. Назначенная оболочка интерфейсов: свеча 7 А непрерывно / 10 А не более 1 с; муфта 2 А / 3 А не более 1 с; общий вход J13/F1 10 А / 13 А не более 1 с; воздух у F1 не выше 80 °C. Предварительный непрерывный бюджет 5 В — 0,70 А. [Инженерное основание](docs/research/SIROKKO_POWER_AND_LOAD_ENVELOPE_RU.md) не заменяет физическую квалификацию.
 
 Актуальные изображения:
 
 - [сборочный вид спереди](manufacturing/current/renders/assembly-front.png);
-- [сборочный вид сзади](manufacturing/current/renders/assembly-back.png);
+- [медь обратной стороны](manufacturing/current/renders/routing-B_Cu.png);
 - [3D-вид сверху](manufacturing/current/renders/board-3d-top.png);
 - [3D-вид снизу](manufacturing/current/renders/board-3d-bottom.png);
 - [CAM Gerber/Excellon](manufacturing/current/cam.zip);

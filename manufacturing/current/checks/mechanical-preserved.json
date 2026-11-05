@@ -1,7 +1,0 @@
-{
-  "pcb_sha256": "312ac4603783ec30186d6cc41e2aa3a62adb817e4f05eafe403e9d95e356959e",
-  "supports_checked": 13,
-  "mechanical_pdf_sha256": "c2704aa33283928f456e160756342fffb73de305e135401c4d38a9f648c1e7dd",
-  "unchanged_geometry": true,
-  "drill_delivery_note": "Current full Excellon is MixedPlating; older drawing footer mentioning separate files is superseded by current README."
-}
