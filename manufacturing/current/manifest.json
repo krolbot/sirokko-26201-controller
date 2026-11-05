@@ -5,7 +5,7 @@
   "cam_sha256": "4f8b02e8b50431d1a17d113fc4117ad4c489567af9d73264a8903ddbff32145d",
   "cam_review_completed": true,
   "global_minimum_proven": false,
-  "optimization_acceptance": "OPEN",
+  "optimization_acceptance": "ACCEPTED_BY_USER",
   "production_release": false,
   "physical_tests": false,
   "sources": {
@@ -81,12 +81,12 @@
   },
   "outputs": {
     "manufacturing/current/FABRICATION_REQUIREMENTS_RU.md": "3eb5edeae829b36885a068d681b81d9d372ad3129e546cfefd35b3c6d0ae6e9f",
-    "manufacturing/current/README_RU.md": "88738b5240c98f9b26e28d606d5642d1772eab6c1d103f17ab8527ff6ac5b0b1",
+    "manufacturing/current/README_RU.md": "89c3169adcd8c54266e51ac68e8e85ba306edb8b00abd2f3fba6604cafe0720e",
     "manufacturing/current/bom.csv": "05efb1ef91653b1f81bc3c0adfa9105675762d6b90354edaf2d7222dc2de1b04",
     "manufacturing/current/cam.zip": "4f8b02e8b50431d1a17d113fc4117ad4c489567af9d73264a8903ddbff32145d",
     "manufacturing/current/checks/CAM_REVIEW_RU.md": "ff2a06e8ecac9e5da12380181f524139f0aee6cca8646e74432eca77226bf0db",
     "manufacturing/current/checks/PREFAB_GATE_RU.md": "309dece234315e0c2c514bd037b36e28b393a799e67f45a3a4339dbd2f0b8419",
-    "manufacturing/current/checks/VIA_OPTIMIZATION_RU.md": "721fab48ed12949374260ee67192c6610a45ac8b594b865323da3db9f27dfb5e",
+    "manufacturing/current/checks/VIA_OPTIMIZATION_RU.md": "e158a70b76a8cf3d7a692158ac954027f8f5ab7bdbc8a1ca2da896723b5ba2b6",
     "manufacturing/current/checks/bias-placement.json": "9fbd8e1b002e3520863f399094324f2b1b3f4cbe6fa3cb172b7ba4ab4b9c00b5",
     "manufacturing/current/checks/board-state.json": "0a293193fac59725014e3cc2b3c9791cf955ae440401382fecc0a5a2cc427c9d",
     "manufacturing/current/checks/cam-bottom.png": "b7c7355cc34b726d092254c3234f9795aabd756987f14a554a3edec639459b0d",
@@ -102,7 +102,7 @@
     "manufacturing/current/checks/prefab-v6-control.json": "17dd437479761cbc39cb17d4217bd44914e78fed30922b3bd9c1ce86e8db84b5",
     "manufacturing/current/checks/return-path-review.json": "7f747e640aa6fb9cfcfbf84c44b74bb14cae0ab4ccf290da6c89ada66797b13c",
     "manufacturing/current/checks/terminal-move-rejected.json": "1b88066a27b43f0fcd12e5c694f3895e41500c80ddddc7555e27a8e68c9f9e72",
-    "manufacturing/current/checks/verification.json": "c1be699a13a31e096a4bf63b89d7c02eabd42622f15ba5168635730d9cb5494c",
+    "manufacturing/current/checks/verification.json": "64abfcd5e4f8881330fe77dd3cffa623d675d5074bf947630eac5c938adac88d",
     "manufacturing/current/checks/via-optimization.json": "6e9112ad1b3a3b161c494bec0a29a02d92c7080b146960058a8eb147dedc1721",
     "manufacturing/current/cpl.csv": "b80830acf47e03d219b4ac55fa90a91516a38b94da697e3de8f4751878af45ba",
     "manufacturing/current/drill/Sirokko26201_control_motor_candidate.drl": "596062b2353203cca193f46faf75bb1a945463ad4fe5e814cd9d53d304374965",
@@ -134,10 +134,16 @@
     "manufacturing/current/renders/routing-F_Cu.svg": "19a470460da7760143019a9b299ab0edd8b6126b32310bb4578ac1c67d83740d"
   },
   "documentation": {
-    "README.md": "e88df3b52b1980405e18baf22051cf16fe5c44689a997669fe959342542eeb19",
-    "README_RU.md": "54e10e1fd6e7814e492f07e86ed58a2734e5146af1c82d480ee6bad5e67eeb83",
-    "docs/CURRENT_STATE_RU.md": "7f7ee06a2eb63adc1612d54f8018462feb9b4cad7665f5e455578d09317f5de7",
+    "README.md": "fdf97d737301a8c4ad85d6df23878608abc1951eeff594ff7432f959a45e2b9f",
+    "README_RU.md": "44f27cec074026c8dfde0fc7b5e9ad05864cdd312c6739bf9cd775227266794d",
+    "docs/CURRENT_STATE_RU.md": "3e55b748d0bd46dcb8f97229681e0ec056fb8f3f39388c058bde44ef4394c4a6",
     "docs/PANEL_CONTROL_RU.md": "3f758534312eeb123fc2b33fa5dcf6d74467cff04324721d295465c6cafd2727",
     "docs/TFT24_INTERFACE_RU.md": "7013ae36ceb2c349d12fc70da347a9b766f2c50b55fe8ac1519f492ecd5afa0b"
+  },
+  "user_acceptance": {
+    "quote": "считаю этого достаточно одобряю",
+    "accepted_vias": 115,
+    "hardware_commit": "c9c52ce4ee0f19dd2f9d1e39260331a0c0849d6a",
+    "further_minimization_required": false
   }
 }

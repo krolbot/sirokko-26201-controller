@@ -122,6 +122,12 @@
     "passed": true
   },
   "mechanical_report": "J29 unchanged; R7/R8 outside its wire-entry span, final 3D visually reviewed; mounting holes unchanged",
-  "optimization_acceptance": "OPEN: global minimum not established",
-  "digital_package_checks": "PASS"
+  "optimization_acceptance": "ACCEPTED_BY_USER",
+  "digital_package_checks": "PASS",
+  "user_acceptance": {
+    "quote": "считаю этого достаточно одобряю",
+    "accepted_vias": 115,
+    "hardware_commit": "c9c52ce4ee0f19dd2f9d1e39260331a0c0849d6a",
+    "further_minimization_required": false
+  }
 }

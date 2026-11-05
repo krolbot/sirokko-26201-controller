@@ -1,6 +1,6 @@
 # Sirokko 262.01 controller
 
-> **Hardware v7 candidate: verified digital package with 115 vias; optimization acceptance remains open.** Bare PCB fabrication and component assembly are separate. See [current manufacturing instructions](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: no physical qualification or operational release is claimed. Firmware development remains on HOLD pending agreement on functions, menus and overall logic; the unpublished KEY0 draft is not included in this commit.
+> **Hardware v7 candidate: verified digital package with 115 vias; optimization accepted by the user; further minimization is not required.** Bare PCB fabrication and component assembly are separate. See [current manufacturing instructions](manufacturing/current/README_RU.md). `production_release=false`, `physical_tests=false`: no physical qualification or operational release is claimed. Firmware development remains on HOLD pending agreement on functions, menus and overall logic; the unpublished KEY0 draft is not included in this commit.
 
 The repository contains one canonical KiCad project:
 
