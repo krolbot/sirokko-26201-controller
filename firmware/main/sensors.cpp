@@ -42,11 +42,12 @@ public:
         if (!write_register(0x00, 0x15) || !write_register(0x01, 0x03) ||
             !write_register(0x02, 0x00) || !configuration_ok()) return false;
         next_start_ms_ = 1;
+        initialized_ = true;
         return true;
     }
 
     void poll(uint64_t now_ms) {
-        if (!handle_) {
+        if (!handle_ || !initialized_) {
             invalidate(0xFF);
             return;
         }
@@ -146,6 +147,7 @@ private:
     uint64_t next_start_ms_{};
     bool waiting_{};
     bool saw_high_{};
+    bool initialized_{};
 };
 
 class RoomDs18b20 {
@@ -161,27 +163,32 @@ public:
         onewire_device_iter_handle_t iterator{};
         if (onewire_new_device_iter(bus_, &iterator) != ESP_OK) return false;
         unsigned count = 0;
+        bool invalid_rom = false;
         esp_err_t result{};
         do {
             onewire_device_t device{};
             result = onewire_device_iter_get_next(iterator, &device);
             if (result == ESP_OK && (device.address & 0xFFU) == 0x28U) {
+                uint8_t rom[8]{};
+                for (unsigned b=0;b<8;++b) rom[b]=static_cast<uint8_t>(device.address>>(b*8));
+                if (sirokko::onewire_crc8(rom,7)!=rom[7]) invalid_rom=true;
                 address_ = device.address;
                 ++count;
             }
         } while (result == ESP_OK);
         onewire_del_device_iter(iterator);
-        if (result != ESP_ERR_NOT_FOUND || count != 1) return false;
+        if (result != ESP_ERR_NOT_FOUND || count != 1 || invalid_rom) return false;
 
         // Volatile scratchpad configuration only: 12 bit, no EEPROM write/copy.
         if (!reset_and_command(0x4E)) return false;
         const uint8_t config[3]{0x00, 0x00, 0x7F};
         if (onewire_bus_write_bytes(bus_, config, sizeof(config)) != ESP_OK) return false;
+        initialized_ = true;
         return true;
     }
 
     void poll(uint64_t now_ms) {
-        if (!bus_) {
+        if (!bus_ || !initialized_) {
             invalidate(0xFF);
             return;
         }
@@ -198,13 +205,15 @@ public:
         }
         if (now_ms - conversion_started_ms_ < 800) return;
 
+        uint8_t completed{};
+        const bool conversion_done = onewire_bus_read_bytes(bus_, &completed, 1)==ESP_OK && completed==0xFF;
         uint8_t frame[9]{};
-        if (!reset_and_command(0xBE) || onewire_bus_read_bytes(bus_, frame, sizeof(frame)) != ESP_OK) {
+        if (!conversion_done || !reset_and_command(0xBE) || onewire_bus_read_bytes(bus_, frame, sizeof(frame)) != ESP_OK) {
             invalidate(0xFD);
         } else {
             int32_t milli_c{};
             if (sirokko::decode_ds18b20_scratchpad(frame, 12, true, &milli_c)) {
-                sample_ = {milli_c, now_ms, 0, true};
+                sample_ = {milli_c, clock_ms(), 0, true};
             } else {
                 invalidate(0xFC);
             }
@@ -235,6 +244,7 @@ private:
     uint64_t conversion_started_ms_{};
     uint64_t next_start_ms_{};
     bool conversion_pending_{};
+    bool initialized_{};
 };
 }  // namespace
 

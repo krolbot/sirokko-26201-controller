@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <limits>
+#include <cmath>
 
 namespace sirokko {
 namespace {
@@ -53,26 +54,26 @@ void CommandGate::invalidate() { current_ = {}; }
 
 Controller::Controller(ProcessProfile profile, Settings settings, uint64_t boot_id)
     : profile_(profile), settings_(settings), boot_id_(boot_id ? boot_id : 1) {
-    if (profile_.purge_speed_code > kPwmMaximum || profile_.run_speed_code > kPwmMaximum ||
-        !valid_timer(profile_.recovery_purge_ms) || !valid_timer(profile_.prepurge_ms) ||
-        !valid_timer(profile_.preheat_ms) || !valid_timer(profile_.ignition_ms) ||
-        !valid_timer(profile_.verify_ms) || !valid_timer(profile_.postpurge_ms) ||
-        profile_.maximum_purge_exit_exhaust_milli_c <= 0 ||
-        profile_.maximum_purge_exit_air_milli_c <= 0) {
-        profile_.qualified = false;
-    }
-    if (!valid_timer(settings_.duration_ms)) settings_.duration_ms = 3600000;
+    profile_.qualified = profile_.qualified && valid_process_profile(profile_);
+    if (!valid_settings(settings_)) settings_ = {};
+    run_speed_code_ = profile_.run_speed_code;
     purge_id_ = next_id_++;
     purge_minimum_ms_ = profile_.recovery_purge_ms;
 }
 
-bool Controller::sensors_fresh(const Sensors& sensors, uint64_t now_ms) const {
-    const auto fresh = [now_ms](const SensorSample& sample, uint64_t limit) {
+bool Controller::thermal_sensors_fresh(const Sensors& sensors, uint64_t now_ms) const {
+    const auto fresh = [now_ms](const SensorSample& sample) {
         return sample.valid && sample.status == 0 && sample.sample_ms <= now_ms &&
-               now_ms - sample.sample_ms <= limit;
+               now_ms - sample.sample_ms <= kSensorStaleMs && sample.milli_c >= 0 && sample.milli_c < 600000;
     };
-    return fresh(sensors.exhaust, kSensorStaleMs) && fresh(sensors.air, kSensorStaleMs) &&
-           fresh(sensors.room, kRoomSensorStaleMs);
+    return fresh(sensors.exhaust) && fresh(sensors.air);
+}
+
+bool Controller::sensors_fresh(const Sensors& sensors, uint64_t now_ms) const {
+    const auto& r = sensors.room;
+    const bool room_ok = r.valid && r.status == 0 && r.sample_ms <= now_ms &&
+        now_ms-r.sample_ms <= kRoomSensorStaleMs && r.milli_c >= -55000 && r.milli_c <= 125000;
+    return thermal_sensors_fresh(sensors, now_ms) && (settings_.mode == Mode::MANUAL || room_ok);
 }
 
 uint32_t Controller::sensor_faults(const Sensors& sensors, uint64_t now_ms) const {
@@ -81,9 +82,12 @@ uint32_t Controller::sensor_faults(const Sensors& sensors, uint64_t now_ms) cons
                now_ms - sample.sample_ms > limit;
     };
     uint32_t result = FAULT_NONE;
-    if (bad(sensors.exhaust, kSensorStaleMs)) result |= FAULT_EXHAUST;
-    if (bad(sensors.air, kSensorStaleMs)) result |= FAULT_AIR;
-    if (bad(sensors.room, kRoomSensorStaleMs)) result |= FAULT_ROOM;
+    if (bad(sensors.exhaust, kSensorStaleMs) || sensors.exhaust.milli_c < 0) result |= FAULT_EXHAUST;
+    if (bad(sensors.air, kSensorStaleMs) || sensors.air.milli_c < 0) result |= FAULT_AIR;
+    if (settings_.mode == Mode::TEMPERATURE && (bad(sensors.room, kRoomSensorStaleMs) ||
+        sensors.room.milli_c < -55000 || sensors.room.milli_c > 125000)) result |= FAULT_ROOM;
+    if ((sensors.exhaust.valid && sensors.exhaust.milli_c >= 600000) ||
+        (sensors.air.valid && sensors.air.milli_c >= 600000)) result |= FAULT_OVER_TEMPERATURE;
     if (profile_.qualified) {
         if (sensors.exhaust.valid && sensors.exhaust.milli_c >= profile_.maximum_exhaust_milli_c)
             result |= FAULT_OVER_TEMPERATURE;
@@ -96,11 +100,15 @@ uint32_t Controller::sensor_faults(const Sensors& sensors, uint64_t now_ms) cons
 Block Controller::start_guard(const Sensors& sensors, uint64_t now_ms) const {
     if (!profile_.qualified) return Block::PROFILE_NOT_QUALIFIED;
     if (faults_) return Block::FAULT_LATCHED;
+    if (calibration_candidate_.valid) return Block::BUSY;
     if (state_ != State::IDLE) return state_ == State::MAINTENANCE ? Block::MAINTENANCE : Block::BUSY;
     if (!sensors_fresh(sensors, now_ms)) return Block::SENSOR_INVALID;
     if (sensors.exhaust.milli_c < 0 || sensors.exhaust.milli_c >= profile_.maximum_exhaust_milli_c ||
-        sensors.air.milli_c < 0 || sensors.air.milli_c >= profile_.maximum_air_milli_c)
+        sensors.air.milli_c < 0 || sensors.air.milli_c >= profile_.maximum_air_milli_c ||
+        sensors.exhaust.milli_c > profile_.maximum_purge_exit_exhaust_milli_c ||
+        sensors.air.milli_c > profile_.maximum_purge_exit_air_milli_c)
         return Block::TEMPERATURE_OUT_OF_RANGE;
+    if (settings_.duration_ms > std::numeric_limits<uint64_t>::max()-now_ms) return Block::STALE_COMMAND;
     return Block::NONE;
 }
 
@@ -125,7 +133,7 @@ void Controller::begin_purge(State state, uint64_t now_ms) {
 
 bool Controller::purge_ready(const Sensors& sensors, uint64_t now_ms) const {
     return profile_.qualified && now_ms >= purge_started_ms_ &&
-           now_ms - purge_started_ms_ >= purge_minimum_ms_ && sensors_fresh(sensors, now_ms) &&
+           now_ms - purge_started_ms_ >= purge_minimum_ms_ && thermal_sensors_fresh(sensors, now_ms) &&
            sensors.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
            sensors.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
 }
@@ -134,14 +142,19 @@ void Controller::begin_start(uint64_t now_ms, const Sensors& sensors) {
     run_id_ = next_id_++;
     if (next_id_ == 0) next_id_ = 1;
     ignition_baseline_milli_c_ = sensors.exhaust.milli_c;
-    duration_active_ = true;
-    duration_deadline_ms_ = now_ms + settings_.duration_ms;
+    ignition_air_baseline_milli_c_ = sensors.air.milli_c;
+    run_speed_code_ = profile_.run_speed_code;
+    duration_active_ = settings_.duration_ms != 0;
+    duration_deadline_ms_ = duration_active_ ? now_ms + settings_.duration_ms : 0;
     delayed_armed_ = false;
     arm_id_ = 0;
     transition(State::PREPURGE, now_ms);
+    record("START", now_ms);
 }
 
 void Controller::begin_stop(uint64_t now_ms) {
+    if (calibration_requested_) cancel_calibration(calibration::Reason::EXTERNAL_CANCEL, now_ms);
+    if (active(state_) || delayed_armed_) record("STOP", now_ms);
     duration_active_ = false;
     duration_deadline_ms_ = 0;
     run_id_ = 0;
@@ -152,7 +165,10 @@ void Controller::begin_stop(uint64_t now_ms) {
 }
 
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
+    if (calibration_requested_ || calibration_candidate_.valid)
+        cancel_calibration(calibration::Reason::RUN_CONTEXT_LOST, now_ms);
     faults_ |= faults;
+    record("FAULT", now_ms);
     duration_active_ = false;
     delayed_armed_ = false;
     duration_deadline_ms_ = delayed_due_ms_ = 0;
@@ -178,8 +194,10 @@ Outputs Controller::outputs() const {
             result = {true, profile_.run_speed_code, true, true};
             break;
         case State::VERIFY:
-        case State::RUN:
             result = {true, profile_.run_speed_code, false, true};
+            break;
+        case State::RUN:
+            result = {true, static_cast<uint16_t>(std::lround(run_speed_code_)), false, true};
             break;
         default:
             break;
@@ -191,27 +209,48 @@ Outputs Controller::outputs() const {
 Snapshot Controller::tick(const TickInput& input) {
     const uint64_t now = input.now_ms;
     last_sensors_ = input.sensors;
+    if (have_tick_ && now < last_tick_ms_) {
+        latch_fault(FAULT_CONTROL_WATCHDOG, now);
+        last_tick_ms_ = now;
+        return snapshot(now);
+    }
+    have_tick_ = true;
+    last_tick_ms_ = now;
 
     const uint32_t current_sensor_faults = sensor_faults(input.sensors, now);
     const uint32_t new_external_faults = input.external_faults & ~previous_external_faults_;
     previous_external_faults_ = input.external_faults;
     uint32_t new_faults = new_external_faults;
-    if (active(state_)) new_faults |= current_sensor_faults;
+    if (active(state_) || state_ == State::MAINTENANCE) new_faults |= current_sensor_faults;
+    if (calibration_candidate_.valid && purging(state_))
+        new_faults |= current_sensor_faults & ~static_cast<uint32_t>(FAULT_ROOM);
     if (new_faults) latch_fault(new_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued/armed starts and never writes GPIO directly.
-    if (input.stop) begin_stop(now);
-    const bool stop_barrier = input.stop;
+    if (input.operator_combustion_problem && (calibration_requested_ || calibration_candidate_.valid)) {
+        record("OPERATOR_COMBUSTION_PROBLEM", now);
+        cancel_calibration(calibration::Reason::OPERATOR_NEGATIVE, now);
+    }
+    const bool stop_barrier = input.stop || input.operator_combustion_problem;
+    if (stop_barrier) {
+        begin_stop(now);
+        if(state_==State::MAINTENANCE) transition(State::IDLE,now);
+    }
 
-    if (input.enter_maintenance) {
+    if (input.enter_maintenance && !stop_barrier && state_ == State::IDLE && faults_ == 0 &&
+        thermal_sensors_fresh(input.sensors, now) &&
+        input.sensors.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
+        input.sensors.air.milli_c <= profile_.maximum_purge_exit_air_milli_c) {
         delayed_armed_ = false;
+        delayed_due_ms_ = 0;
         arm_id_ = 0;
-        if (state_ == State::IDLE || state_ == State::FAULT) transition(State::MAINTENANCE, now);
+        transition(State::MAINTENANCE, now);
     } else if (input.exit_maintenance && state_ == State::MAINTENANCE) {
         transition(faults_ ? State::FAULT : State::IDLE, now);
     }
 
-    if (input.cancel_delayed) {
+    if (input.cancel_delayed && delayed_armed_) {
+        ++state_version_;
         delayed_armed_ = false;
         delayed_due_ms_ = 0;
         arm_id_ = 0;
@@ -227,11 +266,23 @@ Snapshot Controller::tick(const TickInput& input) {
         reset_barrier = true;  // RESET_FAULT never consumes a START/ARM from the same control pass.
     }
 
-    if (duration_active_ && now >= duration_deadline_ms_) begin_stop(now);
+    // Existing expiry wins over a simultaneous timer extension or cancellation.
+    const bool expired = duration_active_ && now >= duration_deadline_ms_;
+    if (expired) { record("TIMER_EXPIRED", now); begin_stop(now); }
+    if (!stop_barrier && !expired && input.set_shutdown_timer && active(state_) &&
+        input.shutdown_after_ms <= kMaximumTimerMs &&
+        input.shutdown_after_ms <= std::numeric_limits<uint64_t>::max()-now) {
+        duration_active_ = input.shutdown_after_ms != 0;
+        duration_deadline_ms_ = duration_active_ ? now + input.shutdown_after_ms : 0;
+        ++state_version_;
+        record(duration_active_ ? "TIMER_ARMED" : "TIMER_CANCELLED", now);
+    }
 
     if (!stop_barrier && !reset_barrier && input.arm_delayed && state_ == State::IDLE && valid_timer(input.delay_ms) &&
+        input.delay_ms <= std::numeric_limits<uint64_t>::max()-now &&
         start_guard(input.sensors, now) == Block::NONE) {
         delayed_armed_ = true;
+        ++state_version_;
         delayed_due_ms_ = now + input.delay_ms;
         arm_id_ = next_id_++;
         if (next_id_ == 0) next_id_ = 1;
@@ -241,12 +292,21 @@ Snapshot Controller::tick(const TickInput& input) {
     if (delayed_armed_ && now >= delayed_due_ms_) {
         delayed_armed_ = false;
         delayed_due_ms_ = 0;
+        arm_id_ = 0;
         delayed_start = true;
     }
 
-    if (!stop_barrier && !reset_barrier && (input.start || delayed_start) &&
-        start_guard(input.sensors, now) == Block::NONE) {
+    if (!stop_barrier && !reset_barrier && !expired &&
+        (input.start || delayed_start || input.start_calibration) &&
+        start_guard(input.sensors, now) == Block::NONE &&
+        (!input.start_calibration || (profile_.calibration_floor_speed_code > 0 &&
+         profile_.run_speed_code-profile_.calibration_floor_speed_code >= 2))) {
+        calibration_saved_ = false;
+        calibrator_ = {};
+        calibration_requested_ = input.start_calibration;
+        calibration_started_ms_ = now;
         begin_start(now, input.sensors);
+        if (calibration_requested_) record("CALIBRATION_START", now);
     }
 
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
@@ -261,11 +321,17 @@ Snapshot Controller::tick(const TickInput& input) {
             if (elapsed >= profile_.prepurge_ms) transition(State::PREHEAT, now);
             break;
         case State::PREHEAT:
-            if (elapsed >= profile_.preheat_ms) transition(State::IGNITION, now);
+            if (elapsed >= profile_.preheat_ms) {
+                // Sample immediately before fuel admission, not before a potentially hot glow preparation.
+                ignition_baseline_milli_c_ = input.sensors.exhaust.milli_c;
+                ignition_air_baseline_milli_c_ = input.sensors.air.milli_c;
+                transition(State::IGNITION, now);
+            }
             break;
         case State::IGNITION:
             if (elapsed >= profile_.ignition_ms) {
-                if (input.sensors.exhaust.milli_c - ignition_baseline_milli_c_ >= profile_.minimum_ignition_rise_milli_c)
+                if (static_cast<int64_t>(input.sensors.exhaust.milli_c) - ignition_baseline_milli_c_ >= profile_.minimum_ignition_rise_milli_c &&
+                    static_cast<int64_t>(input.sensors.air.milli_c) - ignition_air_baseline_milli_c_ >= profile_.minimum_ignition_air_rise_milli_c)
                     transition(State::VERIFY, now);
                 else
                     latch_fault(FAULT_IGNITION_TIMEOUT, now);
@@ -273,8 +339,12 @@ Snapshot Controller::tick(const TickInput& input) {
             break;
         case State::VERIFY:
             if (elapsed >= profile_.verify_ms) {
-                if (input.sensors.exhaust.milli_c >= profile_.minimum_run_exhaust_milli_c)
+                if (input.sensors.exhaust.milli_c >= profile_.minimum_run_exhaust_milli_c &&
+                    static_cast<int64_t>(input.sensors.air.milli_c)-ignition_air_baseline_milli_c_ >= profile_.minimum_ignition_air_rise_milli_c) {
                     transition(State::RUN, now);
+                    regulator_.reset(now, input.sensors.room.milli_c/1000.0, 1.0);
+                    if (calibration_requested_) start_calibration_run(now);
+                }
                 else
                     latch_fault(FAULT_IGNITION_TIMEOUT, now);
             }
@@ -282,8 +352,11 @@ Snapshot Controller::tick(const TickInput& input) {
         case State::RUN:
             if (input.sensors.exhaust.milli_c < profile_.minimum_run_exhaust_milli_c)
                 latch_fault(FAULT_FLAME_LOST, now);
-            else if (input.sensors.room.milli_c >= settings_.room_setpoint_milli_c)
-                begin_stop(now);
+            else if (calibration_requested_)
+                run_calibration(now, input.sensors);
+            else
+                regulate(now, input.sensors); // Comfort setpoint NEVER requests extinguishing.
+
             break;
         case State::STOP_PURGE:
             if (purge_ready(input.sensors, now)) {
@@ -321,7 +394,7 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     const uint64_t purge_deadline = purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_minimum_ms_
         ? std::numeric_limits<uint64_t>::max() : purge_started_ms_ + purge_minimum_ms_;
     result.purge_minimum_remaining_ms = result.purge_active ? remaining(now_ms, purge_deadline) : 0;
-    result.purge_sensors_fresh = result.purge_active && sensors_fresh(last_sensors_, now_ms);
+    result.purge_sensors_fresh = result.purge_active && thermal_sensors_fresh(last_sensors_, now_ms);
     result.purge_temperature_ready = result.purge_sensors_fresh && profile_.qualified &&
         last_sensors_.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
         last_sensors_.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
@@ -331,12 +404,97 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     else if (state_ == State::RECOVERY_PURGE) result.start_block = Block::RECOVERY_REQUIRED;
     else if (state_ == State::MAINTENANCE) result.start_block = Block::MAINTENANCE;
     else if (state_ != State::IDLE) result.start_block = Block::BUSY;
-    else result.start_block = Block::NONE;
+    else result.start_block = start_guard(last_sensors_, now_ms);
+    result.range_calibrated = range_.valid;
+    result.minimum_speed_code = range_.valid ? range_.minimum_speed_code : profile_.run_speed_code;
+    result.maximum_speed_code = profile_.run_speed_code;
+    result.command_percent = profile_.run_speed_code ? 100.0*result.outputs.speed_code/profile_.run_speed_code : 0;
+    result.working_span_fraction = regulator_.value().fraction;
+    const auto cal = calibrator_.snapshot(now_ms);
+    result.calibration_active = calibration_requested_ || calibration_candidate_.valid;
+    result.calibration_phase = calibration_saved_ ? "SAVED" :
+        (calibration_requested_ && state_ != State::RUN ? "STARTING" : calibration::phase_name(cal.phase));
+    result.calibration_reason = calibration::reason_name(cal.reason);
+    result.calibration_target_code = cal.target_code;
+    result.calibration_points = cal.accepted_point_count;
+    result.calibration_elapsed_ms = now_ms >= calibration_started_ms_ &&
+        (result.calibration_active || cal.phase != calibration::Phase::IDLE)
+        ? now_ms-calibration_started_ms_ : 0;
+    result.room_excess = !result.calibration_active && state_ == State::RUN && settings_.mode == Mode::TEMPERATURE &&
+        last_sensors_.room.valid && last_sensors_.room.milli_c > settings_.room_setpoint_milli_c &&
+        (!range_.valid || result.working_span_fraction <= 0.001);
     return result;
 }
 
-void Controller::update_settings(const Settings& settings) {
-    if (valid_timer(settings.duration_ms) && settings.room_hysteresis_milli_c > 0) settings_ = settings;
+bool Controller::update_settings(const Settings& settings) {
+    if (!valid_settings(settings) || state_ == State::MAINTENANCE ||
+        calibration_requested_ || calibration_candidate_.valid) return false;
+    Settings accepted = settings;
+    if (active(state_) && settings_.mode == Mode::TEMPERATURE && settings.mode == Mode::MANUAL && profile_.run_speed_code) {
+        const long step = std::lround(20.0 * run_speed_code_/profile_.run_speed_code);
+        accepted.manual_percent = static_cast<uint8_t>(std::clamp(step*5, 5L, 100L));
+    }
+    if (range_.valid) {
+        const unsigned first_step = (20U*range_.minimum_speed_code + range_.maximum_speed_code-1)/range_.maximum_speed_code;
+        accepted.manual_percent = std::max<uint8_t>(accepted.manual_percent, static_cast<uint8_t>(first_step*5));
+    }
+    settings_ = accepted;
+    ++state_version_;
+    return true;
+}
+
+bool Controller::update_process_profile(const ProcessProfile& profile, uint64_t now_ms) {
+    if (!profile.qualified || !valid_process_profile(profile) || calibration_requested_ ||
+        calibration_candidate_.valid || delayed_armed_ ||
+        (state_ != State::IDLE && state_ != State::FAULT && state_ != State::RECOVERY_PURGE)) return false;
+    profile_ = profile;
+    range_ = {};
+    calibrator_ = {};
+    calibration_saved_ = false;
+    delayed_armed_ = duration_active_ = false;
+    delayed_due_ms_ = duration_deadline_ms_ = arm_id_ = run_id_ = 0;
+    run_speed_code_ = profile_.run_speed_code;
+    purge_started_ms_ = now_ms;
+    purge_minimum_ms_ = profile_.recovery_purge_ms;
+    purge_id_ = next_id_++;
+    transition(faults_ ? State::FAULT_PURGE : State::RECOVERY_PURGE, now_ms);
+    ++state_version_;
+    record("PROCESS_CONFIGURED", now_ms);
+    return true;
+}
+
+bool Controller::install_range(const OperatingRange& range) {
+    if (active(state_) || state_ == State::MAINTENANCE || !profile_.qualified || !range.valid ||
+        range.process_fingerprint != process_fingerprint(profile_) || !profile_.calibration_floor_speed_code ||
+        range.minimum_speed_code < profile_.calibration_floor_speed_code || range.minimum_speed_code >= range.maximum_speed_code ||
+        range.maximum_speed_code != profile_.run_speed_code || !std::isfinite(range.slew_up_per_s) ||
+        !std::isfinite(range.slew_down_per_s) || range.slew_up_per_s < 0.0001 || range.slew_up_per_s > 0.005 ||
+        range.slew_down_per_s < 0.0001 || range.slew_down_per_s > 0.005) return false;
+    range_ = range;
+    run_speed_code_ = profile_.run_speed_code;
+    ++state_version_;
+    return true;
+}
+
+void Controller::regulate(uint64_t now_ms, const Sensors& sensors) {
+    if (!range_.valid) { run_speed_code_ = profile_.run_speed_code; return; }
+    const double span = range_.maximum_speed_code-range_.minimum_speed_code;
+    const double manual = std::clamp((settings_.manual_percent*range_.maximum_speed_code/100.0-
+        range_.minimum_speed_code)/span, 0.0, 1.0);
+    const double room = sensors.room.valid ? sensors.room.milli_c/1000.0 : settings_.room_setpoint_milli_c/1000.0;
+    const auto regulated = regulator_.tick(now_ms, room, settings_.room_setpoint_milli_c/1000.0,
+        settings_.mode == Mode::TEMPERATURE, manual, std::min(settings_.slew_up_per_s,range_.slew_up_per_s),
+        std::min(settings_.slew_down_per_s,range_.slew_down_per_s));
+    run_speed_code_ = range_.minimum_speed_code + regulated.fraction*span;
+}
+
+void Controller::record(const char* kind, uint64_t now_ms) {
+    if (event_count_ == events_.size()) {
+        std::move(events_.begin()+1, events_.end(), events_.begin());
+        --event_count_;
+    }
+    events_[event_count_++] = {now_ms,kind,state_,outputs().speed_code,last_sensors_.exhaust.milli_c,
+        last_sensors_.air.milli_c,faults_};
 }
 
 int32_t decode_max31856_signed19(uint8_t msb, uint8_t mid, uint8_t lsb) {

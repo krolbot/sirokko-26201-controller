@@ -2,6 +2,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <array>
+#include "sirokko/regulator.hpp"
+#include "sirokko/calibration.hpp"
 
 namespace sirokko {
 
@@ -11,6 +14,8 @@ constexpr uint64_t kCommandFreshnessMs = 5000;
 constexpr uint64_t kSensorStaleMs = 600;
 constexpr uint64_t kRoomSensorStaleMs = 2000;
 constexpr uint64_t kMaximumTimerMs = 7ULL * 24 * 60 * 60 * 1000;
+
+enum class Mode : uint8_t { TEMPERATURE, MANUAL };
 
 enum class State : uint8_t {
     RECOVERY_PURGE,
@@ -47,6 +52,8 @@ enum Fault : uint32_t {
     FAULT_IGNITION_TIMEOUT = 1U << 4,
     FAULT_FLAME_LOST = 1U << 5,
     FAULT_CONTROL_WATCHDOG = 1U << 6,
+    FAULT_CALIBRATION = 1U << 7,
+    FAULT_STORAGE = 1U << 8,
 };
 
 struct SensorSample {
@@ -78,13 +85,43 @@ struct ProcessProfile {
     int32_t minimum_run_exhaust_milli_c{};
     uint16_t purge_speed_code{};
     uint16_t run_speed_code{};
+    // Explicit trial envelope; zero forbids automatic exploration, not an invented motor minimum.
+    uint16_t calibration_floor_speed_code{};
+    int32_t minimum_ignition_air_rise_milli_c{};
 };
 
 struct Settings {
-    int32_t room_setpoint_milli_c{20000};
+    int32_t room_setpoint_milli_c{15000};
     int32_t room_hysteresis_milli_c{1000};
-    uint64_t duration_ms{3600000};
+    uint64_t duration_ms{};  // 0 = no automatic shutdown; never persisted as an active deadline.
+    Mode mode{Mode::TEMPERATURE};
+    uint8_t manual_percent{100};
+    double slew_up_per_s{0.005};
+    double slew_down_per_s{0.005};
 };
+
+struct OperatingRange {
+    bool valid{};
+    uint16_t minimum_speed_code{};
+    uint16_t maximum_speed_code{};
+    double slew_up_per_s{0.005};
+    double slew_down_per_s{0.005};
+    uint64_t process_fingerprint{};
+};
+
+struct ControlEvent {
+    uint64_t at_ms{};
+    const char* kind{"NONE"};
+    State state{State::IDLE};
+    uint16_t speed_code{};
+    int32_t exhaust_milli_c{};
+    int32_t air_milli_c{};
+    uint32_t faults{};
+};
+
+bool valid_settings(const Settings& settings);
+bool valid_process_profile(const ProcessProfile& profile);
+uint64_t process_fingerprint(const ProcessProfile& profile);
 
 struct Outputs {
     bool fan_request{};
@@ -105,6 +142,10 @@ struct TickInput {
     uint64_t delay_ms{};
     bool enter_maintenance{};
     bool exit_maintenance{};
+    bool start_calibration{};
+    bool set_shutdown_timer{};
+    uint64_t shutdown_after_ms{};  // 0 cancels an active timer.
+    bool operator_combustion_problem{};
 };
 
 struct Snapshot {
@@ -125,10 +166,22 @@ struct Snapshot {
     uint64_t purge_minimum_remaining_ms{};
     bool purge_sensors_fresh{};
     bool purge_temperature_ready{};
-    bool profile_qualified{};
+    bool profile_qualified{}; // Legacy name: configured process limits, NOT measured combustion quality.
+    bool range_calibrated{};
+    uint16_t minimum_speed_code{};
+    uint16_t maximum_speed_code{};
+    double command_percent{};
+    double working_span_fraction{};
+    bool calibration_active{};
+    const char* calibration_phase{"IDLE"};
+    const char* calibration_reason{"NONE"};
+    uint16_t calibration_target_code{};
+    uint16_t calibration_points{};
+    uint64_t calibration_elapsed_ms{};
+    bool room_excess{};
 };
 
-enum class Action : uint8_t { START, ARM, RESET_FAULT, SETTINGS, OTA };
+enum class Action : uint8_t { START, ARM, RESET_FAULT, SETTINGS, OTA, CALIBRATE, TIMER, CANCEL_ARM, PROCESS_CONFIG };
 
 struct Grant {
     uint64_t token{};
@@ -154,9 +207,24 @@ public:
     Controller(ProcessProfile profile, Settings settings, uint64_t boot_id);
     Snapshot tick(const TickInput& input);
     Snapshot snapshot(uint64_t now_ms) const;
-    void update_settings(const Settings& settings);
+    bool update_settings(const Settings& settings);
+    bool update_process_profile(const ProcessProfile& profile, uint64_t now_ms);
+    bool install_range(const OperatingRange& range);
+    bool pending_calibration_range(OperatingRange* range) const;
+    bool finish_calibration_storage(bool success);
+    OperatingRange operating_range() const { return range_; }
+    ProcessProfile process_profile() const { return profile_; }
+    Settings settings() const { return settings_; }
+    const std::array<ControlEvent,16>& events() const { return events_; }
+    size_t event_count() const { return event_count_; }
 private:
     bool sensors_fresh(const Sensors& sensors, uint64_t now_ms) const;
+    bool thermal_sensors_fresh(const Sensors& sensors, uint64_t now_ms) const;
+    void record(const char* kind, uint64_t now_ms);
+    void regulate(uint64_t now_ms, const Sensors& sensors);
+    void start_calibration_run(uint64_t now_ms);
+    void run_calibration(uint64_t now_ms, const Sensors& sensors);
+    void cancel_calibration(calibration::Reason reason, uint64_t now_ms);
     uint32_t sensor_faults(const Sensors& sensors, uint64_t now_ms) const;
     Block start_guard(const Sensors& sensors, uint64_t now_ms) const;
     void transition(State state, uint64_t now_ms);
@@ -187,6 +255,22 @@ private:
     bool duration_active_{};
     bool delayed_armed_{};
     uint32_t previous_external_faults_{};
+    OperatingRange range_;
+    Regulator regulator_;
+    calibration::Calibrator calibrator_;
+    calibration::Config calibration_config_;
+    OperatingRange calibration_candidate_;
+    bool calibration_requested_{};
+    bool calibration_saved_{};
+    uint64_t calibration_started_ms_{};
+    uint64_t calibration_control_ms_{};
+    calibration::Phase calibration_logged_phase_{calibration::Phase::IDLE};
+    double run_speed_code_{};
+    int32_t ignition_air_baseline_milli_c_{};
+    uint64_t last_tick_ms_{};
+    bool have_tick_{};
+    std::array<ControlEvent,16> events_{};
+    size_t event_count_{};
 };
 
 int32_t decode_max31856_signed19(uint8_t msb, uint8_t mid, uint8_t lsb);

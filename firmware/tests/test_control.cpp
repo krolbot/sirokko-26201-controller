@@ -29,7 +29,7 @@ uint8_t hex_byte(const std::string& value) {
 }
 
 Sensors good(uint64_t now, int32_t exhaust = 100000, int32_t room = 15000) {
-    return {{exhaust, now, 0, true}, {80000, now, 0, true}, {room, now, 0, true}};
+    return {{exhaust, now, 0, true}, {exhaust * 4 / 5, now, 0, true}, {room, now, 0, true}};
 }
 
 ProcessProfile profile() {
@@ -46,6 +46,7 @@ ProcessProfile profile() {
     value.maximum_exhaust_milli_c = 500000;
     value.maximum_air_milli_c = 400000;
     value.minimum_ignition_rise_milli_c = 20000;
+    value.minimum_ignition_air_rise_milli_c = 10000;
     value.minimum_run_exhaust_milli_c = 110000;
     value.purge_speed_code = 2000;
     value.run_speed_code = 3000;
@@ -174,6 +175,22 @@ void test_state_machine_and_priority() {
     in.now_ms = 162;
     in.sensors = good(162, 130000);
     assert(machine.tick(in).state == State::IDLE);
+}
+
+void test_maintenance_stop_priority() {
+    Controller machine(profile(),{},9);TickInput in{};
+    in.now_ms=100;in.sensors=good(100);assert(machine.tick(in).state==State::IDLE);
+    in.now_ms=101;in.sensors=good(101);in.enter_maintenance=true;
+    auto s=machine.tick(in);assert(s.state==State::MAINTENANCE);
+    assert(!s.outputs.fuel && !s.outputs.glow && !s.outputs.fan_request);
+    in.now_ms=102;in.sensors=good(102);in.stop=true;in.start=true;
+    s=machine.tick(in);assert(s.state==State::IDLE);
+    assert(!s.outputs.fuel && !s.outputs.glow && !s.outputs.fan_request);
+    in.now_ms=103;in.sensors=good(103);in.stop=false;in.start=false;
+    assert(machine.tick(in).state==State::MAINTENANCE);
+    in.now_ms=104;in.sensors=good(104);in.sensors.air.valid=false;
+    s=machine.tick(in);assert(s.state!=State::MAINTENANCE && s.faults);
+    assert(!s.outputs.fuel && !s.outputs.glow);
 }
 
 void test_delayed_stop_and_fault_barriers() {
@@ -523,6 +540,7 @@ int main(int argc, char** argv) {
     test_gate();
     test_safe_closed();
     test_state_machine_and_priority();
+    test_maintenance_stop_priority();
     test_delayed_stop_and_fault_barriers();
     test_duration_exact_boundary();
     test_output_driver_fault_is_safe();

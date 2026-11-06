@@ -1,0 +1,27 @@
+menu "Sirokko local panel"
+    config SIROKKO_PANEL_WIDTH
+        int "Native TFT width (pixels)"
+        range 1 320
+        default 240
+    config SIROKKO_PANEL_HEIGHT
+        int "Native TFT height (pixels)"
+        range 1 320
+        default 320
+    config SIROKKO_PANEL_ROTATION
+        int "Rotation (0, 90, 180 or 270 degrees)"
+        range 0 270
+        default 0
+        help
+            Other values are rejected by the display driver; safety control remains independent.
+    config SIROKKO_PANEL_X_GAP
+        int "Controller X offset (pixels)"
+        range 0 320
+        default 0
+    config SIROKKO_PANEL_Y_GAP
+        int "Controller Y offset (pixels)"
+        range 0 320
+        default 0
+    config SIROKKO_PANEL_INVERT
+        bool "Invert ST7789 colors"
+        default y
+endmenu
