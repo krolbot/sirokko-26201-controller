@@ -491,37 +491,75 @@ void test_bounded_receive_policy() {
 
 struct OutputLog {
     std::vector<std::string> events;
-    bool fail_pwm{};
+    bool fail_nonzero_pwm{};
+    bool fail_zero_pwm{};
+    bool fail_fan{};
+    bool fail_fuel_off{};
+    bool fail_glow_off{};
 };
 
 bool fake_digital(void* context, OutputLine line, bool enabled) {
     auto& log = *static_cast<OutputLog*>(context);
     const char* name = line == OutputLine::FUEL ? "FUEL" : line == OutputLine::GLOW ? "GLOW" : "FAN";
     log.events.emplace_back(std::string(name) + (enabled ? "=1" : "=0"));
+    if (line == OutputLine::FAN_REQUEST) return !log.fail_fan;
+    if (line == OutputLine::FUEL && !enabled) return !log.fail_fuel_off;
+    if (line == OutputLine::GLOW && !enabled) return !log.fail_glow_off;
     return true;
 }
 
 bool fake_pwm(void* context, uint16_t speed_code) {
     auto& log = *static_cast<OutputLog*>(context);
     log.events.emplace_back("PWM=" + std::to_string(speed_code));
-    return !log.fail_pwm;
+    return speed_code == 0 ? !log.fail_zero_pwm : !log.fail_nonzero_pwm;
 }
 
 void test_output_driver_fail_closed_order() {
     FailClosedOutputDriver driver;
     OutputLog log{};
-    log.fail_pwm = true;
-    assert(!driver.apply({true, 2000, true, true}, &log, fake_digital, fake_pwm));
-    for (const auto& event : log.events) assert(event != "GLOW=1" && event != "FUEL=1");
-    assert(!driver.current().glow && !driver.current().fuel);
-
-    log = {};
-    assert(driver.apply({true, 2000, true, true}, &log, fake_digital, fake_pwm));
+    assert(driver.apply({true, 1500, true, true}, &log, fake_digital, fake_pwm));
     const auto fan = std::find(log.events.begin(), log.events.end(), "FAN=1");
-    const auto pwm = std::find(log.events.begin(), log.events.end(), "PWM=2000");
+    const auto pwm = std::find(log.events.begin(), log.events.end(), "PWM=1500");
     const auto glow = std::find(log.events.begin(), log.events.end(), "GLOW=1");
     const auto fuel = std::find(log.events.begin(), log.events.end(), "FUEL=1");
     assert(fan < pwm && pwm < glow && glow < fuel);
+
+    log = {};
+    log.fail_nonzero_pwm = true;
+    assert(!driver.apply({true, 2000, false, false}, &log, fake_digital, fake_pwm));
+    assert(std::find(log.events.begin(), log.events.end(), "PWM=2000") != log.events.end());
+    assert(std::find(log.events.begin(), log.events.end(), "PWM=0") == log.events.end());
+    assert(std::count(log.events.begin(), log.events.end(), "FUEL=0") >= 2);
+    assert(std::count(log.events.begin(), log.events.end(), "GLOW=0") >= 2);
+    assert(!driver.current().fuel && !driver.current().glow && driver.current().fan_request &&
+           driver.current().speed_code == 1500);
+
+    log = {};
+    log.fail_fan = true;
+    assert(!driver.apply({false, 0, false, false}, &log, fake_digital, fake_pwm));
+    assert(std::count(log.events.begin(), log.events.end(), "PWM=0") == 1);
+    assert(!driver.current().fuel && !driver.current().glow && driver.current().fan_request &&
+           driver.current().speed_code == 0);
+
+    log = {};
+    assert(driver.apply({true, 1600, true, true}, &log, fake_digital, fake_pwm));
+    log = {};
+    log.fail_fan = true;
+    log.fail_zero_pwm = true;
+    assert(!driver.apply({false, 0, false, false}, &log, fake_digital, fake_pwm));
+    assert(std::count(log.events.begin(), log.events.end(), "PWM=0") == 1);
+    assert(!driver.current().fuel && !driver.current().glow && driver.current().fan_request &&
+           driver.current().speed_code == 1600);
+
+    log = {};
+    assert(driver.apply({true, 1700, true, true}, &log, fake_digital, fake_pwm));
+    log = {};
+    log.fail_fuel_off = true;
+    assert(!driver.apply({true, 1800, false, false}, &log, fake_digital, fake_pwm));
+    assert(std::count(log.events.begin(), log.events.end(), "FUEL=0") >= 2);
+    assert(driver.current().fuel && !driver.current().glow && driver.current().fan_request &&
+           driver.current().speed_code == 1700);
+    for (const auto& event : log.events) assert(event != "GLOW=1" && event != "FUEL=1");
 }
 
 void test_max31856_deadline_boundaries() {
@@ -552,5 +590,5 @@ int main(int argc, char** argv) {
     test_bounded_receive_policy();
     std::cout << "PASS: 352 MAX31856 vectors + deadline edges; 31 DS18B20 vectors (25 accepted/6 rejected); "
                  "command freshness; state/timer/fault/STOP/purge barriers; external-fault incident edges; "
-                 "bounded HTTP/OTA receive policy; fail-closed output order\n";
+                 "bounded HTTP/OTA receive policy; fail-closed output order and confirmed PWM error state\n";
 }

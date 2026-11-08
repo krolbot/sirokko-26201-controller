@@ -656,6 +656,10 @@ ParseError parse_request(const char* text, size_t size, const sirokko::Settings&
     if (!command_submission && (seen & kGrant) != 0U) return ParseError::GRANT;
     if ((seen & ~required) != 0U) return ParseError::UNKNOWN_FIELD;
     if ((seen & required) != required) return ParseError::MISSING_FIELD;
+    // The signed upload has its own counted-body endpoint.  Keeping OTA out of
+    // generic submissions prevents a grant from entering maintenance without
+    // the package verifier and its guaranteed exit path.
+    if (command_submission && command.action == sirokko::Action::OTA) return ParseError::OTA_UPLOAD_ONLY;
     command.payload_digest = digest_command(command);
     *output = command;
     return ParseError::OK;
@@ -817,6 +821,7 @@ const char* error_name(ParseError error) {
         case ParseError::PROCESS: return "PROCESS";
         case ParseError::GRANT: return "GRANT";
         case ParseError::STOP_CHALLENGE: return "STOP_CHALLENGE";
+        case ParseError::OTA_UPLOAD_ONLY: return "OTA_UPLOAD_ONLY";
     }
     return "PROTOCOL";
 }

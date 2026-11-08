@@ -156,6 +156,9 @@ const char* russian_block(sirokko::Block block) {
         case sirokko::Block::BUSY: return "Автомат занят";
         case sirokko::Block::MAINTENANCE: return "Обслуживание";
         case sirokko::Block::STALE_COMMAND: return "Команда устарела";
+        case sirokko::Block::CALIBRATION_DISABLED: return "Калибровка отключена в профиле процесса";
+        case sirokko::Block::CALIBRATION_RANGE_INVALID: return "Диапазон исследования калибровки недопустим";
+        case sirokko::Block::CALIBRATION_TIME_BUDGET: return "Калибровка не укладывается в разрешённый общий срок";
     }
     return "Неизвестный запрет";
 }
@@ -177,6 +180,11 @@ const char* russian_event(const char* kind) {
 const char* russian_calibration(const char* code) {
     if (!code || std::strcmp(code, "NONE") == 0) return "нет причины";
     if (std::strcmp(code, "IDLE") == 0) return "ожидание";
+    if (std::strcmp(code, "PERSIST_STAGING") == 0) return "подготовка результата; отмена ещё возможна";
+    if (std::strcmp(code, "PERSIST_COMMITTING") == 0) return "запись результата; граница отмены пройдена";
+    if (std::strcmp(code, "PERSIST_FAILED") == 0) return "запись результата не подтверждена";
+    if (std::strcmp(code, "STORAGE_UNCONFIRMED") == 0) return "ошибка записи или обратного чтения; содержимое памяти требует проверки";
+    if (std::strcmp(code, "SAVED") == 0) return "результат записан и проверен";
     if (std::strstr(code, "KEY0") || std::strstr(code, "OPERATOR"))
         return "оператор сообщил отсутствие/неустойчивость горения";
     return code;
@@ -425,6 +433,8 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw(",\"phase_ru\":"); json->quoted(russian_calibration(control.calibration_phase));
     json->raw(",\"reason\":"); json->quoted(control.calibration_reason);
     json->raw(",\"reason_ru\":"); json->quoted(russian_calibration(control.calibration_reason));
+    json->raw(",\"block\":{\"code\":"); json->quoted(sirokko::block_name(control.calibration_block));
+    json->raw(",\"ru\":"); json->quoted(russian_block(control.calibration_block)); json->character('}');
     json->raw(",\"target_code\":"); json->unsigned_integer(static_cast<uint32_t>(control.calibration_target_code));
     json->raw(",\"points\":"); json->unsigned_integer(static_cast<uint32_t>(control.calibration_points));
     json->raw(",\"elapsed_ms\":"); json->unsigned_integer(control.calibration_elapsed_ms); json->raw("}");
@@ -675,6 +685,9 @@ esp_err_t challenge_handler(httpd_req_t* request) {
     std::fill(body.begin(), body.end(), 0);
     if (parsed != web_protocol::ParseError::OK) return reject(request, web_protocol::error_name(parsed));
     if (!semantic_valid(command)) return reject(request, "VALUE");
+    if (command.action == sirokko::Action::CALIBRATE && view.control.calibration_block != sirokko::Block::NONE) {
+        return reject(request, "CALIBRATION_BLOCK", "409 Conflict");
+    }
     sirokko::Grant issued{};
     const uint64_t parameters = runtime_hash(command);
     if (!runtime_issue(command.action, parameters, &issued)) return reject(request, "BUSY", "503 Service Unavailable");
@@ -714,6 +727,12 @@ esp_err_t command_handler(httpd_req_t* request) {
     const web_protocol::ParseError parsed = web_protocol::parse_command_request(body.data(), body_size, view.settings, &command);
     std::fill(body.begin(), body.end(), 0);
     if (parsed != web_protocol::ParseError::OK) return reject(request, web_protocol::error_name(parsed));
+    // Defense in depth for the parser-level OTA_UPLOAD_ONLY rejection above:
+    // only /api/ota owns a signed upload and maintenance lifecycle.
+    if (command.action == sirokko::Action::OTA) return reject(request, "OTA_UPLOAD_ONLY", "405 Method Not Allowed");
+    if (command.action == sirokko::Action::CALIBRATE && view.control.calibration_block != sirokko::Block::NONE) {
+        return reject(request, "CALIBRATION_BLOCK", "409 Conflict");
+    }
     bool previous = false;
     const web_protocol::ReplayResult replay = g_replays.lookup(command.command_id, command.payload_digest, &previous);
     if (replay == web_protocol::ReplayResult::CONFLICT) return reject(request, "REPLAY", "409 Conflict");

@@ -170,6 +170,26 @@ test('synthetic fixture: a single timer maps to SETTINGS in IDLE and TIMER in an
   expect(fixture.commands[1]).toMatchObject({ action: 'TIMER', delay_ms: 120_000 });
 });
 
+test('synthetic fixture: explicit calibration block is visible and never reaches a challenge', async ({ page }) => {
+  const fixture = fixtures.get(page);
+  fixture.state = syntheticState({
+    calibration: {
+      block: {
+        code: 'CALIBRATION_RANGE_INVALID',
+        ru: 'Диапазон исследования калибровки недопустим',
+      },
+    },
+  });
+  await openLoggedIn(page);
+  await openDetail(page, 'Калибровка');
+  const blocked = page.getByRole('button', { name: 'Калибровка недоступна', exact: true });
+  await expect(blocked).toBeDisabled();
+  await expect(page.getByTestId('calibration-availability')).toContainText('Диапазон исследования калибровки недопустим');
+  await expect(page.getByTestId('calibration-availability')).toContainText('CALIBRATION_RANGE_INVALID');
+  expect(fixture.challenges).toEqual([]);
+  expect(fixture.commands).toEqual([]);
+});
+
 test('synthetic fixture: OTA stale challenge never uploads over a TFT-updated snapshot', async ({ page }) => {
   const fixture = fixtures.get(page);
   fixture.challengeVersion = '23';

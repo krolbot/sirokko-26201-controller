@@ -24,6 +24,7 @@ enum class ParseError : uint8_t {
     PROCESS,
     GRANT,
     STOP_CHALLENGE,
+    OTA_UPLOAD_ONLY,
 };
 
 struct GrantFields {

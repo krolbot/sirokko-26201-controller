@@ -61,7 +61,7 @@ export function syntheticState(patch = {}) {
     range: { calibrated: true, minimum_speed_code: 160, maximum_speed_code: 850, working_span_fraction: 0.4 },
     room_excess: false,
     process: { configured: true, physical_tests: false, profile: { ...SYNTHETIC_PROCESS_PROFILE } },
-    calibration: { active: false, phase: 'IDLE', phase_ru: 'ожидание', reason: 'NONE', reason_ru: 'нет причины', target_code: 0, points: 0, elapsed_ms: 0 },
+    calibration: { active: false, phase: 'IDLE', phase_ru: 'ожидание', reason: 'NONE', reason_ru: 'нет причины', block: { code: 'NONE', ru: 'Нет' }, target_code: 0, points: 0, elapsed_ms: 0 },
     events: [{ at_ms: 1_000, kind: 'START', kind_ru: 'Запуск принят автоматом', state: 'IDLE', state_ru: 'Ожидание', speed_code: 0, exhaust_milli_c: 50_000, air_milli_c: 25_000, faults: 0 }],
   };
   return mergeSynthetic(base, patch);

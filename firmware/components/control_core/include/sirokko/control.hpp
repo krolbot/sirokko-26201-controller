@@ -41,6 +41,9 @@ enum class Block : uint8_t {
     BUSY,
     MAINTENANCE,
     STALE_COMMAND,
+    CALIBRATION_DISABLED,
+    CALIBRATION_RANGE_INVALID,
+    CALIBRATION_TIME_BUDGET,
 };
 
 enum Fault : uint32_t {
@@ -122,6 +125,8 @@ struct ControlEvent {
 bool valid_settings(const Settings& settings);
 bool valid_process_profile(const ProcessProfile& profile);
 uint64_t process_fingerprint(const ProcessProfile& profile);
+// Calibration-specific admission after the common start guard has passed.
+Block calibration_configuration_block(const ProcessProfile& profile, const Settings& settings);
 
 struct Outputs {
     bool fan_request{};
@@ -179,6 +184,7 @@ struct Snapshot {
     uint16_t calibration_points{};
     uint64_t calibration_elapsed_ms{};
     bool room_excess{};
+    Block calibration_block{Block::PROFILE_NOT_QUALIFIED};
 };
 
 enum class Action : uint8_t { START, ARM, RESET_FAULT, SETTINGS, OTA, CALIBRATE, TIMER, CANCEL_ARM, PROCESS_CONFIG };
@@ -211,6 +217,12 @@ public:
     bool update_process_profile(const ProcessProfile& profile, uint64_t now_ms);
     bool install_range(const OperatingRange& range);
     bool pending_calibration_range(OperatingRange* range) const;
+    // A candidate becomes irrevocable to STOP/fault cancellation only after seal succeeds.
+    bool begin_calibration_storage(uint64_t tx_id);
+    bool seal_calibration_storage(uint64_t tx_id);
+    bool complete_calibration_storage(uint64_t tx_id, bool verified);
+    bool calibration_storage_ready(uint64_t tx_id) const;
+    // Legacy compatibility: false clears an unsealed candidate/stage; true accepts only an unstaged candidate.
     bool finish_calibration_storage(bool success);
     OperatingRange operating_range() const { return range_; }
     ProcessProfile process_profile() const { return profile_; }
@@ -231,7 +243,7 @@ private:
     void begin_purge(State state, uint64_t now_ms);
     bool purge_ready(const Sensors& sensors, uint64_t now_ms) const;
     void begin_start(uint64_t now_ms, const Sensors& sensors);
-    void begin_stop(uint64_t now_ms);
+    void begin_stop(uint64_t now_ms, bool preserve_calibration_candidate = false);
     void latch_fault(uint32_t faults, uint64_t now_ms);
     Outputs outputs() const;
 
@@ -262,6 +274,10 @@ private:
     OperatingRange calibration_candidate_;
     bool calibration_requested_{};
     bool calibration_saved_{};
+    uint64_t calibration_storage_id_{};
+    bool calibration_storage_sealed_{};
+    // A sealed write failure is indeterminate until a later boot/load verifies NVS.
+    bool calibration_storage_unconfirmed_{};
     uint64_t calibration_started_ms_{};
     uint64_t calibration_control_ms_{};
     calibration::Phase calibration_logged_phase_{calibration::Phase::IDLE};
@@ -288,6 +304,7 @@ using PwmWriter = bool (*)(void* context, uint16_t speed_code);
 class FailClosedOutputDriver {
 public:
     bool apply(const Outputs& requested, void* context, DigitalWriter digital_write, PwmWriter pwm_write);
+    // Last values confirmed by successful writer calls; a failed PWM-off request is not represented as zero.
     Outputs current() const { return current_; }
 private:
     Outputs current_{};

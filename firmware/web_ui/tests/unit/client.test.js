@@ -4,6 +4,8 @@ import test from 'node:test';
 import { ApiClient } from '../../src/lib/api.js';
 import { ControllerSession } from '../../src/lib/controller.js';
 import {
+  calibrationAllowed,
+  calibrationBlock,
   commandMatchesSnapshot,
   fullSettingsPayload,
   sensorText,
@@ -88,6 +90,32 @@ test('API OTA preparation preserves opaque hex grants and sends complete-file di
   assert.equal(upload.options.headers['X-Sirokko-Expires'], 'a0');
   assert.equal(upload.options.headers['X-Sirokko-Command-Id'], 'c0ffee');
   assert.equal(upload.options.headers['X-Sirokko-Upload-SHA256'], prepared.payload.upload_sha256);
+});
+
+test('generic client command refuses OTA before any /api/command request', () => {
+  const calls = [];
+  const client = new ApiClient({ fetchImpl: async (...arguments_) => { calls.push(arguments_); throw new Error('must not fetch'); } });
+  assert.throws(() => client.command({ action: 'OTA', command_id: '1' }), /prepareOta\(\).*sendOta/);
+  assert.equal(calls.length, 0);
+});
+
+test('calibration block fails closed before browser challenge or generic command', async () => {
+  const block = { code: 'CALIBRATION_TIME_BUDGET', ru: 'Калибровка не укладывается в разрешённый общий срок' };
+  const api = new SyntheticApi(syntheticState({ calibration: { block } }));
+  const session = await restored(api);
+  assert.deepEqual(calibrationBlock(session.view.snapshot), block);
+  assert.equal(calibrationAllowed(session.view.snapshot), false);
+  const result = await session.submit('CALIBRATE');
+  assert.equal(result.status, 'CALIBRATION_BLOCKED');
+  assert.equal(api.calls.challenge.length, 0);
+  assert.equal(api.calls.command.length, 0);
+  assert.match(session.view.message.text, /разрешённый общий срок/);
+
+  const legacySnapshot = syntheticState();
+  delete legacySnapshot.calibration.block;
+  assert.equal(calibrationAllowed(legacySnapshot), false, 'missing contract field must not permit calibration');
+  assert.equal(calibrationBlock(legacySnapshot).code, 'PROFILE_NOT_QUALIFIED');
+  assert.equal(calibrationAllowed(syntheticState()), true, 'permitted fixture states set an explicit NONE block');
 });
 
 test('settings carry the complete current payload and confirm only on a newer matching snapshot', async () => {

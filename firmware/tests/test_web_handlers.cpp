@@ -83,6 +83,7 @@ void reset() {
     view.control.minimum_speed_code = 100;
     view.control.maximum_speed_code = 900;
     view.control.working_span_fraction = 0.4;
+    view.control.calibration_block = sirokko::Block::NONE;
     view.control.calibration_phase = "IDLE";
     view.control.calibration_reason = "NONE";
     view.settings = {};
@@ -131,6 +132,9 @@ const char* block_name(Block block) {
         case Block::BUSY: return "BUSY";
         case Block::MAINTENANCE: return "MAINTENANCE";
         case Block::STALE_COMMAND: return "STALE_COMMAND";
+        case Block::CALIBRATION_DISABLED: return "CALIBRATION_DISABLED";
+        case Block::CALIBRATION_RANGE_INVALID: return "CALIBRATION_RANGE_INVALID";
+        case Block::CALIBRATION_TIME_BUDGET: return "CALIBRATION_TIME_BUDGET";
     }
     return "UNKNOWN";
 }
@@ -221,8 +225,9 @@ int main(int argc, char** argv) {
     httpd_req_t state = request_with_body({}, cookie);
     check(state_handler(&state) == ESP_OK && state.response_body.find("\"ru\":\"Ожидание\"") != std::string::npos &&
           state.response_body.find("\"physical_tests\":false") != std::string::npos &&
+          state.response_body.find("\"block\":{\"code\":\"NONE\",\"ru\":\"Нет\"}") != std::string::npos &&
           state.response_body.find("\"kind_ru\":\"Запуск принят автоматом\"") != std::string::npos,
-          "actual state handler serializes Russian state, process boundary and event journal");
+          "actual state handler serializes Russian state, calibration availability, process boundary and event journal");
 
     // Actual serializer: unrounded IDs, sensor freshness and complete configured profile readback.
     RuntimeView extended{};runtime_view(&extended);
@@ -256,6 +261,20 @@ int main(int argc, char** argv) {
     extended.control.calibration_reason="INSUFFICIENT_THERMAL_RESPONSE";
     JsonBuilder maximum(bytes.data(),bytes.size());
     check(build_state_json(extended,&maximum),"full 16-event journal plus profile fits state buffer");
+    struct CalibrationBlockCase { sirokko::Block block; const char* code; const char* russian; };
+    constexpr CalibrationBlockCase kCalibrationBlocks[] = {
+        {sirokko::Block::CALIBRATION_DISABLED, "CALIBRATION_DISABLED", "Калибровка отключена в профиле процесса"},
+        {sirokko::Block::CALIBRATION_RANGE_INVALID, "CALIBRATION_RANGE_INVALID", "Диапазон исследования калибровки недопустим"},
+        {sirokko::Block::CALIBRATION_TIME_BUDGET, "CALIBRATION_TIME_BUDGET", "Калибровка не укладывается в разрешённый общий срок"},
+    };
+    for (const CalibrationBlockCase& item : kCalibrationBlocks) {
+        extended.control.calibration_block = item.block;
+        JsonBuilder calibration_state(bytes.data(), bytes.size());
+        check(build_state_json(extended, &calibration_state) &&
+              std::string(calibration_state.data()).find(std::string("\"block\":{\"code\":\"") + item.code + "\",\"ru\":\"" + item.russian + "\"}") != std::string::npos,
+              "all explicit calibration blocks serialize with Russian operator reasons");
+    }
+    extended.control.calibration_block = sirokko::Block::NONE;
     for(const std::string& removed: {
         std::string("{\"action\":\"ARM\",\"command_id\":\"51\",\"delay_ms\":60000}"),
         std::string("{\"action\":\"CANCEL_ARM\",\"command_id\":\"52\"}")}) {
@@ -303,8 +322,37 @@ int main(int argc, char** argv) {
     check(command_handler(&stop) == ESP_OK && stop.response_body.find("STOP_REQUESTED") != std::string::npos &&
           fake_runtime::stop_calls == 1, "STOP takes the separate immediate route without a grant");
     httpd_req_t stop_replay = request_with_body("{\"action\":\"STOP\",\"command_id\":\"2\"}", cookie);
-    check(command_handler(&stop_replay) == ESP_OK && stop_replay.response_body.find("\"replay\":true") != std::string::npos &&
-          fake_runtime::stop_calls == 1, "duplicate STOP is idempotent and does not call runtime twice");
+    check(command_handler(&stop_replay) == ESP_OK && stop_replay.response_status=="200 OK" &&
+          stop_replay.response_body.find("\"replay\":true") != std::string::npos && fake_runtime::stop_calls == 1,
+          "duplicate STOP is idempotent and does not call runtime twice");
+
+    const std::string calibrate_challenge = "{\"action\":\"CALIBRATE\",\"command_id\":\"d\"}";
+    httpd_req_t calibrate_grant = request_with_body(calibrate_challenge, cookie);
+    check(challenge_handler(&calibrate_grant) == ESP_OK && calibrate_grant.response_body.find("CHALLENGE") != std::string::npos,
+          "CALIBRATE receives a challenge only while its explicit block is NONE");
+    const std::string calibrate_submit = "{\"action\":\"CALIBRATE\",\"command_id\":\"d\",\"grant\":{\"token\":\"abc\",\"state_version\":\"22\",\"expires_ms\":\"1000\"}}";
+    fake_runtime::view.control.calibration_block = sirokko::Block::CALIBRATION_TIME_BUDGET;
+    const unsigned calibrate_submits_before = fake_runtime::submit_calls;
+    httpd_req_t blocked_calibrate = request_with_body(calibrate_submit, cookie);
+    check(command_handler(&blocked_calibrate) == ESP_OK && blocked_calibrate.response_status == "409 Conflict" &&
+          blocked_calibrate.response_body.find("CALIBRATION_BLOCK") != std::string::npos &&
+          fake_runtime::submit_calls == calibrate_submits_before,
+          "new calibration block rejects an already challenged command before runtime submit");
+    fake_runtime::view.control.calibration_block = sirokko::Block::NONE;
+    httpd_req_t allowed_calibrate = request_with_body(calibrate_submit, cookie);
+    check(command_handler(&allowed_calibrate) == ESP_OK && allowed_calibrate.response_body.find("QUEUED") != std::string::npos &&
+          fake_runtime::submit_calls == calibrate_submits_before + 1 && fake_runtime::last_action == sirokko::Action::CALIBRATE,
+          "a non-blocked calibration command remains routable after the rejected attempt");
+    for (const CalibrationBlockCase& item : kCalibrationBlocks) {
+        fake_runtime::view.control.calibration_block = item.block;
+        const unsigned issues_before = fake_runtime::issue_calls;
+        httpd_req_t blocked_challenge = request_with_body(calibrate_challenge, cookie);
+        check(challenge_handler(&blocked_challenge) == ESP_OK && blocked_challenge.response_status == "409 Conflict" &&
+              blocked_challenge.response_body.find("CALIBRATION_BLOCK") != std::string::npos &&
+              fake_runtime::issue_calls == issues_before,
+              "every explicit calibration block rejects challenge before runtime grant issuance");
+    }
+    fake_runtime::view.control.calibration_block = sirokko::Block::NONE;
 
     const auto package_digest = sirokko::web_protocol::sha256(package.data(), package.size());
     const std::string package_digest_hex = hex_digest(package_digest);
@@ -313,6 +361,15 @@ int main(int argc, char** argv) {
     httpd_req_t ota_grant = request_with_body(ota_challenge, cookie);
     check(challenge_handler(&ota_grant) == ESP_OK && ota_grant.response_body.find("CHALLENGE") != std::string::npos,
           "actual OTA challenge binds size and SHA-256 before upload");
+    const std::string generic_ota_submit = "{\"action\":\"OTA\",\"command_id\":\"a\",\"upload_size\":" +
+        std::to_string(package.size()) + ",\"upload_sha256\":\"" + package_digest_hex +
+        "\",\"grant\":{\"token\":\"abc\",\"state_version\":\"22\",\"expires_ms\":\"1000\"}}";
+    const unsigned generic_ota_submits_before = fake_runtime::submit_calls;
+    httpd_req_t generic_ota = request_with_body(generic_ota_submit, cookie);
+    check(command_handler(&generic_ota) == ESP_OK && generic_ota.response_status == "400 Bad Request" &&
+          generic_ota.response_body.find("OTA_UPLOAD_ONLY") != std::string::npos &&
+          fake_runtime::submit_calls == generic_ota_submits_before && !fake_runtime::maintenance,
+          "generic command endpoint explicitly rejects OTA without entering runtime maintenance");
     httpd_req_t ota = request_with_body(std::string(reinterpret_cast<const char*>(package.data()), package.size()), cookie);
     ota.headers["X-Sirokko-Token"] = "abc";
     ota.headers["X-Sirokko-State-Version"] = "22";
@@ -322,7 +379,7 @@ int main(int argc, char** argv) {
     ota.headers["X-Sirokko-Upload-SHA256"] = package_digest_hex;
     check(ota_handler(&ota) == ESP_OK && ota.response_body.find("VERIFIED_ACTIVATION_QUEUED") != std::string::npos &&
           fake_runtime::activation_requests==1 && !fake_esp::boot_partition && !fake_esp::restart_requested &&
-          !fake_esp::ota_bytes.empty(), "actual OTA handler verifies and queues activation, never selects partition or reboots");
+          !fake_esp::ota_bytes.empty(), "actual OTA handler still consumes the preserved challenge, verifies and queues activation");
 
     if(argc==4) {
         std::ofstream response_file(std::filesystem::path(argv[3])/"ota-response.json");

@@ -29,9 +29,28 @@ export const PROCESS_PROFILE_FIELDS = Object.freeze([
 export const ACTIVE_SESSION_STATES = new Set(['PREPURGE', 'PREHEAT', 'IGNITION', 'VERIFY', 'RUN']);
 export const TIMER_CONFIRMATION_EARLY_MS = 1_000;
 export const TIMER_CONFIRMATION_LATE_MS = 5_000;
+const MISSING_CALIBRATION_BLOCK = Object.freeze({
+  code: 'PROFILE_NOT_QUALIFIED',
+  ru: 'Нет настроенного профиля процесса',
+});
 
 export function isRecord(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+// A missing field is never permission to start automatic calibration. Older
+// snapshots fail closed to the core contract's default block instead.
+export function calibrationBlock(snapshot) {
+  const block = snapshot?.calibration?.block;
+  if (!isRecord(block) || typeof block.code !== 'string' || block.code.length === 0) return MISSING_CALIBRATION_BLOCK;
+  return {
+    code: block.code,
+    ru: typeof block.ru === 'string' && block.ru.length > 0 ? block.ru : block.code,
+  };
+}
+
+export function calibrationAllowed(snapshot) {
+  return calibrationBlock(snapshot).code === 'NONE';
 }
 
 export function isHexString(value) {

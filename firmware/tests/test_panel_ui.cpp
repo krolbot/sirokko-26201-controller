@@ -16,6 +16,7 @@ View baseline() {
     View view{};
     view.control.state = State::IDLE;
     view.control.start_block = Block::NONE;
+    view.control.calibration_block = Block::NONE;
     view.control.state_version = 10;
     view.control.boot_id = 1;
     view.settings.room_setpoint_milli_c = 20000;
@@ -103,6 +104,23 @@ void test_menu_is_exactly_eight_items_and_scrolls() {
     assert(screen.menu_count == 8);
     assert(screen.menu_rows[1] == MenuItem::MANUAL_POWER);
     assert(std::strcmp(menu_label(screen.menu_rows[1]), "Уровень") == 0);
+}
+
+void test_calibration_admission_uses_the_core_block_without_duplicating_its_policy() {
+    for (Block block : {Block::PROFILE_NOT_QUALIFIED, Block::CALIBRATION_DISABLED,
+                        Block::CALIBRATION_RANGE_INVALID, Block::CALIBRATION_TIME_BUDGET,
+                        Block::SENSOR_INVALID}) {
+        Model model;
+        View view = baseline();
+        view.control.calibration_block = block;
+        model.reset(view);
+        uint64_t now = 100;
+        open_menu(model, now);
+        select_menu(model, 3, now);
+        assert(model.screen().notice == Notice::CALIBRATION_BLOCKED);
+        Command absent{};
+        assert(!model.take_command(&absent));
+    }
 }
 
 void test_home_edit_confirms_only_after_matching_snapshot_and_double_cancels() {
@@ -298,6 +316,87 @@ void test_view_loss_blocks_old_work_and_recovery_clears_unavailable() {
     assert(model.screen().page == Page::MENU);
 }
 
+void assert_credentials_cleared(const Model& model) {
+    const LocalCredentials& credentials = model.credentials();
+    assert(!credentials.available);
+    for (char value : credentials.ssid) assert(value == '\0');
+    for (char value : credentials.password) assert(value == '\0');
+}
+
+void test_fault_reset_uses_the_existing_short_click_waits_for_a_snapshot_and_never_runs_during_purge() {
+    View fault = baseline();
+    fault.control.state = State::FAULT;
+    fault.control.faults = FAULT_CALIBRATION;
+    fault.control.state_version++;
+
+    Model model;
+    model.reset(fault);
+    uint64_t now = 100;
+    model.click(now);
+    assert(model.screen().pending_click);
+    model.tick(now + kDoubleClickWindowMs - 1);
+    Command absent{};
+    assert(!model.take_command(&absent));
+    model.tick(now + kDoubleClickWindowMs);
+    const Command reset = take(model);
+    assert(reset.kind == CommandKind::RESET_FAULT);
+    model.command_result(true);
+    assert(model.screen().notice == Notice::QUEUED);
+    assert(model.screen().command_in_flight);
+
+    View reset_ack = fault;
+    reset_ack.now_ms = now + kDoubleClickWindowMs + 20;
+    reset_ack.control.state = State::IDLE;
+    reset_ack.control.faults = FAULT_NONE;
+    reset_ack.control.state_version++;
+    model.update(reset_ack);
+    assert(model.screen().notice == Notice::NONE);
+    assert(!model.screen().command_in_flight);
+
+    Model double_click;
+    double_click.reset(fault);
+    double_click.click(now);
+    double_click.click(now + kDoubleClickWindowMs - 1);
+    double_click.tick(now + kDoubleClickWindowMs + 1);
+    assert(!double_click.screen().pending_click);
+    assert(!double_click.take_command(&absent));
+
+    View cooling = fault;
+    cooling.control.state = State::FAULT_PURGE;
+    Model purge;
+    purge.reset(cooling);
+    purge.click(now);
+    purge.tick(now + kDoubleClickWindowMs + 1);
+    assert(!purge.take_command(&absent));
+}
+
+void test_wifi_credentials_are_cleared_on_exit_and_every_unavailable_path() {
+    Model model;
+    model.reset(baseline());
+    uint64_t now = 100;
+    open_menu(model, now);
+    select_menu(model, 5, now);
+    assert(model.screen().page == Page::WIFI);
+    assert(take(model).kind == CommandKind::REQUEST_NETWORK_CREDENTIALS);
+    model.set_credentials("Sirokko", "secret-password");
+    model.command_result(true);
+    assert(model.credentials().available);
+
+    model.click(now);
+    model.click(now + kDoubleClickWindowMs - 1);
+    assert(model.screen().page == Page::MENU);
+    assert_credentials_cleared(model);
+
+    model.set_credentials("Sirokko", "secret-password");
+    model.credentials_unavailable();
+    assert(model.screen().notice == Notice::CREDENTIALS_UNAVAILABLE);
+    assert_credentials_cleared(model);
+
+    model.set_credentials("Sirokko", "secret-password");
+    model.set_view_unavailable();
+    assert_credentials_cleared(model);
+}
+
 void test_stop_fault_and_boot_cancel_stale_confirmations_and_clicks() {
     Model stop_model;
     View running = baseline();
@@ -434,13 +533,16 @@ void test_encoder_debounce_boot_hold_and_quadrature() {
 
 int main() {
     test_menu_is_exactly_eight_items_and_scrolls();
+    test_calibration_admission_uses_the_core_block_without_duplicating_its_policy();
     test_home_edit_confirms_only_after_matching_snapshot_and_double_cancels();
     test_external_snapshot_cancels_an_edit_but_normal_state_progress_does_not_stick();
     test_single_shutdown_timer_uses_timer_in_run_and_settings_in_idle();
     test_queued_is_not_success_and_times_out_without_matching_snapshot();
     test_view_loss_blocks_old_work_and_recovery_clears_unavailable();
+    test_fault_reset_uses_the_existing_short_click_waits_for_a_snapshot_and_never_runs_during_purge();
+    test_wifi_credentials_are_cleared_on_exit_and_every_unavailable_path();
     test_stop_fault_and_boot_cancel_stale_confirmations_and_clicks();
     test_hidden_phase_cannot_accept_inputs_or_replay_a_click();
     test_encoder_debounce_boot_hold_and_quadrature();
-    std::cout << "PASS: panel UI menu, single shutdown timer, snapshot confirmation and stale-command safety\n";
+    std::cout << "PASS: panel UI menu, single shutdown timer, calibration admission, fault-reset snapshot safety, Wi-Fi credential clearing and stale-command safety\n";
 }

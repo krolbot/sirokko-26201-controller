@@ -4,6 +4,8 @@
   import { ApiClient } from './lib/api.js';
   import { ControllerSession } from './lib/controller.js';
   import {
+    calibrationAllowed,
+    calibrationBlock,
     cloneJson,
     deepEqual,
     formatDuration,
@@ -273,6 +275,10 @@
   }
 
   async function startCalibration() {
+    if (!calibrationAllowed(snapshot)) {
+      message('warning', `Калибровка недоступна: ${calibrationBlockLabel(snapshot)}.`);
+      return;
+    }
     await session.submit('CALIBRATE');
   }
 
@@ -330,6 +336,11 @@
     const phase = calibration.phase_ru || calibration.phase || '—';
     const reason = calibration.reason_ru || calibration.reason || '—';
     return `${calibration.active ? 'активна' : 'не активна'}; ${phase}; ${reason}`;
+  }
+
+  function calibrationBlockLabel(state) {
+    const block = calibrationBlock(state);
+    return `${block.ru}${block.code ? ` (${block.code})` : ''}`;
   }
 
   function otaLabel(ota) {
@@ -493,8 +504,8 @@
         <h1>Калибровка</h1><p class="page-intro">Интерфейс показывает только фактическую фазу автомата; процент или завершение не моделируются.</p>
         <div class="process-state"><strong>{calibrationLabel(snapshot)}</strong><span>Точек: {snapshot.calibration?.points ?? '—'}</span></div>
         <dl class="readings"><div><dt>Фаза</dt><dd>{snapshot.calibration?.phase_ru || snapshot.calibration?.phase || '—'}</dd></div><div><dt>Причина/отмена</dt><dd>{snapshot.calibration?.reason_ru || snapshot.calibration?.reason || '—'}</dd></div><div><dt>Время</dt><dd>{formatDuration(snapshot.calibration?.elapsed_ms)}</dd></div></dl>
-        <button class="btn primary-button" disabled={!automaticReady || snapshot.calibration?.active} onclick={startCalibration}>{snapshot.calibration?.active ? 'Калибровка активна' : 'Начать калибровку'}</button>
-        <p class="field-description after-button">Для отмены используется СТОП; итог и причина появятся только в следующем снимке автомата.</p>
+        <button class="btn primary-button" disabled={!automaticReady || snapshot.calibration?.active || !calibrationAllowed(snapshot)} onclick={startCalibration}>{snapshot.calibration?.active ? 'Калибровка активна' : calibrationAllowed(snapshot) ? 'Начать калибровку' : 'Калибровка недоступна'}</button>
+        <p class="field-description after-button" data-testid="calibration-availability">{snapshot.calibration?.phase === 'PERSIST_COMMITTING' ? 'Идёт запись проверенного результата. СТОП остаётся доступен, но уже не отменяет эту запись.' : snapshot.calibration?.active || calibrationAllowed(snapshot) ? 'Для отмены используется СТОП; итог и причина появятся только в следующем снимке автомата.' : `Калибровка недоступна: ${calibrationBlockLabel(snapshot)}.`}</p>
       {:else if detail === 'advanced'}
         <h1>Плавность регулирования</h1><p class="page-intro">Изменение команды за секунду, в процентах рабочего диапазона.</p>
         <label class="full-label">Нарастание, %/с<input class="input" type="number" min="0.01" max="0.5" step="0.01" inputmode="decimal" value={Number(settingsValue('slew_up_per_s')) * 100} disabled={!automaticReady || settingsConflict} oninput={(event) => draftValue('slew_up_per_s', Number(event.currentTarget.value) / 100)} /></label>

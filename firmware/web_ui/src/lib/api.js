@@ -105,6 +105,9 @@ export class ApiClient {
   }
 
   command(payload) {
+    if (payload?.action === 'OTA') {
+      throw new TypeError('OTA передаётся только через prepareOta() и sendOta(), а не /api/command');
+    }
     if (!payload.grant) return this.postJson('/api/command', payload);
     const { token, state_version, expires_ms } = payload.grant;
     // boot_id is checked by the client, not an additional field in the strict command parser.

@@ -190,10 +190,16 @@ bool execute_command(const panel_ui::Command& command) {
             return submit_action(sirokko::Action::TIMER,command_hash(command.kind,command.delay_ms),command.delay_ms,nullptr);
         case panel_ui::CommandKind::CALIBRATE:
             return submit_action(sirokko::Action::CALIBRATE,command_hash(command.kind,0),0,nullptr);
+        case panel_ui::CommandKind::RESET_FAULT:
+            return submit_action(sirokko::Action::RESET_FAULT,command_hash(command.kind,0),0,nullptr);
         case panel_ui::CommandKind::REQUEST_NETWORK_CREDENTIALS: {
             char ssid[33]{},password[65]{};
-            const bool success=runtime_network_credentials(ssid,sizeof(ssid),password,sizeof(password));
-            if(success)g_model.set_credentials(ssid,password);
+            bool success=runtime_network_credentials(ssid,sizeof(ssid),password,sizeof(password));
+            if(success) {
+                g_model.set_credentials(ssid,password);
+                success=g_model.credentials().available;
+            }
+            if(!success)g_model.credentials_unavailable();
             std::memset(ssid,0,sizeof(ssid));std::memset(password,0,sizeof(password));return success;
         }
         case panel_ui::CommandKind::NONE:return false;
@@ -276,8 +282,6 @@ void panel_task(void*) {
             panel_ui::Command command{};
             if(g_model.take_command(&command)) {
                 const bool accepted=execute_command(command);g_model.command_result(accepted);
-                if(!accepted&&command.kind==panel_ui::CommandKind::REQUEST_NETWORK_CREDENTIALS)
-                    g_model.credentials_unavailable();
             }
             render_step(now);
         }

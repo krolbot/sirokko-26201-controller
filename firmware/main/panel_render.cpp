@@ -85,8 +85,17 @@ void message(Canvas& c,const Frame& f,const char* kicker,const char* title,const
     if(panel_draw::text_width(title,size)>292) size=24;
     if(panel_draw::text_width(title,size)>292) size=22;
     c.text(160,145,title,size,kInk,Align::Center);
-    if(detail&&*detail) c.text(160,174,detail,16,kSecond,Align::Center);
-    if(detail2&&*detail2) c.text(160,197,detail2,14,kSecond,Align::Center);
+    if(detail&&*detail) {
+        float detail_size=16;
+        if(panel_draw::text_width(detail,detail_size)>280) detail_size=14;
+        if(panel_draw::text_width(detail,detail_size)>280) detail_size=12;
+        c.text(160,174,detail,detail_size,kSecond,Align::Center);
+    }
+    if(detail2&&*detail2) {
+        float detail2_size=14;
+        if(panel_draw::text_width(detail2,detail2_size)>280) detail2_size=12;
+        c.text(160,197,detail2,detail2_size,kSecond,Align::Center);
+    }
     footer(c,foot);
 }
 // Presentation only: one soft pass toward the setpoint, never synthetic temperature progress.
@@ -326,6 +335,57 @@ const char* fault_title(uint32_t faults) {
     if(faults&sirokko::FAULT_CALIBRATION)return "Ошибка калибровки";
     return "Неисправность";
 }
+const char* calibration_reason_detail(const char* reason) {
+    if(eq(reason,"INVALID_CONFIG"))return "Неверная настройка";
+    if(eq(reason,"ALREADY_ACTIVE"))return "Уже выполняется";
+    if(eq(reason,"BACKDATED_TIME"))return "Время данных неверно";
+    if(eq(reason,"OVERALL_TIMEOUT"))return "Не хватило времени";
+    if(eq(reason,"RUN_CONTEXT_LOST"))return "Рабочий режим прерван";
+    if(eq(reason,"COMMAND_OUT_OF_RANGE"))return "Команда вне диапазона";
+    if(eq(reason,"COMMAND_SLEW_VIOLATION"))return "Нарушен темп команды";
+    if(eq(reason,"COMMAND_NOT_REACHED"))return "Команда не достигнута";
+    if(eq(reason,"SENSOR_INVALID"))return "Ошибка датчиков";
+    if(eq(reason,"STALE_SAMPLE"))return "Данные устарели";
+    if(eq(reason,"SAMPLE_TIMESTAMP_REGRESSION"))return "Время данных неверно";
+    if(eq(reason,"SAMPLE_SKEW"))return "Датчики не совпали";
+    if(eq(reason,"REPEATED_SAMPLE"))return "Нет новых данных";
+    if(eq(reason,"SAMPLE_GAP"))return "Пропуск данных";
+    if(eq(reason,"REFERENCE_TIMEOUT"))return "Нет опорных данных";
+    if(eq(reason,"POINT_TIMEOUT"))return "Нет данных точки";
+    if(eq(reason,"REFERENCE_NOT_REPRODUCIBLE"))return "Опорный режим нестабилен";
+    if(eq(reason,"NO_COMMAND_RESPONSE"))return "Нет отклика команды";
+    if(eq(reason,"POINT_NOT_REPRODUCIBLE"))return "Точка нестабильна";
+    if(eq(reason,"DYNAMIC_NOT_REPRODUCIBLE"))return "Переход нестабилен";
+    if(eq(reason,"INSUFFICIENT_MARGIN"))return "Недостаточный запас";
+    if(eq(reason,"INSUFFICIENT_THERMAL_RESPONSE"))return "Нет теплового отклика";
+    if(eq(reason,"OPERATOR_NEGATIVE")||eq(reason,"OPERATOR_COMBUSTION_PROBLEM"))return "Оператор: нет/неустойчиво";
+    if(eq(reason,"EXTERNAL_CANCEL"))return "Калибровка отменена";
+    return reason&&*reason&&!eq(reason,"NONE")?reason:"Причина не указана";
+}
+const char* fault_reset_footer(const Frame& f) {
+    if(f.screen.command_in_flight)return "Сброс: ожидание снимка";
+    if(f.screen.notice==panel_ui::Notice::CONFIRMATION_TIMEOUT)return "Сброс не подтверждён";
+    if(f.screen.notice==panel_ui::Notice::COMMAND_REJECTED)return "Сброс отклонён";
+    return "Нажать энкодер — сбросить";
+}
+struct CalibrationBlockText { const char* title; const char* detail; const char* foot; };
+CalibrationBlockText calibration_block_text(sirokko::Block block) {
+    switch(block) {
+        case sirokko::Block::PROFILE_NOT_QUALIFIED:return {"Нужна настройка","Процесс не настроен","Настройте в браузере"};
+        case sirokko::Block::CALIBRATION_DISABLED:return {"Калибровка выключена","Диапазон не разрешён","Настройте в браузере"};
+        case sirokko::Block::CALIBRATION_RANGE_INVALID:return {"Неверный диапазон","Проверьте границы","Настройте в браузере"};
+        case sirokko::Block::CALIBRATION_TIME_BUDGET:return {"Не уложится в срок","Темп изменения слишком мал","Настройте в браузере"};
+        case sirokko::Block::SENSOR_INVALID:return {"Нет показаний","Проверьте датчики","Проверьте датчики"};
+        case sirokko::Block::TEMPERATURE_OUT_OF_RANGE:return {"Высокая температура","Дождитесь охлаждения","Дождитесь охлаждения"};
+        case sirokko::Block::RECOVERY_REQUIRED:return {"Нужно охлаждение","Дождитесь окончания","Дождитесь охлаждения"};
+        case sirokko::Block::FAULT_LATCHED:return {"Устраните причину","Сначала сбросьте аварию","Нажать энкодер — сбросить"};
+        case sirokko::Block::BUSY:return {"Операция выполняется","Дождитесь завершения","Дождитесь завершения"};
+        case sirokko::Block::MAINTENANCE:return {"Обслуживание","Завершите через браузер","Управление через браузер"};
+        case sirokko::Block::STALE_COMMAND:return {"Состояние изменилось","Повторите калибровку","Повторите действие"};
+        case sirokko::Block::NONE:return {"Калибровка недоступна","Состояние изменилось","Обновите состояние"};
+    }
+    return {"Калибровка недоступна","Состояние изменилось","Обновите состояние"};
+}
 void draw_block(Canvas& c,const Frame& f) {
     const char* title="Пуск заблокирован";const char* detail="Проверьте настройки";
     switch(f.view.control.start_block) {
@@ -337,6 +397,9 @@ void draw_block(Canvas& c,const Frame& f) {
         case sirokko::Block::MAINTENANCE:title="Обслуживание";detail="Управление через браузер";break;
         case sirokko::Block::STALE_COMMAND:title="Команда устарела";detail="Повторите действие";break;
         case sirokko::Block::BUSY:detail="Операция выполняется";break;
+        case sirokko::Block::CALIBRATION_DISABLED:title="Калибровка выключена";detail="Диапазон не разрешён";break;
+        case sirokko::Block::CALIBRATION_RANGE_INVALID:title="Неверный диапазон";detail="Проверьте настройки";break;
+        case sirokko::Block::CALIBRATION_TIME_BUDGET:title="Недостаточно времени";detail="Проверьте скорость";break;
         case sirokko::Block::NONE:break;
     }
     if(!f.view.storage_ok){title="Ошибка памяти";detail="Настройки недоступны";}
@@ -360,8 +423,20 @@ void draw(Canvas& c,const Frame& f) {
         case Scene::Verify:message(c,f,"Запуск","Проверка запуска","",Icon::Thermometer,kOrange,kWarm,"Пуск/Стоп — отмена");break;
         case Scene::Cooldown:message(c,f,"Останов","Охлаждение","",Icon::Fan,kBlue,kBlueBg,"Не отключайте питание");break;
         case Scene::Recovery:message(c,f,"После включения","Продувка","Проверка температуры",Icon::Fan,kBlue,kBlueBg,"Не отключайте питание");break;
-        case Scene::FaultCooling:message(c,f,"Авария",fault_title(f.view.control.faults),"Охлаждение продолжается",Icon::Warning,kRed,kRedBg,"Не отключайте питание");break;
-        case Scene::FaultLatched:message(c,f,"Авария",fault_title(f.view.control.faults),"Охлаждение завершено",Icon::Warning,kRed,kRedBg,"Устраните причину");break;
+        case Scene::FaultCooling:
+            if(f.view.control.faults&sirokko::FAULT_CALIBRATION)
+                message(c,f,"Авария",fault_title(f.view.control.faults),calibration_reason_detail(f.view.control.calibration_reason),
+                        Icon::Warning,kRed,kRedBg,"Не отключайте питание","Охлаждение продолжается");
+            else
+                message(c,f,"Авария",fault_title(f.view.control.faults),"Охлаждение продолжается",Icon::Warning,kRed,kRedBg,"Не отключайте питание");
+            break;
+        case Scene::FaultLatched:
+            if(f.view.control.faults&sirokko::FAULT_CALIBRATION)
+                message(c,f,"Авария",fault_title(f.view.control.faults),calibration_reason_detail(f.view.control.calibration_reason),
+                        Icon::Warning,kRed,kRedBg,fault_reset_footer(f),"Охлаждение завершено");
+            else
+                message(c,f,"Авария",fault_title(f.view.control.faults),"Охлаждение завершено",Icon::Warning,kRed,kRedBg,fault_reset_footer(f));
+            break;
         case Scene::SensorMissing:message(c,f,f.view.control.state==sirokko::State::IDLE?"Запуск недоступен":"Данные недоступны","Нет показаний","Комнатный датчик",Icon::Thermometer,kRed,kRedBg);break;
         case Scene::Calibrate:message(c,f,"Калибровка","Поиск диапазона","Проверка устойчивости",Icon::Settings,kOrange,kWarm,"Пуск/Стоп — прервать");break;
         case Scene::CalReference:message(c,f,"Калибровка","Исходный режим","Ожидание стабилизации",Icon::Settings,kOrange,kWarm,"Пуск/Стоп — прервать");break;
@@ -376,7 +451,10 @@ void draw(Canvas& c,const Frame& f) {
         case Scene::Queued:message(c,f,"Настройки","Применение","",Icon::Clock,kSecond,0xf5f5f5);break;
         case Scene::Rejected:message(c,f,"Настройки","Не применено","Состояние изменилось",Icon::Warning,kRed,kRedBg);break;
         case Scene::CommandRejected:
-            if(f.screen.notice==panel_ui::Notice::CONFIRMATION_TIMEOUT)
+            if(f.screen.notice==panel_ui::Notice::CALIBRATION_BLOCKED) {
+                const auto block=calibration_block_text(f.view.control.calibration_block);
+                message(c,f,"Калибровка",block.title,block.detail,Icon::Warning,kRed,kRedBg,block.foot);
+            } else if(f.screen.notice==panel_ui::Notice::CONFIRMATION_TIMEOUT)
                 message(c,f,"Настройки","Нет подтверждения","Проверьте значение",Icon::Warning,kRed,kRedBg);
             else message(c,f,"Настройки","Команда отклонена","Значение не изменено",Icon::Warning,kRed,kRedBg);
             break;
@@ -434,7 +512,8 @@ Scene select_scene(const panel_ui::Screen& s,const panel_ui::View& v,uint64_t no
     if(show_saved&&eq(v.control.calibration_phase,"SAVED")&&s.page==Page::HOME)return Scene::CalSaved;
     if(s.notice==Notice::QUEUED)return Scene::Queued;
     if(s.notice==Notice::EXTERNAL_CHANGE)return Scene::Rejected;
-    if(s.notice==Notice::COMMAND_REJECTED||s.notice==Notice::CONFIRMATION_TIMEOUT)return Scene::CommandRejected;
+    if(s.notice==Notice::CALIBRATION_BLOCKED||s.notice==Notice::COMMAND_REJECTED||s.notice==Notice::CONFIRMATION_TIMEOUT)
+        return Scene::CommandRejected;
     // A stale room measurement must not linger on a live gauge, even during a page transition.
     if(v.control.state==State::RUN&&v.settings.mode==sirokko::Mode::TEMPERATURE&&
        !sample_fresh(v.sensors.room,now,sirokko::kRoomSensorStaleMs))return Scene::SensorMissing;
@@ -491,6 +570,7 @@ void Renderer::update(const panel_ui::Screen& s,const panel_ui::View& v,
     const bool immediate=!initialized_||urgent(next.scene)||v.control.boot_id!=frame_.view.control.boot_id;
     const bool family_changed=initialized_&&!family_equal(next.scene,frame_.scene);
     const bool scroll_changed=initialized_&&(next.scene==Scene::Menu||next.scene==Scene::MenuService)&&s.menu_first!=frame_.screen.menu_first;
+    const bool leaving_wifi=initialized_&&frame_.screen.page==panel_ui::Page::WIFI&&next.screen.page!=panel_ui::Page::WIFI;
     if(immediate) {
         target_from_=target_to_=target;current_from_=current_to_=current;menu_from_=menu_to_=row;
         target_started_=current_started_=menu_started_=now;
@@ -509,7 +589,9 @@ void Renderer::update(const panel_ui::Screen& s,const panel_ui::View& v,
             menu_to_=row;menu_started_=now;
         }
         if(family_changed||scroll_changed) {
-            previous_=frame_;transition_started_=now;transition_=0;
+            previous_=frame_;
+            if(leaving_wifi) previous_.credentials={};
+            transition_started_=now;transition_=0;
         } else if(transition_<1)transition_=eased(now,transition_started_,kTransitionMs);
     }
     next.target=motion(target_from_,target_to_,now,target_started_,kMarkerMs);

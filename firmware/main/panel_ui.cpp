@@ -162,7 +162,9 @@ void Model::invalidate_pending() {
 
 bool Model::presentation_blocked() const {
     const auto state=view_.control.state;
-    if((state!=sirokko::State::IDLE&&state!=sirokko::State::RUN)||view_.control.calibration_active)return true;
+    if ((state != sirokko::State::IDLE && state != sirokko::State::RUN && state != sirokko::State::FAULT) ||
+        view_.control.calibration_active)
+        return true;
     if(state==sirokko::State::RUN&&view_.settings.mode==sirokko::Mode::TEMPERATURE) {
         const auto& room=view_.sensors.room;
         return !room.valid||room.status!=0||last_now_ms_<room.sample_ms||
@@ -173,6 +175,11 @@ bool Model::presentation_blocked() const {
 bool Model::interaction_blocked() const {
     return !view_available_ || command_in_flight_ || confirmation_.active || view_.control.faults != 0 ||
            presentation_blocked();
+}
+
+bool Model::reset_fault_available() const {
+    return view_available_ && view_.control.state == sirokko::State::FAULT && view_.control.faults != 0 &&
+           !command_in_flight_ && !confirmation_.active && queued_command_.kind == CommandKind::NONE;
 }
 
 MenuItem Model::menu_item_at(uint8_t index) const {
@@ -268,6 +275,7 @@ void Model::abort_stale_interaction(bool show_external_change) {
     timer_target_ = TimerTarget::NONE;
     editing_ = false;
     page_ = Page::HOME;
+    clear_credentials();
     bump_interaction_epoch();
     if (show_external_change && had_interaction) set_notice(Notice::EXTERNAL_CHANGE);
 }
@@ -283,9 +291,11 @@ void Model::update(const View& view) {
     const bool state_changed = view.control.state_version != previous.control.state_version;
     const bool settings_changed = !same_settings(view.settings, previous.settings);
     const bool boot_changed = view.control.boot_id != previous.control.boot_id;
-    const bool stop_or_fault = view.control.faults != 0 || is_fault_or_stop(view.control.state) ||
-                               (is_active_session(previous.control.state) && view.control.state == sirokko::State::IDLE &&
-                                view.control.run_id == 0);
+    const bool entered_stop_or_fault =
+        (view.control.faults != 0 && previous.control.faults == 0) ||
+        (!is_fault_or_stop(previous.control.state) && is_fault_or_stop(view.control.state)) ||
+        (is_active_session(previous.control.state) && view.control.state == sirokko::State::IDLE &&
+         view.control.run_id == 0);
 
     view_ = view;
     view_available_ = true;
@@ -295,7 +305,7 @@ void Model::update(const View& view) {
 
     if (recovered && notice_ == Notice::VIEW_UNAVAILABLE) set_notice(Notice::NONE);
 
-    if (boot_changed || stop_or_fault) {
+    if (boot_changed || entered_stop_or_fault) {
         abort_stale_interaction(true);
         return;
     }
@@ -340,6 +350,7 @@ void Model::set_view_unavailable() {
     timer_target_ = TimerTarget::NONE;
     editing_ = false;
     page_ = Page::HOME;
+    clear_credentials();
     bump_interaction_epoch();
     notice_ = Notice::VIEW_UNAVAILABLE;
     notice_expires_ms_ = 0;
@@ -410,7 +421,12 @@ Model::CommandContext Model::command_context() const {
 }
 
 void Model::queue_command(const Command& command) {
-    if (command.kind == CommandKind::NONE || interaction_blocked() || queued_command_.kind != CommandKind::NONE) return;
+    if (command.kind == CommandKind::NONE || queued_command_.kind != CommandKind::NONE) return;
+    if (command.kind == CommandKind::RESET_FAULT) {
+        if (!reset_fault_available()) return;
+    } else if (interaction_blocked()) {
+        return;
+    }
     queued_command_ = command;
     queued_context_ = command_context();
     set_notice(Notice::NONE);
@@ -474,6 +490,10 @@ void Model::open_menu_item(MenuItem item) {
             begin_edit(EditField::SHUTDOWN_TIMER, Page::MENU);
             break;
         case MenuItem::CALIBRATION: {
+            if (view_.control.calibration_block != sirokko::Block::NONE) {
+                set_notice(Notice::CALIBRATION_BLOCKED);
+                break;
+            }
             Command command{};
             command.kind = CommandKind::CALIBRATE;
             queue_command(command);
@@ -485,6 +505,7 @@ void Model::open_menu_item(MenuItem item) {
             break;
         case MenuItem::WIFI: {
             bump_interaction_epoch();
+            clear_credentials();
             page_ = Page::WIFI;
             Command command{};
             command.kind = CommandKind::REQUEST_NETWORK_CREDENTIALS;
@@ -546,10 +567,16 @@ void Model::rotate(int turns) {
 void Model::execute_pending_single() {
     const PendingClick pending = pending_click_;
     pending_click_.active = false;
-    if (interaction_blocked() || pending.epoch != interaction_epoch_ || pending.page != page_ ||
-        pending.edit_field != edit_field_) {
+    if (pending.epoch != interaction_epoch_ || pending.page != page_ || pending.edit_field != edit_field_) {
         return;
     }
+    if (pending.page == Page::HOME && reset_fault_available()) {
+        Command command{};
+        command.kind = CommandKind::RESET_FAULT;
+        queue_command(command);
+        return;
+    }
+    if (interaction_blocked()) return;
     if (pending.page == Page::MENU &&
         (pending.menu_index != menu_index_ || pending.menu_item != menu_item_at(menu_index_))) {
         return;
@@ -591,8 +618,13 @@ void Model::execute_pending_double() {
             bump_interaction_epoch();
             break;
         case Page::DIAGNOSTICS:
-        case Page::WIFI:
         case Page::OTA:
+            page_ = Page::MENU;
+            synchronize_menu();
+            bump_interaction_epoch();
+            break;
+        case Page::WIFI:
+            clear_credentials();
             page_ = Page::MENU;
             synchronize_menu();
             bump_interaction_epoch();
@@ -604,7 +636,7 @@ void Model::execute_pending_double() {
 
 void Model::click(uint64_t now_ms) {
     advance_clock(now_ms);
-    if (interaction_blocked()) return;
+    if (!reset_fault_available() && interaction_blocked()) return;
     set_notice(Notice::NONE);
     if (pending_click_.active) {
         if (now_ms >= pending_click_.started_ms && now_ms - pending_click_.started_ms <= kDoubleClickWindowMs) {
@@ -643,6 +675,8 @@ bool Model::snapshot_confirms(const Confirmation& confirmation, const View& view
         }
         case CommandKind::CALIBRATE:
             return view.control.calibration_active && is_active_session(view.control.state) && view.control.run_id != 0;
+        case CommandKind::RESET_FAULT:
+            return view.control.state == sirokko::State::IDLE && view.control.faults == 0;
         case CommandKind::REQUEST_NETWORK_CREDENTIALS:
             return credentials_.available;
         case CommandKind::NONE:
@@ -671,8 +705,12 @@ void Model::expire_confirmation(uint64_t now_ms) {
     if (!confirmation_.active || now_ms < confirmation_.deadline_ms) return;
     const CommandKind kind = confirmation_.command.kind;
     confirmation_ = {};
-    set_notice(kind == CommandKind::REQUEST_NETWORK_CREDENTIALS ? Notice::CREDENTIALS_UNAVAILABLE
-                                                                 : Notice::CONFIRMATION_TIMEOUT);
+    if (kind == CommandKind::REQUEST_NETWORK_CREDENTIALS) {
+        clear_credentials();
+        set_notice(Notice::CREDENTIALS_UNAVAILABLE);
+    } else {
+        set_notice(Notice::CONFIRMATION_TIMEOUT);
+    }
 }
 
 void Model::tick(uint64_t now_ms) {
@@ -684,7 +722,7 @@ void Model::tick(uint64_t now_ms) {
     }
 
     expire_confirmation(last_now_ms_);
-    if (!interaction_blocked() && pending_click_.active && now_ms >= pending_click_.started_ms &&
+    if ((!interaction_blocked() || reset_fault_available()) && pending_click_.active && now_ms >= pending_click_.started_ms &&
         now_ms - pending_click_.started_ms >= kDoubleClickWindowMs) {
         execute_pending_single();
     }
@@ -712,10 +750,23 @@ void Model::command_result(bool accepted) {
     in_flight_command_ = {};
     in_flight_context_ = {};
     if (!accepted) {
-        set_notice(Notice::COMMAND_REJECTED);
+        if (command.kind == CommandKind::CALIBRATE) {
+            set_notice(Notice::CALIBRATION_BLOCKED);
+        } else if (command.kind == CommandKind::REQUEST_NETWORK_CREDENTIALS) {
+            clear_credentials();
+            set_notice(Notice::CREDENTIALS_UNAVAILABLE);
+        } else {
+            set_notice(Notice::COMMAND_REJECTED);
+        }
         return;
     }
     begin_confirmation(command, context);
+}
+
+void Model::clear_credentials() {
+    credentials_.available = false;
+    credentials_.ssid.fill('\0');
+    credentials_.password.fill('\0');
 }
 
 void Model::copy_credentials(std::array<char, 33>* target, const char* source) {
@@ -741,6 +792,7 @@ void Model::copy_credentials(std::array<char, 65>* target, const char* source) {
 }
 
 void Model::set_credentials(const char* ssid, const char* password) {
+    clear_credentials();
     copy_credentials(&credentials_.ssid, ssid);
     copy_credentials(&credentials_.password, password);
     credentials_.available = credentials_.ssid[0] != '\0' && credentials_.password[0] != '\0';
@@ -749,12 +801,13 @@ void Model::set_credentials(const char* ssid, const char* password) {
         confirmation_ = {};
         set_notice(Notice::NONE);
     } else if (!credentials_.available) {
+        clear_credentials();
         set_notice(Notice::CREDENTIALS_UNAVAILABLE);
     }
 }
 
 void Model::credentials_unavailable() {
-    credentials_ = {};
+    clear_credentials();
     if (confirmation_.active && confirmation_.command.kind == CommandKind::REQUEST_NETWORK_CREDENTIALS)
         confirmation_ = {};
     set_notice(Notice::CREDENTIALS_UNAVAILABLE);
@@ -810,6 +863,7 @@ const char* notice_label(Notice notice) {
         case Notice::NONE: return "";
         case Notice::QUEUED: return "Применение";
         case Notice::COMMAND_REJECTED: return "Команда отклонена";
+        case Notice::CALIBRATION_BLOCKED: return "Калибровка недоступна";
         case Notice::CONFIRMATION_TIMEOUT: return "Нет подтверждения";
         case Notice::CREDENTIALS_UNAVAILABLE: return "Нет данных Wi-Fi";
         case Notice::VIEW_UNAVAILABLE: return "Нет снимка состояния";

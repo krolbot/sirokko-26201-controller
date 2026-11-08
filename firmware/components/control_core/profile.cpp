@@ -26,7 +26,9 @@ bool valid_process_profile(const ProcessProfile& p) {
         p.minimum_run_exhaust_milli_c > 0 && p.minimum_run_exhaust_milli_c < p.maximum_exhaust_milli_c &&
         p.purge_speed_code > 0 && p.purge_speed_code <= kPwmMaximum &&
         p.run_speed_code > 0 && p.run_speed_code <= kPwmMaximum &&
-        (p.calibration_floor_speed_code == 0 || p.calibration_floor_speed_code < p.run_speed_code);
+        (p.calibration_floor_speed_code == 0 ||
+         (p.calibration_floor_speed_code < p.run_speed_code &&
+          static_cast<uint32_t>(p.run_speed_code) - p.calibration_floor_speed_code >= 2U));
 }
 uint64_t process_fingerprint(const ProcessProfile& p) {
     // Explicit field order, independent of padding, ABI, and bool representation.

@@ -152,9 +152,12 @@ void Controller::begin_start(uint64_t now_ms, const Sensors& sensors) {
     record("START", now_ms);
 }
 
-void Controller::begin_stop(uint64_t now_ms) {
-    if (calibration_requested_) cancel_calibration(calibration::Reason::EXTERNAL_CANCEL, now_ms);
-    if (active(state_) || delayed_armed_) record("STOP", now_ms);
+void Controller::begin_stop(uint64_t now_ms, bool preserve_calibration_candidate) {
+    const bool cancel_presealed_calibration = calibration_requested_ ||
+        (calibration_candidate_.valid && !calibration_storage_sealed_ && !preserve_calibration_candidate);
+    if (cancel_presealed_calibration) cancel_calibration(calibration::Reason::EXTERNAL_CANCEL, now_ms);
+    if (active(state_) || delayed_armed_ ||
+        (calibration_candidate_.valid && calibration_storage_sealed_)) record("STOP", now_ms);
     duration_active_ = false;
     duration_deadline_ms_ = 0;
     run_id_ = 0;
@@ -165,7 +168,7 @@ void Controller::begin_stop(uint64_t now_ms) {
 }
 
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
-    if (calibration_requested_ || calibration_candidate_.valid)
+    if (calibration_requested_ || (calibration_candidate_.valid && !calibration_storage_sealed_))
         cancel_calibration(calibration::Reason::RUN_CONTEXT_LOST, now_ms);
     faults_ |= faults;
     record("FAULT", now_ms);
@@ -224,13 +227,22 @@ Snapshot Controller::tick(const TickInput& input) {
     if (active(state_) || state_ == State::MAINTENANCE) new_faults |= current_sensor_faults;
     if (calibration_candidate_.valid && purging(state_))
         new_faults |= current_sensor_faults & ~static_cast<uint32_t>(FAULT_ROOM);
-    if (new_faults) latch_fault(new_faults, now);
 
-    // STOP is an independent priority barrier. It cancels queued/armed starts and never writes GPIO directly.
+    // Preserve the operator report with the pre-fault state/output context. A
+    // simultaneous sensor or external fault still owns the state transition below.
     if (input.operator_combustion_problem && (calibration_requested_ || calibration_candidate_.valid)) {
         record("OPERATOR_COMBUSTION_PROBLEM", now);
         cancel_calibration(calibration::Reason::OPERATOR_NEGATIVE, now);
     }
+    if (new_faults) latch_fault(new_faults, now);
+
+    // A pending/staged range is no longer trustworthy once either thermal
+    // channel becomes invalid, even while IDLE has not escalated it to a fault.
+    if (calibration_candidate_.valid && !calibration_storage_sealed_ && state_ == State::IDLE &&
+        !thermal_sensors_fresh(input.sensors, now))
+        cancel_calibration(calibration::Reason::SENSOR_INVALID, now);
+
+    // STOP is an independent priority barrier. It cancels queued/armed starts and never writes GPIO directly.
     const bool stop_barrier = input.stop || input.operator_combustion_problem;
     if (stop_barrier) {
         begin_stop(now);
@@ -238,7 +250,7 @@ Snapshot Controller::tick(const TickInput& input) {
     }
 
     if (input.enter_maintenance && !stop_barrier && state_ == State::IDLE && faults_ == 0 &&
-        thermal_sensors_fresh(input.sensors, now) &&
+        !calibration_candidate_.valid && thermal_sensors_fresh(input.sensors, now) &&
         input.sensors.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
         input.sensors.air.milli_c <= profile_.maximum_purge_exit_air_milli_c) {
         delayed_armed_ = false;
@@ -296,12 +308,16 @@ Snapshot Controller::tick(const TickInput& input) {
         delayed_start = true;
     }
 
+    const Block requested_start_block = start_guard(input.sensors, now);
+    const Block requested_calibration_block = input.start_calibration
+        ? calibration_configuration_block(profile_, settings_) : Block::NONE;
     if (!stop_barrier && !reset_barrier && !expired &&
         (input.start || delayed_start || input.start_calibration) &&
-        start_guard(input.sensors, now) == Block::NONE &&
-        (!input.start_calibration || (profile_.calibration_floor_speed_code > 0 &&
-         profile_.run_speed_code-profile_.calibration_floor_speed_code >= 2))) {
+        requested_start_block == Block::NONE && requested_calibration_block == Block::NONE) {
         calibration_saved_ = false;
+        calibration_storage_id_ = 0;
+        calibration_storage_sealed_ = false;
+        if (input.start_calibration) calibration_storage_unconfirmed_ = false;
         calibrator_ = {};
         calibration_requested_ = input.start_calibration;
         calibration_started_ms_ = now;
@@ -412,9 +428,13 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.working_span_fraction = regulator_.value().fraction;
     const auto cal = calibrator_.snapshot(now_ms);
     result.calibration_active = calibration_requested_ || calibration_candidate_.valid;
-    result.calibration_phase = calibration_saved_ ? "SAVED" :
-        (calibration_requested_ && state_ != State::RUN ? "STARTING" : calibration::phase_name(cal.phase));
-    result.calibration_reason = calibration::reason_name(cal.reason);
+    result.calibration_phase = calibration_storage_unconfirmed_ ? "PERSIST_FAILED" :
+        (calibration_saved_ ? "SAVED" :
+         (calibration_candidate_.valid && calibration_storage_sealed_ ? "PERSIST_COMMITTING" :
+          calibration_candidate_.valid && calibration_storage_id_ != 0 ? "PERSIST_STAGING" :
+          (calibration_requested_ && state_ != State::RUN ? "STARTING" : calibration::phase_name(cal.phase))));
+    result.calibration_reason = calibration_storage_unconfirmed_ ? "STORAGE_UNCONFIRMED" :
+        calibration::reason_name(cal.reason);
     result.calibration_target_code = cal.target_code;
     result.calibration_points = cal.accepted_point_count;
     result.calibration_elapsed_ms = now_ms >= calibration_started_ms_ &&
@@ -423,6 +443,8 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.room_excess = !result.calibration_active && state_ == State::RUN && settings_.mode == Mode::TEMPERATURE &&
         last_sensors_.room.valid && last_sensors_.room.milli_c > settings_.room_setpoint_milli_c &&
         (!range_.valid || result.working_span_fraction <= 0.001);
+    result.calibration_block = result.start_block == Block::NONE
+        ? calibration_configuration_block(profile_, settings_) : result.start_block;
     return result;
 }
 
@@ -451,6 +473,9 @@ bool Controller::update_process_profile(const ProcessProfile& profile, uint64_t 
     range_ = {};
     calibrator_ = {};
     calibration_saved_ = false;
+    calibration_storage_id_ = 0;
+    calibration_storage_sealed_ = false;
+    calibration_storage_unconfirmed_ = false;
     delayed_armed_ = duration_active_ = false;
     delayed_due_ms_ = duration_deadline_ms_ = arm_id_ = run_id_ = 0;
     run_speed_code_ = profile_.run_speed_code;
@@ -546,39 +571,50 @@ bool max31856_sample_within_deadline(uint64_t started_ms, uint64_t ready_observe
 bool FailClosedOutputDriver::apply(const Outputs& requested, void* context,
                                    DigitalWriter digital_write, PwmWriter pwm_write) {
     if (!digital_write || !pwm_write) return false;
+    const auto write_off = [&](OutputLine line, bool* current) {
+        const bool off = digital_write(context, line, false);
+        if (off) *current = false;
+        return off;
+    };
+    const auto force_combustion_outputs_off = [&] {
+        const bool fuel_off = write_off(OutputLine::FUEL, &current_.fuel);
+        const bool glow_off = write_off(OutputLine::GLOW, &current_.glow);
+        return fuel_off && glow_off;
+    };
+
     bool ok = requested.speed_code <= kPwmMaximum &&
               ((!requested.glow && !requested.fuel) || (requested.fan_request && requested.speed_code > 0));
-    if (!requested.fuel) {
-        ok = digital_write(context, OutputLine::FUEL, false) && ok;
-        current_.fuel = false;
+    if (!requested.fuel) ok = write_off(OutputLine::FUEL, &current_.fuel) && ok;
+    if (!requested.glow) ok = write_off(OutputLine::GLOW, &current_.glow) && ok;
+    const bool fan_written = digital_write(context, OutputLine::FAN_REQUEST, requested.fan_request);
+    if (fan_written) current_.fan_request = requested.fan_request;
+    ok = fan_written && ok;
+    if (ok) {
+        const bool pwm_written = pwm_write(context, requested.speed_code);
+        if (pwm_written) current_.speed_code = requested.speed_code;
+        ok = pwm_written;
     }
-    if (!requested.glow) {
-        ok = digital_write(context, OutputLine::GLOW, false) && ok;
-        current_.glow = false;
-    }
-    ok = digital_write(context, OutputLine::FAN_REQUEST, requested.fan_request) && ok;
-    current_.fan_request = requested.fan_request;
-    if (ok) ok = pwm_write(context, requested.speed_code);
     if (!ok) {
-        digital_write(context, OutputLine::FUEL, false);
-        digital_write(context, OutputLine::GLOW, false);
-        current_.fuel = current_.glow = false;
-        current_.speed_code = 0;
+        // Never claim PWM=0 if its writer did not confirm it. A normal purge
+        // deliberately keeps a non-zero fan command, so its error path does not
+        // inject a conflicting PWM-off request.
+        force_combustion_outputs_off();
+        if (!requested.fan_request && pwm_write(context, 0)) current_.speed_code = 0;
         return false;
     }
-    current_.speed_code = requested.speed_code;
     if (requested.glow && !current_.glow) {
-        ok = digital_write(context, OutputLine::GLOW, true);
-        current_.glow = ok;
+        const bool glow_written = digital_write(context, OutputLine::GLOW, true);
+        if (glow_written) current_.glow = true;
+        ok = glow_written;
     }
     if (ok && requested.fuel && !current_.fuel) {
-        ok = digital_write(context, OutputLine::FUEL, true);
-        current_.fuel = ok;
+        const bool fuel_written = digital_write(context, OutputLine::FUEL, true);
+        if (fuel_written) current_.fuel = true;
+        ok = fuel_written;
     }
     if (!ok) {
-        digital_write(context, OutputLine::FUEL, false);
-        digital_write(context, OutputLine::GLOW, false);
-        current_.fuel = current_.glow = false;
+        force_combustion_outputs_off();
+        if (!requested.fan_request && pwm_write(context, 0)) current_.speed_code = 0;
     }
     return ok;
 }
@@ -611,6 +647,9 @@ const char* block_name(Block block) {
         case Block::BUSY: return "BUSY";
         case Block::MAINTENANCE: return "MAINTENANCE";
         case Block::STALE_COMMAND: return "STALE_COMMAND";
+        case Block::CALIBRATION_DISABLED: return "CALIBRATION_DISABLED";
+        case Block::CALIBRATION_RANGE_INVALID: return "CALIBRATION_RANGE_INVALID";
+        case Block::CALIBRATION_TIME_BUDGET: return "CALIBRATION_TIME_BUDGET";
     }
     return "UNKNOWN";
 }

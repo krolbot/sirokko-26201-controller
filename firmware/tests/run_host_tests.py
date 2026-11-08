@@ -31,10 +31,17 @@ suites = {
     "test_panel_render": [root / "main/panel_ui.cpp", root / "main/panel_canvas.cpp", root / "main/panel_render.cpp"],
     "test_panel_driver": [root / "main/panel_ui.cpp", root / "main/panel_canvas.cpp", root / "main/panel_render.cpp"],
     "test_ota_activation": [],
+    "test_persistence": [],
+    "test_sensor_driver": core + [root / "main/sensors.cpp"],
+    "test_runtime_driver": core + [root / "main/start_stop_button.cpp"],
 }
 for name, sources in suites.items():
     binary = build / name
-    extra = ["-I", str(root / "tests/panel_stubs")] if name == "test_panel_driver" else []
+    stubs = {"test_panel_driver": "panel_stubs", "test_sensor_driver": "sensor_stubs",
+             "test_runtime_driver": "runtime_host_stubs"}
+    extra = ["-I", str(root / "tests" / stubs[name])] if name in stubs else []
+    if name in ("test_ota_activation", "test_persistence"):
+        extra += ["-pthread"]
     subprocess.run(common + extra + [str(p) for p in sources] +
                    [str(root / f"tests/{name}.cpp"), "-o", str(binary)], check=True)
     args = [str(binary)]

@@ -1,11 +1,129 @@
 #include "sirokko/control.hpp"
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 namespace sirokko {
+namespace {
+
+// This is an algorithmic deadline, not a combustion or equipment setting.
+constexpr uint64_t kCalibrationOverallDurationMs = 6ULL * 60 * 60 * 1000;
+constexpr uint8_t kCalibrationSamplesPerWindow = 60;
+constexpr uint64_t kCalibrationSamplePeriodMs = 1000;
+
+struct CalibrationTiming {
+    uint64_t analysis_budget_ms{};
+    bool fits{};
+};
+
+bool add_duration(uint64_t* total, uint64_t duration) {
+    if (!total || duration > std::numeric_limits<uint64_t>::max() - *total) return false;
+    *total += duration;
+    return true;
+}
+
+// The regulator cannot traverse this distance faster than the configured fractional slew.
+// Floor keeps the value a lower bound even when a non-integral millisecond is required.
+uint64_t movement_lower_bound_ms(uint16_t distance, uint16_t span, double slew_per_s) {
+    if (distance == 0) return 0;
+    if (span == 0 || !std::isfinite(slew_per_s) || !(slew_per_s > 0.0))
+        return std::numeric_limits<uint64_t>::max();
+    const double codes_per_second = static_cast<double>(span) * slew_per_s;
+    const double milliseconds = static_cast<double>(distance) * 1000.0 / codes_per_second;
+    if (!std::isfinite(milliseconds) || milliseconds >=
+        static_cast<double>(std::numeric_limits<uint64_t>::max()))
+        return std::numeric_limits<uint64_t>::max();
+    return static_cast<uint64_t>(std::floor(milliseconds));
+}
+
+bool calibration_timing(const ProcessProfile& profile, const Settings& settings,
+                        CalibrationTiming* timing) {
+    if (!timing || !valid_settings(settings) || profile.calibration_floor_speed_code == 0 ||
+        profile.calibration_floor_speed_code >= profile.run_speed_code) return false;
+
+    const uint16_t span = static_cast<uint16_t>(profile.run_speed_code -
+                                                profile.calibration_floor_speed_code);
+    if (span < 2) return false;
+    const uint16_t step = std::max<uint16_t>(1, static_cast<uint16_t>((span + 9U) / 10U));
+    // The first distinct sample may arrive one millisecond after phase entry;
+    // only the intervals BETWEEN accepted samples require sample_period_ms.
+    // Keep admission a true lower bound rather than rounding every phase up.
+    const uint64_t settle_ms = (static_cast<uint64_t>(kCalibrationSamplesPerWindow) *
+        calibration::kRequiredAnalysisWindows - 1U) * kCalibrationSamplePeriodMs + 1U;
+
+    uint64_t fixed_phases_ms = 0;
+    if (!add_duration(&fixed_phases_ms, profile.prepurge_ms) ||
+        !add_duration(&fixed_phases_ms, profile.preheat_ms) ||
+        !add_duration(&fixed_phases_ms, profile.ignition_ms) ||
+        !add_duration(&fixed_phases_ms, profile.verify_ms) ||
+        !add_duration(&fixed_phases_ms, profile.postpurge_ms)) return false;
+
+    uint64_t analysis_minimum_ms = 0;
+    if (!add_duration(&analysis_minimum_ms, settle_ms)) return false;  // Initial reference.
+
+    uint16_t target = profile.run_speed_code;
+    uint8_t point_count = 0;
+    while (target > profile.calibration_floor_speed_code) {
+        const uint16_t remaining = static_cast<uint16_t>(target - profile.calibration_floor_speed_code);
+        const uint16_t descent = std::min(step, remaining);
+        target = static_cast<uint16_t>(target - descent);
+        if (++point_count > calibration::kMaximumTestedPoints) return false;
+
+        const uint16_t distance = static_cast<uint16_t>(profile.run_speed_code - target);
+        const uint64_t down_ms = movement_lower_bound_ms(distance, span, settings.slew_down_per_s);
+        const uint64_t up_ms = movement_lower_bound_ms(distance, span, settings.slew_up_per_s);
+        if (down_ms == std::numeric_limits<uint64_t>::max() ||
+            up_ms == std::numeric_limits<uint64_t>::max()) return false;
+
+        // First lower point, return to the reference, then its repeat.
+        if (!add_duration(&analysis_minimum_ms, down_ms) ||
+            !add_duration(&analysis_minimum_ms, settle_ms) ||
+            !add_duration(&analysis_minimum_ms, up_ms) ||
+            !add_duration(&analysis_minimum_ms, settle_ms) ||
+            !add_duration(&analysis_minimum_ms, down_ms) ||
+            !add_duration(&analysis_minimum_ms, settle_ms)) return false;
+
+        // Every non-final point has one more return/reference phase before the next descent.
+        if (target != profile.calibration_floor_speed_code &&
+            (!add_duration(&analysis_minimum_ms, up_ms) ||
+             !add_duration(&analysis_minimum_ms, settle_ms))) return false;
+    }
+
+    if (fixed_phases_ms >= kCalibrationOverallDurationMs ||
+        analysis_minimum_ms >= kCalibrationOverallDurationMs - fixed_phases_ms) {
+        timing->fits = false;
+        return true;
+    }
+    timing->analysis_budget_ms = kCalibrationOverallDurationMs - fixed_phases_ms;
+    timing->fits = true;
+    return true;
+}
+
+}  // namespace
+
+Block calibration_configuration_block(const ProcessProfile& profile, const Settings& settings) {
+    if (!profile.qualified) return Block::PROFILE_NOT_QUALIFIED;
+    if (profile.calibration_floor_speed_code != 0 &&
+        (profile.calibration_floor_speed_code >= profile.run_speed_code ||
+         static_cast<uint32_t>(profile.run_speed_code) - profile.calibration_floor_speed_code < 2U))
+        return Block::CALIBRATION_RANGE_INVALID;
+    if (!valid_process_profile(profile)) return Block::PROFILE_NOT_QUALIFIED;
+    if (profile.calibration_floor_speed_code == 0) return Block::CALIBRATION_DISABLED;
+
+    CalibrationTiming timing{};
+    if (!calibration_timing(profile, settings, &timing) || !timing.fits)
+        return Block::CALIBRATION_TIME_BUDGET;
+    return Block::NONE;
+}
+
 void Controller::start_calibration_run(uint64_t now_ms) {
     // Analysis-policy defaults, NOT physical ignition/flame/overtemperature limits.
     // The trial interval itself must be explicitly supplied in the process profile.
+    CalibrationTiming timing{};
+    if (!calibration_timing(profile_, settings_, &timing) || !timing.fits) {
+        latch_fault(FAULT_CALIBRATION, now_ms);
+        return;
+    }
     const uint16_t span = profile_.run_speed_code-profile_.calibration_floor_speed_code;
     calibration::Config c{};
     c.floor_code=profile_.calibration_floor_speed_code;
@@ -20,7 +138,9 @@ void Controller::start_calibration_run(uint64_t now_ms) {
     c.command_arrival_timeout_ms=static_cast<uint64_t>(1000.0/std::min(settings_.slew_up_per_s,settings_.slew_down_per_s))+120000;
     c.reference_timeout_ms=1800000;
     c.point_timeout_ms=1800000;
-    c.maximum_total_duration_ms=6ULL*60*60*1000;
+    // Reserve the pre-ignition and mandatory post-purge phases so the complete
+    // deterministic procedure remains within the fixed six-hour global budget.
+    c.maximum_total_duration_ms=timing.analysis_budget_ms;
     c.maximum_transition_settle_difference_ms=120000;
     c.reference_noise_floor_milli_c=250;
     c.reference_noise_ceiling_milli_c=2000;
@@ -39,12 +159,16 @@ void Controller::start_calibration_run(uint64_t now_ms) {
     if(!calibrator_.start(c,now_ms)) latch_fault(FAULT_CALIBRATION,now_ms);
 }
 
-void Controller::cancel_calibration(calibration::Reason reason,uint64_t now_ms) {
+void Controller::cancel_calibration(calibration::Reason reason, uint64_t now_ms) {
+    if (calibration_storage_sealed_ ||
+        (!calibration_requested_ && !calibration_candidate_.valid && !calibrator_.active())) return;
     calibrator_.cancel(reason);
-    calibration_requested_=false;
-    calibration_candidate_={};
-    calibration_saved_=false;
-    record("CALIBRATION_CANCELLED",now_ms);
+    calibration_requested_ = false;
+    calibration_candidate_ = {};
+    calibration_saved_ = false;
+    calibration_storage_id_ = 0;
+    calibration_storage_sealed_ = false;
+    record("CALIBRATION_CANCELLED", now_ms);
 }
 
 void Controller::run_calibration(uint64_t now_ms,const Sensors& sensors) {
@@ -64,13 +188,16 @@ void Controller::run_calibration(uint64_t now_ms,const Sensors& sensors) {
     if(cal.stop_requested) {
         if(cal.completed_pending_stop && cal.result.profile.valid) {
             const auto& p=cal.result.profile;
-            calibration_candidate_={true,p.min_code,p.max_code,
-                settings_.slew_up_per_s,settings_.slew_down_per_s,process_fingerprint(profile_)};
+            calibration_candidate_ = {true, p.min_code, p.max_code,
+                settings_.slew_up_per_s, settings_.slew_down_per_s, process_fingerprint(profile_)};
+            calibration_requested_ = false;
+            calibration_saved_ = false;
+            calibration_storage_id_ = 0;
+            calibration_storage_sealed_ = false;
             // The usable range is narrower than the tested interval: the same fractional
             // limit implies a slower absolute motion, never a faster untested transition.
-            calibration_requested_=false;
-            record("CALIBRATION_PENDING_COOLDOWN",now_ms);
-            begin_stop(now_ms);
+            record("CALIBRATION_PENDING_COOLDOWN", now_ms);
+            begin_stop(now_ms, true);
         } else {
             // Keep the calibrator's exact failure reason, not a generic cancel reason.
             calibration_requested_=false;
@@ -88,18 +215,87 @@ void Controller::run_calibration(uint64_t now_ms,const Sensors& sensors) {
 }
 
 bool Controller::pending_calibration_range(OperatingRange* range) const {
-    if(!range || !calibration_candidate_.valid || state_!=State::IDLE || faults_!=0) return false;
-    *range=calibration_candidate_;
+    if (!range || !calibration_candidate_.valid || calibration_storage_id_ != 0 ||
+        state_ != State::IDLE || faults_ != 0) return false;
+    *range = calibration_candidate_;
     return true;
 }
 
+bool Controller::begin_calibration_storage(uint64_t tx_id) {
+    if (tx_id == 0 || !calibration_candidate_.valid || calibration_storage_id_ != 0 ||
+        calibration_storage_sealed_ || state_ != State::IDLE || faults_ != 0) return false;
+    calibration_storage_id_ = tx_id;
+    calibration_saved_ = false;
+    ++state_version_;
+    if (state_version_ == 0) state_version_ = 1;
+    return true;
+}
+
+bool Controller::seal_calibration_storage(uint64_t tx_id) {
+    const bool cold = thermal_sensors_fresh(last_sensors_, last_tick_ms_) &&
+        last_sensors_.exhaust.milli_c <= profile_.maximum_purge_exit_exhaust_milli_c &&
+        last_sensors_.air.milli_c <= profile_.maximum_purge_exit_air_milli_c;
+    if (tx_id == 0 || tx_id != calibration_storage_id_ || calibration_storage_sealed_ ||
+        !calibration_candidate_.valid || state_ != State::IDLE || faults_ != 0 || !cold) return false;
+    calibration_storage_sealed_ = true;
+    ++state_version_;
+    if (state_version_ == 0) state_version_ = 1;
+    return true;
+}
+
+bool Controller::calibration_storage_ready(uint64_t tx_id) const {
+    return tx_id != 0 && tx_id == calibration_storage_id_ && calibration_storage_sealed_ &&
+        calibration_candidate_.valid && (state_ == State::IDLE || state_ == State::FAULT);
+}
+
+bool Controller::complete_calibration_storage(uint64_t tx_id, bool verified) {
+    if (tx_id == 0 || tx_id != calibration_storage_id_ || !calibration_storage_sealed_ ||
+        !calibration_candidate_.valid) return false;
+    if (verified && state_ != State::IDLE && state_ != State::FAULT) return false;
+
+    const bool accepted = verified && install_range(calibration_candidate_);
+    calibration_candidate_ = {};
+    calibration_requested_ = false;
+    calibration_storage_id_ = 0;
+    calibration_storage_sealed_ = false;
+    calibration_saved_ = accepted;
+    calibration_storage_unconfirmed_ = !accepted;
+    if (!accepted) {
+        ++state_version_;
+        if (state_version_ == 0) state_version_ = 1;
+    }
+    record(accepted ? "CALIBRATION_SAVED" : "CALIBRATION_STORAGE_UNCONFIRMED", last_tick_ms_);
+    return accepted;
+}
+
 bool Controller::finish_calibration_storage(bool success) {
-    const bool accepted=success && state_==State::IDLE && faults_==0 &&
-        calibration_candidate_.valid && install_range(calibration_candidate_);
-    calibration_candidate_={};
-    calibration_saved_=accepted;
-    if(!accepted) calibrator_.cancel(calibration::Reason::EXTERNAL_CANCEL);
-    record(accepted?"CALIBRATION_SAVED":"CALIBRATION_STORAGE_FAILED",last_tick_ms_);
+    if (!calibration_candidate_.valid || calibration_storage_sealed_) return false;
+    if (!success) {
+        calibration_candidate_ = {};
+        calibration_requested_ = false;
+        calibration_storage_id_ = 0;
+        calibration_storage_sealed_ = false;
+        calibration_saved_ = false;
+        calibrator_.cancel(calibration::Reason::EXTERNAL_CANCEL);
+        ++state_version_;
+        if (state_version_ == 0) state_version_ = 1;
+        record("CALIBRATION_STORAGE_FAILED", last_tick_ms_);
+        return false;
+    }
+
+    // `true` is only the legacy, no-transaction compatibility path. A staged
+    // transaction must cross seal and complete with its exact storage id.
+    if (calibration_storage_id_ != 0) return false;
+    const bool accepted = state_ == State::IDLE && faults_ == 0 && install_range(calibration_candidate_);
+    calibration_candidate_ = {};
+    calibration_requested_ = false;
+    calibration_saved_ = accepted;
+    if (!accepted) {
+        calibrator_.cancel(calibration::Reason::EXTERNAL_CANCEL);
+        ++state_version_;
+        if (state_version_ == 0) state_version_ = 1;
+    }
+    record(accepted ? "CALIBRATION_SAVED" : "CALIBRATION_STORAGE_FAILED", last_tick_ms_);
     return accepted;
 }
 } // namespace sirokko

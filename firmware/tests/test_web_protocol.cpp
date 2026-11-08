@@ -132,6 +132,14 @@ int main() {
     check(parse_challenge_request(kBadNumber, std::strlen(kBadNumber), current, &parsed) != ParseError::OK,
           "fractional integral delay is rejected");
 
+    const char kOtaChallenge[] = R"JSON({"action":"OTA","command_id":"2","upload_size":1024,"upload_sha256":"0000000000000000000000000000000000000000000000000000000000000000"})JSON";
+    const char kOtaSubmission[] = R"JSON({"action":"OTA","command_id":"2","upload_size":1024,"upload_sha256":"0000000000000000000000000000000000000000000000000000000000000000","grant":{"token":"abc","state_version":"22","expires_ms":"1000"}})JSON";
+    check(parse_challenge_request(kOtaChallenge, std::strlen(kOtaChallenge), current, &parsed) == ParseError::OK,
+          "OTA package metadata remains eligible for an upload challenge");
+    check(parse_command_request(kOtaSubmission, std::strlen(kOtaSubmission), current, &parsed) == ParseError::OTA_UPLOAD_ONLY &&
+          std::strcmp(error_name(ParseError::OTA_UPLOAD_ONLY), "OTA_UPLOAD_ONLY") == 0,
+          "generic command submission explicitly rejects OTA before runtime routing");
+
     const char kArm[] = R"JSON({"action":"ARM","command_id":"30","delay_ms":60000})JSON";
     const char kCancelArm[] = R"JSON({"action":"CANCEL_ARM","command_id":"31"})JSON";
     for(const char* removed: {kArm,kCancelArm})

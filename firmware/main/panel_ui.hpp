@@ -37,12 +37,14 @@ enum class CommandKind : uint8_t {
     SETTINGS,
     TIMER,
     CALIBRATE,
+    RESET_FAULT,
     REQUEST_NETWORK_CREDENTIALS,
 };
 enum class Notice : uint8_t {
     NONE,
     QUEUED,
     COMMAND_REJECTED,
+    CALIBRATION_BLOCKED,
     CONFIRMATION_TIMEOUT,
     CREDENTIALS_UNAVAILABLE,
     VIEW_UNAVAILABLE,
@@ -173,6 +175,7 @@ private:
     void invalidate_pending();
     bool presentation_blocked() const;
     bool interaction_blocked() const;
+    bool reset_fault_available() const;
     void synchronize_menu();
     MenuItem menu_item_at(uint8_t index) const;
     void move_menu(int turns);
@@ -194,6 +197,7 @@ private:
     void expire_confirmation(uint64_t now_ms);
     void set_notice(Notice notice);
 
+    void clear_credentials();
     void copy_credentials(std::array<char, 33>* target, const char* source);
     void copy_credentials(std::array<char, 65>* target, const char* source);
 

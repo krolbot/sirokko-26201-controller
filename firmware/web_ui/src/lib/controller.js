@@ -1,4 +1,6 @@
 import {
+  calibrationAllowed,
+  calibrationBlock,
   commandMatchesSnapshot,
   hasFault,
   isHexString,
@@ -189,12 +191,12 @@ export class ControllerSession {
       this._commandEpoch += 1;
       pending = null;
       requestInFlight = null;
-      message = statusMessage('warning', 'Контроллер перезапущен; незавершённые действия отменены.');
+      message = statusMessage('warning', 'Контроллер перезапущен; подтверждение прежних запросов сброшено.');
     } else if (fault && (!hasFault(previous) || snapshot.faults !== previous.faults)) {
       this._commandEpoch += 1;
       pending = null;
       requestInFlight = null;
-      message = statusMessage('warning', 'Автомат сообщает аварию; незавершённые действия отменены.');
+      message = statusMessage('warning', 'Автомат сообщает аварию; подтверждение незавершённых запросов сброшено.');
     } else if (pending && commandMatchesSnapshot(pending, snapshot)) {
       pending = null;
       message = statusMessage('ok', 'Новый снимок соответствует запросу.');
@@ -247,6 +249,11 @@ export class ControllerSession {
     if (this._view.pending || this._view.requestInFlight || this._view.ota.phase === 'activation_queued') return { status: 'BUSY' };
     const baseline = this._view.snapshot;
     if (!baseline || !isHexString(baseline.state_version)) return { status: 'NO_SNAPSHOT' };
+    if (action === 'CALIBRATE' && !calibrationAllowed(baseline)) {
+      const block = calibrationBlock(baseline);
+      this._set({ message: statusMessage('warning', `Калибровка недоступна: ${block.ru} (${block.code}).`) });
+      return { status: 'CALIBRATION_BLOCKED', block: block.code };
+    }
     const authEpoch = this._authEpoch;
     const commandEpoch = ++this._commandEpoch;
     const payload = { action, command_id: this.commandId(), ...fields };

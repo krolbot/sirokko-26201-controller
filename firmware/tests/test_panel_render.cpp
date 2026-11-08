@@ -34,6 +34,7 @@ void fresh(panel_ui::View& v,uint64_t now) {
 Fixture base(const char* id) {
     Fixture f{id};
     f.view.control.state=State::RUN;f.view.control.start_block=sirokko::Block::NONE;
+    f.view.control.calibration_block=sirokko::Block::NONE;
     f.view.control.profile_qualified=true;f.view.control.range_calibrated=true;
     f.view.control.boot_id=1;f.view.control.run_id=1;
     f.view.settings.room_setpoint_milli_c=26000;f.view.settings.manual_percent=55;
@@ -54,8 +55,8 @@ std::vector<Fixture> fixtures() {
     for(auto pair: {std::pair{"prepurge",State::PREPURGE},{"preheat",State::PREHEAT},{"ignition",State::IGNITION},
                    {"verify",State::VERIFY},{"cooldown",State::STOP_PURGE},{"recovery",State::RECOVERY_PURGE}})
         add(pair.first).view.control.state=pair.second;
-    auto& fc=add("fault-cooling");fc.view.control.state=State::FAULT_PURGE;fc.view.control.faults=sirokko::FAULT_OVER_TEMPERATURE;
-    auto& fl=add("fault-latched");fl.view.control.state=State::FAULT;fl.view.control.faults=sirokko::FAULT_OVER_TEMPERATURE;
+    auto& fc=add("fault-cooling");fc.view.control.state=State::FAULT_PURGE;fc.view.control.faults=sirokko::FAULT_CALIBRATION;fc.view.control.calibration_reason="OVERALL_TIMEOUT";
+    auto& fl=add("fault-latched");fl.view.control.state=State::FAULT;fl.view.control.faults=sirokko::FAULT_CALIBRATION;fl.view.control.calibration_reason="OPERATOR_NEGATIVE";
     auto& sensor=add("sensor");sensor.view.control.state=State::IDLE;sensor.view.sensors.room.valid=false;sensor.view.control.start_block=sirokko::Block::SENSOR_INVALID;
     auto& cal=add("calibrate");cal.view.control.calibration_active=true;cal.view.control.calibration_phase="SETTLE_POINT";
     auto& cc=add("cal-cooling");cc.view.control.state=State::STOP_PURGE;cc.view.control.calibration_active=true;cc.view.control.calibration_phase="COMPLETE_PENDING_STOP";
@@ -81,7 +82,8 @@ std::vector<Fixture> fixtures() {
     auto& blocked=add("blocked");blocked.view.control.state=State::IDLE;blocked.view.control.start_block=sirokko::Block::PROFILE_NOT_QUALIFIED;
     add("queued").screen.notice=panel_ui::Notice::QUEUED;
     add("rejected").screen.notice=panel_ui::Notice::EXTERNAL_CHANGE;
-    add("command-rejected").screen.notice=panel_ui::Notice::COMMAND_REJECTED;
+    auto& blocked_calibration=add("command-rejected");blocked_calibration.screen.notice=panel_ui::Notice::CALIBRATION_BLOCKED;
+    blocked_calibration.view.control.calibration_block=sirokko::Block::CALIBRATION_TIME_BUDGET;
     return result;
 }
 Picture picture(const Renderer& renderer) {
@@ -212,6 +214,57 @@ void heat_wave_tests() {
     std::printf("PASS: heat wave pixel mask/marker invariance/direction/pause; %zu disabled cases; STOP/fault preemption; measured-point approach/retreat\n",inactive.size());
 }
 
+void audit_panel_scene_tests() {
+    const char* titles[] = {"Нужна настройка", "Калибровка выключена", "Неверный диапазон", "Не уложится в срок",
+                            "Нет показаний", "Высокая температура", "Нужно охлаждение", "Устраните причину"};
+    const char* details[] = {"Процесс не настроен", "Диапазон не разрешён", "Проверьте границы",
+                             "Темп изменения слишком мал", "Проверьте датчики", "Дождитесь охлаждения",
+                             "Дождитесь окончания", "Сначала сбросьте аварию", "Рабочий режим прерван",
+                             "Нарушен темп команды", "Опорный режим нестабилен", "Оператор: нет/неустойчиво"};
+    const char* footers[] = {"Настройте в браузере", "Нажать энкодер — сбросить", "Сброс: ожидание снимка",
+                             "Сброс не подтверждён", "Управление через браузер", "Повторите действие"};
+    for (const char* title : titles) assert(panel_draw::text_width(title, 22) <= 292);
+    for (const char* detail : details) assert(panel_draw::text_width(detail, 12) <= 280);
+    for (const char* footer : footers) assert(panel_draw::text_width(footer, 13) <= 280);
+
+    for (sirokko::Block block : {sirokko::Block::PROFILE_NOT_QUALIFIED, sirokko::Block::CALIBRATION_DISABLED,
+                                 sirokko::Block::CALIBRATION_RANGE_INVALID, sirokko::Block::CALIBRATION_TIME_BUDGET,
+                                 sirokko::Block::SENSOR_INVALID}) {
+        auto f = base("calibration-block");
+        f.view.control.state = State::IDLE;
+        f.screen.notice = panel_ui::Notice::CALIBRATION_BLOCKED;
+        f.view.control.calibration_block = block;
+        Renderer renderer;
+        renderer.update(f.screen, f.view, f.credentials, f.view.now_ms);
+        assert(renderer.frame().scene == Scene::CommandRejected);
+        const auto image = picture(renderer);
+        assert(std::any_of(image.begin(), image.end(), [](uint16_t pixel) { return pixel != 0; }));
+    }
+
+    auto wifi = base("wifi-secret");
+    wifi.screen.page = Page::WIFI;
+    wifi.credentials.available = true;
+    std::snprintf(wifi.credentials.ssid.data(), wifi.credentials.ssid.size(), "Sirokko");
+    std::snprintf(wifi.credentials.password.data(), wifi.credentials.password.size(), "secret-password");
+    Renderer renderer;
+    renderer.update(wifi.screen, wifi.view, wifi.credentials, 10000);
+    const auto visible_wifi = picture(renderer);
+    auto exited = wifi;
+    exited.screen.page = Page::MENU;
+    exited.credentials = {};
+    renderer.update(exited.screen, exited.view, exited.credentials, 10001);
+    const auto transition = picture(renderer);
+    Renderer expected;
+    auto sanitized_wifi = wifi;
+    sanitized_wifi.credentials = {};
+    expected.update(sanitized_wifi.screen, sanitized_wifi.view, sanitized_wifi.credentials, 10000);
+    assert(transition == picture(expected));
+    assert(transition != visible_wifi);
+    assert(!renderer.frame().credentials.available);
+    for (char value : renderer.frame().credentials.ssid) assert(value == '\0');
+    for (char value : renderer.frame().credentials.password) assert(value == '\0');
+}
+
 void tests() {
     char value[48]{};
     panel_render::format_temperature(value,sizeof(value),-300);assert(std::strcmp(value,"-0,3 °C")==0);
@@ -262,6 +315,7 @@ void tests() {
 int main(int argc,char** argv) {
     tests();
     heat_wave_tests();
+    audit_panel_scene_tests();
     const auto list=fixtures();assert(list.size()==36);
     if(argc>1)std::filesystem::create_directories(argv[1]);
     const auto begin=std::chrono::steady_clock::now();
@@ -273,7 +327,7 @@ int main(int argc,char** argv) {
         if(argc>1)save(std::filesystem::path(argv[1])/(std::string(f.id)+".ppm"),image);
     }
     const auto ms=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();
-    std::printf("PASS: %zu approved scenes; animation, safety preemption, stale sensors, formatting, stripe canaries and damage commits. %zu pixels in %lld host ms (not MCU FPS).\n",list.size(),pixels,static_cast<long long>(ms));
+    std::printf("PASS: %zu approved scenes; calibration blocks/reasons, Wi-Fi scrub, animation, safety preemption, stale sensors, formatting, stripe canaries and damage commits. %zu pixels in %lld host ms (not MCU FPS).\n",list.size(),pixels,static_cast<long long>(ms));
     if(argc>2) {
         const auto directory=std::filesystem::path(argv[2]);std::filesystem::create_directories(directory);
         Renderer renderer;auto f=base("demo");f.view.control.state=State::IDLE;

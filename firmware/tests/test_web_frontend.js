@@ -39,6 +39,7 @@ async function main() {
   const actual = JSON.parse(read('state.json'));
   assert.equal(actual.state.ru, 'Ожидание');
   assert.equal(actual.process.physical_tests, false);
+  assert.deepEqual(actual.calibration.block, { code: 'NONE', ru: 'Нет' });
   assert.equal(actual.events[0].kind_ru, 'Запуск принят автоматом');
   assert.deepEqual(fullSettingsPayload(actual.settings), actual.settings);
   assert.deepEqual(validateProcessProfile(actual.process.profile), actual.process.profile);

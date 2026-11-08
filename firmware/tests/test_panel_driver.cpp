@@ -6,8 +6,9 @@
 
 namespace {
 RuntimeView test_runtime{};
-bool view_available=true,change_during_grant=false;
+bool view_available=true,change_during_grant=false,network_ready=false,network_payload_valid=true;
 int submitted{};
+sirokko::Action submitted_action=sirokko::Action::START;
 void advance(uint64_t now) {fake_idf::clock_us=now*1000;test_runtime.now_ms=now;}
 void finish_frame(uint64_t& now) {
     for(int steps=0;steps<100;++steps) {
@@ -29,18 +30,30 @@ void reset_display() {
     if(fake_idf::pending)fake_idf::complete();
     complete_transfer(0);display_release();g_started=false;fake_idf::fail_draw=false;
 }
+void assert_credentials_cleared() {
+    assert(!g_model.credentials().available);
+    for(char value:g_model.credentials().ssid)assert(value=='\0');
+    for(char value:g_model.credentials().password)assert(value=='\0');
+}
 }
 bool runtime_view(RuntimeView* out){if(!view_available)return false;*out=test_runtime;return true;}
 bool runtime_issue(sirokko::Action a,uint64_t hash,sirokko::Grant* grant) {
     if(change_during_grant)++test_runtime.control.state_version;
     *grant={1,test_runtime.control.state_version,hash,test_runtime.now_ms+1000,a,true};return true;
 }
-bool runtime_submit(const sirokko::Grant&,sirokko::Action,uint64_t,const sirokko::Settings*){++submitted;return true;}
-bool runtime_network_credentials(char*,size_t,char*,size_t){return false;}
+bool runtime_submit(const sirokko::Grant&,sirokko::Action action,uint64_t,const sirokko::Settings*){
+    submitted_action=action;++submitted;return true;
+}
+bool runtime_network_credentials(char* ssid,size_t ssid_size,char* password,size_t password_size){
+    if(!network_ready)return false;
+    if(!network_payload_valid)return true;
+    std::snprintf(ssid,ssid_size,"Sirokko");std::snprintf(password,password_size,"secret-password");return true;
+}
 
 int main() {
     uint64_t now=10000;advance(now);
     test_runtime.control.state=sirokko::State::IDLE;test_runtime.control.start_block=sirokko::Block::NONE;
+    test_runtime.control.calibration_block=sirokko::Block::NONE;
     test_runtime.control.boot_id=7;test_runtime.settings.room_setpoint_milli_c=26000;
     test_runtime.sensors.room={24500,now,0,true};test_runtime.sensors.air={22000,now,0,true};test_runtime.sensors.exhaust={23000,now,0,true};
     if(kRotation==0) {assert(!panel_begin());assert(fake_idf::draws==0);std::puts("PASS: unsupported portrait layout rejected");return 0;}
@@ -84,6 +97,18 @@ int main() {
     ++test_runtime.control.state_version;assert(!execute_command(command)&&submitted==1);
     update_view();change_during_grant=true;assert(!execute_command(command)&&submitted==1);change_during_grant=false;
     update_view();++test_runtime.control.boot_id;assert(!execute_command(command)&&submitted==1);
+    // Reset stays on the normal grant/submit path; the model separately limits the encoder gesture to stable FAULT.
+    ++test_runtime.control.state_version;test_runtime.control.state=sirokko::State::FAULT;
+    test_runtime.control.faults=sirokko::FAULT_CALIBRATION;update_view();
+    panel_ui::Command reset{};reset.kind=panel_ui::CommandKind::RESET_FAULT;
+    assert(execute_command(reset)&&submitted==2&&submitted_action==sirokko::Action::RESET_FAULT);
+    // A failed network credential request cannot retain prior credentials or look successful.
+    g_model.set_credentials("old-network","old-password");assert(g_model.credentials().available);
+    panel_ui::Command network{};network.kind=panel_ui::CommandKind::REQUEST_NETWORK_CREDENTIALS;
+    network_ready=false;assert(!execute_command(network));assert_credentials_cleared();
+    network_ready=true;network_payload_valid=false;assert(!execute_command(network));assert_credentials_cleared();
+    network_payload_valid=true;assert(execute_command(network));assert(g_model.credentials().available);
+    g_model.set_view_unavailable();assert_credentials_cleared();
     view_available=false;assert(!execute_command(command));update_view();render_step(now);
     assert(g_renderer.frame().scene==panel_render::Scene::NoData&&!g_renderer.transitioning());reset_display();
     // A real DMA/damage frame contains the wave; STOP preempts it at the pending stripe boundary.
@@ -109,5 +134,5 @@ int main() {
     now+=400;advance(now);test_runtime.sensors.room.sample_ms=now;update_view();
     render_step(now);finish_frame(now);assert(fake_idf::draws==quiet_draws);verify_framebuffer();reset_display();
     assert(fake_idf::allocations==fake_idf::frees);
-    std::puts("PASS: production panel.cpp: landscape, RGB565 wire order, DMA lifetime, unchanged-scene suppression, fault preemption, timeout/enqueue failure, context-bound grants, unavailable snapshot, active heat-wave DMA, immediate STOP and no-fuel silence");
+    std::puts("PASS: production panel.cpp: landscape, RGB565 wire order, DMA lifetime, unchanged-scene suppression, fault preemption, timeout/enqueue failure, context-bound grants, RESET_FAULT routing, Wi-Fi credential failure clearing, unavailable snapshot, active heat-wave DMA, immediate STOP and no-fuel silence");
 }

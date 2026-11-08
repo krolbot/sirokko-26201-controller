@@ -16,6 +16,10 @@
 namespace {
 constexpr char kTag[] = "sensors";
 constexpr spi_host_device_t kSpiHost = SPI2_HOST;
+// CR0 keeps the existing one-shot, interrupt-fault, CJ-enabled, 50 Hz contract.
+constexpr uint8_t kMax31856Cr0Configured = 0x15U;
+constexpr uint8_t kMax31856Cr0OneShot = 0x55U;
+constexpr uint8_t kMax31856Cr0FaultClear = kMax31856Cr0Configured | 0x02U;
 uint64_t clock_ms() { return static_cast<uint64_t>(esp_timer_get_time() / 1000); }
 
 class Max31856Channel {
@@ -39,7 +43,7 @@ public:
         if (spi_bus_add_device(kSpiHost, &device, &handle_) != ESP_OK) return false;
 
         // One-shot, OCFAULT=01, CJ enabled, 50 Hz; type K; expose all useful SR bits.
-        if (!write_register(0x00, 0x15) || !write_register(0x01, 0x03) ||
+        if (!write_register(0x00, kMax31856Cr0Configured) || !write_register(0x01, 0x03) ||
             !write_register(0x02, 0x00) || !configuration_ok()) return false;
         next_start_ms_ = 1;
         initialized_ = true;
@@ -57,7 +61,34 @@ public:
                 std::array<uint8_t, 6> stale{};
                 read_registers(0x0A, stale.data(), stale.size());  // clear an old DRDY without publishing it
             }
-            if (!configuration_ok() || !write_register(0x00, 0x55)) {
+            if (!configuration_ok()) {
+                retry_after_start_failure(now_ms);
+                return;
+            }
+            // The prior SR value was published while its conversion completed. Clear it only
+            // between conversions, then require a new clean conversion before validity returns.
+            if (fault_status_clear_pending_) {
+                uint8_t latest{};
+                if (!read_registers(0x0F, &latest, 1)) {
+                    sample_.valid = false;
+                    next_start_ms_ = now_ms + 250;
+                    return; // Never clear a status register that could not be observed.
+                }
+                if (latest & static_cast<uint8_t>(~sample_.status)) {
+                    sample_.status = static_cast<uint8_t>(sample_.status | latest);
+                    sample_.valid = false;
+                    next_start_ms_ = now_ms + 250;
+                    return; // Publish newly latched causes for a full control interval first.
+                }
+                if (!write_register(0x00, kMax31856Cr0FaultClear)) {
+                    // Retain the observed hardware SR cause; a failed clear must not revive data.
+                    sample_.valid = false;
+                    next_start_ms_ = now_ms + 250;
+                    return;
+                }
+                fault_status_clear_pending_ = false;
+            }
+            if (!write_register(0x00, kMax31856Cr0OneShot)) {
                 invalidate(0xFE);
                 next_start_ms_ = now_ms + 250;
                 return;
@@ -72,6 +103,7 @@ public:
         const uint64_t observed_ms = clock_ms();
         const int level = gpio_get_level(drdy_);
         if (level != 0) saw_high_ = true;
+        const bool timed_out = observed_ms >= started_ms_ && observed_ms - started_ms_ > 210;
         if (level == 0 && saw_high_) {
             if (!sirokko::max31856_sample_within_deadline(started_ms_, observed_ms, observed_ms)) {
                 invalidate(0xFC);
@@ -86,18 +118,37 @@ public:
             } else {
                 const uint64_t completed_ms = clock_ms();
                 const uint8_t after = packet[5];
-                sample_.status = before | after;
+                sample_.status = static_cast<uint8_t>(before | after);
                 sample_.valid = sample_.status == 0 &&
                     sirokko::max31856_sample_within_deadline(started_ms_, observed_ms, completed_ms);
                 if (sample_.valid) {
                     sample_.milli_c = sirokko::max31856_milli_c(packet[2], packet[3], packet[4]);
                     sample_.sample_ms = completed_ms;
+                } else if (sample_.status != 0) {
+                    // Preserve all SR bits for the control loop; clear only before the next one-shot.
+                    fault_status_clear_pending_ = true;
                 } else if (sample_.status == 0) {
                     sample_.status = 0xFC;
                 }
             }
             waiting_ = false;
-        } else if (observed_ms >= started_ms_ && observed_ms - started_ms_ > 210) {
+        } else if (level == 0) {
+            // A persistent interrupt-mode fault may reassert before DRDY returns high. Read and
+            // publish SR rather than reducing that physical cause to a generic DRDY timeout.
+            uint8_t status{};
+            if (!read_registers(0x0F, &status, 1)) {
+                invalidate(0xFD);
+                waiting_ = false;
+            } else if (status != 0) {
+                sample_.valid = false;
+                sample_.status = status;
+                fault_status_clear_pending_ = true;
+                waiting_ = false;
+            } else if (timed_out) {
+                invalidate(0xFC);
+                waiting_ = false;
+            }
+        } else if (timed_out) {
             invalidate(0xFC);  // DRDY did not complete a new HIGH->LOW cycle by its deadline
             waiting_ = false;
         }
@@ -106,6 +157,16 @@ public:
     sirokko::SensorSample sample() const { return sample_; }
 
 private:
+    void retry_after_start_failure(uint64_t now_ms) {
+        // Do not overwrite a just-published physical SR reason before the control loop can observe it.
+        if (fault_status_clear_pending_) {
+            sample_.valid = false;
+        } else {
+            invalidate(0xFE);
+        }
+        next_start_ms_ = now_ms + 250;
+    }
+
     void invalidate(uint8_t status) {
         sample_.valid = false;
         sample_.status = status;
@@ -148,6 +209,7 @@ private:
     bool waiting_{};
     bool saw_high_{};
     bool initialized_{};
+    bool fault_status_clear_pending_{};
 };
 
 class RoomDs18b20 {
