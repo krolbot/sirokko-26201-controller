@@ -50,68 +50,7 @@ web_protocol::ChallengeBinding g_challenge{};
 web_protocol::ReplayCache g_replays{};
 std::array<char, kStateJsonCapacity> g_state_json{};
 
-constexpr char kPage[] = R"SIROKKO(<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sirokko 262.01</title><style>
-:root{color-scheme:dark;font:16px system-ui,sans-serif;background:#101216;color:#edf0f4}body{max-width:1050px;margin:auto;padding:14px}h1{font-size:1.55rem;margin:.3rem 0}h2{font-size:1.12rem;margin:.2rem 0 .7rem}.card{background:#1b2028;border:1px solid #3b4657;border-radius:12px;padding:14px;margin:12px 0}.notice{border-left:5px solid #e7b44f}.warn{color:#ffd273}.bad{color:#ff8d8d}.good{color:#8be3a8}.stale{background:#5a2525;border-color:#ff8d8d}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.value{font-size:1.12rem;overflow-wrap:anywhere}.small{font-size:.88rem;color:#c4cad4}label{display:grid;gap:5px}button,input,select,textarea{font:inherit;padding:10px;border-radius:7px;border:1px solid #637084;background:#11161e;color:#fff}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.start{background:#17693c}.stop{background:#8c2e31;font-weight:700}.secondary{background:#243447}textarea{min-height:190px;resize:vertical}table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #394353;padding:6px;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}.row>*{flex:1}.hidden{display:none!important}@media(max-width:520px){body{padding:8px}.row>*{min-width:100%}button,input,select,textarea{box-sizing:border-box;width:100%}}
-</style></head><body>
-<h1>Sirokko 262.01</h1>
-<div class="card notice"><b>Сервисный интерфейс, не подтверждение физической работы.</b><br><span class="small">Профиль процесса валидируется как форма данных; <code>physical_tests=false</code>. Команда вентилятора — не измеренные RPM, ток, расход или состояние реле.</span></div>
-<div id="login" class="card"><h2>Вход в точку доступа</h2><label>Пароль AP<input id="password" type="password" autocomplete="current-password"></label><p><button id="loginButton" onclick="login()">Войти</button> <span id="loginResult"></span></p></div>
-<div id="panel" hidden>
-<div id="stale" class="card stale hidden"><b>СВЯЗЬ ПОТЕРЯНА — данные устарели.</b><br>ПУСК, настройки, таймер, калибровка, профиль и OTA заблокированы до нового чтения состояния. СТОП остаётся доступным отдельной приоритетной командой.</div>
-<div class="card"><div class="grid"><div>Состояние<div id="state" class="value">—</div></div><div>Запрет пуска<div id="block" class="value">—</div></div><div>Версия<div id="version" class="value">—</div></div><div>Хранилище<div id="storage" class="value">—</div></div></div><pre id="faults" class="small"></pre><div id="last" class="small"></div></div>
-<div class="card"><h2>Температуры и команда</h2><div class="grid"><div>Помещение<div id="room" class="value">—</div></div><div>Выхлоп EXH<div id="exhaust" class="value">—</div></div><div>Воздух AIR<div id="air" class="value">—</div></div><div>Команда вентилятора<div id="command" class="value">—</div></div><div>Диапазон<div id="range" class="value">—</div></div><div>Превышение комнаты<div id="roomExcess" class="value">—</div></div></div></div>
-<div class="card"><h2>Сеанс, пуск и продувка</h2><div class="grid"><div>Таймер останова<div id="runRemaining" class="value">—</div></div><div>Отложенный пуск<div id="armRemaining" class="value">—</div></div><div>Продувка<div id="purgeRemaining" class="value">—</div></div><div>Калибровка<div id="calibration" class="value">—</div></div></div><div id="purgeConditions" class="small"></div></div>
-<div class="card"><h2>Управление</h2><div class="grid"><button class="start" data-online onclick="issueSimple('START')">ПУСК</button><button class="stop" id="stopButton" onclick="stopNow()">СТОП</button><button data-online onclick="issueSimple('RESET_FAULT')">Сбросить аварию</button><button data-online onclick="issueSimple('CALIBRATE')">Начать автоматическую калибровку</button><button data-online onclick="cancelArm()">Отменить отложенный пуск</button></div><p class="small">СТОП не требует дополнительного подтверждения и никогда не обращается к GPIO напрямую: он передаётся в общий автомат.</p></div>
-<div class="card"><h2>Настройки управления</h2><div class="grid"><label>Уставка помещения, °C<input id="setpoint" data-setting type="number" min="15" max="30" step="1"></label><label>Длительность нового сеанса, мин (0=выкл.)<input id="duration" data-setting type="number" min="0" max="10080" step="1"></label><label>Режим<select id="mode" data-setting><option value="TEMPERATURE">По температуре</option><option value="MANUAL">Ручной</option></select></label><label>Ручная команда, %<input id="manual" data-setting type="number" min="5" max="100" step="5"></label><label>Нарастание /с<input id="slewUp" data-setting type="number" min="0.0001" max="0.005" step="0.0001"></label><label>Снижение /с<input id="slewDown" data-setting type="number" min="0.0001" max="0.005" step="0.0001"></label></div><p><button class="secondary" data-online onclick="saveSettings()">Сохранить настройки</button></p><p class="small">Старый гистерезис не является полем UI. Редактирование не перезапускает уже работающий таймер.</p></div>
-<div class="card"><h2>Таймер и отложенный пуск</h2><div class="row"><label>Выключить через, мин (0=отмена)<input id="timerAfter" type="number" min="0" max="10080" step="1" value="0"></label><button class="secondary" data-online onclick="setTimer()">Установить таймер от сейчас</button><label>Пуск через, мин<input id="armAfter" type="number" min="1" max="10080" step="1" value="10"></label><button class="secondary" data-online onclick="armStart()">Взвести пуск</button></div></div>
-<div class="card"><h2>Профиль процесса — сервисный JSON</h2><p class="small">Вставьте полный JSON профиля из утверждённого паспорта процесса. Форма проверяется строго; здесь намеренно нет вымышленных физических чисел или поэтапных подтверждений. <code>qualified</code> означает настроенную форму профиля, а не доказанную квалификацию горения.</p><textarea id="processJson" spellcheck="false" placeholder="Вставьте полный JSON профиля процесса без примеров чисел."></textarea><p><button class="secondary" data-online onclick="saveProcess()">Проверить и передать профиль</button></p><div id="profileStatus" class="small">—</div></div>
-<div class="card"><h2>Подписанное OTA</h2><p class="small">Принимается один подписанный пакет <code>.sota</code>, созданный offline-инструментом. Обычный совместимый <code>.bin</code> не является подлинным OTA-пакетом и не принимается. Загрузка доступна только после безопасного перехода в обслуживание.</p><div class="row"><label>Файл .sota<input id="otaFile" type="file" accept=".sota,application/octet-stream"></label><button class="secondary" data-online onclick="uploadOta()">Проверить и загрузить OTA</button></div></div>
-<div class="card"><h2>Журнал автомата (монотонное время)</h2><div class="small">В том числе отрицательное сообщение KEY0 во время калибровки, если оно зафиксировано автоматом.</div><div style="overflow:auto"><table><thead><tr><th>ms</th><th>Событие</th><th>Состояние</th><th>PWM</th><th>EXH / AIR</th><th>Faults</th></tr></thead><tbody id="events"></tbody></table></div></div>
-<div class="card"><b>Ответ интерфейса</b><pre id="result">—</pre></div>
-</div>
-<script>
-/* BEGIN js-sha256 0.11.1 (MIT) */
-/**
- * [js-sha256]{@link https://github.com/emn178/js-sha256}
- *
- * @version 0.11.1
- * @author Chen, Yi-Cyuan [emn178@gmail.com]
- * @copyright Chen, Yi-Cyuan 2014-2025
- * @license MIT
- */
-!function(){"use strict";function t(t,i){i?(d[0]=d[16]=d[1]=d[2]=d[3]=d[4]=d[5]=d[6]=d[7]=d[8]=d[9]=d[10]=d[11]=d[12]=d[13]=d[14]=d[15]=0,this.blocks=d):this.blocks=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],t?(this.h0=3238371032,this.h1=914150663,this.h2=812702999,this.h3=4144912697,this.h4=4290775857,this.h5=1750603025,this.h6=1694076839,this.h7=3204075428):(this.h0=1779033703,this.h1=3144134277,this.h2=1013904242,this.h3=2773480762,this.h4=1359893119,this.h5=2600822924,this.h6=528734635,this.h7=1541459225),this.block=this.start=this.bytes=this.hBytes=0,this.finalized=this.hashed=!1,this.first=!0,this.is224=t}function i(i,r,s){var e,n=typeof i;if("string"===n){var o,a=[],u=i.length,c=0;for(e=0;e<u;++e)(o=i.charCodeAt(e))<128?a[c++]=o:o<2048?(a[c++]=192|o>>>6,a[c++]=128|63&o):o<55296||o>=57344?(a[c++]=224|o>>>12,a[c++]=128|o>>>6&63,a[c++]=128|63&o):(o=65536+((1023&o)<<10|1023&i.charCodeAt(++e)),a[c++]=240|o>>>18,a[c++]=128|o>>>12&63,a[c++]=128|o>>>6&63,a[c++]=128|63&o);i=a}else{if("object"!==n)throw new Error(h);if(null===i)throw new Error(h);if(f&&i.constructor===ArrayBuffer)i=new Uint8Array(i);else if(!(Array.isArray(i)||f&&ArrayBuffer.isView(i)))throw new Error(h)}i.length>64&&(i=new t(r,!0).update(i).array());var y=[],p=[];for(e=0;e<64;++e){var l=i[e]||0;y[e]=92^l,p[e]=54^l}t.call(this,r,s),this.update(p),this.oKeyPad=y,this.inner=!0,this.sharedMemory=s}var h="input is invalid type",r="object"==typeof window,s=r?window:{};s.JS_SHA256_NO_WINDOW&&(r=!1);var e=!r&&"object"==typeof self,n=!s.JS_SHA256_NO_NODE_JS&&"object"==typeof process&&process.versions&&process.versions.node&&"renderer"!=process.type;n?s=global:e&&(s=self);var o=!s.JS_SHA256_NO_COMMON_JS&&"object"==typeof module&&module.exports,a="function"==typeof define&&define.amd,f=!s.JS_SHA256_NO_ARRAY_BUFFER&&"undefined"!=typeof ArrayBuffer,u="0123456789abcdef".split(""),c=[-2147483648,8388608,32768,128],y=[24,16,8,0],p=[1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],l=["hex","array","digest","arrayBuffer"],d=[];!s.JS_SHA256_NO_NODE_JS&&Array.isArray||(Array.isArray=function(t){return"[object Array]"===Object.prototype.toString.call(t)}),!f||!s.JS_SHA256_NO_ARRAY_BUFFER_IS_VIEW&&ArrayBuffer.isView||(ArrayBuffer.isView=function(t){return"object"==typeof t&&t.buffer&&t.buffer.constructor===ArrayBuffer});var A=function(i,h){return function(r){return new t(h,!0).update(r)[i]()}},w=function(i){var h=A("hex",i);n&&(h=b(h,i)),h.create=function(){return new t(i)},h.update=function(t){return h.create().update(t)};for(var r=0;r<l.length;++r){var s=l[r];h[s]=A(s,i)}return h},b=function(t,i){var r,e=require("crypto"),n=require("buffer").Buffer,o=i?"sha224":"sha256";r=n.from&&!s.JS_SHA256_NO_BUFFER_FROM?n.from:function(t){return new n(t)};return function(i){if("string"==typeof i)return e.createHash(o).update(i,"utf8").digest("hex");if(null===i||void 0===i)throw new Error(h);return i.constructor===ArrayBuffer&&(i=new Uint8Array(i)),Array.isArray(i)||ArrayBuffer.isView(i)||i.constructor===n?e.createHash(o).update(r(i)).digest("hex"):t(i)}},_=function(t,h){return function(r,s){return new i(r,h,!0).update(s)[t]()}},v=function(t){var h=_("hex",t);h.create=function(h){return new i(h,t)},h.update=function(t,i){return h.create(t).update(i)};for(var r=0;r<l.length;++r){var s=l[r];h[s]=_(s,t)}return h};t.prototype.update=function(t){if(!this.finalized){var i,r=typeof t;if("string"!==r){if("object"!==r)throw new Error(h);if(null===t)throw new Error(h);if(f&&t.constructor===ArrayBuffer)t=new Uint8Array(t);else if(!(Array.isArray(t)||f&&ArrayBuffer.isView(t)))throw new Error(h);i=!0}for(var s,e,n=0,o=t.length,a=this.blocks;n<o;){if(this.hashed&&(this.hashed=!1,a[0]=this.block,this.block=a[16]=a[1]=a[2]=a[3]=a[4]=a[5]=a[6]=a[7]=a[8]=a[9]=a[10]=a[11]=a[12]=a[13]=a[14]=a[15]=0),i)for(e=this.start;n<o&&e<64;++n)a[e>>>2]|=t[n]<<y[3&e++];else for(e=this.start;n<o&&e<64;++n)(s=t.charCodeAt(n))<128?a[e>>>2]|=s<<y[3&e++]:s<2048?(a[e>>>2]|=(192|s>>>6)<<y[3&e++],a[e>>>2]|=(128|63&s)<<y[3&e++]):s<55296||s>=57344?(a[e>>>2]|=(224|s>>>12)<<y[3&e++],a[e>>>2]|=(128|s>>>6&63)<<y[3&e++],a[e>>>2]|=(128|63&s)<<y[3&e++]):(s=65536+((1023&s)<<10|1023&t.charCodeAt(++n)),a[e>>>2]|=(240|s>>>18)<<y[3&e++],a[e>>>2]|=(128|s>>>12&63)<<y[3&e++],a[e>>>2]|=(128|s>>>6&63)<<y[3&e++],a[e>>>2]|=(128|63&s)<<y[3&e++]);this.lastByteIndex=e,this.bytes+=e-this.start,e>=64?(this.block=a[16],this.start=e-64,this.hash(),this.hashed=!0):this.start=e}return this.bytes>4294967295&&(this.hBytes+=this.bytes/4294967296<<0,this.bytes=this.bytes%4294967296),this}},t.prototype.finalize=function(){if(!this.finalized){this.finalized=!0;var t=this.blocks,i=this.lastByteIndex;t[16]=this.block,t[i>>>2]|=c[3&i],this.block=t[16],i>=56&&(this.hashed||this.hash(),t[0]=this.block,t[16]=t[1]=t[2]=t[3]=t[4]=t[5]=t[6]=t[7]=t[8]=t[9]=t[10]=t[11]=t[12]=t[13]=t[14]=t[15]=0),t[14]=this.hBytes<<3|this.bytes>>>29,t[15]=this.bytes<<3,this.hash()}},t.prototype.hash=function(){var t,i,h,r,s,e,n,o,a,f=this.h0,u=this.h1,c=this.h2,y=this.h3,l=this.h4,d=this.h5,A=this.h6,w=this.h7,b=this.blocks;for(t=16;t<64;++t)i=((s=b[t-15])>>>7|s<<25)^(s>>>18|s<<14)^s>>>3,h=((s=b[t-2])>>>17|s<<15)^(s>>>19|s<<13)^s>>>10,b[t]=b[t-16]+i+b[t-7]+h<<0;for(a=u&c,t=0;t<64;t+=4)this.first?(this.is224?(e=300032,w=(s=b[0]-1413257819)-150054599<<0,y=s+24177077<<0):(e=704751109,w=(s=b[0]-210244248)-1521486534<<0,y=s+143694565<<0),this.first=!1):(i=(f>>>2|f<<30)^(f>>>13|f<<19)^(f>>>22|f<<10),r=(e=f&u)^f&c^a,w=y+(s=w+(h=(l>>>6|l<<26)^(l>>>11|l<<21)^(l>>>25|l<<7))+(l&d^~l&A)+p[t]+b[t])<<0,y=s+(i+r)<<0),i=(y>>>2|y<<30)^(y>>>13|y<<19)^(y>>>22|y<<10),r=(n=y&f)^y&u^e,A=c+(s=A+(h=(w>>>6|w<<26)^(w>>>11|w<<21)^(w>>>25|w<<7))+(w&l^~w&d)+p[t+1]+b[t+1])<<0,i=((c=s+(i+r)<<0)>>>2|c<<30)^(c>>>13|c<<19)^(c>>>22|c<<10),r=(o=c&y)^c&f^n,d=u+(s=d+(h=(A>>>6|A<<26)^(A>>>11|A<<21)^(A>>>25|A<<7))+(A&w^~A&l)+p[t+2]+b[t+2])<<0,i=((u=s+(i+r)<<0)>>>2|u<<30)^(u>>>13|u<<19)^(u>>>22|u<<10),r=(a=u&c)^u&y^o,l=f+(s=l+(h=(d>>>6|d<<26)^(d>>>11|d<<21)^(d>>>25|d<<7))+(d&A^~d&w)+p[t+3]+b[t+3])<<0,f=s+(i+r)<<0,this.chromeBugWorkAround=!0;this.h0=this.h0+f<<0,this.h1=this.h1+u<<0,this.h2=this.h2+c<<0,this.h3=this.h3+y<<0,this.h4=this.h4+l<<0,this.h5=this.h5+d<<0,this.h6=this.h6+A<<0,this.h7=this.h7+w<<0},t.prototype.hex=function(){this.finalize();var t=this.h0,i=this.h1,h=this.h2,r=this.h3,s=this.h4,e=this.h5,n=this.h6,o=this.h7,a=u[t>>>28&15]+u[t>>>24&15]+u[t>>>20&15]+u[t>>>16&15]+u[t>>>12&15]+u[t>>>8&15]+u[t>>>4&15]+u[15&t]+u[i>>>28&15]+u[i>>>24&15]+u[i>>>20&15]+u[i>>>16&15]+u[i>>>12&15]+u[i>>>8&15]+u[i>>>4&15]+u[15&i]+u[h>>>28&15]+u[h>>>24&15]+u[h>>>20&15]+u[h>>>16&15]+u[h>>>12&15]+u[h>>>8&15]+u[h>>>4&15]+u[15&h]+u[r>>>28&15]+u[r>>>24&15]+u[r>>>20&15]+u[r>>>16&15]+u[r>>>12&15]+u[r>>>8&15]+u[r>>>4&15]+u[15&r]+u[s>>>28&15]+u[s>>>24&15]+u[s>>>20&15]+u[s>>>16&15]+u[s>>>12&15]+u[s>>>8&15]+u[s>>>4&15]+u[15&s]+u[e>>>28&15]+u[e>>>24&15]+u[e>>>20&15]+u[e>>>16&15]+u[e>>>12&15]+u[e>>>8&15]+u[e>>>4&15]+u[15&e]+u[n>>>28&15]+u[n>>>24&15]+u[n>>>20&15]+u[n>>>16&15]+u[n>>>12&15]+u[n>>>8&15]+u[n>>>4&15]+u[15&n];return this.is224||(a+=u[o>>>28&15]+u[o>>>24&15]+u[o>>>20&15]+u[o>>>16&15]+u[o>>>12&15]+u[o>>>8&15]+u[o>>>4&15]+u[15&o]),a},t.prototype.toString=t.prototype.hex,t.prototype.digest=function(){this.finalize();var t=this.h0,i=this.h1,h=this.h2,r=this.h3,s=this.h4,e=this.h5,n=this.h6,o=this.h7,a=[t>>>24&255,t>>>16&255,t>>>8&255,255&t,i>>>24&255,i>>>16&255,i>>>8&255,255&i,h>>>24&255,h>>>16&255,h>>>8&255,255&h,r>>>24&255,r>>>16&255,r>>>8&255,255&r,s>>>24&255,s>>>16&255,s>>>8&255,255&s,e>>>24&255,e>>>16&255,e>>>8&255,255&e,n>>>24&255,n>>>16&255,n>>>8&255,255&n];return this.is224||a.push(o>>>24&255,o>>>16&255,o>>>8&255,255&o),a},t.prototype.array=t.prototype.digest,t.prototype.arrayBuffer=function(){this.finalize();var t=new ArrayBuffer(this.is224?28:32),i=new DataView(t);return i.setUint32(0,this.h0),i.setUint32(4,this.h1),i.setUint32(8,this.h2),i.setUint32(12,this.h3),i.setUint32(16,this.h4),i.setUint32(20,this.h5),i.setUint32(24,this.h6),this.is224||i.setUint32(28,this.h7),t},(i.prototype=new t).finalize=function(){if(t.prototype.finalize.call(this),this.inner){this.inner=!1;var i=this.array();t.call(this,this.is224,this.sharedMemory),this.update(this.oKeyPad),this.update(i),t.prototype.finalize.call(this)}};var B=w();B.sha256=B,B.sha224=w(!0),B.sha256.hmac=v(),B.sha224.hmac=v(!0),o?module.exports=B:(s.sha256=B.sha256,s.sha224=B.sha224,a&&define(function(){return B}))}();
-/* END js-sha256 */
-'use strict';
-const q=id=>document.getElementById(id);const dirty=new Set();let pollTimer=null;let online=false;let pending=null;let lastState=null;
-for(const input of document.querySelectorAll('[data-setting]'))input.addEventListener('input',()=>dirty.add(input.id));
-function text(id,value){q(id).textContent=value==null?'—':String(value)}
-function milliseconds(ms){if(!Number.isFinite(ms))return'—';const seconds=Math.ceil(ms/1000);const d=Math.floor(seconds/86400),h=Math.floor(seconds%86400/3600),m=Math.floor(seconds%3600/60),s=seconds%60;return(d?d+' д ':'')+(h?h+' ч ':'')+(m?m+' мин ':'')+s+' с'}
-function temperature(sample){return sample&&sample.valid?(sample.milli_c/1000).toFixed(1)+' °C':'ОШИБКА ('+(sample?sample.status:'—')+')'}
-function commandId(){if(!crypto||!crypto.getRandomValues)throw Error('Браузер не предоставляет криптографический генератор');const value=new Uint32Array(2);crypto.getRandomValues(value);return value[0].toString(16).padStart(8,'0')+value[1].toString(16).padStart(8,'0')}
-function report(value){text('result',value)}
-function setOnline(value){online=value;q('stale').classList.toggle('hidden',value);for(const button of document.querySelectorAll('[data-online]'))button.disabled=!value;q('stopButton').disabled=false}
-async function responseJson(response){const raw=await response.text();try{return{response,body:JSON.parse(raw)}}catch(_){return{response,body:{status:'HTTP_ERROR',code:raw||response.statusText}}}}
-async function api(url,options){const reply=await fetch(url,options);return responseJson(reply)}
-function settingsPayload(){const setpoint=Number(q('setpoint').value),duration=Number(q('duration').value),manual=Number(q('manual').value),up=Number(q('slewUp').value),down=Number(q('slewDown').value);if(!Number.isInteger(setpoint)||setpoint<15||setpoint>30||!Number.isInteger(duration)||duration<0||duration>10080||!Number.isInteger(manual)||manual<5||manual>100||manual%5!==0||!Number.isFinite(up)||up<0.0001||up>0.005||!Number.isFinite(down)||down<0.0001||down>0.005)throw Error('Проверьте диапазоны настроек');return{room_setpoint_milli_c:setpoint*1000,duration_ms:duration*60000,mode:q('mode').value,manual_percent:manual,slew_up_per_s:up,slew_down_per_s:down}}
-function observationFor(action,payload,before){return state=>{if(action==='SETTINGS'){const v=state.settings,p=payload.settings;return v.room_setpoint_milli_c===p.room_setpoint_milli_c&&v.duration_ms===p.duration_ms&&v.mode===p.mode&&v.manual_percent===p.manual_percent&&Math.abs(v.slew_up_per_s-p.slew_up_per_s)<1e-9&&Math.abs(v.slew_down_per_s-p.slew_down_per_s)<1e-9}if(action==='START')return['PREPURGE','PREHEAT','IGNITION','VERIFY','RUN'].includes(state.state.code);if(action==='RESET_FAULT')return before.faults!==0&&state.faults===0;if(action==='ARM')return !before.delayed.armed&&state.delayed.armed;if(action==='CANCEL_ARM')return before.delayed.armed&&!state.delayed.armed;if(action==='TIMER')return payload.delay_ms===0?(before.timer.active&&!state.timer.active):(state.timer.active&&state.timer.remaining_ms<=payload.delay_ms);if(action==='CALIBRATE')return state.calibration.active;if(action==='PROCESS_CONFIG')return !before.process.configured&&state.process.configured;return false}}
-async function issue(payload,dirtyIds=[]){if(!online)throw Error('Нет подтверждённой связи с автоматом');const before=lastState;const challenge=await api('/api/challenge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!challenge.response.ok||challenge.body.status!=='CHALLENGE')throw Error(challenge.body.code||'Не удалось получить одноразовый challenge');const submitted={...payload,grant:{token:challenge.body.token,state_version:challenge.body.state_version,expires_ms:challenge.body.expires_ms}};const answer=await api('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(submitted)});if(!answer.response.ok||answer.body.status!=='QUEUED'){report('Отклонено: '+(answer.body.code||answer.body.status));return}pending={action:payload.action,observe:observationFor(payload.action,payload,before),dirtyIds};report('Запрос принят в очередь. Настройки не считаются применёнными до чтения подтверждённого состояния.');await poll()}
-async function issueSimple(action){try{await issue({action,command_id:commandId()})}catch(error){report(String(error.message||error))}}
-async function stopNow(){try{const answer=await api('/api/command',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'STOP',command_id:commandId()})});report(answer.response.ok?'СТОП передан автомату; ожидается штатная продувка.':'СТОП отклонён: '+(answer.body.code||answer.body.status));await poll()}catch(error){report('Не удалось передать СТОП: '+String(error.message||error))}}
-async function saveSettings(){try{await issue({action:'SETTINGS',command_id:commandId(),settings:settingsPayload()},['setpoint','duration','mode','manual','slewUp','slewDown'])}catch(error){report(String(error.message||error))}}
-async function armStart(){try{const minutes=Number(q('armAfter').value);if(!Number.isInteger(minutes)||minutes<1||minutes>10080)throw Error('Задержка пуска: 1…10080 минут');await issue({action:'ARM',command_id:commandId(),delay_ms:minutes*60000})}catch(error){report(String(error.message||error))}}
-async function cancelArm(){try{await issue({action:'CANCEL_ARM',command_id:commandId()})}catch(error){report(String(error.message||error))}}
-async function setTimer(){try{const minutes=Number(q('timerAfter').value);if(!Number.isInteger(minutes)||minutes<0||minutes>10080)throw Error('Таймер: 0…10080 минут');await issue({action:'TIMER',command_id:commandId(),delay_ms:minutes*60000})}catch(error){report(String(error.message||error))}}
-async function saveProcess(){try{const process=JSON.parse(q('processJson').value);if(!process||Array.isArray(process)||typeof process!=='object')throw Error('Нужен JSON-объект профиля');await issue({action:'PROCESS_CONFIG',command_id:commandId(),process})}catch(error){report('Профиль не передан: '+String(error.message||error))}}
-function hex(bytes){return Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('')}
-async function hashImage(raw){return globalThis.crypto&&crypto.subtle?hex(await crypto.subtle.digest('SHA-256',raw)):window.sha256(raw)}
-async function uploadOta(){try{if(!online)throw Error('Нет подтверждённой связи');const file=q('otaFile').files[0];if(!file)throw Error('Выберите подписанный .sota пакет');if(!file.name.toLowerCase().endsWith('.sota'))throw Error('Нужен подписанный .sota пакет, не исходный .bin');const raw=await file.arrayBuffer();const payload={action:'OTA',command_id:commandId(),upload_size:file.size,upload_sha256:await hashImage(raw)};const challenge=await api('/api/challenge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!challenge.response.ok||challenge.body.status!=='CHALLENGE')throw Error(challenge.body.code||'OTA challenge отклонён');report('Загрузка пакета; до проверки подписи и образа слот не активируется…');const answer=await api('/api/ota',{method:'POST',headers:{'X-Sirokko-Token':challenge.body.token,'X-Sirokko-State-Version':challenge.body.state_version,'X-Sirokko-Expires':challenge.body.expires_ms,'X-Sirokko-Command-Id':payload.command_id,'X-Sirokko-Upload-Size':String(payload.upload_size),'X-Sirokko-Upload-SHA256':payload.upload_sha256},body:file});report(answer.response.ok&&answer.body.status==='VERIFIED_REBOOTING'?'Пакет проверен; устройство перезапускается в новый OTA-слот.':'OTA отклонена: '+(answer.body.code||answer.body.status))}catch(error){report(String(error.message||error))}}
-function renderEvents(events){const body=q('events');while(body.firstChild)body.removeChild(body.firstChild);for(const event of events||[]){const row=document.createElement('tr');for(const value of [event.at_ms,event.kind_ru+' ('+event.kind+')',event.state_ru+' ('+event.state+')',event.speed_code,(event.exhaust_milli_c/1000).toFixed(1)+' / '+(event.air_milli_c/1000).toFixed(1)+' °C','0x'+Number(event.faults).toString(16)]){const cell=document.createElement('td');cell.textContent=String(value);row.appendChild(cell)}body.appendChild(row)}}
-function render(state){lastState=state;setOnline(true);text('state',state.state.ru+' ('+state.state.code+')');text('block',state.start_block.ru+' ('+state.start_block.code+')');text('version',state.version);text('storage',state.storage_ok?'OK':'ОШИБКА: запись/чтение не подтверждены');text('faults','Faults: 0x'+Number(state.faults).toString(16)+'\nВыходы: FAN='+state.outputs.fan_request+' GLOW='+state.outputs.glow+' FUEL='+state.outputs.fuel+' PWM='+state.outputs.speed_code);text('room',temperature(state.sensors.room));text('exhaust',temperature(state.sensors.exhaust));text('air',temperature(state.sensors.air));text('command',state.outputs.command_percent.toFixed(1)+' %; PWM '+state.outputs.speed_code);text('range',(state.range.calibrated?'калиброван ':'не калиброван ')+state.range.minimum_speed_code+'…'+state.range.maximum_speed_code+'; доля '+(state.range.working_span_fraction*100).toFixed(1)+' %');text('roomExcess',state.room_excess?'есть: автомат не гасит горение по комнате':'нет');text('runRemaining',state.timer.active?milliseconds(state.timer.remaining_ms):'не активен');text('armRemaining',state.delayed.armed?milliseconds(state.delayed.remaining_ms):'не взведён');text('purgeRemaining',state.purge.active?milliseconds(state.purge.minimum_remaining_ms):'не активна');text('purgeConditions',state.purge.active?'Датчики: '+(state.purge.sensors_fresh?'актуальны':'недостоверны')+'; температура: '+(state.purge.temperature_ready?'допускает окончание':'ещё не допускает окончание'):'' );text('calibration',(state.calibration.active?'активна':'не активна')+'; '+state.calibration.phase_ru+' / '+state.calibration.reason_ru+'; точек '+state.calibration.points+'; '+milliseconds(state.calibration.elapsed_ms));text('profileStatus','configured='+state.process.configured+'; physical_tests='+state.process.physical_tests);if(!dirty.has('setpoint'))q('setpoint').value=(state.settings.room_setpoint_milli_c/1000).toFixed(0);if(!dirty.has('duration'))q('duration').value=Math.round(state.settings.duration_ms/60000);if(!dirty.has('mode'))q('mode').value=state.settings.mode;if(!dirty.has('manual'))q('manual').value=state.settings.manual_percent;if(!dirty.has('slewUp'))q('slewUp').value=state.settings.slew_up_per_s;if(!dirty.has('slewDown'))q('slewDown').value=state.settings.slew_down_per_s;renderEvents(state.events);text('last','Последнее подтверждённое чтение: '+new Date().toLocaleTimeString()+'; state_version='+state.state_version);if(pending&&pending.observe&&pending.observe(state)){for(const id of pending.dirtyIds)dirty.delete(id);report('Изменение подтверждено новым чтением состояния.');pending=null}}
-async function poll(){try{const answer=await api('/api/state',{cache:'no-store'});if(!answer.response.ok){if(answer.response.status===401){q('panel').hidden=true;q('login').hidden=false;if(pollTimer)clearInterval(pollTimer)}else setOnline(false);return}render(answer.body)}catch(_){setOnline(false);text('last','Последние значения устарели: '+new Date().toLocaleTimeString())}}
-async function login(){try{q('loginButton').disabled=true;const response=await fetch('/api/login',{method:'POST',headers:{'X-Sirokko-Password':q('password').value}});q('password').value='';if(!response.ok){text('loginResult','Отказ');return}q('login').hidden=true;q('panel').hidden=false;text('loginResult','');await poll();if(pollTimer)clearInterval(pollTimer);pollTimer=setInterval(poll,1000)}catch(_){text('loginResult','Нет связи')}finally{q('loginButton').disabled=false}}
-</script></body></html>)SIROKKO";
+#include "web_ui_data.inc"
 
 uint64_t now_ms() { return static_cast<uint64_t>(esp_timer_get_time() / 1000); }
 uint64_t receive_clock(void*) { return now_ms(); }
@@ -196,7 +135,7 @@ const char* russian_state(sirokko::State state) {
         case sirokko::State::PREPURGE: return "Предпродувка";
         case sirokko::State::PREHEAT: return "Накал";
         case sirokko::State::IGNITION: return "Розжиг";
-        case sirokko::State::VERIFY: return "Проверка горения";
+        case sirokko::State::VERIFY: return "Проверка запуска";
         case sirokko::State::RUN: return "Работа";
         case sirokko::State::STOP_PURGE: return "Продувка после останова";
         case sirokko::State::FAULT_PURGE: return "Аварийная продувка";
@@ -266,7 +205,7 @@ void no_store(httpd_req_t* request) {
     httpd_resp_set_hdr(request, "X-Frame-Options", "DENY");
     httpd_resp_set_hdr(request, "Referrer-Policy", "no-referrer");
     httpd_resp_set_hdr(request, "Content-Security-Policy",
-                       "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
+                       "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
 }
 
 esp_err_t send_json(httpd_req_t* request, const char* body, const char* status = nullptr) {
@@ -369,7 +308,8 @@ bool read_header(httpd_req_t* request, const char* name, char* output, size_t ca
 bool semantic_valid(const web_protocol::Command& command) {
     switch (command.action) {
         case sirokko::Action::ARM:
-            return command.delay_ms != 0 && command.delay_ms <= sirokko::kMaximumTimerMs;
+        case sirokko::Action::CANCEL_ARM:
+            return false; // Public product contract: one shutdown timer, no delayed start.
         case sirokko::Action::TIMER:
             return command.delay_ms <= sirokko::kMaximumTimerMs;
         case sirokko::Action::SETTINGS:
@@ -381,7 +321,6 @@ bool semantic_valid(const web_protocol::Command& command) {
         case sirokko::Action::START:
         case sirokko::Action::RESET_FAULT:
         case sirokko::Action::CALIBRATE:
-        case sirokko::Action::CANCEL_ARM:
             return true;
     }
     return false;
@@ -404,11 +343,34 @@ sirokko::Grant to_runtime_grant(const web_protocol::Command& command) {
     return grant;
 }
 
-void append_sensor(JsonBuilder* json, const sirokko::SensorSample& sample) {
+void append_sensor(JsonBuilder* json, const sirokko::SensorSample& sample, uint64_t now, uint64_t maximum_age) {
     json->raw("{\"milli_c\":"); json->integer(sample.milli_c);
     json->raw(",\"sample_ms\":"); json->unsigned_integer(sample.sample_ms);
     json->raw(",\"status\":"); json->unsigned_integer(static_cast<uint32_t>(sample.status));
-    json->raw(",\"valid\":"); json->boolean(sample.valid); json->character('}');
+    json->raw(",\"valid\":"); json->boolean(sample.valid);
+    json->raw(",\"fresh\":"); json->boolean(sample.valid && sample.status==0 && now>=sample.sample_ms && now-sample.sample_ms<=maximum_age);
+    json->character('}');
+}
+
+void append_process(JsonBuilder* json, const sirokko::ProcessProfile& profile) {
+    json->raw("{\"qualified\":"); json->boolean(profile.qualified);
+    json->raw(",\"recovery_purge_ms\":"); json->unsigned_integer(profile.recovery_purge_ms);
+    json->raw(",\"prepurge_ms\":"); json->unsigned_integer(profile.prepurge_ms);
+    json->raw(",\"preheat_ms\":"); json->unsigned_integer(profile.preheat_ms);
+    json->raw(",\"ignition_ms\":"); json->unsigned_integer(profile.ignition_ms);
+    json->raw(",\"verify_ms\":"); json->unsigned_integer(profile.verify_ms);
+    json->raw(",\"postpurge_ms\":"); json->unsigned_integer(profile.postpurge_ms);
+    json->raw(",\"maximum_purge_exit_exhaust_milli_c\":"); json->integer(profile.maximum_purge_exit_exhaust_milli_c);
+    json->raw(",\"maximum_purge_exit_air_milli_c\":"); json->integer(profile.maximum_purge_exit_air_milli_c);
+    json->raw(",\"maximum_exhaust_milli_c\":"); json->integer(profile.maximum_exhaust_milli_c);
+    json->raw(",\"maximum_air_milli_c\":"); json->integer(profile.maximum_air_milli_c);
+    json->raw(",\"minimum_ignition_rise_milli_c\":"); json->integer(profile.minimum_ignition_rise_milli_c);
+    json->raw(",\"minimum_run_exhaust_milli_c\":"); json->integer(profile.minimum_run_exhaust_milli_c);
+    json->raw(",\"purge_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.purge_speed_code));
+    json->raw(",\"run_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.run_speed_code));
+    json->raw(",\"calibration_floor_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.calibration_floor_speed_code));
+    json->raw(",\"minimum_ignition_air_rise_milli_c\":"); json->integer(profile.minimum_ignition_air_rise_milli_c);
+    json->character('}');
 }
 
 bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
@@ -417,15 +379,17 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw("{\"version\":"); json->quoted(description ? description->version : "unknown");
     json->raw(",\"uptime_ms\":"); json->unsigned_integer(view.now_ms);
     json->raw(",\"state_version\":\""); json->hexadecimal(control.state_version); json->raw("\"");
+    json->raw(",\"boot_id\":\""); json->hexadecimal(control.boot_id); json->raw("\"");
+    json->raw(",\"run_id\":\""); json->hexadecimal(control.run_id); json->raw("\"");
     json->raw(",\"state\":{\"code\":"); json->quoted(sirokko::state_name(control.state));
     json->raw(",\"ru\":"); json->quoted(russian_state(control.state)); json->raw("}");
     json->raw(",\"start_block\":{\"code\":"); json->quoted(sirokko::block_name(control.start_block));
     json->raw(",\"ru\":"); json->quoted(russian_block(control.start_block)); json->raw("}");
     json->raw(",\"faults\":"); json->unsigned_integer(control.faults);
     json->raw(",\"storage_ok\":"); json->boolean(view.storage_ok);
-    json->raw(",\"sensors\":{\"exhaust\":"); append_sensor(json, view.sensors.exhaust);
-    json->raw(",\"air\":"); append_sensor(json, view.sensors.air);
-    json->raw(",\"room\":"); append_sensor(json, view.sensors.room); json->raw("}");
+    json->raw(",\"sensors\":{\"exhaust\":"); append_sensor(json, view.sensors.exhaust, view.now_ms, sirokko::kSensorStaleMs);
+    json->raw(",\"air\":"); append_sensor(json, view.sensors.air, view.now_ms, sirokko::kSensorStaleMs);
+    json->raw(",\"room\":"); append_sensor(json, view.sensors.room, view.now_ms, sirokko::kRoomSensorStaleMs); json->raw("}");
     json->raw(",\"outputs\":{\"fan_request\":"); json->boolean(control.outputs.fan_request);
     json->raw(",\"speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(control.outputs.speed_code));
     json->raw(",\"glow\":"); json->boolean(control.outputs.glow);
@@ -439,6 +403,9 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw(",\"slew_down_per_s\":"); json->real(view.settings.slew_down_per_s); json->raw("}");
     json->raw(",\"timer\":{\"active\":"); json->boolean(control.duration_active);
     json->raw(",\"remaining_ms\":"); json->unsigned_integer(control.duration_remaining_ms);
+    const uint64_t deadline=control.duration_active && control.duration_remaining_ms<=std::numeric_limits<uint64_t>::max()-view.now_ms
+        ? view.now_ms+control.duration_remaining_ms : 0;
+    json->raw(",\"deadline_ms\":"); json->unsigned_integer(deadline);
     json->raw(",\"saved_duration_ms\":"); json->unsigned_integer(view.settings.duration_ms); json->raw("}");
     json->raw(",\"delayed\":{\"armed\":"); json->boolean(control.delayed_armed);
     json->raw(",\"remaining_ms\":"); json->unsigned_integer(control.delayed_remaining_ms); json->raw("}");
@@ -452,7 +419,7 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw(",\"working_span_fraction\":"); json->real(control.working_span_fraction); json->raw("}");
     json->raw(",\"room_excess\":"); json->boolean(control.room_excess);
     json->raw(",\"process\":{\"configured\":"); json->boolean(view.process.qualified);
-    json->raw(",\"physical_tests\":false}");
+    json->raw(",\"physical_tests\":false,\"profile\":"); append_process(json, view.process); json->character('}');
     json->raw(",\"calibration\":{\"active\":"); json->boolean(control.calibration_active);
     json->raw(",\"phase\":"); json->quoted(control.calibration_phase);
     json->raw(",\"phase_ru\":"); json->quoted(russian_calibration(control.calibration_phase));
@@ -500,6 +467,7 @@ struct OtaSink {
     std::array<uint8_t, ota_verify::kSignatureSize> signature{};
     std::array<uint8_t, sizeof(esp_image_header_t)> image_header{};
     ota_verify::Manifest manifest{};
+    char verified_version[33]{};
     size_t received{};
     size_t header_size{};
     size_t image_size{};
@@ -647,13 +615,15 @@ ota_verify::Result finish_ota_sink(OtaSink* sink) {
     if (esp_ota_get_partition_description(sink->partition, &description) != ESP_OK || !app_project_matches(description)) {
         return ota_verify::Result::PROJECT;
     }
+    std::memcpy(sink->verified_version, description.version, sizeof(description.version));
     return ota_verify::Result::OK;
 }
 
 esp_err_t page_handler(httpd_req_t* request) {
     no_store(request);
     httpd_resp_set_type(request, "text/html; charset=utf-8");
-    return httpd_resp_send(request, kPage, HTTPD_RESP_USE_STRLEN);
+    httpd_resp_set_hdr(request, "Content-Encoding", "gzip");
+    return httpd_resp_send(request, reinterpret_cast<const char*>(kPageGzip), sizeof(kPageGzip));
 }
 
 esp_err_t login_handler(httpd_req_t* request) {
@@ -712,9 +682,9 @@ esp_err_t challenge_handler(httpd_req_t* request) {
     g_challenge.bind(command.action, fields, command.payload_digest);
     char response[192]{};
     const int length = std::snprintf(response, sizeof(response),
-        "{\"status\":\"CHALLENGE\",\"token\":\"%llx\",\"state_version\":\"%llx\",\"expires_ms\":\"%llx\"}",
+        "{\"status\":\"CHALLENGE\",\"token\":\"%llx\",\"state_version\":\"%llx\",\"expires_ms\":\"%llx\",\"boot_id\":\"%llx\"}",
         static_cast<unsigned long long>(issued.token), static_cast<unsigned long long>(issued.state_version),
-        static_cast<unsigned long long>(issued.expires_ms));
+        static_cast<unsigned long long>(issued.expires_ms), static_cast<unsigned long long>(view.control.boot_id));
     if (length <= 0 || static_cast<size_t>(length) >= sizeof(response)) return reject(request, "ENCODING", "500 Internal Server Error");
     return send_json(request, response);
 }
@@ -850,7 +820,13 @@ esp_err_t ota_handler(httpd_req_t* request) {
         return reject(request, "MAINTENANCE_LEASE", "409 Conflict");
     }
     g_replays.remember(command.command_id, command.payload_digest, true);
-    return send_json(request, "{\"status\":\"VERIFIED_ACTIVATION_QUEUED\"}");
+    char response[384]{};
+    JsonBuilder json(response, sizeof(response));
+    json.raw("{\"status\":\"VERIFIED_ACTIVATION_QUEUED\",\"expected_version\":");
+    json.quoted(sink.verified_version);
+    json.raw("}");
+    if (!json.ok()) return reject(request, "ENCODING", "500 Internal Server Error");
+    return send_json(request, json.data());
 }
 
 }  // namespace

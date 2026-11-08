@@ -20,8 +20,16 @@ credentials/
 **/wifi*.yml
 
 # Build output and caches
+__pycache__/
+node_modules/
+.browsers
+firmware/web_ui/test-results/
+firmware/web_ui/playwright-report/
+firmware/web_ui/evidence/
 build/
 build-host/
+build-host-sanitized/
+firmware/build-tft/
 dist/
 out/
 .cache/

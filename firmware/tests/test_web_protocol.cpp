@@ -128,9 +128,18 @@ int main() {
     const char kNoGrant[] = R"JSON({"action":"START","command_id":"1"})JSON";
     check(parse_command_request(kNoGrant, std::strlen(kNoGrant), current, &parsed) == ParseError::MISSING_FIELD,
           "non-stop submission without grant is rejected");
-    const char kBadNumber[] = R"JSON({"action":"ARM","command_id":"1","delay_ms":1.0})JSON";
+    const char kBadNumber[] = R"JSON({"action":"TIMER","command_id":"1","delay_ms":1.0})JSON";
     check(parse_challenge_request(kBadNumber, std::strlen(kBadNumber), current, &parsed) != ParseError::OK,
           "fractional integral delay is rejected");
+
+    const char kArm[] = R"JSON({"action":"ARM","command_id":"30","delay_ms":60000})JSON";
+    const char kCancelArm[] = R"JSON({"action":"CANCEL_ARM","command_id":"31"})JSON";
+    for(const char* removed: {kArm,kCancelArm})
+        check(parse_challenge_request(removed,std::strlen(removed),current,&parsed)==ParseError::ACTION,
+              "removed delayed-start actions cannot obtain a public API grant");
+    const char kTimer[] = R"JSON({"action":"TIMER","command_id":"32","delay_ms":0})JSON";
+    check(parse_challenge_request(kTimer,std::strlen(kTimer),current,&parsed)==ParseError::OK &&
+          parsed.action==sirokko::Action::TIMER && parsed.delay_ms==0,"single shutdown timer cancellation remains supported");
 
     Command process{};
     check(parse_challenge_request(kProcessChallenge, std::strlen(kProcessChallenge), current, &process) == ParseError::OK,

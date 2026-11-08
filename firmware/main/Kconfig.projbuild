@@ -10,9 +10,10 @@ menu "Sirokko local panel"
     config SIROKKO_PANEL_ROTATION
         int "Rotation (0, 90, 180 or 270 degrees)"
         range 0 270
-        default 0
+        default 90
         help
-            Other values are rejected by the display driver; safety control remains independent.
+            Approved UI is landscape 320x240. With native 240x320, select 90 or 270.
+            Other logical sizes are rejected; safety control remains independent.
     config SIROKKO_PANEL_X_GAP
         int "Controller X offset (pixels)"
         range 0 320

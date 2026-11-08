@@ -239,13 +239,11 @@ bool equals(const char* left, const char* right) {
 
 bool parse_action_text(const char* text, sirokko::Action* action) {
     if (equals(text, "START")) *action = sirokko::Action::START;
-    else if (equals(text, "ARM")) *action = sirokko::Action::ARM;
     else if (equals(text, "RESET_FAULT")) *action = sirokko::Action::RESET_FAULT;
     else if (equals(text, "SETTINGS")) *action = sirokko::Action::SETTINGS;
     else if (equals(text, "OTA")) *action = sirokko::Action::OTA;
     else if (equals(text, "CALIBRATE")) *action = sirokko::Action::CALIBRATE;
     else if (equals(text, "TIMER")) *action = sirokko::Action::TIMER;
-    else if (equals(text, "CANCEL_ARM")) *action = sirokko::Action::CANCEL_ARM;
     else if (equals(text, "PROCESS_CONFIG")) *action = sirokko::Action::PROCESS_CONFIG;
     else return false;
     return true;

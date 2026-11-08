@@ -6,16 +6,16 @@
 
 Маршруты:
 
-- `GET /` — self-contained HTML/CSS/JS без CDN;
+- `GET /` — автономный Svelte HTML/CSS/JS/шрифты без CDN, gzip-ресурс `main/web_ui_data.inc`;
 - `POST /api/login` — пароль AP в заголовке `X-Sirokko-Password`, затем cookie `HttpOnly; SameSite=Strict`; серверный session TTL — 15 минут;
 - `GET /api/state` — русское состояние, EXH/AIR/room, outputs, timer/arm/purge, range/calibration, process boundary, storage и event journal;
 - `POST /api/challenge` — одноразовый challenge для всех действий кроме STOP;
-- `POST /api/command` — `START`, `ARM`, `RESET_FAULT`, `SETTINGS`, `CALIBRATE`, `TIMER`, `CANCEL_ARM`, `PROCESS_CONFIG` и отдельный `STOP`;
+- `POST /api/command` — `START`, `RESET_FAULT`, `SETTINGS`, `CALIBRATE`, `TIMER`, `PROCESS_CONFIG` и отдельный `STOP`;
 - `POST /api/ota` — потоковая загрузка подписанного `.sota`.
 
 UI не сообщает «применено» после `QUEUED`: оно ждёт следующего state readback. Dirty input не перезаписывается. При stale/offline отключены все auto-action controls, а `STOP` остаётся отдельным доступным маршрутом.
 
-`qualified` в интерфейсе означает только настроенную форму профиля. Экран явно показывает `physical_tests=false`; физических примеров параметров процесса в UI нет.
+`qualified` в интерфейсе означает только настроенную форму профиля. Сервисный экран явно показывает `physical_tests=false`; физических примеров параметров процесса в UI нет.
 
 ## Протокол управления
 
@@ -26,7 +26,7 @@ UI не сообщает «применено» после `QUEUED`: оно жд
 1. Клиент отправляет полный semantic payload на `/api/challenge` без `grant`.
 2. `web_protocol` вычисляет canonical SHA-256 полного payload и runtime выдаёт grant.
 3. Web связывает action + token + state version + expiry + 256-bit payload digest.
-4. Клиент отправляет тот же payload и grant на `/api/command` (или метаданные upload в заголовках `/api/ota`).
+4. Клиент сверяет `state_version` и `boot_id` challenge с исходным снимком редактирования. При конфликте запрос не отправляет. Затем отправляет тот же payload и grant на `/api/command` (или метаданные upload в заголовках `/api/ota`).
 5. До runtime вызова проверяются одноразовость, expiry, state-version и replay cache. Для `PROCESS_CONFIG` runtime hash — `process_fingerprint(profile)`; web SHA-256 всё равно связывает полный payload.
 
 `STOP` авторизован cookie, но намеренно не требует challenge/подтверждения. Он проходит отдельный strict parser и idempotent replay cache, после чего вызывает только `runtime_stop(false)`.
@@ -61,7 +61,7 @@ OTA handler сохраняет transport deadline через `receive_exact_boun
 - `esp_app_desc_t::project_name` записанного image;
 - исходный maintenance epoch и текущие показания/выходы в задаче управления непосредственно при активации.
 
-HTTP handler не выбирает boot partition и не перезагружает MCU. После проверки он ставит запрос `VERIFIED_ACTIVATION_QUEUED`. Контроллер выдерживает 200 мс для ответа браузеру без блокирующего ожидания, повторно проверяет свежие холодные термопары, отсутствие fault, выключенные выходы и действующий epoch. STOP, выход из maintenance, pending persistence или потеря свежих/холодных данных отзывают epoch и запрос. Только владелец автомата вызывает финальную `esp_ota_set_boot_partition()` и перезагрузку; эта запись flash выполняется исключительно в холодном состоянии с выключенными силовыми выходами. Её физическая длительность и поведение при сбое питания требуют стенда; обычный safety loop не ждёт network/NVS.
+HTTP handler не выбирает boot partition и не перезагружает MCU. После проверки он ставит запрос `VERIFIED_ACTIVATION_QUEUED` и возвращает `expected_version` из проверенного образа. Браузер сохраняет ожидание через повторную авторизацию после reboot; совпадение новой boot identity и ожидаемой версии — наблюдение запущенной версии, не физическое подтверждение rollback. Через 120 с без подтверждения результат неизвестен. Контроллер выдерживает 200 мс для ответа браузеру без блокирующего ожидания, повторно проверяет свежие холодные термопары, отсутствие fault, выключенные выходы и действующий epoch. STOP, выход из maintenance, pending persistence или потеря свежих/холодных данных отзывают epoch и запрос. Только владелец автомата вызывает финальную `esp_ota_set_boot_partition()` и перезагрузку; эта запись flash выполняется исключительно в холодном состоянии с выключенными силовыми выходами. Её физическая длительность и поведение при сбое питания требуют стенда; обычный safety loop не ждёт network/NVS.
 
 Для HTTP AP встроен MIT `js-sha256` 0.11.1: `crypto.subtle` доступен не на всех незащищённых HTTP-origin, поэтому браузер использует автономный SHA-256 fallback. CDN и Интернет не нужны. Источник, SHA-256 и лицензия — `firmware/third_party/`.
 
@@ -106,7 +106,7 @@ python3 firmware/tests/test_web_ota_host.py
 
 Дополнительно отдельный scratch-only Docker probe в закреплённом ESP-IDF 5.2.3 image собрал и слинковал фактические `web.cpp`, `web_protocol.cpp`, `ota_verify.cpp` и `bounded_receive.cpp` для `esp32s3` с `-Werror` и embedded public PEM. Он не меняет CMake проекта, но использует минимальные runtime stubs и factory partition — это compile/link proof, а не общая project-сборка.
 
-Проверка в браузере выполняется отдельно на временной localhost-копии production HTML; она проверяет frontend с синтетическим state и не является физической проверкой AP/ESP/flash.
+Chromium/WebKit получают точный gzip/CSP из production handler через loopback fixture server. Проверяются синтетические гонки и действительный сериализованный host JSON. Дополнительно SHA fallback выполняется на небезопасном HTTP origin, не localhost. Это программные проверки, не физическое испытание AP/ESP/flash. Подробности: `firmware/web_ui/README_RU.md`.
 
 ## Непроверенное этим модулем
 

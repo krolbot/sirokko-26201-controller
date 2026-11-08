@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstring>
 #include <fstream>
+#include <filesystem>
 #include <iterator>
 #include <string>
 #include <vector>
@@ -178,8 +179,8 @@ bool runtime_activate_ota(uint32_t lease,const void* partition) {
 void runtime_exit_maintenance() { fake_runtime::maintenance = false; ++fake_runtime::exit_maintenance_calls; }
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
-        std::fprintf(stderr, "usage: %s VALID_SOTA WRONG_IMAGE_TARGET_SOTA\n", argv[0]);
+    if (argc != 3 && argc != 4) {
+        std::fprintf(stderr, "usage: %s VALID_SOTA WRONG_IMAGE_TARGET_SOTA [EXPORT_DIR]\n", argv[0]);
         return 2;
     }
     const std::vector<uint8_t> package = read_bytes(argv[1]);
@@ -191,6 +192,7 @@ int main(int argc, char** argv) {
     fake_runtime::reset();
     copy_text(fake_esp::app_description.version, sizeof(fake_esp::app_description.version), "host-test");
     copy_text(fake_esp::app_description.project_name, sizeof(fake_esp::app_description.project_name), "sirokko_26201_controller");
+    copy_text(fake_esp::partition_description.version, sizeof(fake_esp::partition_description.version), "host-ota-new");
     copy_text(fake_esp::partition_description.project_name, sizeof(fake_esp::partition_description.project_name), "sirokko_26201_controller");
 
     constexpr char kPassword[] = "12345678901234567890";
@@ -198,10 +200,11 @@ int main(int argc, char** argv) {
     check(fake_esp::registered_handlers.size() == 6, "all six HTTP routes are registered");
 
     httpd_req_t page{};
-    check(page_handler(&page) == ESP_OK && page.response_body.find("СВЯЗЬ ПОТЕРЯНА") != std::string::npos &&
-          page.response_body.find("signed .sota") == std::string::npos &&
-          page.response_body.find(".sota") != std::string::npos,
-          "actual page handler returns Russian offline self-contained UI");
+    check(page_handler(&page) == ESP_OK &&
+          page.response_headers["Content-Encoding"] == "gzip" &&
+          page.response_body.size() == sizeof(kPageGzip) &&
+          std::memcmp(page.response_body.data(), kPageGzip, sizeof(kPageGzip)) == 0,
+          "actual page handler returns exact offline gzip resource (decompression checked by JS suite)");
 
     httpd_req_t unauthenticated = request_with_body("{\"action\":\"START\",\"command_id\":\"1\"}");
     check(command_handler(&unauthenticated) == ESP_OK && unauthenticated.response_status == "401 Unauthorized" &&
@@ -220,6 +223,58 @@ int main(int argc, char** argv) {
           state.response_body.find("\"physical_tests\":false") != std::string::npos &&
           state.response_body.find("\"kind_ru\":\"Запуск принят автоматом\"") != std::string::npos,
           "actual state handler serializes Russian state, process boundary and event journal");
+
+    // Actual serializer: unrounded IDs, sensor freshness and complete configured profile readback.
+    RuntimeView extended{};runtime_view(&extended);
+    extended.control.boot_id=0xfedcba9876543210ULL;extended.control.run_id=0x123456789abcdef0ULL;
+    extended.control.duration_active=true;extended.control.duration_remaining_ms=60000;
+    extended.sensors.room.sample_ms=extended.now_ms;
+    extended.sensors.air.sample_ms=extended.now_ms;
+    extended.sensors.exhaust.sample_ms=extended.now_ms+1;
+    std::array<char,kStateJsonCapacity> bytes{};JsonBuilder expanded(bytes.data(),bytes.size());
+    check(build_state_json(extended,&expanded),"expanded state fits bounded serializer");
+    const std::string serialized=expanded.data();
+    check(serialized.find("\"boot_id\":\"fedcba9876543210\"")!=std::string::npos &&
+          serialized.find("\"run_id\":\"123456789abcdef0\"")!=std::string::npos &&
+          serialized.find("\"deadline_ms\":61000")!=std::string::npos,"hex boot/run IDs and stable timer deadline survive JSON");
+    check(serialized.find("\"room\":{\"milli_c\":21000,\"sample_ms\":1000,\"status\":0,\"valid\":true,\"fresh\":true}")!=std::string::npos &&
+          serialized.find("\"exhaust\":{\"milli_c\":50000,\"sample_ms\":1001,\"status\":0,\"valid\":true,\"fresh\":false}")!=std::string::npos,
+          "freshness rejects future samples independently of the sensor-valid bit");
+    std::array<char,2048> profile_bytes{};JsonBuilder profile_json(profile_bytes.data(),profile_bytes.size());
+    append_process(&profile_json,extended.process);
+    const std::string profile_command=std::string("{\"action\":\"PROCESS_CONFIG\",\"command_id\":\"50\",\"process\":")+profile_json.data()+"}";
+    web_protocol::Command roundtrip{};
+    check(web_protocol::parse_challenge_request(profile_command.data(),profile_command.size(),extended.settings,&roundtrip)==web_protocol::ParseError::OK,
+          "full process readback round-trips through actual strict command parser");
+    extended.now_ms=3001;extended.control.duration_active=false;
+    JsonBuilder stale(bytes.data(),bytes.size());build_state_json(extended,&stale);
+    check(std::string(stale.data()).find("\"room\":{\"milli_c\":21000,\"sample_ms\":1000,\"status\":0,\"valid\":true,\"fresh\":false}")!=std::string::npos &&
+          std::string(stale.data()).find("\"deadline_ms\":0")!=std::string::npos,"stale measured value and cancelled timer are unambiguous");
+    extended.event_count=extended.events.size();
+    for(auto& event:extended.events)event={UINT64_MAX,"CALIBRATION_COMPLETE_PENDING_STOP",sirokko::State::RECOVERY_PURGE,4014,INT32_MIN,INT32_MAX,UINT32_MAX};
+    extended.control.calibration_phase="COMPLETE_PENDING_STOP";
+    extended.control.calibration_reason="INSUFFICIENT_THERMAL_RESPONSE";
+    JsonBuilder maximum(bytes.data(),bytes.size());
+    check(build_state_json(extended,&maximum),"full 16-event journal plus profile fits state buffer");
+    for(const std::string& removed: {
+        std::string("{\"action\":\"ARM\",\"command_id\":\"51\",\"delay_ms\":60000}"),
+        std::string("{\"action\":\"CANCEL_ARM\",\"command_id\":\"52\"}")}) {
+        const auto calls=fake_runtime::issue_calls;auto req=request_with_body(removed,cookie);
+        challenge_handler(&req);check(req.response_status=="400 Bad Request"&&fake_runtime::issue_calls==calls,
+                                     "removed delayed-start action never reaches runtime grant issuer");
+    }
+    // Export ONLY explicit host fixtures and the exact production page/security headers for browser checks.
+    if(argc==4) {
+        const std::filesystem::path output=argv[3];std::filesystem::create_directories(output);
+        std::ofstream page_file(output/"page.bin",std::ios::binary);page_file<<page.response_body;
+        std::ofstream state_file(output/"state.json");state_file<<state.response_body;
+        std::array<char,4096> header_bytes{};JsonBuilder header_json(header_bytes.data(),header_bytes.size());
+        header_json.raw("{");bool first=true;
+        for(const auto& [key,value]:page.response_headers){if(!first)header_json.raw(",");first=false;header_json.quoted(key.c_str());header_json.raw(":");header_json.quoted(value.c_str());}
+        header_json.raw("}");check(header_json.ok(),"exported response headers fit buffer");
+        std::ofstream header_file(output/"headers.json");header_file<<header_json.data();
+        check(page_file.good()&&state_file.good()&&header_file.good(),"actual-handler fixture export written");
+    }
 
     const std::string start_challenge = "{\"action\":\"START\",\"command_id\":\"1\"}";
     const unsigned issue_before_nul=fake_runtime::issue_calls;
@@ -269,6 +324,11 @@ int main(int argc, char** argv) {
           fake_runtime::activation_requests==1 && !fake_esp::boot_partition && !fake_esp::restart_requested &&
           !fake_esp::ota_bytes.empty(), "actual OTA handler verifies and queues activation, never selects partition or reboots");
 
+    if(argc==4) {
+        std::ofstream response_file(std::filesystem::path(argv[3])/"ota-response.json");
+        response_file << ota.response_body;
+        check(response_file.good(),"actual OTA response exported");
+    }
     fake_esp::boot_partition = nullptr;
     fake_esp::restart_requested = false;
     std::string lost_payload=ota_challenge;
@@ -331,6 +391,31 @@ int main(int argc, char** argv) {
     httpd_req_t expired_session = request_with_body({}, cookie);
     check(state_handler(&expired_session) == ESP_OK && expired_session.response_status == "401 Unauthorized",
           "server-side session expiry rejects an old cookie");
+
+    // Reset only RAM-owned web state to its C++ static-initialization values,
+    // as happens on a real reset; no HTTP request or grant survives that reset.
+    const unsigned before_reboot_submit = fake_runtime::submit_calls;
+    std::memset(g_session, 0, sizeof(g_session));
+    g_session_expires_ms = g_last_login_ms = 0;
+    g_failed_logins = 0;
+    g_challenge = {};
+    g_replays = {};
+    fake_esp::now_us = 1000U * 1000U;
+    fake_runtime::view.control.boot_id = 0xbb;
+    fake_runtime::view.control.state_version = 0x22; // Deliberately reuse old version.
+    auto reboot_stale = request_with_body(start_submit, cookie);
+    command_handler(&reboot_stale);
+    check(reboot_stale.response_status == "401 Unauthorized" &&
+          fake_runtime::submit_calls == before_reboot_submit,
+          "reboot invalidates old cookie before any command submission");
+    httpd_req_t new_login{};
+    new_login.headers["X-Sirokko-Password"] = kPassword;
+    login_handler(&new_login);
+    auto reauthenticated_old_grant = request_with_body(start_submit, cookie_from_login(new_login));
+    command_handler(&reauthenticated_old_grant);
+    check(reauthenticated_old_grant.response_status == "409 Conflict" &&
+          fake_runtime::submit_calls == before_reboot_submit,
+          "fresh login cannot revive pre-reset grant even with identical state_version");
 
     if (failures == 0) {
         std::puts("PASS: actual web handlers, auth, state, grants, STOP, bounded signed OTA and abort paths");

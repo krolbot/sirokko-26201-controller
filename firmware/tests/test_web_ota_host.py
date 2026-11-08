@@ -9,6 +9,7 @@ a host test translation unit with test-only ESP transport/runtime shims.
 from __future__ import annotations
 
 import os
+import argparse
 from pathlib import Path
 import shutil
 import subprocess
@@ -66,6 +67,10 @@ def make_test_image(path: Path, chip_id: int) -> None:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--export-dir", type=Path, help="export actual-handler page and explicit host fixture state")
+    parser.add_argument("--sanitize", action="store_true", help="ASan/UBSan on production C++ parsers/handlers/verifier")
+    args = parser.parse_args()
     try:
         cxx = required("g++")
         linker = required("ld")
@@ -80,6 +85,8 @@ def main() -> int:
               "-I", os.fspath(FIRMWARE / "components" / "control_core" / "include"),
               "-I", os.fspath(MAIN)]
 
+    sanitizer = ["-O1", "-g", "-fsanitize=address,undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie"] if args.sanitize else []
+    common += sanitizer
     try:
         with tempfile.TemporaryDirectory(prefix="sirokko-web-ota-", dir=scratch_base) as temporary, \
                 test_signing_environment(Path(temporary)) as test_public_key:
@@ -121,15 +128,16 @@ def main() -> int:
                             "ota_public_key.pem"], cwd=work, check=True)
 
             handlers = work / "test_web_handlers"
-            run([cxx, "-std=c++20", "-O2", "-Wall", "-Wextra", "-Werror",
+            run([cxx, "-std=c++20", "-O2", "-Wall", "-Wextra", "-Werror", *sanitizer,
                  "-I", os.fspath(TESTS / "web_host_stubs"), "-I", os.fspath(TESTS),
                  "-I", os.fspath(MAIN), "-I", os.fspath(FIRMWARE / "components" / "control_core" / "include"),
                  os.fspath(MAIN / "bounded_receive.cpp"), os.fspath(MAIN / "web_protocol.cpp"),
                  os.fspath(MAIN / "ota_verify.cpp"), os.fspath(TESTS / "test_web_handlers.cpp"),
                  os.fspath(embedded_key), "-lcrypto", "-Wl,-z,noexecstack", "-o", os.fspath(handlers)])
-            run([os.fspath(handlers), os.fspath(valid_package), os.fspath(wrong_chip_package)])
-
-            run(["node", os.fspath(TESTS / "test_web_frontend.js"), os.fspath(MAIN / "web.cpp")])
+            export = args.export_dir.resolve() if args.export_dir else work / "actual-handler"
+            run([os.fspath(handlers), os.fspath(valid_package), os.fspath(wrong_chip_package), os.fspath(export)])
+            run(["node", os.fspath(TESTS / "test_web_frontend.js"), os.fspath(export)])
+            run(["node", "--test", *map(os.fspath, sorted((FIRMWARE / "web_ui/tests/unit").glob("*.test.js")))])
     except (OSError, subprocess.CalledProcessError, RuntimeError) as error:
         print(f"test_web_ota_host.py: {error}", file=sys.stderr)
         return 1

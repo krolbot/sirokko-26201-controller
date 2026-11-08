@@ -1,0 +1,28 @@
+{
+  "name": "sirokko-firmware-web-ui",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "postbuild": "node tools/licenses.mjs && node tools/verify-dist.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "test:unit": "node --test tests/unit/*.test.js",
+    "test:browser": "PLAYWRIGHT_BROWSERS_PATH=${PLAYWRIGHT_BROWSERS_PATH:-$PWD/.browsers} playwright test",
+    "test": "npm run test:unit && npm run test:browser"
+  },
+  "dependencies": {
+    "svelte": "5.57.3",
+    "@fontsource/ibm-plex-sans": "5.3.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "vite": "8.3.6",
+    "tailwindcss": "4.3.4",
+    "@tailwindcss/vite": "4.3.4",
+    "daisyui": "5.7.50",
+    "vite-plugin-singlefile": "2.3.4",
+    "@playwright/test": "1.65.0",
+    "@axe-core/playwright": "4.14.0"
+  }
+}
