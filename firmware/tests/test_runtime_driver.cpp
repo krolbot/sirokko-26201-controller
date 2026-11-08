@@ -79,6 +79,42 @@ void fresh_boot_and_credentials() {
     std::memset(password,0,sizeof(password));std::memset(ssid,0,sizeof(ssid));
     std::cout<<"PASS actual app_main: empty NVS safe boot and AP+HTTP credential readiness\n";
 }
+void restart_is_blocked_through_shutdown() {
+    for(bool fault : {false,true}) {
+        ControlWork control{};configure(control);
+        const uint64_t old_version=g_view.control.state_version;
+        assert(submit(Action::START));next(control);
+        step(control,io::clock_ms+100);assert(g_view.control.state==State::PREHEAT);
+        if(fault) next(control,true);
+        else {runtime_stop();next(control);}
+        const State stopping=fault ? State::FAULT_PURGE : State::STOP_PURGE;
+        assert(g_view.control.state==stopping);
+        assert(!g_view.control.outputs.fuel && !g_view.control.outputs.glow);
+        assert(!submit(Action::START));
+        assert(!button_runtime_start(nullptr,g_view.control.state_version));
+        // Expired minimum duration is insufficient while either outlet is hot.
+        io::clock_ms+=500;
+        auto hot=samples(io::clock_ms,120000,60000);
+        assert(xQueueOverwrite(g_sensor_queue,&hot)==pdTRUE);control_pass(control);
+        assert(g_view.control.state==stopping);
+        assert(g_view.control.outputs.fan_request);
+        assert(!submit(Action::START));
+        step(control,io::clock_ms+500);
+        if(fault) {
+            assert(g_view.control.state==State::FAULT);
+            assert(!submit(Action::START));
+            assert(submit(Action::RESET_FAULT));next(control);
+        }
+        assert(g_view.control.state==State::IDLE);
+        assert(!button_runtime_start(nullptr,old_version));
+        for(unsigned i=0;i<10;++i) next(control);
+        assert(g_view.control.state==State::IDLE); // No deferred/replayed start.
+        assert(button_runtime_start(nullptr,g_view.control.state_version));next(control);
+        assert(g_view.control.state==State::PREPURGE); // A fresh manual press works.
+    }
+    std::cout<<"PASS restart lockout: hot purge, fault purge/reset, stale KEY0 and no deferred START\n";
+}
+
 void settings_start_barriers() {
     ControlWork control{};configure(control);StorageWork storage{};
     Settings settings{};settings.mode=Mode::MANUAL;
@@ -307,6 +343,7 @@ void ota_claim_and_cancellation() {
 }
 }
 int main() {
+    restart_is_blocked_through_shutdown();
     fresh_boot_and_credentials();settings_start_barriers();settings_revision_and_ack_backpressure();
     range_normal_and_precommit_cancellations();range_after_boundary();storage_failures_and_unknown_outcome();
     power_cut_boundaries();corruption_and_explicit_profile_repair();ota_claim_and_cancellation();

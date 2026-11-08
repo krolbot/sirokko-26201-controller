@@ -76,6 +76,25 @@ test('synthetic fixture: dirty settings freeze on an external state-version chan
   await expect(page.getByTestId('setpoint')).toHaveText('23°C');
 });
 
+test('synthetic fixture: shutdown blocks START and never queues a restart after cooling', async ({ page }) => {
+  const fixture = fixtures.get(page);
+  fixture.state = syntheticState({ state: { code: 'STOP_PURGE', ru: 'Охлаждение' }, start_block: { code: 'BUSY', ru: 'Идёт охлаждение' }, purge: { active: true }, outputs: { fan_request: true } });
+  await openLoggedIn(page);
+  const start = page.getByRole('button', { name: 'Запустить отопление', exact: true });
+  await expect(start).toHaveCount(0);
+  for (const code of ['FAULT_PURGE', 'FAULT', 'RECOVERY_PURGE']) {
+    fixture.state = syntheticState({ state: { code, ru: code }, start_block: { code: 'BUSY', ru: 'Пуск запрещён' } });
+    await waitForNextPoll(page);
+    await expect(start).toHaveCount(0);
+  }
+  fixture.state = syntheticState({ state_version: '24' });
+  await expect(start).toBeEnabled();
+  expect(fixture.commands).toHaveLength(0);
+  expect(fixture.challenges).toHaveLength(0);
+  await start.click();
+  await expect.poll(() => fixture.commands.filter(command => command.action === 'START').length).toBe(1);
+});
+
 test('synthetic fixture: queued command confirms only from newer matching state', async ({ page }) => {
   const fixture = fixtures.get(page);
   fixture.onCommand = (payload) => {

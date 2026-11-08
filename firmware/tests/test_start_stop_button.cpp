@@ -164,6 +164,22 @@ void test_single_shot_requires_release() {
     assert(fake.starts == 2);
 }
 
+void test_purge_press_cannot_become_start_after_cooling() {
+    for(State state : {State::STOP_PURGE,State::FAULT_PURGE,State::RECOVERY_PURGE}) {
+        FakeRuntime fake{};fake.snapshot=idle(10);fake.snapshot.state=state;
+        fake.snapshot.start_block=Block::BUSY;
+        Button button(executor(fake));uint64_t now=0;settle_released(button,now);
+        button.poll(true,++now); // Rejected intent captured before cooling ends.
+        fake.snapshot=idle(11);
+        now+=kTiming.debounce_ms;button.poll(true,now);
+        assert(button.last_dispatch()==Dispatch::REJECTED && fake.starts==0);
+        for(unsigned i=0;i<30;++i) {now+=kTiming.polling_ms;button.poll(true,now);}
+        assert(fake.starts==0 && fake.stops==0);
+        release(button,now);assert(fake.starts==0);
+        short_press(button,now);assert(fake.starts==1 && fake.issued_for_version==11);
+    }
+}
+
 void test_invalid_states_and_blocks_are_rejected() {
     const State rejected[] = {State::RECOVERY_PURGE, State::FAULT_PURGE, State::FAULT, State::MAINTENANCE,
                               State::STOP_PURGE};
@@ -287,6 +303,7 @@ int main() {
     test_held_at_boot_requires_release_and_fresh_press();
     test_bounce_and_short_press_are_filtered();
     test_single_shot_requires_release();
+    test_purge_press_cannot_become_start_after_cooling();
     test_invalid_states_and_blocks_are_rejected();
     test_calibration_stop_reports_combustion_problem();
     test_failure_gap_and_clock_regression_require_release();
