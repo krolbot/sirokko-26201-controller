@@ -79,15 +79,16 @@ void reset() {
     view.control.state_version = 0x22;
     view.control.outputs.fan_request = false;
     view.control.command_percent = 37.5;
-    view.control.range_calibrated = true;
-    view.control.minimum_speed_code = 100;
-    view.control.maximum_speed_code = 900;
+    view.control.learned_model.valid = true;
+    view.control.learned_model.minimum_speed_code = 100;
+    view.control.learned_model.maximum_speed_code = 900;
     view.control.working_span_fraction = 0.4;
-    view.control.calibration_block = sirokko::Block::NONE;
-    view.control.calibration_phase = "IDLE";
-    view.control.calibration_reason = "NONE";
+    view.control.commissioning.block = sirokko::Block::NONE;
+    view.control.commissioning.phase = sirokko::CommissioningPhase::IDLE;
+    view.control.commissioning.reason = sirokko::CommissioningReason::NONE;
     view.settings = {};
-    view.process.qualified = true;
+    view.envelope.provisioned = true;
+    view.control.envelope_provisioned = true;
     view.storage_ok = true;
     view.sensors.room = {21000, 1, 0, true};
     view.sensors.exhaust = {50000, 1, 0, true};
@@ -102,9 +103,6 @@ void reset() {
 }  // namespace fake_runtime
 
 namespace sirokko {
-bool valid_settings(const Settings&) { return true; }
-bool valid_process_profile(const ProcessProfile&) { return true; }
-uint64_t process_fingerprint(const ProcessProfile&) { return 0x1234; }
 const char* state_name(State state) {
     switch (state) {
         case State::IDLE: return "IDLE";
@@ -124,17 +122,20 @@ const char* state_name(State state) {
 const char* block_name(Block block) {
     switch (block) {
         case Block::NONE: return "NONE";
-        case Block::PROFILE_NOT_QUALIFIED: return "PROFILE_NOT_QUALIFIED";
-        case Block::RECOVERY_REQUIRED: return "RECOVERY_REQUIRED";
+        case Block::ENVELOPE_MISSING: return "ENVELOPE_MISSING";
+        case Block::ENVELOPE_INVALID: return "ENVELOPE_INVALID";
+        case Block::ENVELOPE_HARDWARE_MISMATCH: return "ENVELOPE_HARDWARE_MISMATCH";
+        case Block::RECOVERY_PURGE: return "RECOVERY_PURGE";
         case Block::SENSOR_INVALID: return "SENSOR_INVALID";
-        case Block::TEMPERATURE_OUT_OF_RANGE: return "TEMPERATURE_OUT_OF_RANGE";
+        case Block::SENSOR_STALE: return "SENSOR_STALE";
+        case Block::SENSOR_SKEW: return "SENSOR_SKEW";
+        case Block::INITIAL_THERMAL_STATE: return "INITIAL_THERMAL_STATE";
         case Block::FAULT_LATCHED: return "FAULT_LATCHED";
         case Block::BUSY: return "BUSY";
         case Block::MAINTENANCE: return "MAINTENANCE";
+        case Block::STORAGE_UNCONFIRMED: return "STORAGE_UNCONFIRMED";
+        case Block::MODEL_UNAVAILABLE: return "MODEL_UNAVAILABLE";
         case Block::STALE_COMMAND: return "STALE_COMMAND";
-        case Block::CALIBRATION_DISABLED: return "CALIBRATION_DISABLED";
-        case Block::CALIBRATION_RANGE_INVALID: return "CALIBRATION_RANGE_INVALID";
-        case Block::CALIBRATION_TIME_BUDGET: return "CALIBRATION_TIME_BUDGET";
     }
     return "UNKNOWN";
 }
@@ -165,13 +166,12 @@ bool runtime_submit(const sirokko::Grant& grant, sirokko::Action action, uint64_
 
 void runtime_stop(bool) { ++fake_runtime::stop_calls; }
 
-bool runtime_configure_process(const sirokko::Grant& grant, const sirokko::ProcessProfile&) {
+bool runtime_revise_model(const sirokko::Grant& grant, const sirokko::LearnedModelRevision&) {
     ++fake_runtime::submit_calls;
-    fake_runtime::last_action = sirokko::Action::PROCESS_CONFIG;
+    fake_runtime::last_action = sirokko::Action::MODEL_REVISION;
     return grant.valid && fake_runtime::accept_submit;
 }
 
-bool runtime_process_valid(const sirokko::ProcessProfile&) { return true; }
 bool runtime_network_credentials(char*, size_t, char*, size_t) { return false; }
 bool runtime_maintenance_safe() { return fake_runtime::maintenance; }
 uint32_t runtime_maintenance_lease(){return fake_runtime::maintenance?1U:0U;}
@@ -224,7 +224,7 @@ int main(int argc, char** argv) {
 
     httpd_req_t state = request_with_body({}, cookie);
     check(state_handler(&state) == ESP_OK && state.response_body.find("\"ru\":\"Ожидание\"") != std::string::npos &&
-          state.response_body.find("\"physical_tests\":false") != std::string::npos &&
+          state.response_body.find("\"envelope\":") != std::string::npos &&
           state.response_body.find("\"block\":{\"code\":\"NONE\",\"ru\":\"Нет\"}") != std::string::npos &&
           state.response_body.find("\"kind_ru\":\"Запуск принят автоматом\"") != std::string::npos,
           "actual state handler serializes Russian state, calibration availability, process boundary and event journal");
@@ -245,36 +245,37 @@ int main(int argc, char** argv) {
     check(serialized.find("\"room\":{\"milli_c\":21000,\"sample_ms\":1000,\"status\":0,\"valid\":true,\"fresh\":true}")!=std::string::npos &&
           serialized.find("\"exhaust\":{\"milli_c\":50000,\"sample_ms\":1001,\"status\":0,\"valid\":true,\"fresh\":false}")!=std::string::npos,
           "freshness rejects future samples independently of the sensor-valid bit");
-    std::array<char,2048> profile_bytes{};JsonBuilder profile_json(profile_bytes.data(),profile_bytes.size());
-    append_process(&profile_json,extended.process);
-    const std::string profile_command=std::string("{\"action\":\"PROCESS_CONFIG\",\"command_id\":\"50\",\"process\":")+profile_json.data()+"}";
+    const std::string profile_command="{\"action\":\"PROCESS_CONFIG\",\"command_id\":\"50\",\"process\":{}}";
     web_protocol::Command roundtrip{};
-    check(web_protocol::parse_challenge_request(profile_command.data(),profile_command.size(),extended.settings,&roundtrip)==web_protocol::ParseError::OK,
-          "full process readback round-trips through actual strict command parser");
+    check(web_protocol::parse_challenge_request(profile_command.data(),profile_command.size(),extended.settings,&roundtrip)==web_protocol::ParseError::UNKNOWN_FIELD,
+          "legacy process payload is rejected as an unknown field");
+    const std::string removed_action="{\"action\":\"PROCESS_CONFIG\",\"command_id\":\"51\"}";
+    check(web_protocol::parse_challenge_request(removed_action.data(),removed_action.size(),extended.settings,&roundtrip)==web_protocol::ParseError::ACTION,
+          "legacy process action cannot re-enter without its removed payload");
     extended.now_ms=3001;extended.control.duration_active=false;
     JsonBuilder stale(bytes.data(),bytes.size());build_state_json(extended,&stale);
     check(std::string(stale.data()).find("\"room\":{\"milli_c\":21000,\"sample_ms\":1000,\"status\":0,\"valid\":true,\"fresh\":false}")!=std::string::npos &&
           std::string(stale.data()).find("\"deadline_ms\":0")!=std::string::npos,"stale measured value and cancelled timer are unambiguous");
     extended.event_count=extended.events.size();
     for(auto& event:extended.events)event={UINT64_MAX,"CALIBRATION_COMPLETE_PENDING_STOP",sirokko::State::RECOVERY_PURGE,4014,INT32_MIN,INT32_MAX,UINT32_MAX};
-    extended.control.calibration_phase="COMPLETE_PENDING_STOP";
-    extended.control.calibration_reason="INSUFFICIENT_THERMAL_RESPONSE";
+    extended.control.commissioning.phase=sirokko::CommissioningPhase::COMPLETE_PENDING_STOP;
+    extended.control.commissioning.reason=sirokko::CommissioningReason::NO_COMMAND_RESPONSE;
     JsonBuilder maximum(bytes.data(),bytes.size());
     check(build_state_json(extended,&maximum),"full 16-event journal plus profile fits state buffer");
     struct CalibrationBlockCase { sirokko::Block block; const char* code; const char* russian; };
     constexpr CalibrationBlockCase kCalibrationBlocks[] = {
-        {sirokko::Block::CALIBRATION_DISABLED, "CALIBRATION_DISABLED", "Калибровка отключена в профиле процесса"},
-        {sirokko::Block::CALIBRATION_RANGE_INVALID, "CALIBRATION_RANGE_INVALID", "Диапазон исследования калибровки недопустим"},
-        {sirokko::Block::CALIBRATION_TIME_BUDGET, "CALIBRATION_TIME_BUDGET", "Калибровка не укладывается в разрешённый общий срок"},
+        {sirokko::Block::ENVELOPE_MISSING, "ENVELOPE_MISSING", "Не задана защитная оболочка"},
+        {sirokko::Block::ENVELOPE_INVALID, "ENVELOPE_INVALID", "Защитная оболочка недействительна"},
+        {sirokko::Block::STORAGE_UNCONFIRMED, "STORAGE_UNCONFIRMED", "Хранилище модели не подтверждено"},
     };
     for (const CalibrationBlockCase& item : kCalibrationBlocks) {
-        extended.control.calibration_block = item.block;
+        extended.control.commissioning.block = item.block;
         JsonBuilder calibration_state(bytes.data(), bytes.size());
         check(build_state_json(extended, &calibration_state) &&
               std::string(calibration_state.data()).find(std::string("\"block\":{\"code\":\"") + item.code + "\",\"ru\":\"" + item.russian + "\"}") != std::string::npos,
               "all explicit calibration blocks serialize with Russian operator reasons");
     }
-    extended.control.calibration_block = sirokko::Block::NONE;
+    extended.control.commissioning.block = sirokko::Block::NONE;
     for(const std::string& removed: {
         std::string("{\"action\":\"ARM\",\"command_id\":\"51\",\"delay_ms\":60000}"),
         std::string("{\"action\":\"CANCEL_ARM\",\"command_id\":\"52\"}")}) {
@@ -331,28 +332,80 @@ int main(int argc, char** argv) {
     check(challenge_handler(&calibrate_grant) == ESP_OK && calibrate_grant.response_body.find("CHALLENGE") != std::string::npos,
           "CALIBRATE receives a challenge only while its explicit block is NONE");
     const std::string calibrate_submit = "{\"action\":\"CALIBRATE\",\"command_id\":\"d\",\"grant\":{\"token\":\"abc\",\"state_version\":\"22\",\"expires_ms\":\"1000\"}}";
-    fake_runtime::view.control.calibration_block = sirokko::Block::CALIBRATION_TIME_BUDGET;
+    fake_runtime::view.control.commissioning.block = sirokko::Block::STORAGE_UNCONFIRMED;
     const unsigned calibrate_submits_before = fake_runtime::submit_calls;
     httpd_req_t blocked_calibrate = request_with_body(calibrate_submit, cookie);
     check(command_handler(&blocked_calibrate) == ESP_OK && blocked_calibrate.response_status == "409 Conflict" &&
-          blocked_calibrate.response_body.find("CALIBRATION_BLOCK") != std::string::npos &&
+          blocked_calibrate.response_body.find("COMMISSIONING_BLOCK") != std::string::npos &&
           fake_runtime::submit_calls == calibrate_submits_before,
           "new calibration block rejects an already challenged command before runtime submit");
-    fake_runtime::view.control.calibration_block = sirokko::Block::NONE;
+    fake_runtime::view.control.commissioning.block = sirokko::Block::NONE;
     httpd_req_t allowed_calibrate = request_with_body(calibrate_submit, cookie);
     check(command_handler(&allowed_calibrate) == ESP_OK && allowed_calibrate.response_body.find("QUEUED") != std::string::npos &&
           fake_runtime::submit_calls == calibrate_submits_before + 1 && fake_runtime::last_action == sirokko::Action::CALIBRATE,
           "a non-blocked calibration command remains routable after the rejected attempt");
     for (const CalibrationBlockCase& item : kCalibrationBlocks) {
-        fake_runtime::view.control.calibration_block = item.block;
+        fake_runtime::view.control.commissioning.block = item.block;
         const unsigned issues_before = fake_runtime::issue_calls;
         httpd_req_t blocked_challenge = request_with_body(calibrate_challenge, cookie);
         check(challenge_handler(&blocked_challenge) == ESP_OK && blocked_challenge.response_status == "409 Conflict" &&
-              blocked_challenge.response_body.find("CALIBRATION_BLOCK") != std::string::npos &&
+              blocked_challenge.response_body.find("COMMISSIONING_BLOCK") != std::string::npos &&
               fake_runtime::issue_calls == issues_before,
               "every explicit calibration block rejects challenge before runtime grant issuance");
     }
-    fake_runtime::view.control.calibration_block = sirokko::Block::NONE;
+    fake_runtime::view.control.commissioning.block = sirokko::Block::NONE;
+
+    // Exercise the real challenge/command handlers, not just the DTO parser.
+    auto& installed_model = fake_runtime::view.control.learned_model;
+    installed_model.provenance.revision = 1;
+    installed_model.slew_up_per_s = 0.001;
+    installed_model.slew_down_per_s = 0.001;
+    const std::string revision_fields = R"("revision":{"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.0008,"slew_down_per_s":0.0007})";
+    const std::string revision_challenge = "{\"action\":\"MODEL_REVISION\",\"command_id\":\"60\"," + revision_fields + "}";
+    const std::string revision_submit = "{\"action\":\"MODEL_REVISION\",\"command_id\":\"60\"," + revision_fields +
+        ",\"grant\":{\"token\":\"abc\",\"state_version\":\"22\",\"expires_ms\":\"1000\"}}";
+    auto revision_grant_request = request_with_body(revision_challenge, cookie);
+    check(challenge_handler(&revision_grant_request) == ESP_OK && revision_grant_request.response_body.find("CHALLENGE") != std::string::npos,
+          "model narrowing receives a production handler challenge");
+    const unsigned revision_calls_before = fake_runtime::submit_calls;
+    installed_model.provenance.revision = 2;
+    auto stale_revision_request = request_with_body(revision_submit, cookie);
+    command_handler(&stale_revision_request);
+    check(stale_revision_request.response_status == "409 Conflict" && fake_runtime::submit_calls == revision_calls_before,
+          "model changed after challenge cannot reach runtime revision queue");
+    installed_model.provenance.revision = 1;
+    auto revision_command_request = request_with_body(revision_submit, cookie);
+    check(command_handler(&revision_command_request) == ESP_OK && revision_command_request.response_body.find("QUEUED") != std::string::npos &&
+          fake_runtime::submit_calls == revision_calls_before + 1 && fake_runtime::last_action == sirokko::Action::MODEL_REVISION,
+          "validated model revision reaches only its typed runtime operation");
+    for (const std::string& invalid_revision : {
+        std::string(R"({"expected_revision":1,"minimum_speed_code":99,"maximum_speed_code":800,"slew_up_per_s":0.0008,"slew_down_per_s":0.0007})"),
+        std::string(R"({"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":901,"slew_up_per_s":0.0008,"slew_down_per_s":0.0007})"),
+        std::string(R"({"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.002,"slew_down_per_s":0.0007})"),
+        std::string(R"({"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.0008,"slew_down_per_s":0.002})")}) {
+        const unsigned issues_before = fake_runtime::issue_calls;
+        auto invalid_request = request_with_body("{\"action\":\"MODEL_REVISION\",\"command_id\":\"61\",\"revision\":" + invalid_revision + "}", cookie);
+        challenge_handler(&invalid_request);
+        check(invalid_request.response_status == "409 Conflict" && fake_runtime::issue_calls == issues_before,
+              "widening either bound or accelerating either slew never obtains a grant");
+    }
+    for (const std::string& rejected_revision : {
+        std::string(R"({"expected_revision":1,"minimum_speed_code":500,"maximum_speed_code":500,"slew_up_per_s":0.0008,"slew_down_per_s":0.0007})"),
+        std::string(R"({"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0,"slew_down_per_s":0.0007})"),
+        std::string(R"({"expected_revision":1,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.0008,"slew_down_per_s":0.000099})")}) {
+        const unsigned issues_before = fake_runtime::issue_calls;
+        auto rejected = request_with_body("{\"action\":\"MODEL_REVISION\",\"command_id\":\"62\",\"revision\":" + rejected_revision + "}", cookie);
+        challenge_handler(&rejected);
+        check(rejected.response_status == "409 Conflict" && fake_runtime::issue_calls == issues_before,
+              "degenerate range and sub-minimum slew fail the shared owner validator before a grant");
+    }
+    installed_model.valid = false;
+    auto missing_model_request = request_with_body(revision_challenge, cookie);
+    const unsigned missing_model_issues = fake_runtime::issue_calls;
+    challenge_handler(&missing_model_request);
+    check(missing_model_request.response_status == "409 Conflict" && fake_runtime::issue_calls == missing_model_issues,
+          "manual revision cannot create an initial model");
+    installed_model.valid = true;
 
     const auto package_digest = sirokko::web_protocol::sha256(package.data(), package.size());
     const std::string package_digest_hex = hex_digest(package_digest);

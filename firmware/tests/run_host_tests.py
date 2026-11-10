@@ -31,7 +31,7 @@ suites = {
     "test_panel_render": [root / "main/panel_ui.cpp", root / "main/panel_canvas.cpp", root / "main/panel_render.cpp"],
     "test_panel_driver": [root / "main/panel_ui.cpp", root / "main/panel_canvas.cpp", root / "main/panel_render.cpp"],
     "test_ota_activation": [],
-    "test_persistence": [],
+    "test_persistence": core,
     "test_sensor_driver": core + [root / "main/sensors.cpp"],
     "test_runtime_driver": core + [root / "main/start_stop_button.cpp"],
 }

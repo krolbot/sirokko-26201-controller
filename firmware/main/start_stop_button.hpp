@@ -21,7 +21,7 @@ constexpr Timing kTiming{
 
 struct Snapshot {
     sirokko::State state{sirokko::State::RECOVERY_PURGE};
-    sirokko::Block start_block{sirokko::Block::RECOVERY_REQUIRED};
+    sirokko::Block start_block{sirokko::Block::ENVELOPE_MISSING};
     uint64_t state_version{};
     bool delayed_armed{};
     bool calibration_active{};

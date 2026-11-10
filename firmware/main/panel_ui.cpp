@@ -163,7 +163,7 @@ void Model::invalidate_pending() {
 bool Model::presentation_blocked() const {
     const auto state=view_.control.state;
     if ((state != sirokko::State::IDLE && state != sirokko::State::RUN && state != sirokko::State::FAULT) ||
-        view_.control.calibration_active)
+        view_.control.commissioning.active)
         return true;
     if(state==sirokko::State::RUN&&view_.settings.mode==sirokko::Mode::TEMPERATURE) {
         const auto& room=view_.sensors.room;
@@ -490,7 +490,7 @@ void Model::open_menu_item(MenuItem item) {
             begin_edit(EditField::SHUTDOWN_TIMER, Page::MENU);
             break;
         case MenuItem::CALIBRATION: {
-            if (view_.control.calibration_block != sirokko::Block::NONE) {
+            if (view_.control.commissioning.block != sirokko::Block::NONE) {
                 set_notice(Notice::CALIBRATION_BLOCKED);
                 break;
             }
@@ -674,7 +674,7 @@ bool Model::snapshot_confirms(const Confirmation& confirmation, const View& view
             return saturating_add(view.control.duration_remaining_ms, kTimerConfirmationSlackMs) >= expected_remaining;
         }
         case CommandKind::CALIBRATE:
-            return view.control.calibration_active && is_active_session(view.control.state) && view.control.run_id != 0;
+            return view.control.commissioning.active && is_active_session(view.control.state) && view.control.run_id != 0;
         case CommandKind::RESET_FAULT:
             return view.control.state == sirokko::State::IDLE && view.control.faults == 0;
         case CommandKind::REQUEST_NETWORK_CREDENTIALS:

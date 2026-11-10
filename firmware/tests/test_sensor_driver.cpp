@@ -55,9 +55,9 @@ sirokko::TickInput tick_input(uint64_t now_ms, const sirokko::Sensors& sensors) 
     return input;
 }
 
-sirokko::ProcessProfile qualified_profile() {
-    sirokko::ProcessProfile profile{};
-    profile.qualified = true;
+sirokko::SafetyEnvelope qualified_profile() {
+    sirokko::SafetyEnvelope profile{};
+    profile.provisioned = true;
     profile.recovery_purge_ms = 1;
     profile.prepurge_ms = 1;
     profile.preheat_ms = 1;
@@ -71,9 +71,10 @@ sirokko::ProcessProfile qualified_profile() {
     profile.minimum_ignition_rise_milli_c = 1000;
     profile.minimum_run_exhaust_milli_c = 50000;
     profile.purge_speed_code = 1000;
-    profile.run_speed_code = 2000;
+    profile.reference_speed_code = 2000;
+    profile.exploration_floor_code = 1000;
     profile.minimum_ignition_air_rise_milli_c = 1000;
-    assert(sirokko::valid_process_profile(profile));
+    assert(sirokko::valid_safety_envelope(profile));
     return profile;
 }
 

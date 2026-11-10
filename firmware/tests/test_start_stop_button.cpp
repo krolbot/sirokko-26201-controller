@@ -196,8 +196,8 @@ void test_invalid_states_and_blocks_are_rejected() {
     }
 
     const Block blocked_states[] = {
-        Block::PROFILE_NOT_QUALIFIED, Block::RECOVERY_REQUIRED, Block::SENSOR_INVALID,
-        Block::TEMPERATURE_OUT_OF_RANGE, Block::FAULT_LATCHED, Block::BUSY,
+        Block::ENVELOPE_MISSING, Block::RECOVERY_PURGE, Block::SENSOR_INVALID,
+        Block::INITIAL_THERMAL_STATE, Block::FAULT_LATCHED, Block::BUSY,
         Block::MAINTENANCE, Block::STALE_COMMAND,
     };
     for (Block block : blocked_states) {
@@ -282,7 +282,7 @@ void test_state_changes_before_debounce_never_retarget() {
 
     FakeRuntime blocked{};
     blocked.snapshot = idle(20);
-    blocked.snapshot.start_block = Block::PROFILE_NOT_QUALIFIED;
+    blocked.snapshot.start_block = Block::ENVELOPE_MISSING;
     Button blocked_button(executor(blocked));
     now = 0;
     settle_released(blocked_button, now);

@@ -189,10 +189,10 @@ test('synthetic fixture: a single timer maps to SETTINGS in IDLE and TIMER in an
   expect(fixture.commands[1]).toMatchObject({ action: 'TIMER', delay_ms: 120_000 });
 });
 
-test('synthetic fixture: explicit calibration block is visible and never reaches a challenge', async ({ page }) => {
+test('synthetic fixture: explicit commissioning block is visible and never reaches a challenge', async ({ page }) => {
   const fixture = fixtures.get(page);
   fixture.state = syntheticState({
-    calibration: {
+    commissioning: {
       block: {
         code: 'CALIBRATION_RANGE_INVALID',
         ru: 'Диапазон исследования калибровки недопустим',
@@ -200,13 +200,44 @@ test('synthetic fixture: explicit calibration block is visible and never reaches
     },
   });
   await openLoggedIn(page);
-  await openDetail(page, 'Калибровка');
-  const blocked = page.getByRole('button', { name: 'Калибровка недоступна', exact: true });
+  await openDetail(page, 'Ввод в эксплуатацию');
+  const blocked = page.getByRole('button', { name: 'Ввод в эксплуатацию недоступен', exact: true });
   await expect(blocked).toBeDisabled();
-  await expect(page.getByTestId('calibration-availability')).toContainText('Диапазон исследования калибровки недопустим');
-  await expect(page.getByTestId('calibration-availability')).toContainText('CALIBRATION_RANGE_INVALID');
+  await expect(page.getByTestId('commissioning-availability')).toContainText('Диапазон исследования калибровки недопустим');
+  await expect(page.getByTestId('commissioning-availability')).toContainText('CALIBRATION_RANGE_INVALID');
   expect(fixture.challenges).toEqual([]);
   expect(fixture.commands).toEqual([]);
+});
+
+test('synthetic fixture: model correction sends only MODEL_REVISION and confirms exact readback', async ({ page }) => {
+  const fixture = fixtures.get(page);
+  fixture.onCommand = (payload) => {
+    if (payload.action === 'MODEL_REVISION') {
+      fixture.state = syntheticState({
+        state_version: '23',
+        learned_model: {
+          minimum_speed_code: payload.revision.minimum_speed_code,
+          maximum_speed_code: payload.revision.maximum_speed_code,
+          slew_up_per_s: payload.revision.slew_up_per_s,
+          slew_down_per_s: payload.revision.slew_down_per_s,
+          provenance: { revision: payload.revision.expected_revision + 1 },
+        },
+      });
+    }
+    return { status: 'QUEUED' };
+  };
+  await openLoggedIn(page);
+  await openDetail(page, 'Ввод в эксплуатацию');
+  await page.getByLabel('Минимум PWM').fill('200');
+  await page.getByLabel('Максимум PWM').fill('800');
+  await page.getByLabel('Нарастание, код/с').fill('0.0008');
+  await page.getByLabel('Снижение, код/с').fill('0.0007');
+  await page.getByRole('button', { name: 'Сохранить коррекцию модели', exact: true }).click();
+  await expect(page.locator('.feedback')).toContainText('Новый снимок соответствует запросу');
+  expect(fixture.challenges[0]).toMatchObject({ action: 'MODEL_REVISION', revision: {
+    expected_revision: 1, minimum_speed_code: 200, maximum_speed_code: 800, slew_up_per_s: 0.0008, slew_down_per_s: 0.0007,
+  } });
+  expect(fixture.commands[0]).toMatchObject(fixture.challenges[0]);
 });
 
 test('synthetic fixture: OTA stale challenge never uploads over a TFT-updated snapshot', async ({ page }) => {

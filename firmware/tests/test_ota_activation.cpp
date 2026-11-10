@@ -322,8 +322,8 @@ void test_ota_control_safe() {
     // Synthetic values exercise admission only; not heater qualification limits.
     Snapshot state{};
     state.state=State::MAINTENANCE;
-    ProcessProfile profile{};
-    profile.qualified=true;
+    SafetyEnvelope profile{};
+    profile.provisioned=true;
     profile.maximum_purge_exit_air_milli_c=30000;
     profile.maximum_purge_exit_exhaust_milli_c=40000;
     Sensors sensors{{20000,1000,0,true},{20000,1000,0,true},{20000,1000,0,true}};
@@ -358,7 +358,7 @@ void test_ota_control_safe() {
     state.state=State::IDLE;
     assert(!ota_control_safe(state,sensors,profile,1000));
     state.state=State::MAINTENANCE;
-    profile.qualified=false;
+    profile.provisioned=false;
     assert(!ota_control_safe(state,sensors,profile,1000));
 }
 

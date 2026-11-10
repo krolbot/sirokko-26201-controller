@@ -46,7 +46,7 @@ jobs:
             -v "$GITHUB_WORKSPACE:/project" \
             -w /project/firmware \
             espressif/idf@sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380 \
-            /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py build'
+            /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py build && python3 tests/test_factory_envelope.py'
       - name: Prepare exact build artifact
         run: |
           mkdir -p firmware/release-artifact/bootloader firmware/release-artifact/partition_table

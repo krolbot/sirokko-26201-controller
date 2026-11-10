@@ -6,32 +6,13 @@ export const SETTINGS_EDITABLE_FIELDS = Object.freeze([
   'slew_down_per_s',
 ]);
 
-export const PROCESS_PROFILE_FIELDS = Object.freeze([
-  'qualified',
-  'recovery_purge_ms',
-  'prepurge_ms',
-  'preheat_ms',
-  'ignition_ms',
-  'verify_ms',
-  'postpurge_ms',
-  'maximum_purge_exit_exhaust_milli_c',
-  'maximum_purge_exit_air_milli_c',
-  'maximum_exhaust_milli_c',
-  'maximum_air_milli_c',
-  'minimum_ignition_rise_milli_c',
-  'minimum_run_exhaust_milli_c',
-  'purge_speed_code',
-  'run_speed_code',
-  'calibration_floor_speed_code',
-  'minimum_ignition_air_rise_milli_c',
-]);
 
 export const ACTIVE_SESSION_STATES = new Set(['PREPURGE', 'PREHEAT', 'IGNITION', 'VERIFY', 'RUN']);
 export const TIMER_CONFIRMATION_EARLY_MS = 1_000;
 export const TIMER_CONFIRMATION_LATE_MS = 5_000;
-const MISSING_CALIBRATION_BLOCK = Object.freeze({
-  code: 'PROFILE_NOT_QUALIFIED',
-  ru: 'Нет настроенного профиля процесса',
+const MISSING_COMMISSIONING_BLOCK = Object.freeze({
+  code: 'ENVELOPE_MISSING',
+  ru: 'Не заданы подтверждённые ограничения запуска',
 });
 
 export function isRecord(value) {
@@ -40,17 +21,17 @@ export function isRecord(value) {
 
 // A missing field is never permission to start automatic calibration. Older
 // snapshots fail closed to the core contract's default block instead.
-export function calibrationBlock(snapshot) {
-  const block = snapshot?.calibration?.block;
-  if (!isRecord(block) || typeof block.code !== 'string' || block.code.length === 0) return MISSING_CALIBRATION_BLOCK;
+export function commissioningBlock(snapshot) {
+  const block = snapshot?.commissioning?.block;
+  if (!isRecord(block) || typeof block.code !== 'string' || block.code.length === 0) return MISSING_COMMISSIONING_BLOCK;
   return {
     code: block.code,
     ru: typeof block.ru === 'string' && block.ru.length > 0 ? block.ru : block.code,
   };
 }
 
-export function calibrationAllowed(snapshot) {
-  return calibrationBlock(snapshot).code === 'NONE';
+export function commissioningAllowed(snapshot) {
+  return commissioningBlock(snapshot).code === 'NONE';
 }
 
 export function isHexString(value) {
@@ -133,18 +114,77 @@ export function fullSettingsPayload(currentSettings, edits = {}) {
   return payload;
 }
 
-export function validateProcessProfile(profile) {
-  if (!isRecord(profile)) throw new TypeError('Профиль должен быть JSON-объектом');
-  const keys = Object.keys(profile).sort();
-  const expected = [...PROCESS_PROFILE_FIELDS].sort();
+export const MODEL_REVISION_FIELDS = Object.freeze([
+  'expected_revision',
+  'minimum_speed_code',
+  'maximum_speed_code',
+  'slew_up_per_s',
+  'slew_down_per_s',
+]);
+
+function safeRevision(value) {
+  return Number.isSafeInteger(value) && value >= 0 && value <= 0xffff_ffff;
+}
+
+function safeSpeedCode(value) {
+  return Number.isSafeInteger(value) && value >= 0 && value <= 0xffff;
+}
+
+function finiteSlew(value) {
+  return Number.isFinite(value) && value >= 0.0001 && value <= 0.005;
+}
+
+/**
+ * Build the only public model-correction DTO from the currently observed model.
+ * A correction may only narrow the learned operating interval and slow either
+ * slew; it cannot manufacture an initial profile or relax a learned limit.
+ */
+export function modelRevisionPayload(currentModel, edits = {}) {
+  if (!isRecord(currentModel) || currentModel.valid !== true || !isRecord(currentModel.provenance)) {
+    throw new TypeError('Нет сохранённой LearnedOperatingModel для ручной коррекции');
+  }
+  if (!safeRevision(currentModel.provenance.revision) || !safeSpeedCode(currentModel.minimum_speed_code) ||
+      !safeSpeedCode(currentModel.maximum_speed_code) || currentModel.minimum_speed_code >= currentModel.maximum_speed_code ||
+      !finiteSlew(currentModel.slew_up_per_s) || !finiteSlew(currentModel.slew_down_per_s)) {
+    throw new TypeError('Снимок LearnedOperatingModel имеет недопустимые поля');
+  }
+  if (!isRecord(edits)) throw new TypeError('Коррекция модели должна быть объектом');
+  const revision = {
+    expected_revision: currentModel.provenance.revision,
+    minimum_speed_code: currentModel.minimum_speed_code,
+    maximum_speed_code: currentModel.maximum_speed_code,
+    slew_up_per_s: currentModel.slew_up_per_s,
+    slew_down_per_s: currentModel.slew_down_per_s,
+    ...edits,
+  };
+  const keys = Object.keys(revision).sort();
+  const expected = [...MODEL_REVISION_FIELDS].sort();
   if (keys.length !== expected.length || keys.some((key, index) => key !== expected[index])) {
-    throw new TypeError('Профиль должен содержать ровно 17 полей ProcessProfile без добавлений и пропусков');
+    throw new TypeError('Коррекция модели должна содержать ровно поля MODEL_REVISION');
   }
-  if (typeof profile.qualified !== 'boolean') throw new TypeError('qualified должен быть boolean');
-  for (const field of PROCESS_PROFILE_FIELDS.filter((field) => field !== 'qualified')) {
-    if (!Number.isSafeInteger(profile[field])) throw new TypeError(`${field} должен быть целым числом`);
+  if (!safeRevision(revision.expected_revision) || revision.expected_revision >= 0xffffffff || revision.expected_revision !== currentModel.provenance.revision) {
+    throw new RangeError('Ожидаемая ревизия модели не соответствует снимку');
   }
-  return profile;
+  if (!safeSpeedCode(revision.minimum_speed_code) || !safeSpeedCode(revision.maximum_speed_code) || revision.minimum_speed_code >= revision.maximum_speed_code) {
+    throw new RangeError('Границы модели: целые PWM 0…65535, минимум строго меньше максимума');
+  }
+  if (!finiteSlew(revision.slew_up_per_s) || !finiteSlew(revision.slew_down_per_s)) {
+    throw new RangeError('Скорости модели: конечные значения 0,0001…0,005 /с');
+  }
+  if (revision.minimum_speed_code < currentModel.minimum_speed_code || revision.maximum_speed_code > currentModel.maximum_speed_code ||
+      revision.slew_up_per_s > currentModel.slew_up_per_s || revision.slew_down_per_s > currentModel.slew_down_per_s) {
+    throw new RangeError('Разрешено только сузить сохранённый диапазон и замедлить нарастание/снижение');
+  }
+  return revision;
+}
+
+export function modelRevisionMatches(requested, observedModel) {
+  if (!isRecord(requested) || !isRecord(observedModel) || observedModel.valid !== true || !isRecord(observedModel.provenance)) return false;
+  return observedModel.provenance.revision === requested.expected_revision + 1 &&
+    observedModel.minimum_speed_code === requested.minimum_speed_code &&
+    observedModel.maximum_speed_code === requested.maximum_speed_code &&
+    observedModel.slew_up_per_s === requested.slew_up_per_s &&
+    observedModel.slew_down_per_s === requested.slew_down_per_s;
 }
 
 export function deepEqual(left, right) {
@@ -198,11 +238,12 @@ export function commandMatchesSnapshot(pending, snapshot) {
     case 'TIMER':
       return timerDeadlineMatches(baseline, snapshot, payload.delay_ms);
     case 'CALIBRATE':
-      return snapshot?.calibration?.active === true;
+      return snapshot?.commissioning?.active === true;
+    case 'MODEL_REVISION':
+      return modelRevisionMatches(payload.revision, snapshot?.learned_model);
     case 'RESET_FAULT':
       return !hasFault(snapshot);
-    case 'PROCESS_CONFIG':
-      return snapshot?.process?.configured === true && deepEqual(payload.process, snapshot?.process?.profile);
+
     case 'STOP':
       return ['STOP_PURGE', 'FAULT_PURGE', 'IDLE', 'FAULT'].includes(snapshot?.state?.code) &&
         snapshot.outputs?.fuel === false && snapshot.outputs?.glow === false;

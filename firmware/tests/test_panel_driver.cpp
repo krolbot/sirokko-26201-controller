@@ -53,7 +53,7 @@ bool runtime_network_credentials(char* ssid,size_t ssid_size,char* password,size
 int main() {
     uint64_t now=10000;advance(now);
     test_runtime.control.state=sirokko::State::IDLE;test_runtime.control.start_block=sirokko::Block::NONE;
-    test_runtime.control.calibration_block=sirokko::Block::NONE;
+    test_runtime.control.commissioning.block=sirokko::Block::NONE;
     test_runtime.control.boot_id=7;test_runtime.settings.room_setpoint_milli_c=26000;
     test_runtime.sensors.room={24500,now,0,true};test_runtime.sensors.air={22000,now,0,true};test_runtime.sensors.exhaust={23000,now,0,true};
     if(kRotation==0) {assert(!panel_begin());assert(fake_idf::draws==0);std::puts("PASS: unsupported portrait layout rejected");return 0;}
@@ -99,7 +99,7 @@ int main() {
     update_view();++test_runtime.control.boot_id;assert(!execute_command(command)&&submitted==1);
     // Reset stays on the normal grant/submit path; the model separately limits the encoder gesture to stable FAULT.
     ++test_runtime.control.state_version;test_runtime.control.state=sirokko::State::FAULT;
-    test_runtime.control.faults=sirokko::FAULT_CALIBRATION;update_view();
+    test_runtime.control.faults=sirokko::FAULT_COMMISSIONING;update_view();
     panel_ui::Command reset{};reset.kind=panel_ui::CommandKind::RESET_FAULT;
     assert(execute_command(reset)&&submitted==2&&submitted_action==sirokko::Action::RESET_FAULT);
     // A failed network credential request cannot retain prior credentials or look successful.

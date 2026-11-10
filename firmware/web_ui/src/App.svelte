@@ -4,8 +4,8 @@
   import { ApiClient } from './lib/api.js';
   import { ControllerSession } from './lib/controller.js';
   import {
-    calibrationAllowed,
-    calibrationBlock,
+    commissioningAllowed,
+    commissioningBlock,
     cloneJson,
     deepEqual,
     formatDuration,
@@ -13,10 +13,10 @@
     hasFault,
     isActiveSession,
     isRecord,
+    modelRevisionPayload,
     millisecondsFromMinutes,
     minutesFromMilliseconds,
     sensorText,
-    validateProcessProfile,
   } from './lib/protocol.js';
 
   let tab = $state('home');
@@ -32,10 +32,11 @@
   let timerDirty = $state(false);
   let timerBaseVersion = $state(null);
   let timerConflict = $state(false);
-  let profileText = $state('');
-  let profileDirty = $state(false);
-  let profileBaseVersion = $state(null);
-  let profileConflict = $state(false);
+  let modelDraft = $state(null);
+  let modelDirty = $state(false);
+  let modelBaseVersion = $state(null);
+  let modelConflict = $state(false);
+
   let otaFile = $state(null);
   let localMessage = $state(null);
   let bottomNav = $state();
@@ -172,18 +173,63 @@
     if (timerBaseVersion !== state.state_version) timerConflict = true;
   }
 
-  function reconcileProfile(state, confirmedAction) {
-    const profile = state?.process?.profile;
-    if (!isRecord(profile)) return;
-    const incoming = JSON.stringify(profile, null, 2);
-    if (!profileDirty || confirmedAction === 'PROCESS_CONFIG' || profileText === incoming) {
-      profileText = incoming;
-      profileDirty = false;
-      profileBaseVersion = state.state_version;
-      profileConflict = false;
+  function restoreModel() {
+    if (!snapshot?.learned_model?.valid || !isRecord(snapshot.learned_model.provenance)) return;
+    modelDraft = {
+      minimum_speed_code: snapshot.learned_model.minimum_speed_code,
+      maximum_speed_code: snapshot.learned_model.maximum_speed_code,
+      slew_up_per_s: snapshot.learned_model.slew_up_per_s,
+      slew_down_per_s: snapshot.learned_model.slew_down_per_s,
+    };
+    modelDirty = false;
+    modelConflict = false;
+    modelBaseVersion = snapshot.state_version;
+  }
+
+  function reconcileModel(state, confirmedAction) {
+    const model = state?.learned_model;
+    if (!model?.valid || !isRecord(model.provenance)) {
+      modelDraft = null;
+      modelDirty = false;
+      modelConflict = false;
+      modelBaseVersion = state?.state_version ?? null;
       return;
     }
-    if (profileBaseVersion !== state.state_version) profileConflict = true;
+    if (!modelDraft || confirmedAction === 'MODEL_REVISION' || !modelDirty) {
+      modelDraft = {
+        minimum_speed_code: model.minimum_speed_code,
+        maximum_speed_code: model.maximum_speed_code,
+        slew_up_per_s: model.slew_up_per_s,
+        slew_down_per_s: model.slew_down_per_s,
+      };
+      modelDirty = false;
+      modelConflict = false;
+      modelBaseVersion = state.state_version;
+      return;
+    }
+    if (modelBaseVersion !== state.state_version) modelConflict = true;
+  }
+
+  function editModel(field, value) {
+    if (!modelDraft) return;
+    modelDraft = { ...modelDraft, [field]: value };
+    modelDirty = true;
+    modelConflict = modelBaseVersion !== snapshot?.state_version;
+  }
+
+  async function saveModel() {
+    if (!snapshot?.learned_model || !modelDraft) return;
+    if (modelConflict || modelBaseVersion !== snapshot.state_version) {
+      modelConflict = true;
+      message('warning', 'Сохранённая модель изменилась на другой панели. Черновик не отправлен; перечитайте снимок.');
+      return;
+    }
+    try {
+      const revision = modelRevisionPayload(snapshot.learned_model, modelDraft);
+      await session.submit('MODEL_REVISION', { revision });
+    } catch (error) {
+      message('error', error.message || String(error));
+    }
   }
 
   function receiveSession(next) {
@@ -191,7 +237,8 @@
     if (next.auth !== 'authenticated' || (next.snapshot && previous.snapshot && next.snapshot.boot_id !== previous.snapshot.boot_id)) {
       settingsDraft = null; settingsDirty = []; settingsBaseVersion = null; settingsConflict = false;
       timerDirty = false; timerBaseVersion = null; timerConflict = false;
-      profileDirty = false; profileBaseVersion = null; profileConflict = false;
+      modelDraft = null; modelDirty = false; modelBaseVersion = null; modelConflict = false;
+
     }
     const confirmedAction = previous?.pending?.action && !next.pending && next.message?.kind === 'ok'
       ? previous.pending.action
@@ -199,7 +246,8 @@
     if (next.snapshot && next.snapshot !== previous?.snapshot) {
       reconcileSettings(next.snapshot, confirmedAction);
       reconcileTimer(next.snapshot, confirmedAction);
-      reconcileProfile(next.snapshot, confirmedAction);
+      reconcileModel(next.snapshot, confirmedAction);
+
     }
     ui = next;
     if (next.message) localMessage = null;
@@ -275,41 +323,13 @@
   }
 
   async function startCalibration() {
-    if (!calibrationAllowed(snapshot)) {
-      message('warning', `Калибровка недоступна: ${calibrationBlockLabel(snapshot)}.`);
+    if (!commissioningAllowed(snapshot)) {
+      message('warning', `Ввод в эксплуатацию недоступен: ${commissioningBlockLabel(snapshot)}.`);
       return;
     }
     await session.submit('CALIBRATE');
   }
 
-  function editProfile(event) {
-    profileText = event.currentTarget.value;
-    profileDirty = true;
-    profileConflict = profileBaseVersion !== snapshot?.state_version;
-  }
-
-  async function saveProfile() {
-    if (!snapshot) return;
-    if (profileConflict || profileBaseVersion !== snapshot.state_version) {
-      profileConflict = true;
-      message('warning', 'Профиль изменён на другой панели. Черновик не отправлен.');
-      return;
-    }
-    try {
-      const process = validateProcessProfile(JSON.parse(profileText));
-      await session.submit('PROCESS_CONFIG', { process });
-    } catch (error) {
-      message('error', `Профиль не отправлен: ${error.message || error}`);
-    }
-  }
-
-  function restoreProfile() {
-    if (!snapshot?.process?.profile) return;
-    profileText = JSON.stringify(snapshot.process.profile, null, 2);
-    profileDirty = false;
-    profileConflict = false;
-    profileBaseVersion = snapshot.state_version;
-  }
 
   function chooseOta(event) {
     const file = event.currentTarget.files?.[0] || null;
@@ -330,16 +350,16 @@
     await session.uploadOta(otaFile);
   }
 
-  function calibrationLabel(state) {
-    const calibration = state?.calibration;
-    if (!calibration) return 'Нет данных';
-    const phase = calibration.phase_ru || calibration.phase || '—';
-    const reason = calibration.reason_ru || calibration.reason || '—';
-    return `${calibration.active ? 'активна' : 'не активна'}; ${phase}; ${reason}`;
+  function commissioningLabel(state) {
+    const commissioning = state?.commissioning;
+    if (!commissioning) return 'Нет данных';
+    const phase = commissioning.phase?.ru || commissioning.phase?.code || '—';
+    const reason = commissioning.reason?.ru || commissioning.reason?.code || '—';
+    return `${commissioning.active ? 'активна' : 'не активна'}; ${phase}; ${reason}`;
   }
 
-  function calibrationBlockLabel(state) {
-    const block = calibrationBlock(state);
+  function commissioningBlockLabel(state) {
+    const block = commissioningBlock(state);
     return `${block.ru}${block.code ? ` (${block.code})` : ''}`;
   }
 
@@ -477,7 +497,7 @@
       {#if !detail}
         <div class="section-heading"><h1>Настройки</h1></div>
         <div class="settings-list">
-          {#each [['diagnostics','Показания и журнал','Температуры, состояние, события'],['calibration','Калибровка','Фактическая фаза и запуск калибровки'],['advanced','Плавность регулирования','Нарастание и снижение команды'],['service','Сервис','Профиль процесса JSON'],['update','Обновление','Подписанный пакет .sota']] as [id, title, subtitle]}
+          {#each [['diagnostics','Показания и журнал','Температуры, состояние, события'],['calibration','Ввод в эксплуатацию','Фактическая фаза и запуск автокалибровки'],['advanced','Плавность регулирования','Нарастание и снижение команды'],['update','Обновление','Подписанный пакет .sota']] as [id, title, subtitle]}
             <button class="settings-row" onclick={() => openDetail(id)}><span><strong>{title}</strong><span>{subtitle}</span></span><Icon name="right" size={18} /></button>
           {/each}
           <button class="settings-row theme-row" onclick={toggleTheme}><span><strong>Оформление</strong><span>{dark ? 'Тёмное' : 'Светлое'}</span></span><Icon name="sun" size={22} /></button>
@@ -495,17 +515,34 @@
           <div><dt>Выхлоп</dt><dd>{sensorText(snapshot.sensors?.exhaust)}</dd></div>
           <div><dt>Команда вентилятора</dt><dd>{Number(snapshot.outputs?.command_percent ?? 0).toFixed(1)} % · PWM {snapshot.outputs?.speed_code ?? '—'}</dd></div>
           <div><dt>Режим</dt><dd>{snapshot.settings?.mode === 'MANUAL' ? 'Ручной' : 'По температуре'}</dd></div>
-          <div><dt>Диапазон</dt><dd>{snapshot.range?.calibrated ? 'калиброван' : 'не калиброван'} · {snapshot.range?.minimum_speed_code ?? '—'}…{snapshot.range?.maximum_speed_code ?? '—'}</dd></div>
+          <div><dt>Сохранённая модель</dt><dd>{snapshot.learned_model?.valid ? `PWM ${snapshot.learned_model.minimum_speed_code}…${snapshot.learned_model.maximum_speed_code}; rev. ${snapshot.learned_model.provenance?.revision ?? '—'}` : 'нет подтверждённой модели'}</dd></div>
           <div><dt>Продувка</dt><dd>{snapshot.purge?.active ? `активна; минимум ${formatDuration(snapshot.purge.minimum_remaining_ms)}` : 'не активна'}</dd></div>
         </dl>
         <h2 class="subheading">Последние события автомата</h2>
         <ol class="event-list">{#each snapshot.events || [] as event}<li><time>{event.at_ms} ms</time><span>{event.kind_ru || event.kind || '—'} · {event.state_ru || event.state || '—'} · PWM {event.speed_code} · EXH {Number(event.exhaust_milli_c / 1000).toFixed(1)} °C / AIR {Number(event.air_milli_c / 1000).toFixed(1)} °C</span></li>{/each}</ol>
       {:else if detail === 'calibration'}
-        <h1>Калибровка</h1><p class="page-intro">Интерфейс показывает только фактическую фазу автомата; процент или завершение не моделируются.</p>
-        <div class="process-state"><strong>{calibrationLabel(snapshot)}</strong><span>Точек: {snapshot.calibration?.points ?? '—'}</span></div>
-        <dl class="readings"><div><dt>Фаза</dt><dd>{snapshot.calibration?.phase_ru || snapshot.calibration?.phase || '—'}</dd></div><div><dt>Причина/отмена</dt><dd>{snapshot.calibration?.reason_ru || snapshot.calibration?.reason || '—'}</dd></div><div><dt>Время</dt><dd>{formatDuration(snapshot.calibration?.elapsed_ms)}</dd></div></dl>
-        <button class="btn primary-button" disabled={!automaticReady || snapshot.calibration?.active || !calibrationAllowed(snapshot)} onclick={startCalibration}>{snapshot.calibration?.active ? 'Калибровка активна' : calibrationAllowed(snapshot) ? 'Начать калибровку' : 'Калибровка недоступна'}</button>
-        <p class="field-description after-button" data-testid="calibration-availability">{snapshot.calibration?.phase === 'PERSIST_COMMITTING' ? 'Идёт запись проверенного результата. СТОП остаётся доступен, но уже не отменяет эту запись.' : snapshot.calibration?.active || calibrationAllowed(snapshot) ? 'Для отмены используется СТОП; итог и причина появятся только в следующем снимке автомата.' : `Калибровка недоступна: ${calibrationBlockLabel(snapshot)}.`}</p>
+        <h1>Ввод в эксплуатацию</h1><p class="page-intro">Интерфейс показывает только фактическую фазу автомата; процент или завершение не моделируются.</p>
+        <div class="process-state"><strong>{commissioningLabel(snapshot)}</strong><span>Точек: {snapshot.commissioning?.accepted_point_count ?? '—'}</span></div>
+        <dl class="readings"><div><dt>Фаза</dt><dd>{snapshot.commissioning?.phase?.ru || snapshot.commissioning?.phase?.code || '—'}</dd></div><div><dt>Причина/отмена</dt><dd>{snapshot.commissioning?.reason?.ru || snapshot.commissioning?.reason?.code || '—'}</dd></div><div><dt>Время</dt><dd>{formatDuration(snapshot.commissioning?.elapsed_ms)}</dd></div></dl>
+        <button class="btn primary-button" disabled={!automaticReady || snapshot.commissioning?.active || !commissioningAllowed(snapshot)} onclick={startCalibration}>{snapshot.commissioning?.active ? 'Ввод в эксплуатацию активен' : commissioningAllowed(snapshot) ? 'Начать ввод в эксплуатацию' : 'Ввод в эксплуатацию недоступен'}</button>
+        <p class="field-description after-button" data-testid="commissioning-availability">{snapshot.commissioning?.active || commissioningAllowed(snapshot) ? 'Для отмены используется СТОП; итог и причина появятся только в следующем снимке автомата.' : `Ввод в эксплуатацию недоступен: ${commissioningBlockLabel(snapshot)}.`}</p>
+        <section class="timer-section" aria-labelledby="model-revision-title">
+          <h2 id="model-revision-title">Ручная коррекция сохранённой модели</h2>
+          {#if snapshot.learned_model?.valid && modelDraft}
+            <p class="field-description">Ревизия {snapshot.learned_model.provenance?.revision ?? '—'}. Можно только сузить диапазон PWM и замедлить скорости; исходную модель эта форма не создаёт.</p>
+            <div class="duration-inputs">
+              <label>Минимум PWM<input class="input" type="number" min={snapshot.learned_model.minimum_speed_code} max={snapshot.learned_model.maximum_speed_code} step="1" inputmode="numeric" value={modelDraft.minimum_speed_code} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('minimum_speed_code', Number(event.currentTarget.value))} /></label>
+              <label>Максимум PWM<input class="input" type="number" min={snapshot.learned_model.minimum_speed_code} max={snapshot.learned_model.maximum_speed_code} step="1" inputmode="numeric" value={modelDraft.maximum_speed_code} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('maximum_speed_code', Number(event.currentTarget.value))} /></label>
+              <label>Нарастание, код/с<input class="input" type="number" min="0" max={snapshot.learned_model.slew_up_per_s} step="any" inputmode="decimal" value={modelDraft.slew_up_per_s} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('slew_up_per_s', Number(event.currentTarget.value))} /></label>
+              <label>Снижение, код/с<input class="input" type="number" min="0" max={snapshot.learned_model.slew_down_per_s} step="any" inputmode="decimal" value={modelDraft.slew_down_per_s} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('slew_down_per_s', Number(event.currentTarget.value))} /></label>
+            </div>
+            {#if modelConflict}<p class="field-description" data-testid="model-conflict">Сохранённая модель изменена внешне. Перечитайте снимок.</p>{/if}
+            <button class="btn primary-button" disabled={!automaticReady || modelConflict || !modelDirty} onclick={saveModel}>Сохранить коррекцию модели</button>
+            <button class="btn text-button full-width" onclick={restoreModel}>Вернуть снимок модели</button>
+          {:else}
+            <p class="field-description" data-testid="model-unavailable">Ручная коррекция недоступна: сохранённая LearnedOperatingModel ещё не подтверждена.</p>
+          {/if}
+        </section>
       {:else if detail === 'advanced'}
         <h1>Плавность регулирования</h1><p class="page-intro">Изменение команды за секунду, в процентах рабочего диапазона.</p>
         <label class="full-label">Нарастание, %/с<input class="input" type="number" min="0.01" max="0.5" step="0.01" inputmode="decimal" value={Number(settingsValue('slew_up_per_s')) * 100} disabled={!automaticReady || settingsConflict} oninput={(event) => draftValue('slew_up_per_s', Number(event.currentTarget.value) / 100)} /></label>
@@ -513,15 +550,7 @@
         {#if settingsConflict}<p class="field-description">Настройки изменены внешне. Перечитайте снимок.</p>{/if}
         <button class="btn primary-button" disabled={!automaticReady || settingsConflict || !settingsDirty.length} onclick={saveSettings}>Сохранить плавность</button>
         <button class="btn text-button full-width" onclick={restoreSettings}>Вернуть снимок автомата</button>
-      {:else if detail === 'service'}
-        <h1>Сервис</h1><p class="page-intro">Профиль процесса доступен только в сервисном разделе. Значения не подставляются и передаются строго как полный ProcessProfile из паспорта процесса.</p>
-        <p class="field-description">Настроен: {String(snapshot.process?.configured)} · физические испытания: {String(snapshot.process?.physical_tests)}. Поле qualified не доказывает горение.</p>
-        <details class="service-disclosure" open><summary>Профиль процесса JSON (17 полей)</summary>
-          {#if profileConflict}<p class="field-description">Профиль изменён внешне. Черновик заморожен до перечитывания.</p>{/if}
-          <textarea class="service-textarea" spellcheck="false" value={profileText} oninput={editProfile} aria-label="Профиль процесса JSON"></textarea>
-          <button class="btn primary-button" disabled={!automaticReady || profileConflict || !profileDirty} onclick={saveProfile}>Проверить и передать профиль</button>
-          <button class="btn text-button full-width" onclick={restoreProfile}>Вернуть снимок автомата</button>
-        </details>
+
       {:else if detail === 'update'}
         <h1>Обновление</h1><p class="page-intro">Принимается один подписанный .sota. Файл полностью хешируется в браузере, затем проверяется автоматом перед постановкой активации в очередь.</p>
         <label class="file-label">Пакет прошивки<input class="file-input" type="file" accept=".sota,application/octet-stream" onchange={chooseOta} disabled={!automaticReady || ui.requestInFlight === 'OTA'} /></label>

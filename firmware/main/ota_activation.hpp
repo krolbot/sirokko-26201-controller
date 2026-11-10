@@ -187,14 +187,14 @@ private:
 };
 
 inline bool ota_control_safe(const Snapshot& state,const Sensors& sensors,
-                             const ProcessProfile& profile,uint64_t now_ms) {
+                             const SafetyEnvelope& envelope,uint64_t now_ms) {
     const auto cold=[now_ms](const SensorSample& sample,int32_t limit) {
         return sample.valid && sample.status==0 && sample.sample_ms<=now_ms &&
             now_ms-sample.sample_ms<=kSensorStaleMs && sample.milli_c>=0 && sample.milli_c<=limit;
     };
-    return state.state==State::MAINTENANCE && !state.faults && profile.qualified &&
+    return state.state==State::MAINTENANCE && !state.faults && envelope.provisioned &&
         !state.outputs.fuel && !state.outputs.glow && !state.outputs.fan_request &&
-        cold(sensors.exhaust,profile.maximum_purge_exit_exhaust_milli_c) &&
-        cold(sensors.air,profile.maximum_purge_exit_air_milli_c);
+        cold(sensors.exhaust,envelope.maximum_purge_exit_exhaust_milli_c) &&
+        cold(sensors.air,envelope.maximum_purge_exit_air_milli_c);
 }
 } // namespace sirokko

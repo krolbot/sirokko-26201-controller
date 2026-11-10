@@ -1,351 +1,567 @@
-// Real production task passes and runtime API, with deterministic ESP-IDF I/O.
-// Fixtures are synthetic; this is not a physical NVS or FreeRTOS timing test.
+// Production app_main passes with deterministic synthetic ESP-IDF boundaries.
+// Synthetic envelopes/models below are host fixtures only; they are not a production
+// commissioning writer or an assertion about physical NVS power-cut behavior.
 #include "fake_runtime_idf.hpp"
 #include "../main/app_main.cpp"
+
+#include <cassert>
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <stdexcept>
 
-bool SensorSuite::begin() {return true;}
+bool SensorSuite::begin() { return true; }
 void SensorSuite::poll(uint64_t) {}
-sirokko::Sensors SensorSuite::readings() const {return {};}
-bool panel_begin() {return fake_runtime_idf::panel_ok;}
-bool web_start(const char*) {return fake_runtime_idf::web_ok;}
+sirokko::Sensors SensorSuite::readings() const { return {}; }
+bool panel_begin() { return fake_runtime_idf::panel_ok; }
+bool web_start(const char*) { return fake_runtime_idf::web_ok; }
 
 namespace {
 using namespace sirokko;
-namespace io=fake_runtime_idf;
-ProcessProfile synthetic_profile() {
-    ProcessProfile p{};p.qualified=true;
-    p.recovery_purge_ms=100;p.prepurge_ms=100;p.preheat_ms=100;
-    p.ignition_ms=100;p.verify_ms=100;p.postpurge_ms=100;
-    p.maximum_purge_exit_exhaust_milli_c=60000;p.maximum_purge_exit_air_milli_c=50000;
-    p.maximum_exhaust_milli_c=500000;p.maximum_air_milli_c=250000;
-    p.minimum_ignition_rise_milli_c=10000;p.minimum_ignition_air_rise_milli_c=5000;
-    p.minimum_run_exhaust_milli_c=110000;
-    p.purge_speed_code=1400;p.run_speed_code=1000;p.calibration_floor_speed_code=400;
-    return p;
+namespace io = fake_runtime_idf;
+
+SafetyEnvelope synthetic_envelope() {
+    SafetyEnvelope envelope{};
+    envelope.provisioned = true;
+    envelope.recovery_purge_ms = 100;
+    envelope.prepurge_ms = 10;
+    envelope.preheat_ms = 10;
+    envelope.ignition_ms = 10;
+    envelope.verify_ms = 10;
+    envelope.postpurge_ms = 20;
+    envelope.maximum_purge_exit_exhaust_milli_c = 60000;
+    envelope.maximum_purge_exit_air_milli_c = 50000;
+    envelope.maximum_exhaust_milli_c = 500000;
+    envelope.maximum_air_milli_c = 250000;
+    envelope.minimum_ignition_rise_milli_c = 10000;
+    envelope.minimum_ignition_air_rise_milli_c = 5000;
+    envelope.minimum_run_exhaust_milli_c = 110000;
+    envelope.purge_speed_code = 1400;
+    envelope.reference_speed_code = 1000;
+    envelope.exploration_floor_code = 400;
+    return envelope;
 }
-Sensors samples(uint64_t now,int exhaust=20000,int air=20000) {
-    return {{exhaust,now,0,true},{air,now,0,true},{20000,now,0,true}};
+
+LearnedOperatingModel synthetic_model(uint16_t minimum = 600, uint16_t maximum = 1000) {
+    LearnedOperatingModel model{};
+    model.valid = true;
+    model.minimum_speed_code = minimum;
+    model.maximum_speed_code = maximum;
+    model.slew_up_per_s = .004;
+    model.slew_down_per_s = .003;
+    model.provenance = {envelope_fingerprint(synthetic_envelope()), 1, 101, 3};
+    model.measurements = {100, 20, 30, 200000, 40000, 180000, 45000, 1, 1, 1, 1, 10, 10, 2};
+    model.fingerprint = learned_model_fingerprint(model);
+    return model;
 }
+
+Sensors samples(uint64_t now, int exhaust = 20000, int air = 20000) {
+    return {{exhaust, now, 0, true}, {air, now, 0, true}, {20000, now, 0, true}};
+}
+
 void reset_globals() {
-    delete g_controller;g_controller=nullptr;io::reset();
-    g_gate={};g_output_driver={};g_ota_activation.reset();g_range_commit.reset();g_maintenance_epoch=0;
-    g_view={};g_stop=false;g_operator_problem=false;g_exit_maintenance=false;g_output_driver_fault=false;
-    g_storage_busy=false;g_storage_faults=0;g_process_pending=false;g_range_pending=false;g_boot_ready=false;
-    g_web_ready=false;g_credentials_ready=false;g_control_passes=0;
-    std::memset(g_ap_ssid,0,sizeof(g_ap_ssid));std::memset(g_ap_password,0,sizeof(g_ap_password));
-    g_ota_activation_queue=g_sensor_queue=g_command_queue=g_settings_queue=g_process_queue=g_storage_jobs=g_store_results=nullptr;
-    g_view_mutex=g_gate_mutex=nullptr;
+    delete g_controller;
+    g_controller = nullptr;
+    io::reset();
+    g_gate = {};
+    g_output_driver = {};
+    g_ota_activation.reset();
+    g_model_commit.reset();
+    g_storage_faults = 0;
+    g_storage_busy = false;
+    g_model_pending = false;
+    g_stop = false;
+    g_operator_problem = false;
+    g_exit_maintenance = false;
+    g_output_driver_fault = false;
+    g_boot_ready = false;
+    g_web_ready = false;
+    g_credentials_ready = false;
+    g_control_passes = 0;
+    g_maintenance_epoch = 0;
+    g_view = {};
+    g_sensor_queue = g_command_queue = g_storage_jobs = g_store_results = g_ota_activation_queue = nullptr;
+    g_view_mutex = g_gate_mutex = nullptr;
 }
-void step(ControlWork& work,uint64_t now,bool bad_exhaust=false) {
-    io::clock_ms=now;auto sensor=samples(now);sensor.exhaust.valid=!bad_exhaust;
-    assert(xQueueOverwrite(g_sensor_queue,&sensor)==pdTRUE);control_pass(work);
+
+void seed_factory_boot(const LearnedOperatingModel& model = synthetic_model()) {
+    // Synthetic host preconditioning of the read-only factory source.
+    assert(save_record(kEnvelopeKey, kEnvelopeMagic, synthetic_envelope()));
+    assert(save_record(kModelKey, kModelMagic, model));
 }
-void next(ControlWork& work,bool bad_exhaust=false) {step(work,io::clock_ms+20,bad_exhaust);}
-bool submit(Action action,const Settings* settings=nullptr) {
-    Grant grant{};assert(runtime_issue(action,123,&grant));return runtime_submit(grant,action,0,settings);
+
+void boot_provisioned(const LearnedOperatingModel& model = synthetic_model()) {
+    reset_globals();
+    seed_factory_boot(model);
+    app_main();
+    g_boot_ready = true;
 }
-void configure(ControlWork& work) {
-    reset_globals();app_main();
-    assert(g_controller->update_process_profile(synthetic_profile(),0));
-    g_boot_ready=true;step(work,1000);assert(g_view.control.state==State::IDLE);
+
+void reboot_preserving_flash() {
+    auto flash = io::flash;
+    reset_globals();
+    io::flash = std::move(flash);
+    app_main();
+    g_boot_ready = true;
 }
-void reboot() {
-    auto flash=io::flash;reset_globals();io::flash=std::move(flash);app_main();
+
+void step(ControlWork& work, uint64_t now, int exhaust = 20000, int air = 20000) {
+    io::clock_ms = now;
+    const Sensors sensor = samples(now, exhaust, air);
+    assert(xQueueOverwrite(g_sensor_queue, &sensor) == pdTRUE);
+    control_pass(work);
 }
-OperatingRange stored_range() {
-    OperatingRange range{};assert(load_record("range_v2",kRangeMagic,&range));return range;
+
+void next(ControlWork& work) { step(work, io::clock_ms + 20); }
+
+bool submit(Action action, const Settings* settings = nullptr) {
+    Grant grant{};
+    assert(runtime_issue(action, 9, &grant));
+    return runtime_submit(grant, action, 0, settings);
 }
-bool event(const char* kind) {
-    for(size_t i=0;i<g_controller->event_count();++i)
-        if(!std::strcmp(g_controller->events()[i].kind,kind))return true;
-    return false;
+
+bool issue(Action action, Grant* grant) { return runtime_issue(action, 9, grant); }
+
+void test_empty_boot_is_safe() {
+    reset_globals();
+    app_main();
+    ControlWork work{};
+    step(work, 1000);
+    RuntimeView view{};
+    assert(runtime_view(&view));
+    assert(!view.envelope.provisioned);
+    assert(view.control.start_block == Block::ENVELOPE_MISSING);
+    assert(!view.control.outputs.fuel && !view.control.outputs.glow);
+    std::cout << "PASS runtime empty NVS: missing factory source remains safely blocked\n";
 }
-void fresh_boot_and_credentials() {
-    reset_globals();app_main();
-    assert(g_controller && !g_controller->process_profile().qualified && storage_healthy());
-    ControlWork work{};step(work,1000);
-    assert(g_view.control.state==State::RECOVERY_PURGE);
-    assert(g_view.control.start_block==Block::PROFILE_NOT_QUALIFIED);
-    assert(!g_view.control.outputs.fuel && !g_view.control.outputs.glow);
-    assert(io::gpio[board::kFuel]==0 && io::gpio[board::kGlow]==0);
-    char ssid[33]{},password[21]{};
-    assert(runtime_network_credentials(ssid,sizeof(ssid),password,sizeof(password)));
-    g_web_ready=false;assert(!runtime_network_credentials(ssid,sizeof(ssid),password,sizeof(password)));
-    g_web_ready=true;g_credentials_ready=false;
-    assert(!runtime_network_credentials(ssid,sizeof(ssid),password,sizeof(password)));
-    std::memset(password,0,sizeof(password));std::memset(ssid,0,sizeof(ssid));
-    std::cout<<"PASS actual app_main: empty NVS safe boot and AP+HTTP credential readiness\n";
+
+void test_factory_record_and_model_boot() {
+    boot_provisioned(synthetic_model(650, 900));
+    ControlWork work{};
+    step(work, 1000);
+    assert(g_controller->safety_envelope().provisioned);
+    assert(g_controller->learned_model().valid);
+    assert(g_controller->learned_model().minimum_speed_code == 650);
+    assert(g_controller->learned_model().maximum_speed_code == 900);
+    assert(g_controller->snapshot(1000).state == State::IDLE);
+
+    auto corrupt = io::flash["sirokko/envelope_v1"];
+    corrupt[0] ^= 1;
+    reset_globals();
+    io::flash["sirokko/envelope_v1"] = corrupt;
+    app_main();
+    assert(!g_controller->safety_envelope().provisioned);
+    assert(!storage_healthy());
+
+    reset_globals();
+    assert(save_record(kEnvelopeKey, kEnvelopeMagic, synthetic_envelope()));
+    assert(save_record(kModelKey, kModelMagic, synthetic_model()));
+    io::flash["sirokko/model_active4"][0] ^= 1;
+    app_main();
+    assert(g_controller->safety_envelope().provisioned);
+    assert(!g_controller->learned_model().valid);
+    assert(!storage_healthy());
+    std::cout << "PASS factory envelope/model: codec+semantic source loads before Controller; corrupt records fail closed\n";
 }
-void restart_is_blocked_through_shutdown() {
-    for(bool fault : {false,true}) {
-        ControlWork control{};configure(control);
-        const uint64_t old_version=g_view.control.state_version;
-        assert(submit(Action::START));next(control);
-        step(control,io::clock_ms+100);assert(g_view.control.state==State::PREHEAT);
-        if(fault) next(control,true);
-        else {runtime_stop();next(control);}
-        const State stopping=fault ? State::FAULT_PURGE : State::STOP_PURGE;
-        assert(g_view.control.state==stopping);
+
+void test_restart_lockout_stale_key0_and_fault_purge() {
+    for (bool fault : {false, true}) {
+        boot_provisioned();
+        ControlWork work{};
+        step(work, 1000);
+        const uint64_t stale_version = g_view.control.state_version;
+        assert(submit(Action::START));
+        next(work);
+        if (fault) {
+            step(work, io::clock_ms + 20, 20000, 20000);
+            step(work, io::clock_ms + 20, 20000, 20000);
+            step(work, io::clock_ms + 20, 20000, 20000);
+            io::clock_ms += 20;
+            Sensors bad = samples(io::clock_ms);
+            bad.exhaust.valid = false;
+            assert(xQueueOverwrite(g_sensor_queue, &bad) == pdTRUE);
+            control_pass(work);
+        } else {
+            runtime_stop();
+            next(work);
+        }
+        const State stopping = fault ? State::FAULT_PURGE : State::STOP_PURGE;
+        assert(g_view.control.state == stopping);
         assert(!g_view.control.outputs.fuel && !g_view.control.outputs.glow);
         assert(!submit(Action::START));
-        assert(!button_runtime_start(nullptr,g_view.control.state_version));
-        // Expired minimum duration is insufficient while either outlet is hot.
-        io::clock_ms+=500;
-        auto hot=samples(io::clock_ms,120000,60000);
-        assert(xQueueOverwrite(g_sensor_queue,&hot)==pdTRUE);control_pass(control);
-        assert(g_view.control.state==stopping);
-        assert(g_view.control.outputs.fan_request);
+        assert(!button_start(nullptr, g_view.control.state_version));
+        step(work, io::clock_ms + 500, 120000, 60000);
+        assert(g_view.control.state == stopping && g_view.control.outputs.fan_request);
         assert(!submit(Action::START));
-        step(control,io::clock_ms+500);
-        if(fault) {
-            assert(g_view.control.state==State::FAULT);
-            assert(!submit(Action::START));
-            assert(submit(Action::RESET_FAULT));next(control);
+        step(work, io::clock_ms + 500);
+        if (fault) {
+            assert(g_view.control.state == State::FAULT);
+            assert(submit(Action::RESET_FAULT));
+            next(work);
         }
-        assert(g_view.control.state==State::IDLE);
-        assert(!button_runtime_start(nullptr,old_version));
-        for(unsigned i=0;i<10;++i) next(control);
-        assert(g_view.control.state==State::IDLE); // No deferred/replayed start.
-        assert(button_runtime_start(nullptr,g_view.control.state_version));next(control);
-        assert(g_view.control.state==State::PREPURGE); // A fresh manual press works.
+        assert(g_view.control.state == State::IDLE);
+        assert(!button_start(nullptr, stale_version));
+        for (unsigned pass = 0; pass < 10; ++pass) next(work);
+        assert(g_view.control.state == State::IDLE);
+        assert(button_start(nullptr, g_view.control.state_version));
     }
-    std::cout<<"PASS restart lockout: hot purge, fault purge/reset, stale KEY0 and no deferred START\n";
+    std::cout << "PASS STOP/fault purge lockout: stale KEY0 cannot replay a deferred START\n";
 }
 
-void settings_start_barriers() {
-    ControlWork control{};configure(control);StorageWork storage{};
-    Settings settings{};settings.mode=Mode::MANUAL;
-    assert(submit(Action::SETTINGS,&settings));next(control);
-    step(control,io::clock_ms+1500);assert(g_storage_busy && !g_view.control.outputs.fuel);
-    bool start_accepted=true;unsigned passes=0;
-    io::before_commit=[&](const std::string& key) {
-        if(key!="sirokko/settings_v2")return;
-        start_accepted=submit(Action::START);runtime_stop();
-        for(unsigned i=0;i<40;++i) {next(control);++passes;assert(!g_view.control.outputs.fuel && g_storage_busy);}
+void test_settings_barriers_and_ack_backpressure() {
+    boot_provisioned();
+    ControlWork control{};
+    StorageWork storage{};
+    step(control, 1000);
+    Settings first{};
+    first.mode = Mode::MANUAL;
+    first.manual_percent = 90;
+    assert(submit(Action::SETTINGS, &first));
+    next(control);
+    step(control, io::clock_ms + 1500);
+    assert(g_storage_busy);
+    bool start_accepted = true;
+    unsigned passes = 0;
+    io::before_commit = [&](const std::string& key) {
+        if (key != "sirokko/settings_v2") return;
+        start_accepted = submit(Action::START);
+        runtime_stop();
+        for (unsigned pass = 0; pass < 40; ++pass) {
+            next(control);
+            ++passes;
+            assert(!g_view.control.outputs.fuel && g_storage_busy);
+        }
     };
-    storage_pass(storage);io::before_commit={};
-    assert(!start_accepted && passes==40 && g_storage_busy);
-    next(control);assert(!g_storage_busy && g_view.control.state==State::IDLE);
-    assert(submit(Action::START));next(control);assert(g_view.control.state==State::PREPURGE);
-    assert(io::maximum_queue_wait==0);
+    storage_pass(storage);
+    io::before_commit = {};
+    assert(!start_accepted && passes == 40 && g_storage_busy);
+    next(control);
+    assert(!g_storage_busy && g_view.control.state == State::IDLE);
 
-    // START queued before the grant, behind another consumed queue entry.
-    ControlWork queued{};configure(queued);StorageWork worker{};
-    assert(submit(Action::SETTINGS,&settings));next(queued);
-    RuntimeCommand dummy{};assert(xQueueSend(g_command_queue,&dummy,0)==pdTRUE);
-    assert(submit(Action::START));step(queued,io::clock_ms+1500);
-    assert(g_storage_busy);next(queued);assert(g_view.control.state==State::IDLE);
-    storage_pass(worker);next(queued);assert(!g_storage_busy);
-    std::cout<<"PASS actual Settings/START: API and queued-command barriers, STOP during write, 40 continuing control passes, zero blocking queue waits\n";
-}
-void settings_revision_and_ack_backpressure() {
-    ControlWork control{};configure(control);StorageWork storage{};
-    Settings first{};first.mode=Mode::MANUAL;first.manual_percent=90;
-    assert(submit(Action::SETTINGS,&first));next(control);step(control,io::clock_ms+1500);
-    Settings second=first;second.manual_percent=80;
-    io::before_commit=[&](const std::string& key) {
-        if(key=="sirokko/settings_v2") {assert(submit(Action::SETTINGS,&second));next(control);}
-    };
-    storage_pass(storage);io::before_commit={};next(control);
-    Settings read{};assert(load_record("settings_v2",kSettingsMagic,&read) && read.manual_percent==90);
-    assert(control.settings_pending && !g_storage_busy);
-    step(control,io::clock_ms+1500);storage_pass(storage);next(control);
-    assert(load_record("settings_v2",kSettingsMagic,&read) && read.manual_percent==80);
-
-    assert(submit(Action::SETTINGS,&first));next(control);step(control,io::clock_ms+1500);
-    StoreResult stale{control.inflight.id+1,StoreKind::SETTINGS,true};
-    assert(xQueueSend(g_store_results,&stale,0)==pdTRUE);
-    storage_pass(storage);assert(storage.result_waiting && g_storage_busy);
-    next(control);assert(g_storage_busy && (g_storage_faults.load()&STORAGE_INTERNAL));
-    storage_pass(storage);next(control);
-    assert(!g_storage_busy && !storage.result_waiting && io::maximum_queue_wait==0);
-    std::cout<<"PASS Settings revisions preserved; full result queue retries nonblocking; stale ACK cannot release a live grant\n";
+    assert(submit(Action::SETTINGS, &first));
+    next(control);
+    step(control, io::clock_ms + 1500);
+    StoreResult stale{control.inflight.id + 1, StoreKind::SETTINGS, true};
+    assert(xQueueSend(g_store_results, &stale, 0) == pdTRUE);
+    storage_pass(storage);
+    assert(storage.waiting && g_storage_busy);
+    next(control);
+    assert(g_storage_busy && (g_storage_faults.load() & STORAGE_INTERNAL));
+    storage_pass(storage);
+    next(control);
+    assert(!g_storage_busy && !storage.waiting && io::maximum_queue_wait == 0);
+    std::cout << "PASS settings: START barrier, STOP priority, 40 control passes and nonblocking stale-ACK retry\n";
 }
 
-struct Prepared {
-    Controller controller{synthetic_profile(),{},7};
-    uint64_t now{};
-    OperatingRange candidate{};
-};
-const Prepared& calibrated_pending_fixture() {
-    static const Prepared result=[] {
-        Prepared p;
-        OperatingRange old{true,700,1000,0.005,0.005,process_fingerprint(synthetic_profile())};
-        assert(p.controller.install_range(old));
-        auto tick=[&](uint64_t t,int exh=20000,int air=20000,bool start=false) {
-            TickInput i{};i.now_ms=t;i.sensors=samples(t,exh,air);i.start_calibration=start;return p.controller.tick(i);
-        };
-        assert(tick(1000).state==State::IDLE);
-        assert(tick(1001,20000,20000,true).state==State::PREPURGE);
-        tick(1101);tick(1201);tick(1301,270000,70000);
-        auto state=tick(1401,270000,70000);assert(state.state==State::RUN);
-        double exh=270000,air=70000;TickInput input{};input.sensors=samples(1401,270000,70000);
-        for(uint64_t t=1421;t<21600000;t+=20) {
-            const double te=state.outputs.fuel?160000+110.0*state.outputs.speed_code:20000;
-            const double ta=state.outputs.fuel?70000+15.0*(1000-state.outputs.speed_code):20000;
-            exh+=(te-exh)*(-std::expm1(-0.02/5.0));air+=(ta-air)*(-std::expm1(-0.02/5.0));
-            input.now_ms=t;
-            if(t-input.sensors.exhaust.sample_ms>=200) input.sensors=samples(t,std::lround(exh),std::lround(air));
-            state=p.controller.tick(input);assert(state.state!=State::FAULT && state.state!=State::FAULT_PURGE);
-            if(p.controller.pending_calibration_range(&p.candidate)) {p.now=t;break;}
-        }
-        assert(p.now && p.candidate.valid && p.candidate.minimum_speed_code<700);
-        assert(p.controller.operating_range().minimum_speed_code==700);
-        return p;
-    }();
-    return result;
+void begin_revision(ControlWork& control, uint16_t minimum, uint16_t maximum) {
+    const auto old = g_controller->learned_model();
+    LearnedModelRevision revision{old.provenance.revision, minimum, maximum, .003, .002};
+    Grant grant{};
+    assert(issue(Action::MODEL_REVISION, &grant));
+    assert(runtime_revise_model(grant, revision));
+    next(control);
+    assert(g_storage_busy && g_model_pending);
 }
-void pending(ControlWork& work) {
-    const auto& fixture=calibrated_pending_fixture();reset_globals();app_main();
-    assert(save_record("process_v2",kProcessMagic,synthetic_profile()));
-    assert(save_record("range_v2",kRangeMagic,fixture.controller.operating_range()));
-    delete g_controller;g_controller=new Controller(fixture.controller);g_boot_ready=true;
-    step(work,fixture.now);
-    assert(g_storage_busy && g_range_pending && work.inflight.kind==StoreKind::RANGE_STAGE);
-    assert(!std::strcmp(g_view.control.calibration_phase,"PERSIST_STAGING"));
-    assert(stored_range().minimum_speed_code==700);
+
+void test_revision_narrows_both_bounds_and_bootloads() {
+    boot_provisioned();
+    ControlWork control{};
+    StorageWork storage{};
+    step(control, 1000);
+    begin_revision(control, 650, 900);
+    storage_pass(storage);
+    next(control);
+    assert(g_model_commit.claimed() && g_storage_busy);
+    storage_pass(storage);
+    next(control);
+    assert(!g_storage_busy && !g_model_pending);
+    assert(g_controller->learned_model().minimum_speed_code == 650);
+    assert(g_controller->learned_model().maximum_speed_code == 900);
+    reboot_preserving_flash();
+    assert(g_controller->safety_envelope().provisioned);
+    assert(g_controller->learned_model().minimum_speed_code == 650);
+    assert(g_controller->learned_model().maximum_speed_code == 900);
+    std::cout << "PASS revision: both bounds narrow, durable record loads through app_main factory boot\n";
 }
-void sealed(ControlWork& work,StorageWork& storage) {
-    pending(work);storage_pass(storage);assert(stored_range().minimum_speed_code==700);
-    next(work);assert(g_range_commit.claimed() && g_storage_busy);
-    assert(!std::strcmp(g_view.control.calibration_phase,"PERSIST_COMMITTING"));
-    assert(g_controller->operating_range().minimum_speed_code==700);
-}
-void assert_boot_range(uint16_t minimum) {
-    reboot();assert(storage_healthy());assert(g_controller->operating_range().valid);
-    assert(g_controller->operating_range().minimum_speed_code==minimum);
-    assert(!g_controller->snapshot(0).outputs.fuel && !g_controller->snapshot(0).outputs.glow);
-}
-void range_normal_and_precommit_cancellations() {
-    const auto minimum=calibrated_pending_fixture().candidate.minimum_speed_code;
-    {ControlWork c{};StorageWork s{};sealed(c,s);storage_pass(s);
-     assert(g_controller->operating_range().minimum_speed_code==700);next(c);
-     assert(!g_storage_busy && !g_range_pending && !std::strcmp(g_view.control.calibration_phase,"SAVED"));
-     assert(g_controller->operating_range().minimum_speed_code==minimum);assert_boot_range(minimum);}
-    for(unsigned point=0;point<5;++point) {
-        ControlWork c{};StorageWork s{};pending(c);
-        if(point==0) {runtime_stop();next(c);storage_pass(s);next(c);}
-        if(point==1) {
-            io::before_commit=[&](const std::string& key) {if(key=="sirokko/range_stage3") {runtime_stop(true);next(c);}};
-            storage_pass(s);io::before_commit={};next(c);assert(event("OPERATOR_COMBUSTION_PROBLEM"));
-        }
-        if(point>=2) {
-            storage_pass(s);
-            if(point==2)runtime_stop();
-            if(point==4)runtime_stop(true);
-            next(c,point>=3);
-            if(point==4)assert(event("OPERATOR_COMBUSTION_PROBLEM"));
-        }
-        assert(!g_storage_busy && !g_range_pending && !g_controller->snapshot(io::clock_ms).calibration_active);
-        assert(stored_range().minimum_speed_code==700 && g_controller->operating_range().minimum_speed_code==700);
-        assert_boot_range(700);
+
+void test_revision_stop_fault_and_storage_unknown_outcomes() {
+    for (bool fault : {false, true}) {
+        boot_provisioned();
+        ControlWork control{};
+        StorageWork storage{};
+        step(control, 1000);
+        const auto old = g_controller->learned_model();
+        begin_revision(control, 650, 900);
+        if (fault) runtime_stop(true); else runtime_stop();
+        next(control);
+        storage_pass(storage);
+        next(control);
+        assert(!g_model_pending && !g_storage_busy);
+        assert(g_controller->learned_model().minimum_speed_code == old.minimum_speed_code);
+        LearnedOperatingModel active{};
+        assert(load_record(kModelKey, kModelMagic, &active));
+        assert(active.minimum_speed_code == old.minimum_speed_code);
+        assert(active.maximum_speed_code == old.maximum_speed_code);
     }
-    std::cout<<"PASS actual calibration storage: stage is non-active, verified activation only; STOP before/during/after stage ACK and simultaneous operator+sensor fault preserve old range across reboot\n";
+
+    for (unsigned failure = 0; failure < 3; ++failure) {
+        boot_provisioned();
+        ControlWork control{};
+        StorageWork storage{};
+        step(control, 1000);
+        begin_revision(control, 650, 900);
+        if (failure == 0) io::nvs_set_error = ESP_FAIL;
+        if (failure == 2) {
+            io::after_commit = [](const std::string& key) {
+                if (key == "sirokko/model_stage4") io::nvs_get_error = ESP_FAIL;
+            };
+        }
+        storage_pass(storage);
+        io::nvs_set_error = ESP_OK;
+        io::after_commit = {};
+        io::nvs_get_error = ESP_OK;
+        if (failure == 1) {
+            next(control);
+            io::nvs_commit_error = ESP_FAIL;
+            storage_pass(storage);
+            io::nvs_commit_error = ESP_OK;
+        }
+        next(control);
+        assert(!storage_healthy());
+        assert(g_controller->learned_model().minimum_speed_code == 600);
+    }
+    std::cout << "PASS model storage: pre-claim STOP/fault cancel; set/commit/readback failures retain old RAM model\n";
 }
-void range_after_boundary() {
-    const auto minimum=calibrated_pending_fixture().candidate.minimum_speed_code;
-    {ControlWork c{};StorageWork s{};sealed(c,s);runtime_stop(true);next(c);
-     assert(g_range_commit.claimed() && g_controller->snapshot(io::clock_ms).calibration_active);
-     assert(event("OPERATOR_COMBUSTION_PROBLEM"));storage_pass(s);next(c);
-     assert(!std::strcmp(g_view.control.calibration_phase,"SAVED"));assert_boot_range(minimum);}
-    {ControlWork c{};StorageWork s{};sealed(c,s);g_output_driver_fault=true;next(c,true);storage_pass(s);next(c,true);
-     assert(g_storage_busy && g_view.control.state==State::FAULT_PURGE);
-     assert(g_controller->operating_range().minimum_speed_code==700);
-     for(unsigned i=0;i<10 && g_storage_busy;++i)next(c);
-     assert(!g_storage_busy && g_view.control.state==State::FAULT && g_view.control.faults);
-     assert(!g_view.control.outputs.fuel && g_controller->operating_range().minimum_speed_code==minimum);
-     assert_boot_range(minimum);}
-    std::cout<<"PASS after range claim: STOP still de-energizes, does not falsely cancel committed write; sensor fault keeps purge and defers RAM acceptance until FAULT\n";
-}
-void storage_failures_and_unknown_outcome() {
-    {ControlWork c{};StorageWork s{};pending(c);io::nvs_set_error=ESP_FAIL;storage_pass(s);io::nvs_set_error=ESP_OK;next(c);
-     assert(!g_storage_busy && !storage_healthy() && stored_range().minimum_speed_code==700);assert_boot_range(700);}
-    {ControlWork c{};StorageWork s{};sealed(c,s);io::nvs_commit_error=ESP_FAIL;storage_pass(s);io::nvs_commit_error=ESP_OK;next(c);
-     assert(!g_storage_busy && !storage_healthy());assert_boot_range(700);}
-    {ControlWork c{};StorageWork s{};sealed(c,s);
-     io::after_commit=[](const std::string& key){if(key=="sirokko/range_v2")io::nvs_get_error=ESP_FAIL;};
-     storage_pass(s);io::after_commit={};io::nvs_get_error=ESP_OK;next(c);
-     assert(!g_storage_busy && !storage_healthy() && !g_view.control.calibration_active);
-     assert(!std::strcmp(g_view.control.calibration_phase,"PERSIST_FAILED"));
-     assert(!std::strcmp(g_view.control.calibration_reason,"STORAGE_UNCONFIRMED"));
-     assert(g_controller->operating_range().minimum_speed_code==700);
-     assert_boot_range(calibrated_pending_fixture().candidate.minimum_speed_code);}
-    std::cout<<"PASS staging/set/commit/readback failures: old RAM range retained, fault latched, ambiguous durable outcome not labelled cancelled or saved\n";
-}
+
 struct PowerCut {};
-void power_cut_boundaries() {
-    const auto minimum=calibrated_pending_fixture().candidate.minimum_speed_code;
-    for(unsigned point=0;point<5;++point) {
-        ControlWork c{};StorageWork s{};
-        if(point<2)pending(c);else sealed(c,s);
-        const auto key=point<2?"sirokko/range_stage3":"sirokko/range_v2";
-        const auto cut=[key](const std::string& actual){if(actual==key)throw PowerCut{};};
-        if(point==0 || point==2)io::before_commit=cut;
-        else if(point==1 || point==3)io::after_commit=cut;
-        else {io::durable_at_set=true;io::after_set=cut;}
-        bool interrupted=false;try {storage_pass(s);}catch(const PowerCut&){interrupted=true;}
-        assert(interrupted);assert_boot_range(point>=3?minimum:700);
-    }
-    std::cout<<"PASS reset injection at five real storage boundaries, including set-already-durable backend: boot uses only intact old or exact activated candidate\n";
-}
-void corruption_and_explicit_profile_repair() {
-    ControlWork c{};configure(c);
-    assert(save_record("process_v2",kProcessMagic,synthetic_profile()));
-    assert(save_record("settings_v2",kSettingsMagic,Settings{}));
-    auto flash=io::flash;
-    io::flash["sirokko/settings_v2"][0]^=1;reboot();
-    assert(!storage_healthy() && (g_storage_faults.load()&STORAGE_SETTINGS));
-    step(c,1000);assert(g_view.control.faults&FAULT_STORAGE);
-    assert(save_record("process_v2",kProcessMagic,synthetic_profile()));assert(!storage_healthy());
-    assert(save_record("settings_v2",kSettingsMagic,Settings{}));assert(storage_healthy());
-    reset_globals();io::flash=flash;io::flash["sirokko/process_v2"][0]^=1;app_main();
-    assert(!storage_healthy() && !g_controller->process_profile().qualified);
+struct PreparedCommissioning {
+    Controller controller{synthetic_envelope(), {}, 7};
+    LearnedOperatingModel old{};
+    LearnedOperatingModel candidate{};
+    uint64_t ready_at{};
+};
 
-    ControlWork r{};StorageWork s{};sealed(r,s);storage_pass(s);next(r);
-    io::flash["sirokko/range_stage3"][0]^=1;reboot();
-    assert(!storage_healthy() && !g_controller->operating_range().valid);
-    ControlWork recovery{};step(recovery,1000);
-    // The explicit process-config command invalidates obsolete/corrupt calibration
-    // records; unrelated valid settings are not erased and no erase_flash occurs.
-    Grant grant{};assert(runtime_issue(Action::PROCESS_CONFIG,456,&grant));
-    assert(runtime_configure_process(grant,synthetic_profile()));next(recovery);
-    StorageWork repair{};storage_pass(repair);next(recovery);
-    assert(storage_healthy() && !g_process_pending && !io::flash.count("sirokko/range_stage3") && !io::flash.count("sirokko/range_v2"));
-    reboot();assert(storage_healthy() && !g_controller->operating_range().valid);
-    std::cout<<"PASS boot distinguishes missing/corrupt records, record-specific diagnostics, explicit profile reconfiguration clears obsolete calibration without flash erase\n";
+const PreparedCommissioning& calibrated_pending_fixture() {
+    static const PreparedCommissioning prepared = [] {
+        PreparedCommissioning result{};
+        result.old = synthetic_model(700, 1000);
+        assert(result.controller.install_learned_model(result.old));
+        auto tick = [&](uint64_t now, int exhaust = 20000, int air = 20000, bool start = false) {
+            TickInput input{};
+            input.now_ms = now;
+            input.sensors = samples(now, exhaust, air);
+            input.start_commissioning = start;
+            return result.controller.tick(input);
+        };
+        assert(tick(1000).state == State::IDLE);
+        assert(tick(1001, 20000, 20000, true).state == State::PREPURGE);
+        tick(1101); tick(1201); tick(1301, 270000, 70000);
+        auto state = tick(1401, 270000, 70000);
+        assert(state.state == State::RUN);
+        double exhaust = 270000, air = 70000;
+        TickInput input{};
+        input.sensors = samples(1401, 270000, 70000);
+        for (uint64_t now = 1421; now < 21600000; now += 20) {
+            const double target_exhaust = state.outputs.fuel ? 160000 + 110.0 * state.outputs.speed_code : 20000;
+            const double target_air = state.outputs.fuel ? 70000 + 15.0 * (1000 - state.outputs.speed_code) : 20000;
+            exhaust += (target_exhaust - exhaust) * (-std::expm1(-0.02 / 5.0));
+            air += (target_air - air) * (-std::expm1(-0.02 / 5.0));
+            input.now_ms = now;
+            if (now - input.sensors.exhaust.sample_ms >= 200)
+                input.sensors = samples(now, std::lround(exhaust), std::lround(air));
+            state = result.controller.tick(input);
+            assert(state.state != State::FAULT && state.state != State::FAULT_PURGE);
+            if (result.controller.pending_learned_model(&result.candidate)) {
+                result.ready_at = now;
+                break;
+            }
+        }
+        assert(result.ready_at && result.candidate.valid);
+        assert(result.candidate.minimum_speed_code < result.old.minimum_speed_code);
+        assert(result.controller.learned_model().fingerprint == result.old.fingerprint);
+        return result;
+    }();
+    return prepared;
 }
-void queued_ota(ControlWork& c) {
-    configure(c);assert(submit(Action::OTA));next(c);
-    assert(g_view.control.state==State::MAINTENANCE);
-    const auto lease=runtime_maintenance_lease();assert(lease);
-    assert(runtime_activate_ota(lease,esp_ota_get_next_update_partition(nullptr)));next(c);
+
+void assert_model_equal(const LearnedOperatingModel& actual, const LearnedOperatingModel& expected) {
+    assert(actual.valid == expected.valid);
+    assert(actual.minimum_speed_code == expected.minimum_speed_code);
+    assert(actual.maximum_speed_code == expected.maximum_speed_code);
+    assert(actual.slew_up_per_s == expected.slew_up_per_s);
+    assert(actual.slew_down_per_s == expected.slew_down_per_s);
+    assert(actual.provenance.safety_envelope_fingerprint == expected.provenance.safety_envelope_fingerprint);
+    assert(actual.fingerprint == expected.fingerprint);
 }
-void ota_claim_and_cancellation() {
-    for(unsigned which=0;which<3;++which) {
-        ControlWork c{};queued_ota(c);
-        if(which==0)runtime_stop();else if(which==1)runtime_exit_maintenance();
-        step(c,io::clock_ms+200,which==2);
+
+LearnedOperatingModel durable_model() {
+    LearnedOperatingModel model{};
+    assert(load_record(kModelKey, kModelMagic, &model));
+    return model;
+}
+
+void assert_reboot_model(const LearnedOperatingModel& expected, bool storage_ok = true) {
+    reboot_preserving_flash();
+    assert(storage_healthy() == storage_ok);
+    assert_model_equal(g_controller->learned_model(), expected);
+    const auto snap = g_controller->snapshot(0);
+    assert(!snap.outputs.fuel && !snap.outputs.glow);
+}
+
+void pending(ControlWork& control) {
+    const auto& fixture = calibrated_pending_fixture();
+    boot_provisioned(fixture.old);
+    delete g_controller;
+    g_controller = new Controller(fixture.controller);
+    g_boot_ready = true;
+    step(control, fixture.ready_at);
+    assert(g_storage_busy && g_model_pending && control.inflight.kind == StoreKind::MODEL_STAGE);
+    assert(g_view.control.commissioning.phase == CommissioningPhase::PERSIST_STAGING);
+    assert_model_equal(g_controller->learned_model(), fixture.old);
+    assert_model_equal(durable_model(), fixture.old);
+}
+
+void sealed(ControlWork& control, StorageWork& storage) {
+    pending(control);
+    storage_pass(storage);
+    assert_model_equal(durable_model(), calibrated_pending_fixture().old);
+    next(control);
+    assert(g_model_commit.claimed() && g_storage_busy);
+    assert(g_view.control.commissioning.phase == CommissioningPhase::PERSIST_COMMITTING);
+    assert_model_equal(g_controller->learned_model(), calibrated_pending_fixture().old);
+}
+
+void test_commissioning_normal_and_preclaim_cancellations() {
+    const auto& fixture = calibrated_pending_fixture();
+    { ControlWork control{}; StorageWork storage{}; sealed(control, storage); storage_pass(storage); next(control);
+      assert(!g_storage_busy && !g_model_pending);
+      assert(g_view.control.commissioning.phase == CommissioningPhase::SAVED);
+      assert_model_equal(g_controller->learned_model(), fixture.candidate);
+      assert_reboot_model(fixture.candidate); }
+    for (unsigned point = 0; point < 4; ++point) {
+        ControlWork control{}; StorageWork storage{}; pending(control);
+        if (point == 0) { runtime_stop(); next(control); storage_pass(storage); next(control); }
+        if (point == 1) {
+            io::before_commit = [&](const std::string& key) {
+                if (key == "sirokko/model_stage4") { runtime_stop(true); next(control); }
+            };
+            storage_pass(storage); io::before_commit = {}; next(control);
+        }
+        if (point == 2) { storage_pass(storage); runtime_stop(); next(control); }
+        if (point == 3) { storage_pass(storage); g_output_driver_fault = true; next(control); }
+        assert(!g_storage_busy && !g_model_pending && !g_controller->snapshot(io::clock_ms).commissioning.active);
+        assert_model_equal(g_controller->learned_model(), fixture.old);
+        assert_model_equal(durable_model(), fixture.old);
+        assert_reboot_model(fixture.old);
+    }
+    std::cout << "PASS commissioning runtime: calibrated candidate stages, normal activation commits, STOP/fault before claim retain exact old model\n";
+}
+
+void test_commissioning_postclaim_stop_fault_and_deferred_activation() {
+    const auto& fixture = calibrated_pending_fixture();
+    { ControlWork control{}; StorageWork storage{}; sealed(control, storage);
+      runtime_stop(true); next(control);
+      assert(g_model_commit.claimed() && g_view.control.commissioning.active);
+      storage_pass(storage); next(control);
+      assert(g_view.control.commissioning.phase == CommissioningPhase::SAVED);
+      assert_model_equal(g_controller->learned_model(), fixture.candidate);
+      assert_reboot_model(fixture.candidate); }
+    { ControlWork control{}; StorageWork storage{}; sealed(control, storage);
+      g_output_driver_fault = true; next(control);
+      assert(g_view.control.state == State::FAULT_PURGE && g_storage_busy);
+      storage_pass(storage); step(control, io::clock_ms + 20, 120000, 60000);
+      assert(g_storage_busy && g_view.control.state == State::FAULT_PURGE);
+      assert_model_equal(g_controller->learned_model(), fixture.old);
+      for (unsigned pass = 0; pass < 10 && g_storage_busy; ++pass) next(control);
+      assert(!g_storage_busy && g_view.control.state == State::FAULT);
+      assert_model_equal(g_controller->learned_model(), fixture.candidate);
+      assert_reboot_model(fixture.candidate); }
+    std::cout << "PASS post-claim runtime: STOP preserves sealed activation; fault purge defers RAM acceptance until FAULT\n";
+}
+
+void test_commissioning_storage_failures() {
+    const auto& fixture = calibrated_pending_fixture();
+    { ControlWork control{}; StorageWork storage{}; pending(control); io::nvs_set_error = ESP_FAIL; storage_pass(storage); io::nvs_set_error = ESP_OK; next(control);
+      assert(!g_storage_busy && !storage_healthy()); assert_model_equal(g_controller->learned_model(), fixture.old); assert_reboot_model(fixture.old); }
+    { ControlWork control{}; StorageWork storage{}; sealed(control, storage); io::nvs_commit_error = ESP_FAIL; storage_pass(storage); io::nvs_commit_error = ESP_OK; next(control);
+      assert(!g_storage_busy && !storage_healthy()); assert_model_equal(g_controller->learned_model(), fixture.old); assert_reboot_model(fixture.old); }
+    { ControlWork control{}; StorageWork storage{}; sealed(control, storage);
+      io::after_commit = [](const std::string& key) { if (key == "sirokko/model_active4") io::nvs_get_error = ESP_FAIL; };
+      storage_pass(storage); io::after_commit = {}; io::nvs_get_error = ESP_OK; next(control);
+      assert(!g_storage_busy && !storage_healthy());
+      assert(g_view.control.commissioning.phase == CommissioningPhase::PERSIST_FAILED);
+      assert(g_view.control.commissioning.reason == CommissioningReason::STORAGE_UNCONFIRMED);
+      assert_model_equal(g_controller->learned_model(), fixture.old);
+      assert_reboot_model(fixture.candidate); }
+    std::cout << "PASS commissioning storage failures: exact old RAM on failure, readback-ambiguous durable candidate remains unconfirmed\n";
+}
+
+void test_commissioning_power_cut_boundaries() {
+    const auto& fixture = calibrated_pending_fixture();
+    const auto hook = [](const std::string& expected) { return [expected](const std::string& actual) { if (actual == expected) throw PowerCut{}; }; };
+    for (unsigned point = 0; point < 8; ++point) {
+        ControlWork control{}; StorageWork storage{};
+        const bool active = point >= 4;
+        if (active) sealed(control, storage); else pending(control);
+        const char* key = active ? "sirokko/model_active4" : "sirokko/model_stage4";
+        const unsigned boundary = point % 4;
+        if (boundary == 0) io::before_set = hook(key);
+        if (boundary == 1) io::after_set = hook(key);
+        if (boundary == 2) io::before_commit = hook(key);
+        if (boundary == 3) io::after_commit = hook(key);
+        if (active && boundary == 1) io::durable_at_set = true;
+        bool interrupted = false;
+        try { storage_pass(storage); } catch (const PowerCut&) { interrupted = true; }
+        assert(interrupted);
+        auto flash = io::flash;
+        reset_globals(); io::flash = std::move(flash); app_main(); g_boot_ready = true;
+        const auto& expected = active && (boundary == 1 || boundary == 3) ? fixture.candidate : fixture.old;
+        assert(storage_healthy());
+        assert_model_equal(g_controller->learned_model(), expected);
+        assert(!g_controller->snapshot(0).outputs.fuel && !g_controller->snapshot(0).outputs.glow);
+    }
+    std::cout << "PASS commissioning journal: exact old/new reboot model and no storage fault at every stage/active set+commit boundary\n";
+}
+
+void test_ota_claim_cancellation() {
+    for (unsigned which = 0; which < 3; ++which) {
+        boot_provisioned();
+        ControlWork control{};
+        step(control, 1000);
+        assert(submit(Action::OTA));
+        next(control);
+        assert(g_view.control.state == State::MAINTENANCE);
+        const uint32_t lease = runtime_maintenance_lease();
+        assert(lease && runtime_activate_ota(lease, esp_ota_get_next_update_partition(nullptr)));
+        next(control);
+        if (which == 0) runtime_stop();
+        if (which == 1) runtime_exit_maintenance();
+        if (which == 2) {
+            io::clock_ms += 200;
+            Sensors bad = samples(io::clock_ms);
+            bad.exhaust.valid = false;
+            assert(xQueueOverwrite(g_sensor_queue, &bad) == pdTRUE);
+            control_pass(control);
+        } else {
+            step(control, io::clock_ms + 200);
+        }
         assert(!io::boot_select_count && !io::restart_count && !runtime_maintenance_lease());
     }
-    {ControlWork c{};queued_ota(c);
-     io::before_boot_select=[] {runtime_stop();assert(g_ota_activation.commit_started());assert(!g_ota_activation.revoke_precommit());};
-     step(c,io::clock_ms+200);io::before_boot_select={};
-     assert(io::boot_select_count==1 && io::restart_count==1 && g_stop && !runtime_maintenance_lease());}
-    {ControlWork c{};queued_ota(c);io::boot_select_error=ESP_FAIL;step(c,io::clock_ms+200);
-     assert(io::boot_select_count==1 && !io::restart_count && !storage_healthy());}
-    {ControlWork c{};configure(c);assert(submit(Action::OTA));next(c);
-     int invalid_partition{};assert(runtime_activate_ota(runtime_maintenance_lease(),&invalid_partition));next(c);step(c,io::clock_ms+200);
-     assert(!io::boot_select_count && !io::restart_count && !storage_healthy());}
-    std::cout<<"PASS actual OTA owner: STOP/exit/fault before claim prevent boot write; STOP after claim is not false cancellation; invalid slot and ESP failure never reboot\n";
+    std::cout << "PASS OTA owner: STOP/exit/fault before claim prevents boot selection\n";
 }
-}
+}  // namespace
+
 int main() {
-    restart_is_blocked_through_shutdown();
-    fresh_boot_and_credentials();settings_start_barriers();settings_revision_and_ack_backpressure();
-    range_normal_and_precommit_cancellations();range_after_boundary();storage_failures_and_unknown_outcome();
-    power_cut_boundaries();corruption_and_explicit_profile_repair();ota_claim_and_cancellation();
-    delete g_controller;g_controller=nullptr;
+    test_empty_boot_is_safe();
+    test_factory_record_and_model_boot();
+    test_restart_lockout_stale_key0_and_fault_purge();
+    test_settings_barriers_and_ack_backpressure();
+    test_revision_narrows_both_bounds_and_bootloads();
+    test_revision_stop_fault_and_storage_unknown_outcomes();
+    test_commissioning_normal_and_preclaim_cancellations();
+    test_commissioning_postclaim_stop_fault_and_deferred_activation();
+    test_commissioning_storage_failures();
+    test_commissioning_power_cut_boundaries();
+    test_ota_claim_cancellation();
+    delete g_controller;
 }

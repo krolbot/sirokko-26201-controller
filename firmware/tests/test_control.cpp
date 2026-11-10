@@ -32,9 +32,9 @@ Sensors good(uint64_t now, int32_t exhaust = 100000, int32_t room = 15000) {
     return {{exhaust, now, 0, true}, {exhaust * 4 / 5, now, 0, true}, {room, now, 0, true}};
 }
 
-ProcessProfile profile() {
-    ProcessProfile value{};
-    value.qualified = true;
+SafetyEnvelope profile() {
+    SafetyEnvelope value{};
+    value.provisioned = true;
     value.recovery_purge_ms = 100;
     value.prepurge_ms = 10;
     value.preheat_ms = 10;
@@ -49,7 +49,7 @@ ProcessProfile profile() {
     value.minimum_ignition_air_rise_milli_c = 10000;
     value.minimum_run_exhaust_milli_c = 110000;
     value.purge_speed_code = 2000;
-    value.run_speed_code = 3000;
+    value.reference_speed_code = 3000;
     return value;
 }
 
@@ -119,7 +119,7 @@ void test_gate() {
 }
 
 void test_safe_closed() {
-    ProcessProfile unqualified{};
+    SafetyEnvelope unqualified{};
     Controller machine(unqualified, {}, 1);
     TickInput in{};
     in.now_ms = 100;
@@ -127,7 +127,7 @@ void test_safe_closed() {
     in.start = true;
     const auto state = machine.tick(in);
     assert(state.state == State::RECOVERY_PURGE);
-    assert(state.start_block == Block::PROFILE_NOT_QUALIFIED);
+    assert(state.start_block == Block::ENVELOPE_MISSING);
     assert(state.outputs.fan_request && state.outputs.speed_code == kPwmMaximum);
     assert(!state.outputs.glow && !state.outputs.fuel);
 }

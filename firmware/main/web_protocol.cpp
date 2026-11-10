@@ -12,7 +12,7 @@ constexpr uint32_t kAction = 1U << 0;
 constexpr uint32_t kCommandId = 1U << 1;
 constexpr uint32_t kDelay = 1U << 2;
 constexpr uint32_t kSettings = 1U << 3;
-constexpr uint32_t kProcess = 1U << 4;
+constexpr uint32_t kRevision = 1U << 4;
 constexpr uint32_t kUploadSize = 1U << 5;
 constexpr uint32_t kUploadSha256 = 1U << 6;
 constexpr uint32_t kGrant = 1U << 7;
@@ -176,26 +176,6 @@ ParseError parse_double(Cursor* cursor, double* output) {
     return ParseError::OK;
 }
 
-ParseError parse_bool(Cursor* cursor, bool* output) {
-    if (!cursor || !output) return ParseError::INVALID_JSON;
-    cursor->skip_space();
-    constexpr char kTrue[] = "true";
-    constexpr char kFalse[] = "false";
-    if (static_cast<size_t>(cursor->end() - cursor->current()) >= sizeof(kTrue) - 1 &&
-        std::memcmp(cursor->current(), kTrue, sizeof(kTrue) - 1) == 0) {
-        cursor->set_current(cursor->current() + sizeof(kTrue) - 1);
-        *output = true;
-        return ParseError::OK;
-    }
-    if (static_cast<size_t>(cursor->end() - cursor->current()) >= sizeof(kFalse) - 1 &&
-        std::memcmp(cursor->current(), kFalse, sizeof(kFalse) - 1) == 0) {
-        cursor->set_current(cursor->current() + sizeof(kFalse) - 1);
-        *output = false;
-        return ParseError::OK;
-    }
-    return ParseError::FIELD_TYPE;
-}
-
 int hex_value(char value) {
     if (value >= '0' && value <= '9') return value - '0';
     if (value >= 'a' && value <= 'f') return value - 'a' + 10;
@@ -243,8 +223,9 @@ bool parse_action_text(const char* text, sirokko::Action* action) {
     else if (equals(text, "SETTINGS")) *action = sirokko::Action::SETTINGS;
     else if (equals(text, "OTA")) *action = sirokko::Action::OTA;
     else if (equals(text, "CALIBRATE")) *action = sirokko::Action::CALIBRATE;
+    else if (equals(text, "MODEL_REVISION")) *action = sirokko::Action::MODEL_REVISION;
     else if (equals(text, "TIMER")) *action = sirokko::Action::TIMER;
-    else if (equals(text, "PROCESS_CONFIG")) *action = sirokko::Action::PROCESS_CONFIG;
+
     else return false;
     return true;
 }
@@ -325,18 +306,10 @@ ParseError parse_settings(Cursor* cursor, sirokko::Settings* settings) {
     return seen == kRequired ? ParseError::OK : ParseError::MISSING_FIELD;
 }
 
-ParseError parse_process(Cursor* cursor, sirokko::ProcessProfile* profile) {
-    if (!cursor || !profile || !cursor->take('{')) return ParseError::FIELD_TYPE;
-    enum Bits : uint32_t {
-        QUALIFIED = 1U << 0, RECOVERY = 1U << 1, PREPURGE = 1U << 2, PREHEAT = 1U << 3,
-        IGNITION = 1U << 4, VERIFY = 1U << 5, POSTPURGE = 1U << 6, PURGE_EXH = 1U << 7,
-        PURGE_AIR = 1U << 8, MAX_EXH = 1U << 9, MAX_AIR = 1U << 10, IGNITION_RISE = 1U << 11,
-        MIN_RUN = 1U << 12, PURGE_SPEED = 1U << 13, RUN_SPEED = 1U << 14, CAL_FLOOR = 1U << 15,
-        IGNITION_AIR_RISE = 1U << 16,
-    };
-    constexpr uint32_t kRequired = QUALIFIED | RECOVERY | PREPURGE | PREHEAT | IGNITION | VERIFY | POSTPURGE |
-        PURGE_EXH | PURGE_AIR | MAX_EXH | MAX_AIR | IGNITION_RISE | MIN_RUN | PURGE_SPEED | RUN_SPEED |
-        CAL_FLOOR | IGNITION_AIR_RISE;
+ParseError parse_revision(Cursor* cursor, sirokko::LearnedModelRevision* revision) {
+    if (!cursor || !revision || !cursor->take('{')) return ParseError::FIELD_TYPE;
+    enum Bits : uint32_t { EXPECTED = 1U << 0, MINIMUM = 1U << 1, MAXIMUM = 1U << 2, UP = 1U << 3, DOWN = 1U << 4 };
+    constexpr uint32_t kRequired = EXPECTED | MINIMUM | MAXIMUM | UP | DOWN;
     uint32_t seen = 0;
     bool have_member = false;
     while (true) {
@@ -349,28 +322,16 @@ ParseError parse_process(Cursor* cursor, sirokko::ProcessProfile* profile) {
         } else if (cursor->take('}')) {
             return ParseError::MISSING_FIELD;
         }
-        char key[48]{};
+        char key[32]{};
         ParseError result = parse_string(cursor, key, sizeof(key));
         if (result != ParseError::OK) return result;
         if (!cursor->take(':')) return ParseError::INVALID_JSON;
         uint32_t bit = 0;
-        if (equals(key, "qualified")) { bit = QUALIFIED; result = parse_bool(cursor, &profile->qualified); }
-        else if (equals(key, "recovery_purge_ms")) { bit = RECOVERY; result = parse_u64(cursor, &profile->recovery_purge_ms); }
-        else if (equals(key, "prepurge_ms")) { bit = PREPURGE; result = parse_u64(cursor, &profile->prepurge_ms); }
-        else if (equals(key, "preheat_ms")) { bit = PREHEAT; result = parse_u64(cursor, &profile->preheat_ms); }
-        else if (equals(key, "ignition_ms")) { bit = IGNITION; result = parse_u64(cursor, &profile->ignition_ms); }
-        else if (equals(key, "verify_ms")) { bit = VERIFY; result = parse_u64(cursor, &profile->verify_ms); }
-        else if (equals(key, "postpurge_ms")) { bit = POSTPURGE; result = parse_u64(cursor, &profile->postpurge_ms); }
-        else if (equals(key, "maximum_purge_exit_exhaust_milli_c")) { bit = PURGE_EXH; result = parse_i32(cursor, &profile->maximum_purge_exit_exhaust_milli_c); }
-        else if (equals(key, "maximum_purge_exit_air_milli_c")) { bit = PURGE_AIR; result = parse_i32(cursor, &profile->maximum_purge_exit_air_milli_c); }
-        else if (equals(key, "maximum_exhaust_milli_c")) { bit = MAX_EXH; result = parse_i32(cursor, &profile->maximum_exhaust_milli_c); }
-        else if (equals(key, "maximum_air_milli_c")) { bit = MAX_AIR; result = parse_i32(cursor, &profile->maximum_air_milli_c); }
-        else if (equals(key, "minimum_ignition_rise_milli_c")) { bit = IGNITION_RISE; result = parse_i32(cursor, &profile->minimum_ignition_rise_milli_c); }
-        else if (equals(key, "minimum_run_exhaust_milli_c")) { bit = MIN_RUN; result = parse_i32(cursor, &profile->minimum_run_exhaust_milli_c); }
-        else if (equals(key, "purge_speed_code")) { bit = PURGE_SPEED; result = parse_u16(cursor, &profile->purge_speed_code); }
-        else if (equals(key, "run_speed_code")) { bit = RUN_SPEED; result = parse_u16(cursor, &profile->run_speed_code); }
-        else if (equals(key, "calibration_floor_speed_code")) { bit = CAL_FLOOR; result = parse_u16(cursor, &profile->calibration_floor_speed_code); }
-        else if (equals(key, "minimum_ignition_air_rise_milli_c")) { bit = IGNITION_AIR_RISE; result = parse_i32(cursor, &profile->minimum_ignition_air_rise_milli_c); }
+        if (equals(key, "expected_revision")) { bit = EXPECTED; uint64_t value{}; result = parse_u64(cursor, &value); if (result == ParseError::OK && value <= UINT32_MAX) revision->expected_revision = static_cast<uint32_t>(value); else if (result == ParseError::OK) result = ParseError::FIELD_VALUE; }
+        else if (equals(key, "minimum_speed_code")) { bit = MINIMUM; result = parse_u16(cursor, &revision->minimum_speed_code); }
+        else if (equals(key, "maximum_speed_code")) { bit = MAXIMUM; result = parse_u16(cursor, &revision->maximum_speed_code); }
+        else if (equals(key, "slew_up_per_s")) { bit = UP; result = parse_double(cursor, &revision->slew_up_per_s); }
+        else if (equals(key, "slew_down_per_s")) { bit = DOWN; result = parse_double(cursor, &revision->slew_down_per_s); }
         else return ParseError::UNKNOWN_FIELD;
         if ((seen & bit) != 0U) return ParseError::DUPLICATE_FIELD;
         if (result != ParseError::OK) return result;
@@ -511,11 +472,6 @@ private:
 
 void hash_u8(Sha256* hash, uint8_t value) { hash->update(&value, 1); }
 
-void hash_u16(Sha256* hash, uint16_t value) {
-    const uint8_t bytes[]{static_cast<uint8_t>(value >> 8U), static_cast<uint8_t>(value)};
-    hash->update(bytes, sizeof(bytes));
-}
-
 void hash_u32(Sha256* hash, uint32_t value) {
     const uint8_t bytes[]{static_cast<uint8_t>(value >> 24U), static_cast<uint8_t>(value >> 16U),
                           static_cast<uint8_t>(value >> 8U), static_cast<uint8_t>(value)};
@@ -557,25 +513,14 @@ Digest digest_command(const Command& command) {
             hash_double(&hash, command.settings.slew_up_per_s);
             hash_double(&hash, command.settings.slew_down_per_s);
             break;
-        case sirokko::Action::PROCESS_CONFIG:
-            hash_u8(&hash, command.process.qualified ? 1U : 0U);
-            hash_u64(&hash, command.process.recovery_purge_ms);
-            hash_u64(&hash, command.process.prepurge_ms);
-            hash_u64(&hash, command.process.preheat_ms);
-            hash_u64(&hash, command.process.ignition_ms);
-            hash_u64(&hash, command.process.verify_ms);
-            hash_u64(&hash, command.process.postpurge_ms);
-            hash_i32(&hash, command.process.maximum_purge_exit_exhaust_milli_c);
-            hash_i32(&hash, command.process.maximum_purge_exit_air_milli_c);
-            hash_i32(&hash, command.process.maximum_exhaust_milli_c);
-            hash_i32(&hash, command.process.maximum_air_milli_c);
-            hash_i32(&hash, command.process.minimum_ignition_rise_milli_c);
-            hash_i32(&hash, command.process.minimum_run_exhaust_milli_c);
-            hash_u16(&hash, command.process.purge_speed_code);
-            hash_u16(&hash, command.process.run_speed_code);
-            hash_u16(&hash, command.process.calibration_floor_speed_code);
-            hash_i32(&hash, command.process.minimum_ignition_air_rise_milli_c);
+        case sirokko::Action::MODEL_REVISION:
+            hash_u32(&hash, command.revision.expected_revision);
+            hash_u32(&hash, command.revision.minimum_speed_code);
+            hash_u32(&hash, command.revision.maximum_speed_code);
+            hash_double(&hash, command.revision.slew_up_per_s);
+            hash_double(&hash, command.revision.slew_down_per_s);
             break;
+
         case sirokko::Action::OTA:
             hash_u64(&hash, command.upload_size);
             hash.update(command.upload_sha256.data(), command.upload_sha256.size());
@@ -618,7 +563,7 @@ ParseError parse_request(const char* text, size_t size, const sirokko::Settings&
         else if (equals(key, "command_id")) { bit = kCommandId; result = parse_hex_u64(&cursor, &command.command_id); }
         else if (equals(key, "delay_ms")) { bit = kDelay; result = parse_u64(&cursor, &command.delay_ms); }
         else if (equals(key, "settings")) { bit = kSettings; result = parse_settings(&cursor, &command.settings); }
-        else if (equals(key, "process")) { bit = kProcess; result = parse_process(&cursor, &command.process); }
+        else if (equals(key, "revision")) { bit = kRevision; result = parse_revision(&cursor, &command.revision); }
         else if (equals(key, "upload_size")) { bit = kUploadSize; result = parse_u64(&cursor, &command.upload_size); }
         else if (equals(key, "upload_sha256")) { bit = kUploadSha256; result = parse_hex_digest(&cursor, &command.upload_sha256); }
         else if (equals(key, "grant")) { bit = kGrant; result = parse_grant(&cursor, &command.grant); command.has_grant = result == ParseError::OK; }
@@ -637,7 +582,8 @@ ParseError parse_request(const char* text, size_t size, const sirokko::Settings&
         case sirokko::Action::ARM:
         case sirokko::Action::TIMER: required |= kDelay; break;
         case sirokko::Action::SETTINGS: required |= kSettings; break;
-        case sirokko::Action::PROCESS_CONFIG: required |= kProcess; break;
+        case sirokko::Action::MODEL_REVISION: required |= kRevision; break;
+
         case sirokko::Action::OTA: required |= kUploadSize | kUploadSha256; break;
         case sirokko::Action::START:
         case sirokko::Action::RESET_FAULT:
@@ -648,8 +594,7 @@ ParseError parse_request(const char* text, size_t size, const sirokko::Settings&
     if (command.action == sirokko::Action::START || command.action == sirokko::Action::ARM ||
         command.action == sirokko::Action::RESET_FAULT || command.action == sirokko::Action::SETTINGS ||
         command.action == sirokko::Action::OTA || command.action == sirokko::Action::CALIBRATE ||
-        command.action == sirokko::Action::TIMER || command.action == sirokko::Action::CANCEL_ARM ||
-        command.action == sirokko::Action::PROCESS_CONFIG) {
+        command.action == sirokko::Action::MODEL_REVISION || command.action == sirokko::Action::TIMER || command.action == sirokko::Action::CANCEL_ARM) {
         if (command_submission) required |= kGrant;
     }
     // STOP is intentionally not an Action enum: it is parsed by the handler before this protocol.
@@ -818,7 +763,7 @@ const char* error_name(ParseError error) {
         case ParseError::MISSING_FIELD: return "MISSING";
         case ParseError::ACTION: return "ACTION";
         case ParseError::SETTINGS: return "SETTINGS";
-        case ParseError::PROCESS: return "PROCESS";
+        case ParseError::MODEL: return "MODEL";
         case ParseError::GRANT: return "GRANT";
         case ParseError::STOP_CHALLENGE: return "STOP_CHALLENGE";
         case ParseError::OTA_UPLOAD_ONLY: return "OTA_UPLOAD_ONLY";

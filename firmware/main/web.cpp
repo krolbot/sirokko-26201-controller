@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstdarg>
 #include <cstddef>
 #include <cstdint>
@@ -100,7 +101,6 @@ public:
 
     void boolean(bool value) { raw(value ? "true" : "false"); }
     void integer(int32_t value) { formatted("%ld", static_cast<long>(value)); }
-    void unsigned_integer(uint32_t value) { formatted("%lu", static_cast<unsigned long>(value)); }
     void unsigned_integer(uint64_t value) { formatted("%llu", static_cast<unsigned long long>(value)); }
     void hexadecimal(uint64_t value) { formatted("%llx", static_cast<unsigned long long>(value)); }
     void real(double value) { formatted("%.8g", value); }
@@ -148,17 +148,20 @@ const char* russian_state(sirokko::State state) {
 const char* russian_block(sirokko::Block block) {
     switch (block) {
         case sirokko::Block::NONE: return "Нет";
-        case sirokko::Block::PROFILE_NOT_QUALIFIED: return "Нет настроенного профиля процесса";
-        case sirokko::Block::RECOVERY_REQUIRED: return "Требуется восстановительная продувка";
+        case sirokko::Block::ENVELOPE_MISSING: return "Не задана защитная оболочка";
+        case sirokko::Block::ENVELOPE_INVALID: return "Защитная оболочка недействительна";
+        case sirokko::Block::ENVELOPE_HARDWARE_MISMATCH: return "Защитная оболочка не соответствует оборудованию";
+        case sirokko::Block::RECOVERY_PURGE: return "Требуется восстановительная продувка";
         case sirokko::Block::SENSOR_INVALID: return "Датчики недостоверны";
-        case sirokko::Block::TEMPERATURE_OUT_OF_RANGE: return "Температура вне допуска";
+        case sirokko::Block::SENSOR_STALE: return "Данные датчиков устарели";
+        case sirokko::Block::SENSOR_SKEW: return "Метки времени датчиков не согласованы";
+        case sirokko::Block::INITIAL_THERMAL_STATE: return "Начальное тепловое состояние вне допуска";
         case sirokko::Block::FAULT_LATCHED: return "Авария зафиксирована";
         case sirokko::Block::BUSY: return "Автомат занят";
         case sirokko::Block::MAINTENANCE: return "Обслуживание";
+        case sirokko::Block::STORAGE_UNCONFIRMED: return "Хранилище модели не подтверждено";
+        case sirokko::Block::MODEL_UNAVAILABLE: return "Сохранённая модель недоступна";
         case sirokko::Block::STALE_COMMAND: return "Команда устарела";
-        case sirokko::Block::CALIBRATION_DISABLED: return "Калибровка отключена в профиле процесса";
-        case sirokko::Block::CALIBRATION_RANGE_INVALID: return "Диапазон исследования калибровки недопустим";
-        case sirokko::Block::CALIBRATION_TIME_BUDGET: return "Калибровка не укладывается в разрешённый общий срок";
     }
     return "Неизвестный запрет";
 }
@@ -171,23 +174,9 @@ const char* russian_event(const char* kind) {
     if (std::strcmp(kind, "TIMER_EXPIRED") == 0) return "Истёк таймер останова";
     if (std::strcmp(kind, "TIMER_ARMED") == 0) return "Таймер останова установлен";
     if (std::strcmp(kind, "TIMER_CANCELLED") == 0) return "Таймер останова отменён";
-    if (std::strcmp(kind, "PROCESS_CONFIGURED") == 0) return "Профиль процесса сохранён";
     if (std::strstr(kind, "KEY0") || std::strstr(kind, "OPERATOR"))
         return "Оператор сообщил отсутствие/неустойчивость горения (KEY0)";
     return kind;
-}
-
-const char* russian_calibration(const char* code) {
-    if (!code || std::strcmp(code, "NONE") == 0) return "нет причины";
-    if (std::strcmp(code, "IDLE") == 0) return "ожидание";
-    if (std::strcmp(code, "PERSIST_STAGING") == 0) return "подготовка результата; отмена ещё возможна";
-    if (std::strcmp(code, "PERSIST_COMMITTING") == 0) return "запись результата; граница отмены пройдена";
-    if (std::strcmp(code, "PERSIST_FAILED") == 0) return "запись результата не подтверждена";
-    if (std::strcmp(code, "STORAGE_UNCONFIRMED") == 0) return "ошибка записи или обратного чтения; содержимое памяти требует проверки";
-    if (std::strcmp(code, "SAVED") == 0) return "результат записан и проверен";
-    if (std::strstr(code, "KEY0") || std::strstr(code, "OPERATOR"))
-        return "оператор сообщил отсутствие/неустойчивость горения";
-    return code;
 }
 
 bool authorized(httpd_req_t* request) {
@@ -322,8 +311,10 @@ bool semantic_valid(const web_protocol::Command& command) {
             return command.delay_ms <= sirokko::kMaximumTimerMs;
         case sirokko::Action::SETTINGS:
             return sirokko::valid_settings(command.settings);
-        case sirokko::Action::PROCESS_CONFIG:
-            return sirokko::valid_process_profile(command.process) && runtime_process_valid(command.process);
+        case sirokko::Action::MODEL_REVISION:
+            return command.revision.minimum_speed_code <= command.revision.maximum_speed_code &&
+                   std::isfinite(command.revision.slew_up_per_s) && std::isfinite(command.revision.slew_down_per_s) &&
+                   command.revision.slew_up_per_s >= 0.0 && command.revision.slew_down_per_s >= 0.0;
         case sirokko::Action::OTA:
             return command.upload_size >= ota_verify::kManifestSize + ota_verify::kSignatureSize;
         case sirokko::Action::START:
@@ -335,9 +326,12 @@ bool semantic_valid(const web_protocol::Command& command) {
 }
 
 uint64_t runtime_hash(const web_protocol::Command& command) {
-    return command.action == sirokko::Action::PROCESS_CONFIG
-        ? sirokko::process_fingerprint(command.process)
-        : web_protocol::runtime_parameters_hash(command);
+    return web_protocol::runtime_parameters_hash(command);
+}
+
+bool revision_is_safe(const web_protocol::Command& command, const RuntimeView& view) {
+    if (command.action != sirokko::Action::MODEL_REVISION) return true;
+    return sirokko::valid_model_revision(view.control.learned_model, command.revision);
 }
 
 sirokko::Grant to_runtime_grant(const web_protocol::Command& command) {
@@ -360,25 +354,77 @@ void append_sensor(JsonBuilder* json, const sirokko::SensorSample& sample, uint6
     json->character('}');
 }
 
-void append_process(JsonBuilder* json, const sirokko::ProcessProfile& profile) {
-    json->raw("{\"qualified\":"); json->boolean(profile.qualified);
-    json->raw(",\"recovery_purge_ms\":"); json->unsigned_integer(profile.recovery_purge_ms);
-    json->raw(",\"prepurge_ms\":"); json->unsigned_integer(profile.prepurge_ms);
-    json->raw(",\"preheat_ms\":"); json->unsigned_integer(profile.preheat_ms);
-    json->raw(",\"ignition_ms\":"); json->unsigned_integer(profile.ignition_ms);
-    json->raw(",\"verify_ms\":"); json->unsigned_integer(profile.verify_ms);
-    json->raw(",\"postpurge_ms\":"); json->unsigned_integer(profile.postpurge_ms);
-    json->raw(",\"maximum_purge_exit_exhaust_milli_c\":"); json->integer(profile.maximum_purge_exit_exhaust_milli_c);
-    json->raw(",\"maximum_purge_exit_air_milli_c\":"); json->integer(profile.maximum_purge_exit_air_milli_c);
-    json->raw(",\"maximum_exhaust_milli_c\":"); json->integer(profile.maximum_exhaust_milli_c);
-    json->raw(",\"maximum_air_milli_c\":"); json->integer(profile.maximum_air_milli_c);
-    json->raw(",\"minimum_ignition_rise_milli_c\":"); json->integer(profile.minimum_ignition_rise_milli_c);
-    json->raw(",\"minimum_run_exhaust_milli_c\":"); json->integer(profile.minimum_run_exhaust_milli_c);
-    json->raw(",\"purge_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.purge_speed_code));
-    json->raw(",\"run_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.run_speed_code));
-    json->raw(",\"calibration_floor_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(profile.calibration_floor_speed_code));
-    json->raw(",\"minimum_ignition_air_rise_milli_c\":"); json->integer(profile.minimum_ignition_air_rise_milli_c);
-    json->character('}');
+struct CommissioningText { const char* code; const char* ru; };
+CommissioningText commissioning_phase_text(sirokko::CommissioningPhase value) {
+    switch (value) {
+        case sirokko::CommissioningPhase::IDLE: return {"IDLE", "Не запущена"};
+        case sirokko::CommissioningPhase::STARTING: return {"STARTING", "Подготовка запуска"};
+        case sirokko::CommissioningPhase::WAIT_REFERENCE_COMMAND: return {"WAIT_REFERENCE_COMMAND", "Выход на опорную команду"};
+        case sirokko::CommissioningPhase::SETTLE_REFERENCE: return {"SETTLE_REFERENCE", "Установление опорного режима"};
+        case sirokko::CommissioningPhase::WAIT_DESCENT_COMMAND: return {"WAIT_DESCENT_COMMAND", "Снижение команды"};
+        case sirokko::CommissioningPhase::SETTLE_POINT: return {"SETTLE_POINT", "Установление рабочей точки"};
+        case sirokko::CommissioningPhase::WAIT_RETURN_COMMAND: return {"WAIT_RETURN_COMMAND", "Возврат к опорной команде"};
+        case sirokko::CommissioningPhase::SETTLE_RETURN_REFERENCE: return {"SETTLE_RETURN_REFERENCE", "Проверка опорного режима"};
+        case sirokko::CommissioningPhase::WAIT_REPEAT_COMMAND: return {"WAIT_REPEAT_COMMAND", "Повтор рабочей точки"};
+        case sirokko::CommissioningPhase::SETTLE_REPEAT_POINT: return {"SETTLE_REPEAT_POINT", "Проверка повторяемости точки"};
+        case sirokko::CommissioningPhase::WAIT_POST_REPEAT_REFERENCE_COMMAND: return {"WAIT_POST_REPEAT_REFERENCE_COMMAND", "Повторный возврат к опоре"};
+        case sirokko::CommissioningPhase::SETTLE_POST_REPEAT_REFERENCE: return {"SETTLE_POST_REPEAT_REFERENCE", "Проверка опоры после повтора"};
+        case sirokko::CommissioningPhase::COMPLETE_PENDING_STOP: return {"COMPLETE_PENDING_STOP", "Измерения завершены, останов и охлаждение"};
+        case sirokko::CommissioningPhase::FAILED: return {"FAILED", "Не выполнена"};
+        case sirokko::CommissioningPhase::CANCELLED: return {"CANCELLED", "Отменена"};
+        case sirokko::CommissioningPhase::PERSIST_STAGING: return {"PERSIST_STAGING", "Подготовка сохранения"};
+        case sirokko::CommissioningPhase::PERSIST_COMMITTING: return {"PERSIST_COMMITTING", "Запись и проверка модели"};
+        case sirokko::CommissioningPhase::SAVED: return {"SAVED", "Модель сохранена"};
+        case sirokko::CommissioningPhase::PERSIST_FAILED: return {"PERSIST_FAILED", "Ошибка сохранения"};
+    }
+    return {"UNKNOWN", "Неизвестное состояние"};
+}
+CommissioningText commissioning_reason_text(sirokko::CommissioningReason value) {
+    switch (value) {
+        case sirokko::CommissioningReason::NONE: return {"NONE", "Нет"};
+        case sirokko::CommissioningReason::COMPLETE: return {"COMPLETE", "Измерения завершены"};
+        case sirokko::CommissioningReason::INVALID_CONFIG: return {"INVALID_CONFIG", "Недопустимые исходные ограничения"};
+        case sirokko::CommissioningReason::ALREADY_ACTIVE: return {"ALREADY_ACTIVE", "Калибровка уже выполняется"};
+        case sirokko::CommissioningReason::BACKDATED_TIME: return {"BACKDATED_TIME", "Нарушен порядок времени"};
+        case sirokko::CommissioningReason::OVERALL_TIMEOUT: return {"OVERALL_TIMEOUT", "Истекло время калибровки"};
+        case sirokko::CommissioningReason::RUN_CONTEXT_LOST: return {"RUN_CONTEXT_LOST", "Потерян рабочий режим"};
+        case sirokko::CommissioningReason::COMMAND_OUT_OF_RANGE: return {"COMMAND_OUT_OF_RANGE", "Команда вне разрешённого диапазона"};
+        case sirokko::CommissioningReason::COMMAND_SLEW_VIOLATION: return {"COMMAND_SLEW_VIOLATION", "Превышена скорость изменения команды"};
+        case sirokko::CommissioningReason::COMMAND_NOT_REACHED: return {"COMMAND_NOT_REACHED", "Заданная команда не достигнута"};
+        case sirokko::CommissioningReason::SENSOR_INVALID: return {"SENSOR_INVALID", "Недостоверные показания датчика"};
+        case sirokko::CommissioningReason::STALE_SAMPLE: return {"STALE_SAMPLE", "Устаревшие показания"};
+        case sirokko::CommissioningReason::SAMPLE_TIMESTAMP_REGRESSION: return {"SAMPLE_TIMESTAMP_REGRESSION", "Нарушен порядок отсчётов"};
+        case sirokko::CommissioningReason::SAMPLE_SKEW: return {"SAMPLE_SKEW", "Рассогласованы моменты измерения"};
+        case sirokko::CommissioningReason::REPEATED_SAMPLE: return {"REPEATED_SAMPLE", "Повторный отсчёт"};
+        case sirokko::CommissioningReason::SAMPLE_GAP: return {"SAMPLE_GAP", "Пропуск отсчётов"};
+        case sirokko::CommissioningReason::REFERENCE_TIMEOUT: return {"REFERENCE_TIMEOUT", "Опорный режим не установился"};
+        case sirokko::CommissioningReason::POINT_TIMEOUT: return {"POINT_TIMEOUT", "Рабочая точка не установилась"};
+        case sirokko::CommissioningReason::REFERENCE_NOT_REPRODUCIBLE: return {"REFERENCE_NOT_REPRODUCIBLE", "Опорный режим не повторяется"};
+        case sirokko::CommissioningReason::NO_COMMAND_RESPONSE: return {"NO_COMMAND_RESPONSE", "Нет подтверждённого теплового отклика"};
+        case sirokko::CommissioningReason::POINT_NOT_REPRODUCIBLE: return {"POINT_NOT_REPRODUCIBLE", "Рабочая точка не повторяется"};
+        case sirokko::CommissioningReason::DYNAMIC_NOT_REPRODUCIBLE: return {"DYNAMIC_NOT_REPRODUCIBLE", "Динамика не повторяется"};
+        case sirokko::CommissioningReason::INSUFFICIENT_MARGIN: return {"INSUFFICIENT_MARGIN", "Недостаточный запас"};
+        case sirokko::CommissioningReason::OPERATOR_NEGATIVE: return {"OPERATOR_NEGATIVE", "Оператор отклонил результат"};
+        case sirokko::CommissioningReason::EXTERNAL_CANCEL: return {"EXTERNAL_CANCEL", "Отменена внешней командой"};
+        case sirokko::CommissioningReason::STORAGE_UNCONFIRMED: return {"STORAGE_UNCONFIRMED", "Сохранение не подтверждено"};
+    }
+    return {"UNKNOWN", "Неизвестное состояние"};
+}
+void append_model(JsonBuilder* json, const sirokko::LearnedOperatingModel& model) {
+    json->raw("{\"valid\":"); json->boolean(model.valid);
+    json->raw(",\"minimum_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(model.minimum_speed_code));
+    json->raw(",\"maximum_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(model.maximum_speed_code));
+    json->raw(",\"slew_up_per_s\":"); json->real(model.slew_up_per_s);
+    json->raw(",\"slew_down_per_s\":"); json->real(model.slew_down_per_s);
+    json->raw(",\"fingerprint\":\""); json->hexadecimal(model.fingerprint); json->raw("\"");
+    json->raw(",\"provenance\":{\"safety_envelope_fingerprint\":\""); json->hexadecimal(model.provenance.safety_envelope_fingerprint);
+    json->raw("\",\"commissioning_started_ms\":"); json->unsigned_integer(model.provenance.commissioning_started_ms);
+    json->raw(",\"commissioning_completed_ms\":"); json->unsigned_integer(model.provenance.commissioning_completed_ms);
+    json->raw(",\"revision\":"); json->unsigned_integer(model.provenance.revision); json->raw("}");
+    json->raw(",\"measurement\":{\"elapsed_ms\":"); json->unsigned_integer(model.measurements.elapsed_ms);
+    json->raw(",\"tested_point_count\":"); json->unsigned_integer(model.measurements.tested_point_count);
+    json->raw(",\"observed_slew_up_codes_per_s\":"); json->real(model.measurements.observed_slew_up_codes_per_s);
+    json->raw(",\"observed_slew_down_codes_per_s\":"); json->real(model.measurements.observed_slew_down_codes_per_s); json->raw("}}");
 }
 
 bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
@@ -421,23 +467,22 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw(",\"minimum_remaining_ms\":"); json->unsigned_integer(control.purge_minimum_remaining_ms);
     json->raw(",\"sensors_fresh\":"); json->boolean(control.purge_sensors_fresh);
     json->raw(",\"temperature_ready\":"); json->boolean(control.purge_temperature_ready); json->raw("}");
-    json->raw(",\"range\":{\"calibrated\":"); json->boolean(control.range_calibrated);
-    json->raw(",\"minimum_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(control.minimum_speed_code));
-    json->raw(",\"maximum_speed_code\":"); json->unsigned_integer(static_cast<uint32_t>(control.maximum_speed_code));
-    json->raw(",\"working_span_fraction\":"); json->real(control.working_span_fraction); json->raw("}");
-    json->raw(",\"room_excess\":"); json->boolean(control.room_excess);
-    json->raw(",\"process\":{\"configured\":"); json->boolean(view.process.qualified);
-    json->raw(",\"physical_tests\":false,\"profile\":"); append_process(json, view.process); json->character('}');
-    json->raw(",\"calibration\":{\"active\":"); json->boolean(control.calibration_active);
-    json->raw(",\"phase\":"); json->quoted(control.calibration_phase);
-    json->raw(",\"phase_ru\":"); json->quoted(russian_calibration(control.calibration_phase));
-    json->raw(",\"reason\":"); json->quoted(control.calibration_reason);
-    json->raw(",\"reason_ru\":"); json->quoted(russian_calibration(control.calibration_reason));
-    json->raw(",\"block\":{\"code\":"); json->quoted(sirokko::block_name(control.calibration_block));
-    json->raw(",\"ru\":"); json->quoted(russian_block(control.calibration_block)); json->character('}');
-    json->raw(",\"target_code\":"); json->unsigned_integer(static_cast<uint32_t>(control.calibration_target_code));
-    json->raw(",\"points\":"); json->unsigned_integer(static_cast<uint32_t>(control.calibration_points));
-    json->raw(",\"elapsed_ms\":"); json->unsigned_integer(control.calibration_elapsed_ms); json->raw("}");
+    json->raw(",\"commissioning\":{\"phase\":{\"code\":"); json->quoted(commissioning_phase_text(control.commissioning.phase).code);
+    json->raw(",\"ru\":"); json->quoted(commissioning_phase_text(control.commissioning.phase).ru); json->raw("}");
+    json->raw(",\"reason\":{\"code\":"); json->quoted(commissioning_reason_text(control.commissioning.reason).code);
+    json->raw(",\"ru\":"); json->quoted(commissioning_reason_text(control.commissioning.reason).ru); json->raw("}");
+    json->raw(",\"block\":{\"code\":"); json->quoted(sirokko::block_name(control.commissioning.block));
+    json->raw(",\"ru\":"); json->quoted(russian_block(control.commissioning.block)); json->raw("}");
+    json->raw(",\"active\":"); json->boolean(control.commissioning.active);
+    json->raw(",\"target_speed_code\":"); json->unsigned_integer(control.commissioning.target_speed_code);
+    json->raw(",\"accepted_point_count\":"); json->unsigned_integer(control.commissioning.accepted_point_count);
+    json->raw(",\"elapsed_ms\":"); json->unsigned_integer(control.commissioning.elapsed_ms);
+    json->raw(",\"source_envelope_fingerprint\":\""); json->hexadecimal(control.commissioning.source_envelope_fingerprint);
+    json->raw("\",\"installed_model_fingerprint\":\""); json->hexadecimal(control.commissioning.installed_model_fingerprint);
+    json->raw("\",\"installed_model_revision\":"); json->unsigned_integer(control.commissioning.installed_model_revision); json->raw("}");
+    json->raw(",\"learned_model\":"); append_model(json, control.learned_model);
+    json->raw(",\"envelope\":{\"provisioned\":"); json->boolean(control.envelope_provisioned);
+    json->raw(",\"fingerprint\":\""); json->hexadecimal(sirokko::envelope_fingerprint(view.envelope)); json->raw("\"}");
     json->raw(",\"events\":[");
     const size_t event_count = std::min(view.event_count, view.events.size());
     for (size_t index = 0; index < event_count; ++index) {
@@ -685,9 +730,10 @@ esp_err_t challenge_handler(httpd_req_t* request) {
     std::fill(body.begin(), body.end(), 0);
     if (parsed != web_protocol::ParseError::OK) return reject(request, web_protocol::error_name(parsed));
     if (!semantic_valid(command)) return reject(request, "VALUE");
-    if (command.action == sirokko::Action::CALIBRATE && view.control.calibration_block != sirokko::Block::NONE) {
-        return reject(request, "CALIBRATION_BLOCK", "409 Conflict");
+    if (command.action == sirokko::Action::CALIBRATE && view.control.commissioning.block != sirokko::Block::NONE) {
+        return reject(request, "COMMISSIONING_BLOCK", "409 Conflict");
     }
+    if (!revision_is_safe(command, view)) return reject(request, "MODEL_REVISION", "409 Conflict");
     sirokko::Grant issued{};
     const uint64_t parameters = runtime_hash(command);
     if (!runtime_issue(command.action, parameters, &issued)) return reject(request, "BUSY", "503 Service Unavailable");
@@ -730,9 +776,10 @@ esp_err_t command_handler(httpd_req_t* request) {
     // Defense in depth for the parser-level OTA_UPLOAD_ONLY rejection above:
     // only /api/ota owns a signed upload and maintenance lifecycle.
     if (command.action == sirokko::Action::OTA) return reject(request, "OTA_UPLOAD_ONLY", "405 Method Not Allowed");
-    if (command.action == sirokko::Action::CALIBRATE && view.control.calibration_block != sirokko::Block::NONE) {
-        return reject(request, "CALIBRATION_BLOCK", "409 Conflict");
+    if (command.action == sirokko::Action::CALIBRATE && view.control.commissioning.block != sirokko::Block::NONE) {
+        return reject(request, "COMMISSIONING_BLOCK", "409 Conflict");
     }
+    if (!revision_is_safe(command, view)) return reject(request, "MODEL_REVISION", "409 Conflict");
     bool previous = false;
     const web_protocol::ReplayResult replay = g_replays.lookup(command.command_id, command.payload_digest, &previous);
     if (replay == web_protocol::ReplayResult::CONFLICT) return reject(request, "REPLAY", "409 Conflict");
@@ -743,8 +790,8 @@ esp_err_t command_handler(httpd_req_t* request) {
     const web_protocol::BindingResult binding = g_challenge.consume(command, view.now_ms, view.control.state_version);
     if (binding != web_protocol::BindingResult::ACCEPTED) return reject(request, "CHALLENGE", "409 Conflict");
     const sirokko::Grant grant = to_runtime_grant(command);
-    const bool accepted = command.action == sirokko::Action::PROCESS_CONFIG
-        ? runtime_configure_process(grant, command.process)
+    const bool accepted = command.action == sirokko::Action::MODEL_REVISION
+        ? runtime_revise_model(grant, command.revision)
         : runtime_submit(grant, command.action, command.delay_ms,
                          command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr);
     g_replays.remember(command.command_id, command.payload_digest, accepted);

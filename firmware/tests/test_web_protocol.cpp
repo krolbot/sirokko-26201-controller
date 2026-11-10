@@ -150,9 +150,17 @@ int main() {
           parsed.action==sirokko::Action::TIMER && parsed.delay_ms==0,"single shutdown timer cancellation remains supported");
 
     Command process{};
-    check(parse_challenge_request(kProcessChallenge, std::strlen(kProcessChallenge), current, &process) == ParseError::OK,
-          "full process profile shape parses without invented UI defaults");
-    check(process.process.minimum_ignition_air_rise_milli_c == 16, "new air-rise profile field is preserved");
+    check(parse_challenge_request(kProcessChallenge, std::strlen(kProcessChallenge), current, &process) != ParseError::OK,
+          "legacy process-profile payload cannot re-enter through the strict parser");
+
+    const char kRevisionChallenge[] = R"JSON({"action":"MODEL_REVISION","command_id":"42","revision":{"expected_revision":7,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.002,"slew_down_per_s":0.003}})JSON";
+    const char kRevisionSubmission[] = R"JSON({"action":"MODEL_REVISION","command_id":"42","revision":{"expected_revision":7,"minimum_speed_code":200,"maximum_speed_code":800,"slew_up_per_s":0.002,"slew_down_per_s":0.003},"grant":{"token":"abc","state_version":"22","expires_ms":"1000"}})JSON";
+    Command revision{};
+    check(parse_challenge_request(kRevisionChallenge, std::strlen(kRevisionChallenge), current, &revision) == ParseError::OK && revision.action == sirokko::Action::MODEL_REVISION && revision.revision.expected_revision == 7,
+          "strict learned-model revision challenge parses every revision field");
+    Command revision_submit{};
+    check(parse_command_request(kRevisionSubmission, std::strlen(kRevisionSubmission), current, &revision_submit) == ParseError::OK && digest_equal(revision.payload_digest, revision_submit.payload_digest),
+          "model revision grant binds the full revision digest");
 
     Stop stop{};
     const char kStop[] = R"JSON({"action":"STOP","command_id":"9"})JSON";

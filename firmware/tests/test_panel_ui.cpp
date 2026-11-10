@@ -16,7 +16,7 @@ View baseline() {
     View view{};
     view.control.state = State::IDLE;
     view.control.start_block = Block::NONE;
-    view.control.calibration_block = Block::NONE;
+    view.control.commissioning.block = Block::NONE;
     view.control.state_version = 10;
     view.control.boot_id = 1;
     view.settings.room_setpoint_milli_c = 20000;
@@ -26,7 +26,7 @@ View baseline() {
     view.now_ms = 100;
     view.sensors.room.valid = true;
     view.sensors.room.milli_c = 19500;
-    view.process.qualified = true;
+    view.envelope.provisioned = true;
     return view;
 }
 
@@ -107,12 +107,12 @@ void test_menu_is_exactly_eight_items_and_scrolls() {
 }
 
 void test_calibration_admission_uses_the_core_block_without_duplicating_its_policy() {
-    for (Block block : {Block::PROFILE_NOT_QUALIFIED, Block::CALIBRATION_DISABLED,
-                        Block::CALIBRATION_RANGE_INVALID, Block::CALIBRATION_TIME_BUDGET,
+    for (Block block : {Block::ENVELOPE_MISSING, Block::ENVELOPE_HARDWARE_MISMATCH,
+                        Block::ENVELOPE_INVALID, Block::STORAGE_UNCONFIRMED,
                         Block::SENSOR_INVALID}) {
         Model model;
         View view = baseline();
-        view.control.calibration_block = block;
+        view.control.commissioning.block = block;
         model.reset(view);
         uint64_t now = 100;
         open_menu(model, now);
@@ -148,7 +148,7 @@ void test_home_edit_confirms_only_after_matching_snapshot_and_double_cancels() {
     model.update(acknowledged);
     assert(model.screen().notice == Notice::NONE);
     assert(!model.screen().command_in_flight);
-    assert(model.view().sensors.room.valid && model.view().process.qualified);
+    assert(model.view().sensors.room.valid && model.view().envelope.provisioned);
 
     Model manual_model;
     View manual = baseline();
@@ -326,7 +326,7 @@ void assert_credentials_cleared(const Model& model) {
 void test_fault_reset_uses_the_existing_short_click_waits_for_a_snapshot_and_never_runs_during_purge() {
     View fault = baseline();
     fault.control.state = State::FAULT;
-    fault.control.faults = FAULT_CALIBRATION;
+    fault.control.faults = FAULT_COMMISSIONING;
     fault.control.state_version++;
 
     Model model;
@@ -501,7 +501,7 @@ void test_hidden_phase_cannot_accept_inputs_or_replay_a_click() {
     // Calibration is shown from its real state; entering its full-screen phase consumes confirmation.
     model.reset(baseline());uint64_t now=100;open_menu(model,now);select_menu(model,3,now);
     assert(take(model).kind==CommandKind::CALIBRATE);model.command_result(true);
-    view=baseline();view.control.state=State::PREPURGE;view.control.calibration_active=true;
+    view=baseline();view.control.state=State::PREPURGE;view.control.commissioning.active=true;
     view.control.run_id=2;++view.control.state_version;view.now_ms=now+20;model.update(view);
     assert(model.screen().page==Page::HOME&&!model.screen().command_in_flight&&model.screen().notice==Notice::NONE);
 }

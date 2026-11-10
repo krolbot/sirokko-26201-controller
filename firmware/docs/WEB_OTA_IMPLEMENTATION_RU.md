@@ -8,14 +8,14 @@
 
 - `GET /` — автономный Svelte HTML/CSS/JS/шрифты без CDN, gzip-ресурс `main/web_ui_data.inc`;
 - `POST /api/login` — пароль AP в заголовке `X-Sirokko-Password`, затем cookie `HttpOnly; SameSite=Strict`; серверный session TTL — 15 минут;
-- `GET /api/state` — русское состояние, EXH/AIR/room, outputs, timer/arm/purge, range/calibration, process boundary, storage и event journal;
+- `GET /api/state` — русское состояние, EXH/AIR/room, outputs, timer/purge, commissioning, исходный envelope, learned model, storage и event journal;
 - `POST /api/challenge` — одноразовый challenge для всех действий кроме STOP;
-- `POST /api/command` — `START`, `RESET_FAULT`, `SETTINGS`, `CALIBRATE`, `TIMER`, `PROCESS_CONFIG` и отдельный `STOP`;
+- `POST /api/command` — `START`, `RESET_FAULT`, `SETTINGS`, `CALIBRATE`, `MODEL_REVISION`, `TIMER` и `STOP` (STOP проходит отдельную проверку без challenge на том же маршруте);
 - `POST /api/ota` — потоковая загрузка подписанного `.sota`.
 
 UI не сообщает «применено» после `QUEUED`: оно ждёт следующего state readback. Dirty input не перезаписывается. При stale/offline отключены все auto-action controls, а `STOP` остаётся отдельным доступным маршрутом.
 
-`qualified` в интерфейсе означает только настроенную форму профиля. Сервисный экран явно показывает `physical_tests=false`; физических примеров параметров процесса в UI нет.
+Исходные ограничения (`SafetyEnvelope`) отделены от полученной калибровкой `LearnedOperatingModel`. Отсутствующий или испорченный envelope блокирует топливо; тестовые значения не используются как параметры оборудования. Ручная коррекция существующей модели принимает только точную текущую ревизию и может лишь сузить рабочие границы/ограничить темп. UI не заявляет, что эти программные состояния являются физической квалификацией горения.
 
 ## Протокол управления
 
@@ -27,7 +27,7 @@ UI не сообщает «применено» после `QUEUED`: оно жд
 2. `web_protocol` вычисляет canonical SHA-256 полного payload и runtime выдаёт grant.
 3. Web связывает action + token + state version + expiry + 256-bit payload digest.
 4. Клиент сверяет `state_version` и `boot_id` challenge с исходным снимком редактирования. При конфликте запрос не отправляет. Затем отправляет тот же payload и grant на `/api/command` (или метаданные upload в заголовках `/api/ota`).
-5. До runtime вызова проверяются одноразовость, expiry, state-version и replay cache. Для `PROCESS_CONFIG` runtime hash — `process_fingerprint(profile)`; web SHA-256 всё равно связывает полный payload.
+5. До runtime-вызова проверяются одноразовость, expiry, state-version и replay cache. `MODEL_REVISION` дополнительно сверяется с фактической сохранённой моделью и ожидаемой ревизией; полный payload по-прежнему связан с challenge.
 
 `STOP` авторизован cookie, но намеренно не требует challenge/подтверждения. Он проходит отдельный strict parser и idempotent replay cache, после чего вызывает только `runtime_stop(false)`.
 

@@ -21,7 +21,7 @@ enum class ParseError : uint8_t {
     MISSING_FIELD,
     ACTION,
     SETTINGS,
-    PROCESS,
+    MODEL,
     GRANT,
     STOP_CHALLENGE,
     OTA_UPLOAD_ONLY,
@@ -40,7 +40,7 @@ struct Command {
     uint64_t command_id{};
     uint64_t delay_ms{};
     sirokko::Settings settings{};
-    sirokko::ProcessProfile process{};
+    sirokko::LearnedModelRevision revision{};
     uint64_t upload_size{};
     Digest upload_sha256{};
     GrantFields grant{};

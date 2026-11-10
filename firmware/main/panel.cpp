@@ -165,7 +165,7 @@ bool inputs_begin() {
 panel_ui::View panel_view(const RuntimeView& runtime) {
     panel_ui::View view{};
     view.control=runtime.control;view.settings=runtime.settings;view.now_ms=runtime.now_ms;
-    view.storage_ok=runtime.storage_ok;view.sensors=runtime.sensors;view.process=runtime.process;
+    view.storage_ok=runtime.storage_ok;view.sensors=runtime.sensors;view.envelope=runtime.envelope;
     return view;
 }
 bool update_view() {

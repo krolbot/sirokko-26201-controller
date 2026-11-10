@@ -8,16 +8,16 @@
 using namespace sirokko;
 
 // Deliberately synthetic millisecond-scale process fixture. NOT heater settings.
-static ProcessProfile synthetic_profile() {
-    ProcessProfile p{};
-    p.qualified=true;
+static SafetyEnvelope synthetic_profile() {
+    SafetyEnvelope p{};
+    p.provisioned=true;
     p.recovery_purge_ms=100; p.prepurge_ms=10; p.preheat_ms=10;
     p.ignition_ms=10; p.verify_ms=10; p.postpurge_ms=20;
     p.maximum_purge_exit_exhaust_milli_c=150000; p.maximum_purge_exit_air_milli_c=120000;
     p.maximum_exhaust_milli_c=500000; p.maximum_air_milli_c=400000;
     p.minimum_ignition_rise_milli_c=20000; p.minimum_ignition_air_rise_milli_c=10000;
-    p.minimum_run_exhaust_milli_c=110000; p.purge_speed_code=2000; p.run_speed_code=3000;
-    p.calibration_floor_speed_code=1000;
+    p.minimum_run_exhaust_milli_c=110000; p.purge_speed_code=2000; p.reference_speed_code=3000;
+    p.exploration_floor_code=1000;
     return p;
 }
 static Sensors readings(uint64_t now,int room=15000,int exh=130000) {
@@ -25,6 +25,15 @@ static Sensors readings(uint64_t now,int room=15000,int exh=130000) {
 }
 static TickInput observation(uint64_t now,int room=15000,int exh=130000) {
     TickInput i{};i.now_ms=now;i.sensors=readings(now,room,exh);return i;
+}
+static LearnedOperatingModel stored_model(const SafetyEnvelope& envelope, uint16_t minimum,
+                                          uint16_t maximum) {
+    LearnedOperatingModel model{};
+    model.valid=true; model.minimum_speed_code=minimum; model.maximum_speed_code=maximum;
+    model.provenance={envelope_fingerprint(envelope),100,200,1};
+    model.measurements.elapsed_ms=100; model.measurements.tested_point_count=1;
+    model.fingerprint=learned_model_fingerprint(model);
+    return model;
 }
 static uint64_t start_running(Controller& c) {
     auto i=observation(100,15000,100000); assert(c.tick(i).state==State::IDLE);
@@ -35,8 +44,8 @@ static uint64_t start_running(Controller& c) {
     i=observation(141);assert(c.tick(i).state==State::RUN);return 141;
 }
 static void range_for(Controller& c) {
-    const auto p=c.process_profile();
-    assert(c.install_range({true,1500,3000,0.005,0.005,process_fingerprint(p)}));
+    const auto p=c.safety_envelope();
+    assert(c.install_learned_model(stored_model(p,1500,3000)));
 }
 static void test_regulator() {
     Regulator r;r.reset(0,10,0.2);
@@ -106,9 +115,9 @@ static void test_shutdown_timer() {
     std::cout<<"PASS shutdown: disabled default, arm, remaining, immutable preset, exact expiry, priority, cancel, reset\n";
 }
 static void test_limits_and_ambiguity() {
-    auto p=synthetic_profile();assert(valid_process_profile(p));
-    p.run_speed_code=4015;assert(!valid_process_profile(p));p=synthetic_profile();
-    p.minimum_ignition_air_rise_milli_c=0;assert(!valid_process_profile(p));
+    auto p=synthetic_profile();assert(valid_safety_envelope(p));
+    p.reference_speed_code=4015;assert(!valid_safety_envelope(p));p=synthetic_profile();
+    p.minimum_ignition_air_rise_milli_c=0;assert(!valid_safety_envelope(p));
     p=synthetic_profile();Controller c(p,{},4);
     auto i=observation(100,15000,100000);c.tick(i);
     i=observation(101,15000,200000);i.start=true;
@@ -125,12 +134,14 @@ static void test_limits_and_ambiguity() {
     Controller overflow(p,{},6);i=observation(UINT64_MAX-100,15000,100000);overflow.tick(i);
     i=observation(UINT64_MAX-50,15000,100000);i.arm_delayed=true;i.delay_ms=100;
     s=overflow.tick(i);assert(!s.delayed_armed);
-    auto range=OperatingRange{true,1500,3000,0.005,0.005,process_fingerprint(p)};
-    Controller fresh(p,{},7);range.process_fingerprint^=1;assert(!fresh.install_range(range));
-    range.process_fingerprint=process_fingerprint(p);assert(fresh.install_range(range));
+    auto range=stored_model(p,1500,3000);
+    Controller fresh(p,{},7);range.provenance.safety_envelope_fingerprint^=1;assert(!fresh.install_learned_model(range));
+    range=stored_model(p,1500,3000);assert(fresh.install_learned_model(range));
     i=observation(100,15000,100000);fresh.tick(i);
-    auto p2=p;p2.calibration_floor_speed_code=1100;assert(fresh.update_process_profile(p2,101));
-    assert(!fresh.operating_range().valid);
+    const auto before=fresh.learned_model();
+    assert(!fresh.revise_learned_model({before.provenance.revision,1400,3000,0.005,0.005}));
+    assert(fresh.revise_learned_model({before.provenance.revision,1600,2800,0.004,0.004}));
+    assert(fresh.learned_model().provenance.revision==before.provenance.revision+1);
     std::cout<<"PASS limits: physical-profile placeholder rejected, raw 600 C, hot restart, two-channel evidence, settings, overflow, profile binding\n";
 }
 int main() {test_regulator();test_continuous_burning_and_manual();test_shutdown_timer();test_limits_and_ambiguity();}

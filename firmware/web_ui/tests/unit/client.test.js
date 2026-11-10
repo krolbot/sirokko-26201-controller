@@ -4,10 +4,12 @@ import test from 'node:test';
 import { ApiClient } from '../../src/lib/api.js';
 import { ControllerSession } from '../../src/lib/controller.js';
 import {
-  calibrationAllowed,
-  calibrationBlock,
+  commissioningAllowed,
+  commissioningBlock,
   commandMatchesSnapshot,
   fullSettingsPayload,
+  modelRevisionMatches,
+  modelRevisionPayload,
   sensorText,
   timerDeadlineMatches,
 } from '../../src/lib/protocol.js';
@@ -100,22 +102,76 @@ test('generic client command refuses OTA before any /api/command request', () =>
 });
 
 test('calibration block fails closed before browser challenge or generic command', async () => {
-  const block = { code: 'CALIBRATION_TIME_BUDGET', ru: 'Калибровка не укладывается в разрешённый общий срок' };
-  const api = new SyntheticApi(syntheticState({ calibration: { block } }));
+  const block = { code: 'MODEL_UNAVAILABLE', ru: 'Сохранённая модель недоступна' };
+  const api = new SyntheticApi(syntheticState({ commissioning: { block } }));
   const session = await restored(api);
-  assert.deepEqual(calibrationBlock(session.view.snapshot), block);
-  assert.equal(calibrationAllowed(session.view.snapshot), false);
+  assert.deepEqual(commissioningBlock(session.view.snapshot), block);
+  assert.equal(commissioningAllowed(session.view.snapshot), false);
   const result = await session.submit('CALIBRATE');
   assert.equal(result.status, 'CALIBRATION_BLOCKED');
   assert.equal(api.calls.challenge.length, 0);
   assert.equal(api.calls.command.length, 0);
-  assert.match(session.view.message.text, /разрешённый общий срок/);
+  assert.match(session.view.message.text, /Сохранённая модель/);
 
   const legacySnapshot = syntheticState();
-  delete legacySnapshot.calibration.block;
-  assert.equal(calibrationAllowed(legacySnapshot), false, 'missing contract field must not permit calibration');
-  assert.equal(calibrationBlock(legacySnapshot).code, 'PROFILE_NOT_QUALIFIED');
-  assert.equal(calibrationAllowed(syntheticState()), true, 'permitted fixture states set an explicit NONE block');
+  delete legacySnapshot.commissioning.block;
+  assert.equal(commissioningAllowed(legacySnapshot), false, 'missing contract field must not permit commissioning');
+  assert.equal(commissioningBlock({}).code, 'ENVELOPE_MISSING');
+  assert.equal(commissioningAllowed(syntheticState()), true, 'permitted fixture states set an explicit NONE block');
+});
+
+test('MODEL_REVISION builds an exact constrained DTO and confirms every observed field', async () => {
+  const baseline = syntheticState();
+  const revision = modelRevisionPayload(baseline.learned_model, {
+    minimum_speed_code: 200,
+    maximum_speed_code: 800,
+    slew_up_per_s: 0.0008,
+    slew_down_per_s: 0.0007,
+  });
+  assert.deepEqual(revision, {
+    expected_revision: 1,
+    minimum_speed_code: 200,
+    maximum_speed_code: 800,
+    slew_up_per_s: 0.0008,
+    slew_down_per_s: 0.0007,
+  });
+  assert.throws(() => modelRevisionPayload(baseline.learned_model, { maximum_speed_code: 851 }), /только сузить/);
+  assert.throws(() => modelRevisionPayload(baseline.learned_model, { minimum_speed_code: 800, maximum_speed_code: 800 }), /строго меньше/);
+  for (const value of [0, 0.000099, NaN, Infinity]) {
+    assert.throws(() => modelRevisionPayload(baseline.learned_model, { slew_up_per_s: value }), /Скорости модели/);
+    assert.throws(() => modelRevisionPayload(baseline.learned_model, { slew_down_per_s: value }), /Скорости модели/);
+  }
+  assert.equal(modelRevisionPayload(baseline.learned_model, { slew_up_per_s: 0.0001 }).slew_up_per_s, 0.0001);
+  assert.throws(() => modelRevisionPayload({ ...baseline.learned_model, provenance: { revision: 0xffffffff } }), /ревизия/);
+
+  assert.throws(() => modelRevisionPayload({ ...baseline.learned_model, valid: false }, {}), /нет сохранённой/i);
+
+  const observed = syntheticState({
+    state_version: '23',
+    learned_model: {
+      minimum_speed_code: revision.minimum_speed_code,
+      maximum_speed_code: revision.maximum_speed_code,
+      slew_up_per_s: revision.slew_up_per_s,
+      slew_down_per_s: revision.slew_down_per_s,
+      provenance: { revision: 2 },
+    },
+  });
+  assert.equal(modelRevisionMatches(revision, observed.learned_model), true);
+  assert.equal(modelRevisionMatches(revision, { ...observed.learned_model, maximum_speed_code: 799 }), false);
+  assert.equal(commandMatchesSnapshot({ action: 'MODEL_REVISION', payload: { revision }, baseline }, observed), true);
+  assert.equal(commandMatchesSnapshot({ action: 'MODEL_REVISION', payload: { revision }, baseline }, { ...observed, learned_model: { ...observed.learned_model, slew_down_per_s: 0.0006 } }), false);
+
+  const api = new SyntheticApi(baseline);
+  api.commandHandler = (payload) => {
+    api.current = observed;
+    return { status: 'QUEUED' };
+  };
+  const session = await restored(api);
+  assert.equal((await session.submit('MODEL_REVISION', { revision })).status, 'QUEUED');
+  await waitForTasks();
+  assert.deepEqual(api.calls.challenge[0].revision, revision);
+  assert.deepEqual(api.calls.command[0].revision, revision);
+  assert.equal(session.view.pending, null);
 });
 
 test('settings carry the complete current payload and confirm only on a newer matching snapshot', async () => {

@@ -56,7 +56,13 @@ def test_signing_environment(work: Path):
 
 def run(arguments: list[str]) -> None:
     print("+", " ".join(arguments), flush=True)
-    subprocess.run(arguments, cwd=ROOT, check=True)
+    # Node's assertion diagnostics must not consume the host's entire heap.
+    # Keep the deadline outside JS so a synchronous loop cannot evade it.
+    if Path(arguments[0]).name == "node":
+        subprocess.run([arguments[0], "--max-old-space-size=128", *arguments[1:]],
+                       cwd=ROOT, check=True, timeout=60)
+    else:
+        subprocess.run(arguments, cwd=ROOT, check=True)
 
 
 def make_test_image(path: Path, chip_id: int) -> None:
@@ -132,13 +138,16 @@ def main() -> int:
                  "-I", os.fspath(TESTS / "web_host_stubs"), "-I", os.fspath(TESTS),
                  "-I", os.fspath(MAIN), "-I", os.fspath(FIRMWARE / "components" / "control_core" / "include"),
                  os.fspath(MAIN / "bounded_receive.cpp"), os.fspath(MAIN / "web_protocol.cpp"),
-                 os.fspath(MAIN / "ota_verify.cpp"), os.fspath(TESTS / "test_web_handlers.cpp"),
+                 os.fspath(MAIN / "ota_verify.cpp"),
+                 os.fspath(FIRMWARE / "components/control_core/profile.cpp"),
+                 os.fspath(TESTS / "test_web_handlers.cpp"),
                  os.fspath(embedded_key), "-lcrypto", "-Wl,-z,noexecstack", "-o", os.fspath(handlers)])
             export = args.export_dir.resolve() if args.export_dir else work / "actual-handler"
             run([os.fspath(handlers), os.fspath(valid_package), os.fspath(wrong_chip_package), os.fspath(export)])
+            run(["node", os.fspath(TESTS / "test_binary_contract.cjs")])
             run(["node", os.fspath(TESTS / "test_web_frontend.js"), os.fspath(export)])
             run(["node", "--test", *map(os.fspath, sorted((FIRMWARE / "web_ui/tests/unit").glob("*.test.js")))])
-    except (OSError, subprocess.CalledProcessError, RuntimeError) as error:
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired, RuntimeError) as error:
         print(f"test_web_ota_host.py: {error}", file=sys.stderr)
         return 1
 

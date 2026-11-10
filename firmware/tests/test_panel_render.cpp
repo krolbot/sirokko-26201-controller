@@ -34,8 +34,8 @@ void fresh(panel_ui::View& v,uint64_t now) {
 Fixture base(const char* id) {
     Fixture f{id};
     f.view.control.state=State::RUN;f.view.control.start_block=sirokko::Block::NONE;
-    f.view.control.calibration_block=sirokko::Block::NONE;
-    f.view.control.profile_qualified=true;f.view.control.range_calibrated=true;
+    f.view.control.commissioning.block=sirokko::Block::NONE;
+    f.view.control.envelope_provisioned=true;f.view.control.learned_model.valid=true;
     f.view.control.boot_id=1;f.view.control.run_id=1;
     f.view.settings.room_setpoint_milli_c=26000;f.view.settings.manual_percent=55;
     f.view.sensors.room={24500,10000,0,true};f.view.sensors.air={65000,10000,0,true};
@@ -55,16 +55,16 @@ std::vector<Fixture> fixtures() {
     for(auto pair: {std::pair{"prepurge",State::PREPURGE},{"preheat",State::PREHEAT},{"ignition",State::IGNITION},
                    {"verify",State::VERIFY},{"cooldown",State::STOP_PURGE},{"recovery",State::RECOVERY_PURGE}})
         add(pair.first).view.control.state=pair.second;
-    auto& fc=add("fault-cooling");fc.view.control.state=State::FAULT_PURGE;fc.view.control.faults=sirokko::FAULT_CALIBRATION;fc.view.control.calibration_reason="OVERALL_TIMEOUT";
-    auto& fl=add("fault-latched");fl.view.control.state=State::FAULT;fl.view.control.faults=sirokko::FAULT_CALIBRATION;fl.view.control.calibration_reason="OPERATOR_NEGATIVE";
+    auto& fc=add("fault-cooling");fc.view.control.state=State::FAULT_PURGE;fc.view.control.faults=sirokko::FAULT_COMMISSIONING;fc.view.control.commissioning.reason=sirokko::CommissioningReason::OVERALL_TIMEOUT;
+    auto& fl=add("fault-latched");fl.view.control.state=State::FAULT;fl.view.control.faults=sirokko::FAULT_COMMISSIONING;fl.view.control.commissioning.reason=sirokko::CommissioningReason::OPERATOR_NEGATIVE;
     auto& sensor=add("sensor");sensor.view.control.state=State::IDLE;sensor.view.sensors.room.valid=false;sensor.view.control.start_block=sirokko::Block::SENSOR_INVALID;
-    auto& cal=add("calibrate");cal.view.control.calibration_active=true;cal.view.control.calibration_phase="SETTLE_POINT";
-    auto& cc=add("cal-cooling");cc.view.control.state=State::STOP_PURGE;cc.view.control.calibration_active=true;cc.view.control.calibration_phase="COMPLETE_PENDING_STOP";
-    auto& saved=add("cal-saved");saved.view.control.state=State::IDLE;saved.view.control.calibration_phase="SAVED";
-    auto& reference=add("cal-reference");reference.view.control.calibration_active=true;reference.view.control.calibration_phase="SETTLE_REFERENCE";
-    auto& repeat=add("cal-repeat");repeat.view.control.calibration_active=true;repeat.view.control.calibration_phase="SETTLE_REPEAT_POINT";
-    auto& store=add("cal-store");store.view.control.state=State::IDLE;store.view.control.calibration_active=true;store.view.control.calibration_phase="COMPLETE_PENDING_STOP";
-    auto& cancelled=add("cal-cancelled");cancelled.view.control.state=State::STOP_PURGE;cancelled.view.control.calibration_phase="CANCELLED";
+    auto& cal=add("calibrate");cal.view.control.commissioning.active=true;cal.view.control.commissioning.phase=sirokko::CommissioningPhase::SETTLE_POINT;
+    auto& cc=add("cal-cooling");cc.view.control.state=State::STOP_PURGE;cc.view.control.commissioning.active=true;cc.view.control.commissioning.phase=sirokko::CommissioningPhase::COMPLETE_PENDING_STOP;
+    auto& saved=add("cal-saved");saved.view.control.state=State::IDLE;saved.view.control.commissioning.phase=sirokko::CommissioningPhase::SAVED;
+    auto& reference=add("cal-reference");reference.view.control.commissioning.active=true;reference.view.control.commissioning.phase=sirokko::CommissioningPhase::SETTLE_REFERENCE;
+    auto& repeat=add("cal-repeat");repeat.view.control.commissioning.active=true;repeat.view.control.commissioning.phase=sirokko::CommissioningPhase::SETTLE_REPEAT_POINT;
+    auto& store=add("cal-store");store.view.control.state=State::IDLE;store.view.control.commissioning.active=true;store.view.control.commissioning.phase=sirokko::CommissioningPhase::COMPLETE_PENDING_STOP;
+    auto& cancelled=add("cal-cancelled");cancelled.view.control.state=State::STOP_PURGE;cancelled.view.control.commissioning.phase=sirokko::CommissioningPhase::CANCELLED;
     add("menu").screen.page=Page::MENU;
     auto& mode=add("mode");mode.screen.page=Page::EDIT;mode.screen.editing=true;mode.screen.edit_field=EditField::MODE;mode.screen.edit_value=1;
     auto& te=add("timer-edit");te.screen.page=Page::EDIT;te.screen.editing=true;te.screen.edit_field=EditField::SHUTDOWN_TIMER;te.screen.edit_value=90;
@@ -79,11 +79,11 @@ std::vector<Fixture> fixtures() {
     auto& off=add("timer-off");off.screen.page=Page::EDIT;off.screen.editing=true;off.screen.edit_field=EditField::SHUTDOWN_TIMER;
     add("maintenance").view.control.state=State::MAINTENANCE;
     add("no-data").screen.notice=panel_ui::Notice::VIEW_UNAVAILABLE;
-    auto& blocked=add("blocked");blocked.view.control.state=State::IDLE;blocked.view.control.start_block=sirokko::Block::PROFILE_NOT_QUALIFIED;
+    auto& blocked=add("blocked");blocked.view.control.state=State::IDLE;blocked.view.control.start_block=sirokko::Block::ENVELOPE_MISSING;
     add("queued").screen.notice=panel_ui::Notice::QUEUED;
     add("rejected").screen.notice=panel_ui::Notice::EXTERNAL_CHANGE;
     auto& blocked_calibration=add("command-rejected");blocked_calibration.screen.notice=panel_ui::Notice::CALIBRATION_BLOCKED;
-    blocked_calibration.view.control.calibration_block=sirokko::Block::CALIBRATION_TIME_BUDGET;
+    blocked_calibration.view.control.commissioning.block=sirokko::Block::STORAGE_UNCONFIRMED;
     return result;
 }
 Picture picture(const Renderer& renderer) {
@@ -162,7 +162,7 @@ void heat_wave_tests() {
     auto& high=add();high.view.sensors.room.milli_c=27000;high.view.control.room_excess=true;
     auto& edit=add();edit.screen.page=Page::EDIT;edit.screen.editing=true;
     edit.screen.edit_field=EditField::TEMPERATURE;edit.screen.edit_value=27000;
-    auto& cal=add();cal.view.control.calibration_active=true;cal.view.control.calibration_phase="SETTLE_POINT";
+    auto& cal=add();cal.view.control.commissioning.active=true;cal.view.control.commissioning.phase=sirokko::CommissioningPhase::SETTLE_POINT;
     add().screen.notice=panel_ui::Notice::VIEW_UNAVAILABLE;
     for(const auto& value:inactive) {
         auto off=value;off.view.control.outputs.fuel=false;
@@ -227,13 +227,13 @@ void audit_panel_scene_tests() {
     for (const char* detail : details) assert(panel_draw::text_width(detail, 12) <= 280);
     for (const char* footer : footers) assert(panel_draw::text_width(footer, 13) <= 280);
 
-    for (sirokko::Block block : {sirokko::Block::PROFILE_NOT_QUALIFIED, sirokko::Block::CALIBRATION_DISABLED,
-                                 sirokko::Block::CALIBRATION_RANGE_INVALID, sirokko::Block::CALIBRATION_TIME_BUDGET,
+    for (sirokko::Block block : {sirokko::Block::ENVELOPE_MISSING, sirokko::Block::ENVELOPE_HARDWARE_MISMATCH,
+                                 sirokko::Block::ENVELOPE_INVALID, sirokko::Block::STORAGE_UNCONFIRMED,
                                  sirokko::Block::SENSOR_INVALID}) {
         auto f = base("calibration-block");
         f.view.control.state = State::IDLE;
         f.screen.notice = panel_ui::Notice::CALIBRATION_BLOCKED;
-        f.view.control.calibration_block = block;
+        f.view.control.commissioning.block = block;
         Renderer renderer;
         renderer.update(f.screen, f.view, f.credentials, f.view.now_ms);
         assert(renderer.frame().scene == Scene::CommandRejected);

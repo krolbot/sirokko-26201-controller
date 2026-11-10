@@ -57,7 +57,7 @@ struct View {
     uint64_t now_ms{};
     bool storage_ok{true};
     sirokko::Sensors sensors{};
-    sirokko::ProcessProfile process{};
+    sirokko::SafetyEnvelope envelope{};
 };
 
 struct Command {

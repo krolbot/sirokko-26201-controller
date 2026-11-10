@@ -3,6 +3,7 @@
 // Contract check of the exact resource and JSON emitted by production web.cpp.
 // State values come from explicit host fixtures, not from a physical controller.
 const assert = require('node:assert/strict');
+const { assertSameBytes } = require('./binary_contract.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
@@ -18,12 +19,12 @@ async function main() {
   assert(source.includes('#include "web_ui_data.inc"') && !source.includes('R"SIROKKO('));
   const embedded = fs.readFileSync(path.join(firmware, 'main/web_ui_data.inc'), 'utf8');
   const bytes = Buffer.from([...embedded.matchAll(/0x([0-9a-f]{2})/g)].map(match => parseInt(match[1], 16)));
-  assert.deepEqual(read('page.bin'), bytes, 'handler must send the current embedded bytes');
+  assertSameBytes(read('page.bin'), bytes, 'handler must send the current embedded bytes');
   const html = gunzipSync(bytes);
   const declared = embedded.match(/HTML SHA-256: ([0-9a-f]{64})/)[1];
   assert.equal(createHash('sha256').update(html).digest('hex'), declared);
   const dist = path.join(firmware, 'web_ui/dist/index.html');
-  if (fs.existsSync(dist)) assert.deepEqual(html, fs.readFileSync(dist), 'shipped page equals built frontend');
+  if (fs.existsSync(dist)) assertSameBytes(html, fs.readFileSync(dist), 'shipped page equals built frontend');
   const text = html.toString('utf8');
   assert(text.includes('Связь потеряна') && text.includes('.sota') && text.includes('VERIFIED_ACTIVATION_QUEUED'));
   assert(!/CANCEL_ARM|VERIFIED_REBOOTING|<script[^>]+\bsrc\s*=/i.test(text));
@@ -33,16 +34,20 @@ async function main() {
   assert.match(headers['Content-Security-Policy'], /connect-src 'self'/);
 
   const load = relative => import(pathToFileURL(path.join(firmware, 'web_ui/src/lib', relative)));
-  const { fullSettingsPayload, validateProcessProfile, sensorText } = await load('protocol.js');
+  const { fullSettingsPayload, sensorText } = await load('protocol.js');
   const { ControllerSession } = await load('controller.js');
   const { sha256Hex } = await load('sha256.js');
   const actual = JSON.parse(read('state.json'));
   assert.equal(actual.state.ru, 'Ожидание');
-  assert.equal(actual.process.physical_tests, false);
-  assert.deepEqual(actual.calibration.block, { code: 'NONE', ru: 'Нет' });
+  assert.equal(actual.envelope.provisioned, true);
+  assert.equal(Object.hasOwn(actual, "process"), false);
+  assert.equal(Object.hasOwn(actual, "calibration"), false);
+  assert.deepEqual(actual.commissioning.block, { code: 'NONE', ru: 'Нет' });
   assert.equal(actual.events[0].kind_ru, 'Запуск принят автоматом');
   assert.deepEqual(fullSettingsPayload(actual.settings), actual.settings);
-  assert.deepEqual(validateProcessProfile(actual.process.profile), actual.process.profile);
+  assert.equal(actual.learned_model.valid, true);
+  assert.equal(actual.learned_model.minimum_speed_code, 100);
+  assert.equal(actual.learned_model.maximum_speed_code, 900);
   assert.equal(sensorText(actual.sensors.room), '21,0 °C');
   assert.match(sensorText(actual.sensors.air), /устарело/);
   const otaResponse = JSON.parse(read('ota-response.json'));
@@ -61,6 +66,6 @@ async function main() {
     assert.equal(await sha256Hex(vector, webcrypto), expected, 'native SHA');
     assert.equal(await sha256Hex(vector, {}), expected, 'plain-HTTP SHA fallback');
   }
-  console.log('PASS: production HTTP gzip/headers/JSON/OTA contract, complete settings/profile and both SHA paths');
+  console.log('PASS: production HTTP gzip/headers/JSON/OTA contract, complete settings/model and both SHA paths');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

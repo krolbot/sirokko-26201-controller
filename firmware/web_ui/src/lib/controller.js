@@ -1,14 +1,15 @@
 import {
-  calibrationAllowed,
-  calibrationBlock,
+  commissioningAllowed,
+  commissioningBlock,
   commandMatchesSnapshot,
   hasFault,
   isHexString,
   makeCommandId,
+  modelRevisionPayload,
 } from './protocol.js';
 
 const CONFIRMATION_TIMEOUT_MS = 5_000;
-const ACTIONS = new Set(['START', 'RESET_FAULT', 'SETTINGS', 'CALIBRATE', 'TIMER', 'PROCESS_CONFIG']);
+const ACTIONS = new Set(['START', 'RESET_FAULT', 'SETTINGS', 'CALIBRATE', 'TIMER', 'MODEL_REVISION']);
 
 function initialView() {
   return {
@@ -249,14 +250,18 @@ export class ControllerSession {
     if (this._view.pending || this._view.requestInFlight || this._view.ota.phase === 'activation_queued') return { status: 'BUSY' };
     const baseline = this._view.snapshot;
     if (!baseline || !isHexString(baseline.state_version)) return { status: 'NO_SNAPSHOT' };
-    if (action === 'CALIBRATE' && !calibrationAllowed(baseline)) {
-      const block = calibrationBlock(baseline);
+    if (action === 'CALIBRATE' && !commissioningAllowed(baseline)) {
+      const block = commissioningBlock(baseline);
       this._set({ message: statusMessage('warning', `Калибровка недоступна: ${block.ru} (${block.code}).`) });
       return { status: 'CALIBRATION_BLOCKED', block: block.code };
     }
+    let commandFields = fields;
+    if (action === 'MODEL_REVISION') {
+      commandFields = { revision: modelRevisionPayload(baseline.learned_model, fields.revision) };
+    }
     const authEpoch = this._authEpoch;
     const commandEpoch = ++this._commandEpoch;
-    const payload = { action, command_id: this.commandId(), ...fields };
+    const payload = { action, command_id: this.commandId(), ...commandFields };
     this._readEpoch += 1;
     this._set({ requestInFlight: action, message: statusMessage('pending', 'Получаем одноразовое подтверждение…') });
     try {
