@@ -24,6 +24,9 @@
   let dark = $state(false);
   let ui = $state({ auth: 'anonymous', link: 'offline', snapshot: null, pending: null, requestInFlight: null, message: null, ota: { phase: 'idle' } });
   let password = $state('');
+  let wifiPassword = $state('');
+  let wifiConfirmation = $state('');
+  let wifiSaving = $state(false);
   let settingsDraft = $state(null);
   let settingsDirty = $state([]);
   let settingsBaseVersion = $state(null);
@@ -74,6 +77,26 @@
 
   function message(kind, text) {
     localMessage = { kind, text };
+  }
+
+  async function saveWifi(remove = false) {
+    if (!automaticReady || wifiSaving) return;
+    const next = remove ? '' : wifiPassword;
+    if (!remove && (!/^[\x21-\x7e]{8,63}$/.test(next) || next !== wifiConfirmation)) {
+      message('error', 'Введите одинаковый пароль в оба поля: 8–63 латинских букв, цифр или символов без пробелов.');
+      return;
+    }
+    wifiSaving = true;
+    try {
+      await session.api.saveWifi(next);
+      wifiPassword = ''; wifiConfirmation = '';
+      message('success', 'Сохранено. Настройка Wi-Fi и входа в браузере применится после следующего включения питания.');
+      await session.poll();
+    } catch (error) {
+      message('error', `Не удалось сохранить пароль: ${error.code || error.message}`);
+    } finally {
+      wifiSaving = false;
+    }
   }
 
   function navigate(to) {
@@ -497,12 +520,22 @@
       {#if !detail}
         <div class="section-heading"><h1>Настройки</h1></div>
         <div class="settings-list">
-          {#each [['diagnostics','Показания и журнал','Температуры, состояние, события'],['calibration','Ввод в эксплуатацию','Фактическая фаза и запуск автокалибровки'],['advanced','Плавность регулирования','Нарастание и снижение команды'],['update','Обновление','Подписанный пакет .sota']] as [id, title, subtitle]}
+          {#each [['wifi','Wi-Fi и пароль','Открытая сеть или защита паролем'],['diagnostics','Показания и журнал','Температуры, состояние, события'],['calibration','Ввод в эксплуатацию','Фактическая фаза и запуск автокалибровки'],['advanced','Плавность регулирования','Нарастание и снижение команды'],['update','Обновление','Подписанный пакет .sota']] as [id, title, subtitle]}
             <button class="settings-row" onclick={() => openDetail(id)}><span><strong>{title}</strong><span>{subtitle}</span></span><Icon name="right" size={18} /></button>
           {/each}
           <button class="settings-row theme-row" onclick={toggleTheme}><span><strong>Оформление</strong><span>{dark ? 'Тёмное' : 'Светлое'}</span></span><Icon name="sun" size={22} /></button>
           <button class="settings-row" onclick={() => openDetail('about')}><span><strong>О контроллере</strong><span>Версия, идентификаторы и соединение</span></span><Icon name="right" size={18} /></button>
         </div>
+      {:else if detail === 'wifi'}
+        <h1>Wi-Fi и пароль</h1>
+        <p class="page-intro">{snapshot.wifi?.password_required ? 'Сеть и веб-интерфейс защищены паролем.' : 'Сеть открыта, вход в веб-интерфейс без пароля. Любой рядом может подключиться.'}</p>
+        {#if snapshot.wifi?.restart_required}<p class="field-description">После следующего включения: {snapshot.wifi.next_boot_password_required ? 'защита новым паролем' : 'без пароля'}.</p>{/if}
+        <label class="full-label">Новый пароль<input class="input" type="password" autocomplete="new-password" minlength="8" maxlength="63" bind:value={wifiPassword} disabled={wifiSaving} /></label>
+        <label class="full-label">Повторите пароль<input class="input" type="password" autocomplete="new-password" minlength="8" maxlength="63" bind:value={wifiConfirmation} disabled={wifiSaving} /></label>
+        <p class="field-description">8–63 латинских букв, цифр или символов без пробелов. Этот пароль используется для Wi-Fi и входа в браузере.</p>
+        <button class="btn primary-button" disabled={!automaticReady || wifiSaving || !wifiPassword} onclick={() => saveWifi(false)}>{wifiSaving ? 'Сохраняем…' : 'Задать пароль'}</button>
+        <button class="btn text-button" disabled={!automaticReady || wifiSaving || !snapshot.wifi?.next_boot_password_required} onclick={() => saveWifi(true)}>Убрать пароль</button>
+        <p class="field-description">Изменение вступит в силу после следующего включения питания. Если отопитель работает, сначала остановите его и дождитесь окончания продувки.</p>
       {:else if detail === 'diagnostics'}
         <h1>Показания и журнал</h1>
         <dl class="readings">

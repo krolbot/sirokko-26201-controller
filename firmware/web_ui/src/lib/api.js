@@ -100,6 +100,16 @@ export class ApiClient {
     return this.request('/api/state', { method: 'GET' });
   }
 
+  async saveWifi(password) {
+    const body = await this.request('/api/wifi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/octet-stream', 'X-Sirokko-Config': 'wifi' },
+      body: password,
+    });
+    if (body.status !== 'SAVED') throw protocolError(body.code || 'Пароль не сохранён', body);
+    return body;
+  }
+
   async challenge(payload) {
     return assertChallenge(await this.postJson('/api/challenge', payload));
   }

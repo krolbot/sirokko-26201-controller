@@ -317,7 +317,7 @@ void draw_wifi(Canvas& c,const Frame& f) {
         c.text(20,69,"Сеть прибора",14,kSecond);
         wrapped(c,f.credentials.ssid.data(),96,19,2);
         c.text(20,129,"Пароль",14,kSecond);
-        wrapped(c,f.credentials.password.data(),153,19,3);
+        wrapped(c,f.credentials.password[0]?f.credentials.password.data():"Без пароля",153,19,3);
         c.text(20,191,"192.168.4.1",24,kBlue);
     }
     footer(c,"2 нажатия — назад");

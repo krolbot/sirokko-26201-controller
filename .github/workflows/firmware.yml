@@ -22,6 +22,11 @@ jobs:
           node-version: '26.7.0'
           cache: npm
           cache-dependency-path: firmware/web_ui/package-lock.json
+      - name: Check optional Wi-Fi password behavior
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Werror firmware/tests/wifi_password_test.cpp -o /tmp/sirokko-wifi-test
+          /tmp/sirokko-wifi-test
+          node --test firmware/web_ui/tests/wifi.test.mjs
       - name: Build production web page and verify embedded bytes
         run: |
           npm ci --prefix firmware/web_ui

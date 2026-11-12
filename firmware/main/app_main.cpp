@@ -1,4 +1,5 @@
 #include "runtime_api.hpp"
+#include "wifi_password.hpp"
 #include "start_stop_button.hpp"
 #include "ota_activation.hpp"
 #include "persistence.hpp"
@@ -8,7 +9,6 @@
 #include <cstring>
 #include <new>
 #include "board.hpp"
-#include "bootloader_random.h"
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_app_desc.h"
@@ -164,7 +164,7 @@ namespace {
     ;
     char g_ap_ssid[33]{
     }
-    ,g_ap_password[21]{
+    ,g_ap_password[sirokko::wifi::kPasswordCapacity]{
     }
     ;
     uint64_t now_ms(){
@@ -660,29 +660,17 @@ namespace {
             vTaskDelayUntil(&wake,pdMS_TO_TICKS(sirokko::kControlPeriodMs));
         }
     }
-    bool load_or_create_password(){
-        nvs_handle_t nvs{
-        }
-        ;
+    bool load_wifi_password(){
+        nvs_handle_t nvs{};
         if(nvs_open("sirokko",NVS_READWRITE,&nvs)!=ESP_OK)return false;
         size_t size=sizeof(g_ap_password);
-        const auto e=nvs_get_str(nvs,"ap_password",g_ap_password,&size);
-        if(e==ESP_OK&&size==sizeof(g_ap_password)&&std::strlen(g_ap_password)==20){
-            nvs_close(nvs);
+        const auto result=nvs_get_str(nvs,sirokko::wifi::kPasswordKey,g_ap_password,&size);
+        nvs_close(nvs);
+        if(result==ESP_ERR_NVS_NOT_FOUND){
+            g_ap_password[0]=0;
             return true;
         }
-        if(e!=ESP_ERR_NVS_NOT_FOUND){
-            nvs_close(nvs);
-            return false;
-        }
-        constexpr char alphabet[]="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
-        bootloader_random_enable();
-        for(size_t i=0;i<20;++i)g_ap_password[i]=alphabet[esp_random()%(sizeof(alphabet)-1)];
-        bootloader_random_disable();
-        g_ap_password[20]=0;
-        const bool ok=nvs_set_str(nvs,"ap_password",g_ap_password)==ESP_OK&&nvs_commit(nvs)==ESP_OK;
-        nvs_close(nvs);
-        return ok;
+        return result==ESP_OK&&sirokko::wifi::valid_password(g_ap_password);
     }
     bool start_access_point(){
         if(esp_netif_init()!=ESP_OK)return false;
@@ -704,10 +692,11 @@ namespace {
         std::memcpy(cfg.ap.password,g_ap_password,std::strlen(g_ap_password));
         cfg.ap.channel=6;
         cfg.ap.max_connection=4;
-        cfg.ap.authmode=WIFI_AUTH_WPA2_PSK;
+        cfg.ap.authmode=g_ap_password[0]?WIFI_AUTH_WPA2_PSK:WIFI_AUTH_OPEN;
         cfg.ap.pmf_cfg.capable=true;
-        cfg.ap.pmf_cfg.required=true;
+        cfg.ap.pmf_cfg.required=g_ap_password[0]!=0;
         if(esp_wifi_set_storage(WIFI_STORAGE_RAM)!=ESP_OK||esp_wifi_set_mode(WIFI_MODE_AP)!=ESP_OK||esp_wifi_set_config(WIFI_IF_AP,&cfg)!=ESP_OK||esp_wifi_start()!=ESP_OK)return false;
+        ESP_LOGI(kTag,"Wi-Fi AP %s (%s), http://192.168.4.1",g_ap_ssid,g_ap_password[0]?"password protected":"open");
         g_credentials_ready=true;
         return true;
     }
@@ -793,6 +782,15 @@ void runtime_exit_maintenance(){
     g_ota_activation.revoke_precommit();
     g_maintenance_epoch=0;
 }
+bool runtime_save_wifi_password(const char* password){
+    if(!sirokko::wifi::valid_password(password))return false;
+    nvs_handle_t nvs{};
+    if(nvs_open("sirokko",NVS_READWRITE,&nvs)!=ESP_OK)return false;
+    const bool ok=nvs_set_str(nvs,sirokko::wifi::kPasswordKey,password)==ESP_OK&&nvs_commit(nvs)==ESP_OK;
+    nvs_close(nvs);
+    // Apply on the next normal restart, without disrupting control or the connection.
+    return ok;
+}
 bool runtime_network_credentials(char* ssid,size_t ssid_size,char* password,size_t password_size){
     if(!g_credentials_ready||!g_web_ready||!ssid||!password||ssid_size<sizeof(g_ap_ssid)||password_size<sizeof(g_ap_password))return false;
     std::memcpy(ssid,g_ap_ssid,sizeof(g_ap_ssid));
@@ -818,6 +816,7 @@ extern "C" void app_main(){
     g_sensor_suite.begin();
     if(xTaskCreatePinnedToCore(sensor_task,"sensors",6144,nullptr,8,nullptr,0)!=pdPASS||xTaskCreatePinnedToCore(control_task,"control",24576,nullptr,20,nullptr,1)!=pdPASS||xTaskCreate(storage_task,"storage",4096,nullptr,2,nullptr)!=pdPASS)return;
     start_stop_button_begin();
-    if(load_or_create_password()&&start_access_point())g_web_ready=web_start(g_ap_password);
+    if(load_wifi_password()&&start_access_point())g_web_ready=web_start(g_ap_password);
+    ESP_LOGI(kTag,"Web interface: %s",g_web_ready?"ready":"unavailable");
     g_boot_ready=true;
 }

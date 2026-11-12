@@ -26,4 +26,5 @@ bool runtime_maintenance_safe();
 uint32_t runtime_maintenance_lease();
 bool runtime_activate_ota(uint32_t lease, const void* verified_partition);
 void runtime_exit_maintenance();
+bool runtime_save_wifi_password(const char* password);
 bool web_start(const char* ap_password);

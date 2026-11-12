@@ -795,7 +795,7 @@ void Model::set_credentials(const char* ssid, const char* password) {
     clear_credentials();
     copy_credentials(&credentials_.ssid, ssid);
     copy_credentials(&credentials_.password, password);
-    credentials_.available = credentials_.ssid[0] != '\0' && credentials_.password[0] != '\0';
+    credentials_.available = credentials_.ssid[0] != '\0';
     if (credentials_.available && confirmation_.active &&
         confirmation_.command.kind == CommandKind::REQUEST_NETWORK_CREDENTIALS) {
         confirmation_ = {};

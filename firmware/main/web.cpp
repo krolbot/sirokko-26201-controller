@@ -1,4 +1,5 @@
 #include "runtime_api.hpp"
+#include "wifi_password.hpp"
 #include "bounded_receive.hpp"
 #include "ota_verify.hpp"
 #include "web_protocol.hpp"
@@ -42,7 +43,9 @@ constexpr char kTargetName[] = "esp32s3";
 extern const uint8_t ota_public_key_pem_start[] asm("_binary_ota_public_key_pem_start");
 extern const uint8_t ota_public_key_pem_end[] asm("_binary_ota_public_key_pem_end");
 
-char g_password[21]{};
+char g_password[sirokko::wifi::kPasswordCapacity]{};
+bool g_wifi_restart_required{};
+bool g_next_password_required{};
 char g_session[33]{};
 uint64_t g_session_expires_ms{};
 uint64_t g_last_login_ms{};
@@ -180,6 +183,7 @@ const char* russian_event(const char* kind) {
 }
 
 bool authorized(httpd_req_t* request) {
+    if (!g_password[0]) return true;
     char cookie[160]{};
     if (!g_session[0] || now_ms() >= g_session_expires_ms ||
         httpd_req_get_hdr_value_str(request, "Cookie", cookie, sizeof(cookie)) != ESP_OK) {
@@ -449,6 +453,9 @@ bool build_state_json(const RuntimeView& view, JsonBuilder* json) {
     json->raw(",\"glow\":"); json->boolean(control.outputs.glow);
     json->raw(",\"fuel\":"); json->boolean(control.outputs.fuel);
     json->raw(",\"command_percent\":"); json->real(control.command_percent); json->raw("}");
+    json->raw(",\"wifi\":{\"password_required\":"); json->boolean(g_password[0] != 0);
+    json->raw(",\"next_boot_password_required\":"); json->boolean(g_next_password_required);
+    json->raw(",\"restart_required\":"); json->boolean(g_wifi_restart_required); json->raw("}");
     json->raw(",\"settings\":{\"room_setpoint_milli_c\":"); json->integer(view.settings.room_setpoint_milli_c);
     json->raw(",\"duration_ms\":"); json->unsigned_integer(view.settings.duration_ms);
     json->raw(",\"mode\":"); json->quoted(view.settings.mode == sirokko::Mode::TEMPERATURE ? "TEMPERATURE" : "MANUAL");
@@ -687,9 +694,9 @@ esp_err_t login_handler(httpd_req_t* request) {
         return reject(request, "RATE_LIMIT", "429 Too Many Requests");
     }
     g_last_login_ms = current;
-    char supplied[32]{};
+    char supplied[sirokko::wifi::kPasswordCapacity]{};
     const bool header = read_header(request, "X-Sirokko-Password", supplied, sizeof(supplied));
-    const bool accepted = header && std::strlen(supplied) == 20 && constant_equal(supplied, g_password, 20);
+    const bool accepted = (!g_password[0]) || (header && std::strlen(supplied) == std::strlen(g_password) && constant_equal(supplied, g_password, std::strlen(g_password)));
     std::memset(supplied, 0, sizeof(supplied));
     if (!accepted) {
         ++g_failed_logins;
@@ -707,6 +714,32 @@ esp_err_t login_handler(httpd_req_t* request) {
     httpd_resp_set_hdr(request, "Set-Cookie", cookie);
     httpd_resp_set_type(request, "application/json; charset=utf-8");
     return httpd_resp_sendstr(request, "{\"status\":\"OK\"}");
+}
+
+esp_err_t wifi_handler(httpd_req_t* request) {
+    if (!authorized(request)) return reject(request, "AUTH", "401 Unauthorized");
+    // A custom header prevents cross-origin HTML forms from changing the password.
+    char intent[16]{};
+    if (!read_header(request, "X-Sirokko-Config", intent, sizeof(intent)) || std::strcmp(intent, "wifi") != 0)
+        return reject(request, "CONFIG_HEADER");
+    char password[sirokko::wifi::kPasswordCapacity]{};
+    size_t size{};
+    if (request->content_len > 0 && !read_body(request, password, sizeof(password), &size)) {
+        std::memset(password, 0, sizeof(password));
+        return reject(request, "BODY");
+    }
+    if (!sirokko::wifi::valid_password(password)) {
+        std::memset(password, 0, sizeof(password));
+        return reject(request, "PASSWORD_LENGTH_OR_CHARACTERS");
+    }
+    const bool saved = runtime_save_wifi_password(password);
+    if (saved) {
+        g_wifi_restart_required = std::strcmp(password, g_password) != 0;
+        g_next_password_required = password[0] != 0;
+    }
+    std::memset(password, 0, sizeof(password));
+    if (!saved) return reject(request, "STORAGE", "503 Service Unavailable");
+    return send_json(request, "{\"status\":\"SAVED\"}");
 }
 
 esp_err_t state_handler(httpd_req_t* request) {
@@ -898,8 +931,9 @@ esp_err_t ota_handler(httpd_req_t* request) {
 }  // namespace
 
 bool web_start(const char* ap_password) {
-    if (!ap_password || std::strlen(ap_password) != 20) return false;
-    std::memcpy(g_password, ap_password, sizeof(g_password));
+    if (!sirokko::wifi::valid_password(ap_password)) return false;
+    std::snprintf(g_password, sizeof(g_password), "%s", ap_password);
+    g_next_password_required = g_password[0] != 0;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.stack_size = 12288;
     config.max_uri_handlers = 8;
@@ -912,6 +946,7 @@ bool web_start(const char* ap_password) {
     const httpd_uri_t handlers[] = {
         {"/", HTTP_GET, page_handler, nullptr},
         {"/api/login", HTTP_POST, login_handler, nullptr},
+        {"/api/wifi", HTTP_POST, wifi_handler, nullptr},
         {"/api/state", HTTP_GET, state_handler, nullptr},
         {"/api/challenge", HTTP_POST, challenge_handler, nullptr},
         {"/api/command", HTTP_POST, command_handler, nullptr},
