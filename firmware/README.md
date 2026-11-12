@@ -1,75 +1,80 @@
-# Прошивка Sirokko 262.01
+# Разработка и сборка прошивки
 
-Версия сборки — `1.0.0`; цель — ESP32-S3 с ESP-IDF 5.2.3. Карта разделов, GPIO, NVS и ключ доверия `main/ota_public_key.pem` являются частью прошивки.
+Для записи готовой прошивки и первоначальной настройки используйте [SETUP.md](../SETUP.md). Этот каталог нужен для изменения и сборки исходников.
 
-## Воспроизводимая сборка
+## Инструменты
 
-Из корня репозитория нужны Python 3, Node.js 26 и ESP-IDF 5.2.3.
+- ESP-IDF **5.2.3**, настроенный для **ESP32-S3**;
+- Node.js **26** с npm;
+- Python 3 из окружения ESP-IDF.
+
+Версии компонентов ESP-IDF и веб-зависимостей закреплены в `dependencies.lock` и `web_ui/package-lock.json`.
+
+## Собрать
+
+Откройте терминал с активным ESP-IDF. Все команды ниже запускаются **из корня репозитория**:
 
 ```sh
 npm ci --prefix firmware/web_ui
 npm run build --prefix firmware/web_ui
 python3 firmware/tools/embed_web_ui.py
 python3 firmware/tools/embed_web_ui.py --check
-
-cd firmware
-idf.py set-target esp32s3
-idf.py build
+idf.py -C firmware set-target esp32s3
+idf.py -C firmware build
 ```
 
-`web_ui_data.inc` — проверяемый встроенный gzip-образ production UI. Шрифты и иконки панели генерируются только при изменении исходных assets:
+Результат — `firmware/build/`. Для USB-записи своего образа на вынутый из основной платы DevKit:
 
 ```sh
-python3 firmware/tools/generate_panel_fonts.py --check
-python3 firmware/tools/generate_panel_icons.py --check
+idf.py -C firmware -p /dev/ttyACM0 flash monitor
 ```
 
-Для этих двух генераторов нужны Pillow/FreeType и `rsvg-convert`; в самом устройстве они не нужны. CI собирает UI, сверяет встроенные байты, собирает ESP32-S3 и прикладывает полный набор для записи вместе с `flasher_args.json`, `flash_args` и `SHA256SUMS`.
+Замените порт фактическим. Не добавляйте содержимое `build/`, `node_modules/` и локальный `sdkconfig` в репозиторий. GitHub Actions собирает ту же цель и сохраняет комплект с загрузчиком, таблицей разделов, образами и адресами записи.
 
-## Запись и подключение
+## Где изменять
 
-Первую запись выполняйте через USB на вынутом из платы DevKit, без подключённых исполнительных нагрузок. После сборки из каталога `firmware`:
+| Каталог / файл | Назначение |
+|---|---|
+| `components/control_core/` | Управление отопителем, калибровка, регулирование |
+| `main/board.hpp` | Аппаратные назначения |
+| `main/app_main.cpp`, `main/sensors.cpp` | Работа ESP-IDF и датчиков |
+| `main/panel*` | Экран и местное управление |
+| `main/web*`, `web_ui/src/` | HTTP API и веб-интерфейс |
+| `main/persistence.hpp`, `main/record_codec.hpp` | Хранение параметров |
+| `partitions.csv`, `sdkconfig.defaults` | Разделы flash и конфигурация сборки |
+
+Шрифты, иконки и встроенная веб-страница лежат в `main/*_data.inc`. Это используемые прошивкой данные, не временные отчёты.
+
+### Изменение веб-интерфейса
+
+Правьте `web_ui/src/`, затем повторите сборку веб-страницы, `embed_web_ui.py` и сборку ESP-IDF. [Подробности веб-сборки](web_ui/README.md).
+
+### Изменение шрифта и иконок
+
+Генераторы находятся в `tools/`; нужны Pillow/FreeType и `rsvg-convert`. Для обычной сборки уже включённых данных эти инструменты не нужны. При изменении ресурсов запускайте генераторы из корня репозитория и проверяйте результат:
 
 ```sh
-idf.py -p /dev/ttyACM0 flash monitor
+python3 firmware/tools/generate_panel_fonts.py
+python3 firmware/tools/generate_panel_icons.py
 ```
 
-Замените `/dev/ttyACM0` фактическим портом. Для полного готового архива CI распакуйте все файлы с сохранением подкаталогов; из каталога архива в окружении ESP-IDF:
+Генерация может зависеть от версии шрифтовых библиотек. Не заменяйте готовые данные только из-за отличий своего окружения, если ресурсы не менялись.
+
+## Подпись OTA
+
+Веб-обновление принимает `.sota`, подписанный RSA-3072. Открытый ключ доверия включён в `main/ota_public_key.pem`; закрытый ключ в проект не входит.
+
+Из корня репозитория, после сборки:
 
 ```sh
-sha256sum -c SHA256SUMS
-python -m esptool --chip esp32s3 --port /dev/ttyACM0 write_flash @flash_args
-```
-
-Эта запись не подготавливает исходные пределы NVS автоматически. Без них запуск остаётся заблокированным. После установки DevKit и включения платы откройте на местной панели пункт **Wi-Fi**: там показаны имя сети и индивидуальный пароль. Подключитесь к этой сети и откройте `http://192.168.4.1`.
-
-## Исходные пределы и калибровка
-
-Для конкретной сборки сначала подготовьте квалифицированную запись `SafetyEnvelope`; числовых значений по умолчанию нет. Пока валидная запись отсутствует, калибровка и подача топлива заблокированы.
-
-`prepare_factory_envelope.py` проверяет полный вход с `qualification_reference` и всеми полями `SafetyEnvelope`, кодирует запись для ABI цели и ничего не записывает в устройство:
-
-```sh
-python3 firmware/tools/prepare_factory_envelope.py \
-  --input /protected/qualified-envelope.json \
-  --output-dir /protected/sirokko-envelope
-
-cd /protected/sirokko-envelope
-python3 "$IDF_PATH/components/nvs_flash/nvs_partition_generator/nvs_partition_gen.py" \
-  generate envelope.csv nvs.bin 0x6000
-```
-
-`0x6000` — размер раздела `nvs` из `partitions.csv`. Не перезаписывайте уже заполненный NVS: в нём хранятся настройки и учётные данные.
-
-## Подписанный OTA
-
-После target-сборки подпишите ровно её application image закрытым RSA-3072 ключом владельца. Инструмент требует явный `--key` либо `SIROKKO_OTA_SIGNING_KEY`, принимает только owner-only файл и не выводит ключ.
-
-```sh
-export SIROKKO_OTA_SIGNING_KEY=/protected/sirokko-ota-rsa3072.pem
 python3 firmware/tools/sign_ota.py \
   --input firmware/build/sirokko_26201_controller.bin \
-  --output sirokko-1.0.0.sota
+  --output /path/to/sirokko.sota \
+  --key /protected/sirokko-ota-rsa3072.pem
 ```
 
-В устройстве остаётся только `main/ota_public_key.pem`; OTA проверяет подпись, проект, цель ESP32-S3 и размер до выбора загрузочного раздела.
+В `--key` передаётся путь, не содержимое ключа. Файл должен принадлежать владельцу и иметь доступ только для него. Вместо параметра можно использовать `SIROKKO_OTA_SIGNING_KEY`.
+
+Для собственной системы обновлений нужен собственный ключ и соответствующий открытый ключ в прошивке. Сначала запишите такую прошивку через USB; установленное устройство не примет пакет, подписанный неизвестным ему ключом. Не публикуйте закрытый ключ вместе с исходниками или выпуском.
+
+Формирование исходных пределов конкретного отопителя и запись NVS описаны отдельно в [SETUP.md](../SETUP.md); повторная сборка приложения их не заменяет.
