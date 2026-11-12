@@ -1,0 +1,9 @@
+(fp_lib_table
+ (version 7)
+ (lib (name "Connector_Sirokko_Module")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Module.pretty")(options "")(descr ""))
+ (lib (name "Sirokko_Capacitor")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Capacitor.pretty")(options "")(descr ""))
+ (lib (name "Sirokko_Input")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Input.pretty")(options "")(descr ""))
+ (lib (name "Sirokko_Mechanical")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Mechanical.pretty")(options "")(descr ""))
+ (lib (name "Sirokko_Power")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Power.pretty")(options "")(descr ""))
+ (lib (name "Sirokko_Relay_Mechanical")(type "KiCad")(uri "${KIPRJMOD}/Sirokko_Relay_Mechanical.pretty")(options "")(descr ""))
+)

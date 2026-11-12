@@ -30,7 +30,6 @@ SIGNATURE_SIZE = 384  # RSA-3072
 DEFAULT_PROJECT = "sirokko_26201_controller"
 DEFAULT_TARGET = "esp32s3"
 DEFAULT_MAX_IMAGE_SIZE = 0x700000
-DEFAULT_KEY = Path("/root/.hermes/profiles/engineer/credentials/sirokko-ota-signing.pem")
 SAFE_NAME = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
@@ -86,17 +85,24 @@ def sign_header(header: bytes, key_path: Path) -> bytes:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create a signed Sirokko OTA package without exposing the private key.")
+    env_key = os.environ.get("SIROKKO_OTA_SIGNING_KEY")
     parser.add_argument("--input", required=True, type=Path, help="ESP-IDF application .bin")
     parser.add_argument("--output", required=True, type=Path, help="output .sota package")
     parser.add_argument("--project", default=DEFAULT_PROJECT, help="expected ESP-IDF project_name")
     parser.add_argument("--target", default=DEFAULT_TARGET, help="expected target tag")
     parser.add_argument("--max-image-size", type=parse_size, default=DEFAULT_MAX_IMAGE_SIZE,
                         help="maximum raw image size; default matches Sirokko OTA slot (0x700000)")
-    parser.add_argument("--key", type=Path, default=Path(os.environ.get("SIROKKO_OTA_SIGNING_KEY", DEFAULT_KEY)),
-                        help="owner-only RSA-3072 private key path; it is not printed")
+    parser.add_argument(
+        "--key",
+        type=Path,
+        default=Path(env_key) if env_key else None,
+        help="owner-only RSA-3072 private key path; required via --key or SIROKKO_OTA_SIGNING_KEY",
+    )
     args = parser.parse_args()
 
     try:
+        if args.key is None:
+            raise ValueError("signing key must be specified with --key or SIROKKO_OTA_SIGNING_KEY")
         key_path = secure_key_path(args.key)
         image = args.input.read_bytes()
         if not image:

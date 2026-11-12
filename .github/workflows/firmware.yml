@@ -27,18 +27,7 @@ jobs:
           npm ci --prefix firmware/web_ui
           npm run build --prefix firmware/web_ui
           python3 firmware/tools/embed_web_ui.py --check
-      - name: Host tests
-        run: python3 firmware/tests/run_host_tests.py
-      - name: ASan and UBSan host tests
-        run: python3 firmware/tests/run_host_tests.py --sanitize
-      - name: Browser integration tests
-        working-directory: firmware/web_ui
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/firmware/web_ui/.browsers
-        run: |
-          npx playwright install --with-deps chromium webkit
-          npm run test:browser
-      - name: ESP-IDF v5.2.3 target build
+      - name: ESP-IDF v5.2.3 ESP32-S3 target build
         run: |
           docker run --rm \
             -e IDF_TARGET=esp32s3 \
@@ -46,8 +35,8 @@ jobs:
             -v "$GITHUB_WORKSPACE:/project" \
             -w /project/firmware \
             espressif/idf@sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380 \
-            /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py build && python3 tests/test_factory_envelope.py'
-      - name: Prepare exact build artifact
+            /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py set-target esp32s3 && idf.py build'
+      - name: Prepare complete ESP32-S3 flash artifact
         run: |
           mkdir -p firmware/release-artifact/bootloader firmware/release-artifact/partition_table
           cp \

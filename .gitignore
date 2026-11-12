@@ -23,9 +23,6 @@ credentials/
 __pycache__/
 node_modules/
 .browsers
-firmware/web_ui/test-results/
-firmware/web_ui/playwright-report/
-firmware/web_ui/evidence/
 build/
 build-host/
 build-host-sanitized/
@@ -52,3 +49,6 @@ out/
 *~
 .DS_Store
 Thumbs.db
+
+# Private working notes, never part of the public project
+.planning/
