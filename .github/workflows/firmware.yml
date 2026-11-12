@@ -26,6 +26,8 @@ jobs:
         run: |
           g++ -std=c++17 -Wall -Wextra -Werror firmware/tests/wifi_password_test.cpp -o /tmp/sirokko-wifi-test
           /tmp/sirokko-wifi-test
+          g++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined firmware/tests/captive_dns_test.cpp -o /tmp/sirokko-dns-test
+          /tmp/sirokko-dns-test
           node --test firmware/web_ui/tests/wifi.test.mjs
       - name: Build production web page and verify embedded bytes
         run: |

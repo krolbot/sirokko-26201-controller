@@ -1,5 +1,7 @@
 #include "runtime_api.hpp"
 #include "wifi_password.hpp"
+#include "captive_dns.hpp"
+#include "lwip/inet.h"
 #include "start_stop_button.hpp"
 #include "ota_activation.hpp"
 #include "persistence.hpp"
@@ -676,7 +678,20 @@ namespace {
         if(esp_netif_init()!=ESP_OK)return false;
         const auto loop=esp_event_loop_create_default();
         if(loop!=ESP_OK&&loop!=ESP_ERR_INVALID_STATE)return false;
-        if(!esp_netif_create_default_wifi_ap())return false;
+        esp_netif_t* ap=esp_netif_create_default_wifi_ap();
+        if(!ap)return false;
+        if(esp_netif_dhcps_stop(ap)!=ESP_OK)return false;
+        esp_netif_ip_info_t ip{};
+        ip.ip.addr=ip.gw.addr=inet_addr("192.168.0.1");
+        ip.netmask.addr=inet_addr("255.255.255.0");
+        if(esp_netif_set_ip_info(ap,&ip)!=ESP_OK)return false;
+        esp_netif_dns_info_t dns{};
+        dns.ip.type=ESP_IPADDR_TYPE_V4;
+        dns.ip.u_addr.ip4.addr=ip.ip.addr;
+        uint8_t offer_dns=2; // DHCP OFFER_DNS
+        if(esp_netif_set_dns_info(ap,ESP_NETIF_DNS_MAIN,&dns)!=ESP_OK||
+           esp_netif_dhcps_option(ap,ESP_NETIF_OP_SET,ESP_NETIF_DOMAIN_NAME_SERVER,&offer_dns,sizeof(offer_dns))!=ESP_OK||
+           esp_netif_dhcps_start(ap)!=ESP_OK)return false;
         wifi_init_config_t init=WIFI_INIT_CONFIG_DEFAULT();
         if(esp_wifi_init(&init)!=ESP_OK)return false;
         uint8_t mac[6]{
@@ -696,7 +711,8 @@ namespace {
         cfg.ap.pmf_cfg.capable=true;
         cfg.ap.pmf_cfg.required=g_ap_password[0]!=0;
         if(esp_wifi_set_storage(WIFI_STORAGE_RAM)!=ESP_OK||esp_wifi_set_mode(WIFI_MODE_AP)!=ESP_OK||esp_wifi_set_config(WIFI_IF_AP,&cfg)!=ESP_OK||esp_wifi_start()!=ESP_OK)return false;
-        ESP_LOGI(kTag,"Wi-Fi AP %s (%s), http://192.168.4.1",g_ap_ssid,g_ap_password[0]?"password protected":"open");
+        ESP_LOGI(kTag,"Wi-Fi AP %s (%s), http://192.168.0.1",g_ap_ssid,g_ap_password[0]?"password protected":"open");
+        if(!captive_dns_start())return false;
         g_credentials_ready=true;
         return true;
     }

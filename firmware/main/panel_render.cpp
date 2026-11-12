@@ -318,7 +318,7 @@ void draw_wifi(Canvas& c,const Frame& f) {
         wrapped(c,f.credentials.ssid.data(),96,19,2);
         c.text(20,129,"Пароль",14,kSecond);
         wrapped(c,f.credentials.password[0]?f.credentials.password.data():"Без пароля",153,19,3);
-        c.text(20,191,"192.168.4.1",24,kBlue);
+        c.text(20,191,"192.168.0.1",24,kBlue);
     }
     footer(c,"2 нажатия — назад");
 }
@@ -425,7 +425,7 @@ void draw(Canvas& c,const Frame& f) {
         case Scene::TimerEdit:case Scene::TimerOff:draw_timer(c,f);break;
         case Scene::Diagnostics:draw_diagnostics(c,f);break;
         case Scene::Wifi:draw_wifi(c,f);break;
-        case Scene::Ota:message(c,f,"Обновление","Через браузер","192.168.4.1",Icon::Upload,kBlue,kBlueBg,"После остановки и охлаждения");break;
+        case Scene::Ota:message(c,f,"Обновление","Через браузер","192.168.0.1",Icon::Upload,kBlue,kBlueBg,"После остановки и охлаждения");break;
         case Scene::Prepurge:message(c,f,"Запуск","Продувка","Перед розжигом",Icon::Fan,kBlue,kBlueBg,"Пуск/Стоп — отмена");break;
         case Scene::Preheat:message(c,f,"Запуск","Разогрев свечи","",Icon::Heat,kOrange,kWarm,"Пуск/Стоп — отмена");break;
         case Scene::Ignition:message(c,f,"Запуск","Розжиг","",Icon::Heat,kOrange,kWarm,"Пуск/Стоп — отмена");break;
