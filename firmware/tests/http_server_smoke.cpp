@@ -32,7 +32,7 @@ bool probe(const char* path, const char* host, size_t padding, int expected) {
         headers.append(buffer,count);
     }
     int status=0;std::sscanf(headers.c_str(),"HTTP/1.1 %d",&status);
-    const bool ok=status==expected&&(expected!=302||headers.find("Location: http://192.168.0.1/")!=std::string::npos);
+    const bool ok=status==expected&&(expected!=302||headers.find("Location: http://192.168.26.1/")!=std::string::npos);
     // Drain the response so a successful large HTML reply does not cause a reset.
     while(recv(fd,buffer,sizeof(buffer),0)>0){}
     close(fd);
@@ -45,10 +45,10 @@ void run(void*) {
     passed+=probe("/generate_204","connectivitycheck.gstatic.com",2048,302);
     passed+=probe("/hotspot-detect.html","captive.apple.com",4096,302);
     passed+=probe("/connecttest.txt","www.msftconnecttest.com",4096,302);
-    passed+=probe("/","192.168.0.1",4096,200);
-    passed+=probe("/api/state","192.168.0.1",4096,200);
-    passed+=probe("/api/unknown","192.168.0.1",4096,404);
-    passed+=probe("/","192.168.0.1",9000,431);
+    passed+=probe("/","192.168.26.1",4096,200);
+    passed+=probe("/api/state","192.168.26.1",4096,200);
+    passed+=probe("/api/unknown","192.168.26.1",4096,404);
+    passed+=probe("/","192.168.26.1",9000,431);
     ESP_LOGI("http_smoke","RESULT %u/7",passed);
     vTaskDelete(nullptr);
 }

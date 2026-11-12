@@ -24,12 +24,12 @@ bool captive_dns_start() {
     sockaddr_in address{};
     address.sin_family = AF_INET;
     address.sin_port = htons(53);
-    address.sin_addr.s_addr = inet_addr("192.168.0.1");
+    address.sin_addr.s_addr = inet_addr("192.168.26.1");
     if (bind(fd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) != 0 ||
         xTaskCreate(dns_task, "portal_dns", 3072, reinterpret_cast<void*>(static_cast<intptr_t>(fd)), 2, nullptr) != pdPASS) {
         close(fd);
         return false;
     }
-    ESP_LOGI("portal", "Captive DNS ready at 192.168.0.1:53");
+    ESP_LOGI("portal", "Captive DNS ready at 192.168.26.1:53");
     return true;
 }

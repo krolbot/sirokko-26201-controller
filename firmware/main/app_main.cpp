@@ -682,7 +682,7 @@ namespace {
         if(!ap)return false;
         if(esp_netif_dhcps_stop(ap)!=ESP_OK)return false;
         esp_netif_ip_info_t ip{};
-        ip.ip.addr=ip.gw.addr=inet_addr("192.168.0.1");
+        ip.ip.addr=ip.gw.addr=inet_addr("192.168.26.1");
         ip.netmask.addr=inet_addr("255.255.255.0");
         if(esp_netif_set_ip_info(ap,&ip)!=ESP_OK)return false;
         esp_netif_dns_info_t dns{};
@@ -711,7 +711,7 @@ namespace {
         cfg.ap.pmf_cfg.capable=true;
         cfg.ap.pmf_cfg.required=g_ap_password[0]!=0;
         if(esp_wifi_set_storage(WIFI_STORAGE_RAM)!=ESP_OK||esp_wifi_set_mode(WIFI_MODE_AP)!=ESP_OK||esp_wifi_set_config(WIFI_IF_AP,&cfg)!=ESP_OK||esp_wifi_start()!=ESP_OK)return false;
-        ESP_LOGI(kTag,"Wi-Fi AP %s (%s), http://192.168.0.1",g_ap_ssid,g_ap_password[0]?"password protected":"open");
+        ESP_LOGI(kTag,"Wi-Fi AP %s (%s), http://192.168.26.1",g_ap_ssid,g_ap_password[0]?"password protected":"open");
         if(!captive_dns_start())return false;
         g_credentials_ready=true;
         return true;

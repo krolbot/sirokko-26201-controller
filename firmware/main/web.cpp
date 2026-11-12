@@ -688,8 +688,8 @@ ota_verify::Result finish_ota_sink(OtaSink* sink) {
 esp_err_t portal_redirect(httpd_req_t* request) {
     no_store(request);
     httpd_resp_set_status(request, "302 Found");
-    httpd_resp_set_hdr(request, "Location", "http://192.168.0.1/");
-    return httpd_resp_sendstr(request, "Open http://192.168.0.1/");
+    httpd_resp_set_hdr(request, "Location", "http://192.168.26.1/");
+    return httpd_resp_sendstr(request, "Open http://192.168.26.1/");
 }
 
 esp_err_t missing_page(httpd_req_t* request, httpd_err_code_t) {
@@ -702,7 +702,7 @@ esp_err_t missing_page(httpd_req_t* request, httpd_err_code_t) {
 esp_err_t page_handler(httpd_req_t* request) {
     char host[128]{};
     if (read_header(request, "Host", host, sizeof(host)) &&
-        std::strcmp(host, "192.168.0.1") != 0 && std::strcmp(host, "192.168.0.1:80") != 0)
+        std::strcmp(host, "192.168.26.1") != 0 && std::strcmp(host, "192.168.26.1:80") != 0)
         return portal_redirect(request);
     no_store(request);
     httpd_resp_set_type(request, "text/html; charset=utf-8");

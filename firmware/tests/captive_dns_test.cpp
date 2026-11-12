@@ -9,7 +9,7 @@ int main() {
     auto reset=[&]{packet.fill(0);std::memcpy(packet.data(),query,sizeof(query));};
     reset();auto n=sirokko::portal::dns_reply(packet.data(),sizeof(query),packet.size());
     assert(n==sizeof(query)+16 && packet[0]==0x12 && packet[1]==0x34 && packet[7]==1);
-    assert(packet[n-4]==192 && packet[n-3]==168 && packet[n-2]==0 && packet[n-1]==1);
+    assert(packet[n-4]==192 && packet[n-3]==168 && packet[n-2]==26 && packet[n-1]==1);
     reset();packet[23]=28;assert(sirokko::portal::dns_reply(packet.data(),sizeof(query),packet.size())==sizeof(query));assert(packet[7]==0);
     reset();assert(sirokko::portal::dns_reply(packet.data(),sizeof(query),sizeof(query))==0);
     for(size_t size=0;size<sizeof(query);++size){reset();assert(sirokko::portal::dns_reply(packet.data(),size,packet.size())==0);}

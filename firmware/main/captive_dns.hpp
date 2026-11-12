@@ -26,7 +26,7 @@ inline size_t dns_reply(uint8_t* data, size_t size, size_t capacity) {
     data[6] = 0; data[7] = address ? 1 : 0;
     data[8] = data[9] = data[10] = data[11] = 0;
     if (!address) return end;
-    const uint8_t answer[] = {0xc0,0x0c,0,1,0,1,0,0,0,60,0,4,192,168,0,1};
+    const uint8_t answer[] = {0xc0,0x0c,0,1,0,1,0,0,0,60,0,4,192,168,26,1};
     std::memcpy(data + end, answer, sizeof(answer));
     return end + sizeof(answer);
 }
