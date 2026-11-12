@@ -18,6 +18,10 @@
 #include "esp_app_format.h"
 #include "esp_chip_info.h"
 #include "esp_http_server.h"
+#include "esp_log.h"
+
+static_assert(CONFIG_HTTPD_MAX_REQ_HDR_LEN >= 8192,
+              "Set CONFIG_HTTPD_MAX_REQ_HDR_LEN=8192 in the active sdkconfig (defaults do not override it)");
 #include "esp_ota_ops.h"
 #include "esp_random.h"
 #include "esp_system.h"
@@ -961,6 +965,7 @@ bool web_start(const char* ap_password) {
     config.send_wait_timeout = 5;
     httpd_handle_t server{};
     if (httpd_start(&server, &config) != ESP_OK) return false;
+    ESP_LOGI("web", "HTTP request header limit: %d bytes", CONFIG_HTTPD_MAX_REQ_HDR_LEN);
     if (httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, missing_page) != ESP_OK) return false;
     const httpd_uri_t handlers[] = {
         {"/", HTTP_GET, page_handler, nullptr},
