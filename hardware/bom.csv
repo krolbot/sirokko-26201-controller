@@ -14,14 +14,14 @@
 Плата;D101;1;Диод Шоттки;STPS5H100B-TR;STMicroelectronics;100 В, 5 А, TO-252;ChipDip — точный MPN;https://www.chipdip.ru/product/stps5h100b-tr-diod-shottki-100v-5a-dpak-st-microelectronics-9001570322;—
 Плата;F1;1;Держатель плавкой вставки;3568;Keystone Electronics;для вставки 0997015.WXN, посадочное место Keystone 3568;ChipDip — точный MPN;https://www.chipdip.ru/product/3568-derzhatel-predohranitelya-tht-keystone-8070123077;Впаивается в PCB
 Вставное;F1;1;Плавкая вставка;0997015.WXN;Littelfuse;15 А, 58 В DC, для держателя 3568;ChipDip — точный MPN;https://www.chipdip.ru/product/0997015-wxn-predohranitel-plavkaya-vstavka-15a-littelfuse-8013841700;Устанавливается в держатель F1
-Плата;J1,J3;2;Гнездовая колодка 1×22;SSQ-122-01-T-S;Samtec;P2,54, вертикальная, для DevKit;ChipDip — точный MPN;https://www.chipdip.ru/product0/8065631635;Только колодки, DevKit отдельной строкой
+Плата;J1,J3;2;Гнездовая колодка 1×22;SSQ-122-01-T-S;Samtec;P2,54, вертикальная, для DevKit;ChipDip — точный MPN;https://www.chipdip.ru/product0/8065631635;—
 Плата;J12;1;Винтовая клеммная колодка 1×3;1715734;Phoenix Contact;MKDS 1,5, P5,08, горизонтальная;ChipDip — точный MPN;https://www.chipdip.ru/product/1715734-vintovoy-terminal-17.5a-250v-phoenix-contact-8031094982;Для DS18B20
 Плата;J13,J27,J28;3;Винтовая клеммная колодка 1×2;1756993;Phoenix Contact;MKDS 5-HV-2, P9,52;ChipDip — точный MPN;https://www.chipdip.ru/product/1756993-fixed-terminal-blocks-mkds-5-hv-2-9-phoenix-contact-8005105820;Вход 24 В и два выхода нагрузки
 Плата;J29;1;Винтовая клеммная колодка 1×4;1715747;Phoenix Contact;MKDS 1,5-4, P5,08, горизонтальная;ChipDip — точный MPN;https://www.chipdip.ru/product/1715747-fixed-terminal-blocks-4p-5.08mm-phoenix-contact-8005104956;Для HC-160A S2
-Плата;J30,J31;2;Колодка модуля 1×9;SSW-109-01-T-S;Samtec;P2,54, для модулей MAX31856;ChipDip — точный MPN;https://www.chipdip.ru/product/ssw-109-01-t-s-headers-wire-housings-tiger-buy-samtec-8004762790;Только колодки, модули отдельной строкой
+Плата;J30,J31;2;Колодка модуля 1×9;SSW-109-01-T-S;Samtec;P2,54, для модулей MAX31856;ChipDip — точный MPN;https://www.chipdip.ru/product/ssw-109-01-t-s-headers-wire-housings-tiger-buy-samtec-8004762790;—
 Плата;J32;1;Ключевой IDC-разъём 2×6;—;—;P2,54, вертикальный, THT, ключевой, по посадочному месту IDC-Header_2x06;MPN и карточка не назначены;—;Для панели TFT
 Плата;K1,K2;2;Колодка реле;DZ85AB-5-PCB;Durakool;5 выводов, впаиваемая, для DG85BM-5021-76-1024;ChipDip — точный MPN;https://www.chipdip.ru/product/dz85ab-5-pcb-dz-5-pin-pcb-mount-relay-socket-for-durakool-8034111209;Впаивается в PCB
-Вставное;K1,K2;2;Реле 24 В;DG85BM-5021-76-1024;Durakool;вставное, для колодки DZ85AB-5-PCB;Вне ChipDip — выбранный MPN;—;Не заменять на другое семейство реле
+Вставное;K1,K2;2;Реле 24 В;DG85BM-5021-76-1024;Durakool;вставное, для колодки DZ85AB-5-PCB;Вне ChipDip — выбранный MPN;—;—
 Плата;L101;1;Силовой дроссель;SRP1770TA-330M;Bourns;33 мкГн, Isat не менее 10 А;ChipDip — точный MPN;https://www.chipdip.ru/product/srp1770ta-330m-power-inductors-smd-33uh-20-bourns-8005125913;—
 Плата;Q1,Q2,Q3,Q4;4;N-канальный MOSFET;IPB017N10N5LFATMA1;Infineon Technologies;100 В, PG-TO263-7;ChipDip — точный MPN;https://www.chipdip.ru/product/ipb017n10n5lfatma1-100v-180a-1.7mohm-100a-10v-313w-infineon-8044731406;—
 Плата;R1,R86,R87;3;Резистор;MFR-25FTE52-4K7;Yageo;4,7 кОм, THT DIN0207, P10,16;ChipDip — точный MPN;https://www.chipdip.ru/product/mfr-25fte52-4k7-metal-film-resistors-4.7k-250mw-50ppm-yageo-8003541082;—
@@ -40,10 +40,10 @@
 Плата;U11;1;Драйвер двигателя;DRV8803PWPR;Texas Instruments;HTSSOP-16 с тепловой площадкой;ChipDip — точный MPN;https://www.chipdip.ru/product/drv8803pwpr-texas-instruments-9001599750;—
 Плата;U13;1;Контроллер идеального диода;LM74800QDRRRQ1;Texas Instruments;WSON-12 3×3 мм с тепловой площадкой;ChipDip — точный MPN;https://www.chipdip.ru/product/lm74800qdrrrq1-kontroller-upravleniya-texas-instruments-9001859100;—
 Плата;U101;1;Импульсный понижающий контроллер;LM5013DDAR;Texas Instruments;DDA-8;ChipDip — точный MPN;https://www.chipdip.ru/product/lm5013ddar-texas-instruments-8075672392;—
-Внешнее;J1,J3;1;ESP32 DevKit;YD-ESP32-S3 N16R8 V1.4;YD;готовая плата, N16R8, V1.4, два ряда по 22 контакта;Вне ChipDip — согласованное исполнение;—;Голый ESP32-S3-WROOM не подходит
-Внешнее;J30,J31;2;Модуль термопары MAX31856;синий 9-контактный, геометрия Adafruit 3263;—;совместим с колодкой SSW-109-01-T-S, 9 контактов P2,54;ChipDip — эталон геометрии;https://www.chipdip.ru/product/3263-datchik-adapter-dlya-datchika-3-3-5vdc-ic-adafruit-8062129909;Карточка 3263 не присваивает MPN безымянному синему модулю
+Внешнее;J1,J3;1;ESP32 DevKit;YD-ESP32-S3 N16R8 V1.4;YD;готовая плата, N16R8, V1.4, два ряда по 22 контакта;Вне ChipDip — согласованное исполнение;—;—
+Внешнее;J30,J31;2;Модуль термопары MAX31856;синий 9-контактный, геометрия Adafruit 3263;—;совместим с колодкой SSW-109-01-T-S, 9 контактов P2,54;ChipDip — эталон геометрии;https://www.chipdip.ru/product/3263-datchik-adapter-dlya-datchika-3-3-5vdc-ic-adafruit-8062129909;Геометрия и распиновка Adafruit 3263
 Внешнее;J12;1;Герметичный температурный зонд;DS18B20;Smartmodule;IP67, трёхпроводный, для J12;ChipDip — карточка зонда;https://www.chipdip.ru/product/ds18b20-ip67-1-3-wire-gilza-49-7-h-6-mm-smartmodule-9000725119;Длина кабеля выбирается по месту
-Внешнее;J29;1;Контроллер двигателя;HC-160A S2;—;исполнение S2, линии A1, A2, PA, G;Вне ChipDip — согласованное исполнение;—;Не часть PCB
-Внешнее;J32;1;Панель TFT с энкодером;—;—;TFT 2,4″ SPI, 3,3 В, EC11, отдельная KEY0, 12 доступных контактов;Вне ChipDip — ограничения совместимости;—;Не заменять панелью с другой распиновкой
+Внешнее;J29;1;Контроллер двигателя;HC-160A S2;—;исполнение S2, линии A1, A2, PA, G;Вне ChipDip — согласованное исполнение;—;—
+Внешнее;J32;1;Панель TFT с энкодером;—;—;TFT 2,4″ SPI, 3,3 В, EC11, отдельная KEY0, 12 доступных контактов;Вне ChipDip — ограничения совместимости;—;Распиновка — в docs/assembly.md
 Внешнее;—;2;Термопара;тип K;—;рабочий диапазон 0–600 °C;Исполнение выбирается по месту;—;Механическое исполнение и длина не заданы
 Внешнее;J32;1;Шлейф панели;—;—;до 100 мм, ключевой 2×6 IDC со стороны J32, 12 контактов к выбранной панели;Исполнение выбирается по месту;—;Разводка контактов не 1:1
