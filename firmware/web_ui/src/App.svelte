@@ -56,15 +56,18 @@
   const snapshot = $derived(ui.snapshot);
   const measurements = new Measurements();
   let recording = $state(measurements.status());
-  const trialActions = ["TRIAL_DRY", "TRIAL_FUEL"];
+  const trialPending = $derived(
+    ui.pending?.action === "TRIAL_START" ||
+      ui.requestInFlight === "TRIAL_START",
+  );
 
-  async function startTrial(mode) {
-    const action = mode === "DRY" ? "TRIAL_DRY" : "TRIAL_FUEL";
+  async function startTrial() {
+    const action = "TRIAL_START";
     if (!connectionReady(ui) || !commandAllowed(snapshot, action)) return;
-    if (!measurements.startTrial(snapshot, ui.link === "online", mode)) {
+    if (!measurements.startTrial(snapshot, ui.link === "online")) {
       notify(
         "error",
-        "Завершите текущую запись и скачайте CSV перед новой пробой",
+        "Завершите текущую запись и скачайте CSV перед новым запуском",
       );
       return;
     }
@@ -117,17 +120,13 @@
   }
 
   const stopVisible = $derived(
-    needsStop(snapshot) ||
-      ["START", ...trialActions].includes(ui.pending?.action) ||
-      trialActions.includes(ui.requestInFlight),
+    needsStop(snapshot) || ui.pending?.action === "START" || trialPending,
   );
   const stopLabel = $derived(
-    trialActive(snapshot) ||
-      trialActions.includes(ui.pending?.action) ||
-      trialActions.includes(ui.requestInFlight)
+    trialActive(snapshot) || trialPending
       ? snapshot?.state?.code === "TRIAL_READY" || !needsStop(snapshot)
-        ? "Отменить пробу"
-        : "Остановить пробу"
+        ? "Отменить запуск"
+        : "Остановить запуск"
       : ui.pending?.action === "START" && !needsStop(snapshot)
         ? "Отменить запуск"
         : "Остановить нагрев",

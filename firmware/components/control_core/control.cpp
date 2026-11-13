@@ -107,7 +107,7 @@ uint32_t Controller::sensor_faults(const Sensors &sensors, uint64_t now_ms) cons
         result |= FAULT_EXHAUST;
     if (!thermocouple_fresh(sensors.air, now_ms))
         result |= FAULT_AIR;
-    if (trial_mode_ == TrialMode::NONE && settings_.mode == Mode::TEMPERATURE &&
+    if (!trial_active_ && settings_.mode == Mode::TEMPERATURE &&
         !room_temperature_fresh(sensors.room, now_ms))
         result |= FAULT_ROOM;
     if (exhaust_ok && envelope_.maximum_exhaust_milli_c &&
@@ -141,20 +141,19 @@ bool Controller::local_button_fresh(uint64_t now_ms) const {
 }
 
 bool Controller::cooling_ready(const Sensors &sensors, uint64_t now_ms) const {
-    if (trial_mode_ == TrialMode::NONE)
+    if (!trial_active_)
         return cooling_complete(envelope_, sensors, now_ms);
     return thermal_sensors_fresh(sensors, now_ms) && sensors.exhaust.milli_c < trial_cooling_limit(envelope_);
 }
 
 uint64_t Controller::purge_minimum_ms() const {
-    return trial_mode_ == TrialMode::NONE ? envelope_.postpurge_ms
-                                          : std::max(envelope_.postpurge_ms, kPostpurgeMinimumMs);
+    return !trial_active_ ? envelope_.postpurge_ms : std::max(envelope_.postpurge_ms, kPostpurgeMinimumMs);
 }
 
 Block Controller::trial_start_guard(const Sensors &sensors, uint64_t now_ms) const {
     if (faults_)
         return Block::FAULT_LATCHED;
-    if (trial_mode_ != TrialMode::NONE || (state_ != State::IDLE && state_ != State::UNCONFIGURED))
+    if (trial_active_ || (state_ != State::IDLE && state_ != State::UNCONFIGURED))
         return Block::BUSY;
     if (!local_button_fresh(now_ms))
         return Block::LOCAL_CONTROLS_UNAVAILABLE;
@@ -175,7 +174,7 @@ void Controller::transition(State state, uint64_t now_ms) {
         return;
     state_ = state;
     if (state == State::IDLE || state == State::UNCONFIGURED || state == State::FAULT)
-        trial_mode_ = TrialMode::NONE;
+        trial_active_ = false;
     state_started_ms_ = now_ms;
     ++state_version_;
     if (state_version_ == 0)
@@ -240,7 +239,7 @@ void Controller::begin_stop(uint64_t now_ms) {
 }
 
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
-    trial_fault_ = trial_fault_ || trial_mode_ != TrialMode::NONE;
+    trial_fault_ = trial_fault_ || trial_active_;
     if (combustion_monitor_.snapshot().phase != combustion::Phase::LOST)
         combustion_monitor_ = {};
     faults_ |= faults;
@@ -256,7 +255,7 @@ void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
 
 Outputs Controller::outputs() const {
     Outputs result{};
-    if (trial_mode_ != TrialMode::NONE) {
+    if (trial_active_) {
         if (purging(state_))
             return {true, kPwmMaximum, false, false};
         const bool held = local_button_held_ && local_button_fresh(last_tick_ms_);
@@ -266,7 +265,7 @@ Outputs Controller::outputs() const {
             const uint64_t elapsed =
                 last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
             return {true, kPwmMaximum, held && elapsed < kIgnitionGlowMs,
-                    held && trial_mode_ == TrialMode::FUEL && elapsed < kTrialMeasurementMs};
+                    held && elapsed < kTrialMeasurementMs};
         }
         return result;
     }
@@ -319,8 +318,8 @@ Snapshot Controller::tick(const TickInput &input) {
     local_button_held_ = input.local_button_held;
     local_button_valid_ = input.local_button_valid;
     local_button_sample_ms_ = input.local_button_sample_ms;
-    if (!envelope_.provisioned && trial_mode_ == TrialMode::NONE && input.trial_request == TrialMode::NONE &&
-        !purging(state_) && state_ != State::FAULT) {
+    if (!envelope_.provisioned && !trial_active_ && !input.trial_request && !purging(state_) &&
+        state_ != State::FAULT) {
         last_tick_ms_ = now;
         faults_ = input.external_faults;
         if (input.stop || input.exit_maintenance) {
@@ -349,7 +348,7 @@ Snapshot Controller::tick(const TickInput &input) {
         new_faults |= current_sensor_faults;
     const bool button_sample_fresh =
         local_button_sample_ms_ <= now && now - local_button_sample_ms_ <= kLocalButtonFreshMs;
-    if (trial_mode_ != TrialMode::NONE &&
+    if (trial_active_ &&
         ((active(state_) && (!button_sample_fresh || (!local_button_valid_ && local_button_held_))) ||
          (state_ == State::TRIAL_READY && !button_sample_fresh)))
         new_faults |= FAULT_LOCAL_CONTROLS;
@@ -357,8 +356,8 @@ Snapshot Controller::tick(const TickInput &input) {
         latch_fault(new_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued starts and never writes GPIO directly.
-    const bool stop_barrier = input.stop || (trial_mode_ != TrialMode::NONE && active(state_) &&
-                                             (!local_button_held_ || !local_button_valid_));
+    const bool stop_barrier =
+        input.stop || (trial_active_ && active(state_) && (!local_button_held_ || !local_button_valid_));
     if (stop_barrier) {
         // Revoke queued commands even when STOP leaves an idle controller in IDLE.
         if (++state_version_ == 0)
@@ -390,8 +389,8 @@ Snapshot Controller::tick(const TickInput &input) {
         record("TIMER_EXPIRED", now);
         begin_stop(now);
     }
-    if (trial_mode_ == TrialMode::NONE && !stop_barrier && !expired && input.set_shutdown_timer &&
-        active(state_) && input.shutdown_after_ms <= kMaximumTimerMs &&
+    if (!trial_active_ && !stop_barrier && !expired && input.set_shutdown_timer && active(state_) &&
+        input.shutdown_after_ms <= kMaximumTimerMs &&
         input.shutdown_after_ms <= std::numeric_limits<uint64_t>::max() - now) {
         duration_active_ = input.shutdown_after_ms != 0;
         duration_deadline_ms_ = duration_active_ ? now + input.shutdown_after_ms : 0;
@@ -400,21 +399,20 @@ Snapshot Controller::tick(const TickInput &input) {
     }
 
     const Block requested_start_block = start_guard(input.sensors, now);
-    if (input.trial_request == TrialMode::NONE && !stop_barrier && !reset_barrier && !expired &&
-        input.cycle_record_ready && input.start && requested_start_block == Block::NONE)
+    if (!input.trial_request && !stop_barrier && !reset_barrier && !expired && input.cycle_record_ready &&
+        input.start && requested_start_block == Block::NONE)
         begin_start(now);
 
-    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready &&
-        (input.trial_request == TrialMode::DRY || input.trial_request == TrialMode::FUEL) &&
+    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready && input.trial_request &&
         trial_start_guard(input.sensors, now) == Block::NONE) {
-        trial_mode_ = input.trial_request;
+        trial_active_ = true;
         trial_fault_ = false;
         duration_active_ = false;
         duration_deadline_ms_ = 0;
         condition_active_ = false;
         combustion_monitor_ = {};
         transition(State::TRIAL_READY, now);
-        record(trial_mode_ == TrialMode::DRY ? "TRIAL_DRY_ARMED" : "TRIAL_FUEL_ARMED", now);
+        record("TRIAL_ARMED", now);
     }
 
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
@@ -438,13 +436,13 @@ Snapshot Controller::tick(const TickInput &input) {
         }
         break;
     case State::PREHEAT:
-        if (elapsed >= (trial_mode_ == TrialMode::NONE ? envelope_.preheat_ms : kPreheatMinimumMs)) {
+        if (elapsed >= (!trial_active_ ? envelope_.preheat_ms : kPreheatMinimumMs)) {
             condition_active_ = false;
             transition(State::IGNITION, now);
         }
         break;
     case State::IGNITION:
-        if (trial_mode_ != TrialMode::NONE) {
+        if (trial_active_) {
             if (elapsed >= kTrialMeasurementMs) {
                 record("TRIAL_FINISHED", now);
                 begin_stop(now);
@@ -509,9 +507,9 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.boot_id = boot_id_;
     result.run_id = run_id_;
     result.reset_fault_block = reset_fault_guard(last_sensors_, now_ms, previous_external_faults_);
-    result.trial_mode = trial_mode_;
+    result.trial_active = trial_active_;
     result.trial_start_block = trial_start_guard(last_sensors_, now_ms);
-    if (trial_mode_ != TrialMode::NONE) {
+    if (trial_active_) {
         const uint64_t elapsed = now_ms >= state_started_ms_ ? now_ms - state_started_ms_ : 0;
         const uint64_t period = state_ == State::TRIAL_READY ? kTrialArmMs
                                 : state_ == State::PREHEAT   ? kPreheatMinimumMs
@@ -546,7 +544,7 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.combustion = combustion_monitor_.snapshot();
     if (state_ != State::RUN && result.combustion.phase != combustion::Phase::LOST)
         result.combustion = {};
-    const auto command_maximum = trial_mode_ == TrialMode::NONE ? envelope_.maximum_speed_code : kPwmMaximum;
+    const auto command_maximum = !trial_active_ ? envelope_.maximum_speed_code : kPwmMaximum;
     result.command_percent = command_maximum ? 100.0 * result.outputs.speed_code / command_maximum : 0;
     result.working_span_fraction = regulator_.value().fraction;
     result.room_excess = state_ == State::RUN && settings_.mode == Mode::TEMPERATURE &&
@@ -581,7 +579,7 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
 }
 
 bool Controller::update_settings(const Settings &settings) {
-    if (!valid_settings(settings) || trial_mode_ != TrialMode::NONE || state_ == State::MAINTENANCE ||
+    if (!valid_settings(settings) || trial_active_ || state_ == State::MAINTENANCE ||
         combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT)
         return false;
     Settings accepted = settings;

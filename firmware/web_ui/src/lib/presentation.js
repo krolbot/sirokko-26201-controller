@@ -43,7 +43,7 @@ export const routes = {
   wifi: { title: "Wi-Fi", section: "settings" },
   regulation: { title: "Темп изменения ШИМ", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
-  trial: { title: "Пробный запуск", section: "settings" },
+  trial: { title: "Первый запуск", section: "settings" },
   update: { title: "Обновление", section: "settings" },
 };
 export function routeFromHash(hash) {
@@ -55,8 +55,8 @@ export function blockedActionLink(snapshot, action) {
   switch (snapshot?.commands?.[action]?.code) {
     case "ENVELOPE_MISSING":
     case "ENVELOPE_INVALID":
-      return action === "START" && snapshot?.commands?.TRIAL_DRY
-        ? { href: "#/trial", label: "Пробный запуск и измерения" }
+      return action === "START" && snapshot?.commands?.TRIAL_START
+        ? { href: "#/trial", label: "Первый запуск и измерения" }
         : { href: "#/heater", label: "Настроить отопитель" };
     case "SENSOR_INVALID":
     case "SENSOR_STALE":

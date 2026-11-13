@@ -34,7 +34,7 @@ export function makeCommandId(cryptoApi = globalThis.crypto) {
 }
 
 export function trialActive(snapshot) {
-  return ["DRY", "FUEL"].includes(snapshot?.trial?.mode);
+  return snapshot?.trial?.active === true;
 }
 
 export function isActiveSession(snapshot) {
@@ -245,10 +245,9 @@ export function commandMatchesSnapshot(pending, snapshot) {
       return settingsChangesMatch(baseline, payload.settings, snapshot);
     case "START":
       return isActiveSession(snapshot) && snapshot.run_id !== baseline.run_id;
-    case "TRIAL_DRY":
-    case "TRIAL_FUEL":
+    case "TRIAL_START":
       return (
-        snapshot.trial?.mode === (action === "TRIAL_DRY" ? "DRY" : "FUEL") &&
+        trialActive(snapshot) &&
         ["TRIAL_READY", "PREHEAT", "IGNITION"].includes(snapshot.state?.code) &&
         (snapshot.state.code === "TRIAL_READY" ||
           (snapshot.run_id !== "0" && snapshot.run_id !== baseline.run_id))

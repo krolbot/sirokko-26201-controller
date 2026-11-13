@@ -39,7 +39,6 @@ constexpr uint64_t kLocalButtonFreshMs = 100;
 constexpr uint64_t kMaximumTimerMs = 7ULL * 24 * 60 * 60 * 1000;
 
 enum class Mode : uint8_t { TEMPERATURE, MANUAL };
-enum class TrialMode : uint8_t { NONE, DRY, FUEL };
 
 enum class State : uint8_t {
     UNCONFIGURED,
@@ -164,7 +163,7 @@ struct TickInput {
     bool enter_maintenance{};
     bool exit_maintenance{};
     bool cycle_record_ready{};
-    TrialMode trial_request{TrialMode::NONE};
+    bool trial_request{};
     bool local_button_held{};
     bool local_button_valid{};
     uint64_t local_button_sample_ms{};
@@ -176,7 +175,7 @@ struct Snapshot {
     State state{State::RECOVERY_PURGE};
     Block start_block{Block::RECOVERY_PURGE};
     Block reset_fault_block{Block::BUSY};
-    TrialMode trial_mode{TrialMode::NONE};
+    bool trial_active{};
     uint64_t trial_remaining_ms{};
     Block trial_start_block{Block::BUSY};
     Outputs outputs;
@@ -205,8 +204,7 @@ enum class Action : uint8_t {
     OTA,
     TIMER,
     PROFILE,
-    TRIAL_DRY,
-    TRIAL_FUEL,
+    TRIAL_START,
 };
 
 struct Grant {
@@ -268,7 +266,7 @@ class Controller {
     Settings settings_;
     Sensors last_sensors_;
     State state_{State::UNCONFIGURED};
-    TrialMode trial_mode_{TrialMode::NONE};
+    bool trial_active_{};
     bool trial_fault_{};
     bool local_button_held_{};
     bool local_button_valid_{};

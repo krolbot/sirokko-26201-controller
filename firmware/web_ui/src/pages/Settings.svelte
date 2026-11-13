@@ -43,7 +43,7 @@
   <div class="grouped-list surface">
     <a class="list-row" href="#/trial"
       ><span class="row-icon"><Icon name="thermometer" /></span><span
-        class="row-title">Пробный запуск</span
+        class="row-title">Первый запуск</span
       ><Icon name="chevron" size={16} /></a
     >
     <a class="list-row" href="#/heater"

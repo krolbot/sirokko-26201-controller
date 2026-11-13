@@ -58,7 +58,7 @@ void Button::latch_press_intent() {
 
     // The action is chosen at the first observed low level, never at dispatch time.
     source_state_version_ = snapshot.state_version;
-    if (snapshot.trial_mode != sirokko::TrialMode::NONE) {
+    if (snapshot.trial_active) {
         intent_ = Intent::HOLD;
     } else if (is_stop_target(snapshot)) {
         intent_ = Intent::STOP;

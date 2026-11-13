@@ -236,7 +236,7 @@ bool button_snapshot(void *, start_stop_button::Snapshot *out) {
     RuntimeView v{};
     if (!out || !runtime_view(&v))
         return false;
-    *out = {v.control.state, v.control.start_block, v.control.state_version, v.control.trial_mode};
+    *out = {v.control.state, v.control.start_block, v.control.state_version, v.control.trial_active};
     return true;
 }
 bool button_start(void *, uint64_t version) {
@@ -368,8 +368,8 @@ void control_pass(ControlWork &w) {
     input.external_faults =
         (g_output_driver_fault ? static_cast<uint32_t>(sirokko::FAULT_CONTROL_WATCHDOG) : 0) |
         (storage_healthy() ? 0 : static_cast<uint32_t>(sirokko::FAULT_STORAGE));
-    if ((g_controller->safety_envelope().provisioned || before.trial_mode != sirokko::TrialMode::NONE) &&
-        g_startup_complete && (!g_button_ready || !panel_ready()))
+    if ((g_controller->safety_envelope().provisioned || before.trial_active) && g_startup_complete &&
+        (!g_button_ready || !panel_ready()))
         input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
     input.stop = g_stop.exchange(false);
     input.exit_maintenance = g_exit_maintenance.exchange(false);
@@ -412,10 +412,8 @@ void control_pass(ControlWork &w) {
     }
     if (have) {
         input.start = c.action == sirokko::Action::START;
-        input.trial_request = c.action == sirokko::Action::TRIAL_DRY    ? sirokko::TrialMode::DRY
-                              : c.action == sirokko::Action::TRIAL_FUEL ? sirokko::TrialMode::FUEL
-                                                                        : sirokko::TrialMode::NONE;
-        if (input.trial_request != sirokko::TrialMode::NONE && (!g_button_ready || !panel_ready()))
+        input.trial_request = c.action == sirokko::Action::TRIAL_START;
+        if (input.trial_request && (!g_button_ready || !panel_ready()))
             input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
         input.set_shutdown_timer = c.action == sirokko::Action::TIMER;
         input.shutdown_after_ms = c.delay_ms;

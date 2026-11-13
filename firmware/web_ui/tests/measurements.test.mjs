@@ -177,27 +177,27 @@ test("trial captures arm, actuation and cooldown, stopping only after the cycle 
   const r = new Measurements();
   const initial = {
     ...snapshot(),
-    trial: { mode: "NONE" },
+    trial: { active: false },
     state: { code: "UNCONFIGURED" },
   };
-  assert(r.startTrial(initial, true, "FUEL", time));
+  assert(r.startTrial(initial, true, time));
   const armed = {
     ...snapshot(1100),
-    trial: { mode: "FUEL" },
+    trial: { active: true },
     state: { code: "TRIAL_READY" },
   };
   r.observe(armed, true, time + 100);
   r.cancelTrialRequest(time + 101); // A late browser timeout must not discard an observed trial.
   assert(r.active);
   r.observe(
-    { ...snapshot(1200), trial: { mode: "FUEL" }, state: { code: "IGNITION" } },
+    { ...snapshot(1200), trial: { active: true }, state: { code: "IGNITION" } },
     true,
     time + 200,
   );
   r.observe(
     {
       ...snapshot(1300),
-      trial: { mode: "FUEL" },
+      trial: { active: true },
       state: { code: "STOP_PURGE" },
     },
     true,
@@ -207,7 +207,7 @@ test("trial captures arm, actuation and cooldown, stopping only after the cycle 
   r.observe(
     {
       ...snapshot(1400),
-      trial: { mode: "NONE" },
+      trial: { active: false },
       state: { code: "UNCONFIGURED" },
     },
     true,
@@ -216,34 +216,34 @@ test("trial captures arm, actuation and cooldown, stopping only after the cycle 
   assert.equal(r.active, false);
   assert.equal(r.reason, "trial_finished");
   assert.equal(
-    csvRows(r).find((row) => row.state === "IGNITION").trial_mode,
-    "FUEL",
+    csvRows(r).find((row) => row.state === "IGNITION").trial_active,
+    "true",
   );
   const before = r.csv();
-  assert.equal(r.startTrial(initial, true, "DRY", time + 500), false);
+  assert.equal(r.startTrial(initial, true, time + 500), false);
   assert.equal(r.csv(), before);
   r.markExported();
-  assert(r.startTrial(initial, true, "DRY", time + 600));
+  assert(r.startTrial(initial, true, time + 600));
 });
 
 test("trial cannot overwrite an active recording and rejection or reboot retains its collected data", () => {
   const r = new Measurements();
-  const initial = { ...snapshot(), trial: { mode: "NONE" } };
+  const initial = { ...snapshot(), trial: { active: false } };
   assert(r.start(initial, true, time));
   const before = r.csv();
-  assert.equal(r.startTrial(initial, true, "DRY", time + 100), false);
+  assert.equal(r.startTrial(initial, true, time + 100), false);
   assert.equal(r.csv(), before);
   r.stop();
   r.markExported();
-  assert(r.startTrial(initial, true, "DRY", time + 200));
+  assert(r.startTrial(initial, true, time + 200));
   r.cancelTrialRequest(time + 300);
   assert.equal(r.active, false);
   assert.equal(r.reason, "trial_not_started");
   assert(r.unsaved);
   r.markExported();
-  assert(r.startTrial(initial, true, "FUEL", time + 400));
+  assert(r.startTrial(initial, true, time + 400));
   r.observe(
-    { ...snapshot(20), boot_id: "new", trial: { mode: "NONE" } },
+    { ...snapshot(20), boot_id: "new", trial: { active: false } },
     true,
     time + 500,
   );

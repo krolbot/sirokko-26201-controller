@@ -36,7 +36,7 @@
 
 <div class="page-heading"><h1>Параметры отопителя</h1></div>
 <p class="caption">Можно сохранять по мере заполнения.</p>
-<a class="secondary" href="#/trial">Пробный запуск и измерения</a>
+<a class="secondary" href="#/trial">Первый запуск и измерения</a>
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
   </p>{/if}

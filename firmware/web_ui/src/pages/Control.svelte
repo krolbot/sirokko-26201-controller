@@ -39,7 +39,7 @@
           ? `Ждём выхлоп ниже ${snapshot.envelope.parameters.cooling_exhaust_milli_c / 1000} °C`
           : "Нет свежих показаний термопар"
       : trial && snapshot.state.code === "TRIAL_READY"
-        ? "Проба подготовлена. Удерживайте KEY0 на панели"
+        ? "Запуск подготовлен. Удерживайте KEY0 на панели"
         : {
             PREHEAT: "Двигатель и муфта выключены",
             IGNITION: snapshot.outputs.glow
@@ -119,7 +119,7 @@
     </p>{/if}
 {/snippet}
 <div class="page-heading">
-  <h1>{trial ? "Пробный запуск" : "Отопление"}</h1>
+  <h1>{trial ? "Первый запуск" : "Отопление"}</h1>
   {#if manual && !trial}<p class="caption">
       % от максимального ШИМ двигателя
     </p>{/if}
@@ -139,8 +139,7 @@
         </h2>
         <p class="caption">{processText}</p>
       </div>
-      {#if trial}<a class="secondary" href="#/trial">Показания и запись пробы</a
-        >
+      {#if trial}<a class="secondary" href="#/trial">Показания и запись</a>
       {:else}<details class="stage-settings">
           <summary>Температура и режим<Icon name="chevron" size={16} /></summary
           >{@render controls()}

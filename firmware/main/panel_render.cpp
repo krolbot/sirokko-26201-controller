@@ -480,7 +480,7 @@ void draw_block(Canvas &c, const Frame &f) {
         break;
     case sirokko::Block::BUTTON_HELD:
         title = "Отпустите KEY0";
-        detail = "Затем подготовьте пробный запуск";
+        detail = "Затем подготовьте первый запуск";
         break;
     case sirokko::Block::STALE_COMMAND:
         title = "Команда устарела";
@@ -509,9 +509,7 @@ void draw_block(Canvas &c, const Frame &f) {
 void draw_trial(Canvas &c, const Frame &f) {
     const auto &control = f.view.control;
     const bool armed = control.state == sirokko::State::TRIAL_READY;
-    c.text(160, 28, "Пробный запуск", 21, kInk, Align::Center, 500);
-    c.text(160, 51, control.trial_mode == sirokko::TrialMode::FUEL ? "С топливом" : "Без топлива", 15,
-           kOrange, Align::Center);
+    c.text(160, 28, "Первый запуск", 21, kInk, Align::Center, 500);
     const char *stage = armed                                      ? "Удерживайте KEY0"
                         : control.state == sirokko::State::PREHEAT ? "Накал свечи"
                                                                    : "Запись прогрева";
@@ -686,9 +684,8 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::FaultLatched;
     if (v.control.state == State::STOP_PURGE)
         return Scene::Cooldown;
-    if (v.control.trial_mode != sirokko::TrialMode::NONE &&
-        (v.control.state == State::TRIAL_READY || v.control.state == State::PREHEAT ||
-         v.control.state == State::IGNITION))
+    if (v.control.trial_active && (v.control.state == State::TRIAL_READY ||
+                                   v.control.state == State::PREHEAT || v.control.state == State::IGNITION))
         return Scene::Trial;
     switch (v.control.state) {
     case State::TRIAL_READY:

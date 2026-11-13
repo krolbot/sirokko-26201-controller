@@ -263,14 +263,14 @@ test("a new fault cancels an unconfirmed action and explains the interruption", 
   );
 });
 
-test("trial acknowledgement requires its requested mode and a new state in the same boot", () => {
+test("first start acknowledgement requires an active trial and a new state in the same boot", () => {
   const baseline = state();
-  const pending = { action: "TRIAL_DRY", baseline, payload: {} };
+  const pending = { action: "TRIAL_START", baseline, payload: {} };
   const armed = {
     ...baseline,
     state_version: "3",
     state: { code: "TRIAL_READY" },
-    trial: { mode: "DRY" },
+    trial: { active: true },
   };
   assert.equal(commandMatchesSnapshot(pending, armed), true);
   assert.equal(
@@ -282,7 +282,7 @@ test("trial acknowledgement requires its requested mode and a new state in the s
     false,
   );
   assert.equal(
-    commandMatchesSnapshot(pending, { ...armed, trial: { mode: "FUEL" } }),
+    commandMatchesSnapshot(pending, { ...armed, trial: { active: false } }),
     false,
   );
   assert.equal(
@@ -310,7 +310,7 @@ test("trial acknowledgement requires its requested mode and a new state in the s
 
 test("queued trial stays pending until armed and a reboot never confirms it", async () => {
   for (const reboot of [false, true]) {
-    let snapshot = { ...state(), commands: { TRIAL_FUEL: { allowed: true } } };
+    let snapshot = { ...state(), commands: { TRIAL_START: { allowed: true } } };
     const session = new ControllerSession({
       api: {
         state: async () => snapshot,
@@ -320,14 +320,14 @@ test("queued trial stays pending until armed and a reboot never confirms it", as
       commandId: () => "abcd",
     });
     await session.restore();
-    assert.equal((await session.submit("TRIAL_FUEL")).status, "QUEUED");
-    assert.equal(session.view.pending?.action, "TRIAL_FUEL");
+    assert.equal((await session.submit("TRIAL_START")).status, "QUEUED");
+    assert.equal(session.view.pending?.action, "TRIAL_START");
     snapshot = {
       ...snapshot,
       state_version: "3",
       boot_id: reboot ? "2" : "1",
       state: { code: "TRIAL_READY" },
-      trial: { mode: "FUEL" },
+      trial: { active: true },
     };
     await session.poll();
     assert.equal(session.view.pending, null);

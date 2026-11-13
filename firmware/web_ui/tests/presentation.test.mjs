@@ -111,7 +111,7 @@ test("trial keeps STOP visible while armed, firing and cooling even with outputs
     assert.equal(
       needsStop({
         state: { code },
-        trial: { mode: "DRY" },
+        trial: { active: true },
         outputs: { fuel: false, glow: false },
       }),
       true,
@@ -119,7 +119,7 @@ test("trial keeps STOP visible while armed, firing and cooling even with outputs
   assert.equal(
     needsStop({
       state: { code: "UNCONFIGURED" },
-      trial: { mode: "NONE" },
+      trial: { active: false },
       outputs: { fuel: false, glow: false },
     }),
     false,

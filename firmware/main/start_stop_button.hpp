@@ -23,7 +23,7 @@ struct Snapshot {
     sirokko::State state{sirokko::State::RECOVERY_PURGE};
     sirokko::Block start_block{sirokko::Block::ENVELOPE_MISSING};
     uint64_t state_version{};
-    sirokko::TrialMode trial_mode{sirokko::TrialMode::NONE};
+    bool trial_active{};
 };
 
 struct HeldSample {

@@ -96,22 +96,19 @@ int main() {
     assert(command_policy::block(eligibility, Action::SETTINGS) == Block::NONE);
     assert(command_policy::block(eligibility, Action::OTA) == Block::NONE);
     eligibility.control.trial_start_block = Block::NONE;
-    for (const auto trial : {Action::TRIAL_DRY, Action::TRIAL_FUEL}) {
-        assert(command_policy::starts_cycle(trial));
-        assert(command_policy::block(eligibility, trial) == Block::LOCAL_CONTROLS_UNAVAILABLE);
-    }
+    assert(command_policy::starts_cycle(Action::TRIAL_START));
+    assert(command_policy::block(eligibility, Action::TRIAL_START) == Block::LOCAL_CONTROLS_UNAVAILABLE);
     eligibility.local_controls_initialized = true;
-    for (const auto trial : {Action::TRIAL_DRY, Action::TRIAL_FUEL})
-        assert(command_policy::block(eligibility, trial) == Block::NONE);
+    assert(command_policy::block(eligibility, Action::TRIAL_START) == Block::NONE);
     eligibility.control.trial_start_block = Block::SENSOR_STALE;
-    assert(command_policy::block(eligibility, Action::TRIAL_FUEL) == Block::SENSOR_STALE);
-    eligibility.control.trial_mode = TrialMode::FUEL;
+    assert(command_policy::block(eligibility, Action::TRIAL_START) == Block::SENSOR_STALE);
+    eligibility.control.trial_active = true;
     eligibility.control.state = State::TRIAL_READY;
-    for (const auto action : {Action::START, Action::TRIAL_DRY, Action::TRIAL_FUEL, Action::SETTINGS,
-                              Action::TIMER, Action::PROFILE, Action::OTA})
+    for (const auto action :
+         {Action::START, Action::TRIAL_START, Action::SETTINGS, Action::TIMER, Action::PROFILE, Action::OTA})
         assert(command_policy::block(eligibility, action) == Block::BUSY);
     assert(command_policy::wifi_password_block(eligibility) == Block::BUSY);
-    eligibility.control.trial_mode = TrialMode::NONE;
+    eligibility.control.trial_active = false;
     eligibility.control.state = State::UNCONFIGURED;
     eligibility.local_controls_initialized = false;
     Snapshot maintenance{};
@@ -167,6 +164,8 @@ int main() {
     JsonBuilder json(output, sizeof(output));
     assert(build_state_json(view, {"test", false, false, false}, &json));
     assert(std::strstr(output, "\"outputs_enabled\":false") && std::strstr(output, "ENVELOPE_MISSING"));
+    assert(std::strstr(output, "\"trial\":{\"active\":false"));
+    view.control.trial_active = true;
     view.control.faults = (1U << 10) - 1;
     view.event_count = view.events.size();
     for (auto &event : view.events) {
@@ -180,6 +179,8 @@ int main() {
     JsonBuilder full(output, sizeof(output));
     assert(build_state_json(view, {"1.1.1-dev", true, true, true}, &full));
     assert(std::strstr(output, "Достигнут предел температуры выхлопа; топливо отключено"));
+    assert(std::strstr(output, "\"trial\":{\"active\":true"));
+    assert(std::strstr(output, "\"outputs_enabled\":true"));
     view.events[0].kind = "PROFILE_SAVED";
     view.events[1].kind = "COMBUSTION_SUSPECT";
     view.events[2].kind = "FUTURE_INTERNAL_EVENT";

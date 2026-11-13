@@ -105,7 +105,7 @@ int main() {
     // A trial consumes a live hold, never the normal one-shot START/STOP command.
     Local trial;
     trial.view.state = State::TRIAL_READY;
-    trial.view.trial_mode = TrialMode::DRY;
+    trial.view.trial_active = true;
     start_stop_button::Button held({&trial, read, start, stop});
     held.reset(true, 0);
     for (unsigned t = 10; t <= 100; t += 10)
@@ -136,9 +136,9 @@ int main() {
     Local rig;
     start_stop_button::Button physical({&rig, read, start, stop});
     physical.reset(false, 0);
-    auto physical_tick = [&](uint64_t at, bool pressed, TrialMode request = TrialMode::NONE) {
+    auto physical_tick = [&](uint64_t at, bool pressed, bool request = false) {
         const auto previous = probe.snapshot(at);
-        rig.view = {previous.state, previous.start_block, previous.state_version, previous.trial_mode};
+        rig.view = {previous.state, previous.start_block, previous.state_version, previous.trial_active};
         physical.poll(pressed, at);
         const auto key = physical.held_sample();
         auto input = control_fixture::input(at);
@@ -150,13 +150,13 @@ int main() {
     };
     for (unsigned t = 10; t <= 40; t += 10)
         physical_tick(t, false);
-    assert(physical_tick(50, true, TrialMode::DRY).state == State::UNCONFIGURED);
+    assert(physical_tick(50, true, true).state == State::UNCONFIGURED);
     for (unsigned t = 60; t <= 90; t += 10)
         physical_tick(t, true);
-    assert(physical_tick(100, true, TrialMode::DRY).state == State::UNCONFIGURED);
+    assert(physical_tick(100, true, true).state == State::UNCONFIGURED);
     for (unsigned t = 110; t <= 150; t += 10)
         physical_tick(t, false);
-    assert(physical_tick(160, false, TrialMode::DRY).state == State::TRIAL_READY);
+    assert(physical_tick(160, false, true).state == State::TRIAL_READY);
     for (unsigned t = 170; t <= 190; t += 10)
         assert(physical_tick(t, true).state == State::TRIAL_READY);
     auto started = physical_tick(200, true);
@@ -179,17 +179,11 @@ int main() {
     assert(web_protocol::parse_command_request(request, std::strlen(request), &command) !=
            web_protocol::ParseError::OK);
     web_protocol::Command trial_command{};
-    const char *dry = R"({"action":"TRIAL_DRY","command_id":"2"})";
-    const char *fuel = R"({"action":"TRIAL_FUEL","command_id":"2"})";
-    assert(web_protocol::parse_challenge_request(dry, std::strlen(dry), &trial_command) ==
+    const char *first_start = R"({"action":"TRIAL_START","command_id":"2"})";
+    assert(web_protocol::parse_challenge_request(first_start, std::strlen(first_start), &trial_command) ==
            web_protocol::ParseError::OK);
-    assert(trial_command.action == Action::TRIAL_DRY);
-    const auto dry_digest = trial_command.payload_digest;
-    assert(web_protocol::parse_challenge_request(fuel, std::strlen(fuel), &trial_command) ==
-           web_protocol::ParseError::OK);
-    assert(trial_command.action == Action::TRIAL_FUEL);
-    assert(!web_protocol::digest_equal(dry_digest, trial_command.payload_digest));
-    const char *extend_trial = R"({"action":"TRIAL_FUEL","command_id":"2","delay_ms":999999})";
+    assert(trial_command.action == Action::TRIAL_START);
+    const char *extend_trial = R"({"action":"TRIAL_START","command_id":"2","delay_ms":999999})";
     assert(web_protocol::parse_challenge_request(extend_trial, std::strlen(extend_trial), &trial_command) ==
            web_protocol::ParseError::UNKNOWN_FIELD);
     const char *duplicate = R"({"action":"START","action":"CALIBRATE","command_id":"1"})";

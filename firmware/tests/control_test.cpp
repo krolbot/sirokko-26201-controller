@@ -13,14 +13,14 @@ TickInput trial_input(uint64_t now, bool held = false, int32_t exhaust = 20000) 
     i.local_button_sample_ms = now;
     return i;
 }
-Controller trial_ignition(TrialMode mode, SafetyEnvelope profile = {}) {
+Controller trial_ignition(SafetyEnvelope profile = {}) {
     Settings settings{};
     settings.duration_ms = 1; // Normal timer must not affect a trial.
     Controller c(profile, settings, 21, Startup::CLEAN);
     auto i = trial_input(100);
-    i.trial_request = mode;
+    i.trial_request = true;
     auto s = c.tick(i);
-    assert(s.state == State::TRIAL_READY && s.trial_mode == mode && !s.run_id);
+    assert(s.state == State::TRIAL_READY && s.trial_active && !s.run_id);
     assert(s.trial_remaining_ms == kTrialArmMs);
     off(s);
     assert(!s.outputs.fan_request);
@@ -32,12 +32,12 @@ Controller trial_ignition(TrialMode mode, SafetyEnvelope profile = {}) {
     assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fuel);
     s = c.tick(trial_input(kIgnitionAt, true));
     assert(s.state == State::IGNITION && s.outputs.glow && s.outputs.fan_request);
-    assert(s.outputs.speed_code == kPwmMaximum && s.outputs.fuel == (mode == TrialMode::FUEL));
+    assert(s.outputs.speed_code == kPwmMaximum && s.outputs.fuel);
     return c;
 }
 void test_trials() {
-    for (const auto mode : {TrialMode::DRY, TrialMode::FUEL}) {
-        auto c = trial_ignition(mode);
+    {
+        auto c = trial_ignition();
         const auto before = envelope_fingerprint(c.safety_envelope());
         auto future_snapshot = c.snapshot(kIgnitionAt + kIgnitionGlowMs + 1);
         assert(future_snapshot.outputs.glow); // A read cannot change the applied output command.
@@ -46,17 +46,17 @@ void test_trials() {
             auto i = trial_input(kIgnitionAt + elapsed, true, 100000);
             i.set_shutdown_timer = true;
             i.shutdown_after_ms = 1;
-            i.trial_request = mode; // Repeated requests cannot extend the window.
+            i.trial_request = true; // Repeated requests cannot extend the window.
             s = c.tick(i);
             assert(s.state != State::RUN && !s.duration_active && !s.faults);
             assert(!c.update_settings(Settings{}));
             if (elapsed < kTrialMeasurementMs) {
                 assert(s.state == State::IGNITION);
                 assert(s.outputs.glow == (elapsed < kIgnitionGlowMs));
-                assert(s.outputs.fuel == (mode == TrialMode::FUEL));
+                assert(s.outputs.fuel);
                 assert(s.trial_remaining_ms == kTrialMeasurementMs - elapsed);
             } else {
-                assert(s.state == State::STOP_PURGE && s.trial_mode == mode);
+                assert(s.state == State::STOP_PURGE && s.trial_active);
                 off(s);
             }
         }
@@ -65,7 +65,7 @@ void test_trials() {
         assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs - 1, false)).state == State::STOP_PURGE);
         assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs, false, 40000)).state == State::STOP_PURGE);
         s = c.tick(trial_input(stopped + kPostpurgeMinimumMs + 20, false, 39999));
-        assert(s.state == State::UNCONFIGURED && s.trial_mode == TrialMode::NONE);
+        assert(s.state == State::UNCONFIGURED && !s.trial_active);
         assert(!s.outputs.fan_request && !s.outputs.fuel && !s.outputs.glow);
         assert(!s.envelope_provisioned && envelope_fingerprint(c.safety_envelope()) == before);
         s = c.tick(trial_input(stopped + kPostpurgeMinimumMs + 40, true));
@@ -74,7 +74,7 @@ void test_trials() {
     for (unsigned scenario = 0; scenario < 7; ++scenario) {
         Controller c({}, Settings{}, 1, Startup::CLEAN);
         auto i = trial_input(100);
-        i.trial_request = TrialMode::FUEL;
+        i.trial_request = true;
         switch (scenario) {
         case 0:
             i.local_button_held = true;
@@ -99,17 +99,17 @@ void test_trials() {
             break;
         }
         const auto s = c.tick(i);
-        assert(s.state != State::TRIAL_READY && s.trial_mode == TrialMode::NONE);
+        assert(s.state != State::TRIAL_READY && !s.trial_active);
         off(s);
         assert(!s.outputs.fan_request);
     }
     Controller pending({}, Settings{}, 1, Startup::CLEAN);
     auto i = trial_input(100);
-    i.trial_request = TrialMode::DRY;
+    i.trial_request = true;
     pending.tick(i);
     auto expired = pending;
     auto s = expired.tick(trial_input(100 + kTrialArmMs, true));
-    assert(s.state == State::UNCONFIGURED && s.trial_mode == TrialMode::NONE && !s.outputs.glow);
+    assert(s.state == State::UNCONFIGURED && !s.trial_active && !s.outputs.glow);
     i = trial_input(120, true);
     i.local_button_valid = false; // Press debounce: wait without energizing anything.
     s = pending.tick(i);
@@ -122,7 +122,7 @@ void test_trials() {
     assert(s.state == State::STOP_PURGE && !s.faults);
     off(s);
     for (unsigned scenario = 0; scenario < 5; ++scenario) {
-        auto c = trial_ignition(TrialMode::FUEL);
+        auto c = trial_ignition();
         i = trial_input(kIgnitionAt + 200, true);
         switch (scenario) {
         case 0:
@@ -145,13 +145,13 @@ void test_trials() {
         assert(s.state == State::FAULT_PURGE && s.faults && s.outputs.fan_request);
         off(s);
         s = c.tick(trial_input(i.now_ms + kPostpurgeMinimumMs));
-        assert(s.state == State::FAULT && s.trial_mode == TrialMode::NONE);
+        assert(s.state == State::FAULT && !s.trial_active);
         i = trial_input(i.now_ms + kPostpurgeMinimumMs + 20);
         i.reset_fault = true;
         s = c.tick(i);
         assert(s.state == State::UNCONFIGURED && !s.faults); // No room sensor required for trial reset.
     }
-    auto c = trial_ignition(TrialMode::FUEL);
+    auto c = trial_ignition();
     i = trial_input(kIgnitionAt + 100, true);
     i.local_button_sample_ms = kIgnitionAt;
     assert(c.tick(i).outputs.fuel); // Exactly 100 ms is still fresh.
@@ -170,13 +170,13 @@ void test_trials() {
     Controller mixed(envelope(), Settings{}, 21, Startup::CLEAN);
     i = trial_input(100);
     i.start = true;
-    i.trial_request = TrialMode::DRY;
+    i.trial_request = true;
     s = mixed.tick(i);
-    assert(s.state == State::TRIAL_READY && s.trial_mode == TrialMode::DRY);
+    assert(s.state == State::TRIAL_READY && s.trial_active);
     off(s);
     auto known_limit = SafetyEnvelope{};
     known_limit.maximum_exhaust_milli_c = 50000;
-    c = trial_ignition(TrialMode::FUEL, known_limit);
+    c = trial_ignition(known_limit);
     s = c.tick(trial_input(kIgnitionAt + 20, true, 50000));
     assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_OVER_TEMPERATURE));
     off(s);

@@ -251,8 +251,7 @@ bool semantic_valid(const web_protocol::Command &command) {
     case sirokko::Action::OTA:
         return command.upload_size >= ota_verify::kManifestSize + ota_verify::kSignatureSize;
     case sirokko::Action::START:
-    case sirokko::Action::TRIAL_DRY:
-    case sirokko::Action::TRIAL_FUEL:
+    case sirokko::Action::TRIAL_START:
     case sirokko::Action::RESET_FAULT:
         return true;
     }

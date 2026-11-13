@@ -22,9 +22,8 @@
   const snapshot = $derived(ui.snapshot);
   const active = $derived(trialActive(snapshot));
   const pending = $derived(
-    ["TRIAL_DRY", "TRIAL_FUEL"].includes(
-      ui.pending?.action || ui.requestInFlight,
-    ),
+    ui.pending?.action === "TRIAL_START" ||
+      ui.requestInFlight === "TRIAL_START",
   );
   const ready = $derived(connectionReady(ui));
   const captureAvailable = $derived(!recording.active && !recording.unsaved);
@@ -39,26 +38,24 @@
     cooling
       ? "Минимальное охлаждение"
       : phase === "TRIAL_READY"
-        ? "На начало пробы"
+        ? "На начало запуска"
         : phase === "PREHEAT"
-          ? "До включения двигателя"
-          : "До окончания пробы",
+          ? "До подачи топлива"
+          : "До отключения топлива",
   );
 </script>
 
-<div class="page-heading"><h1>Пробный запуск</h1></div>
+<div class="page-heading"><h1>Первый запуск</h1></div>
 <p class="intro">
   Запуск и запись температур без заполненного профиля отопителя.
 </p>
 {#if active}
   <section class="surface info-panel section trial-process" aria-live="polite">
-    <p class="caption">
-      {snapshot.trial.mode === "DRY" ? "Без топлива" : "С топливом"}
-    </p>
     <h2>{phase === "TRIAL_READY" ? "Готов к началу" : stateText(snapshot)}</h2>
     {#if phase === "TRIAL_READY"}
       <p>
-        Нажмите и удерживайте KEY0 на панели. Отпускание кнопки остановит пробу.
+        Нажмите и удерживайте KEY0 на панели. Отпускание кнопки остановит
+        запуск.
       </p>
     {:else if cooling}
       <p>Свеча и топливо выключены. Двигатель охлаждает отопитель.</p>
@@ -66,7 +63,7 @@
       <p>
         Удерживайте KEY0. Отпустите кнопку, чтобы отключить свечу и топливо.
       </p>
-      {#if snapshot.trial.mode === "FUEL" && phase === "IGNITION"}
+      {#if phase === "IGNITION"}
         <p class="caption">
           Если розжига нет, отпустите KEY0; не ждите окончания отсчёта.
         </p>
@@ -82,39 +79,32 @@
   </section>
 {:else}
   <section class="surface info-panel section">
-    <h2>Выберите пробу</h2>
+    <h2>Запуск с записью температур</h2>
     <p class="caption">
-      После 30 с накала включится двигатель на максимальном ШИМ, а в пробе с
-      топливом — и муфта. Ещё через 10 с свеча выключится. До 90 с измерений,
-      затем охлаждение.
+      После 30 с накала включатся двигатель и подача топлива. Ещё через 10 с
+      свеча выключится. Через 90 с после подачи топлива начнётся охлаждение.
+      Двигатель работает на максимальном ШИМ.
     </p>
     <p class="notice">
-      Перед пробой с топливом восстановите штатное отключение муфты при
-      перегреве.
+      Перед запуском восстановите штатное отключение муфты при перегреве.
     </p>
     <div class="trial-actions">
-      {#each [["DRY", "Без топлива", "TRIAL_DRY"], ["FUEL", "С топливом", "TRIAL_FUEL"]] as [mode, label, action]}
-        <div>
-          <button
-            class={mode === "DRY" ? "secondary" : "primary"}
-            disabled={!ready ||
-              !captureAvailable ||
-              !commandAllowed(snapshot, action)}
-            onclick={() => startTrial(mode)}>{label}</button
-          >
-          {#if !commandAllowed(snapshot, action) && (action === "TRIAL_DRY" || commandReason(snapshot, action) !== commandReason(snapshot, "TRIAL_DRY"))}<p
-              class="caption"
-            >
-              {commandReason(snapshot, action)}
-            </p>{/if}
-        </div>
-      {/each}
+      <button
+        class="primary"
+        disabled={!ready ||
+          !captureAvailable ||
+          !commandAllowed(snapshot, "TRIAL_START")}
+        onclick={startTrial}>Подготовить запуск</button
+      >
+      {#if !commandAllowed(snapshot, "TRIAL_START")}<p class="caption">
+          {commandReason(snapshot, "TRIAL_START")}
+        </p>{/if}
     </div>
     {#if recording.active}<p class="caption">
-        Перед новой пробой завершите текущую запись и скачайте CSV.
+        Перед новым запуском завершите текущую запись и скачайте CSV.
       </p>
     {:else if recording.unsaved}<p class="caption">
-        Скачайте CSV предыдущей записи перед новой пробой.
+        Скачайте CSV предыдущей записи перед новым запуском.
       </p>{/if}
     {#if pending}<p class="caption" role="status">
         Ждём подтверждения контроллера…
@@ -162,8 +152,8 @@
     stopDisabled={active || pending}
   />
 {:else}<p class="caption">
-    Запись начнётся при подготовке пробы и завершится после охлаждения. Держите
-    страницу открытой; CSV останется доступен до её закрытия.
+    Запись начнётся при подготовке запуска и завершится после охлаждения.
+    Держите страницу открытой; CSV останется доступен до её закрытия.
   </p>{/if}
 <a class="secondary" href="#/heater">Параметры отопителя</a>
 
@@ -172,9 +162,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .trial-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
     margin-top: 20px;
   }
   .trial-actions button {
@@ -198,10 +185,5 @@
   }
   .trial-process h2 {
     margin: 8px 0 16px;
-  }
-  @media (max-width: 400px) {
-    .trial-actions {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

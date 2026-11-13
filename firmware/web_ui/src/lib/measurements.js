@@ -7,7 +7,7 @@ const columns = [
   "boot_id",
   "uptime_ms",
   "state",
-  "trial_mode",
+  "trial_active",
   "faults",
   "profile_fingerprint",
   "fan_command",
@@ -39,7 +39,7 @@ export class Measurements {
     this.exportedRows = 0;
     this.samples = 0;
     this.reason = "";
-    this.trialMode = null;
+    this.trialRequested = false;
     this.trialSeen = false;
   }
 
@@ -55,7 +55,6 @@ export class Measurements {
       online: this.online,
       reason: this.reason,
       elapsedMs: this.samples ? this.lastUptime - this.firstUptime : 0,
-      trialMode: this.trialMode,
     };
   }
 
@@ -66,7 +65,7 @@ export class Measurements {
     this.exportedRows = this.samples = 0;
     this.reason = "";
     this.active = this.online = true;
-    this.trialMode = null;
+    this.trialRequested = false;
     this.trialSeen = false;
     this.bootId = snapshot.boot_id;
     this.firstUptime = snapshot.uptime_ms;
@@ -75,21 +74,17 @@ export class Measurements {
     return true;
   }
 
-  startTrial(snapshot, online, mode, now = Date.now()) {
-    if (
-      !["DRY", "FUEL"].includes(mode) ||
-      !this.start(snapshot, online, now) ||
-      !this.active
-    )
-      return false;
-    this.trialMode = mode;
+  startTrial(snapshot, online, now = Date.now()) {
+    if (!this.start(snapshot, online, now) || !this.active) return false;
+    this.trialRequested = true;
     this.trialSeen = false;
-    this.event("trial_requested", mode, now);
+    this.event("trial_requested", "", now);
     return true;
   }
 
   cancelTrialRequest(now = Date.now()) {
-    if (this.trialMode && !this.trialSeen) this.stop("trial_not_started", now);
+    if (this.trialRequested && !this.trialSeen)
+      this.stop("trial_not_started", now);
   }
 
   valid(snapshot) {
@@ -158,7 +153,7 @@ export class Measurements {
       this.bootId,
       snapshot.uptime_ms,
       snapshot.state?.code,
-      snapshot.trial?.mode || "NONE",
+      snapshot.trial?.active === true,
       snapshot.faults,
       snapshot.envelope?.fingerprint,
       outputs.fan_request,
@@ -170,9 +165,9 @@ export class Measurements {
     ]);
     this.lastUptime = snapshot.uptime_ms;
     this.samples++;
-    if (this.trialMode) {
-      if (snapshot.trial?.mode === this.trialMode) this.trialSeen = true;
-      else if (this.trialSeen && snapshot.trial?.mode === "NONE")
+    if (this.trialRequested) {
+      if (snapshot.trial?.active === true) this.trialSeen = true;
+      else if (this.trialSeen && snapshot.trial?.active === false)
         this.stop("trial_finished", now);
     }
   }
@@ -188,7 +183,7 @@ export class Measurements {
     if (!this.active) return;
     this.event(reason, "", now);
     this.active = false;
-    this.trialMode = null;
+    this.trialRequested = false;
     this.trialSeen = false;
     if (this.reason !== "limit") this.reason = reason;
   }

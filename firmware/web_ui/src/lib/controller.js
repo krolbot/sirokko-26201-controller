@@ -11,8 +11,7 @@ import {
 const CONFIRMATION_TIMEOUT_MS = 5_000;
 const ACTIONS = new Set([
   "START",
-  "TRIAL_DRY",
-  "TRIAL_FUEL",
+  "TRIAL_START",
   "RESET_FAULT",
   "SETTINGS",
   "TIMER",
@@ -298,8 +297,7 @@ export class ControllerSession {
         "ok",
         {
           START: "Запуск отопителя начат",
-          TRIAL_DRY: "Проба подготовлена. Удерживайте KEY0 на панели",
-          TRIAL_FUEL: "Проба подготовлена. Удерживайте KEY0 на панели",
+          TRIAL_START: "Запуск подготовлен. Удерживайте KEY0 на панели",
           STOP: "Остановка отопителя подтверждена",
           RESET_FAULT: "Авария сброшена",
           SETTINGS: "Настройки применены",
