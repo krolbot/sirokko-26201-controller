@@ -7,7 +7,7 @@ using namespace control_fixture;
 namespace {
 TickInput trial_input(uint64_t now, bool held = false, int32_t exhaust = 20000) {
     auto i = input(now, exhaust, 20000);
-    i.sensors.room = {}; // Trial uses fixed motor command, not room regulation.
+    i.sensors.room = {}; // Trial uses a manual motor command, not room regulation.
     i.local_button_held = held;
     i.local_button_valid = true;
     i.local_button_sample_ms = now;
@@ -42,7 +42,7 @@ void test_trials() {
         auto future_snapshot = c.snapshot(kIgnitionAt + kIgnitionGlowMs + 1);
         assert(future_snapshot.outputs.glow); // A read cannot change the applied output command.
         Snapshot s{};
-        for (uint64_t elapsed = 100; elapsed <= kTrialMeasurementMs; elapsed += 100) {
+        for (uint64_t elapsed = 100; elapsed <= kFiringStartupMaximumMs; elapsed += 100) {
             auto i = trial_input(kIgnitionAt + elapsed, true, 100000);
             i.set_shutdown_timer = true;
             i.shutdown_after_ms = 1;
@@ -50,17 +50,17 @@ void test_trials() {
             s = c.tick(i);
             assert(s.state != State::RUN && !s.duration_active && !s.faults);
             assert(!c.update_settings(Settings{}));
-            if (elapsed < kTrialMeasurementMs) {
+            if (elapsed < kFiringStartupMaximumMs) {
                 assert(s.state == State::IGNITION);
                 assert(s.outputs.glow == (elapsed < kIgnitionGlowMs));
                 assert(s.outputs.fuel);
-                assert(s.trial_remaining_ms == kTrialMeasurementMs - elapsed);
+                assert(s.trial_remaining_ms == kFiringStartupMaximumMs - elapsed);
             } else {
                 assert(s.state == State::STOP_PURGE && s.trial_active);
                 off(s);
             }
         }
-        const auto stopped = kIgnitionAt + kTrialMeasurementMs;
+        const auto stopped = kIgnitionAt + kFiringStartupMaximumMs;
         assert(s.outputs.fan_request && s.outputs.speed_code == kPwmMaximum);
         assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs - 1, false)).state == State::STOP_PURGE);
         assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs, false, 40000)).state == State::STOP_PURGE);
@@ -181,10 +181,135 @@ void test_trials() {
     assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_OVER_TEMPERATURE));
     off(s);
 }
+void test_trial_measurements() {
+    auto c = trial_ignition();
+    const auto profile_before = envelope_fingerprint(c.safety_envelope());
+    auto i = trial_input(kIgnitionAt + kIgnitionGlowMs - 1, true, 100000);
+    i.trial_confirm = i.set_trial_pwm = true;
+    i.trial_pwm_code = 1;
+    auto s = c.tick(i);
+    assert(s.state == State::IGNITION && s.outputs.glow && s.outputs.speed_code == kPwmMaximum);
+    i = trial_input(kIgnitionAt + kIgnitionGlowMs, true, 100000);
+    i.trial_confirm = i.set_trial_pwm = true;
+    i.trial_pwm_code = 1;
+    s = c.tick(i);
+    assert(s.state == State::RUN && s.trial_active && s.outputs.fuel && !s.outputs.glow);
+    assert(s.outputs.speed_code == kPwmMaximum); // Confirmation always enters at the starting command.
+    assert(s.trial_elapsed_ms == 0 && s.trial_remaining_ms == kTrialMeasurementMs);
+    const uint64_t confirmed_at = i.now_ms;
+    const auto run = c;
+    i = trial_input(confirmed_at + 20, true, 100000);
+    i.set_trial_pwm = true;
+    i.trial_pwm_code = 2007;
+    s = c.tick(i);
+    assert(s.state == State::RUN && s.outputs.speed_code == 2007 && s.outputs.fuel && !s.outputs.glow);
+    assert(s.trial_elapsed_ms == 20 && s.trial_remaining_ms == kTrialMeasurementMs - 20);
+    const auto &event = c.events()[c.event_count() - 1];
+    assert(std::string(event.kind) == "TRIAL_PWM_CHANGED" && event.speed_code == 2007);
+    auto version = s.state_version;
+    for (const auto code : {0U, static_cast<unsigned>(kPwmMaximum) + 1U}) {
+        i.now_ms += 20;
+        i = trial_input(i.now_ms, true, 100000);
+        i.set_trial_pwm = true;
+        i.trial_pwm_code = code;
+        s = c.tick(i);
+        assert(s.outputs.speed_code == 2007 && s.state_version == version);
+    }
+    i = trial_input(confirmed_at + 100, true, 100000);
+    i.set_trial_pwm = true;
+    i.trial_pwm_code = 1;
+    s = c.tick(i);
+    assert(s.outputs.speed_code == 1 && s.outputs.fuel && s.state_version > version);
+    i = trial_input(confirmed_at + kTrialMeasurementMs - 1, true, 100000);
+    i.trial_request = i.trial_confirm = i.set_trial_pwm = i.set_shutdown_timer = true;
+    i.trial_pwm_code = kPwmMaximum;
+    i.shutdown_after_ms = kMaximumTimerMs;
+    s = c.tick(i);
+    assert(s.state == State::RUN && s.trial_remaining_ms == 1 && !s.duration_active);
+    i = trial_input(confirmed_at + kTrialMeasurementMs, true, 100000);
+    i.trial_confirm = i.set_trial_pwm = true;
+    i.trial_pwm_code = 1;
+    s = c.tick(i);
+    assert(s.state == State::STOP_PURGE && s.outputs.speed_code == kPwmMaximum);
+    off(s);
+    assert(!s.envelope_provisioned && envelope_fingerprint(c.safety_envelope()) == profile_before);
+    i = trial_input(confirmed_at + kTrialMeasurementMs + 20, true, 100000);
+    i.set_trial_pwm = i.trial_confirm = true;
+    i.trial_pwm_code = 1;
+    s = c.tick(i);
+    assert(s.state == State::STOP_PURGE && s.outputs.speed_code == kPwmMaximum);
+    off(s);
+
+    auto late = trial_ignition();
+    i = trial_input(kIgnitionAt + kFiringStartupMaximumMs, true, 100000);
+    i.trial_confirm = true;
+    s = late.tick(i);
+    assert(s.state == State::STOP_PURGE);
+    off(s); // Confirmation cannot revive an expired ignition window.
+
+    for (unsigned scenario = 0; scenario < 5; ++scenario) {
+        auto interrupted = run;
+        i = trial_input(confirmed_at + 20, true, 100000);
+        i.trial_confirm = i.set_trial_pwm = true;
+        i.trial_pwm_code = 1;
+        switch (scenario) {
+        case 0:
+            i.stop = true;
+            break;
+        case 1:
+            i.local_button_held = false;
+            break;
+        case 2:
+            i.sensors.exhaust.valid = false;
+            break;
+        case 3:
+            i.local_button_sample_ms = i.now_ms - kLocalButtonFreshMs - 1;
+            break;
+        case 4:
+            i.external_faults = FAULT_CONTROL_WATCHDOG;
+            break;
+        }
+        s = interrupted.tick(i);
+        assert(s.state == (scenario < 2 ? State::STOP_PURGE : State::FAULT_PURGE));
+        assert(s.outputs.speed_code == kPwmMaximum && s.outputs.fan_request);
+        off(s);
+    }
+    auto known_profile = envelope();
+    known_profile.minimum_run_exhaust_milli_c = 150000;
+    auto known = trial_ignition(known_profile);
+    i = trial_input(confirmed_at, true, 100000);
+    i.trial_confirm = true;
+    assert(known.tick(i).state == State::RUN);
+    s = known.tick(trial_input(confirmed_at + kTemperatureConfirmationMs + 20, true, 100000));
+    assert(s.state == State::RUN && !s.faults); // Measurement does not assume the configured flame floor.
+    s = known.tick(trial_input(confirmed_at + kTemperatureConfirmationMs + 40, true,
+                               known_profile.maximum_exhaust_milli_c));
+    assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_OVER_TEMPERATURE));
+    off(s);
+}
+void test_optional_exhaust_cutoff() {
+    auto profile = envelope();
+    profile.maximum_exhaust_milli_c = 0;
+    assert(valid_safety_envelope(profile));
+    Controller c(profile, Settings{}, 1, Startup::CLEAN);
+    auto i = input(120);
+    i.start = true;
+    auto s = c.tick(i);
+    assert(s.state == State::PREHEAT && s.outputs.glow);
+    s = c.tick(input(kIgnitionAt));
+    assert(s.state == State::IGNITION && s.outputs.fuel);
+    s = confirm_ignition(c, kProcessMeasurementCeilingMilliC - 1);
+    assert(s.state == State::RUN && s.outputs.fuel && !s.faults);
+    s = c.tick(input(kRunAt + 20, kProcessMeasurementCeilingMilliC));
+    assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_EXHAUST));
+    off(s); // The probe range still applies when no additional exhaust cutoff is configured.
+}
 } // namespace
 
 int main() {
     test_trials();
+    test_trial_measurements();
+    test_optional_exhaust_cutoff();
     Controller disconnected({}, Settings{}, 7, Startup::CLEAN);
     auto detached = disconnected.snapshot(0);
     assert(detached.state == State::UNCONFIGURED && !detached.purge_active && !detached.outputs.fan_request);

@@ -126,10 +126,107 @@ void synchronization() {
     panel.update(view);
     assert(!panel.screen().editing && !panel.take_command(&command));
 }
+void first_start_controls() {
+    View view{};
+    view.now_ms = 100;
+    view.control.boot_id = 1;
+    view.control.run_id = 4;
+    view.control.trial_active = true;
+    view.control.state = State::PREHEAT;
+    view.control.outputs.glow = true;
+    Model panel;
+    panel.reset(view);
+    Command command{};
+
+    // A click made while the glow plug is on cannot confirm combustion later.
+    panel.click(view.now_ms);
+    panel.rotate(-10);
+    assert(!panel.screen().editing && !panel.screen().pending_click);
+    view.control.state = State::IGNITION;
+    view.control.outputs = {true, kPwmMaximum, true, true};
+    view.control.state_version++;
+    panel.update(view);
+    press(panel, view);
+    assert(!panel.take_command(&command));
+    view.control.outputs.glow = false;
+    panel.update(view);
+    panel.tick(view.now_ms + 300);
+    assert(!panel.take_command(&command));
+
+    press(panel, view);
+    assert(panel.take_command(&command) && command.kind == CommandKind::TRIAL_CONFIRM);
+    panel.command_result(true);
+    panel.update(view);
+    assert(panel.screen().notice == Notice::QUEUED);
+    view.control.state = State::RUN;
+    view.control.state_version++;
+    panel.update(view);
+    assert(panel.screen().notice == Notice::NONE);
+
+    // Trial adjustment works without a room sensor and does not modify normal heating settings.
+    panel.rotate(-17);
+    assert(panel.screen().edit_field == EditField::TRIAL_PWM && panel.screen().edit_value == 83);
+    assert(!panel.take_command(&command));
+    press(panel, view);
+    assert(panel.take_command(&command) && command.kind == CommandKind::TRIAL_PWM);
+    const auto expected = static_cast<uint16_t>((83 * kPwmMaximum + 50) / 100);
+    assert(command.speed_code == expected);
+    panel.command_result(true);
+    view.control.outputs.speed_code = expected;
+    panel.update(view);
+    assert(panel.screen().notice == Notice::QUEUED); // Matching PWM alone is not an acknowledgement.
+    view.control.state_version++;
+    panel.update(view);
+    assert(panel.screen().notice == Notice::NONE);
+
+    panel.rotate(-1000);
+    assert(panel.screen().edit_value == 1);
+    panel.rotate(1000);
+    assert(panel.screen().edit_value == 100);
+    // A change from the web cancels this draft rather than overwriting it on a later click.
+    view.control.outputs.speed_code = 2000;
+    view.control.state_version++;
+    panel.update(view);
+    assert(!panel.screen().editing && panel.screen().notice == Notice::EXTERNAL_CHANGE);
+    press(panel, view);
+    assert(panel.screen().page == Page::HOME && !panel.take_command(&command));
+
+    // STOP cancels a queued PWM edit; a new run cannot inherit it either.
+    panel.rotate(-1);
+    press(panel, view);
+    view.control.state = State::STOP_PURGE;
+    view.control.state_version++;
+    view.control.outputs = {true, kPwmMaximum, false, false};
+    panel.update(view);
+    assert(!panel.take_command(&command) && !panel.screen().editing);
+    view.control.state = State::RUN;
+    view.control.run_id++;
+    view.control.state_version++;
+    view.control.outputs.fuel = true;
+    panel.update(view);
+    panel.rotate(-1);
+    view.control.boot_id++;
+    panel.update(view);
+    assert(!panel.screen().editing && !panel.take_command(&command));
+
+    // A pending confirmation click is discarded if the web confirms first.
+    view.control.state = State::IGNITION;
+    view.control.outputs.glow = false;
+    view.control.state_version++;
+    panel.reset(view);
+    panel.click(view.now_ms);
+    view.control.state = State::RUN;
+    view.control.state_version++;
+    panel.update(view);
+    panel.tick(view.now_ms + kDoubleClickWindowMs);
+    assert(!panel.take_command(&command) && panel.screen().page == Page::HOME);
+}
+
 } // namespace
 
 int main() {
     synchronization();
+    first_start_controls();
     using namespace panel_ui;
     using namespace sirokko;
     View view{};
@@ -219,7 +316,7 @@ int main() {
     // Trial instructions override menu navigation; faults still have priority.
     view.control.trial_active = true;
     view.control.faults = 0;
-    for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION}) {
+    for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION, State::RUN}) {
         view.control.state = state;
         assert(panel_render::select_scene(screen, view, 3000) == panel_render::Scene::Trial);
     }
@@ -241,7 +338,7 @@ int main() {
     view.control.trial_active = true;
     view.control.trial_remaining_ms = 10000;
     view.sensors = control_fixture::input(3000).sensors;
-    for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION}) {
+    for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION, State::RUN}) {
         view.control.state = state;
         renderer.update(screen, view, {}, 3000);
         for (int y = 0; y < panel_render::kHeight; y += panel_render::kStripeRows)

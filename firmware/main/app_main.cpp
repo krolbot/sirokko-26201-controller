@@ -44,6 +44,7 @@ struct RuntimeCommand {
     sirokko::Grant grant{};
     sirokko::Action action{};
     uint64_t delay_ms{};
+    uint16_t speed_code{};
     sirokko::Settings settings{};
     sirokko::SafetyEnvelope envelope{};
 };
@@ -413,6 +414,9 @@ void control_pass(ControlWork &w) {
     if (have) {
         input.start = c.action == sirokko::Action::START;
         input.trial_request = c.action == sirokko::Action::TRIAL_START;
+        input.trial_confirm = c.action == sirokko::Action::TRIAL_CONFIRM;
+        input.set_trial_pwm = c.action == sirokko::Action::TRIAL_PWM;
+        input.trial_pwm_code = c.speed_code;
         if (input.trial_request && (!g_button_ready || !panel_ready()))
             input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
         input.set_shutdown_timer = c.action == sirokko::Action::TIMER;
@@ -549,7 +553,7 @@ bool runtime_issue(sirokko::Action action, uint64_t hash, sirokko::Grant *out) {
     return out->valid;
 }
 bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_t delay,
-                    const sirokko::Settings *settings) {
+                    const sirokko::Settings *settings, uint16_t speed_code) {
     RuntimeView view{};
     if (!grant.valid || grant.action != action || !runtime_view(&view))
         return false;
@@ -559,10 +563,13 @@ bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_
         return false;
     if (action == sirokko::Action::TIMER && delay > sirokko::kMaximumTimerMs)
         return false;
+    if (action == sirokko::Action::TRIAL_PWM && (!speed_code || speed_code > sirokko::kPwmMaximum))
+        return false;
     RuntimeCommand c{};
     c.grant = grant;
     c.action = action;
     c.delay_ms = delay;
+    c.speed_code = speed_code;
     c.settings = settings ? *settings : view.settings;
     return xQueueSend(g_command_queue, &c, 0) == pdTRUE;
 }

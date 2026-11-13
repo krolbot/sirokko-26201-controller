@@ -64,7 +64,9 @@
                 step={scale === 1 ? 1 : 0.001}
                 value={draft.value[key]}
                 disabled={!editing}
-                placeholder="Не задано"
+                placeholder={key === "maximum_exhaust_milli_c"
+                  ? "Не задан"
+                  : "Не задано"}
                 aria-invalid={Boolean(touched[key] && validation.errors[key])}
                 aria-describedby={touched[key] && validation.errors[key]
                   ? `${key}-error`
@@ -101,6 +103,11 @@
                   температуры {limits.temperature_confirmation_ms / 1000} с для завершения
                   розжига. Падение ниже неё во время работы на
                   {limits.temperature_confirmation_ms / 1000} с отключает топливо.</small
+                >
+              {:else if key === "maximum_exhaust_milli_c"}<small class="caption"
+                  >Необязательно. При достижении значения контроллер отключит
+                  топливо. Штатное отключение муфты при перегреве должно быть
+                  подключено независимо от этой настройки.</small
                 >
               {:else if key === "cooling_exhaust_milli_c"}<small class="caption"
                   >Двигатель выключится после минимального времени охлаждения,

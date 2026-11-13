@@ -382,6 +382,8 @@
           {notify}
         />
       {:else if route === "trial"}<Trial
+          {session}
+          {notify}
           {ui}
           api={session.api}
           {recording}

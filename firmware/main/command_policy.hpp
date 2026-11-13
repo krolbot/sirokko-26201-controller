@@ -7,10 +7,15 @@ struct Entry {
     const char *name;
 };
 inline constexpr Entry commands[] = {
-    {sirokko::Action::START, "START"},       {sirokko::Action::TRIAL_START, "TRIAL_START"},
-    {sirokko::Action::SETTINGS, "SETTINGS"}, {sirokko::Action::TIMER, "TIMER"},
-    {sirokko::Action::PROFILE, "PROFILE"},   {sirokko::Action::RESET_FAULT, "RESET_FAULT"},
+    {sirokko::Action::START, "START"},
+    {sirokko::Action::TRIAL_START, "TRIAL_START"},
+    {sirokko::Action::SETTINGS, "SETTINGS"},
+    {sirokko::Action::TIMER, "TIMER"},
+    {sirokko::Action::PROFILE, "PROFILE"},
+    {sirokko::Action::RESET_FAULT, "RESET_FAULT"},
     {sirokko::Action::OTA, "OTA"},
+    {sirokko::Action::TRIAL_CONFIRM, "TRIAL_CONFIRM"},
+    {sirokko::Action::TRIAL_PWM, "TRIAL_PWM"},
 };
 inline bool starts_cycle(sirokko::Action action) {
     return action == sirokko::Action::START || action == sirokko::Action::TRIAL_START;
@@ -42,12 +47,22 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
         return Block::STORAGE_UNAVAILABLE;
     if (view.storage_busy)
         return Block::BUSY;
-    if (control.trial_active && action != Action::RESET_FAULT)
+    if (control.trial_active && action != Action::RESET_FAULT && action != Action::TRIAL_CONFIRM &&
+        action != Action::TRIAL_PWM)
         return Block::BUSY;
     if ((action == Action::TRIAL_START || (action == Action::START && view.envelope.provisioned)) &&
         !view.local_controls_initialized)
         return Block::LOCAL_CONTROLS_UNAVAILABLE;
     switch (action) {
+    case Action::TRIAL_CONFIRM:
+        return control.trial_active && control.state == State::IGNITION && control.outputs.fuel &&
+                       !control.outputs.glow && !control.faults
+                   ? Block::NONE
+                   : Block::BUSY;
+    case Action::TRIAL_PWM:
+        return control.trial_active && control.state == State::RUN && control.outputs.fuel && !control.faults
+                   ? Block::NONE
+                   : Block::BUSY;
     case Action::START:
         return control.start_block;
     case Action::TRIAL_START:

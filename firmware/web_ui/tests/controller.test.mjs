@@ -334,3 +334,81 @@ test("queued trial stays pending until armed and a reboot never confirms it", as
     assert.equal(session.view.message.kind, reboot ? "warning" : "ok");
   }
 });
+
+test("trial confirmation and PWM acknowledge only the applied change in the same run", () => {
+  const baseline = {
+    ...state(),
+    run_id: "a",
+    trial: { active: true },
+    state: { code: "IGNITION" },
+  };
+  const running = {
+    ...baseline,
+    state_version: "3",
+    state: { code: "RUN" },
+    outputs: { speed_code: 2400 },
+  };
+  for (const action of ["TRIAL_CONFIRM", "TRIAL_PWM"]) {
+    const pending = { action, baseline, payload: { speed_code: 2400 } };
+    assert.equal(commandMatchesSnapshot(pending, running), true);
+    for (const patch of [
+      { state_version: "2" },
+      { run_id: "b" },
+      { boot_id: "2" },
+      { trial: { active: false } },
+      { state: { code: "STOP_PURGE" } },
+    ])
+      assert.equal(
+        commandMatchesSnapshot(pending, { ...running, ...patch }),
+        false,
+      );
+  }
+  assert.equal(
+    commandMatchesSnapshot(
+      { action: "TRIAL_PWM", baseline, payload: { speed_code: 2300 } },
+      running,
+    ),
+    false,
+  );
+});
+
+test("trial PWM request preserves its value and local STOP cancels its pending acknowledgement", async () => {
+  let snapshot = {
+    ...state(),
+    trial: { active: true },
+    run_id: "a",
+    state: { code: "RUN" },
+    commands: { TRIAL_PWM: { allowed: true } },
+  };
+  const requests = [];
+  const session = new ControllerSession({
+    api: {
+      state: async () => snapshot,
+      challenge: async (payload) => {
+        requests.push(payload);
+        return { boot_id: "1", state_version: "2" };
+      },
+      command: async (payload) => {
+        requests.push(payload);
+        return { status: "QUEUED" };
+      },
+    },
+    commandId: () => "ab",
+  });
+  await session.restore();
+  assert.equal(
+    (await session.submit("TRIAL_PWM", { speed_code: 2007 })).status,
+    "QUEUED",
+  );
+  assert.equal(session.view.pending?.payload.speed_code, 2007);
+  assert(
+    requests.every(
+      (request) =>
+        request.action === "TRIAL_PWM" && request.speed_code === 2007,
+    ),
+  );
+  snapshot = { ...snapshot, state_version: "3", state: { code: "STOP_PURGE" } };
+  await session.poll();
+  assert.equal(session.view.pending, null);
+  assert.equal(session.view.message.kind, "warning");
+});

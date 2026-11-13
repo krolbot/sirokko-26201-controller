@@ -93,8 +93,14 @@ const char *russian_event(const char *kind) {
         return "Первый запуск подготовлен";
     if (std::strcmp(kind, "TRIAL_START") == 0)
         return "Первый запуск начат удержанием KEY0";
+    if (std::strcmp(kind, "TRIAL_CONFIRMED") == 0)
+        return "Горение подтверждено пользователем";
+    if (std::strcmp(kind, "TRIAL_PWM_CHANGED") == 0)
+        return "ШИМ двигателя изменён при первом запуске";
     if (std::strcmp(kind, "TRIAL_EXPIRED") == 0)
         return "Первый запуск отменён: KEY0 не нажата";
+    if (std::strcmp(kind, "TRIAL_UNCONFIRMED") == 0)
+        return "Первый запуск остановлен: горение не подтверждено";
     if (std::strcmp(kind, "TRIAL_FINISHED") == 0)
         return "Первый запуск завершён по времени";
     if (std::strcmp(kind, "START") == 0)
@@ -172,6 +178,8 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->boolean(control.trial_active);
     json->raw(",\"remaining_ms\":");
     json->unsigned_integer(control.trial_remaining_ms);
+    json->raw(",\"elapsed_ms\":");
+    json->unsigned_integer(control.trial_elapsed_ms);
     json->character('}');
     const auto &monitor = control.combustion;
     const char *phases[] = {"OFF", "LEARNING", "WATCHING", "SUSPECT", "LOST"};

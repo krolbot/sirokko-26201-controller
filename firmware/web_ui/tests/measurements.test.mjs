@@ -251,3 +251,51 @@ test("trial cannot overwrite an active recording and rejection or reboot retains
   assert.equal(r.reason, "restart");
   assert(r.unsaved);
 });
+
+test("CSV keeps accepted PWM steps between polls with their original controller times and temperatures", () => {
+  const r = new Measurements();
+  r.startTrial(snapshot(1000), true, time);
+  const event = (kind, at_ms, speed_code, exhaust_milli_c) => ({
+    kind,
+    at_ms,
+    state: "RUN",
+    speed_code,
+    exhaust_milli_c,
+    air_milli_c: 85000,
+    faults: 0,
+  });
+  const s = {
+    ...snapshot(2000),
+    trial: { active: true },
+    envelope: { fingerprint: "fedc", limits: { pwm_max: 4014 } },
+    events: [
+      event("TRIAL_PWM_CHANGED", 999, 1000, 250000),
+      event("TRIAL_CONFIRMED", 1100, 4014, 310000),
+      event("TRIAL_PWM_CHANGED", 1200, 2800, 320000),
+      event("TRIAL_PWM_CHANGED", 1500, 2400, 300000),
+    ],
+  };
+  r.observe(s, true, time + 1000);
+  r.observe({ ...s, uptime_ms: 2100 }, true, time + 1100);
+  const changes = csvRows(r).filter((row) => row.event === "TRIAL_PWM_CHANGED");
+  assert.deepEqual(
+    changes.map((row) => [
+      row.uptime_ms,
+      row.motor_pwm_code,
+      row.exhaust_c,
+      row.air_c,
+    ]),
+    [
+      ["1200", "2800", "320", "85"],
+      ["1500", "2400", "300", "85"],
+    ],
+  );
+  assert.equal(changes[0].time_utc, new Date(time + 200).toISOString());
+  assert.equal(changes[0].exhaust_sample_ms, "");
+  assert.equal(changes[0].fuel_command, "");
+  assert.equal(
+    csvRows(r).filter((row) => row.event === "TRIAL_CONFIRMED").length,
+    1,
+  );
+  assert.equal(r.samples, 3);
+});

@@ -41,6 +41,8 @@ export class Measurements {
     this.reason = "";
     this.trialRequested = false;
     this.trialSeen = false;
+    this.lastEventMs = -1;
+    this.lastEventMask = 0;
   }
 
   get unsaved() {
@@ -69,6 +71,8 @@ export class Measurements {
     this.trialSeen = false;
     this.bootId = snapshot.boot_id;
     this.firstUptime = snapshot.uptime_ms;
+    this.lastEventMs = snapshot.uptime_ms - 1;
+    this.lastEventMask = 0;
     this.lastUptime = null;
     this.observe(snapshot, true, now);
     return true;
@@ -109,6 +113,63 @@ export class Measurements {
     this.append([new Date(now).toISOString(), kind, note, "", this.bootId]);
   }
 
+  captureTrialEvents(snapshot, now) {
+    for (const event of snapshot.events || []) {
+      const bit =
+        event.kind === "TRIAL_CONFIRMED"
+          ? 1
+          : event.kind === "TRIAL_PWM_CHANGED"
+            ? 2
+            : 0;
+      if (
+        !bit ||
+        !Number.isSafeInteger(event.at_ms) ||
+        event.at_ms < this.firstUptime ||
+        event.at_ms > snapshot.uptime_ms ||
+        event.at_ms < this.lastEventMs
+      )
+        continue;
+      if (event.at_ms > this.lastEventMs) {
+        this.lastEventMs = event.at_ms;
+        this.lastEventMask = 0;
+      }
+      if (this.lastEventMask & bit) continue;
+      this.lastEventMask |= bit;
+      const temperature = (milliC) =>
+        Number.isFinite(milliC) ? milliC / 1000 : null;
+      this.append([
+        new Date(now - (snapshot.uptime_ms - event.at_ms)).toISOString(),
+        event.kind,
+        "",
+        snapshot.version,
+        this.bootId,
+        event.at_ms,
+        event.state,
+        true,
+        event.faults,
+        snapshot.envelope?.fingerprint,
+        null,
+        null,
+        null,
+        event.speed_code,
+        snapshot.envelope?.limits?.pwm_max
+          ? (100 * event.speed_code) / snapshot.envelope.limits.pwm_max
+          : null,
+        temperature(event.exhaust_milli_c),
+        null,
+        null,
+        null,
+        null,
+        temperature(event.air_milli_c),
+        null,
+        null,
+        null,
+        null,
+      ]);
+      if (!this.active) return;
+    }
+  }
+
   observe(snapshot, online, now = Date.now()) {
     if (!this.active) return;
     online = online && this.valid(snapshot);
@@ -132,6 +193,8 @@ export class Measurements {
       this.event("sampling_gap", "", now);
     this.online = true;
     if (!this.active || snapshot.uptime_ms === this.lastUptime) return;
+    this.captureTrialEvents(snapshot, now);
+    if (!this.active) return;
     const outputs = snapshot.outputs || {};
     const readings = channels.flatMap((name) => {
       const s = snapshot.sensors?.[name] || {};

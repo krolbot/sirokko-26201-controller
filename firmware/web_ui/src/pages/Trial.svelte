@@ -10,9 +10,12 @@
     countdownText,
   } from "../lib/presentation.js";
   import { trialActive } from "../lib/protocol.js";
+  import { Draft } from "../lib/draft.svelte.js";
   let {
     ui,
     api,
+    session,
+    notify,
     recording,
     startTrial,
     downloadMeasurements,
@@ -28,6 +31,41 @@
   const ready = $derived(connectionReady(ui));
   const captureAvailable = $derived(!recording.active && !recording.unsaved);
   const phase = $derived(snapshot.state.code);
+  const measuring = $derived(active && phase === "RUN");
+  const pwm = new Draft(["speed_code"]);
+  const pwmMaximum = $derived(snapshot.envelope.limits.pwm_max);
+  const pwmPercent = $derived(
+    Math.round(
+      (100 * (pwm.value?.speed_code ?? snapshot.outputs.speed_code)) /
+        pwmMaximum,
+    ),
+  );
+  let externalPwmChange = $state(false);
+  $effect(() => {
+    const actual = { speed_code: snapshot.outputs.speed_code };
+    pwm.sync(snapshot, actual);
+    if (pwm.conflict || !measuring) {
+      externalPwmChange = pwm.conflict;
+      pwm.reset(snapshot, actual);
+    }
+  });
+  function changePwm(event) {
+    externalPwmChange = false;
+    pwm.set(
+      "speed_code",
+      Math.max(
+        1,
+        Math.round((Number(event.currentTarget.value) * pwmMaximum) / 100),
+      ),
+    );
+  }
+  async function submit(action, payload = {}) {
+    try {
+      await session.submit(action, payload);
+    } catch (error) {
+      notify("error", error.message);
+    }
+  }
   const cooling = $derived(snapshot.purge?.active);
   const time = $derived(
     cooling
@@ -41,7 +79,9 @@
         ? "На начало запуска"
         : phase === "PREHEAT"
           ? "До подачи топлива"
-          : "До отключения топлива",
+          : phase === "IGNITION"
+            ? "На подтверждение горения"
+            : "До окончания измерений",
   );
 </script>
 
@@ -51,7 +91,13 @@
 </p>
 {#if active}
   <section class="surface info-panel section trial-process" aria-live="polite">
-    <h2>{phase === "TRIAL_READY" ? "Готов к началу" : stateText(snapshot)}</h2>
+    <h2>
+      {phase === "TRIAL_READY"
+        ? "Готов к началу"
+        : measuring
+          ? "Прогрев и измерения"
+          : stateText(snapshot)}
+    </h2>
     {#if phase === "TRIAL_READY"}
       <p>
         Нажмите и удерживайте KEY0 на панели. Отпускание кнопки остановит
@@ -66,6 +112,23 @@
       {#if phase === "IGNITION"}
         <p class="caption">
           Если розжига нет, отпустите KEY0; не ждите окончания отсчёта.
+        </p>
+        <button
+          class="primary confirm-ignition"
+          disabled={!ready || !commandAllowed(snapshot, "TRIAL_CONFIRM")}
+          onclick={() => submit("TRIAL_CONFIRM")}>Горение устойчивое</button
+        >
+        {#if snapshot.outputs.glow}<p class="caption">
+            Подтверждение доступно после выключения свечи.
+          </p>{/if}
+      {:else if measuring}
+        <p class="caption">
+          Сначала прогрейте отопитель на полном ШИМ около 10 минут. Затем
+          меняйте ШИМ поэтапно и дождитесь установления температуры на каждой
+          ступени.
+        </p>
+        <p class="caption">
+          После подтверждения: {countdownText(snapshot.trial.elapsed_ms)}
         </p>
       {/if}
     {/if}
@@ -82,8 +145,9 @@
     <h2>Запуск с записью температур</h2>
     <p class="caption">
       После 30 с накала включатся двигатель и подача топлива. Ещё через 10 с
-      свеча выключится. Через 90 с после подачи топлива начнётся охлаждение.
-      Двигатель работает на максимальном ШИМ.
+      свеча выключится. Подтвердите устойчивое горение, чтобы перейти к
+      измерениям и регулировке ШИМ. Без подтверждения топливо отключится через
+      90 с после его подачи. На измерения — до 30 минут с удержанием KEY0.
     </p>
     <p class="notice">
       Перед запуском восстановите штатное отключение муфты при перегреве.
@@ -112,6 +176,41 @@
   </section>
 {/if}
 
+{#if measuring}
+  <section class="surface info-panel section">
+    <h2>ШИМ двигателя</h2>
+    <p class="pwm-value">
+      {pwmPercent} % <span>· {pwm.value?.speed_code} / {pwmMaximum}</span>
+    </p>
+    <input
+      class="pwm-slider"
+      type="range"
+      aria-label="ШИМ двигателя"
+      min="1"
+      max="100"
+      step="1"
+      value={pwmPercent}
+      disabled={!ready || !commandAllowed(snapshot, "TRIAL_PWM")}
+      oninput={changePwm}
+    />
+    <p class="caption">
+      Применено: {snapshot.outputs.speed_code} / {pwmMaximum}. Изменения и
+      температуры попадают в CSV.
+    </p>
+    {#if externalPwmChange}<p class="caption" role="status">
+        ШИМ изменён на другом пульте. Показано текущее значение.
+      </p>{/if}
+    <button
+      class="primary"
+      disabled={!ready ||
+        !commandAllowed(snapshot, "TRIAL_PWM") ||
+        !pwm.dirty ||
+        pwm.value?.speed_code === snapshot.outputs.speed_code}
+      onclick={() => submit("TRIAL_PWM", { speed_code: pwm.value.speed_code })}
+      >Применить ШИМ</button
+    >
+  </section>
+{/if}
 <div class="readings">
   {#each [["exhaust", "Выхлоп"], ["air", "Нагретый воздух"]] as [channel, label]}
     <section class="reading surface">
@@ -158,6 +257,23 @@
 <a class="secondary" href="#/heater">Параметры отопителя</a>
 
 <style>
+  .confirm-ignition {
+    margin-top: 16px;
+  }
+  .pwm-value {
+    font-size: 28px;
+    margin: 16px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .pwm-value span {
+    font-size: 14px;
+    color: var(--secondary);
+  }
+  .pwm-slider {
+    accent-color: var(--accent);
+    width: 100%;
+    margin: 8px 0 16px;
+  }
   .readings {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

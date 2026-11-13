@@ -230,7 +230,7 @@ bool update_view() {
     return true;
 }
 bool submit_action(sirokko::Action action, uint64_t params_hash, uint64_t delay_ms,
-                   const sirokko::Settings *settings) {
+                   const sirokko::Settings *settings, uint16_t speed_code = 0) {
     sirokko::Grant grant{};
     RuntimeView latest{};
     const auto &expected = g_model.view().control;
@@ -238,7 +238,7 @@ bool submit_action(sirokko::Action action, uint64_t params_hash, uint64_t delay_
         latest.control.boot_id != expected.boot_id)
         return false;
     return runtime_issue(action, params_hash, &grant) && grant.state_version == expected.state_version &&
-           runtime_submit(grant, action, delay_ms, settings);
+           runtime_submit(grant, action, delay_ms, settings, speed_code);
 }
 bool execute_command(const panel_ui::Command &command) {
     switch (command.kind) {
@@ -248,6 +248,11 @@ bool execute_command(const panel_ui::Command &command) {
     case panel_ui::CommandKind::TIMER:
         return submit_action(sirokko::Action::TIMER, command_hash(command.kind, command.delay_ms),
                              command.delay_ms, nullptr);
+    case panel_ui::CommandKind::TRIAL_CONFIRM:
+        return submit_action(sirokko::Action::TRIAL_CONFIRM, command_hash(command.kind, 0), 0, nullptr);
+    case panel_ui::CommandKind::TRIAL_PWM:
+        return submit_action(sirokko::Action::TRIAL_PWM, command_hash(command.kind, command.speed_code), 0,
+                             nullptr, command.speed_code);
     case panel_ui::CommandKind::RESET_FAULT:
         return submit_action(sirokko::Action::RESET_FAULT, command_hash(command.kind, 0), 0, nullptr);
     case panel_ui::CommandKind::REQUEST_NETWORK_CREDENTIALS: {

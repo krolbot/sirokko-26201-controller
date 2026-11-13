@@ -12,6 +12,8 @@ const CONFIRMATION_TIMEOUT_MS = 5_000;
 const ACTIONS = new Set([
   "START",
   "TRIAL_START",
+  "TRIAL_CONFIRM",
+  "TRIAL_PWM",
   "RESET_FAULT",
   "SETTINGS",
   "TIMER",
@@ -298,6 +300,8 @@ export class ControllerSession {
         {
           START: "Запуск отопителя начат",
           TRIAL_START: "Запуск подготовлен. Удерживайте KEY0 на панели",
+          TRIAL_CONFIRM: "Горение подтверждено. ШИМ доступен для регулировки",
+          TRIAL_PWM: "ШИМ двигателя изменён",
           STOP: "Остановка отопителя подтверждена",
           RESET_FAULT: "Авария сброшена",
           SETTINGS: "Настройки применены",

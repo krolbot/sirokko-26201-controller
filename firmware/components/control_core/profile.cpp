@@ -64,8 +64,8 @@ bool valid_profile_draft(const SafetyEnvelope &p) {
            (!p.minimum_speed_code || !p.maximum_speed_code || p.minimum_speed_code <= p.maximum_speed_code);
 }
 bool valid_safety_envelope(const SafetyEnvelope &p) {
-    return valid_profile_draft(p) && p.maximum_exhaust_milli_c && p.postpurge_ms && p.purge_speed_code &&
-           p.preheat_ms && p.ignition_timeout_ms > kIgnitionGlowMs + kTemperatureConfirmationMs &&
+    return valid_profile_draft(p) && p.postpurge_ms && p.purge_speed_code && p.preheat_ms &&
+           p.ignition_timeout_ms > kIgnitionGlowMs + kTemperatureConfirmationMs &&
            p.minimum_run_exhaust_milli_c && p.maximum_speed_code && p.minimum_speed_code;
 }
 bool cooling_complete(const SafetyEnvelope &p, const Sensors &s, uint64_t now) {

@@ -186,6 +186,26 @@ int main() {
     const char *extend_trial = R"({"action":"TRIAL_START","command_id":"2","delay_ms":999999})";
     assert(web_protocol::parse_challenge_request(extend_trial, std::strlen(extend_trial), &trial_command) ==
            web_protocol::ParseError::UNKNOWN_FIELD);
+    const char *confirm_trial = R"({"action":"TRIAL_CONFIRM","command_id":"3"})";
+    assert(web_protocol::parse_challenge_request(confirm_trial, std::strlen(confirm_trial), &trial_command) ==
+           web_protocol::ParseError::OK);
+    assert(trial_command.action == Action::TRIAL_CONFIRM);
+    const char *pwm_trial = R"({"action":"TRIAL_PWM","command_id":"4","speed_code":2007})";
+    assert(web_protocol::parse_challenge_request(pwm_trial, std::strlen(pwm_trial), &trial_command) ==
+           web_protocol::ParseError::OK);
+    assert(trial_command.action == Action::TRIAL_PWM && trial_command.speed_code == 2007);
+    const auto original_digest = trial_command.payload_digest;
+    ++trial_command.speed_code;
+    assert(!web_protocol::digest_equal(original_digest, web_protocol::compute_payload_digest(trial_command)));
+    for (const char *bad : {R"({"action":"TRIAL_PWM","command_id":"4"})",
+                            R"({"action":"TRIAL_PWM","command_id":"4","speed_code":0})",
+                            R"({"action":"TRIAL_PWM","command_id":"4","speed_code":4015})",
+                            R"({"action":"TRIAL_PWM","command_id":"4","speed_code":65537})",
+                            R"({"action":"TRIAL_PWM","command_id":"4","speed_code":1.5})",
+                            R"({"action":"TRIAL_PWM","command_id":"4","speed_code":2007,"delay_ms":900000})",
+                            R"({"action":"TRIAL_CONFIRM","command_id":"4","speed_code":2007})"})
+        assert(web_protocol::parse_challenge_request(bad, std::strlen(bad), &trial_command) !=
+               web_protocol::ParseError::OK);
     const char *duplicate = R"({"action":"START","action":"CALIBRATE","command_id":"1"})";
     assert(web_protocol::parse_challenge_request(duplicate, std::strlen(duplicate), &command) ==
            web_protocol::ParseError::DUPLICATE_FIELD);

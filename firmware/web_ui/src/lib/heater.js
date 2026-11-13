@@ -16,12 +16,7 @@ export const heaterGroups = [
         "°C",
         1000,
       ],
-      [
-        "maximum_exhaust_milli_c",
-        "Отключить топливо при выхлопе ≥",
-        "°C",
-        1000,
-      ],
+      ["maximum_exhaust_milli_c", "Дополнительный предел выхлопа", "°C", 1000],
       [
         "cooling_exhaust_milli_c",
         "Выключить двигатель при выхлопе <",
@@ -42,7 +37,10 @@ export const heaterGroups = [
 export const heaterFields = heaterGroups.flatMap((group) => group.fields);
 
 export function missingHeaterFields(envelope) {
-  return heaterFields.filter(([key]) => !(envelope?.parameters?.[key] > 0));
+  return heaterFields.filter(
+    ([key]) =>
+      key !== "maximum_exhaust_milli_c" && !(envelope?.parameters?.[key] > 0),
+  );
 }
 
 export function heaterSetupText(envelope) {

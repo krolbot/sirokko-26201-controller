@@ -36,6 +36,7 @@ struct Command {
     sirokko::Action action{sirokko::Action::START};
     uint64_t command_id{};
     uint64_t delay_ms{};
+    uint16_t speed_code{};
     sirokko::Settings settings{};
     sirokko::SafetyEnvelope envelope{};
     uint64_t upload_size{};

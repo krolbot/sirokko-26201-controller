@@ -25,12 +25,14 @@ enum class MenuItem : uint8_t {
     BACK,
     COUNT,
 };
-enum class EditField : uint8_t { NONE, MODE, MANUAL_POWER, TEMPERATURE, SHUTDOWN_TIMER };
+enum class EditField : uint8_t { NONE, MODE, MANUAL_POWER, TEMPERATURE, SHUTDOWN_TIMER, TRIAL_PWM };
 enum class CommandKind : uint8_t {
     NONE,
     SETTINGS,
     TIMER,
     RESET_FAULT,
+    TRIAL_CONFIRM,
+    TRIAL_PWM,
     REQUEST_NETWORK_CREDENTIALS,
 };
 enum class Notice : uint8_t {
@@ -56,6 +58,7 @@ struct Command {
     CommandKind kind{CommandKind::NONE};
     sirokko::Settings settings{};
     uint64_t delay_ms{};
+    uint16_t speed_code{};
 };
 
 // This stays in RAM in the local panel task. Nothing in panel_ui logs or serializes it.

@@ -108,6 +108,21 @@ int main() {
          {Action::START, Action::TRIAL_START, Action::SETTINGS, Action::TIMER, Action::PROFILE, Action::OTA})
         assert(command_policy::block(eligibility, action) == Block::BUSY);
     assert(command_policy::wifi_password_block(eligibility) == Block::BUSY);
+    assert(command_policy::block(eligibility, Action::TRIAL_CONFIRM) == Block::BUSY);
+    assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::BUSY);
+    eligibility.control.state = State::IGNITION;
+    eligibility.control.outputs.fuel = true;
+    eligibility.control.outputs.glow = true;
+    assert(command_policy::block(eligibility, Action::TRIAL_CONFIRM) == Block::BUSY);
+    eligibility.control.outputs.glow = false;
+    assert(command_policy::block(eligibility, Action::TRIAL_CONFIRM) == Block::NONE);
+    assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::BUSY);
+    eligibility.control.state = State::RUN;
+    assert(command_policy::block(eligibility, Action::TRIAL_CONFIRM) == Block::BUSY);
+    assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::NONE);
+    eligibility.control.trial_active = false;
+    assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::BUSY);
+    eligibility.control.outputs.fuel = false;
     eligibility.control.trial_active = false;
     eligibility.control.state = State::UNCONFIGURED;
     eligibility.local_controls_initialized = false;

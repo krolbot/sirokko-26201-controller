@@ -242,6 +242,8 @@ bool read_header(httpd_req_t *request, const char *name, char *output, size_t ca
 
 bool semantic_valid(const web_protocol::Command &command) {
     switch (command.action) {
+    case sirokko::Action::TRIAL_PWM:
+        return command.speed_code > 0 && command.speed_code <= sirokko::kPwmMaximum;
     case sirokko::Action::TIMER:
         return command.delay_ms <= sirokko::kMaximumTimerMs;
     case sirokko::Action::SETTINGS:
@@ -252,6 +254,7 @@ bool semantic_valid(const web_protocol::Command &command) {
         return command.upload_size >= ota_verify::kManifestSize + ota_verify::kSignatureSize;
     case sirokko::Action::START:
     case sirokko::Action::TRIAL_START:
+    case sirokko::Action::TRIAL_CONFIRM:
     case sirokko::Action::RESET_FAULT:
         return true;
     }
@@ -691,7 +694,8 @@ esp_err_t command_handler(httpd_req_t *request) {
         command.action == sirokko::Action::PROFILE
             ? runtime_save_profile(grant, command.envelope)
             : runtime_submit(grant, command.action, command.delay_ms,
-                             command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr);
+                             command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr,
+                             command.speed_code);
     session->replays.remember(command.command_id, command.payload_digest, accepted);
     if (!accepted)
         return reject(request, "NOT_ACCEPTED", "409 Conflict");

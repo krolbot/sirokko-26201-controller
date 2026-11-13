@@ -34,7 +34,7 @@ constexpr uint64_t kCommandFreshnessMs = 5000;
 constexpr uint64_t kSensorStaleMs = 600;
 constexpr uint64_t kRoomSensorStaleMs = 2000;
 constexpr uint64_t kTrialArmMs = 30000;
-constexpr uint64_t kTrialMeasurementMs = 90000;
+constexpr uint64_t kTrialMeasurementMs = 30ULL * 60 * 1000;
 constexpr uint64_t kLocalButtonFreshMs = 100;
 constexpr uint64_t kMaximumTimerMs = 7ULL * 24 * 60 * 60 * 1000;
 
@@ -110,6 +110,7 @@ struct SafetyEnvelope {
     uint64_t ignition_timeout_ms{kFiringStartupMaximumMs};
     uint64_t postpurge_ms{kPostpurgeMinimumMs};
     int32_t cooling_exhaust_milli_c{40000};
+    // Optional additional exhaust cutoff; zero leaves heater overheat protection to the stock limiter.
     int32_t maximum_exhaust_milli_c{};
     int32_t minimum_run_exhaust_milli_c{};
     // Initial command for the installed two-wire drive on a regulated 24 V supply.
@@ -164,6 +165,9 @@ struct TickInput {
     bool exit_maintenance{};
     bool cycle_record_ready{};
     bool trial_request{};
+    bool trial_confirm{};
+    bool set_trial_pwm{};
+    uint16_t trial_pwm_code{};
     bool local_button_held{};
     bool local_button_valid{};
     uint64_t local_button_sample_ms{};
@@ -176,6 +180,7 @@ struct Snapshot {
     Block start_block{Block::RECOVERY_PURGE};
     Block reset_fault_block{Block::BUSY};
     bool trial_active{};
+    uint64_t trial_elapsed_ms{};
     uint64_t trial_remaining_ms{};
     Block trial_start_block{Block::BUSY};
     Outputs outputs;
@@ -205,6 +210,8 @@ enum class Action : uint8_t {
     TIMER,
     PROFILE,
     TRIAL_START,
+    TRIAL_CONFIRM,
+    TRIAL_PWM,
 };
 
 struct Grant {
@@ -268,6 +275,7 @@ class Controller {
     State state_{State::UNCONFIGURED};
     bool trial_active_{};
     bool trial_fault_{};
+    uint16_t trial_speed_code_{kPwmMaximum};
     bool local_button_held_{};
     bool local_button_valid_{};
     uint64_t local_button_sample_ms_{};

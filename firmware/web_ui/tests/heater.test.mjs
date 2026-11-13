@@ -114,6 +114,19 @@ test("incomplete profile reports the actual missing fields", () => {
   );
   assert.equal(heaterValidation(heaterDraft(partial), limits).complete, false);
 });
+test("extra exhaust cutoff is optional, while configured values still round trip", () => {
+  const without = { parameters: { ...parameters, maximum_exhaust_milli_c: 0 } };
+  assert.deepEqual(missingHeaterFields(without), []);
+  const validation = heaterValidation(heaterDraft(without), limits);
+  assert.equal(validation.complete, true);
+  assert.equal(validation.valid, true);
+  assert.equal(validation.parameters.maximum_exhaust_milli_c, 0);
+  assert.equal(
+    heaterValidation(heaterDraft({ parameters }), limits).parameters
+      .maximum_exhaust_milli_c,
+    parameters.maximum_exhaust_milli_c,
+  );
+});
 test("queued configuration is confirmed only by the saved profile", () => {
   const baseline = {
     boot_id: "1",

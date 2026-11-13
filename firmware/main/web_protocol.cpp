@@ -18,6 +18,7 @@ constexpr uint32_t kUploadSize = 1U << 5;
 constexpr uint32_t kUploadSha256 = 1U << 6;
 constexpr uint32_t kGrant = 1U << 7;
 constexpr uint32_t kEnvelope = 1U << 8;
+constexpr uint32_t kSpeedCode = 1U << 9;
 
 class Cursor {
   public:
@@ -278,6 +279,10 @@ bool parse_action_text(const char *text, sirokko::Action *action) {
         *action = sirokko::Action::PROFILE;
     else if (equals(text, "TRIAL_START"))
         *action = sirokko::Action::TRIAL_START;
+    else if (equals(text, "TRIAL_CONFIRM"))
+        *action = sirokko::Action::TRIAL_CONFIRM;
+    else if (equals(text, "TRIAL_PWM"))
+        *action = sirokko::Action::TRIAL_PWM;
 
     else
         return false;
@@ -615,6 +620,9 @@ Digest digest_command(const Command &command) {
     hash_u8(&hash, static_cast<uint8_t>(command.action));
     hash_u64(&hash, command.command_id);
     switch (command.action) {
+    case sirokko::Action::TRIAL_PWM:
+        hash_u64(&hash, command.speed_code);
+        break;
     case sirokko::Action::TIMER:
         hash_u64(&hash, command.delay_ms);
         break;
@@ -637,6 +645,7 @@ Digest digest_command(const Command &command) {
         break;
     case sirokko::Action::START:
     case sirokko::Action::TRIAL_START:
+    case sirokko::Action::TRIAL_CONFIRM:
     case sirokko::Action::RESET_FAULT:
         break;
     }
@@ -682,6 +691,15 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         } else if (equals(key, "delay_ms")) {
             bit = kDelay;
             result = parse_u64(&cursor, &command.delay_ms);
+        } else if (equals(key, "speed_code")) {
+            bit = kSpeedCode;
+            uint64_t code = 0;
+            result = parse_u64(&cursor, &code);
+            if (result == ParseError::OK) {
+                if (code == 0 || code > sirokko::kPwmMaximum)
+                    return ParseError::FIELD_VALUE;
+                command.speed_code = static_cast<uint16_t>(code);
+            }
         } else if (equals(key, "settings")) {
             bit = kSettings;
             result = parse_settings(&cursor, &command.settings);
@@ -715,6 +733,9 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
 
     uint32_t required = kAction | kCommandId;
     switch (command.action) {
+    case sirokko::Action::TRIAL_PWM:
+        required |= kSpeedCode;
+        break;
     case sirokko::Action::TIMER:
         required |= kDelay;
         break;
@@ -730,6 +751,7 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         break;
     case sirokko::Action::START:
     case sirokko::Action::TRIAL_START:
+    case sirokko::Action::TRIAL_CONFIRM:
     case sirokko::Action::RESET_FAULT:
         break;
     }

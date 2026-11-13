@@ -127,7 +127,7 @@ Block Controller::start_guard(const Sensors &sensors, uint64_t now_ms) const {
     if (data_block != Block::NONE)
         return data_block;
     if (sensors.exhaust.milli_c < kThermocoupleMinimumMilliC ||
-        sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c ||
+        (envelope_.maximum_exhaust_milli_c && sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c) ||
         sensors.air.milli_c < kThermocoupleMinimumMilliC || !cooling_complete(envelope_, sensors, now_ms))
         return Block::INITIAL_THERMAL_STATE;
     if (settings_.duration_ms > std::numeric_limits<uint64_t>::max() - now_ms)
@@ -265,7 +265,12 @@ Outputs Controller::outputs() const {
             const uint64_t elapsed =
                 last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
             return {true, kPwmMaximum, held && elapsed < kIgnitionGlowMs,
-                    held && elapsed < kTrialMeasurementMs};
+                    held && elapsed < kFiringStartupMaximumMs};
+        }
+        if (state_ == State::RUN) {
+            const uint64_t elapsed =
+                last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
+            return {true, trial_speed_code_, false, held && elapsed < kTrialMeasurementMs};
         }
         return result;
     }
@@ -407,6 +412,7 @@ Snapshot Controller::tick(const TickInput &input) {
         trial_start_guard(input.sensors, now) == Block::NONE) {
         trial_active_ = true;
         trial_fault_ = false;
+        trial_speed_code_ = kPwmMaximum;
         duration_active_ = false;
         duration_deadline_ms_ = 0;
         condition_active_ = false;
@@ -443,9 +449,13 @@ Snapshot Controller::tick(const TickInput &input) {
         break;
     case State::IGNITION:
         if (trial_active_) {
-            if (elapsed >= kTrialMeasurementMs) {
-                record("TRIAL_FINISHED", now);
+            if (elapsed >= kFiringStartupMaximumMs) {
+                record("TRIAL_UNCONFIRMED", now);
                 begin_stop(now);
+            } else if (input.trial_confirm && elapsed >= kIgnitionGlowMs) {
+                trial_speed_code_ = kPwmMaximum;
+                transition(State::RUN, now);
+                record("TRIAL_CONFIRMED", now);
             }
             break;
         }
@@ -464,6 +474,21 @@ Snapshot Controller::tick(const TickInput &input) {
         }
         break;
     case State::RUN: {
+        if (trial_active_) {
+            if (elapsed >= kTrialMeasurementMs) {
+                record("TRIAL_FINISHED", now);
+                begin_stop(now);
+            } else if (input.set_trial_pwm && input.trial_pwm_code > 0 &&
+                       input.trial_pwm_code <= kPwmMaximum) {
+                const bool changed = trial_speed_code_ != input.trial_pwm_code;
+                trial_speed_code_ = input.trial_pwm_code;
+                if (++state_version_ == 0)
+                    state_version_ = 1;
+                if (changed)
+                    record("TRIAL_PWM_CHANGED", now);
+            }
+            break;
+        }
         if (temperature_confirmed(input.sensors.exhaust.milli_c < envelope_.minimum_run_exhaust_milli_c,
                                   input.sensors.exhaust.sample_ms))
             latch_fault(FAULT_FLAME_LOST, now);
@@ -511,9 +536,11 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.trial_start_block = trial_start_guard(last_sensors_, now_ms);
     if (trial_active_) {
         const uint64_t elapsed = now_ms >= state_started_ms_ ? now_ms - state_started_ms_ : 0;
+        result.trial_elapsed_ms = elapsed;
         const uint64_t period = state_ == State::TRIAL_READY ? kTrialArmMs
                                 : state_ == State::PREHEAT   ? kPreheatMinimumMs
-                                : state_ == State::IGNITION  ? kTrialMeasurementMs
+                                : state_ == State::IGNITION  ? kFiringStartupMaximumMs
+                                : state_ == State::RUN       ? kTrialMeasurementMs
                                                              : 0;
         result.trial_remaining_ms = elapsed < period ? period - elapsed : 0;
     }

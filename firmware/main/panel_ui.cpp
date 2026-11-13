@@ -146,6 +146,9 @@ void Model::invalidate_pending() {
 
 bool Model::presentation_blocked() const {
     const auto state = view_.control.state;
+    if (view_.control.trial_active)
+        return state != sirokko::State::RUN && !(state == sirokko::State::IGNITION &&
+                                                 view_.control.outputs.fuel && !view_.control.outputs.glow);
     if ((state != sirokko::State::IDLE && state != sirokko::State::UNCONFIGURED &&
          state != sirokko::State::RUN && state != sirokko::State::FAULT) ||
         view_.control.combustion.phase == sirokko::combustion::Phase::SUSPECT)
@@ -311,7 +314,11 @@ void Model::update(const View &view) {
         return;
     }
 
-    if (presentation_blocked()) {
+    const bool trial_context_changed =
+        view.control.trial_active != previous.control.trial_active ||
+        (view.control.trial_active &&
+         (view.control.state != previous.control.state || view.control.run_id != previous.control.run_id));
+    if (presentation_blocked() || trial_context_changed) {
         const bool confirmed = confirmation_.active && snapshot_confirms(confirmation_, view_);
         abort_stale_interaction(!confirmed);
         if (confirmed)
@@ -379,6 +386,12 @@ void Model::begin_edit(EditField field, Page return_page) {
     case EditField::MODE:
         edit_value_ = draft_settings_.mode == sirokko::Mode::MANUAL ? 1 : 0;
         break;
+    case EditField::TRIAL_PWM:
+        edit_value_ = static_cast<int32_t>(
+            (100U * view_.control.outputs.speed_code + sirokko::kPwmMaximum / 2) / sirokko::kPwmMaximum);
+        if (edit_value_ < 1)
+            edit_value_ = 1;
+        break;
     case EditField::MANUAL_POWER:
         edit_value_ = draft_settings_.manual_percent;
         break;
@@ -411,6 +424,9 @@ bool Model::edit_conflicts(const View &previous) const {
     const auto &before = previous.settings;
     const auto &after = view_.settings;
     switch (edit_field_) {
+    case EditField::TRIAL_PWM:
+        return !view_.control.trial_active || view_.control.state != sirokko::State::RUN ||
+               previous.control.outputs.speed_code != view_.control.outputs.speed_code;
     case EditField::MODE:
     case EditField::MANUAL_POWER:
     case EditField::TEMPERATURE:
@@ -479,6 +495,10 @@ void Model::commit_edit() {
     draft_settings_ = view_.settings;
     Command command{};
     switch (edit_field_) {
+    case EditField::TRIAL_PWM:
+        command.kind = CommandKind::TRIAL_PWM;
+        command.speed_code = static_cast<uint16_t>((edit_value_ * sirokko::kPwmMaximum + 50) / 100);
+        break;
     case EditField::MODE:
         draft_settings_.mode = edit_value_ == 0 ? sirokko::Mode::TEMPERATURE : sirokko::Mode::MANUAL;
         command.kind = CommandKind::SETTINGS;
@@ -514,7 +534,8 @@ void Model::commit_edit() {
     const bool unchanged_settings =
         command.kind == CommandKind::SETTINGS && same_settings(command.settings, view_.settings);
     finish_edit();
-    if (!unchanged_settings)
+    if (!unchanged_settings &&
+        !(command.kind == CommandKind::TRIAL_PWM && command.speed_code == view_.control.outputs.speed_code))
         queue_command(command);
 }
 
@@ -565,9 +586,12 @@ void Model::rotate(int turns) {
         return;
     set_notice(Notice::NONE);
 
+    if (view_.control.trial_active && view_.control.state != sirokko::State::RUN)
+        return;
     if (page_ == Page::HOME) {
-        begin_edit(view_.settings.mode == sirokko::Mode::MANUAL ? EditField::MANUAL_POWER
-                                                                : EditField::TEMPERATURE,
+        begin_edit(view_.control.trial_active                     ? EditField::TRIAL_PWM
+                   : view_.settings.mode == sirokko::Mode::MANUAL ? EditField::MANUAL_POWER
+                                                                  : EditField::TEMPERATURE,
                    Page::HOME);
     }
 
@@ -583,6 +607,9 @@ void Model::rotate(int turns) {
     bump_interaction_epoch();
     invalidate_pending();
     switch (edit_field_) {
+    case EditField::TRIAL_PWM:
+        edit_value_ = clamp_step(edit_value_, turns, 1, 100, 1);
+        break;
     case EditField::MODE:
         edit_value_ = clamp_step(edit_value_, turns, 0, 1, 1);
         break;
@@ -623,6 +650,15 @@ void Model::execute_pending_single() {
 
     switch (pending.page) {
     case Page::HOME:
+        if (view_.control.trial_active) {
+            if (view_.control.state == sirokko::State::IGNITION && view_.control.outputs.fuel &&
+                !view_.control.outputs.glow) {
+                Command command{};
+                command.kind = CommandKind::TRIAL_CONFIRM;
+                queue_command(command);
+            }
+            break;
+        }
         page_ = Page::MENU;
         synchronize_menu();
         bump_interaction_epoch();
@@ -722,6 +758,12 @@ bool Model::snapshot_confirms(const Confirmation &confirmation, const View &view
         return saturating_add(view.control.duration_remaining_ms, kTimerConfirmationSlackMs) >=
                expected_remaining;
     }
+    case CommandKind::TRIAL_CONFIRM:
+    case CommandKind::TRIAL_PWM:
+        return view.control.trial_active && view.control.state == sirokko::State::RUN &&
+               view.control.run_id == confirmation.context.run_id &&
+               (confirmation.command.kind == CommandKind::TRIAL_CONFIRM ||
+                view.control.outputs.speed_code == confirmation.command.speed_code);
     case CommandKind::RESET_FAULT:
         return view.control.state == sirokko::State::IDLE && view.control.faults == 0;
     case CommandKind::REQUEST_NETWORK_CREDENTIALS:

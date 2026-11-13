@@ -252,6 +252,21 @@ export function commandMatchesSnapshot(pending, snapshot) {
         (snapshot.state.code === "TRIAL_READY" ||
           (snapshot.run_id !== "0" && snapshot.run_id !== baseline.run_id))
       );
+    case "TRIAL_CONFIRM":
+      return (
+        trialActive(snapshot) &&
+        snapshot.state?.code === "RUN" &&
+        snapshot.run_id !== "0" &&
+        snapshot.run_id === baseline.run_id
+      );
+    case "TRIAL_PWM":
+      return (
+        trialActive(snapshot) &&
+        snapshot.state?.code === "RUN" &&
+        snapshot.run_id !== "0" &&
+        snapshot.run_id === baseline.run_id &&
+        snapshot.outputs?.speed_code === payload.speed_code
+      );
     case "TIMER":
       return (
         isActiveSession(snapshot) &&

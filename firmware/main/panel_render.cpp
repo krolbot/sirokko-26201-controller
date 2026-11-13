@@ -509,15 +509,21 @@ void draw_block(Canvas &c, const Frame &f) {
 void draw_trial(Canvas &c, const Frame &f) {
     const auto &control = f.view.control;
     const bool armed = control.state == sirokko::State::TRIAL_READY;
-    c.text(160, 28, "Первый запуск", 21, kInk, Align::Center, 500);
+    const bool running = control.state == sirokko::State::RUN;
+    const bool confirm =
+        control.state == sirokko::State::IGNITION && control.outputs.fuel && !control.outputs.glow;
+    const bool editing = f.screen.editing && f.screen.edit_field == panel_ui::EditField::TRIAL_PWM;
+    c.text(160, 25, "Первый запуск", 21, kInk, Align::Center, 500);
     const char *stage = armed                                      ? "Удерживайте KEY0"
                         : control.state == sirokko::State::PREHEAT ? "Накал свечи"
-                                                                   : "Запись прогрева";
-    c.text(160, 82, stage, 21, kInk, Align::Center);
+                        : running                                  ? "Настройка ШИМ"
+                        : confirm                                  ? "Горение устойчивое?"
+                                                                   : "Розжиг";
+    c.text(160, 53, stage, 19, kInk, Align::Center);
     const sirokko::SensorSample *samples[] = {&f.view.sensors.exhaust, &f.view.sensors.air};
     const char *labels[] = {"Выхлоп", "Нагретый воздух"};
     for (int i = 0; i < 2; ++i) {
-        const float y = static_cast<float>(118 + i * 30);
+        const float y = static_cast<float>(83 + i * 25);
         char value[40]{};
         if (sirokko::thermocouple_fresh(*samples[i], f.at_ms))
             format_temperature(value, sizeof(value), samples[i]->milli_c);
@@ -526,6 +532,34 @@ void draw_trial(Canvas &c, const Frame &f) {
         c.text(20, y, labels[i], 16, kSecond);
         c.text(300, y, value, 20, kInk, Align::Right);
     }
+    char pwm[64]{};
+    const unsigned percent =
+        (100U * control.outputs.speed_code + sirokko::kPwmMaximum / 2) / sirokko::kPwmMaximum;
+    std::snprintf(pwm, sizeof(pwm), "ШИМ %u%% / %u", percent, control.outputs.speed_code);
+    c.text(160, 135, pwm, 18, editing ? kSecond : kInk, Align::Center);
+    const char *hint = confirm   ? "Нажмите энкодер для подтверждения"
+                       : running ? "Поворот — ШИМ, нажатие — применить"
+                                 : "";
+    if (editing) {
+        const unsigned code = (f.screen.edit_value * sirokko::kPwmMaximum + 50) / 100;
+        std::snprintf(pwm, sizeof(pwm), "Применить %ld%% / %u", static_cast<long>(f.screen.edit_value), code);
+        hint = pwm;
+    }
+    switch (f.screen.notice) {
+    case panel_ui::Notice::QUEUED:
+        hint = "Ждём подтверждения контроллера";
+        break;
+    case panel_ui::Notice::EXTERNAL_CHANGE:
+        hint = "Состояние изменено другим пультом";
+        break;
+    case panel_ui::Notice::COMMAND_REJECTED:
+    case panel_ui::Notice::CONFIRMATION_TIMEOUT:
+        hint = "Команда не подтверждена";
+        break;
+    default:
+        break;
+    }
+    c.text(160, 157, hint, 13, editing ? kOrange : kSecond, Align::Center);
     char outputs[96]{};
     std::snprintf(outputs, sizeof(outputs), "Свеча %s, топливо %s", control.outputs.glow ? "вкл" : "выкл",
                   control.outputs.fuel ? "вкл" : "выкл");
@@ -684,8 +718,9 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::FaultLatched;
     if (v.control.state == State::STOP_PURGE)
         return Scene::Cooldown;
-    if (v.control.trial_active && (v.control.state == State::TRIAL_READY ||
-                                   v.control.state == State::PREHEAT || v.control.state == State::IGNITION))
+    if (v.control.trial_active &&
+        (v.control.state == State::TRIAL_READY || v.control.state == State::PREHEAT ||
+         v.control.state == State::IGNITION || v.control.state == State::RUN))
         return Scene::Trial;
     switch (v.control.state) {
     case State::TRIAL_READY:
