@@ -98,7 +98,9 @@ node --test firmware/web_ui/tests/*.test.mjs
 
 Основание: [настройка ESP-IDF 5.2.3](https://docs.espressif.com/projects/esp-idf/en/v5.2.3/esp32s3/api-reference/kconfig.html#config-httpd-max-req-hdr-len).
 
-`tests/http_server_smoke.cpp` — интеграционная проверка на отдельном DevKit с питанием только от USB. Для тестовой сборки добавьте файл в SRCS и вызовите `http_server_smoke_start()` после успешного запуска веб-сервера. Она обращается к реальному HTTP-серверу через loopback: Android/Apple/Windows captive probes с заголовками 2–4 КБ, главная страница и API, неизвестный API и отказ 431 для запроса свыше 8 КБ. Ожидается журнал `RESULT 7/7`. В обычную прошивку тест не включён.
+`tests/http_server_smoke.cpp` — интеграционная проверка на отдельном DevKit с питанием только от USB. Для тестовой сборки добавьте файл в SRCS, объявите `void http_server_smoke_start();` в глобальной области `app_main.cpp` и вызовите функцию после успешного запуска веб-сервера. Она обращается к реальному HTTP-серверу через loopback: Android/Apple/Windows captive probes с заголовками 2–4 КБ, главная страница, состояние, история с полученным сеансом, неизвестный API и отказ 431 для запроса свыше 8 КБ. Ожидается журнал `RESULT 8/8`. В обычную прошивку тест не включён.
+
+Буферы веба для JSON, Cookie и снимка истории размещены в PSRAM платы N16R8 через `EXT_RAM_BSS_ATTR`. Это освобождает внутреннюю память для стеков задач и DMA. Требуется `CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY=y`, в том числе в активном `sdkconfig` существующей сборки. Само кольцо истории остаётся во внутренней RAM. При отказе запуска HTTP журнал содержит причину, свободную внутреннюю память и размер её наибольшего блока. [Размещение BSS в PSRAM](https://docs.espressif.com/projects/esp-idf/en/v5.2.3/esp32s3/api-guides/external-ram.html#allow-bss-segment-to-be-placed-in-external-memory).
 
 ## Готовность контроллера
 

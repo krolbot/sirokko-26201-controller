@@ -21,12 +21,16 @@
 
 #include "esp_app_desc.h"
 #include "esp_app_format.h"
+#include "esp_attr.h"
 #include "esp_chip_info.h"
+#include "esp_heap_caps.h"
 #include "esp_http_server.h"
 #include "esp_log.h"
 
 static_assert(CONFIG_HTTPD_MAX_REQ_HDR_LEN >= 8192,
               "Set CONFIG_HTTPD_MAX_REQ_HDR_LEN=8192 in the active sdkconfig (defaults do not override it)");
+static_assert(CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY,
+              "Enable CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY for the web buffers");
 #include "esp_ota_ops.h"
 #include "esp_random.h"
 #include "esp_system.h"
@@ -56,7 +60,8 @@ bool g_next_password_required{};
 web_protocol::Sessions g_sessions{};
 uint64_t g_last_login_ms{};
 unsigned g_failed_logins{};
-std::array<char, kStateJsonCapacity> g_state_json{};
+// Reserve internal RAM for task stacks and DMA by keeping large web scratch buffers in PSRAM.
+EXT_RAM_BSS_ATTR std::array<char, kStateJsonCapacity> g_state_json{};
 
 #include "web_ui_data.inc"
 
@@ -81,7 +86,7 @@ bool constant_equal(const char *left, const char *right, size_t size) {
 
 web_protocol::Session *authorized(httpd_req_t *request) {
     // Static scratch space: all handlers execute on the single HTTP server task.
-    static std::array<char, CONFIG_HTTPD_MAX_REQ_HDR_LEN + 1> cookie{};
+    static EXT_RAM_BSS_ATTR std::array<char, CONFIG_HTTPD_MAX_REQ_HDR_LEN + 1> cookie{};
     if (httpd_req_get_hdr_value_str(request, "Cookie", cookie.data(), cookie.size()) != ESP_OK)
         return nullptr;
     return g_sessions.find(cookie.data(), now_ms());
@@ -568,7 +573,7 @@ esp_err_t history_handler(httpd_req_t *request) {
     if (!authorized(request))
         return reject(request, "AUTH", "401 Unauthorized");
     // HTTP handlers run serially; the control task has a separate ring and only a bounded copy lock.
-    static HistorySnapshot history;
+    static EXT_RAM_BSS_ATTR HistorySnapshot history;
     if (!runtime_history(&history))
         return reject(request, "BUSY", "503 Service Unavailable");
     no_store(request);
@@ -848,8 +853,14 @@ bool web_start(const char *ap_password) {
     config.recv_wait_timeout = 1;
     config.send_wait_timeout = 5;
     httpd_handle_t server{};
-    if (httpd_start(&server, &config) != ESP_OK)
+    const esp_err_t started = httpd_start(&server, &config);
+    if (started != ESP_OK) {
+        constexpr uint32_t caps = MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT;
+        ESP_LOGE("web", "HTTP server start failed: %s; internal heap free=%u, largest=%u",
+                 esp_err_to_name(started), static_cast<unsigned>(heap_caps_get_free_size(caps)),
+                 static_cast<unsigned>(heap_caps_get_largest_free_block(caps)));
         return false;
+    }
     ESP_LOGI("web", "HTTP request header limit: %d bytes", CONFIG_HTTPD_MAX_REQ_HDR_LEN);
     if (httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, missing_page) != ESP_OK)
         return false;

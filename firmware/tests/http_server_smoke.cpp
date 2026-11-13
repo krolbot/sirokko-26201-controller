@@ -9,6 +9,7 @@
 #include <string>
 
 namespace {
+std::string session_cookie;
 bool probe(const char *path, const char *host, size_t padding, int expected) {
     const int fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (fd < 0)
@@ -27,7 +28,8 @@ bool probe(const char *path, const char *host, size_t padding, int expected) {
     const std::string request =
         std::string("GET ") + path + " HTTP/1.1\r\nHost: " + host +
         "\r\nUser-Agent: CaptiveNetworkSupport-test\r\nX-Test-Padding: " + std::string(padding, 'x') +
-        "\r\nConnection: close\r\n\r\n";
+        "\r\n" + (session_cookie.empty() ? "" : "Cookie: " + session_cookie + "\r\n") +
+        "Connection: close\r\n\r\n";
     size_t sent = 0;
     while (sent < request.size()) {
         const int count = send(fd, request.data() + sent, request.size() - sent, 0);
@@ -45,6 +47,13 @@ bool probe(const char *path, const char *host, size_t padding, int expected) {
     }
     int status = 0;
     std::sscanf(headers.c_str(), "HTTP/1.1 %d", &status);
+    const auto cookie_start = headers.find("Set-Cookie: ");
+    if (cookie_start != std::string::npos) {
+        const auto begin = cookie_start + std::strlen("Set-Cookie: ");
+        const auto end = headers.find(';', begin);
+        if (end != std::string::npos)
+            session_cookie = headers.substr(begin, end - begin);
+    }
     const bool ok = status == expected &&
                     (expected != 302 || headers.find("Location: http://192.168.26.1/") != std::string::npos);
     // Drain the response so a successful large HTML reply does not cause a reset.
@@ -63,9 +72,10 @@ void run(void *) {
     passed += probe("/connecttest.txt", "www.msftconnecttest.com", 4096, 302);
     passed += probe("/", "192.168.26.1", 4096, 200);
     passed += probe("/api/state", "192.168.26.1", 4096, 200);
+    passed += probe("/api/history", "192.168.26.1", 4096, 200);
     passed += probe("/api/unknown", "192.168.26.1", 4096, 404);
     passed += probe("/", "192.168.26.1", 9000, 431);
-    ESP_LOGI("http_smoke", "RESULT %u/7", passed);
+    ESP_LOGI("http_smoke", "RESULT %u/8", passed);
     vTaskDelete(nullptr);
 }
 } // namespace
