@@ -421,9 +421,9 @@ const char *fault_title(uint32_t faults) {
     if (faults & sirokko::FAULT_ROOM)
         return "Комнатный датчик";
     if (faults & sirokko::FAULT_IGNITION_TIMEOUT)
-        return "Розжиг не подтверждён";
+        return "Розжиг не удался";
     if (faults & sirokko::FAULT_FLAME_LOST)
-        return "Выхлоп ниже порога";
+        return "Выхлоп остыл";
     if (faults & sirokko::FAULT_COMBUSTION_DROP)
         return "Выхлоп остывает";
     return "Неисправность";
@@ -548,8 +548,10 @@ void draw(Canvas &c, const Frame &f) {
                 "Пуск/Стоп — отмена");
         break;
     case Scene::Ignition:
-        message(c, f, "Запуск", "Розжиг", "Двигатель, муфта и свеча включены", Icon::Heat, kOrange, kWarm,
-                "Пуск/Стоп — отмена");
+        message(c, f, "Запуск", "Розжиг",
+                f.view.control.outputs.glow ? "Двигатель, муфта и свеча включены"
+                                            : "Свеча выключена, ждём прогрева",
+                Icon::Heat, kOrange, kWarm, "Пуск/Стоп — отмена");
         break;
     case Scene::Cooldown:
         message(c, f, "Остановка", "Охлаждение", "Свеча и муфта выключены", Icon::Fan, kBlue, kBlueBg,

@@ -51,7 +51,7 @@ const char *russian_block(sirokko::Block block) {
     case sirokko::Block::SENSOR_STALE:
         return "Данные датчиков устарели";
     case sirokko::Block::INITIAL_THERMAL_STATE:
-        return "Выхлоп ещё не остыл до порога запуска";
+        return "Выхлоп ещё не остыл до температуры завершения охлаждения";
     case sirokko::Block::FAULT_LATCHED:
         return "Запуск заблокирован до сброса аварии";
     case sirokko::Block::BUSY:
@@ -94,11 +94,11 @@ const char *russian_event(const char *kind) {
     if (std::strcmp(kind, "COMBUSTION_SUSPECT") == 0)
         return "Проверка падения температуры выхлопа";
     if (std::strcmp(kind, "TIMER_EXPIRED") == 0)
-        return "Истёк таймер останова";
+        return "Время таймера истекло";
     if (std::strcmp(kind, "TIMER_ARMED") == 0)
-        return "Таймер останова установлен";
+        return "Таймер отключения установлен";
     if (std::strcmp(kind, "TIMER_CANCELLED") == 0)
-        return "Таймер останова отменён";
+        return "Таймер отключения отменён";
     return "Неизвестное событие";
 }
 
@@ -139,8 +139,8 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
         {sirokko::FAULT_AIR, "Нет достоверных показаний нагретого воздуха"},
         {sirokko::FAULT_ROOM, "Нет достоверных показаний температуры помещения"},
         {sirokko::FAULT_OVER_TEMPERATURE, "Достигнут предел температуры выхлопа; топливо отключено"},
-        {sirokko::FAULT_IGNITION_TIMEOUT, "Горение не подтверждено при розжиге"},
-        {sirokko::FAULT_FLAME_LOST, "Выхлоп остыл ниже порога отключения топлива"},
+        {sirokko::FAULT_IGNITION_TIMEOUT, "За время розжига выхлоп не прогрелся до заданной температуры"},
+        {sirokko::FAULT_FLAME_LOST, "Выхлоп остыл ниже минимальной рабочей температуры"},
         {sirokko::FAULT_COMBUSTION_DROP, "Температура выхлопа устойчиво падает при неизменном ШИМ двигателя"},
         {sirokko::FAULT_CONTROL_WATCHDOG, "Контроллер не выполнил цикл управления вовремя"},
         {sirokko::FAULT_STORAGE, "Ошибка чтения или записи настроек"},
@@ -301,6 +301,8 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->unsigned_integer(sirokko::kPostpurgeMinimumMs);
     json->raw(",\"temperature_confirmation_ms\":");
     json->unsigned_integer(sirokko::kTemperatureConfirmationMs);
+    json->raw(",\"ignition_glow_ms\":");
+    json->unsigned_integer(sirokko::kIgnitionGlowMs);
     json->raw(",\"firing_max_ms\":");
     json->unsigned_integer(sirokko::kFiringStartupMaximumMs);
     json->raw(",\"timer_max_ms\":");

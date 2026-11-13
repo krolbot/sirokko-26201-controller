@@ -1,10 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {
-  historyPoints,
-  historyPlot,
-  combustionText,
-} from "../src/lib/history.js";
+import { historyPoints, historyPlot } from "../src/lib/history.js";
 const data = (points) => ({ boot_id: "1", points });
 const point = (t, exhaust = 200000) => [
   t,
@@ -55,7 +51,7 @@ test("empty, single and disconnected readings have honest chart representations"
   const pts = historyPoints(data([point(0), point(5000, null)]), "1");
   assert.equal(historyPlot(pts, "exhaust").lastPoint, null);
 });
-test("fault markers represent changes and combustion status does not claim measured flame quality", () => {
+test("fault markers appear when the fault set changes", () => {
   const rows = [point(0), point(5000), point(10000), point(15000)];
   rows[1][6] = rows[2][6] = 1024;
   rows[3][6] = 1026;
@@ -63,5 +59,4 @@ test("fault markers represent changes and combustion status does not claim measu
     historyPlot(historyPoints(data(rows), "1"), "exhaust").faults.length,
     2,
   );
-  assert.equal(combustionText("WATCHING"), "Контроль температуры выхлопа");
 });

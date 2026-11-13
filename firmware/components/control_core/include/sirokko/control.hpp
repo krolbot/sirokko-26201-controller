@@ -13,6 +13,8 @@ constexpr uint16_t kPwmMaximum = 4014;
 constexpr uint64_t kPreheatMinimumMs = 30000;
 constexpr uint64_t kPreheatMaximumMs = 60000;
 constexpr uint64_t kFiringStartupMaximumMs = 90000;
+// Glow plug overlap after motor and fuel start.
+constexpr uint64_t kIgnitionGlowMs = 10000;
 // Software debounce across distinct fresh thermocouple samples, not a flame-detector rating.
 constexpr uint64_t kTemperatureConfirmationMs = 1000;
 constexpr uint64_t kPostpurgeMinimumMs = 150000;

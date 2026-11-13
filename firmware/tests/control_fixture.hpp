@@ -4,12 +4,12 @@
 namespace control_fixture {
 using namespace sirokko;
 constexpr uint64_t kIgnitionAt = 120 + kPreheatMinimumMs;
-constexpr uint64_t kRunAt = kIgnitionAt + 100 + kTemperatureConfirmationMs;
+constexpr uint64_t kRunAt = kIgnitionAt + kIgnitionGlowMs + kTemperatureConfirmationMs;
 // Synthetic timings and temperatures; not settings for a real heater.
 inline SafetyEnvelope envelope() {
     SafetyEnvelope e{};
     e.provisioned = true;
-    e.ignition_timeout_ms = 5000;
+    e.ignition_timeout_ms = 20000;
     e.maximum_exhaust_milli_c = 300000;
     e.cooling_exhaust_milli_c = 30000;
     e.minimum_run_exhaust_milli_c = 40000;
@@ -46,7 +46,7 @@ inline Snapshot confirm_ignition(Controller &c, int32_t exhaust = 50000, int32_t
     for (uint64_t t = kIgnitionAt + 100; t <= kRunAt; t += 100) {
         s = c.tick(input(t, exhaust, air));
         assert(s.state == (t == kRunAt ? State::RUN : State::IGNITION));
-        assert(s.outputs.fuel && s.outputs.glow == (t != kRunAt));
+        assert(s.outputs.fuel && s.outputs.glow == (t < kIgnitionAt + kIgnitionGlowMs));
     }
     return s;
 }

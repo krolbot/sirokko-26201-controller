@@ -83,25 +83,27 @@
                 >
               {:else if key === "preheat_ms"}<small class="caption"
                   >Из инструкции: {limits.preheat_min_ms /
-                    1000}–{limits.preheat_max_ms / 1000} с</small
+                    1000}–{limits.preheat_max_ms / 1000} с. После подачи топлива свеча
+                  работает ещё {limits.ignition_glow_ms / 1000} с.</small
                 >
               {:else if key === "postpurge_ms"}<small class="caption"
-                  >Не менее {limits.postpurge_min_ms / 1000} с; также после обрыва
-                  питания.</small
+                  >Не менее {limits.postpurge_min_ms / 1000} с. Применяется и после
+                  отключения питания во время работы или охлаждения.</small
                 >
               {:else if key === "ignition_timeout_ms"}<small class="caption"
-                  >Если выхлоп не достигнет порога горения за это время, муфта и
-                  свеча выключатся.</small
+                  >Если за это время выхлоп не прогреется до минимальной рабочей
+                  температуры, подача топлива прекратится.</small
                 >
               {:else if key === "minimum_run_exhaust_milli_c"}<small
                   class="caption"
-                  >При розжиге: выхлоп не ниже порога — свеча выключается. При
-                  нагреве: выхлоп ниже порога — топливо отключается.
-                  Подтверждение: {limits.temperature_confirmation_ms / 1000} с.</small
+                  >После выключения свечи выхлоп должен держаться не ниже этой
+                  температуры {limits.temperature_confirmation_ms / 1000} с для завершения
+                  розжига. Падение ниже неё во время работы на
+                  {limits.temperature_confirmation_ms / 1000} с отключает топливо.</small
                 >
               {:else if key === "cooling_exhaust_milli_c"}<small class="caption"
                   >Двигатель выключится после минимального времени охлаждения,
-                  если выхлоп ниже этого порога.</small
+                  когда выхлоп остынет ниже указанной температуры.</small
                 >
               {:else if key === "maximum_speed_code"}<small class="caption"
                   >Верхняя граница рабочего диапазона и команда двигателя при

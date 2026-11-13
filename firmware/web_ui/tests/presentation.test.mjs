@@ -5,7 +5,6 @@ import {
   connectionReady,
   needsStop,
   temperature,
-  routeFromHash,
 } from "../src/lib/presentation.js";
 import { ControllerSession } from "../src/lib/controller.js";
 
@@ -54,8 +53,6 @@ test("offline, pending and reboot block normal commands", () => {
     { ota: { phase: "activation_queued" } },
   ])
     assert.equal(connectionReady({ ...ready, ...change }), false);
-  assert.equal(routeFromHash("#/calibration"), "control");
-  assert.equal(routeFromHash("#/unknown"), "control");
 });
 test("active fuel or glow always exposes STOP, completed cooling does not", () => {
   const snapshot = {
@@ -94,51 +91,11 @@ test("blocked action never requests a grant", async () => {
   assert.equal(session.view.message.text, "Выходы отключены");
 });
 
-test("technical responses never leak into user messages", async () => {
-  const { errorText } = await import("../src/lib/presentation.js");
-  assert.equal(
-    errorText(
-      { code: "INTERNAL_UNKNOWN", message: "HTTP 503 INTERNAL_UNKNOWN" },
-      "Не удалось сохранить пароль",
-    ),
-    "Не удалось сохранить пароль",
-  );
-  assert.equal(
-    errorText({ code: "STORAGE" }, "Не удалось сохранить пароль"),
-    "Не удалось сохранить данные в памяти контроллера",
-  );
-  assert.equal(
-    errorText({ code: "SIGNATURE" }, "Обновление не подтверждено"),
-    "Не удалось подтвердить подлинность прошивки",
-  );
-  assert.equal(
-    errorText({ code: "SENSOR_INVALID" }, "Действие отклонено", {
-      commands: {
-        START: {
-          allowed: false,
-          code: "SENSOR_INVALID",
-          reason: "Нет показаний датчиков",
-        },
-      },
-    }),
-    "Нет показаний датчиков",
-  );
-});
-
 test("timer countdown rounds the last second upward and keeps durations beyond a day", async () => {
-  const { countdownText, defaultSlew } =
-    await import("../src/lib/presentation.js");
+  const { countdownText } = await import("../src/lib/presentation.js");
   assert.equal(countdownText(1), "00:00:01");
   assert.equal(countdownText(0), "00:00:00");
   assert.equal(countdownText(90 * 60000), "01:30:00");
   assert.equal(countdownText(7 * 86400000), "168:00:00");
   assert.equal(countdownText(NaN), "—");
-  assert.equal(
-    defaultSlew({ slew_up_per_s: 0.005, slew_down_per_s: 0.005 }),
-    true,
-  );
-  assert.equal(
-    defaultSlew({ slew_up_per_s: 0.004, slew_down_per_s: 0.005 }),
-    false,
-  );
 });

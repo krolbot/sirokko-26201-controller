@@ -224,7 +224,9 @@ Outputs Controller::outputs() const {
         result = {false, 0, true, false};
         break;
     case State::IGNITION:
-        result = {true, envelope_.maximum_speed_code, true, true};
+        result = {true, envelope_.maximum_speed_code,
+                  last_tick_ms_ >= state_started_ms_ && last_tick_ms_ - state_started_ms_ < kIgnitionGlowMs,
+                  true};
         break;
     case State::RUN:
         result = {true, static_cast<uint16_t>(std::lround(run_speed_code_)), false, true};
@@ -344,10 +346,12 @@ Snapshot Controller::tick(const TickInput &input) {
     case State::IGNITION:
         if (elapsed >= envelope_.ignition_timeout_ms) {
             latch_fault(FAULT_IGNITION_TIMEOUT, now);
-        } else if (temperature_confirmed(input.sensors.exhaust.sample_ms > state_started_ms_ &&
-                                             input.sensors.exhaust.milli_c >=
-                                                 envelope_.minimum_run_exhaust_milli_c,
-                                         input.sensors.exhaust.sample_ms)) {
+        } else if (elapsed >= kIgnitionGlowMs &&
+                   temperature_confirmed(
+                       input.sensors.exhaust.sample_ms >= state_started_ms_ &&
+                           input.sensors.exhaust.sample_ms - state_started_ms_ >= kIgnitionGlowMs &&
+                           input.sensors.exhaust.milli_c >= envelope_.minimum_run_exhaust_milli_c,
+                       input.sensors.exhaust.sample_ms)) {
             transition(State::RUN, now);
             condition_active_ = false;
             run_speed_code_ = envelope_.maximum_speed_code;

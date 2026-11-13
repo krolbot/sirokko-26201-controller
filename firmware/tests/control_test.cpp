@@ -42,6 +42,14 @@ int main() {
     assert(valid_safety_envelope(limits));
     ++limits.ignition_timeout_ms;
     assert(!valid_safety_envelope(limits));
+    limits = envelope();
+    limits.ignition_timeout_ms = kIgnitionGlowMs + kTemperatureConfirmationMs;
+    assert(!valid_safety_envelope(limits));
+    assert(valid_profile_draft(limits)); // Keep saved values editable after an update.
+    Controller short_timeout(limits, Settings{}, 1, Startup::CLEAN);
+    assert(short_timeout.tick(input(100)).state == State::UNCONFIGURED);
+    ++limits.ignition_timeout_ms;
+    assert(valid_safety_envelope(limits));
     Controller empty({}, Settings{}, 1, Startup::CLEAN);
     auto s = empty.tick(input(100));
     off(s);
@@ -114,6 +122,36 @@ int main() {
         assert(s.state == State::STOP_PURGE || s.state == State::FAULT_PURGE);
         assert(s.outputs.fan_request);
     }
+    // Glow duration is independent of exhaust temperature; cold exhaust still has a deadline.
+    for (int32_t exhaust : {20000, 50000}) {
+        auto timed = c;
+        for (uint64_t t = kIgnitionAt + 100; t < kIgnitionAt + kIgnitionGlowMs; t += 100) {
+            s = timed.tick(input(t, exhaust));
+            assert(s.state == State::IGNITION && s.outputs.glow && s.outputs.fuel);
+        }
+        s = timed.tick(input(kIgnitionAt + kIgnitionGlowMs, exhaust));
+        assert(s.state == State::IGNITION && !s.outputs.glow && s.outputs.fuel && s.outputs.fan_request);
+        if (exhaust == 20000) {
+            s = timed.tick(input(kIgnitionAt + envelope().ignition_timeout_ms));
+            off(s);
+            assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_IGNITION_TIMEOUT));
+        }
+    }
+    // STOP and sensor failures override both sides of the glow-off boundary.
+    for (uint64_t offset : {kIgnitionGlowMs - 1, kIgnitionGlowMs, kIgnitionGlowMs + 1}) {
+        for (bool stop : {false, true}) {
+            auto interrupted = c;
+            i = input(kIgnitionAt + offset);
+            if (stop)
+                i.stop = true;
+            else
+                i.sensors.exhaust.valid = false;
+            s = interrupted.tick(i);
+            off(s);
+            assert(s.outputs.fan_request);
+            assert(s.state == (stop ? State::STOP_PURGE : State::FAULT_PURGE));
+        }
+    }
     // Heated-air temperature is telemetry, not an ignition-rise or overheat threshold.
     auto slow_air = c;
     s = confirm_ignition(slow_air, 50000, 20000);
@@ -174,25 +212,26 @@ int main() {
     assert(s.state == State::STOP_PURGE);
     s = running.tick(input(kRunAt + 120 + kPostpurgeMinimumMs));
     assert(s.state == State::IDLE);
+    const uint64_t kConfirmationAt = kIgnitionAt + kIgnitionGlowMs;
     // A spike, duplicated sample or interrupted sequence cannot finish ignition.
     auto noisy = ignition();
-    assert(noisy.tick(input(kIgnitionAt + 100, 50000)).state == State::IGNITION);
-    auto repeated = input(kIgnitionAt + 500, 50000);
-    repeated.sensors.exhaust.sample_ms = kIgnitionAt + 100;
+    assert(noisy.tick(input(kConfirmationAt + 100, 50000)).state == State::IGNITION);
+    auto repeated = input(kConfirmationAt + 500, 50000);
+    repeated.sensors.exhaust.sample_ms = kConfirmationAt + 100;
     assert(noisy.tick(repeated).state == State::IGNITION);
-    assert(noisy.tick(input(kIgnitionAt + 600, 20000)).state == State::IGNITION);
-    for (uint64_t t = kIgnitionAt + 700; t < kIgnitionAt + 1700; t += 100)
+    assert(noisy.tick(input(kConfirmationAt + 600, 20000)).state == State::IGNITION);
+    for (uint64_t t = kConfirmationAt + 700; t < kConfirmationAt + 1700; t += 100)
         assert(noisy.tick(input(t, 50000)).state == State::IGNITION);
-    assert(noisy.tick(input(kIgnitionAt + 1700, 50000)).state == State::RUN);
+    assert(noisy.tick(input(kConfirmationAt + 1700, 50000)).state == State::RUN);
     // One short fall after ignition must not extinguish the heater.
-    assert(noisy.tick(input(kIgnitionAt + 1800, 20000)).state == State::RUN);
-    assert(noisy.tick(input(kIgnitionAt + 1900, 50000)).state == State::RUN);
-    assert(noisy.tick(input(kIgnitionAt + 2000, 50000)).faults == 0);
+    assert(noisy.tick(input(kConfirmationAt + 1800, 20000)).state == State::RUN);
+    assert(noisy.tick(input(kConfirmationAt + 1900, 50000)).state == State::RUN);
+    assert(noisy.tick(input(kConfirmationAt + 2000, 50000)).faults == 0);
     // A gap restarts confirmation rather than bridging missing observations.
     auto gap = ignition();
-    gap.tick(input(kIgnitionAt + 100, 50000));
-    gap.tick(input(kIgnitionAt + 800, 50000));
-    assert(gap.tick(input(kIgnitionAt + 1100, 50000)).state == State::IGNITION);
+    gap.tick(input(kConfirmationAt + 100, 50000));
+    gap.tick(input(kConfirmationAt + 800, 50000));
+    assert(gap.tick(input(kConfirmationAt + 1100, 50000)).state == State::IGNITION);
     // Expiry takes priority even if the last reading would complete confirmation.
     auto deadline = ignition();
     const auto expires = kIgnitionAt + envelope().ignition_timeout_ms;

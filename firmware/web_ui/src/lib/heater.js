@@ -12,7 +12,7 @@ export const heaterGroups = [
     fields: [
       [
         "minimum_run_exhaust_milli_c",
-        "Порог горения по температуре выхлопа",
+        "Минимальная температура выхлопа при работе",
         "°C",
         1000,
       ],
@@ -111,23 +111,23 @@ export function heaterValidation(value, limits) {
     errors.postpurge_ms = `Не менее ${limits.postpurge_min_ms / 1000} с`;
   if (
     p.ignition_timeout_ms &&
-    (p.ignition_timeout_ms <= limits?.temperature_confirmation_ms ||
+    (p.ignition_timeout_ms <=
+      limits?.ignition_glow_ms + limits?.temperature_confirmation_ms ||
       p.ignition_timeout_ms > limits?.firing_max_ms)
   )
-    errors.ignition_timeout_ms = `Больше ${limits.temperature_confirmation_ms / 1000} и не более ${limits.firing_max_ms / 1000} с`;
+    errors.ignition_timeout_ms = `Больше ${(limits.ignition_glow_ms + limits.temperature_confirmation_ms) / 1000} и не более ${limits.firing_max_ms / 1000} с`;
   if (
     p.minimum_run_exhaust_milli_c &&
     p.minimum_run_exhaust_milli_c <= p.cooling_exhaust_milli_c
   )
     errors.minimum_run_exhaust_milli_c =
-      "Должен быть выше температуры отключения двигателя";
+      "Выше температуры отключения двигателя";
   for (const [low, high] of [
     ["cooling_exhaust_milli_c", "maximum_exhaust_milli_c"],
     ["minimum_run_exhaust_milli_c", "maximum_exhaust_milli_c"],
   ])
     if (p[low] && p[high] && p[low] >= p[high])
-      errors[low] =
-        "Значение должно быть ниже температуры отключения топлива при нагреве выхлопа";
+      errors[low] = "Ниже верхнего предела температуры выхлопа";
   if (
     p.minimum_speed_code &&
     p.maximum_speed_code &&

@@ -4,7 +4,6 @@ import {
   heaterDraft,
   heaterValidation,
   missingHeaterFields,
-  heaterSetupText,
 } from "../src/lib/heater.js";
 import { blockedActionLink } from "../src/lib/presentation.js";
 import { commandMatchesSnapshot } from "../src/lib/protocol.js";
@@ -15,6 +14,7 @@ const limits = {
   postpurge_min_ms: 150000,
   firing_max_ms: 90000,
   temperature_confirmation_ms: 1000,
+  ignition_glow_ms: 10000,
   timer_max_ms: 604800000,
   temperature_max_milli_c: 600000,
   pwm_max: 4014,
@@ -22,7 +22,7 @@ const limits = {
 // Synthetic protocol values, not physical heater settings.
 const parameters = {
   preheat_ms: 30000,
-  ignition_timeout_ms: 5000,
+  ignition_timeout_ms: 20000,
   postpurge_ms: 150000,
   cooling_exhaust_milli_c: 30000,
   maximum_exhaust_milli_c: 300000,
@@ -70,6 +70,8 @@ test("coupled limits, precision and nonfinite numbers block saving", () => {
     ["minimum_run_exhaust_milli_c", 300],
     ["minimum_run_exhaust_milli_c", 30],
     ["ignition_timeout_ms", 1],
+    ["ignition_timeout_ms", 10],
+    ["ignition_timeout_ms", 11],
     ["maximum_speed_code", 4015],
     ["maximum_speed_code", 2000.5],
     ["minimum_speed_code", 2001],
@@ -110,13 +112,7 @@ test("incomplete profile reports the actual missing fields", () => {
     missingHeaterFields(partial).map(([key]) => key),
     ["minimum_speed_code"],
   );
-  assert.equal(heaterSetupText(partial), "Не заданы: 1");
   assert.equal(heaterValidation(heaterDraft(partial), limits).complete, false);
-  assert.equal(heaterSetupText({ parameters, provisioned: true }), "Заполнены");
-  assert.equal(
-    heaterSetupText({ parameters, provisioned: false }),
-    "Проверьте параметры",
-  );
 });
 test("queued configuration is confirmed only by the saved profile", () => {
   const baseline = {

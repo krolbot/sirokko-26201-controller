@@ -1,4 +1,6 @@
-# js-sha256
+# Сторонние материалы
+
+## js-sha256
 
 **js-sha256 0.11.1**, автор Chen, Yi-Cyuan, лицензия MIT.
 
@@ -7,3 +9,7 @@
 - [Текст лицензии](js-sha256-LICENSE.txt).
 
 Библиотека вычисляет SHA-256 пакета OTA при подключении к контроллеру по HTTP, когда Web Crypto `subtle` недоступен.
+
+## Оформление интерфейса
+
+Использован [unslop](https://github.com/heydamir/unslop), Damir Sokolovsky (@heydamir), CC BY 4.0.
