@@ -80,7 +80,7 @@ sirokko::FailClosedOutputDriver g_output_driver;
 sirokko::Controller *g_controller{};
 sirokko::Startup g_startup{sirokko::Startup::RECOVER};
 SensorSuite g_sensor_suite;
-QueueHandle_t g_sensor_queue{}, g_command_queue{}, g_storage_jobs{}, g_store_results{},
+QueueHandle_t g_sensor_queue{}, g_button_samples{}, g_command_queue{}, g_storage_jobs{}, g_store_results{},
     g_ota_activation_queue{};
 SemaphoreHandle_t g_view_mutex{}, g_gate_mutex{};
 SemaphoreHandle_t g_history_mutex{};
@@ -236,7 +236,7 @@ bool button_snapshot(void *, start_stop_button::Snapshot *out) {
     RuntimeView v{};
     if (!out || !runtime_view(&v))
         return false;
-    *out = {v.control.state, v.control.start_block, v.control.state_version};
+    *out = {v.control.state, v.control.start_block, v.control.state_version, v.control.trial_mode};
     return true;
 }
 bool button_start(void *, uint64_t version) {
@@ -253,6 +253,8 @@ void button_task(void *) {
     button.reset(gpio_get_level(board::kStartStopButton) == 0, now_ms());
     while (true) {
         button.poll(gpio_get_level(board::kStartStopButton) == 0, now_ms());
+        const auto held = button.held_sample();
+        xQueueOverwrite(g_button_samples, &held);
         vTaskDelay(pdMS_TO_TICKS(start_stop_button::kTiming.polling_ms));
     }
 }
@@ -353,22 +355,28 @@ void grant_storage(ControlWork &w, const sirokko::Snapshot &snap, const sirokko:
 void control_pass(ControlWork &w) {
     xQueueReceive(g_sensor_queue, &w.sensors, 0);
     sirokko::TickInput input{};
-    input.now_ms = now_ms();
     input.sensors = w.sensors;
+    start_stop_button::HeldSample button{};
+    if (xQueuePeek(g_button_samples, &button, 0) == pdTRUE) {
+        input.local_button_held = button.held;
+        input.local_button_valid = button.valid;
+        input.local_button_sample_ms = button.sample_ms;
+    }
+    input.now_ms = now_ms();
     const auto before = g_controller->snapshot(input.now_ms);
     input.cycle_record_ready = w.cycle_dirty;
     input.external_faults =
         (g_output_driver_fault ? static_cast<uint32_t>(sirokko::FAULT_CONTROL_WATCHDOG) : 0) |
         (storage_healthy() ? 0 : static_cast<uint32_t>(sirokko::FAULT_STORAGE));
-    if (g_controller->safety_envelope().provisioned && g_startup_complete &&
-        (!g_button_ready || !panel_ready()))
+    if ((g_controller->safety_envelope().provisioned || before.trial_mode != sirokko::TrialMode::NONE) &&
+        g_startup_complete && (!g_button_ready || !panel_ready()))
         input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
     input.stop = g_stop.exchange(false);
     input.exit_maintenance = g_exit_maintenance.exchange(false);
     RuntimeCommand c{};
     bool have = xQueuePeek(g_command_queue, &c, 0) == pdTRUE;
     bool locked = false;
-    const bool starting = have && c.action == sirokko::Action::START;
+    const bool starting = have && command_policy::starts_cycle(c.action);
     const bool exclusive =
         starting || (have && (c.action == sirokko::Action::OTA || c.action == sirokko::Action::PROFILE));
     if (have && exclusive && g_storage_busy)
@@ -383,7 +391,7 @@ void control_pass(ControlWork &w) {
             storage_status(STORAGE_INTERNAL, false);
         else
             enqueue(w, request);
-        have = false; // Keep START queued until the dirty marker is durably saved.
+        have = false; // Keep the start command queued until the dirty marker is durably saved.
     }
     if ((have || g_cancel_commands) && xSemaphoreTake(g_gate_mutex, pdMS_TO_TICKS(2)) == pdTRUE) {
         locked = true;
@@ -394,7 +402,7 @@ void control_pass(ControlWork &w) {
     } else if (have)
         have = false;
     if (have &&
-        (c.action == sirokko::Action::START || c.action == sirokko::Action::OTA ||
+        (command_policy::starts_cycle(c.action) || c.action == sirokko::Action::OTA ||
          c.action == sirokko::Action::PROFILE) &&
         (g_storage_busy || !storage_healthy()))
         have = false;
@@ -404,6 +412,11 @@ void control_pass(ControlWork &w) {
     }
     if (have) {
         input.start = c.action == sirokko::Action::START;
+        input.trial_request = c.action == sirokko::Action::TRIAL_DRY    ? sirokko::TrialMode::DRY
+                              : c.action == sirokko::Action::TRIAL_FUEL ? sirokko::TrialMode::FUEL
+                                                                        : sirokko::TrialMode::NONE;
+        if (input.trial_request != sirokko::TrialMode::NONE && (!g_button_ready || !panel_ready()))
+            input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
         input.set_shutdown_timer = c.action == sirokko::Action::TIMER;
         input.shutdown_after_ms = c.delay_ms;
         input.reset_fault = c.action == sirokko::Action::RESET_FAULT;
@@ -648,12 +661,13 @@ extern "C" void app_main() {
     g_gate_mutex = xSemaphoreCreateMutex();
     g_history_mutex = xSemaphoreCreateMutex();
     g_sensor_queue = xQueueCreate(1, sizeof(sirokko::Sensors));
+    g_button_samples = xQueueCreate(1, sizeof(start_stop_button::HeldSample));
     g_command_queue = xQueueCreate(8, sizeof(RuntimeCommand));
     g_storage_jobs = xQueueCreate(1, sizeof(StoreRequest));
     g_store_results = xQueueCreate(1, sizeof(StoreResult));
     g_ota_activation_queue = xQueueCreate(1, sizeof(OtaActivation));
-    if (!g_view_mutex || !g_gate_mutex || !g_history_mutex || !g_sensor_queue || !g_command_queue ||
-        !g_storage_jobs || !g_store_results || !g_ota_activation_queue) {
+    if (!g_view_mutex || !g_gate_mutex || !g_history_mutex || !g_sensor_queue || !g_button_samples ||
+        !g_command_queue || !g_storage_jobs || !g_store_results || !g_ota_activation_queue) {
         ESP_LOGE(kTag, "Control queue/mutex allocation failed; startup stopped");
         return;
     }

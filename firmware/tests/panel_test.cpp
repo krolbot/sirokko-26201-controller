@@ -216,6 +216,23 @@ int main() {
     view.control.state = State::RUN;
     assert(panel_render::select_scene(screen, view, 3000) == panel_render::Scene::SensorMissing);
 
+    // Trial instructions override menu navigation; faults still have priority.
+    for (const auto mode : {TrialMode::DRY, TrialMode::FUEL}) {
+        view.control.trial_mode = mode;
+        view.control.faults = 0;
+        for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION}) {
+            view.control.state = state;
+            assert(panel_render::select_scene(screen, view, 3000) == panel_render::Scene::Trial);
+        }
+        view.control.state = State::FAULT_PURGE;
+        assert(panel_render::select_scene(screen, view, 3000) == panel_render::Scene::FaultCooling);
+        view.control.state = State::IGNITION;
+        view.control.faults = FAULT_EXHAUST;
+        assert(panel_render::select_scene(screen, view, 3000) == panel_render::Scene::FaultLatched);
+    }
+    view.control.trial_mode = TrialMode::NONE;
+    view.control.faults = 0;
+
     // Render the fault scene through the real canvas into bounded stripe buffers.
     panel_render::Renderer renderer;
     view.control.state = State::FAULT_PURGE;
@@ -223,6 +240,15 @@ int main() {
     std::array<uint16_t, panel_render::kWidth * panel_render::kStripeRows> pixels{}, scratch{};
     for (int y = 0; y < panel_render::kHeight; y += panel_render::kStripeRows)
         assert(renderer.draw_band(y, panel_render::kStripeRows, pixels.data(), scratch.data()));
+    view.control.trial_mode = TrialMode::DRY;
+    view.control.trial_remaining_ms = 10000;
+    view.sensors = control_fixture::input(3000).sensors;
+    for (const auto state : {State::TRIAL_READY, State::PREHEAT, State::IGNITION}) {
+        view.control.state = state;
+        renderer.update(screen, view, {}, 3000);
+        for (int y = 0; y < panel_render::kHeight; y += panel_render::kStripeRows)
+            assert(renderer.draw_band(y, panel_render::kStripeRows, pixels.data(), scratch.data()));
+    }
     panel_render::DamageTracker damage;
     const auto first = damage.inspect(pixels.data(), 0, panel_render::kStripeRows);
     assert(first.width == panel_render::kWidth);

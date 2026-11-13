@@ -14,6 +14,7 @@
   import {
     fullSettingsPayload,
     isActiveSession,
+    trialActive,
     formatDuration,
     manualMinimum,
   } from "../lib/protocol.js";
@@ -22,8 +23,10 @@
   const ready = $derived(connectionReady(ui));
   const help = $derived(blockedActionLink(snapshot, "START"));
   const active = $derived(isActiveSession(snapshot));
+  const trial = $derived(trialActive(snapshot));
   const process = $derived(
-    snapshot.purge?.active ||
+    trial ||
+      snapshot.purge?.active ||
       ["PREHEAT", "IGNITION", "FAULT", "MAINTENANCE"].includes(
         snapshot.state.code,
       ),
@@ -35,14 +38,16 @@
         : snapshot.purge.sensors_fresh
           ? `Ждём выхлоп ниже ${snapshot.envelope.parameters.cooling_exhaust_milli_c / 1000} °C`
           : "Нет свежих показаний термопар"
-      : {
-          PREHEAT: "Двигатель и муфта выключены",
-          IGNITION: snapshot.outputs.glow
-            ? "Двигатель, муфта и свеча включены"
-            : "Свеча выключена. Двигатель и подача топлива работают; ждём прогрева выхлопа",
-          FAULT: "Свеча и муфта выключены",
-          MAINTENANCE: "Установка новой версии",
-        }[snapshot.state.code] || "",
+      : trial && snapshot.state.code === "TRIAL_READY"
+        ? "Проба подготовлена. Удерживайте KEY0 на панели"
+        : {
+            PREHEAT: "Двигатель и муфта выключены",
+            IGNITION: snapshot.outputs.glow
+              ? "Двигатель, муфта и свеча включены"
+              : "Свеча выключена. Двигатель и подача топлива работают; ждём прогрева выхлопа",
+            FAULT: "Свеча и муфта выключены",
+            MAINTENANCE: "Установка новой версии",
+          }[snapshot.state.code] || "",
   );
   const edit = $derived(
     ready && commandAllowed(snapshot, "SETTINGS") && !settings.conflict,
@@ -114,8 +119,10 @@
     </p>{/if}
 {/snippet}
 <div class="page-heading">
-  <h1>Отопление</h1>
-  {#if manual}<p class="caption">% от максимального ШИМ двигателя</p>{/if}
+  <h1>{trial ? "Пробный запуск" : "Отопление"}</h1>
+  {#if manual && !trial}<p class="caption">
+      % от максимального ШИМ двигателя
+    </p>{/if}
   {#if !process}<span class="state-label" class:heating={active}
       ><i></i>{stateText(snapshot)}</span
     >{/if}
@@ -132,12 +139,14 @@
         </h2>
         <p class="caption">{processText}</p>
       </div>
-      <details class="stage-settings">
-        <summary>Температура и режим<Icon name="chevron" size={16} /></summary
-        >{@render controls()}
-      </details>
+      {#if trial}<a class="secondary" href="#/trial">Показания и запись пробы</a
+        >
+      {:else}<details class="stage-settings">
+          <summary>Температура и режим<Icon name="chevron" size={16} /></summary
+          >{@render controls()}
+        </details>{/if}
     {:else}{@render controls()}{/if}
-    {#if settings.dirty || settings.conflict || ui.pending?.action === "SETTINGS" || ui.requestInFlight === "SETTINGS" || ["IDLE", "UNCONFIGURED"].includes(snapshot.state.code)}
+    {#if !trial && (settings.dirty || settings.conflict || ui.pending?.action === "SETTINGS" || ui.requestInFlight === "SETTINGS" || ["IDLE", "UNCONFIGURED"].includes(snapshot.state.code))}
       <div class="heater-action">
         {#if settings.dirty || settings.conflict}
           <DraftActions
@@ -176,7 +185,7 @@
       >
         {combustionText(snapshot.combustion.phase)}
       </p>{/if}
-    {#if (active && snapshot.timer.active) || (!active && snapshot.settings.duration_ms > 0)}
+    {#if !trial && ((active && snapshot.timer.active) || (!active && snapshot.settings.duration_ms > 0))}
       <a class="list-row surface" href="#/timer">
         <span class="row-icon"><Icon name="clock" /></span>
         <span class="row-title"

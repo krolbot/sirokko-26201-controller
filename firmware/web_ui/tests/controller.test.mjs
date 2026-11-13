@@ -262,3 +262,75 @@ test("a new fault cancels an unconfirmed action and explains the interruption", 
     "Действие прервано из-за ошибки отопителя",
   );
 });
+
+test("trial acknowledgement requires its requested mode and a new state in the same boot", () => {
+  const baseline = state();
+  const pending = { action: "TRIAL_DRY", baseline, payload: {} };
+  const armed = {
+    ...baseline,
+    state_version: "3",
+    state: { code: "TRIAL_READY" },
+    trial: { mode: "DRY" },
+  };
+  assert.equal(commandMatchesSnapshot(pending, armed), true);
+  assert.equal(
+    commandMatchesSnapshot(pending, { ...armed, state_version: "2" }),
+    false,
+  );
+  assert.equal(
+    commandMatchesSnapshot(pending, { ...armed, boot_id: "2" }),
+    false,
+  );
+  assert.equal(
+    commandMatchesSnapshot(pending, { ...armed, trial: { mode: "FUEL" } }),
+    false,
+  );
+  assert.equal(
+    commandMatchesSnapshot(pending, {
+      ...armed,
+      state: { code: "STOP_PURGE" },
+    }),
+    false,
+  );
+  assert.equal(
+    commandMatchesSnapshot(pending, {
+      ...armed,
+      state: { code: "PREHEAT" },
+      run_id: "0",
+    }),
+    false,
+  );
+  const started = { ...armed, state: { code: "PREHEAT" }, run_id: "a" };
+  assert.equal(commandMatchesSnapshot(pending, started), true);
+  assert.equal(
+    commandMatchesSnapshot({ action: "START", baseline, payload: {} }, started),
+    false,
+  );
+});
+
+test("queued trial stays pending until armed and a reboot never confirms it", async () => {
+  for (const reboot of [false, true]) {
+    let snapshot = { ...state(), commands: { TRIAL_FUEL: { allowed: true } } };
+    const session = new ControllerSession({
+      api: {
+        state: async () => snapshot,
+        challenge: async () => ({ boot_id: "1", state_version: "2" }),
+        command: async () => ({ status: "QUEUED" }),
+      },
+      commandId: () => "abcd",
+    });
+    await session.restore();
+    assert.equal((await session.submit("TRIAL_FUEL")).status, "QUEUED");
+    assert.equal(session.view.pending?.action, "TRIAL_FUEL");
+    snapshot = {
+      ...snapshot,
+      state_version: "3",
+      boot_id: reboot ? "2" : "1",
+      state: { code: "TRIAL_READY" },
+      trial: { mode: "FUEL" },
+    };
+    await session.poll();
+    assert.equal(session.view.pending, null);
+    assert.equal(session.view.message.kind, reboot ? "warning" : "ok");
+  }
+});

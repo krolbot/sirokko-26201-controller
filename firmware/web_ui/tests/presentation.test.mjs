@@ -99,3 +99,29 @@ test("timer countdown rounds the last second upward and keeps durations beyond a
   assert.equal(countdownText(7 * 86400000), "168:00:00");
   assert.equal(countdownText(NaN), "—");
 });
+
+test("trial keeps STOP visible while armed, firing and cooling even with outputs off", () => {
+  for (const code of [
+    "TRIAL_READY",
+    "PREHEAT",
+    "IGNITION",
+    "STOP_PURGE",
+    "FAULT_PURGE",
+  ])
+    assert.equal(
+      needsStop({
+        state: { code },
+        trial: { mode: "DRY" },
+        outputs: { fuel: false, glow: false },
+      }),
+      true,
+    );
+  assert.equal(
+    needsStop({
+      state: { code: "UNCONFIGURED" },
+      trial: { mode: "NONE" },
+      outputs: { fuel: false, glow: false },
+    }),
+    false,
+  );
+});

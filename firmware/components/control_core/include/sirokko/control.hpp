@@ -33,9 +33,13 @@ constexpr uint32_t kControlPeriodMs = 20;
 constexpr uint64_t kCommandFreshnessMs = 5000;
 constexpr uint64_t kSensorStaleMs = 600;
 constexpr uint64_t kRoomSensorStaleMs = 2000;
+constexpr uint64_t kTrialArmMs = 30000;
+constexpr uint64_t kTrialMeasurementMs = 90000;
+constexpr uint64_t kLocalButtonFreshMs = 100;
 constexpr uint64_t kMaximumTimerMs = 7ULL * 24 * 60 * 60 * 1000;
 
 enum class Mode : uint8_t { TEMPERATURE, MANUAL };
+enum class TrialMode : uint8_t { NONE, DRY, FUEL };
 
 enum class State : uint8_t {
     UNCONFIGURED,
@@ -48,6 +52,7 @@ enum class State : uint8_t {
     FAULT_PURGE,
     FAULT,
     MAINTENANCE,
+    TRIAL_READY,
 };
 
 enum class Block : uint8_t {
@@ -65,6 +70,7 @@ enum class Block : uint8_t {
     LOCAL_CONTROLS_UNAVAILABLE,
     INITIALIZING,
     STORAGE_UNAVAILABLE,
+    BUTTON_HELD,
 };
 
 enum Fault : uint32_t {
@@ -158,6 +164,10 @@ struct TickInput {
     bool enter_maintenance{};
     bool exit_maintenance{};
     bool cycle_record_ready{};
+    TrialMode trial_request{TrialMode::NONE};
+    bool local_button_held{};
+    bool local_button_valid{};
+    uint64_t local_button_sample_ms{};
     bool set_shutdown_timer{};
     uint64_t shutdown_after_ms{}; // 0 cancels an active timer.
 };
@@ -166,6 +176,9 @@ struct Snapshot {
     State state{State::RECOVERY_PURGE};
     Block start_block{Block::RECOVERY_PURGE};
     Block reset_fault_block{Block::BUSY};
+    TrialMode trial_mode{TrialMode::NONE};
+    uint64_t trial_remaining_ms{};
+    Block trial_start_block{Block::BUSY};
     Outputs outputs;
     uint32_t faults{};
     uint64_t state_version{1};
@@ -192,6 +205,8 @@ enum class Action : uint8_t {
     OTA,
     TIMER,
     PROFILE,
+    TRIAL_DRY,
+    TRIAL_FUEL,
 };
 
 struct Grant {
@@ -236,6 +251,10 @@ class Controller {
     uint32_t sensor_faults(const Sensors &sensors, uint64_t now_ms) const;
     Block reset_fault_guard(const Sensors &sensors, uint64_t now_ms, uint32_t external_faults) const;
     Block start_guard(const Sensors &sensors, uint64_t now_ms) const;
+    Block trial_start_guard(const Sensors &sensors, uint64_t now_ms) const;
+    bool local_button_fresh(uint64_t now_ms) const;
+    bool cooling_ready(const Sensors &sensors, uint64_t now_ms) const;
+    uint64_t purge_minimum_ms() const;
     void transition(State state, uint64_t now_ms);
     void begin_purge(State state, uint64_t now_ms);
     bool purge_ready(const Sensors &sensors, uint64_t now_ms) const;
@@ -249,6 +268,11 @@ class Controller {
     Settings settings_;
     Sensors last_sensors_;
     State state_{State::UNCONFIGURED};
+    TrialMode trial_mode_{TrialMode::NONE};
+    bool trial_fault_{};
+    bool local_button_held_{};
+    bool local_button_valid_{};
+    uint64_t local_button_sample_ms_{};
     uint32_t faults_{};
     uint64_t state_started_ms_{};
     uint64_t state_version_{1};

@@ -12,7 +12,7 @@ struct Timing {
     uint32_t maximum_poll_gap_ms;
 };
 
-// KEY0 is a short, debounced press. It deliberately has no hold threshold.
+// Normal operation uses a debounced short press; trials also consume the live held sample.
 constexpr Timing kTiming{
     .debounce_ms = 30,
     .polling_ms = 10,
@@ -23,6 +23,13 @@ struct Snapshot {
     sirokko::State state{sirokko::State::RECOVERY_PURGE};
     sirokko::Block start_block{sirokko::Block::ENVELOPE_MISSING};
     uint64_t state_version{};
+    sirokko::TrialMode trial_mode{sirokko::TrialMode::NONE};
+};
+
+struct HeldSample {
+    uint64_t sample_ms{};
+    bool held{};
+    bool valid{};
 };
 
 struct Executor {
@@ -43,6 +50,7 @@ class Button {
     void reset(bool pressed, uint64_t now_ms);
     void poll(bool pressed, uint64_t now_ms);
     Dispatch last_dispatch() const { return last_dispatch_; }
+    HeldSample held_sample() const { return held_sample_; }
 
   private:
     enum class Phase : uint8_t {
@@ -53,7 +61,7 @@ class Button {
         LOCKED,
     };
 
-    enum class Intent : uint8_t { NONE, START, STOP, REJECTED, FAILED };
+    enum class Intent : uint8_t { NONE, START, STOP, HOLD, REJECTED, FAILED };
 
     void rebaseline(bool pressed, uint64_t now_ms);
     void begin_release_debounce(Phase resume, uint64_t now_ms);
@@ -70,6 +78,7 @@ class Button {
     uint64_t last_poll_ms_{};
     bool have_last_poll_{};
     Dispatch last_dispatch_{Dispatch::NONE};
+    HeldSample held_sample_{};
 };
 
 } // namespace start_stop_button

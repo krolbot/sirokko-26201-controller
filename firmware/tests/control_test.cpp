@@ -4,7 +4,187 @@
 #include <limits>
 using namespace sirokko;
 using namespace control_fixture;
+namespace {
+TickInput trial_input(uint64_t now, bool held = false, int32_t exhaust = 20000) {
+    auto i = input(now, exhaust, 20000);
+    i.sensors.room = {}; // Trial uses fixed motor command, not room regulation.
+    i.local_button_held = held;
+    i.local_button_valid = true;
+    i.local_button_sample_ms = now;
+    return i;
+}
+Controller trial_ignition(TrialMode mode, SafetyEnvelope profile = {}) {
+    Settings settings{};
+    settings.duration_ms = 1; // Normal timer must not affect a trial.
+    Controller c(profile, settings, 21, Startup::CLEAN);
+    auto i = trial_input(100);
+    i.trial_request = mode;
+    auto s = c.tick(i);
+    assert(s.state == State::TRIAL_READY && s.trial_mode == mode && !s.run_id);
+    assert(s.trial_remaining_ms == kTrialArmMs);
+    off(s);
+    assert(!s.outputs.fan_request);
+    assert(!c.update_settings(Settings{}));
+    s = c.tick(trial_input(120, true));
+    assert(s.state == State::PREHEAT && s.run_id && s.outputs.glow);
+    assert(!s.outputs.fuel && !s.outputs.fan_request && !s.duration_active);
+    s = c.tick(trial_input(kIgnitionAt - 1, true));
+    assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fuel);
+    s = c.tick(trial_input(kIgnitionAt, true));
+    assert(s.state == State::IGNITION && s.outputs.glow && s.outputs.fan_request);
+    assert(s.outputs.speed_code == kPwmMaximum && s.outputs.fuel == (mode == TrialMode::FUEL));
+    return c;
+}
+void test_trials() {
+    for (const auto mode : {TrialMode::DRY, TrialMode::FUEL}) {
+        auto c = trial_ignition(mode);
+        const auto before = envelope_fingerprint(c.safety_envelope());
+        auto future_snapshot = c.snapshot(kIgnitionAt + kIgnitionGlowMs + 1);
+        assert(future_snapshot.outputs.glow); // A read cannot change the applied output command.
+        Snapshot s{};
+        for (uint64_t elapsed = 100; elapsed <= kTrialMeasurementMs; elapsed += 100) {
+            auto i = trial_input(kIgnitionAt + elapsed, true, 100000);
+            i.set_shutdown_timer = true;
+            i.shutdown_after_ms = 1;
+            i.trial_request = mode; // Repeated requests cannot extend the window.
+            s = c.tick(i);
+            assert(s.state != State::RUN && !s.duration_active && !s.faults);
+            assert(!c.update_settings(Settings{}));
+            if (elapsed < kTrialMeasurementMs) {
+                assert(s.state == State::IGNITION);
+                assert(s.outputs.glow == (elapsed < kIgnitionGlowMs));
+                assert(s.outputs.fuel == (mode == TrialMode::FUEL));
+                assert(s.trial_remaining_ms == kTrialMeasurementMs - elapsed);
+            } else {
+                assert(s.state == State::STOP_PURGE && s.trial_mode == mode);
+                off(s);
+            }
+        }
+        const auto stopped = kIgnitionAt + kTrialMeasurementMs;
+        assert(s.outputs.fan_request && s.outputs.speed_code == kPwmMaximum);
+        assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs - 1, false)).state == State::STOP_PURGE);
+        assert(c.tick(trial_input(stopped + kPostpurgeMinimumMs, false, 40000)).state == State::STOP_PURGE);
+        s = c.tick(trial_input(stopped + kPostpurgeMinimumMs + 20, false, 39999));
+        assert(s.state == State::UNCONFIGURED && s.trial_mode == TrialMode::NONE);
+        assert(!s.outputs.fan_request && !s.outputs.fuel && !s.outputs.glow);
+        assert(!s.envelope_provisioned && envelope_fingerprint(c.safety_envelope()) == before);
+        s = c.tick(trial_input(stopped + kPostpurgeMinimumMs + 40, true));
+        assert(s.state == State::UNCONFIGURED && !s.outputs.glow);
+    }
+    for (unsigned scenario = 0; scenario < 7; ++scenario) {
+        Controller c({}, Settings{}, 1, Startup::CLEAN);
+        auto i = trial_input(100);
+        i.trial_request = TrialMode::FUEL;
+        switch (scenario) {
+        case 0:
+            i.local_button_held = true;
+            break;
+        case 1:
+            i.local_button_valid = false;
+            break;
+        case 2:
+            i.local_button_sample_ms = 101;
+            break;
+        case 3:
+            i.cycle_record_ready = false;
+            break;
+        case 4:
+            i.sensors.air.valid = false;
+            break;
+        case 5:
+            i.sensors.exhaust.milli_c = 40000;
+            break;
+        case 6:
+            i.stop = true;
+            break;
+        }
+        const auto s = c.tick(i);
+        assert(s.state != State::TRIAL_READY && s.trial_mode == TrialMode::NONE);
+        off(s);
+        assert(!s.outputs.fan_request);
+    }
+    Controller pending({}, Settings{}, 1, Startup::CLEAN);
+    auto i = trial_input(100);
+    i.trial_request = TrialMode::DRY;
+    pending.tick(i);
+    auto expired = pending;
+    auto s = expired.tick(trial_input(100 + kTrialArmMs, true));
+    assert(s.state == State::UNCONFIGURED && s.trial_mode == TrialMode::NONE && !s.outputs.glow);
+    i = trial_input(120, true);
+    i.local_button_valid = false; // Press debounce: wait without energizing anything.
+    s = pending.tick(i);
+    assert(s.state == State::TRIAL_READY && !s.faults && !s.outputs.glow);
+    s = pending.tick(trial_input(140, true));
+    assert(s.state == State::PREHEAT && s.outputs.glow);
+    i = trial_input(160, false);
+    i.local_button_valid = false; // Release debounce must stop without a spurious fault.
+    s = pending.tick(i);
+    assert(s.state == State::STOP_PURGE && !s.faults);
+    off(s);
+    for (unsigned scenario = 0; scenario < 5; ++scenario) {
+        auto c = trial_ignition(TrialMode::FUEL);
+        i = trial_input(kIgnitionAt + 200, true);
+        switch (scenario) {
+        case 0:
+            i.local_button_sample_ms = i.now_ms - kLocalButtonFreshMs - 1;
+            break;
+        case 1:
+            i.local_button_sample_ms = i.now_ms + 1;
+            break;
+        case 2:
+            i.local_button_valid = false;
+            break;
+        case 3:
+            i.sensors.exhaust.valid = false;
+            break;
+        case 4:
+            i.external_faults = FAULT_CONTROL_WATCHDOG;
+            break;
+        }
+        s = c.tick(i);
+        assert(s.state == State::FAULT_PURGE && s.faults && s.outputs.fan_request);
+        off(s);
+        s = c.tick(trial_input(i.now_ms + kPostpurgeMinimumMs));
+        assert(s.state == State::FAULT && s.trial_mode == TrialMode::NONE);
+        i = trial_input(i.now_ms + kPostpurgeMinimumMs + 20);
+        i.reset_fault = true;
+        s = c.tick(i);
+        assert(s.state == State::UNCONFIGURED && !s.faults); // No room sensor required for trial reset.
+    }
+    auto c = trial_ignition(TrialMode::FUEL);
+    i = trial_input(kIgnitionAt + 100, true);
+    i.local_button_sample_ms = kIgnitionAt;
+    assert(c.tick(i).outputs.fuel); // Exactly 100 ms is still fresh.
+    s = c.tick(trial_input(kIgnitionAt + 120, false));
+    assert(s.state == State::STOP_PURGE && !s.faults);
+    off(s);
+    auto partial = SafetyEnvelope{};
+    partial.purge_speed_code = 1;
+    Controller recovered(partial, Settings{}, 21, Startup::RECOVER);
+    s = recovered.tick(trial_input(100));
+    assert(s.state == State::RECOVERY_PURGE && s.outputs.speed_code == kPwmMaximum);
+    off(s);
+    assert(recovered.tick(trial_input(kPostpurgeMinimumMs - 1)).state == State::RECOVERY_PURGE);
+    s = recovered.tick(trial_input(kPostpurgeMinimumMs));
+    assert(s.state == State::UNCONFIGURED && !s.outputs.fan_request);
+    Controller mixed(envelope(), Settings{}, 21, Startup::CLEAN);
+    i = trial_input(100);
+    i.start = true;
+    i.trial_request = TrialMode::DRY;
+    s = mixed.tick(i);
+    assert(s.state == State::TRIAL_READY && s.trial_mode == TrialMode::DRY);
+    off(s);
+    auto known_limit = SafetyEnvelope{};
+    known_limit.maximum_exhaust_milli_c = 50000;
+    c = trial_ignition(TrialMode::FUEL, known_limit);
+    s = c.tick(trial_input(kIgnitionAt + 20, true, 50000));
+    assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_OVER_TEMPERATURE));
+    off(s);
+}
+} // namespace
+
 int main() {
+    test_trials();
     Controller disconnected({}, Settings{}, 7, Startup::CLEAN);
     auto detached = disconnected.snapshot(0);
     assert(detached.state == State::UNCONFIGURED && !detached.purge_active && !detached.outputs.fan_request);

@@ -1,4 +1,4 @@
-import { MAXIMUM_SLEW_PER_S } from "./protocol.js";
+import { MAXIMUM_SLEW_PER_S, trialActive } from "./protocol.js";
 export function commandAllowed(snapshot, action) {
   return snapshot?.commands?.[action]?.allowed === true;
 }
@@ -19,9 +19,12 @@ export function connectionReady(ui) {
 }
 export function needsStop(snapshot) {
   return (
+    trialActive(snapshot) ||
     snapshot?.outputs?.fuel === true ||
     snapshot?.outputs?.glow === true ||
-    ["PREHEAT", "IGNITION", "RUN"].includes(snapshot?.state?.code)
+    ["TRIAL_READY", "PREHEAT", "IGNITION", "RUN"].includes(
+      snapshot?.state?.code,
+    )
   );
 }
 export function stateText(snapshot) {
@@ -40,6 +43,7 @@ export const routes = {
   wifi: { title: "Wi-Fi", section: "settings" },
   regulation: { title: "Темп изменения ШИМ", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
+  trial: { title: "Пробный запуск", section: "settings" },
   update: { title: "Обновление", section: "settings" },
 };
 export function routeFromHash(hash) {
@@ -51,7 +55,9 @@ export function blockedActionLink(snapshot, action) {
   switch (snapshot?.commands?.[action]?.code) {
     case "ENVELOPE_MISSING":
     case "ENVELOPE_INVALID":
-      return { href: "#/heater", label: "Настроить отопитель" };
+      return action === "START" && snapshot?.commands?.TRIAL_DRY
+        ? { href: "#/trial", label: "Пробный запуск и измерения" }
+        : { href: "#/heater", label: "Настроить отопитель" };
     case "SENSOR_INVALID":
     case "SENSOR_STALE":
     case "INITIAL_THERMAL_STATE":

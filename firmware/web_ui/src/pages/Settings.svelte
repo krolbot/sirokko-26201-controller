@@ -41,6 +41,11 @@
 <section class="settings-group">
   <h2>Отопитель</h2>
   <div class="grouped-list surface">
+    <a class="list-row" href="#/trial"
+      ><span class="row-icon"><Icon name="thermometer" /></span><span
+        class="row-title">Пробный запуск</span
+      ><Icon name="chevron" size={16} /></a
+    >
     <a class="list-row" href="#/heater"
       ><span class="row-icon"><Icon name="tune" /></span>
       <span class="row-title">Параметры отопителя</span><span class="row-value"

@@ -8,12 +8,18 @@ struct Entry {
 };
 inline constexpr Entry commands[] = {
     {sirokko::Action::START, "START"},
+    {sirokko::Action::TRIAL_DRY, "TRIAL_DRY"},
+    {sirokko::Action::TRIAL_FUEL, "TRIAL_FUEL"},
     {sirokko::Action::SETTINGS, "SETTINGS"},
     {sirokko::Action::TIMER, "TIMER"},
     {sirokko::Action::PROFILE, "PROFILE"},
     {sirokko::Action::RESET_FAULT, "RESET_FAULT"},
     {sirokko::Action::OTA, "OTA"},
 };
+inline bool starts_cycle(sirokko::Action action) {
+    return action == sirokko::Action::START || action == sirokko::Action::TRIAL_DRY ||
+           action == sirokko::Action::TRIAL_FUEL;
+}
 inline sirokko::Block wifi_password_block(const RuntimeView &view) {
     using namespace sirokko;
     if (!view.startup_ready)
@@ -21,6 +27,8 @@ inline sirokko::Block wifi_password_block(const RuntimeView &view) {
     if (!view.storage_ok)
         return Block::STORAGE_UNAVAILABLE;
     const auto &control = view.control;
+    if (control.trial_mode != TrialMode::NONE)
+        return Block::BUSY;
     if (view.storage_busy || control.outputs.fan_request || control.outputs.fuel || control.outputs.glow)
         return Block::BUSY;
     if (control.state == State::MAINTENANCE)
@@ -39,11 +47,18 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
         return Block::STORAGE_UNAVAILABLE;
     if (view.storage_busy)
         return Block::BUSY;
-    if (action == Action::START && view.envelope.provisioned && !view.local_controls_initialized)
+    if (control.trial_mode != TrialMode::NONE && action != Action::RESET_FAULT)
+        return Block::BUSY;
+    if ((action == Action::TRIAL_DRY || action == Action::TRIAL_FUEL ||
+         (action == Action::START && view.envelope.provisioned)) &&
+        !view.local_controls_initialized)
         return Block::LOCAL_CONTROLS_UNAVAILABLE;
     switch (action) {
     case Action::START:
         return control.start_block;
+    case Action::TRIAL_DRY:
+    case Action::TRIAL_FUEL:
+        return control.trial_start_block;
     case Action::SETTINGS:
         return control.state == State::MAINTENANCE || control.combustion.phase == combustion::Phase::SUSPECT
                    ? Block::BUSY

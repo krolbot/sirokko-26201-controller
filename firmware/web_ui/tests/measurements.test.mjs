@@ -172,3 +172,82 @@ test("CSV escapes notes, neutralizes formulas and keeps operator events separate
   assert.equal(r.rows[2][2].length, 160);
   assert.equal(r.samples, 1);
 });
+
+test("trial captures arm, actuation and cooldown, stopping only after the cycle completes", () => {
+  const r = new Measurements();
+  const initial = {
+    ...snapshot(),
+    trial: { mode: "NONE" },
+    state: { code: "UNCONFIGURED" },
+  };
+  assert(r.startTrial(initial, true, "FUEL", time));
+  const armed = {
+    ...snapshot(1100),
+    trial: { mode: "FUEL" },
+    state: { code: "TRIAL_READY" },
+  };
+  r.observe(armed, true, time + 100);
+  r.cancelTrialRequest(time + 101); // A late browser timeout must not discard an observed trial.
+  assert(r.active);
+  r.observe(
+    { ...snapshot(1200), trial: { mode: "FUEL" }, state: { code: "IGNITION" } },
+    true,
+    time + 200,
+  );
+  r.observe(
+    {
+      ...snapshot(1300),
+      trial: { mode: "FUEL" },
+      state: { code: "STOP_PURGE" },
+    },
+    true,
+    time + 300,
+  );
+  assert(r.active);
+  r.observe(
+    {
+      ...snapshot(1400),
+      trial: { mode: "NONE" },
+      state: { code: "UNCONFIGURED" },
+    },
+    true,
+    time + 400,
+  );
+  assert.equal(r.active, false);
+  assert.equal(r.reason, "trial_finished");
+  assert.equal(
+    csvRows(r).find((row) => row.state === "IGNITION").trial_mode,
+    "FUEL",
+  );
+  const before = r.csv();
+  assert.equal(r.startTrial(initial, true, "DRY", time + 500), false);
+  assert.equal(r.csv(), before);
+  r.markExported();
+  assert(r.startTrial(initial, true, "DRY", time + 600));
+});
+
+test("trial cannot overwrite an active recording and rejection or reboot retains its collected data", () => {
+  const r = new Measurements();
+  const initial = { ...snapshot(), trial: { mode: "NONE" } };
+  assert(r.start(initial, true, time));
+  const before = r.csv();
+  assert.equal(r.startTrial(initial, true, "DRY", time + 100), false);
+  assert.equal(r.csv(), before);
+  r.stop();
+  r.markExported();
+  assert(r.startTrial(initial, true, "DRY", time + 200));
+  r.cancelTrialRequest(time + 300);
+  assert.equal(r.active, false);
+  assert.equal(r.reason, "trial_not_started");
+  assert(r.unsaved);
+  r.markExported();
+  assert(r.startTrial(initial, true, "FUEL", time + 400));
+  r.observe(
+    { ...snapshot(20), boot_id: "new", trial: { mode: "NONE" } },
+    true,
+    time + 500,
+  );
+  assert.equal(r.active, false);
+  assert.equal(r.reason, "restart");
+  assert(r.unsaved);
+});

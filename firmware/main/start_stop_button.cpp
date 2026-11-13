@@ -38,6 +38,7 @@ void Button::rebaseline(bool pressed, uint64_t now_ms) {
     release_resume_ = Phase::REQUIRE_RELEASE;
     intent_ = Intent::NONE;
     source_state_version_ = 0;
+    held_sample_ = {now_ms, pressed, false};
     // A low level at reset/gap is indistinguishable from a held boot button: require a release.
     phase_ = pressed ? Phase::REQUIRE_RELEASE : Phase::RELEASE_DEBOUNCE;
 }
@@ -57,7 +58,9 @@ void Button::latch_press_intent() {
 
     // The action is chosen at the first observed low level, never at dispatch time.
     source_state_version_ = snapshot.state_version;
-    if (is_stop_target(snapshot)) {
+    if (snapshot.trial_mode != sirokko::TrialMode::NONE) {
+        intent_ = Intent::HOLD;
+    } else if (is_stop_target(snapshot)) {
         intent_ = Intent::STOP;
     } else if (is_start_target(snapshot)) {
         intent_ = Intent::START;
@@ -76,6 +79,9 @@ void Button::dispatch_latched_intent() {
     case Intent::STOP:
         last_dispatch_ =
             executor_.stop && executor_.stop(executor_.context) ? Dispatch::STOP : Dispatch::FAILED;
+        break;
+    case Intent::HOLD:
+        last_dispatch_ = Dispatch::NONE;
         break;
     case Intent::REJECTED:
         last_dispatch_ = Dispatch::REJECTED;
@@ -135,6 +141,9 @@ void Button::poll(bool pressed, uint64_t now_ms) {
             begin_release_debounce(Phase::LOCKED, now_ms);
         break;
     }
+    // Release invalidates the hold immediately; a new held level requires debounce.
+    held_sample_ = {now_ms, phase_ == Phase::LOCKED && pressed,
+                    phase_ == Phase::READY || phase_ == Phase::LOCKED};
 }
 
 } // namespace start_stop_button

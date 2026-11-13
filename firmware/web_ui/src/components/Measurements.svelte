@@ -1,6 +1,15 @@
 <script>
   import { formatDuration } from "../lib/protocol.js";
-  let { recording, online, start, stop, download, addNote } = $props();
+  let {
+    recording,
+    online,
+    start,
+    stop,
+    download,
+    addNote,
+    allowStart = true,
+    stopDisabled = false,
+  } = $props();
   let note = $state("");
   let added = $state(false);
   const status = $derived(
@@ -12,6 +21,8 @@
           restart: "Запись завершена: контроллер перезапущен",
           limit: "Лимит записи достигнут",
           stopped: "Запись завершена",
+          trial_finished: "Проба и запись завершены",
+          trial_not_started: "Проба не началась; запись сохранена",
         }[recording.reason] || "Температуры и команды выходов в одном файле",
   );
   function submit(event) {
@@ -39,8 +50,10 @@
   {/if}
   <div class="form-actions">
     {#if recording.active}
-      <button class="primary" onclick={stop}>Завершить запись</button>
-    {:else}
+      {#if !stopDisabled}<button class="primary" onclick={stop}
+          >Завершить запись</button
+        >{/if}
+    {:else if allowStart}
       <button
         class="primary"
         onclick={begin}

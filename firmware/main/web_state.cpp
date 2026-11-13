@@ -28,6 +28,8 @@ const char *russian_state(sirokko::State state) {
         return "Авария";
     case sirokko::State::MAINTENANCE:
         return "Обновление прошивки";
+    case sirokko::State::TRIAL_READY:
+        return "Пробный запуск: удерживайте KEY0";
     }
     return "Неизвестное состояние";
 }
@@ -60,6 +62,8 @@ const char *russian_block(sirokko::Block block) {
         return "Обновление прошивки";
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
         return "Не удалось запустить драйвер экрана или кнопки";
+    case sirokko::Block::BUTTON_HELD:
+        return "Отпустите KEY0 перед подготовкой пробного запуска";
     case sirokko::Block::STALE_COMMAND:
         return "Состояние отопителя изменилось после отправки команды";
     }
@@ -85,6 +89,16 @@ const char *russian_event(const char *kind) {
         return "Неизвестное событие";
     if (std::strcmp(kind, "PROFILE_SAVED") == 0)
         return "Параметры отопителя сохранены";
+    if (std::strcmp(kind, "TRIAL_DRY_ARMED") == 0)
+        return "Подготовлен пробный запуск без топлива";
+    if (std::strcmp(kind, "TRIAL_FUEL_ARMED") == 0)
+        return "Подготовлен пробный запуск с топливом";
+    if (std::strcmp(kind, "TRIAL_START") == 0)
+        return "Пробный запуск начат удержанием KEY0";
+    if (std::strcmp(kind, "TRIAL_EXPIRED") == 0)
+        return "Пробный запуск отменён: KEY0 не нажата";
+    if (std::strcmp(kind, "TRIAL_FINISHED") == 0)
+        return "Пробный запуск завершён по времени";
     if (std::strcmp(kind, "START") == 0)
         return "Запуск отопителя";
     if (std::strcmp(kind, "STOP") == 0)
@@ -156,6 +170,13 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
         json->quoted(description.text);
     }
     json->character(']');
+    json->raw(",\"trial\":{\"mode\":");
+    json->quoted(control.trial_mode == sirokko::TrialMode::DRY    ? "DRY"
+                 : control.trial_mode == sirokko::TrialMode::FUEL ? "FUEL"
+                                                                  : "NONE");
+    json->raw(",\"remaining_ms\":");
+    json->unsigned_integer(control.trial_remaining_ms);
+    json->character('}');
     const auto &monitor = control.combustion;
     const char *phases[] = {"OFF", "LEARNING", "WATCHING", "SUSPECT", "LOST"};
     json->raw(",\"combustion\":{\"phase\":");
@@ -202,7 +223,7 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->real(control.command_percent);
     json->raw("}");
     json->raw(",\"hardware\":{\"outputs_enabled\":");
-    json->boolean(view.envelope.provisioned);
+    json->boolean(view.envelope.provisioned || control.trial_mode != sirokko::TrialMode::NONE);
     json->raw(",\"local_controls_initialized\":");
     json->boolean(view.local_controls_initialized);
     json->raw(",\"startup_ready\":");

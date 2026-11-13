@@ -31,6 +31,11 @@ uint64_t remaining(uint64_t now, uint64_t deadline) {
     return now >= deadline ? 0 : deadline - now;
 }
 
+int32_t trial_cooling_limit(const SafetyEnvelope &profile) {
+    const auto configured = profile.cooling_exhaust_milli_c;
+    return configured > 0 && configured < kProcessMeasurementCeilingMilliC ? configured : 40000;
+}
+
 } // namespace
 
 Grant CommandGate::issue(Action action, uint64_t params_hash, uint64_t now_ms, uint64_t state_version,
@@ -102,7 +107,8 @@ uint32_t Controller::sensor_faults(const Sensors &sensors, uint64_t now_ms) cons
         result |= FAULT_EXHAUST;
     if (!thermocouple_fresh(sensors.air, now_ms))
         result |= FAULT_AIR;
-    if (settings_.mode == Mode::TEMPERATURE && !room_temperature_fresh(sensors.room, now_ms))
+    if (trial_mode_ == TrialMode::NONE && settings_.mode == Mode::TEMPERATURE &&
+        !room_temperature_fresh(sensors.room, now_ms))
         result |= FAULT_ROOM;
     if (exhaust_ok && envelope_.maximum_exhaust_milli_c &&
         sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c)
@@ -129,10 +135,47 @@ Block Controller::start_guard(const Sensors &sensors, uint64_t now_ms) const {
     return Block::NONE;
 }
 
+bool Controller::local_button_fresh(uint64_t now_ms) const {
+    return local_button_valid_ && local_button_sample_ms_ <= now_ms &&
+           now_ms - local_button_sample_ms_ <= kLocalButtonFreshMs;
+}
+
+bool Controller::cooling_ready(const Sensors &sensors, uint64_t now_ms) const {
+    if (trial_mode_ == TrialMode::NONE)
+        return cooling_complete(envelope_, sensors, now_ms);
+    return thermal_sensors_fresh(sensors, now_ms) && sensors.exhaust.milli_c < trial_cooling_limit(envelope_);
+}
+
+uint64_t Controller::purge_minimum_ms() const {
+    return trial_mode_ == TrialMode::NONE ? envelope_.postpurge_ms
+                                          : std::max(envelope_.postpurge_ms, kPostpurgeMinimumMs);
+}
+
+Block Controller::trial_start_guard(const Sensors &sensors, uint64_t now_ms) const {
+    if (faults_)
+        return Block::FAULT_LATCHED;
+    if (trial_mode_ != TrialMode::NONE || (state_ != State::IDLE && state_ != State::UNCONFIGURED))
+        return Block::BUSY;
+    if (!local_button_fresh(now_ms))
+        return Block::LOCAL_CONTROLS_UNAVAILABLE;
+    if (local_button_held_)
+        return Block::BUTTON_HELD;
+    const auto data = sensor_block(sensors, now_ms, false);
+    if (data != Block::NONE)
+        return data;
+    if (sensors.exhaust.milli_c >= trial_cooling_limit(envelope_) ||
+        (envelope_.maximum_exhaust_milli_c > 0 &&
+         sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c))
+        return Block::INITIAL_THERMAL_STATE;
+    return Block::NONE;
+}
+
 void Controller::transition(State state, uint64_t now_ms) {
     if (state_ == state)
         return;
     state_ = state;
+    if (state == State::IDLE || state == State::UNCONFIGURED || state == State::FAULT)
+        trial_mode_ = TrialMode::NONE;
     state_started_ms_ = now_ms;
     ++state_version_;
     if (state_version_ == 0)
@@ -150,8 +193,8 @@ void Controller::begin_purge(State state, uint64_t now_ms) {
 }
 
 bool Controller::purge_ready(const Sensors &sensors, uint64_t now_ms) const {
-    return now_ms >= purge_started_ms_ && now_ms - purge_started_ms_ >= envelope_.postpurge_ms &&
-           thermal_sensors_fresh(sensors, now_ms) && cooling_complete(envelope_, sensors, now_ms);
+    return now_ms >= purge_started_ms_ && now_ms - purge_started_ms_ >= purge_minimum_ms() &&
+           cooling_ready(sensors, now_ms);
 }
 
 bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
@@ -169,6 +212,7 @@ bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
 }
 
 void Controller::begin_start(uint64_t now_ms) {
+    trial_fault_ = false;
     combustion_monitor_.reset(envelope_.minimum_run_exhaust_milli_c, envelope_.maximum_speed_code);
     run_id_ = next_id_++;
     if (next_id_ == 0)
@@ -191,9 +235,12 @@ void Controller::begin_stop(uint64_t now_ms) {
     run_id_ = 0;
     if (active(state_))
         begin_purge(State::STOP_PURGE, now_ms);
+    else if (state_ == State::TRIAL_READY)
+        transition(envelope_.provisioned ? State::IDLE : State::UNCONFIGURED, now_ms);
 }
 
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
+    trial_fault_ = trial_fault_ || trial_mode_ != TrialMode::NONE;
     if (combustion_monitor_.snapshot().phase != combustion::Phase::LOST)
         combustion_monitor_ = {};
     faults_ |= faults;
@@ -209,9 +256,24 @@ void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
 
 Outputs Controller::outputs() const {
     Outputs result{};
+    if (trial_mode_ != TrialMode::NONE) {
+        if (purging(state_))
+            return {true, kPwmMaximum, false, false};
+        const bool held = local_button_held_ && local_button_fresh(last_tick_ms_);
+        if (state_ == State::PREHEAT)
+            return {false, 0, held, false};
+        if (state_ == State::IGNITION) {
+            const uint64_t elapsed =
+                last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
+            return {true, kPwmMaximum, held && elapsed < kIgnitionGlowMs,
+                    held && trial_mode_ == TrialMode::FUEL && elapsed < kTrialMeasurementMs};
+        }
+        return result;
+    }
     if (!envelope_.provisioned && !purging(state_))
         return result;
-    const uint16_t purge = envelope_.purge_speed_code ? envelope_.purge_speed_code : kPwmMaximum;
+    const uint16_t purge =
+        envelope_.provisioned && envelope_.purge_speed_code ? envelope_.purge_speed_code : kPwmMaximum;
     switch (state_) {
     case State::RECOVERY_PURGE:
     case State::STOP_PURGE:
@@ -243,7 +305,8 @@ Block Controller::reset_fault_guard(const Sensors &sensors, uint64_t now_ms, uin
         return Block::BUSY;
     if (external_faults)
         return Block::FAULT_LATCHED;
-    const auto data_block = sensor_block(sensors, now_ms, settings_.mode == Mode::TEMPERATURE);
+    const auto data_block =
+        sensor_block(sensors, now_ms, !trial_fault_ && settings_.mode == Mode::TEMPERATURE);
     if (data_block != Block::NONE)
         return data_block;
     return sensor_faults(sensors, now_ms) & FAULT_OVER_TEMPERATURE ? Block::INITIAL_THERMAL_STATE
@@ -253,7 +316,11 @@ Block Controller::reset_fault_guard(const Sensors &sensors, uint64_t now_ms, uin
 Snapshot Controller::tick(const TickInput &input) {
     const uint64_t now = input.now_ms;
     last_sensors_ = input.sensors;
-    if (!envelope_.provisioned && !purging(state_) && state_ != State::FAULT) {
+    local_button_held_ = input.local_button_held;
+    local_button_valid_ = input.local_button_valid;
+    local_button_sample_ms_ = input.local_button_sample_ms;
+    if (!envelope_.provisioned && trial_mode_ == TrialMode::NONE && input.trial_request == TrialMode::NONE &&
+        !purging(state_) && state_ != State::FAULT) {
         last_tick_ms_ = now;
         faults_ = input.external_faults;
         if (input.stop || input.exit_maintenance) {
@@ -278,13 +345,20 @@ Snapshot Controller::tick(const TickInput &input) {
     const uint32_t new_external_faults = input.external_faults & ~previous_external_faults_;
     previous_external_faults_ = input.external_faults;
     uint32_t new_faults = new_external_faults;
-    if (active(state_) || state_ == State::MAINTENANCE)
+    if (active(state_) || state_ == State::MAINTENANCE || state_ == State::TRIAL_READY)
         new_faults |= current_sensor_faults;
+    const bool button_sample_fresh =
+        local_button_sample_ms_ <= now && now - local_button_sample_ms_ <= kLocalButtonFreshMs;
+    if (trial_mode_ != TrialMode::NONE &&
+        ((active(state_) && (!button_sample_fresh || (!local_button_valid_ && local_button_held_))) ||
+         (state_ == State::TRIAL_READY && !button_sample_fresh)))
+        new_faults |= FAULT_LOCAL_CONTROLS;
     if (new_faults)
         latch_fault(new_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued starts and never writes GPIO directly.
-    const bool stop_barrier = input.stop;
+    const bool stop_barrier = input.stop || (trial_mode_ != TrialMode::NONE && active(state_) &&
+                                             (!local_button_held_ || !local_button_valid_));
     if (stop_barrier) {
         // Revoke queued commands even when STOP leaves an idle controller in IDLE.
         if (++state_version_ == 0)
@@ -304,6 +378,7 @@ Snapshot Controller::tick(const TickInput &input) {
     bool reset_barrier = false;
     if (input.reset_fault && reset_fault_guard(input.sensors, now, input.external_faults) == Block::NONE) {
         faults_ = FAULT_NONE;
+        trial_fault_ = false;
         combustion_monitor_ = {};
         transition(envelope_.provisioned ? State::IDLE : State::UNCONFIGURED, now);
         reset_barrier = true; // RESET_FAULT never consumes a START from the same control pass.
@@ -315,8 +390,8 @@ Snapshot Controller::tick(const TickInput &input) {
         record("TIMER_EXPIRED", now);
         begin_stop(now);
     }
-    if (!stop_barrier && !expired && input.set_shutdown_timer && active(state_) &&
-        input.shutdown_after_ms <= kMaximumTimerMs &&
+    if (trial_mode_ == TrialMode::NONE && !stop_barrier && !expired && input.set_shutdown_timer &&
+        active(state_) && input.shutdown_after_ms <= kMaximumTimerMs &&
         input.shutdown_after_ms <= std::numeric_limits<uint64_t>::max() - now) {
         duration_active_ = input.shutdown_after_ms != 0;
         duration_deadline_ms_ = duration_active_ ? now + input.shutdown_after_ms : 0;
@@ -325,9 +400,22 @@ Snapshot Controller::tick(const TickInput &input) {
     }
 
     const Block requested_start_block = start_guard(input.sensors, now);
-    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready && input.start &&
-        requested_start_block == Block::NONE)
+    if (input.trial_request == TrialMode::NONE && !stop_barrier && !reset_barrier && !expired &&
+        input.cycle_record_ready && input.start && requested_start_block == Block::NONE)
         begin_start(now);
+
+    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready &&
+        (input.trial_request == TrialMode::DRY || input.trial_request == TrialMode::FUEL) &&
+        trial_start_guard(input.sensors, now) == Block::NONE) {
+        trial_mode_ = input.trial_request;
+        trial_fault_ = false;
+        duration_active_ = false;
+        duration_deadline_ms_ = 0;
+        condition_active_ = false;
+        combustion_monitor_ = {};
+        transition(State::TRIAL_READY, now);
+        record(trial_mode_ == TrialMode::DRY ? "TRIAL_DRY_ARMED" : "TRIAL_FUEL_ARMED", now);
+    }
 
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
     switch (state_) {
@@ -337,13 +425,32 @@ Snapshot Controller::tick(const TickInput &input) {
             purge_id_ = 0;
         }
         break;
+    case State::TRIAL_READY:
+        if (elapsed >= kTrialArmMs) {
+            record("TRIAL_EXPIRED", now);
+            begin_stop(now);
+        } else if (local_button_held_ && local_button_fresh(now) && input.cycle_record_ready) {
+            run_id_ = next_id_++;
+            if (!next_id_)
+                next_id_ = 1;
+            transition(State::PREHEAT, now);
+            record("TRIAL_START", now);
+        }
+        break;
     case State::PREHEAT:
-        if (elapsed >= envelope_.preheat_ms) {
+        if (elapsed >= (trial_mode_ == TrialMode::NONE ? envelope_.preheat_ms : kPreheatMinimumMs)) {
             condition_active_ = false;
             transition(State::IGNITION, now);
         }
         break;
     case State::IGNITION:
+        if (trial_mode_ != TrialMode::NONE) {
+            if (elapsed >= kTrialMeasurementMs) {
+                record("TRIAL_FINISHED", now);
+                begin_stop(now);
+            }
+            break;
+        }
         if (elapsed >= envelope_.ignition_timeout_ms) {
             latch_fault(FAULT_IGNITION_TIMEOUT, now);
         } else if (elapsed >= kIgnitionGlowMs &&
@@ -402,18 +509,27 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.boot_id = boot_id_;
     result.run_id = run_id_;
     result.reset_fault_block = reset_fault_guard(last_sensors_, now_ms, previous_external_faults_);
+    result.trial_mode = trial_mode_;
+    result.trial_start_block = trial_start_guard(last_sensors_, now_ms);
+    if (trial_mode_ != TrialMode::NONE) {
+        const uint64_t elapsed = now_ms >= state_started_ms_ ? now_ms - state_started_ms_ : 0;
+        const uint64_t period = state_ == State::TRIAL_READY ? kTrialArmMs
+                                : state_ == State::PREHEAT   ? kPreheatMinimumMs
+                                : state_ == State::IGNITION  ? kTrialMeasurementMs
+                                                             : 0;
+        result.trial_remaining_ms = elapsed < period ? period - elapsed : 0;
+    }
     result.duration_active = duration_active_;
     result.duration_remaining_ms = duration_active_ ? remaining(now_ms, duration_deadline_ms_) : 0;
     result.purge_active = purging(state_);
     result.purge_id = result.purge_active ? purge_id_ : 0;
-    const uint64_t purge_deadline =
-        purge_started_ms_ > std::numeric_limits<uint64_t>::max() - envelope_.postpurge_ms
-            ? std::numeric_limits<uint64_t>::max()
-            : purge_started_ms_ + envelope_.postpurge_ms;
+    const uint64_t purge_duration = purge_minimum_ms();
+    const uint64_t purge_deadline = purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_duration
+                                        ? std::numeric_limits<uint64_t>::max()
+                                        : purge_started_ms_ + purge_duration;
     result.purge_minimum_remaining_ms = result.purge_active ? remaining(now_ms, purge_deadline) : 0;
     result.purge_sensors_fresh = result.purge_active && thermal_sensors_fresh(last_sensors_, now_ms);
-    result.purge_temperature_ready =
-        result.purge_sensors_fresh && cooling_complete(envelope_, last_sensors_, now_ms);
+    result.purge_temperature_ready = result.purge_sensors_fresh && cooling_ready(last_sensors_, now_ms);
     result.envelope_provisioned = envelope_.provisioned;
     if (!envelope_.provisioned)
         result.start_block = Block::ENVELOPE_MISSING;
@@ -430,7 +546,7 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.combustion = combustion_monitor_.snapshot();
     if (state_ != State::RUN && result.combustion.phase != combustion::Phase::LOST)
         result.combustion = {};
-    const auto command_maximum = envelope_.maximum_speed_code;
+    const auto command_maximum = trial_mode_ == TrialMode::NONE ? envelope_.maximum_speed_code : kPwmMaximum;
     result.command_percent = command_maximum ? 100.0 * result.outputs.speed_code / command_maximum : 0;
     result.working_span_fraction = regulator_.value().fraction;
     result.room_excess = state_ == State::RUN && settings_.mode == Mode::TEMPERATURE &&
@@ -465,7 +581,7 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
 }
 
 bool Controller::update_settings(const Settings &settings) {
-    if (!valid_settings(settings) || state_ == State::MAINTENANCE ||
+    if (!valid_settings(settings) || trial_mode_ != TrialMode::NONE || state_ == State::MAINTENANCE ||
         combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT)
         return false;
     Settings accepted = settings;
@@ -639,6 +755,8 @@ const char *state_name(State state) {
         return "FAULT";
     case State::MAINTENANCE:
         return "MAINTENANCE";
+    case State::TRIAL_READY:
+        return "TRIAL_READY";
     }
     return "UNKNOWN";
 }
@@ -673,6 +791,8 @@ const char *block_name(Block block) {
         return "ENVELOPE_INVALID";
     case Block::SENSOR_STALE:
         return "SENSOR_STALE";
+    case Block::BUTTON_HELD:
+        return "BUTTON_HELD";
     }
     return "UNKNOWN";
 }

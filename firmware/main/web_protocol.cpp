@@ -276,6 +276,10 @@ bool parse_action_text(const char *text, sirokko::Action *action) {
         *action = sirokko::Action::TIMER;
     else if (equals(text, "PROFILE"))
         *action = sirokko::Action::PROFILE;
+    else if (equals(text, "TRIAL_DRY"))
+        *action = sirokko::Action::TRIAL_DRY;
+    else if (equals(text, "TRIAL_FUEL"))
+        *action = sirokko::Action::TRIAL_FUEL;
 
     else
         return false;
@@ -634,6 +638,8 @@ Digest digest_command(const Command &command) {
         hash.update(command.upload_sha256.data(), command.upload_sha256.size());
         break;
     case sirokko::Action::START:
+    case sirokko::Action::TRIAL_DRY:
+    case sirokko::Action::TRIAL_FUEL:
     case sirokko::Action::RESET_FAULT:
         break;
     }
@@ -726,6 +732,8 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         required |= kUploadSize | kUploadSha256;
         break;
     case sirokko::Action::START:
+    case sirokko::Action::TRIAL_DRY:
+    case sirokko::Action::TRIAL_FUEL:
     case sirokko::Action::RESET_FAULT:
         break;
     }

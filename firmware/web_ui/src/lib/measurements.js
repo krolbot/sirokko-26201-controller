@@ -7,6 +7,7 @@ const columns = [
   "boot_id",
   "uptime_ms",
   "state",
+  "trial_mode",
   "faults",
   "profile_fingerprint",
   "fan_command",
@@ -38,6 +39,8 @@ export class Measurements {
     this.exportedRows = 0;
     this.samples = 0;
     this.reason = "";
+    this.trialMode = null;
+    this.trialSeen = false;
   }
 
   get unsaved() {
@@ -52,6 +55,7 @@ export class Measurements {
       online: this.online,
       reason: this.reason,
       elapsedMs: this.samples ? this.lastUptime - this.firstUptime : 0,
+      trialMode: this.trialMode,
     };
   }
 
@@ -62,11 +66,30 @@ export class Measurements {
     this.exportedRows = this.samples = 0;
     this.reason = "";
     this.active = this.online = true;
+    this.trialMode = null;
+    this.trialSeen = false;
     this.bootId = snapshot.boot_id;
     this.firstUptime = snapshot.uptime_ms;
     this.lastUptime = null;
     this.observe(snapshot, true, now);
     return true;
+  }
+
+  startTrial(snapshot, online, mode, now = Date.now()) {
+    if (
+      !["DRY", "FUEL"].includes(mode) ||
+      !this.start(snapshot, online, now) ||
+      !this.active
+    )
+      return false;
+    this.trialMode = mode;
+    this.trialSeen = false;
+    this.event("trial_requested", mode, now);
+    return true;
+  }
+
+  cancelTrialRequest(now = Date.now()) {
+    if (this.trialMode && !this.trialSeen) this.stop("trial_not_started", now);
   }
 
   valid(snapshot) {
@@ -135,6 +158,7 @@ export class Measurements {
       this.bootId,
       snapshot.uptime_ms,
       snapshot.state?.code,
+      snapshot.trial?.mode || "NONE",
       snapshot.faults,
       snapshot.envelope?.fingerprint,
       outputs.fan_request,
@@ -146,6 +170,11 @@ export class Measurements {
     ]);
     this.lastUptime = snapshot.uptime_ms;
     this.samples++;
+    if (this.trialMode) {
+      if (snapshot.trial?.mode === this.trialMode) this.trialSeen = true;
+      else if (this.trialSeen && snapshot.trial?.mode === "NONE")
+        this.stop("trial_finished", now);
+    }
   }
 
   note(text, now = Date.now()) {
@@ -159,6 +188,8 @@ export class Measurements {
     if (!this.active) return;
     this.event(reason, "", now);
     this.active = false;
+    this.trialMode = null;
+    this.trialSeen = false;
     if (this.reason !== "limit") this.reason = reason;
   }
 

@@ -1,4 +1,5 @@
 #include "sirokko/control.hpp"
+#include "control_fixture.hpp"
 #include "start_stop_button.hpp"
 #include "web_protocol.hpp"
 #include "bounded_receive.hpp"
@@ -101,12 +102,96 @@ int main() {
     for (unsigned t = 310; t <= 400; t += 10)
         button.poll(true, t);
     assert(local.stops == 1);
+    // A trial consumes a live hold, never the normal one-shot START/STOP command.
+    Local trial;
+    trial.view.state = State::TRIAL_READY;
+    trial.view.trial_mode = TrialMode::DRY;
+    start_stop_button::Button held({&trial, read, start, stop});
+    held.reset(true, 0);
+    for (unsigned t = 10; t <= 100; t += 10)
+        held.poll(true, t);
+    assert(!held.held_sample().valid);
+    for (unsigned t = 110; t <= 150; t += 10)
+        held.poll(false, t);
+    assert(held.held_sample().valid && !held.held_sample().held);
+    held.poll(true, 160);
+    assert(!held.held_sample().held && !held.held_sample().valid);
+    for (unsigned t = 170; t <= 200; t += 10)
+        held.poll(true, t);
+    assert(held.held_sample().valid && held.held_sample().held);
+    assert(held.held_sample().sample_ms == 200 && !trial.starts && !trial.stops);
+    held.poll(false, 210);
+    assert(!held.held_sample().held && !held.held_sample().valid);
+    for (unsigned t = 220; t <= 250; t += 10)
+        held.poll(false, t);
+    for (unsigned t = 260; t <= 300; t += 10)
+        held.poll(true, t);
+    assert(held.held_sample().valid && held.held_sample().held);
+    held.poll(true, 410); // A stalled poll task cannot retain a usable hold.
+    assert(!held.held_sample().valid);
+    held.poll(true, 420);
+    assert(!held.held_sample().valid);
+    // Exercise the actual debouncer and controller together across trial admission.
+    Controller probe({}, Settings{}, 1, Startup::CLEAN);
+    Local rig;
+    start_stop_button::Button physical({&rig, read, start, stop});
+    physical.reset(false, 0);
+    auto physical_tick = [&](uint64_t at, bool pressed, TrialMode request = TrialMode::NONE) {
+        const auto previous = probe.snapshot(at);
+        rig.view = {previous.state, previous.start_block, previous.state_version, previous.trial_mode};
+        physical.poll(pressed, at);
+        const auto key = physical.held_sample();
+        auto input = control_fixture::input(at);
+        input.trial_request = request;
+        input.local_button_held = key.held;
+        input.local_button_valid = key.valid;
+        input.local_button_sample_ms = key.sample_ms;
+        return probe.tick(input);
+    };
+    for (unsigned t = 10; t <= 40; t += 10)
+        physical_tick(t, false);
+    assert(physical_tick(50, true, TrialMode::DRY).state == State::UNCONFIGURED);
+    for (unsigned t = 60; t <= 90; t += 10)
+        physical_tick(t, true);
+    assert(physical_tick(100, true, TrialMode::DRY).state == State::UNCONFIGURED);
+    for (unsigned t = 110; t <= 150; t += 10)
+        physical_tick(t, false);
+    assert(physical_tick(160, false, TrialMode::DRY).state == State::TRIAL_READY);
+    for (unsigned t = 170; t <= 190; t += 10)
+        assert(physical_tick(t, true).state == State::TRIAL_READY);
+    auto started = physical_tick(200, true);
+    assert(started.state == State::PREHEAT && started.outputs.glow && !started.outputs.fuel);
+    auto held_probe = probe;
+    auto released = physical_tick(210, false);
+    assert(released.state == State::STOP_PURGE && !released.faults);
+    assert(!released.outputs.glow && !released.outputs.fuel && released.outputs.fan_request);
+    assert(!rig.starts && !rig.stops);
+    auto missed = control_fixture::input(200 + kLocalButtonFreshMs + 1);
+    missed.local_button_valid = missed.local_button_held = true;
+    missed.local_button_sample_ms = 200;
+    const auto stopped = held_probe.tick(missed);
+    assert(stopped.state == State::FAULT_PURGE && (stopped.faults & FAULT_LOCAL_CONTROLS));
+    assert(!stopped.outputs.fuel && !stopped.outputs.glow);
     web_protocol::Command command;
     const char *request = R"({"action":"START","command_id":"1"})";
     assert(web_protocol::parse_challenge_request(request, std::strlen(request), &command) ==
            web_protocol::ParseError::OK);
     assert(web_protocol::parse_command_request(request, std::strlen(request), &command) !=
            web_protocol::ParseError::OK);
+    web_protocol::Command trial_command{};
+    const char *dry = R"({"action":"TRIAL_DRY","command_id":"2"})";
+    const char *fuel = R"({"action":"TRIAL_FUEL","command_id":"2"})";
+    assert(web_protocol::parse_challenge_request(dry, std::strlen(dry), &trial_command) ==
+           web_protocol::ParseError::OK);
+    assert(trial_command.action == Action::TRIAL_DRY);
+    const auto dry_digest = trial_command.payload_digest;
+    assert(web_protocol::parse_challenge_request(fuel, std::strlen(fuel), &trial_command) ==
+           web_protocol::ParseError::OK);
+    assert(trial_command.action == Action::TRIAL_FUEL);
+    assert(!web_protocol::digest_equal(dry_digest, trial_command.payload_digest));
+    const char *extend_trial = R"({"action":"TRIAL_FUEL","command_id":"2","delay_ms":999999})";
+    assert(web_protocol::parse_challenge_request(extend_trial, std::strlen(extend_trial), &trial_command) ==
+           web_protocol::ParseError::UNKNOWN_FIELD);
     const char *duplicate = R"({"action":"START","action":"CALIBRATE","command_id":"1"})";
     assert(web_protocol::parse_challenge_request(duplicate, std::strlen(duplicate), &command) ==
            web_protocol::ParseError::DUPLICATE_FIELD);

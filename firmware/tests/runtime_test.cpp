@@ -95,6 +95,25 @@ int main() {
     assert(command_policy::block(eligibility, Action::START) == Block::ENVELOPE_MISSING);
     assert(command_policy::block(eligibility, Action::SETTINGS) == Block::NONE);
     assert(command_policy::block(eligibility, Action::OTA) == Block::NONE);
+    eligibility.control.trial_start_block = Block::NONE;
+    for (const auto trial : {Action::TRIAL_DRY, Action::TRIAL_FUEL}) {
+        assert(command_policy::starts_cycle(trial));
+        assert(command_policy::block(eligibility, trial) == Block::LOCAL_CONTROLS_UNAVAILABLE);
+    }
+    eligibility.local_controls_initialized = true;
+    for (const auto trial : {Action::TRIAL_DRY, Action::TRIAL_FUEL})
+        assert(command_policy::block(eligibility, trial) == Block::NONE);
+    eligibility.control.trial_start_block = Block::SENSOR_STALE;
+    assert(command_policy::block(eligibility, Action::TRIAL_FUEL) == Block::SENSOR_STALE);
+    eligibility.control.trial_mode = TrialMode::FUEL;
+    eligibility.control.state = State::TRIAL_READY;
+    for (const auto action : {Action::START, Action::TRIAL_DRY, Action::TRIAL_FUEL, Action::SETTINGS,
+                              Action::TIMER, Action::PROFILE, Action::OTA})
+        assert(command_policy::block(eligibility, action) == Block::BUSY);
+    assert(command_policy::wifi_password_block(eligibility) == Block::BUSY);
+    eligibility.control.trial_mode = TrialMode::NONE;
+    eligibility.control.state = State::UNCONFIGURED;
+    eligibility.local_controls_initialized = false;
     Snapshot maintenance{};
     maintenance.state = State::MAINTENANCE;
     assert(ota_control_safe(maintenance, {}, {}, 100));

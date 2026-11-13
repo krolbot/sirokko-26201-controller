@@ -12,7 +12,7 @@
     commandAllowed,
     stateText,
   } from "./lib/presentation.js";
-  import { isActiveSession } from "./lib/protocol.js";
+  import { isActiveSession, trialActive } from "./lib/protocol.js";
   import Timer from "./pages/Timer.svelte";
   import Control from "./pages/Control.svelte";
   import Diagnostics from "./pages/Diagnostics.svelte";
@@ -21,6 +21,7 @@
   import Update from "./pages/Update.svelte";
   import Regulation from "./pages/Regulation.svelte";
   import Heater from "./pages/Heater.svelte";
+  import Trial from "./pages/Trial.svelte";
   import { heaterDraft } from "./lib/heater.js";
   import { Measurements } from "./lib/measurements.js";
 
@@ -55,6 +56,37 @@
   const snapshot = $derived(ui.snapshot);
   const measurements = new Measurements();
   let recording = $state(measurements.status());
+  const trialActions = ["TRIAL_DRY", "TRIAL_FUEL"];
+
+  async function startTrial(mode) {
+    const action = mode === "DRY" ? "TRIAL_DRY" : "TRIAL_FUEL";
+    if (!connectionReady(ui) || !commandAllowed(snapshot, action)) return;
+    if (!measurements.startTrial(snapshot, ui.link === "online", mode)) {
+      notify(
+        "error",
+        "Завершите текущую запись и скачайте CSV перед новой пробой",
+      );
+      return;
+    }
+    recording = measurements.status();
+    try {
+      const response = await session.submit(action);
+      if (
+        [
+          "AUTH_REQUIRED",
+          "OFFLINE",
+          "BUSY",
+          "NO_SNAPSHOT",
+          "BLOCKED",
+          "STALE_SNAPSHOT",
+          "REJECTED",
+        ].includes(response.status)
+      )
+        measurements.cancelTrialRequest();
+    } finally {
+      recording = measurements.status();
+    }
+  }
 
   function startRecording() {
     measurements.start(snapshot, ui.link === "online");
@@ -85,12 +117,20 @@
   }
 
   const stopVisible = $derived(
-    needsStop(snapshot) || ui.pending?.action === "START",
+    needsStop(snapshot) ||
+      ["START", ...trialActions].includes(ui.pending?.action) ||
+      trialActions.includes(ui.requestInFlight),
   );
   const stopLabel = $derived(
-    ui.pending?.action === "START" && !needsStop(snapshot)
-      ? "Отменить запуск"
-      : "Остановить нагрев",
+    trialActive(snapshot) ||
+      trialActions.includes(ui.pending?.action) ||
+      trialActions.includes(ui.requestInFlight)
+      ? snapshot?.state?.code === "TRIAL_READY" || !needsStop(snapshot)
+        ? "Отменить пробу"
+        : "Остановить пробу"
+      : ui.pending?.action === "START" && !needsStop(snapshot)
+        ? "Отменить запуск"
+        : "Остановить нагрев",
   );
   const authenticated = $derived(ui.auth === "authenticated");
   function notify(kind, text) {
@@ -309,7 +349,9 @@
           class="back-link"
           href="#/settings">← Настройки</a
         >{/if}
-      {#if recording.active && route !== "diagnostics"}<p class="caption">
+      {#if recording.active && !["diagnostics", "trial"].includes(route)}<p
+          class="caption"
+        >
           <a href="#/diagnostics"
             >Запись измерений · {recording.online
               ? "Идёт запись"
@@ -339,6 +381,15 @@
           {session}
           draft={heater}
           {notify}
+        />
+      {:else if route === "trial"}<Trial
+          {ui}
+          api={session.api}
+          {recording}
+          {startTrial}
+          {downloadMeasurements}
+          {addMeasurementNote}
+          {stopRecording}
         />
       {:else if route === "update"}<Update {ui} {session} {notify} />
       {:else if route === "regulation"}<Regulation

@@ -4,12 +4,15 @@ import {
   hasFault,
   isHexString,
   isActiveSession,
+  trialActive,
   makeCommandId,
 } from "./protocol.js";
 
 const CONFIRMATION_TIMEOUT_MS = 5_000;
 const ACTIONS = new Set([
   "START",
+  "TRIAL_DRY",
+  "TRIAL_FUEL",
   "RESET_FAULT",
   "SETTINGS",
   "TIMER",
@@ -277,8 +280,8 @@ export class ControllerSession {
       pending = null;
       requestInFlight = null;
     } else if (
-      isActiveSession(previous) &&
-      ["STOP_PURGE", "IDLE"].includes(snapshot.state.code) &&
+      (isActiveSession(previous) || trialActive(previous)) &&
+      ["STOP_PURGE", "IDLE", "UNCONFIGURED"].includes(snapshot.state.code) &&
       (pending || requestInFlight) &&
       pending?.action !== "STOP" &&
       requestInFlight !== "STOP"
@@ -295,6 +298,8 @@ export class ControllerSession {
         "ok",
         {
           START: "Запуск отопителя начат",
+          TRIAL_DRY: "Проба подготовлена. Удерживайте KEY0 на панели",
+          TRIAL_FUEL: "Проба подготовлена. Удерживайте KEY0 на панели",
           STOP: "Остановка отопителя подтверждена",
           RESET_FAULT: "Авария сброшена",
           SETTINGS: "Настройки применены",

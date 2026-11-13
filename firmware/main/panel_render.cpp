@@ -478,6 +478,10 @@ void draw_block(Canvas &c, const Frame &f) {
         title = "Пуск заблокирован";
         detail = "Ошибка драйвера экрана/кнопки";
         break;
+    case sirokko::Block::BUTTON_HELD:
+        title = "Отпустите KEY0";
+        detail = "Затем подготовьте пробный запуск";
+        break;
     case sirokko::Block::STALE_COMMAND:
         title = "Команда устарела";
         detail = "Повторите действие";
@@ -502,9 +506,46 @@ void draw_block(Canvas &c, const Frame &f) {
     }
     message(c, f, "Запуск недоступен", title, detail, Icon::Settings, kOrange, kWarm);
 }
+void draw_trial(Canvas &c, const Frame &f) {
+    const auto &control = f.view.control;
+    const bool armed = control.state == sirokko::State::TRIAL_READY;
+    c.text(160, 28, "Пробный запуск", 21, kInk, Align::Center, 500);
+    c.text(160, 51, control.trial_mode == sirokko::TrialMode::FUEL ? "С топливом" : "Без топлива", 15,
+           kOrange, Align::Center);
+    const char *stage = armed                                      ? "Удерживайте KEY0"
+                        : control.state == sirokko::State::PREHEAT ? "Накал свечи"
+                                                                   : "Запись прогрева";
+    c.text(160, 82, stage, 21, kInk, Align::Center);
+    const sirokko::SensorSample *samples[] = {&f.view.sensors.exhaust, &f.view.sensors.air};
+    const char *labels[] = {"Выхлоп", "Нагретый воздух"};
+    for (int i = 0; i < 2; ++i) {
+        const float y = static_cast<float>(118 + i * 30);
+        char value[40]{};
+        if (sirokko::thermocouple_fresh(*samples[i], f.at_ms))
+            format_temperature(value, sizeof(value), samples[i]->milli_c);
+        else
+            std::snprintf(value, sizeof(value), "—");
+        c.text(20, y, labels[i], 16, kSecond);
+        c.text(300, y, value, 20, kInk, Align::Right);
+    }
+    char outputs[96]{};
+    std::snprintf(outputs, sizeof(outputs), "Свеча %s, топливо %s", control.outputs.glow ? "вкл" : "выкл",
+                  control.outputs.fuel ? "вкл" : "выкл");
+    c.text(160, 179, outputs, 14, kSecond, Align::Center);
+    char duration[40]{};
+    const auto seconds = (control.trial_remaining_ms + 999) / 1000;
+    std::snprintf(duration, sizeof(duration), "Осталось %02llu:%02llu",
+                  static_cast<unsigned long long>(seconds / 60),
+                  static_cast<unsigned long long>(seconds % 60));
+    c.text(160, 202, duration, 18, kInk, Align::Center);
+    footer(c, armed ? "Отмена — в веб-пульте" : "Отпустите KEY0 — остановка");
+}
 void draw(Canvas &c, const Frame &f) {
     c.clear(0xffffff);
     switch (f.scene) {
+    case Scene::Trial:
+        draw_trial(c, f);
+        break;
     case Scene::Heat:
     case Scene::TimerRunning:
     case Scene::Above:
@@ -645,7 +686,13 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::FaultLatched;
     if (v.control.state == State::STOP_PURGE)
         return Scene::Cooldown;
+    if (v.control.trial_mode != sirokko::TrialMode::NONE &&
+        (v.control.state == State::TRIAL_READY || v.control.state == State::PREHEAT ||
+         v.control.state == State::IGNITION))
+        return Scene::Trial;
     switch (v.control.state) {
+    case State::TRIAL_READY:
+        return Scene::Trial;
     case State::RECOVERY_PURGE:
         return Scene::Recovery;
     case State::PREHEAT:
@@ -713,7 +760,7 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
 }
 bool urgent(Scene s) {
     return s == Scene::FaultCooling || s == Scene::FaultLatched || s == Scene::Cooldown ||
-           s == Scene::NoData || s == Scene::SensorMissing || s == Scene::Recovery;
+           s == Scene::NoData || s == Scene::SensorMissing || s == Scene::Recovery || s == Scene::Trial;
 }
 void Renderer::reset() {
     *this = Renderer{};

@@ -46,6 +46,7 @@ enum class Scene : uint8_t {
     Queued,
     Rejected,
     CommandRejected,
+    Trial,
 };
 
 Scene select_scene(const panel_ui::Screen &screen, const panel_ui::View &view, uint64_t now_ms);

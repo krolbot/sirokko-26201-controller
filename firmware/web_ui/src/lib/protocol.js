@@ -33,8 +33,14 @@ export function makeCommandId(cryptoApi = globalThis.crypto) {
   return [...words].map((word) => word.toString(16).padStart(8, "0")).join("");
 }
 
+export function trialActive(snapshot) {
+  return ["DRY", "FUEL"].includes(snapshot?.trial?.mode);
+}
+
 export function isActiveSession(snapshot) {
-  return ACTIVE_SESSION_STATES.has(snapshot?.state?.code);
+  return (
+    !trialActive(snapshot) && ACTIVE_SESSION_STATES.has(snapshot?.state?.code)
+  );
 }
 
 export function hasFault(snapshot) {
@@ -239,6 +245,14 @@ export function commandMatchesSnapshot(pending, snapshot) {
       return settingsChangesMatch(baseline, payload.settings, snapshot);
     case "START":
       return isActiveSession(snapshot) && snapshot.run_id !== baseline.run_id;
+    case "TRIAL_DRY":
+    case "TRIAL_FUEL":
+      return (
+        snapshot.trial?.mode === (action === "TRIAL_DRY" ? "DRY" : "FUEL") &&
+        ["TRIAL_READY", "PREHEAT", "IGNITION"].includes(snapshot.state?.code) &&
+        (snapshot.state.code === "TRIAL_READY" ||
+          (snapshot.run_id !== "0" && snapshot.run_id !== baseline.run_id))
+      );
     case "TIMER":
       return (
         isActiveSession(snapshot) &&
@@ -251,7 +265,10 @@ export function commandMatchesSnapshot(pending, snapshot) {
         deepEqual(payload.envelope, snapshot.envelope?.parameters)
       );
     case "RESET_FAULT":
-      return snapshot.state?.code === "IDLE" && !hasFault(snapshot);
+      return (
+        ["IDLE", "UNCONFIGURED"].includes(snapshot.state?.code) &&
+        !hasFault(snapshot)
+      );
 
     case "STOP":
       return (
