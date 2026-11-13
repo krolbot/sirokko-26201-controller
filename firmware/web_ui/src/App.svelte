@@ -22,8 +22,9 @@
   import Regulation from "./pages/Regulation.svelte";
   import Heater from "./pages/Heater.svelte";
   import Trial from "./pages/Trial.svelte";
-  import { heaterDraft } from "./lib/heater.js";
+  import { heaterDraft, heaterValidation } from "./lib/heater.js";
   import { Measurements } from "./lib/measurements.js";
+  import { trialSuggestion } from "./lib/trial-suggestion.js";
 
   let route = $state(routeFromHash(window.location.hash));
   const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -56,6 +57,67 @@
   const snapshot = $derived(ui.snapshot);
   const measurements = new Measurements();
   let recording = $state(measurements.status());
+  let suggestion = $state({
+    ready: false,
+    reason: "Выберите нижний ШИМ после проверки горения.",
+  });
+  let trialSave = $state(null);
+  const trialSaved = $derived(
+    Boolean(
+      trialSave &&
+      snapshot?.boot_id === trialSave.boot &&
+      snapshot.envelope.parameters.minimum_speed_code === trialSave.pwm &&
+      snapshot.envelope.parameters.minimum_run_exhaust_milli_c ===
+        trialSave.temperature,
+    ),
+  );
+
+  function selectTrialPwm() {
+    if (!connectionReady(ui) || ui.pending || ui.requestInFlight) return;
+    if (measurements.selectPwm(snapshot)) {
+      recording = measurements.status();
+      suggestion = trialSuggestion(measurements, snapshot);
+    }
+  }
+  function discardTrialRecording() {
+    if (trialActive(snapshot) || trialPending || !measurements.discard())
+      return;
+    trialSave = null;
+    recording = measurements.status();
+    suggestion = trialSuggestion(measurements, snapshot);
+  }
+  async function saveTrialProfile() {
+    const proposal = trialSuggestion(measurements, snapshot);
+    if (
+      !proposal.ready ||
+      !proposal.complete ||
+      !connectionReady(ui) ||
+      !commandAllowed(snapshot, "PROFILE")
+    )
+      return;
+    const value = heaterDraft(snapshot.envelope);
+    value.minimum_speed_code = proposal.pwm;
+    value.minimum_run_exhaust_milli_c = proposal.temperatureC;
+    const validated = heaterValidation(value, snapshot.envelope.limits);
+    if (!validated.valid) {
+      notify("error", Object.values(validated.errors).join(". "));
+      return;
+    }
+    trialSave = {
+      boot: snapshot.boot_id,
+      pwm: proposal.pwm,
+      temperature: proposal.temperatureC * 1000,
+    };
+    try {
+      const response = await session.submit("PROFILE", {
+        envelope: validated.parameters,
+      });
+      if (response.status !== "QUEUED") trialSave = null;
+    } catch (error) {
+      trialSave = null;
+      notify("error", error.message);
+    }
+  }
   const trialPending = $derived(
     ui.pending?.action === "TRIAL_START" ||
       ui.requestInFlight === "TRIAL_START",
@@ -67,11 +129,12 @@
     if (!measurements.startTrial(snapshot, ui.link === "online")) {
       notify(
         "error",
-        "Завершите текущую запись и скачайте CSV перед новым запуском",
+        "Завершите текущую запись или удалите предыдущую перед новым запуском",
       );
       return;
     }
     recording = measurements.status();
+    trialSave = null;
     try {
       const response = await session.submit(action);
       if (
@@ -144,6 +207,7 @@
     const current = next.snapshot;
     measurements.observe(current, next.link === "online");
     recording = measurements.status();
+    if (current) suggestion = trialSuggestion(measurements, current);
     if (next.auth === "anonymous") {
       settings.clear();
       regulation.clear();
@@ -388,6 +452,11 @@
           api={session.api}
           {recording}
           {startTrial}
+          {suggestion}
+          {trialSaved}
+          {selectTrialPwm}
+          {saveTrialProfile}
+          {discardTrialRecording}
           {downloadMeasurements}
           {addMeasurementNote}
           {stopRecording}

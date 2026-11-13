@@ -1,5 +1,5 @@
 const channels = ["exhaust", "air", "room"];
-const columns = [
+export const columns = [
   "time_utc",
   "event",
   "note",
@@ -43,6 +43,7 @@ export class Measurements {
     this.trialSeen = false;
     this.lastEventMs = -1;
     this.lastEventMask = 0;
+    this.selectedPwm = null;
   }
 
   get unsaved() {
@@ -57,6 +58,7 @@ export class Measurements {
       online: this.online,
       reason: this.reason,
       elapsedMs: this.samples ? this.lastUptime - this.firstUptime : 0,
+      selectedPwm: this.selectedPwm,
     };
   }
 
@@ -64,6 +66,7 @@ export class Measurements {
     if (this.active || this.unsaved || !online || !this.valid(snapshot))
       return false;
     this.rows = [];
+    this.selectedPwm = null;
     this.exportedRows = this.samples = 0;
     this.reason = "";
     this.active = this.online = true;
@@ -263,5 +266,31 @@ export class Measurements {
 
   markExported() {
     this.exportedRows = this.rows.length;
+  }
+
+  discard() {
+    if (this.active) return false;
+    this.rows = [];
+    this.samples = this.exportedRows = 0;
+    this.selectedPwm = null;
+    this.reason = "";
+    return true;
+  }
+
+  selectPwm(snapshot) {
+    if (
+      !this.active ||
+      !this.online ||
+      !snapshot?.trial?.active ||
+      snapshot.state?.code !== "RUN" ||
+      snapshot.boot_id !== this.bootId ||
+      snapshot.faults ||
+      !snapshot.outputs?.fuel ||
+      snapshot.outputs.glow
+    )
+      return false;
+    this.selectedPwm = snapshot.outputs.speed_code;
+    this.note(`Выбран нижний ШИМ: ${this.selectedPwm}`);
+    return true;
   }
 }

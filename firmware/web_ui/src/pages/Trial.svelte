@@ -21,6 +21,11 @@
     downloadMeasurements,
     addMeasurementNote,
     stopRecording,
+    suggestion,
+    trialSaved,
+    selectTrialPwm,
+    saveTrialProfile,
+    discardTrialRecording,
   } = $props();
   const snapshot = $derived(ui.snapshot);
   const active = $derived(trialActive(snapshot));
@@ -87,7 +92,8 @@
 
 <div class="page-heading"><h1>Первый запуск</h1></div>
 <p class="intro">
-  Запуск для настройки отопителя. Температуры и ШИМ записываются в CSV.
+  Выберите нижний ШИМ при устойчивом горении. По измерениям предложим
+  температуру отключения топлива.
 </p>
 {#if active}
   <section class="surface info-panel section trial-process" aria-live="polite">
@@ -137,7 +143,7 @@
           .cooling_exhaust_milli_c / 1000} °C.
       </p>{/if}
   </section>
-{:else}
+{:else if !recording.selectedPwm}
   <section class="surface info-panel section">
     <h2>Порядок запуска</h2>
     <p class="caption">
@@ -162,10 +168,11 @@
         </p>{/if}
     </div>
     {#if recording.active}<p class="caption">
-        Перед новым запуском завершите текущую запись и скачайте CSV.
+        Перед новым запуском завершите текущую запись.
       </p>
     {:else if recording.unsaved}<p class="caption">
-        Скачайте CSV предыдущей записи перед новым запуском.
+        Сначала сохраните настройки или удалите предыдущую запись. Скачивать CSV
+        необязательно.
       </p>{/if}
     {#if pending}<p class="caption" role="status">
         Ждём подтверждения контроллера…
@@ -192,7 +199,7 @@
     />
     <p class="caption">
       Текущий ШИМ: {snapshot.outputs.speed_code} / {pwmMaximum}. Изменения и
-      температуры попадают в CSV.
+      температуры записываются автоматически.
     </p>
     {#if externalPwmChange}<p class="caption" role="status">
         ШИМ изменён на другом пульте. Показано текущее значение.
@@ -206,6 +213,59 @@
       onclick={() => submit("TRIAL_PWM", { speed_code: pwm.value.speed_code })}
       >Применить ШИМ</button
     >
+    <button
+      class="secondary select-pwm"
+      disabled={!ready ||
+        Boolean(ui.pending || ui.requestInFlight) ||
+        pwm.dirty ||
+        !recording.active ||
+        !recording.online}
+      onclick={selectTrialPwm}>Выбрать этот ШИМ как нижний</button
+    >
+    <p class="caption">
+      Выбирайте после проверки устойчивого горения. Настройки сохраняются после
+      остановки и охлаждения.
+    </p>
+  </section>
+{/if}
+{#if recording.selectedPwm}
+  <section class="surface info-panel section" aria-live="polite">
+    <h2>{trialSaved ? "Настройки сохранены" : "Настройки по измерениям"}</h2>
+    <p>Не снижать ШИМ ниже: <strong>{recording.selectedPwm}</strong></p>
+    {#if trialSaved}
+      <p>
+        Отключать топливо при выхлопе ниже: <strong
+          >{snapshot.envelope.parameters.minimum_run_exhaust_milli_c / 1000} °C</strong
+        >
+      </p>
+      <a class="secondary" href="#/control">Перейти к отоплению</a>
+    {:else if suggestion.ready}
+      <p>
+        Отключать топливо при выхлопе ниже: <strong
+          >{suggestion.temperatureC} °C</strong
+        >
+      </p>
+      <p class="caption">
+        Начальное предложение — между {suggestion.referenceC.toFixed(1)} °C (до розжига
+        или завершение охлаждения) и {suggestion.minimumC.toFixed(1)} °C (минимум
+        при подтверждённом горении в выбранном диапазоне ШИМ).
+      </p>
+      <p class="caption">
+        Проверьте при следующем холодном запуске. Температура выхлопа реагирует
+        на погасание с задержкой.
+      </p>
+      <button
+        class="primary"
+        disabled={!ready ||
+          !suggestion.complete ||
+          !commandAllowed(snapshot, "PROFILE") ||
+          Boolean(ui.pending || ui.requestInFlight)}
+        onclick={saveTrialProfile}>Сохранить ШИМ и температуру</button
+      >
+      {#if !suggestion.complete}<p class="caption">
+          Сохранение будет доступно после остановки и охлаждения.
+        </p>{/if}
+    {:else}<p class="caption">{suggestion.reason}</p>{/if}
   </section>
 {/if}
 <div class="readings">
@@ -249,13 +309,26 @@
   />
 {:else}<p class="caption">
     Запись начнётся при подготовке запуска и завершится после охлаждения.
-    Держите страницу открытой; CSV останется доступен до её закрытия.
+    Держите страницу открытой до сохранения настроек. Скачивать CSV
+    необязательно.
   </p>{/if}
+{#if recording.samples && !recording.active && !active && !pending}
+  <button class="secondary" onclick={discardTrialRecording}
+    >Удалить запись</button
+  >
+  <p class="caption">
+    Освободит страницу для нового запуска. Сохранённые настройки останутся в
+    контроллере.
+  </p>
+{/if}
 <a class="secondary" href="#/heater">Параметры отопителя</a>
 
 <style>
   .confirm-ignition {
     margin-top: 16px;
+  }
+  .select-pwm {
+    margin-top: 12px;
   }
   .pwm-value {
     font-size: 28px;
