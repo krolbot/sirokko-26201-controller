@@ -57,6 +57,25 @@ test("offline, pending and reboot block normal commands", () => {
   assert.equal(routeFromHash("#/calibration"), "calibration");
   assert.equal(routeFromHash("#/unknown"), "control");
 });
+test("calibration can be cancelled until commit, and active heat always exposes STOP", () => {
+  const snapshot = {
+    state: { code: "STOP_PURGE" },
+    outputs: { fan_request: true, fuel: false, glow: false },
+    commissioning: { active: true, phase: { code: "COMPLETE_PENDING_STOP" } },
+  };
+  assert.equal(needsStop(snapshot), true);
+  snapshot.state.code = "IDLE";
+  snapshot.outputs.fan_request = false;
+  snapshot.commissioning.phase.code = "PERSIST_STAGING";
+  assert.equal(needsStop(snapshot), true);
+  snapshot.commissioning.phase.code = "PERSIST_COMMITTING";
+  assert.equal(needsStop(snapshot), false);
+  snapshot.outputs.fuel = true;
+  assert.equal(needsStop(snapshot), true);
+  snapshot.outputs.fuel = false;
+  snapshot.outputs.glow = true;
+  assert.equal(needsStop(snapshot), true);
+});
 test("blocked action never requests a grant", async () => {
   let calls = 0;
   const session = new ControllerSession({

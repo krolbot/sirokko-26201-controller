@@ -79,10 +79,8 @@ bool calibration_timing(const SafetyEnvelope &profile, const Settings &settings,
         1U;
 
     uint64_t fixed_phases_ms = 0;
-    if (!add_duration(&fixed_phases_ms, profile.prepurge_ms) ||
-        !add_duration(&fixed_phases_ms, profile.preheat_ms) ||
-        !add_duration(&fixed_phases_ms, profile.ignition_ms) ||
-        !add_duration(&fixed_phases_ms, profile.verify_ms) ||
+    if (!add_duration(&fixed_phases_ms, profile.preheat_ms) ||
+        !add_duration(&fixed_phases_ms, profile.ignition_timeout_ms) ||
         !add_duration(&fixed_phases_ms, profile.postpurge_ms))
         return false;
 
@@ -138,12 +136,15 @@ Block commissioning_configuration_block(const SafetyEnvelope &profile, const Set
         return Block::ENVELOPE_INVALID;
     if (!valid_safety_envelope(profile))
         return Block::ENVELOPE_MISSING;
-    if (profile.exploration_floor_code == 0)
-        return Block::ENVELOPE_INVALID;
-
     CalibrationTiming timing{};
-    if (!calibration_timing(profile, settings, &timing) || !timing.fits)
+    if (!calibration_timing(profile, settings, &timing))
         return Block::ENVELOPE_INVALID;
+    if (!timing.fits) {
+        auto fastest = settings;
+        fastest.slew_up_per_s = fastest.slew_down_per_s = kMaximumSlewPerS;
+        return calibration_timing(profile, fastest, &timing) && timing.fits ? Block::CALIBRATION_TOO_SLOW
+                                                                            : Block::ENVELOPE_INVALID;
+    }
     return Block::NONE;
 }
 
@@ -186,7 +187,6 @@ void Controller::start_commissioning_run(uint64_t now_ms) {
     c.maximum_slew_up_codes_per_s = span * settings_.slew_up_per_s;
     c.maximum_slew_down_codes_per_s = span * settings_.slew_down_per_s;
     commissioning_config_ = c;
-    commissioning_control_ms_ = now_ms;
     commissioning_logged_phase_ = calibration::Phase::IDLE;
     if (!calibrator_.start(c, now_ms))
         latch_fault(FAULT_COMMISSIONING, now_ms);
@@ -197,6 +197,7 @@ void Controller::cancel_commissioning(calibration::Reason reason, uint64_t now_m
         (!commissioning_requested_ && !model_candidate_.valid && !calibrator_.active()))
         return;
     calibrator_.cancel(reason);
+    commissioning_finished_ms_ = now_ms;
     commissioning_requested_ = false;
     model_candidate_ = {};
     model_saved_ = false;
@@ -246,6 +247,7 @@ void Controller::run_commissioning(uint64_t now_ms, const Sensors &sensors) {
             begin_stop(now_ms, true);
         } else {
             // Keep the calibrator's exact failure reason, not a generic cancel reason.
+            commissioning_finished_ms_ = now_ms;
             commissioning_requested_ = false;
             record("CALIBRATION_REJECTED", now_ms);
             latch_fault(FAULT_COMMISSIONING, now_ms);
@@ -257,7 +259,6 @@ void Controller::run_commissioning(uint64_t now_ms, const Sensors &sensors) {
     const auto command = regulator_.tick(now_ms, 20.0, 20.0, false, target, settings_.slew_up_per_s,
                                          settings_.slew_down_per_s);
     run_speed_code_ = commissioning_config_.floor_code + command.fraction * span;
-    commissioning_control_ms_ = now_ms;
 }
 
 bool Controller::pending_learned_model(LearnedOperatingModel *range) const {
@@ -299,6 +300,7 @@ bool Controller::complete_model_storage(uint64_t tx_id, bool verified) {
         return false;
 
     const bool accepted = verified && install_learned_model(model_candidate_);
+    commissioning_finished_ms_ = last_tick_ms_;
     model_candidate_ = {};
     commissioning_requested_ = false;
     model_storage_id_ = 0;
@@ -319,10 +321,12 @@ ModelStorageAbort Controller::abort_model_storage() {
         return ModelStorageAbort::COMMIT_IN_PROGRESS;
     if (!model_candidate_.valid)
         return ModelStorageAbort::NO_CANDIDATE;
+    commissioning_finished_ms_ = last_tick_ms_;
     model_candidate_ = {};
     commissioning_requested_ = false;
     model_storage_id_ = 0;
     model_saved_ = false;
+    model_storage_unconfirmed_ = true;
     calibrator_.cancel(calibration::Reason::EXTERNAL_CANCEL);
     ++state_version_;
     if (state_version_ == 0)

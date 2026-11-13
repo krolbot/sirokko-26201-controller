@@ -588,8 +588,8 @@ Snapshot Calibrator::tick(const Observation &observation) {
         return snapshot(observation.now_ms);
     }
 
-    record_sample_if_due(observation);
-    if (!active())
+    const bool new_sample = record_sample_if_due(observation);
+    if (!active() || !new_sample)
         return snapshot(observation.now_ms);
     const uint16_t required_samples =
         static_cast<uint16_t>(config_.samples_per_window) * kRequiredAnalysisWindows;
@@ -672,7 +672,8 @@ Snapshot Calibrator::tick(const Observation &observation) {
 }
 
 void Calibrator::cancel(Reason reason) {
-    if (!active() && phase_ != Phase::COMPLETE_PENDING_STOP)
+    // The controller can cancel during ignition, before the first analysis phase.
+    if (!active() && phase_ != Phase::COMPLETE_PENDING_STOP && phase_ != Phase::IDLE)
         return;
     if (reason == Reason::NONE || reason == Reason::COMPLETE) {
         reason = Reason::EXTERNAL_CANCEL;

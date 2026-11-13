@@ -7,8 +7,6 @@ struct Entry {
     const char *name;
 };
 inline constexpr Entry commands[] = {
-    {sirokko::Action::DEBUG_ENTER, "DEBUG_ENTER"},
-    {sirokko::Action::DEBUG_SET, "DEBUG_SET"},
     {sirokko::Action::START, "START"},
     {sirokko::Action::SETTINGS, "SETTINGS"},
     {sirokko::Action::TIMER, "TIMER"},
@@ -47,31 +45,19 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
     if ((action == Action::START || action == Action::CALIBRATE) && view.envelope.provisioned &&
         !view.local_controls_initialized)
         return Block::LOCAL_CONTROLS_UNAVAILABLE;
-    if ((action == Action::DEBUG_ENTER || action == Action::DEBUG_SET) && !view.local_controls_initialized)
-        return Block::LOCAL_CONTROLS_UNAVAILABLE;
     switch (action) {
-    case Action::DEBUG_ENTER:
-        if (control.faults)
-            return Block::FAULT_LATCHED;
-        return (control.state == State::IDLE || control.state == State::UNCONFIGURED) &&
-                       !control.commissioning.active
-                   ? Block::NONE
-                   : Block::BUSY;
-    case Action::DEBUG_SET:
-        return control.state == State::DEBUG && !control.faults ? Block::NONE : Block::BUSY;
     case Action::START:
         return control.start_block;
     case Action::CALIBRATE:
         return control.commissioning.block;
     case Action::SETTINGS:
-        return control.state == State::DEBUG || control.state == State::MAINTENANCE ||
-                       control.commissioning.active || control.combustion.phase == combustion::Phase::SUSPECT
+        return control.state == State::MAINTENANCE || control.commissioning.active ||
+                       control.combustion.phase == combustion::Phase::SUSPECT
                    ? Block::BUSY
                    : Block::NONE;
     case Action::TIMER:
         return control.run_id && !control.commissioning.active &&
-                       (control.state == State::PREPURGE || control.state == State::PREHEAT ||
-                        control.state == State::IGNITION || control.state == State::VERIFY ||
+                       (control.state == State::PREHEAT || control.state == State::IGNITION ||
                         control.state == State::RUN)
                    ? Block::NONE
                    : Block::BUSY;
@@ -92,15 +78,13 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
     case Action::OTA:
         if (control.faults)
             return Block::FAULT_LATCHED;
-        if (!view.envelope.provisioned && !debug_heat_configured(view.envelope))
+        if (!view.envelope.provisioned)
             return control.state == State::UNCONFIGURED ? Block::NONE : Block::BUSY;
         if ((control.state != State::IDLE && control.state != State::UNCONFIGURED) ||
             control.commissioning.active)
             return Block::BUSY;
         for (const auto *sample : {&view.sensors.air, &view.sensors.exhaust}) {
-            if (!sample->valid || sample->status || sample->sample_ms > view.now_ms ||
-                sample->milli_c < kThermocoupleMinimumMilliC ||
-                sample->milli_c >= kProcessMeasurementCeilingMilliC)
+            if (!thermocouple_valid(*sample) || sample->sample_ms > view.now_ms)
                 return Block::SENSOR_INVALID;
             if (view.now_ms - sample->sample_ms > kSensorStaleMs)
                 return Block::SENSOR_STALE;

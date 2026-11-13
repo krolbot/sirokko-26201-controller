@@ -3,7 +3,10 @@ export function commandAllowed(snapshot, action) {
   return snapshot?.commands?.[action]?.allowed === true;
 }
 export function commandReason(snapshot, action) {
-  return snapshot?.commands?.[action]?.reason || "Действие недоступно";
+  return (
+    snapshot?.commands?.[action]?.reason ||
+    "Контроллер не разрешает эту команду"
+  );
 }
 export function connectionReady(ui) {
   return (
@@ -18,18 +21,45 @@ export function needsStop(snapshot) {
   return (
     snapshot?.outputs?.fuel === true ||
     snapshot?.outputs?.glow === true ||
-    snapshot?.commissioning?.active === true ||
-    ["PREPURGE", "PREHEAT", "IGNITION", "VERIFY", "RUN", "DEBUG"].includes(
-      snapshot?.state?.code,
-    )
+    (snapshot?.commissioning?.active === true &&
+      snapshot.commissioning.phase?.code !== "PERSIST_COMMITTING") ||
+    ["PREHEAT", "IGNITION", "RUN"].includes(snapshot?.state?.code)
   );
 }
 export function stateText(snapshot) {
-  return snapshot?.state?.ru || "Нет данных";
+  return snapshot?.state?.ru || "Нет состояния отопителя";
 }
-export function calibrationText(snapshot) {
-  if (snapshot.commissioning?.active) return "Выполняется";
-  return snapshot.learned_model?.valid ? "Выполнена" : "Не выполнена";
+export function calibrationStatus(snapshot) {
+  const calibration = snapshot?.commissioning;
+  if (calibration?.active) {
+    const title = snapshot.purge?.active
+      ? "Охлаждение после калибровки"
+      : ["PREHEAT", "IGNITION"].includes(snapshot.state?.code)
+        ? stateText(snapshot)
+        : snapshot.state?.code === "IDLE" &&
+            calibration.phase?.code === "COMPLETE_PENDING_STOP"
+          ? "Ожидание сохранения калибровки"
+          : calibration.phase?.ru || "Калибровка диапазона ШИМ";
+    return {
+      title,
+      summary: "Выполняется",
+      icon: snapshot.purge?.active ? "fan" : "heat",
+    };
+  }
+  const interrupted = {
+    FAILED: ["Калибровка не завершена", "Не завершена"],
+    CANCELLED: ["Калибровка отменена", "Отменена"],
+    PERSIST_FAILED: ["Калибровка не сохранена", "Не сохранена"],
+  }[calibration?.phase?.code];
+  if (interrupted)
+    return { title: interrupted[0], summary: interrupted[1], icon: "heat" };
+  return snapshot?.learned_model?.valid
+    ? { title: "Калибровка выполнена", summary: "Выполнена", icon: "check" }
+    : {
+        title: "Калибровка диапазона ШИМ",
+        summary: "Не выполнена",
+        icon: "heat",
+      };
 }
 export function temperature(sensor) {
   if (!sensor?.valid || sensor.status) return "Нет показаний";
@@ -42,9 +72,8 @@ export const routes = {
   diagnostics: { title: "Состояние", section: "diagnostics" },
   settings: { title: "Настройки", section: "settings" },
   wifi: { title: "Wi-Fi", section: "settings" },
-  regulation: { title: "Плавность", section: "settings" },
+  regulation: { title: "Темп изменения ШИМ", section: "settings" },
   calibration: { title: "Калибровка", section: "settings" },
-  debug: { title: "Режим отладки", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
   update: { title: "Обновление", section: "settings" },
 };
@@ -58,6 +87,8 @@ export function blockedActionLink(snapshot, action) {
     case "ENVELOPE_MISSING":
     case "ENVELOPE_INVALID":
       return { href: "#/heater", label: "Настроить отопитель" };
+    case "CALIBRATION_TOO_SLOW":
+      return { href: "#/regulation", label: "Настроить темп ШИМ" };
     case "MODEL_UNAVAILABLE":
       return { href: "#/calibration", label: "Перейти к калибровке" };
     case "SENSOR_INVALID":
@@ -85,17 +116,12 @@ export function errorText(error, fallback, snapshot) {
   );
   if (blocked) return blocked.reason;
   switch (code) {
-    case "DEBUG_HEAT":
-      return (
-        snapshot?.debug?.heat_reason ||
-        "Проверьте тепловые ограничения и показания термопар"
-      );
     case "WIFI_BUSY":
       return "Смена пароля доступна после остановки и охлаждения отопителя";
     case "STORAGE":
       return "Не удалось сохранить данные в памяти контроллера";
     case "BUSY":
-      return "Контроллер выполняет другую операцию";
+      return "Команда недоступна на текущем этапе работы";
     case "RATE_LIMIT":
     case "SESSIONS_FULL":
       return "Контроллер занят. Повторите позже";

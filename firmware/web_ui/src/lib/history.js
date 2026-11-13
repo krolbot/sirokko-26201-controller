@@ -87,10 +87,10 @@ export function historyPlot(points, channel, width = 608) {
 export function combustionText(phase) {
   return (
     {
-      LEARNING: "Изучение текущего режима",
-      WATCHING: "Температуры установились",
-      SUSPECT: "Проверка падения температуры",
-      LOST: "Обнаружено ослабление горения",
+      LEARNING: "Сбор температур для контроля падения выхлопа",
+      WATCHING: "Контроль температуры выхлопа",
+      SUSPECT: "Проверка падения температуры выхлопа",
+      LOST: "Выхлоп устойчиво остывает при неизменном ШИМ",
     }[phase] || ""
   );
 }

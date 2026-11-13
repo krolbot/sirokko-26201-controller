@@ -35,12 +35,7 @@
 </script>
 
 <div class="page-heading"><h1>Параметры отопителя</h1></div>
-<p class="intro">Sirokko 262.01 · Параметры установки</p>
-<p class="caption">
-  Можно сохранять по мере заполнения. Для проверки двигателя используйте <a
-    href="#/debug">режим отладки</a
-  >.
-</p>
+<p class="caption">Можно сохранять по мере заполнения.</p>
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
   </p>{/if}
@@ -53,13 +48,11 @@
       <section class="surface form-panel">
         <h2>{group.title}</h2>
         {#if group.title === "Время этапов"}<p class="caption">
-            Розжиг и проверка вместе — не более {limits.firing_max_ms / 1000} с
+            Ожидание розжига — не более {limits.firing_max_ms / 1000} с
           </p>
-        {:else if group.title === "Температурные пределы"}<p class="caption">
-            Для мест установки термопар выхлопа и нагретого воздуха
-          </p>
-        {:else}<p class="caption">
-            Команды ШИМ от 1 до {limits.pwm_max}; это не измеренные обороты
+        {:else if group.title === "Двигатель"}<p class="caption">
+            ШИМ от 1 до {limits.pwm_max}. Двигатель приводит вентилятор и
+            топливный насос.
           </p>{/if}
         <div class="parameter-fields">
           {#each group.fields as [key, label, unit, scale]}
@@ -96,7 +89,25 @@
                     1000}–{limits.preheat_max_ms / 1000} с</small
                 >
               {:else if key === "postpurge_ms"}<small class="caption"
-                  >Из инструкции: не менее {limits.postpurge_min_ms / 1000} с</small
+                  >Не менее {limits.postpurge_min_ms / 1000} с; также после обрыва
+                  питания.</small
+                >
+              {:else if key === "ignition_timeout_ms"}<small class="caption"
+                  >Если выхлоп не достигнет порога горения за это время, муфта и
+                  свеча выключатся.</small
+                >
+              {:else if key === "minimum_run_exhaust_milli_c"}<small
+                  class="caption"
+                  >При розжиге: выхлоп не ниже порога — свеча выключается. При
+                  нагреве: выхлоп ниже порога — топливо отключается.
+                  Подтверждение: {limits.temperature_confirmation_ms / 1000} с.</small
+                >
+              {:else if key === "cooling_exhaust_milli_c"}<small class="caption"
+                  >Двигатель выключится после минимального времени охлаждения,
+                  если выхлоп ниже этого порога.</small
+                >
+              {:else if key === "reference_speed_code"}<small class="caption"
+                  >Также верхняя граница ШИМ при калибровке.</small
                 >{/if}
             </div>
           {/each}
@@ -125,7 +136,7 @@
       <div class="disclosure-body">
         <dl class="reading-list">
           <div>
-            <dt>Тепловая мощность</dt>
+            <dt>Мощность штатных ступеней</dt>
             <dd>17,4 / 14,0 кВт</dd>
           </div>
           <div>

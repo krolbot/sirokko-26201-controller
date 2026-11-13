@@ -60,13 +60,13 @@ void monitoring() {
     assert(m.snapshot().phase == combustion::Phase::LEARNING); // Large noise cannot inflate the drop margin.
 
     auto c = ignition();
-    c.tick(input(kIgnitionAt + 100, 200000, 80000));
+    confirm_ignition(c, 200000, 80000);
     auto settings = c.settings();
     settings.mode = Mode::MANUAL;
     settings.manual_percent = 100;
     assert(c.update_settings(settings));
-    auto control = c.tick(input(kIgnitionAt + 200, 200000, 80000));
-    uint64_t now = kIgnitionAt + 200;
+    auto control = c.tick(input(kRunAt + 20, 200000, 80000));
+    uint64_t now = kRunAt + 20;
     for (unsigned i = 0; i < 65; ++i) {
         now += 500;
         control = c.tick(input(now, 200000, 80000));
@@ -82,7 +82,10 @@ void monitoring() {
     assert(suspicious.update_settings(settings));
     auto absolute = c;
     auto immediate = absolute.tick(input(now + 20, 30000, 80000));
-    assert(immediate.faults & FAULT_FLAME_LOST); // Additional analysis never delays the hard floor.
+    assert(!immediate.faults);
+    for (uint64_t t = now + 120; t <= now + 1020; t += 100)
+        immediate = absolute.tick(input(t, 30000, 80000));
+    assert(immediate.faults & FAULT_FLAME_LOST); // Confirmed floor works without a learned baseline.
     for (unsigned i = 0; i < 4; ++i) {
         now += 500;
         control = c.tick(input(now, 140000, 78000));
@@ -94,7 +97,21 @@ void monitoring() {
 void confirmed_calibration() {
     Settings settings{};
     settings.duration_ms = 60000;
-    Controller c(envelope(), settings, 1, Startup::CLEAN);
+    Controller c({}, settings, 1, Startup::CLEAN);
+    auto first = input(10);
+    first.start = first.start_commissioning = true;
+    auto unconfigured = c.tick(first);
+    assert(unconfigured.state == State::UNCONFIGURED && !unconfigured.commissioning.active);
+    off(unconfigured);
+    auto partial = envelope();
+    partial.exploration_floor_code = 0;
+    assert(c.install_safety_envelope(partial, false, 20));
+    first.now_ms = 30;
+    unconfigured = c.tick(first);
+    assert(unconfigured.state == State::UNCONFIGURED && !unconfigured.envelope_provisioned);
+    assert(unconfigured.commissioning.block == Block::ENVELOPE_MISSING);
+    off(unconfigured);
+    assert(c.install_safety_envelope(envelope(), false, 40));
     auto i = input(100);
     i.start = true;
     auto s = c.tick(i);
@@ -104,6 +121,13 @@ void confirmed_calibration() {
     i.start_commissioning = true;
     s = c.tick(i);
     assert(s.commissioning.active && !s.duration_active);
+    auto cancelled_start = c;
+    auto cancel = input(201);
+    cancel.stop = true;
+    const auto cancelled_state = cancelled_start.tick(cancel);
+    assert(cancelled_state.commissioning.phase == CommissioningPhase::CANCELLED);
+    assert(cancelled_state.commissioning.elapsed_ms == 100);
+    assert(cancelled_start.snapshot(10000).commissioning.elapsed_ms == 100);
     bool saved = false;
     for (uint64_t t = 350; t < 6ULL * 3600000; t += 250) {
         i = input(t);
@@ -116,6 +140,10 @@ void confirmed_calibration() {
         LearnedOperatingModel candidate{};
         if (c.pending_learned_model(&candidate)) {
             assert(s.commissioning.active && !s.outputs.fuel);
+            auto aborted = c;
+            assert(aborted.abort_model_storage() == ModelStorageAbort::ABORTED);
+            assert(aborted.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
+            assert(aborted.snapshot(t).commissioning.phase == CommissioningPhase::PERSIST_FAILED);
             assert(c.begin_model_storage(1) && c.seal_model_storage(1));
             auto cancelled = c;
             auto stop = i;
@@ -131,8 +159,11 @@ void confirmed_calibration() {
             auto failed = c;
             assert(!failed.complete_model_storage(1, false));
             assert(!failed.tick(input(t + 2)).learned_model.valid);
+            assert(failed.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
+            assert(failed.snapshot(t + 60000).commissioning.phase == CommissioningPhase::PERSIST_FAILED);
             assert(c.complete_model_storage(1, true));
             assert(c.snapshot(t).learned_model.valid);
+            assert(c.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
             i = input(t + 1);
             i.cycle_record_ready = false;
             assert(c.tick(i).state == State::IDLE);
@@ -142,7 +173,7 @@ void confirmed_calibration() {
             i = input(t + 3);
             i.start = true;
             s = c.tick(i);
-            assert(s.state == State::PREPURGE && !s.commissioning.active);
+            assert(s.state == State::PREHEAT && !s.commissioning.active);
             assert(s.duration_active && s.duration_remaining_ms == 60000);
             saved = true;
             break;
@@ -154,10 +185,19 @@ void confirmed_calibration() {
     assert(rebooted.install_learned_model(c.learned_model()));
     auto ready = rebooted.tick(input(100));
     assert(ready.state == State::IDLE && !ready.commissioning.active);
+    auto repeat = rebooted;
+    auto repeat_start = input(110);
+    repeat_start.start_commissioning = true;
+    assert(repeat.tick(repeat_start).commissioning.active);
+    auto repeat_stop = input(120);
+    repeat_stop.stop = true;
+    auto repeated = repeat.tick(repeat_stop);
+    assert(repeated.learned_model.valid && repeated.commissioning.phase == CommissioningPhase::CANCELLED);
+    assert(repeat.snapshot(60000).commissioning.elapsed_ms == 10);
     auto start = input(120);
     start.start = true;
     ready = rebooted.tick(start);
-    assert(ready.state == State::PREPURGE && !ready.commissioning.active);
+    assert(ready.state == State::PREHEAT && !ready.commissioning.active);
 }
 void history() {
     ThermalHistory history;

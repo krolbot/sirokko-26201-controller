@@ -11,11 +11,8 @@ bool is_stop_target(const Snapshot &snapshot) {
     if (snapshot.calibration_active)
         return true;
     switch (snapshot.state) {
-    case sirokko::State::PREPURGE:
     case sirokko::State::PREHEAT:
     case sirokko::State::IGNITION:
-    case sirokko::State::VERIFY:
-    case sirokko::State::DEBUG:
     case sirokko::State::RUN:
         return true;
     default:

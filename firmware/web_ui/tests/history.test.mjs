@@ -63,5 +63,5 @@ test("fault markers represent changes and combustion status does not claim measu
     historyPlot(historyPoints(data(rows), "1"), "exhaust").faults.length,
     2,
   );
-  assert.equal(combustionText("WATCHING"), "Температуры установились");
+  assert.equal(combustionText("WATCHING"), "Контроль температуры выхлопа");
 });

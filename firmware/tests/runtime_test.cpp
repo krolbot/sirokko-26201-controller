@@ -134,9 +134,8 @@ int main() {
         wifi.control.state = state;
         assert(command_policy::wifi_password_block(wifi) == Block::NONE);
     }
-    for (const auto state :
-         {State::RECOVERY_PURGE, State::PREPURGE, State::PREHEAT, State::IGNITION, State::VERIFY, State::RUN,
-          State::STOP_PURGE, State::FAULT_PURGE, State::MAINTENANCE}) {
+    for (const auto state : {State::RECOVERY_PURGE, State::PREHEAT, State::IGNITION, State::RUN,
+                             State::STOP_PURGE, State::FAULT_PURGE, State::MAINTENANCE}) {
         wifi.control.state = state;
         assert(command_policy::wifi_password_block(wifi) != Block::NONE);
     }
@@ -183,15 +182,35 @@ int main() {
     }
     JsonBuilder full(output, sizeof(output));
     assert(build_state_json(view, {"1.1.1-dev", true, true, true}, &full));
-    assert(std::strstr(output, "Превышена допустимая температура"));
+    assert(std::strstr(output, "Достигнут предел температуры выхлопа; топливо отключено"));
     view.events[0].kind = "CALIBRATION_SAVED";
     view.events[1].kind = "SETTLE_POINT";
     view.events[2].kind = "FUTURE_INTERNAL_EVENT";
     JsonBuilder translated(output, sizeof(output));
     assert(build_state_json(view, {}, &translated));
     assert(std::strstr(output, "\"kind_ru\":\"Результат калибровки сохранён\""));
-    assert(std::strstr(output, "\"kind_ru\":\"Установление рабочей точки\""));
-    assert(std::strstr(output, "\"kind_ru\":\"Событие контроллера\""));
+    assert(std::strstr(output, "\"kind_ru\":\"Ожидание стабильных температур при сниженном ШИМ\""));
+    assert(std::strstr(output, "\"kind_ru\":\"Неизвестное событие\""));
+    // Long translated phase/reason strings must still fit with a full event ring.
+    view.control.commissioning.phase = CommissioningPhase::SETTLE_POST_REPEAT_REFERENCE;
+    view.control.commissioning.reason = CommissioningReason::DYNAMIC_NOT_REPRODUCIBLE;
+    for (auto &event : view.events)
+        event.kind = "SETTLE_POST_REPEAT_REFERENCE";
+    JsonBuilder longest(output, sizeof(output));
+    assert(build_state_json(view, {}, &longest));
+    // API validity agrees with the controller, including plausible range failures.
+    view.now_ms = 1000;
+    view.sensors.exhaust = {kProcessMeasurementCeilingMilliC, 1000, 0, true};
+    view.sensors.air = {20000, 1000, 0, true};
+    view.sensors.room = {126000, 1000, 0, true};
+    JsonBuilder invalid_range(output, sizeof(output));
+    assert(build_state_json(view, {}, &invalid_range));
+    assert(std::strstr(output,
+                       "\"milli_c\":600000,\"sample_ms\":1000,\"status\":0,\"valid\":false,\"fresh\":false"));
+    assert(std::strstr(output,
+                       "\"milli_c\":20000,\"sample_ms\":1000,\"status\":0,\"valid\":true,\"fresh\":true"));
+    assert(std::strstr(output,
+                       "\"milli_c\":126000,\"sample_ms\":1000,\"status\":0,\"valid\":false,\"fresh\":false"));
     char small[8];
     JsonBuilder truncated(small, sizeof(small));
     assert(!build_state_json(view, {}, &truncated));

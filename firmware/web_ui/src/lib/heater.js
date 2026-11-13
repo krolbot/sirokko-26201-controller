@@ -2,65 +2,54 @@ export const heaterGroups = [
   {
     title: "Время этапов",
     fields: [
-      ["preheat_ms", "Накал свечи", "с", 1000],
-      ["prepurge_ms", "Продувка перед розжигом", "с", 1000],
-      ["ignition_ms", "Розжиг", "с", 1000],
-      ["verify_ms", "Проверка запуска", "с", 1000],
-      ["postpurge_ms", "Охлаждение после остановки", "с", 1000],
-      ["recovery_purge_ms", "Продувка после обрыва питания", "с", 1000],
+      ["preheat_ms", "Накал свечи до подачи топлива", "с", 1000],
+      ["ignition_timeout_ms", "Предельное время розжига", "с", 1000],
+      ["postpurge_ms", "Минимальное время охлаждения", "с", 1000],
     ],
   },
   {
-    title: "Температурные пределы",
+    title: "Температура выхлопа",
     fields: [
       [
-        "maximum_exhaust_milli_c",
-        "Отключение топлива: перегрев выхлопа",
+        "minimum_run_exhaust_milli_c",
+        "Порог горения по температуре выхлопа",
         "°C",
         1000,
       ],
       [
-        "maximum_air_milli_c",
-        "Отключение топлива: перегрев воздуха",
+        "maximum_exhaust_milli_c",
+        "Отключить топливо при выхлопе ≥",
         "°C",
         1000,
       ],
       [
         "cooling_exhaust_milli_c",
-        "Отключить вентилятор при выхлопе ниже",
-        "°C",
-        1000,
-      ],
-      [
-        "minimum_ignition_rise_milli_c",
-        "Рост температуры выхлопа при розжиге",
-        "°C",
-        1000,
-      ],
-      [
-        "minimum_ignition_air_rise_milli_c",
-        "Рост температуры воздуха при розжиге",
-        "°C",
-        1000,
-      ],
-      [
-        "minimum_run_exhaust_milli_c",
-        "Остановка при падении выхлопа ниже",
+        "Выключить двигатель при выхлопе <",
         "°C",
         1000,
       ],
     ],
   },
   {
-    title: "Вентилятор",
+    title: "Двигатель",
     fields: [
-      ["purge_speed_code", "Команда при продувке", "ШИМ", 1],
-      ["reference_speed_code", "Опорная команда калибровки", "ШИМ", 1],
-      ["exploration_floor_code", "Минимальный ШИМ для калибровки", "ШИМ", 1],
+      ["reference_speed_code", "ШИМ двигателя при розжиге", "ШИМ", 1],
+      ["purge_speed_code", "ШИМ двигателя при охлаждении", "ШИМ", 1],
+      ["exploration_floor_code", "Нижняя граница ШИМ при калибровке", "ШИМ", 1],
     ],
   },
 ];
 export const heaterFields = heaterGroups.flatMap((group) => group.fields);
+
+export function missingHeaterFields(envelope) {
+  return heaterFields.filter(([key]) => !(envelope?.parameters?.[key] > 0));
+}
+
+export function heaterSetupText(envelope) {
+  if (envelope?.provisioned) return "Заполнены";
+  const count = missingHeaterFields(envelope).length;
+  return count ? `Не заданы: ${count}` : "Проверьте параметры";
+}
 
 export function heaterDraft(envelope) {
   return Object.fromEntries(
@@ -101,11 +90,17 @@ export function heaterValidation(value, limits) {
     parameters[key] = Math.round(raw);
   }
   const p = parameters;
-  if (p.cooling_exhaust_milli_c >= limits?.temperature_max_milli_c)
-    errors.cooling_exhaust_milli_c = "Ниже верхней границы измерений";
+  for (const key of [
+    "cooling_exhaust_milli_c",
+    "maximum_exhaust_milli_c",
+    "minimum_run_exhaust_milli_c",
+  ])
+    if (p[key] >= limits?.temperature_max_milli_c)
+      errors[key] =
+        `Ниже ${limits.temperature_max_milli_c / 1000} °C — предела измерения термопары`;
   if (!p.cooling_exhaust_milli_c)
     errors.cooling_exhaust_milli_c =
-      "Укажите температуру завершения охлаждения";
+      "Укажите температуру выхлопа для отключения двигателя";
   if (
     p.preheat_ms &&
     (p.preheat_ms < limits.preheat_min_ms ||
@@ -115,29 +110,34 @@ export function heaterValidation(value, limits) {
   if (p.postpurge_ms && p.postpurge_ms < limits.postpurge_min_ms)
     errors.postpurge_ms = `Не менее ${limits.postpurge_min_ms / 1000} с`;
   if (
-    p.ignition_ms &&
-    p.verify_ms &&
-    p.ignition_ms + p.verify_ms > limits.firing_max_ms
+    p.ignition_timeout_ms &&
+    (p.ignition_timeout_ms <= limits?.temperature_confirmation_ms ||
+      p.ignition_timeout_ms > limits?.firing_max_ms)
   )
-    errors.verify_ms = `Розжиг и проверка вместе — не более ${limits.firing_max_ms / 1000} с`;
+    errors.ignition_timeout_ms = `Больше ${limits.temperature_confirmation_ms / 1000} и не более ${limits.firing_max_ms / 1000} с`;
+  if (
+    p.minimum_run_exhaust_milli_c &&
+    p.minimum_run_exhaust_milli_c <= p.cooling_exhaust_milli_c
+  )
+    errors.minimum_run_exhaust_milli_c =
+      "Должен быть выше температуры отключения двигателя";
   for (const [low, high] of [
     ["cooling_exhaust_milli_c", "maximum_exhaust_milli_c"],
-    ["minimum_ignition_rise_milli_c", "maximum_exhaust_milli_c"],
-    ["minimum_ignition_air_rise_milli_c", "maximum_air_milli_c"],
     ["minimum_run_exhaust_milli_c", "maximum_exhaust_milli_c"],
   ])
     if (p[low] && p[high] && p[low] >= p[high])
-      errors[low] = "Должно быть ниже порога отключения";
+      errors[low] =
+        "Значение должно быть ниже температуры отключения топлива при нагреве выхлопа";
   if (
     p.exploration_floor_code &&
     p.reference_speed_code &&
     p.reference_speed_code - p.exploration_floor_code < 2
   )
-    errors.exploration_floor_code = "Минимум на 2 единицы ниже опорной команды";
+    errors.exploration_floor_code = "Минимум на 2 единицы ниже ШИМ при розжиге";
   return {
     parameters,
     errors,
     valid: Object.keys(errors).length === 0,
-    complete: heaterFields.every(([key]) => parameters[key] > 0),
+    complete: missingHeaterFields({ parameters }).length === 0,
   };
 }

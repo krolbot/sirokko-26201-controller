@@ -2,8 +2,9 @@
   import {
     stateText,
     compactTemperature,
-    calibrationText,
+    calibrationStatus,
   } from "../lib/presentation.js";
+  import { heaterSetupText } from "../lib/heater.js";
   import { formatDuration } from "../lib/protocol.js";
   import { combustionText } from "../lib/history.js";
   import History from "../components/History.svelte";
@@ -29,13 +30,13 @@
   <span class="state-label">{stateText(snapshot)}</span>
 </div>
 {#if snapshot.faults}<section class="surface info-panel section">
-    <h2>Требует внимания</h2>
+    <h2>Причины аварии</h2>
     {#each snapshot.fault_messages || [] as message}<p class="caption">
         {message}
       </p>{/each}
   </section>{/if}
 <div class="readings">
-  {#each [["room", "Помещение"], ["air", "Выход воздуха"], ["exhaust", "Выхлоп"]] as [id, label]}<section
+  {#each [["room", "Помещение"], ["air", "Нагретый воздух"], ["exhaust", "Выхлоп"]] as [id, label]}<section
       class="reading surface"
     >
       <h2>{label}</h2>
@@ -56,13 +57,14 @@
   <div class="grouped-list surface">
     <a class="list-row" href="#/heater"
       ><span class="row-title">Параметры отопителя</span>
-      <span class="row-value"
-        >{snapshot.envelope?.provisioned ? "Заданы" : "Настроить"}</span
-      ><Icon name="chevron" size={16} /></a
+      <span class="row-value">{heaterSetupText(snapshot.envelope)}</span><Icon
+        name="chevron"
+        size={16}
+      /></a
     >
     <a class="list-row" href="#/calibration"
       ><span class="row-title">Калибровка</span>
-      <span class="row-value">{calibrationText(snapshot)}</span><Icon
+      <span class="row-value">{calibrationStatus(snapshot).summary}</span><Icon
         name="chevron"
         size={16}
       /></a
@@ -72,17 +74,17 @@
 <section class="surface info-panel section">
   <h2>Команды на выходах</h2>
   <dl class="reading-list">
-    {#each [["fan_request", "Вентилятор", "Включён", "Выключен"], ["glow", "Свеча", "Включена", "Выключена"], ["fuel", "Подача топлива", "Включена", "Выключена"]] as [id, label, on, off]}<div
+    {#each [["fan_request", "Двигатель", "Включён", "Выключен"], ["glow", "Свеча", "Включена", "Выключена"], ["fuel", "Муфта топливного насоса", "Включена", "Выключена"]] as [id, label, on, off]}<div
       >
         <dt>{label}</dt>
         <dd>{snapshot.outputs[id] ? on : off}</dd>
       </div>{/each}
     <div>
-      <dt>Команда вентилятора</dt>
+      <dt>ШИМ двигателя</dt>
       <dd>
-        {Number(snapshot.outputs.command_percent).toLocaleString("ru-RU", {
+        {Number(snapshot.outputs.speed_code).toLocaleString("ru-RU", {
           maximumFractionDigits: 1,
-        })} %
+        })}
       </dd>
     </div>
   </dl>
@@ -107,7 +109,9 @@
       </div>
       <div>
         <dt>Память настроек</dt>
-        <dd>{snapshot.storage_ok ? "Доступна" : "Ошибка записи"}</dd>
+        <dd>
+          {snapshot.storage_ok ? "Без ошибок" : "Ошибка чтения или записи"}
+        </dd>
       </div>
     </dl>
   </div>
@@ -123,14 +127,17 @@
 <History {snapshot} {api} {online} />
 <section class="section surface info-panel">
   <h2>Журнал</h2>
+  <p class="caption">Время от включения контроллера</p>
   {#if snapshot.events?.length}<ol class="events">
       {#each [...snapshot.events].reverse() as event}<li>
           <time>{formatDuration(event.at_ms)}</time><span
-            >{event.kind_ru || "Событие контроллера"}<small
+            >{event.kind_ru || "Неизвестное событие"}<small
               >{event.state_ru || ""}</small
             ></span
           >
         </li>{/each}
     </ol>{:else}<p class="empty">Событий пока нет</p>{/if}
 </section>
-<p class="device-caption">Время работы {formatDuration(snapshot.uptime_ms)}</p>
+<p class="device-caption">
+  Контроллер включён {formatDuration(snapshot.uptime_ms)}
+</p>

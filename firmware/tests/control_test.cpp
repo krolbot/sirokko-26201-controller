@@ -5,7 +5,7 @@
 using namespace sirokko;
 using namespace control_fixture;
 int main() {
-    Controller disconnected({}, Settings{}, 7, Startup::RECOVER);
+    Controller disconnected({}, Settings{}, 7, Startup::CLEAN);
     auto detached = disconnected.snapshot(0);
     assert(detached.state == State::UNCONFIGURED && !detached.purge_active && !detached.outputs.fan_request);
     auto request = input(100);
@@ -25,7 +25,7 @@ int main() {
     assert(disconnected.tick(request).state == State::UNCONFIGURED);
 
     // Preparing a revision must not alter the active model before verified storage.
-    Controller revised(envelope(), Settings{}, 1, Startup::RECOVER);
+    Controller revised(envelope(), Settings{}, 1, Startup::CLEAN);
     assert(revised.install_learned_model(model()));
     assert(revised.tick(input(100)).state == State::IDLE);
     const auto before_revision = revised.snapshot(100);
@@ -60,16 +60,15 @@ int main() {
     limits.postpurge_ms = 149999;
     assert(!valid_safety_envelope(limits));
     limits = envelope();
-    limits.ignition_ms = 45000;
-    limits.verify_ms = 45000;
+    limits.ignition_timeout_ms = 90000;
     assert(valid_safety_envelope(limits));
-    ++limits.verify_ms;
+    ++limits.ignition_timeout_ms;
     assert(!valid_safety_envelope(limits));
-    Controller empty({}, Settings{}, 1, Startup::RECOVER);
+    Controller empty({}, Settings{}, 1, Startup::CLEAN);
     auto s = empty.tick(input(100));
     off(s);
     assert(s.start_block == Block::ENVELOPE_MISSING && !s.outputs.fan_request && !s.purge_active);
-    Controller missing(envelope(), Settings{}, 1, Startup::RECOVER);
+    Controller missing(envelope(), Settings{}, 1, Startup::CLEAN);
     s = missing.tick(input(100));
     assert(s.start_block == Block::MODEL_UNAVAILABLE && s.commissioning.block == Block::NONE);
     auto i = input(120);
@@ -77,19 +76,19 @@ int main() {
     s = missing.tick(i);
     off(s);
     assert(s.state == State::IDLE && !s.commissioning.active);
-    Controller cold(envelope(), Settings{}, 1, Startup::RECOVER);
+    Controller cold(envelope(), Settings{}, 1, Startup::CLEAN);
     assert(cold.install_learned_model(model()));
     s = cold.tick(input(100, -20000, -20000));
     assert(s.state == State::IDLE && s.start_block == Block::NONE);
     i = input(120, -20000, -20000);
     i.start = true;
     s = cold.tick(i);
-    assert(s.state == State::PREPURGE);
+    assert(s.state == State::PREHEAT);
     i = input(140, kThermocoupleMinimumMilliC - 1, 20000);
     s = cold.tick(i);
     off(s);
     assert(s.faults & FAULT_EXHAUST);
-    Controller idle(envelope(), Settings{}, 1, Startup::RECOVER);
+    Controller idle(envelope(), Settings{}, 1, Startup::CLEAN);
     idle.tick(input(100));
     CommandGate queued;
     const auto version = idle.snapshot(100).state_version;
@@ -124,7 +123,7 @@ int main() {
             i.sensors.exhaust.milli_c = 300000;
             break;
         case 2:
-            i.sensors.air.milli_c = 150000;
+            i.sensors.air.milli_c = kProcessMeasurementCeilingMilliC;
             break;
         case 3:
             i.now_ms = kIgnitionAt + 680;
@@ -148,14 +147,24 @@ int main() {
         assert(s.state == State::STOP_PURGE || s.state == State::FAULT_PURGE);
         assert(s.outputs.fan_request);
     }
+    // Heated-air temperature is telemetry, not an ignition-rise or overheat threshold.
+    auto slow_air = c;
+    s = confirm_ignition(slow_air, 50000, 20000);
+    assert(s.state == State::RUN && s.outputs.fuel && !s.faults);
+    s = slow_air.tick(input(kRunAt + 20, 50000, 200000));
+    assert(s.state == State::RUN && s.outputs.fuel && !s.faults);
+    auto invalid_air = input(kRunAt + 40, 50000, kProcessMeasurementCeilingMilliC);
+    s = slow_air.tick(invalid_air);
+    assert((s.faults & FAULT_AIR) && !(s.faults & FAULT_OVER_TEMPERATURE));
+    off(s);
     auto failed = c;
-    s = failed.tick(input(kIgnitionAt + 100));
+    s = failed.tick(input(kIgnitionAt + envelope().ignition_timeout_ms));
     off(s);
     assert(s.faults & FAULT_IGNITION_TIMEOUT);
     // The same guard drives fault-reset admission and the transition.
-    s = failed.tick(input(kIgnitionAt + 100 + kPostpurgeMinimumMs));
+    s = failed.tick(input(kIgnitionAt + envelope().ignition_timeout_ms + kPostpurgeMinimumMs));
     assert(s.state == State::FAULT && s.reset_fault_block == Block::NONE);
-    auto reset = input(kIgnitionAt + 120 + kPostpurgeMinimumMs);
+    auto reset = input(kIgnitionAt + envelope().ignition_timeout_ms + 20 + kPostpurgeMinimumMs);
     reset.reset_fault = true;
     reset.external_faults = FAULT_LOCAL_CONTROLS;
     s = failed.tick(reset);
@@ -173,28 +182,63 @@ int main() {
     s = failed.tick(reset);
     assert(s.state == State::IDLE && !s.faults);
     auto running = c;
-    assert(running.tick(input(kIgnitionAt + 100, 50000, 30000)).state == State::VERIFY);
-    s = running.tick(input(kIgnitionAt + 200, 50000, 30000));
+    s = confirm_ignition(running);
     assert(s.state == State::RUN && s.outputs.fuel && !s.outputs.glow);
     auto flame = running;
-    s = flame.tick(input(kIgnitionAt + 220, 30000, 30000));
+    for (uint64_t t = kRunAt + 20; t <= kRunAt + 1020; t += 100) {
+        s = flame.tick(input(t, 30000, 30000));
+        if (t < kRunAt + 1020)
+            assert(s.state == State::RUN && !s.faults);
+    }
     off(s);
     assert(s.faults & FAULT_FLAME_LOST);
-    i = input(kIgnitionAt + 220, 50000, 30000);
+    i = input(kRunAt + 20, 50000, 30000);
     i.set_shutdown_timer = true;
     i.shutdown_after_ms = 100;
     running.tick(i);
-    i = input(kIgnitionAt + 320, 50000, 30000);
+    i = input(kRunAt + 120, 50000, 30000);
     i.set_shutdown_timer = true;
     i.shutdown_after_ms = 1000;
     s = running.tick(i);
     off(s);
     assert(s.state == State::STOP_PURGE); // Expiry wins over extension.
-    i = input(kIgnitionAt + 380, 60000, 30000);
+    i = input(kRunAt + 180, 60000, 30000);
     s = running.tick(i);
     assert(s.state == State::STOP_PURGE);
-    s = running.tick(input(kIgnitionAt + 320 + kPostpurgeMinimumMs));
+    s = running.tick(input(kRunAt + 120 + kPostpurgeMinimumMs));
     assert(s.state == State::IDLE);
+    // A spike, duplicated sample or interrupted sequence cannot finish ignition.
+    auto noisy = ignition();
+    assert(noisy.tick(input(kIgnitionAt + 100, 50000)).state == State::IGNITION);
+    auto repeated = input(kIgnitionAt + 500, 50000);
+    repeated.sensors.exhaust.sample_ms = kIgnitionAt + 100;
+    assert(noisy.tick(repeated).state == State::IGNITION);
+    assert(noisy.tick(input(kIgnitionAt + 600, 20000)).state == State::IGNITION);
+    for (uint64_t t = kIgnitionAt + 700; t < kIgnitionAt + 1700; t += 100)
+        assert(noisy.tick(input(t, 50000)).state == State::IGNITION);
+    assert(noisy.tick(input(kIgnitionAt + 1700, 50000)).state == State::RUN);
+    // One short fall after ignition must not extinguish the heater.
+    assert(noisy.tick(input(kIgnitionAt + 1800, 20000)).state == State::RUN);
+    assert(noisy.tick(input(kIgnitionAt + 1900, 50000)).state == State::RUN);
+    assert(noisy.tick(input(kIgnitionAt + 2000, 50000)).faults == 0);
+    // A gap restarts confirmation rather than bridging missing observations.
+    auto gap = ignition();
+    gap.tick(input(kIgnitionAt + 100, 50000));
+    gap.tick(input(kIgnitionAt + 800, 50000));
+    assert(gap.tick(input(kIgnitionAt + 1100, 50000)).state == State::IGNITION);
+    // Expiry takes priority even if the last reading would complete confirmation.
+    auto deadline = ignition();
+    const auto expires = kIgnitionAt + envelope().ignition_timeout_ms;
+    for (uint64_t t = expires - 1000; t < expires; t += 100)
+        assert(deadline.tick(input(t, 50000)).state == State::IGNITION);
+    auto expired_start = deadline.tick(input(expires, 50000));
+    off(expired_start);
+    assert(expired_start.faults & FAULT_IGNITION_TIMEOUT);
+    // The probe's measurement range is not the configurable overheat threshold.
+    auto range_fault = ignition();
+    auto invalid_probe = range_fault.tick(input(kIgnitionAt + 20, kProcessMeasurementCeilingMilliC));
+    assert((invalid_probe.faults & FAULT_EXHAUST) && !(invalid_probe.faults & FAULT_OVER_TEMPERATURE));
+    off(invalid_probe);
     auto gate = CommandGate{};
     auto a = gate.issue(Action::START, 10, 0, 1, 100);
     auto b = gate.issue(Action::SETTINGS, 11, 0, 1, 101);

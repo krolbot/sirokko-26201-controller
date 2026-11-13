@@ -38,9 +38,8 @@ class ThermalHistory {
         p.state = control.state;
         unsigned bit = 1;
         for (const auto *sample : {&sensors.exhaust, &sensors.air, &sensors.room}) {
-            const auto age = bit == 4 ? sirokko::kRoomSensorStaleMs : sirokko::kSensorStaleMs;
-            if (sample->valid && !sample->status && sample->sample_ms <= now &&
-                now - sample->sample_ms <= age)
+            if (bit == 4 ? sirokko::room_temperature_fresh(*sample, now)
+                         : sirokko::thermocouple_fresh(*sample, now))
                 p.valid |= bit;
             bit <<= 1;
         }

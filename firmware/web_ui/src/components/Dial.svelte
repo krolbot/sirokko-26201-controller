@@ -78,7 +78,7 @@
     viewBox="0 0 320 280"
     role="slider"
     tabindex={disabled ? -1 : 0}
-    aria-label={manual ? "Уровень вентилятора" : "Заданная температура"}
+    aria-label={manual ? "Уровень двигателя" : "Заданная температура"}
     aria-valuemin={min}
     aria-valuemax={max}
     aria-valuenow={value}
@@ -112,7 +112,7 @@
     <path class="dial-hit" d={arc(0, 1)} />
   </svg>
   <div class="dial-content">
-    <p class="eyebrow">{manual ? "Уровень вентилятора" : "Задано"}</p>
+    <p class="eyebrow">{manual ? "Уровень двигателя" : "Задано"}</p>
     <div class="setpoint-value">
       <strong>{value}</strong><span>{manual ? "%" : "°C"}</span>
     </div>

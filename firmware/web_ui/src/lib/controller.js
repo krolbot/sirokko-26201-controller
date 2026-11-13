@@ -17,8 +17,6 @@ const ACTIONS = new Set([
   "TIMER",
   "MODEL_REVISION",
   "PROFILE",
-  "DEBUG_ENTER",
-  "DEBUG_SET",
 ]);
 
 function initialView() {
@@ -283,7 +281,7 @@ export class ControllerSession {
       requestInFlight = null;
     } else if (
       isActiveSession(previous) &&
-      ["STOP_PURGE", "IDLE", "UNCONFIGURED"].includes(snapshot.state.code) &&
+      ["STOP_PURGE", "IDLE"].includes(snapshot.state.code) &&
       (pending || requestInFlight) &&
       pending?.action !== "STOP" &&
       requestInFlight !== "STOP"
@@ -296,8 +294,19 @@ export class ControllerSession {
         "Действие прервано остановкой отопителя",
       );
     } else if (pending && commandMatchesSnapshot(pending, snapshot)) {
-      message =
-        pending.action === "DEBUG_SET" ? null : statusMessage("ok", "Готово.");
+      message = statusMessage(
+        "ok",
+        {
+          START: "Запуск отопителя начат",
+          STOP: "Остановка отопителя подтверждена",
+          CALIBRATE: "Калибровка начата",
+          RESET_FAULT: "Авария сброшена",
+          SETTINGS: "Настройки применены",
+          PROFILE: "Параметры отопителя сохранены",
+          MODEL_REVISION: "Диапазон ШИМ сохранён",
+          TIMER: "Таймер остановки изменён",
+        }[pending.action] || "Команда выполнена",
+      );
       pending = null;
     }
 
@@ -324,7 +333,7 @@ export class ControllerSession {
       };
       message =
         ota.phase === "checking_startup"
-          ? statusMessage("pending", "Проверка запуска…")
+          ? statusMessage("pending", "Проверка запуска новой прошивки…")
           : statusMessage(
               ota.phase === "running_expected_version" ? "ok" : "warning",
               ota.phase === "running_expected_version"
@@ -351,7 +360,7 @@ export class ControllerSession {
       this._lastSnapshotAt !== null &&
       this.now() - this._lastSnapshotAt > 5_000
     ) {
-      this._markLinkLost({ message: "Нет новых данных" });
+      this._markLinkLost({ message: "Нет новых данных от контроллера" });
     }
     if (
       ["activation_queued", "checking_startup"].includes(
@@ -414,7 +423,7 @@ export class ControllerSession {
     this._readEpoch += 1;
     this._set({
       requestInFlight: action,
-      message: statusMessage("pending", "Отправляем…"),
+      message: statusMessage("pending", "Отправляем команду…"),
     });
     try {
       const grant = await this.api.challenge(payload);
@@ -490,7 +499,7 @@ export class ControllerSession {
     this._set({
       pending: null,
       requestInFlight: "STOP",
-      message: statusMessage("pending", "Останавливаем…"),
+      message: statusMessage("pending", "Отправляем команду остановки…"),
     });
     try {
       const response = await this.api.stop(this.commandId());

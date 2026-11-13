@@ -21,8 +21,8 @@
       !draft.conflict,
   );
   const fields = [
-    ["slew_up_per_s", "Набор оборотов"],
-    ["slew_down_per_s", "Снижение оборотов"],
+    ["slew_up_per_s", "Увеличение ШИМ"],
+    ["slew_down_per_s", "Уменьшение ШИМ"],
   ];
   function useAutomatic() {
     for (const [field] of fields) draft.set(field, MAXIMUM_SLEW_PER_S);
@@ -39,14 +39,22 @@
   }
 </script>
 
-<div class="page-heading"><h1>Плавность</h1></div>
+<div class="page-heading"><h1>Темп изменения ШИМ</h1></div>
 <section class="surface smoothing-panel">
   <div class="smoothing-status">
     <Icon name="tune" size={24} />
-    <h2>{automatic ? "Автоматически" : "Ручное ограничение"}</h2>
+    <h2>
+      {automatic
+        ? model.valid
+          ? "По калибровке"
+          : "Исходный темп"
+        : "Замедлено вручную"}
+    </h2>
   </div>
   <p class="caption">
-    Автоматика плавно меняет обороты. Здесь можно снизить скорость изменения.
+    {model.valid
+      ? "Скорость изменения ШИМ двигателя ограничена калибровкой. Здесь её можно уменьшить."
+      : "Калибровка использует исходный темп изменения ШИМ."}
   </p>
   {#if model.valid}
     {#each fields as [field, label]}
@@ -59,13 +67,15 @@
       <label class="slew-control">
         <span class="slew-heading"
           ><span>{label}</span><output
-            >{percent === 100 ? "По модели" : `${percent}% от модели`}</output
+            >{percent === 100
+              ? "По калибровке"
+              : `${percent}% от темпа калибровки`}</output
           ></span
         >
         <input
           type="range"
           aria-label={label}
-          aria-valuetext={`${percent}% от предела модели`}
+          aria-valuetext={`${percent}% от темпа калибровки`}
           min={lower}
           max="100"
           step="1"
@@ -86,16 +96,19 @@
               ),
             )}
         />
-        <span class="slew-scale"><span>Плавнее</span><span>Быстрее</span></span>
+        <span class="slew-scale"
+          ><span>Медленнее</span><span>Быстрее</span></span
+        >
       </label>
     {/each}
-  {:else}<p class="caption">
-      Ручная корректировка доступна после калибровки
-    </p>{/if}
+  {/if}
   {#if !automatic}<button
       class="text-button full-width"
       disabled={!enabled}
-      onclick={useAutomatic}>Вернуть автоматику</button
+      onclick={useAutomatic}
+      >{model.valid
+        ? "Вернуть темп калибровки"
+        : "Вернуть исходный темп"}</button
     >{/if}
   <DraftActions
     busy={Boolean(ui.pending || ui.requestInFlight)}
@@ -105,4 +118,8 @@
     reset={() => draft.reset(snapshot, snapshot.settings)}
     label="Применить"
   />
+  {#if !model.valid && !draft.dirty && snapshot.envelope?.provisioned}
+    <a class="secondary full-width" href="#/calibration">Перейти к калибровке</a
+    >
+  {/if}
 </section>

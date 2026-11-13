@@ -22,7 +22,6 @@
   import Regulation from "./pages/Regulation.svelte";
   import Calibration from "./pages/Calibration.svelte";
   import Heater from "./pages/Heater.svelte";
-  import Debug from "./pages/Debug.svelte";
   import { heaterDraft } from "./lib/heater.js";
   import { Measurements } from "./lib/measurements.js";
 
@@ -88,8 +87,14 @@
   }
 
   const stopVisible = $derived(
-    needsStop(snapshot) ||
-      ["START", "CALIBRATE", "DEBUG_ENTER"].includes(ui.pending?.action),
+    needsStop(snapshot) || ["START", "CALIBRATE"].includes(ui.pending?.action),
+  );
+  const stopLabel = $derived(
+    snapshot?.commissioning?.active || ui.pending?.action === "CALIBRATE"
+      ? "Отменить калибровку"
+      : ui.pending?.action === "START" && !needsStop(snapshot)
+        ? "Отменить запуск"
+        : "Остановить нагрев",
   );
   const authenticated = $derived(ui.auth === "authenticated");
   function notify(kind, text) {
@@ -311,7 +316,7 @@
               class="secondary"
               disabled={!connectionReady(ui)}
               onclick={() => session.submit("RESET_FAULT")}
-              >Сбросить ошибку</button
+              >Сбросить аварию</button
             >{/if}
         </div>{/if}
       {#if routes[route].section === "settings" && route !== "settings"}<a
@@ -343,17 +348,6 @@
           {selectTheme}
         />
       {:else if route === "wifi"}<Wifi {ui} {session} {notify} />
-      {:else if route === "debug"}<Debug
-          {ui}
-          {session}
-          {notify}
-          {heater}
-          {recording}
-          {startRecording}
-          {stopRecording}
-          {downloadMeasurements}
-          {addMeasurementNote}
-        />
       {:else if route === "heater"}<Heater
           {ui}
           {session}
@@ -380,11 +374,7 @@
           <span>{stateText(snapshot)}</span><button
             class="stop-button"
             disabled={ui.requestInFlight === "STOP"}
-            onclick={() => session.stop()}
-            >{snapshot.state.code === "DEBUG" ||
-            ui.pending?.action === "DEBUG_ENTER"
-              ? "Завершить отладку"
-              : "Остановить нагрев"}</button
+            onclick={() => session.stop()}>{stopLabel}</button
           >
         </div>{/if}
       <nav aria-label="Основная навигация">

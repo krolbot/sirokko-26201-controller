@@ -19,7 +19,6 @@ constexpr uint32_t kUploadSize = 1U << 5;
 constexpr uint32_t kUploadSha256 = 1U << 6;
 constexpr uint32_t kGrant = 1U << 7;
 constexpr uint32_t kEnvelope = 1U << 8;
-constexpr uint32_t kDebugSpeed = 1U << 9, kDebugGlow = 1U << 10, kDebugFuel = 1U << 11;
 
 class Cursor {
   public:
@@ -59,20 +58,6 @@ class Cursor {
     const char *current_{};
     const char *end_{};
 };
-
-ParseError parse_bool(Cursor *cursor, bool *value) {
-    cursor->skip_space();
-    for (const auto *literal : {"true", "false"}) {
-        const auto size = std::strlen(literal);
-        if (static_cast<size_t>(cursor->end() - cursor->current()) >= size &&
-            std::memcmp(cursor->current(), literal, size) == 0) {
-            cursor->set_current(cursor->current() + size);
-            *value = literal[0] == 't';
-            return ParseError::OK;
-        }
-    }
-    return ParseError::FIELD_TYPE;
-}
 
 bool ascii_printable(char value) {
     const unsigned char byte = static_cast<unsigned char>(value);
@@ -280,11 +265,7 @@ bool equals(const char *left, const char *right) {
 }
 
 bool parse_action_text(const char *text, sirokko::Action *action) {
-    if (equals(text, "DEBUG_ENTER"))
-        *action = sirokko::Action::DEBUG_ENTER;
-    else if (equals(text, "DEBUG_SET"))
-        *action = sirokko::Action::DEBUG_SET;
-    else if (equals(text, "START"))
+    if (equals(text, "START"))
         *action = sirokko::Action::START;
     else if (equals(text, "RESET_FAULT"))
         *action = sirokko::Action::RESET_FAULT;
@@ -729,12 +710,6 @@ Digest digest_command(const Command &command) {
         hash_u64(&hash, command.upload_size);
         hash.update(command.upload_sha256.data(), command.upload_sha256.size());
         break;
-    case sirokko::Action::DEBUG_SET:
-        hash_u32(&hash, command.debug_outputs.speed_code);
-        hash_u8(&hash, command.debug_outputs.glow);
-        hash_u8(&hash, command.debug_outputs.fuel);
-        break;
-    case sirokko::Action::DEBUG_ENTER:
     case sirokko::Action::START:
     case sirokko::Action::RESET_FAULT:
     case sirokko::Action::CALIBRATE:
@@ -782,16 +757,6 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         } else if (equals(key, "delay_ms")) {
             bit = kDelay;
             result = parse_u64(&cursor, &command.delay_ms);
-        } else if (equals(key, "speed_code")) {
-            bit = kDebugSpeed;
-            result = parse_u16(&cursor, &command.debug_outputs.speed_code);
-            command.debug_outputs.fan_request = command.debug_outputs.speed_code != 0;
-        } else if (equals(key, "glow")) {
-            bit = kDebugGlow;
-            result = parse_bool(&cursor, &command.debug_outputs.glow);
-        } else if (equals(key, "fuel")) {
-            bit = kDebugFuel;
-            result = parse_bool(&cursor, &command.debug_outputs.fuel);
         } else if (equals(key, "settings")) {
             bit = kSettings;
             result = parse_settings(&cursor, &command.settings);
@@ -828,13 +793,6 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
 
     uint32_t required = kAction | kCommandId;
     switch (command.action) {
-    case sirokko::Action::DEBUG_ENTER:
-        break;
-    case sirokko::Action::DEBUG_SET:
-        required |= kDebugSpeed | kDebugGlow | kDebugFuel;
-        if (!sirokko::valid_debug_outputs(command.debug_outputs))
-            return ParseError::FIELD_VALUE;
-        break;
     case sirokko::Action::TIMER:
         required |= kDelay;
         break;

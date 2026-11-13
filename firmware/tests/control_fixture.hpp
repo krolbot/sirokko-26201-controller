@@ -3,16 +3,15 @@
 #include <cassert>
 namespace control_fixture {
 using namespace sirokko;
-constexpr uint64_t kIgnitionAt = 220 + kPreheatMinimumMs;
+constexpr uint64_t kIgnitionAt = 120 + kPreheatMinimumMs;
+constexpr uint64_t kRunAt = kIgnitionAt + 100 + kTemperatureConfirmationMs;
 // Synthetic timings and temperatures; not settings for a real heater.
 inline SafetyEnvelope envelope() {
     SafetyEnvelope e{};
     e.provisioned = true;
-    e.recovery_purge_ms = e.prepurge_ms = e.ignition_ms = e.verify_ms = 100;
+    e.ignition_timeout_ms = 5000;
     e.maximum_exhaust_milli_c = 300000;
-    e.maximum_air_milli_c = 150000;
-    e.cooling_exhaust_milli_c = 50000;
-    e.minimum_ignition_rise_milli_c = e.minimum_ignition_air_rise_milli_c = 1000;
+    e.cooling_exhaust_milli_c = 30000;
     e.minimum_run_exhaust_milli_c = 40000;
     e.purge_speed_code = 1500;
     e.reference_speed_code = 2000;
@@ -41,20 +40,29 @@ inline LearnedOperatingModel model() {
     return m;
 }
 inline Controller ignition(bool calibration = false) {
-    Controller c(envelope(), Settings{}, 1, Startup::RECOVER);
+    Controller c(envelope(), Settings{}, 1, Startup::CLEAN);
     if (!calibration)
         assert(c.install_learned_model(model()));
     assert(c.tick(input(100)).state == State::IDLE);
     auto i = input(120);
     i.start = !calibration;
     i.start_commissioning = calibration;
-    assert(c.tick(i).state == State::PREPURGE);
+    assert(c.tick(i).state == State::PREHEAT);
     assert(c.tick(input(220)).state == State::PREHEAT);
     auto s = c.tick(input(kIgnitionAt - 1));
     assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fuel && !s.outputs.fan_request);
     s = c.tick(input(kIgnitionAt));
     assert(s.state == State::IGNITION && s.outputs.fuel && s.outputs.glow);
     return c;
+}
+inline Snapshot confirm_ignition(Controller &c, int32_t exhaust = 50000, int32_t air = 30000) {
+    Snapshot s{};
+    for (uint64_t t = kIgnitionAt + 100; t <= kRunAt; t += 100) {
+        s = c.tick(input(t, exhaust, air));
+        assert(s.state == (t == kRunAt ? State::RUN : State::IGNITION));
+        assert(s.outputs.fuel && s.outputs.glow == (t != kRunAt));
+    }
+    return s;
 }
 inline void off(const Snapshot &s) {
     assert(!s.outputs.fuel && !s.outputs.glow);

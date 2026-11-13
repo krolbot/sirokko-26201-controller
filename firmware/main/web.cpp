@@ -242,10 +242,6 @@ bool read_header(httpd_req_t *request, const char *name, char *output, size_t ca
 
 bool semantic_valid(const web_protocol::Command &command) {
     switch (command.action) {
-    case sirokko::Action::DEBUG_ENTER:
-        return true;
-    case sirokko::Action::DEBUG_SET:
-        return sirokko::valid_debug_outputs(command.debug_outputs);
     case sirokko::Action::TIMER:
         return command.delay_ms <= sirokko::kMaximumTimerMs;
     case sirokko::Action::SETTINGS:
@@ -272,9 +268,6 @@ uint64_t runtime_hash(const web_protocol::Command &command) {
 }
 
 bool configuration_is_safe(const web_protocol::Command &command, const RuntimeView &view) {
-    if (command.action == sirokko::Action::DEBUG_SET &&
-        (command.debug_outputs.fuel || command.debug_outputs.glow))
-        return view.control.debug_heat_block == sirokko::Block::NONE;
     if (command.action != sirokko::Action::MODEL_REVISION)
         return true;
     return sirokko::valid_model_revision(view.control.learned_model, command.revision);
@@ -629,8 +622,7 @@ esp_err_t challenge_handler(httpd_req_t *request) {
     if (blocked != sirokko::Block::NONE)
         return reject(request, sirokko::block_name(blocked), "409 Conflict");
     if (!configuration_is_safe(command, view))
-        return reject(request, command.action == sirokko::Action::DEBUG_SET ? "DEBUG_HEAT" : "MODEL_REVISION",
-                      "409 Conflict");
+        return reject(request, "MODEL_REVISION", "409 Conflict");
     sirokko::Grant issued{};
     const uint64_t parameters = runtime_hash(command);
     if (!runtime_issue(command.action, parameters, &issued))
@@ -696,8 +688,7 @@ esp_err_t command_handler(httpd_req_t *request) {
         return reject(request, "COMMISSIONING_BLOCK", "409 Conflict");
     }
     if (!configuration_is_safe(command, view))
-        return reject(request, command.action == sirokko::Action::DEBUG_SET ? "DEBUG_HEAT" : "MODEL_REVISION",
-                      "409 Conflict");
+        return reject(request, "MODEL_REVISION", "409 Conflict");
     bool previous = false;
     const web_protocol::ReplayResult replay =
         session->replays.lookup(command.command_id, command.payload_digest, &previous);
@@ -719,8 +710,7 @@ esp_err_t command_handler(httpd_req_t *request) {
         : command.action == sirokko::Action::MODEL_REVISION
             ? runtime_revise_model(grant, command.revision)
             : runtime_submit(grant, command.action, command.delay_ms,
-                             command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr,
-                             command.action == sirokko::Action::DEBUG_SET ? &command.debug_outputs : nullptr);
+                             command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr);
     session->replays.remember(command.command_id, command.payload_digest, accepted);
     if (!accepted)
         return reject(request, "NOT_ACCEPTED", "409 Conflict");

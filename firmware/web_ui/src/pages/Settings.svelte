@@ -1,5 +1,6 @@
 <script>
-  import { automaticSlew, calibrationText } from "../lib/presentation.js";
+  import { automaticSlew, calibrationStatus } from "../lib/presentation.js";
+  import { heaterSetupText } from "../lib/heater.js";
   import Icon from "../Icon.svelte";
   let { snapshot, theme, selectTheme } = $props();
 </script>
@@ -43,20 +44,13 @@
     <a class="list-row" href="#/heater"
       ><span class="row-icon"><Icon name="tune" /></span>
       <span class="row-title">Параметры отопителя</span><span class="row-value"
-        >{snapshot.envelope?.provisioned ? "Заданы" : "Не настроены"}</span
-      ><Icon name="chevron" size={16} /></a
-    >
-    <a class="list-row" href="#/debug"
-      ><span class="row-icon"><Icon name="tune" /></span><span class="row-title"
-        >Режим отладки</span
-      ><span class="row-value"
-        >{snapshot.state.code === "DEBUG" ? "Включён" : ""}</span
+        >{heaterSetupText(snapshot.envelope)}</span
       ><Icon name="chevron" size={16} /></a
     >
     <a class="list-row" href="#/calibration"
       ><span class="row-icon"><Icon name="heat" /></span><span class="row-title"
         >Калибровка</span
-      ><span class="row-value">{calibrationText(snapshot)}</span><Icon
+      ><span class="row-value">{calibrationStatus(snapshot).summary}</span><Icon
         name="chevron"
         size={16}
       /></a
@@ -67,11 +61,13 @@
   <summary>Дополнительно<Icon name="chevron" size={16} /></summary>
   <a class="list-row" href="#/regulation">
     <span class="row-icon"><Icon name="tune" /></span>
-    <span class="row-title">Плавность</span>
+    <span class="row-title">Темп изменения ШИМ</span>
     <span class="row-value"
       >{automaticSlew(snapshot.settings)
-        ? "Автоматически"
-        : "Ручное ограничение"}</span
+        ? snapshot.learned_model?.valid
+          ? "По калибровке"
+          : "Исходный темп"
+        : "Замедлено вручную"}</span
     >
     <Icon name="chevron" size={16} />
   </a>

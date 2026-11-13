@@ -17,7 +17,6 @@ constexpr uint32_t kHeatPulseCycleMs = 2400;
 constexpr uint32_t kHeatPulseTravelMs = 1900;
 
 enum class Scene : uint8_t {
-    Debug,
     Heat,
     Idle,
     Manual,
@@ -25,10 +24,8 @@ enum class Scene : uint8_t {
     EditManual,
     TimerRunning,
     Above,
-    Prepurge,
     Preheat,
     Ignition,
-    Verify,
     Cooldown,
     Recovery,
     FaultCooling,
@@ -59,7 +56,6 @@ enum class Scene : uint8_t {
     CommandRejected,
 };
 
-bool sample_fresh(const sirokko::SensorSample &sample, uint64_t now_ms, uint64_t maximum_age_ms);
 Scene select_scene(const panel_ui::Screen &screen, const panel_ui::View &view, uint64_t now_ms,
                    bool show_saved = true);
 bool urgent(Scene scene);

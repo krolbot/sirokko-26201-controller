@@ -9,8 +9,18 @@ namespace sirokko {
 namespace {
 
 bool active(State state) {
-    return state == State::PREPURGE || state == State::PREHEAT || state == State::IGNITION ||
-           state == State::VERIFY || state == State::RUN;
+    return state == State::PREHEAT || state == State::IGNITION || state == State::RUN;
+}
+
+Block sensor_block(const Sensors &sensors, uint64_t now, bool room_required) {
+    if (!thermocouple_valid(sensors.exhaust) || !thermocouple_valid(sensors.air) ||
+        sensors.exhaust.sample_ms > now || sensors.air.sample_ms > now ||
+        (room_required && (!room_temperature_valid(sensors.room) || sensors.room.sample_ms > now)))
+        return Block::SENSOR_INVALID;
+    if (!thermocouple_fresh(sensors.exhaust, now) || !thermocouple_fresh(sensors.air, now) ||
+        (room_required && !room_temperature_fresh(sensors.room, now)))
+        return Block::SENSOR_STALE;
+    return Block::NONE;
 }
 
 bool purging(State state) {
@@ -107,58 +117,32 @@ Controller::Controller(SafetyEnvelope profile, Settings settings, uint64_t boot_
     envelope_.provisioned = envelope_.provisioned && valid_safety_envelope(envelope_);
     if (!valid_settings(settings_))
         settings_ = {};
-    if (!envelope_.provisioned && !(startup == Startup::RECOVER && debug_heat_configured(envelope_))) {
-        state_ = State::UNCONFIGURED;
-        return;
-    }
+    if (!envelope_.provisioned && startup == Startup::RECOVER)
+        envelope_.postpurge_ms = std::max(envelope_.postpurge_ms, kPostpurgeMinimumMs);
     run_speed_code_ = envelope_.reference_speed_code;
-    state_ = startup == Startup::CLEAN ? State::IDLE : State::RECOVERY_PURGE;
+    state_ = startup == Startup::RECOVER ? State::RECOVERY_PURGE
+             : envelope_.provisioned     ? State::IDLE
+                                         : State::UNCONFIGURED;
     if (state_ == State::RECOVERY_PURGE) {
         purge_id_ = next_id_++;
-        purge_minimum_ms_ =
-            envelope_.recovery_purge_ms ? envelope_.recovery_purge_ms : envelope_.postpurge_ms;
     }
 }
 
 bool Controller::thermal_sensors_fresh(const Sensors &sensors, uint64_t now_ms) const {
-    const auto fresh = [now_ms](const SensorSample &sample) {
-        return sample.valid && sample.status == 0 && sample.sample_ms <= now_ms &&
-               now_ms - sample.sample_ms <= kSensorStaleMs && sample.milli_c >= kThermocoupleMinimumMilliC &&
-               sample.milli_c < kProcessMeasurementCeilingMilliC;
-    };
-    return fresh(sensors.exhaust) && fresh(sensors.air);
-}
-
-bool Controller::sensors_fresh(const Sensors &sensors, uint64_t now_ms) const {
-    const auto &r = sensors.room;
-    const bool room_ok = r.valid && r.status == 0 && r.sample_ms <= now_ms &&
-                         now_ms - r.sample_ms <= kRoomSensorStaleMs && r.milli_c >= -55000 &&
-                         r.milli_c <= 125000;
-    return thermal_sensors_fresh(sensors, now_ms) && (settings_.mode == Mode::MANUAL || room_ok);
+    return thermocouple_fresh(sensors.exhaust, now_ms) && thermocouple_fresh(sensors.air, now_ms);
 }
 
 uint32_t Controller::sensor_faults(const Sensors &sensors, uint64_t now_ms) const {
-    const auto bad = [now_ms](const SensorSample &sample, uint64_t limit) {
-        return !sample.valid || sample.status != 0 || sample.sample_ms > now_ms ||
-               now_ms - sample.sample_ms > limit;
-    };
     uint32_t result = FAULT_NONE;
-    if (bad(sensors.exhaust, kSensorStaleMs) || sensors.exhaust.milli_c < kThermocoupleMinimumMilliC)
+    const bool exhaust_ok = thermocouple_fresh(sensors.exhaust, now_ms);
+    if (!exhaust_ok)
         result |= FAULT_EXHAUST;
-    if (bad(sensors.air, kSensorStaleMs) || sensors.air.milli_c < kThermocoupleMinimumMilliC)
+    if (!thermocouple_fresh(sensors.air, now_ms))
         result |= FAULT_AIR;
-    if (settings_.mode == Mode::TEMPERATURE &&
-        (bad(sensors.room, kRoomSensorStaleMs) || sensors.room.milli_c < -55000 ||
-         sensors.room.milli_c > 125000))
+    if (settings_.mode == Mode::TEMPERATURE && !room_temperature_fresh(sensors.room, now_ms))
         result |= FAULT_ROOM;
-    if ((sensors.exhaust.valid && sensors.exhaust.milli_c >= kProcessMeasurementCeilingMilliC) ||
-        (sensors.air.valid && sensors.air.milli_c >= kProcessMeasurementCeilingMilliC))
-        result |= FAULT_OVER_TEMPERATURE;
-    if (envelope_.maximum_exhaust_milli_c && sensors.exhaust.valid &&
+    if (exhaust_ok && envelope_.maximum_exhaust_milli_c &&
         sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c)
-        result |= FAULT_OVER_TEMPERATURE;
-    if (envelope_.maximum_air_milli_c && sensors.air.valid &&
-        sensors.air.milli_c >= envelope_.maximum_air_milli_c)
         result |= FAULT_OVER_TEMPERATURE;
     return result;
 }
@@ -172,20 +156,12 @@ Block Controller::start_guard(const Sensors &sensors, uint64_t now_ms) const {
         return Block::BUSY;
     if (state_ != State::IDLE)
         return state_ == State::MAINTENANCE ? Block::MAINTENANCE : Block::BUSY;
-    if (!sensors_fresh(sensors, now_ms)) {
-        const auto stale = [now_ms](const SensorSample &sample, uint64_t limit) {
-            return sample.valid && sample.status == 0 && sample.sample_ms <= now_ms &&
-                   now_ms - sample.sample_ms > limit;
-        };
-        if (stale(sensors.exhaust, kSensorStaleMs) || stale(sensors.air, kSensorStaleMs) ||
-            (settings_.mode == Mode::TEMPERATURE && stale(sensors.room, kRoomSensorStaleMs)))
-            return Block::SENSOR_STALE;
-        return Block::SENSOR_INVALID;
-    }
+    const auto data_block = sensor_block(sensors, now_ms, settings_.mode == Mode::TEMPERATURE);
+    if (data_block != Block::NONE)
+        return data_block;
     if (sensors.exhaust.milli_c < kThermocoupleMinimumMilliC ||
         sensors.exhaust.milli_c >= envelope_.maximum_exhaust_milli_c ||
-        sensors.air.milli_c < kThermocoupleMinimumMilliC ||
-        sensors.air.milli_c >= envelope_.maximum_air_milli_c || !cooling_complete(envelope_, sensors, now_ms))
+        sensors.air.milli_c < kThermocoupleMinimumMilliC || !cooling_complete(envelope_, sensors, now_ms))
         return Block::INITIAL_THERMAL_STATE;
     if (settings_.duration_ms > std::numeric_limits<uint64_t>::max() - now_ms)
         return Block::STALE_COMMAND;
@@ -205,9 +181,6 @@ void Controller::transition(State state, uint64_t now_ms) {
 void Controller::begin_purge(State state, uint64_t now_ms) {
     if (!purging(state_)) {
         purge_started_ms_ = now_ms;
-        purge_minimum_ms_ = state == State::RECOVERY_PURGE && envelope_.recovery_purge_ms
-                                ? envelope_.recovery_purge_ms
-                                : envelope_.postpurge_ms;
         purge_id_ = next_id_++;
         if (next_id_ == 0)
             next_id_ = 1;
@@ -216,37 +189,38 @@ void Controller::begin_purge(State state, uint64_t now_ms) {
 }
 
 bool Controller::purge_ready(const Sensors &sensors, uint64_t now_ms) const {
-    return debug_heat_configured(envelope_) && now_ms >= purge_started_ms_ &&
-           now_ms - purge_started_ms_ >= purge_minimum_ms_ && thermal_sensors_fresh(sensors, now_ms) &&
-           cooling_complete(envelope_, sensors, now_ms);
+    return now_ms >= purge_started_ms_ && now_ms - purge_started_ms_ >= envelope_.postpurge_ms &&
+           thermal_sensors_fresh(sensors, now_ms) && cooling_complete(envelope_, sensors, now_ms);
 }
 
-void Controller::begin_start(uint64_t now_ms, const Sensors &sensors) {
+bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
+    if (!condition) {
+        condition_active_ = false;
+        return false;
+    }
+    if (!condition_active_ || sample_ms < condition_sample_ms_ ||
+        sample_ms - condition_sample_ms_ > kSensorStaleMs) {
+        condition_active_ = true;
+        condition_started_ms_ = sample_ms;
+    }
+    condition_sample_ms_ = sample_ms;
+    return sample_ms - condition_started_ms_ >= kTemperatureConfirmationMs;
+}
+
+void Controller::begin_start(uint64_t now_ms) {
     combustion_monitor_.reset(envelope_.minimum_run_exhaust_milli_c, envelope_.reference_speed_code);
     run_id_ = next_id_++;
     if (next_id_ == 0)
         next_id_ = 1;
-    ignition_baseline_milli_c_ = sensors.exhaust.milli_c;
-    ignition_air_baseline_milli_c_ = sensors.air.milli_c;
+    condition_active_ = false;
     run_speed_code_ = envelope_.reference_speed_code;
     duration_active_ = !commissioning_requested_ && settings_.duration_ms != 0;
     duration_deadline_ms_ = duration_active_ ? now_ms + settings_.duration_ms : 0;
-    transition(State::PREPURGE, now_ms);
+    transition(State::PREHEAT, now_ms);
     record("START", now_ms);
 }
 
 void Controller::begin_stop(uint64_t now_ms, bool preserve_calibration_candidate) {
-    if (state_ == State::DEBUG) {
-        record("DEBUG_STOP", now_ms);
-        debug_outputs_ = {};
-        debug_deadline_ms_ = 0;
-        run_id_ = 0;
-        if (debug_heated_)
-            begin_purge(State::STOP_PURGE, now_ms);
-        else
-            transition(envelope_.provisioned ? State::IDLE : State::UNCONFIGURED, now_ms);
-        return;
-    }
     if (combustion_monitor_.snapshot().phase != combustion::Phase::LOST)
         combustion_monitor_ = {};
     const bool cancel_presealed_calibration =
@@ -273,8 +247,7 @@ void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
     duration_active_ = false;
     duration_deadline_ms_ = 0;
     run_id_ = 0;
-    if (active(state_) || purging(state_) || (state_ == State::DEBUG && debug_heated_) ||
-        (faults & FAULT_OVER_TEMPERATURE))
+    if (active(state_) || purging(state_) || (faults & FAULT_OVER_TEMPERATURE))
         begin_purge(State::FAULT_PURGE, now_ms);
     else
         transition(State::FAULT, now_ms);
@@ -282,14 +255,11 @@ void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
 
 Outputs Controller::outputs() const {
     Outputs result{};
-    if (state_ == State::DEBUG)
-        return debug_outputs_;
     if (!envelope_.provisioned && !purging(state_))
         return result;
     const uint16_t purge = envelope_.purge_speed_code ? envelope_.purge_speed_code : kPwmMaximum;
     switch (state_) {
     case State::RECOVERY_PURGE:
-    case State::PREPURGE:
     case State::STOP_PURGE:
     case State::FAULT_PURGE:
         result.fan_request = true;
@@ -301,9 +271,6 @@ Outputs Controller::outputs() const {
         break;
     case State::IGNITION:
         result = {true, envelope_.reference_speed_code, true, true};
-        break;
-    case State::VERIFY:
-        result = {true, envelope_.reference_speed_code, false, true};
         break;
     case State::RUN:
         result = {true, static_cast<uint16_t>(std::lround(run_speed_code_)), false, true};
@@ -320,112 +287,16 @@ Block Controller::reset_fault_guard(const Sensors &sensors, uint64_t now_ms, uin
         return Block::BUSY;
     if (external_faults)
         return Block::FAULT_LATCHED;
-    return sensor_faults(sensors, now_ms) ? Block::SENSOR_INVALID : Block::NONE;
-}
-
-Block Controller::debug_heat_guard(const Sensors &sensors, uint64_t now_ms) const {
-    if (!debug_heat_configured(envelope_))
-        return Block::ENVELOPE_MISSING;
-    if (!thermal_sensors_fresh(sensors, now_ms))
-        return Block::SENSOR_INVALID;
-    if (sensor_faults(sensors, now_ms) & ~static_cast<uint32_t>(FAULT_ROOM))
-        return Block::SENSOR_INVALID;
-    if (faults_)
-        return Block::FAULT_LATCHED;
-    return Block::NONE;
-}
-
-void Controller::debug_tick(const TickInput &input) {
-    const auto now = input.now_ms;
-    uint32_t faults = input.external_faults;
-    if (have_tick_ && now < last_tick_ms_)
-        faults |= FAULT_CONTROL_WATCHDOG;
-    if (debug_heated_)
-        faults |= sensor_faults(input.sensors, now) & ~static_cast<uint32_t>(FAULT_ROOM);
-    if (faults) {
-        latch_fault(faults, now);
-        return;
-    }
-    if (input.stop || input.operator_combustion_problem || now >= debug_deadline_ms_) {
-        if (now >= debug_deadline_ms_)
-            record("DEBUG_LINK_LOST", now);
-        ++state_version_;
-        begin_stop(now);
-        return;
-    }
-    if (input.set_debug_outputs && valid_debug_outputs(input.debug_outputs)) {
-        const auto &requested = input.debug_outputs;
-        const bool heat = requested.fuel || requested.glow;
-        // A heat test requires durable recovery state and thermal limits, not a learned model.
-        const bool permitted =
-            !heat || (input.cycle_record_ready && debug_heat_guard(input.sensors, now) == Block::NONE);
-        // After heating, fan-off ends the test through normal cooling.
-        if (permitted && debug_heated_ && !requested.fan_request && !requested.glow) {
-            begin_stop(now);
-            return;
-        }
-        if (permitted) {
-            if (requested.glow && !debug_outputs_.glow)
-                debug_glow_started_ms_ = now;
-            if (requested.fuel && !debug_outputs_.fuel) {
-                debug_fuel_started_ms_ = now;
-                debug_flame_seen_ = false;
-                combustion_monitor_.reset(envelope_.minimum_run_exhaust_milli_c, requested.speed_code);
-            }
-            const bool changed = requested.speed_code != debug_outputs_.speed_code ||
-                                 requested.glow != debug_outputs_.glow ||
-                                 requested.fuel != debug_outputs_.fuel;
-            debug_outputs_ = requested;
-            debug_heated_ |= heat;
-            debug_deadline_ms_ = now + 5000;
-            ++state_version_;
-            if (changed)
-                record("DEBUG_OUTPUTS", now);
-        }
-    }
-    if (debug_outputs_.glow && now - debug_glow_started_ms_ >= kPreheatMaximumMs) {
-        debug_outputs_.glow = false;
-        ++state_version_;
-        record("DEBUG_GLOW_LIMIT", now);
-    }
-    if (debug_outputs_.fuel) {
-        const auto threshold = envelope_.minimum_run_exhaust_milli_c;
-        if (threshold > 0 && input.sensors.exhaust.milli_c >= threshold)
-            debug_flame_seen_ = true;
-        if (debug_flame_seen_ && input.sensors.exhaust.milli_c < threshold) {
-            latch_fault(FAULT_FLAME_LOST, now);
-            return;
-        }
-        if (!debug_flame_seen_ && now - debug_fuel_started_ms_ >= kFiringStartupMaximumMs) {
-            latch_fault(FAULT_IGNITION_TIMEOUT, now);
-            return;
-        }
-        if (debug_flame_seen_ && !debug_outputs_.glow &&
-            combustion_monitor_.observe(now, input.sensors, debug_outputs_.speed_code).phase ==
-                combustion::Phase::LOST)
-            latch_fault(FAULT_COMBUSTION_DROP, now);
-    }
+    const auto data_block = sensor_block(sensors, now_ms, settings_.mode == Mode::TEMPERATURE);
+    if (data_block != Block::NONE)
+        return data_block;
+    return sensor_faults(sensors, now_ms) & FAULT_OVER_TEMPERATURE ? Block::INITIAL_THERMAL_STATE
+                                                                   : Block::NONE;
 }
 
 Snapshot Controller::tick(const TickInput &input) {
     const uint64_t now = input.now_ms;
     last_sensors_ = input.sensors;
-    if (input.enter_debug && !input.stop && !input.external_faults && !faults_ &&
-        (state_ == State::IDLE || state_ == State::UNCONFIGURED) && !commissioning_requested_ &&
-        !model_candidate_.valid) {
-        debug_outputs_ = {};
-        debug_heated_ = debug_flame_seen_ = false;
-        debug_deadline_ms_ = now + 5000;
-        run_id_ = next_id_++;
-        transition(State::DEBUG, now);
-        record("DEBUG_ENTER", now);
-    }
-    if (state_ == State::DEBUG) {
-        debug_tick(input);
-        last_tick_ms_ = now;
-        have_tick_ = true;
-        return snapshot(now);
-    }
     if (!envelope_.provisioned && !purging(state_) && state_ != State::FAULT) {
         last_tick_ms_ = now;
         faults_ = input.external_faults;
@@ -434,12 +305,11 @@ Snapshot Controller::tick(const TickInput &input) {
             if (input.stop)
                 ++state_version_;
         } else if (input.enter_maintenance && !faults_ &&
-                   (!debug_heat_configured(envelope_) || cooling_complete(envelope_, input.sensors, now))) {
+                   (!envelope_.provisioned || cooling_complete(envelope_, input.sensors, now))) {
             transition(State::MAINTENANCE, now);
         }
         return snapshot(now);
     }
-    last_sensors_ = input.sensors;
     if (have_tick_ && now < last_tick_ms_) {
         latch_fault(FAULT_CONTROL_WATCHDOG, now);
         last_tick_ms_ = now;
@@ -528,7 +398,8 @@ Snapshot Controller::tick(const TickInput &input) {
         calibrator_ = {};
         commissioning_requested_ = input.start_commissioning;
         commissioning_started_ms_ = now;
-        begin_start(now, input.sensors);
+        commissioning_finished_ms_ = 0;
+        begin_start(now);
         if (commissioning_requested_)
             record("CALIBRATION_START", now);
     }
@@ -541,44 +412,31 @@ Snapshot Controller::tick(const TickInput &input) {
             purge_id_ = 0;
         }
         break;
-    case State::PREPURGE:
-        if (elapsed >= envelope_.prepurge_ms)
-            transition(State::PREHEAT, now);
-        break;
     case State::PREHEAT:
         if (elapsed >= envelope_.preheat_ms) {
-            // Sample immediately before fuel admission, not before a potentially hot glow preparation.
-            ignition_baseline_milli_c_ = input.sensors.exhaust.milli_c;
-            ignition_air_baseline_milli_c_ = input.sensors.air.milli_c;
+            condition_active_ = false;
             transition(State::IGNITION, now);
         }
         break;
     case State::IGNITION:
-        if (elapsed >= envelope_.ignition_ms) {
-            if (static_cast<int64_t>(input.sensors.exhaust.milli_c) - ignition_baseline_milli_c_ >=
-                    envelope_.minimum_ignition_rise_milli_c &&
-                static_cast<int64_t>(input.sensors.air.milli_c) - ignition_air_baseline_milli_c_ >=
-                    envelope_.minimum_ignition_air_rise_milli_c)
-                transition(State::VERIFY, now);
-            else
-                latch_fault(FAULT_IGNITION_TIMEOUT, now);
-        }
-        break;
-    case State::VERIFY:
-        if (elapsed >= envelope_.verify_ms) {
-            if (input.sensors.exhaust.milli_c >= envelope_.minimum_run_exhaust_milli_c &&
-                static_cast<int64_t>(input.sensors.air.milli_c) - ignition_air_baseline_milli_c_ >=
-                    envelope_.minimum_ignition_air_rise_milli_c) {
-                transition(State::RUN, now);
-                regulator_.reset(now, input.sensors.room.milli_c / 1000.0, 1.0);
-                if (commissioning_requested_)
-                    start_commissioning_run(now);
-            } else
-                latch_fault(FAULT_IGNITION_TIMEOUT, now);
+        if (elapsed >= envelope_.ignition_timeout_ms) {
+            latch_fault(FAULT_IGNITION_TIMEOUT, now);
+        } else if (temperature_confirmed(input.sensors.exhaust.sample_ms > state_started_ms_ &&
+                                             input.sensors.exhaust.milli_c >=
+                                                 envelope_.minimum_run_exhaust_milli_c,
+                                         input.sensors.exhaust.sample_ms)) {
+            transition(State::RUN, now);
+            condition_active_ = false;
+            run_speed_code_ = model_.valid && !commissioning_requested_ ? model_.maximum_speed_code
+                                                                        : envelope_.reference_speed_code;
+            regulator_.reset(now, input.sensors.room.milli_c / 1000.0, 1.0);
+            if (commissioning_requested_)
+                start_commissioning_run(now);
         }
         break;
     case State::RUN: {
-        if (input.sensors.exhaust.milli_c < envelope_.minimum_run_exhaust_milli_c)
+        if (temperature_confirmed(input.sensors.exhaust.milli_c < envelope_.minimum_run_exhaust_milli_c,
+                                  input.sensors.exhaust.sample_ms))
             latch_fault(FAULT_FLAME_LOST, now);
         else {
             const auto previous = combustion_monitor_.snapshot().phase;
@@ -587,7 +445,7 @@ Snapshot Controller::tick(const TickInput &input) {
                 record("COMBUSTION_SUSPECT", now);
             if (observed.phase == combustion::Phase::LOST)
                 latch_fault(FAULT_COMBUSTION_DROP, now);
-            else if (observed.phase != combustion::Phase::SUSPECT) {
+            else if (!condition_active_ && observed.phase != combustion::Phase::SUSPECT) {
                 // Do not change the command or learn a new calibration point while a drop is being checked.
                 if (commissioning_requested_)
                     run_commissioning(now, input.sensors);
@@ -624,16 +482,14 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.boot_id = boot_id_;
     result.run_id = run_id_;
     result.reset_fault_block = reset_fault_guard(last_sensors_, now_ms, previous_external_faults_);
-    result.debug_remaining_ms = state_ == State::DEBUG ? remaining(now_ms, debug_deadline_ms_) : 0;
-    result.debug_heat_block = debug_heat_guard(last_sensors_, now_ms);
     result.duration_active = duration_active_;
     result.duration_remaining_ms = duration_active_ ? remaining(now_ms, duration_deadline_ms_) : 0;
     result.purge_active = purging(state_);
     result.purge_id = result.purge_active ? purge_id_ : 0;
     const uint64_t purge_deadline =
-        purge_started_ms_ > std::numeric_limits<uint64_t>::max() - purge_minimum_ms_
+        purge_started_ms_ > std::numeric_limits<uint64_t>::max() - envelope_.postpurge_ms
             ? std::numeric_limits<uint64_t>::max()
-            : purge_started_ms_ + purge_minimum_ms_;
+            : purge_started_ms_ + envelope_.postpurge_ms;
     result.purge_minimum_remaining_ms = result.purge_active ? remaining(now_ms, purge_deadline) : 0;
     result.purge_sensors_fresh = result.purge_active && thermal_sensors_fresh(last_sensors_, now_ms);
     result.purge_temperature_ready =
@@ -655,12 +511,12 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     if (result.start_block == Block::NONE && !model_.valid)
         result.start_block = Block::MODEL_UNAVAILABLE;
     result.combustion = combustion_monitor_.snapshot();
-    if (state_ != State::RUN && state_ != State::DEBUG && result.combustion.phase != combustion::Phase::LOST)
+    if (state_ != State::RUN && result.combustion.phase != combustion::Phase::LOST)
         result.combustion = {};
     result.learned_model = model_;
-    result.command_percent = envelope_.reference_speed_code
-                                 ? 100.0 * result.outputs.speed_code / envelope_.reference_speed_code
-                                 : 0;
+    const auto command_maximum = model_.valid && !commissioning_requested_ ? model_.maximum_speed_code
+                                                                           : envelope_.reference_speed_code;
+    result.command_percent = command_maximum ? 100.0 * result.outputs.speed_code / command_maximum : 0;
     result.working_span_fraction = regulator_.value().fraction;
     const auto cal = calibrator_.snapshot(now_ms);
     auto &commissioning = result.commissioning;
@@ -680,10 +536,9 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
                                                       : commissioning_reason(cal.reason);
     commissioning.target_speed_code = cal.target_code;
     commissioning.accepted_point_count = cal.accepted_point_count;
+    const uint64_t calibration_end = commissioning.active ? now_ms : commissioning_finished_ms_;
     commissioning.elapsed_ms =
-        now_ms >= commissioning_started_ms_ && (commissioning.active || cal.phase != calibration::Phase::IDLE)
-            ? now_ms - commissioning_started_ms_
-            : 0;
+        calibration_end >= commissioning_started_ms_ ? calibration_end - commissioning_started_ms_ : 0;
     commissioning.source_envelope_fingerprint = envelope_fingerprint(envelope_);
     commissioning.installed_model_fingerprint = model_.valid ? model_.fingerprint : 0;
     commissioning.installed_model_revision = model_.valid ? model_.provenance.revision : 0;
@@ -691,7 +546,8 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
                               ? commissioning_configuration_block(envelope_, settings_)
                               : common_start_block;
     result.room_excess = !commissioning.active && state_ == State::RUN &&
-                         settings_.mode == Mode::TEMPERATURE && last_sensors_.room.valid &&
+                         settings_.mode == Mode::TEMPERATURE &&
+                         room_temperature_fresh(last_sensors_.room, now_ms) &&
                          last_sensors_.room.milli_c > settings_.room_setpoint_milli_c &&
                          (!model_.valid || result.working_span_fraction <= 0.001);
     return result;
@@ -711,7 +567,8 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
     model_storage_sealed_ = model_storage_unconfirmed_ = false;
     calibrator_ = {};
     commissioning_config_ = {};
-    commissioning_started_ms_ = commissioning_control_ms_ = 0;
+    commissioning_started_ms_ = 0;
+    commissioning_finished_ms_ = 0;
     commissioning_logged_phase_ = calibration::Phase::IDLE;
     combustion_monitor_ = {};
     regulator_ = Regulator{};
@@ -719,7 +576,7 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
     if (++state_version_ == 0)
         state_version_ = 1;
     if (was_unconfigured || !envelope_.provisioned) {
-        if (recover && debug_heat_configured(envelope_))
+        if (recover && envelope_.provisioned)
             begin_purge(faults_ ? State::FAULT_PURGE : State::RECOVERY_PURGE, now_ms);
         else
             transition(faults_ ? State::FAULT : (envelope_.provisioned ? State::IDLE : State::UNCONFIGURED),
@@ -730,14 +587,13 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
 }
 
 bool Controller::update_settings(const Settings &settings) {
-    if (!valid_settings(settings) || state_ == State::DEBUG || state_ == State::MAINTENANCE ||
-        commissioning_requested_ || combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT ||
-        model_candidate_.valid)
+    if (!valid_settings(settings) || state_ == State::MAINTENANCE || commissioning_requested_ ||
+        combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT || model_candidate_.valid)
         return false;
     Settings accepted = settings;
     if (active(state_) && settings_.mode == Mode::TEMPERATURE && settings.mode == Mode::MANUAL &&
-        envelope_.reference_speed_code) {
-        const long step = std::lround(20.0 * run_speed_code_ / envelope_.reference_speed_code);
+        model_.valid && model_.maximum_speed_code) {
+        const long step = std::lround(20.0 * run_speed_code_ / model_.maximum_speed_code);
         accepted.manual_percent = static_cast<uint8_t>(std::clamp(step * 5, 5L, 100L));
     }
     accepted.manual_percent = std::max(accepted.manual_percent, minimum_manual_percent(model_));
@@ -747,8 +603,8 @@ bool Controller::update_settings(const Settings &settings) {
 }
 
 bool Controller::install_learned_model(const LearnedOperatingModel &model) {
-    if (active(state_) || state_ == State::DEBUG || state_ == State::MAINTENANCE || !envelope_.provisioned ||
-        !model.valid || model.provenance.revision == 0 ||
+    if (active(state_) || state_ == State::MAINTENANCE || !envelope_.provisioned || !model.valid ||
+        model.provenance.revision == 0 ||
         model.provenance.safety_envelope_fingerprint != envelope_fingerprint(envelope_) ||
         model.fingerprint != learned_model_fingerprint(model) || !envelope_.exploration_floor_code ||
         model.minimum_speed_code < envelope_.exploration_floor_code ||
@@ -763,6 +619,7 @@ bool Controller::install_learned_model(const LearnedOperatingModel &model) {
             model.provenance.commissioning_completed_ms - model.provenance.commissioning_started_ms)
         return false;
     model_ = model;
+    settings_.manual_percent = std::max(settings_.manual_percent, minimum_manual_percent(model_));
     run_speed_code_ = envelope_.reference_speed_code;
     ++state_version_;
     return true;
@@ -928,14 +785,10 @@ const char *state_name(State state) {
         return "RECOVERY_PURGE";
     case State::IDLE:
         return "IDLE";
-    case State::PREPURGE:
-        return "PREPURGE";
     case State::PREHEAT:
         return "PREHEAT";
     case State::IGNITION:
         return "IGNITION";
-    case State::VERIFY:
-        return "VERIFY";
     case State::RUN:
         return "RUN";
     case State::STOP_PURGE:
@@ -944,8 +797,6 @@ const char *state_name(State state) {
         return "FAULT_PURGE";
     case State::FAULT:
         return "FAULT";
-    case State::DEBUG:
-        return "DEBUG";
     case State::MAINTENANCE:
         return "MAINTENANCE";
     }
@@ -984,6 +835,8 @@ const char *block_name(Block block) {
         return "SENSOR_STALE";
     case Block::MODEL_UNAVAILABLE:
         return "MODEL_UNAVAILABLE";
+    case Block::CALIBRATION_TOO_SLOW:
+        return "CALIBRATION_TOO_SLOW";
     }
     return "UNKNOWN";
 }

@@ -66,13 +66,9 @@ Snapshot Monitor::observe(uint64_t now, const Sensors &sensors, uint16_t command
         return snapshot_;
     const auto &exhaust = sensors.exhaust;
     const auto &air = sensors.air;
-    const auto fresh = [now](const SensorSample &s) {
-        return s.valid && !s.status && s.sample_ms <= now && now - s.sample_ms <= kSensorStaleMs &&
-               s.milli_c >= kThermocoupleMinimumMilliC && s.milli_c < kProcessMeasurementCeilingMilliC;
-    };
     const auto skew = exhaust.sample_ms > air.sample_ms ? exhaust.sample_ms - air.sample_ms
                                                         : air.sample_ms - exhaust.sample_ms;
-    if (!fresh(exhaust) || !fresh(air) || skew > 250 ||
+    if (!thermocouple_fresh(exhaust, now) || !thermocouple_fresh(air, now) || skew > 250 ||
         (have_timestamps_ &&
          (now < last_now_ms_ || exhaust.sample_ms < last_exhaust_ms_ || air.sample_ms < last_air_ms_))) {
         clear_window();

@@ -26,7 +26,8 @@ int main() {
         input_value.sensors.room.milli_c = room;
         return controller.tick(input_value);
     };
-    tick(20000);
+    while (now < kRunAt - 100)
+        tick(20000);
     auto state = tick(20000);
     assert(state.state == State::RUN);
     const auto fingerprint = state.learned_model.fingerprint;
@@ -56,8 +57,38 @@ int main() {
     assert(!restored.snapshot(0).outputs.fuel);
     auto start = input(100);
     start.start = true;
-    assert(restored.tick(start).state == State::PREPURGE);
+    assert(restored.tick(start).state == State::PREHEAT);
     assert(!restored.snapshot(100).commissioning.active);
+
+    // A narrowed model uses its own maximum for display and auto/manual transfer.
+    auto narrowed = model();
+    narrowed.maximum_speed_code = 1500;
+    narrowed.fingerprint = learned_model_fingerprint(narrowed);
+    for (bool recalibrate : {false, true}) {
+        Settings stored{};
+        stored.manual_percent = 60;
+        Controller narrowed_control(envelope(), stored, 12, Startup::CLEAN);
+        assert(narrowed_control.install_learned_model(narrowed));
+        assert(narrowed_control.settings().manual_percent == 80);
+        auto begin = input(120);
+        begin.start = !recalibrate;
+        begin.start_commissioning = recalibrate;
+        assert(narrowed_control.tick(begin).state == State::PREHEAT);
+        narrowed_control.tick(input(kIgnitionAt));
+        auto active = confirm_ignition(narrowed_control);
+        assert(active.outputs.speed_code == (recalibrate ? envelope().reference_speed_code : 1500));
+        assert(active.command_percent == 100.0);
+        if (!recalibrate) {
+            auto manual = narrowed_control.settings();
+            manual.mode = Mode::MANUAL;
+            assert(narrowed_control.update_settings(manual));
+            assert(narrowed_control.settings().manual_percent == 100);
+            assert(narrowed_control.tick(input(kRunAt + 100, 50000)).outputs.speed_code == 1500);
+        } else {
+            active = narrowed_control.tick(input(kRunAt + 100, 50000));
+            assert(active.commissioning.active && !active.faults);
+        }
+    }
 
     // Explicit STOP and a thermocouple fault still override comfort control.
     auto faulted = controller;

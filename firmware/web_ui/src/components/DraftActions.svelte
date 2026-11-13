@@ -18,7 +18,10 @@
   </div>
 {:else if draft.dirty}
   <div class="form-actions">
-    <button class="primary" disabled={!enabled} onclick={save}>{label}</button
-    ><button class="secondary" disabled={busy} onclick={reset}>Отменить</button>
+    <button class="primary" disabled={!enabled || busy} onclick={save}
+      >{label}</button
+    ><button class="secondary" disabled={busy} onclick={reset}
+      >Отменить изменения</button
+    >
   </div>
 {/if}

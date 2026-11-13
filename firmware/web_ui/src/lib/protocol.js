@@ -2,14 +2,7 @@ export const MINIMUM_SLEW_PER_S = 0.0001;
 export const MAXIMUM_SLEW_PER_S = 0.005;
 export const MAX_TIMER_MINUTES = 10_080;
 
-export const ACTIVE_SESSION_STATES = new Set([
-  "PREPURGE",
-  "PREHEAT",
-  "IGNITION",
-  "VERIFY",
-  "RUN",
-  "DEBUG",
-]);
+export const ACTIVE_SESSION_STATES = new Set(["PREHEAT", "IGNITION", "RUN"]);
 export const TIMER_CONFIRMATION_EARLY_MS = 1_000;
 export const TIMER_CONFIRMATION_LATE_MS = 5_000;
 export function isRecord(value) {
@@ -86,7 +79,8 @@ export function millisecondsFromMinutes(value) {
 }
 
 export function validateSettings(settings) {
-  if (!isRecord(settings)) throw new TypeError("Нет полного снимка настроек");
+  if (!isRecord(settings))
+    throw new TypeError("Не получены настройки контроллера");
   const setpoint = Number(settings.room_setpoint_milli_c);
   const manual = Number(settings.manual_percent);
   const duration = Number(settings.duration_ms);
@@ -98,40 +92,40 @@ export function validateSettings(settings) {
     setpoint > 30_000 ||
     setpoint % 1_000 !== 0
   )
-    throw new RangeError("Уставка: 15…30 °C");
+    throw new RangeError("Температура помещения: 15…30 °C");
   if (
     !Number.isSafeInteger(duration) ||
     duration < 0 ||
     duration > MAX_TIMER_MINUTES * 60_000
   )
-    throw new RangeError("Длительность: 0…10080 минут");
+    throw new RangeError("Таймер остановки: 0…10080 минут");
   if (!["TEMPERATURE", "MANUAL"].includes(settings.mode))
-    throw new RangeError("Неизвестный режим");
+    throw new RangeError("Неизвестный режим отопления");
   if (
     !Number.isInteger(manual) ||
     manual < 5 ||
     manual > 100 ||
     manual % 5 !== 0
   )
-    throw new RangeError("Ручная команда: 5…100 % с шагом 5");
+    throw new RangeError("Уровень двигателя: 5…100 % с шагом 5");
   if (
     !Number.isFinite(up) ||
     up < MINIMUM_SLEW_PER_S ||
     up > MAXIMUM_SLEW_PER_S
   )
-    throw new RangeError("Нарастание: 0,0001…0,005 /с");
+    throw new RangeError("Темп увеличения ШИМ вне диапазона 0,0001…0,005 /с");
   if (
     !Number.isFinite(down) ||
     down < MINIMUM_SLEW_PER_S ||
     down > MAXIMUM_SLEW_PER_S
   )
-    throw new RangeError("Снижение: 0,0001…0,005 /с");
+    throw new RangeError("Темп уменьшения ШИМ вне диапазона 0,0001…0,005 /с");
   return settings;
 }
 
 export function fullSettingsPayload(currentSettings, edits = {}) {
   if (!isRecord(currentSettings) || !isRecord(edits))
-    throw new TypeError("Нет полного снимка настроек");
+    throw new TypeError("Не получены настройки контроллера");
   const payload = { ...cloneJson(currentSettings), ...edits };
   validateSettings(payload);
   return payload;
@@ -173,7 +167,7 @@ export function modelRevisionPayload(currentModel, edits = {}) {
     !isRecord(currentModel.provenance)
   ) {
     throw new TypeError(
-      "Нет сохранённой LearnedOperatingModel для ручной коррекции",
+      "Нет сохранённой калибровки для изменения диапазона ШИМ",
     );
   }
   if (
@@ -184,10 +178,10 @@ export function modelRevisionPayload(currentModel, edits = {}) {
     !finiteSlew(currentModel.slew_up_per_s) ||
     !finiteSlew(currentModel.slew_down_per_s)
   ) {
-    throw new TypeError("Снимок LearnedOperatingModel имеет недопустимые поля");
+    throw new TypeError("Контроллер передал некорректные данные калибровки");
   }
   if (!isRecord(edits))
-    throw new TypeError("Коррекция модели должна быть объектом");
+    throw new TypeError("Неверный формат изменений калибровки");
   const revision = {
     expected_revision: currentModel.provenance.revision,
     minimum_speed_code: currentModel.minimum_speed_code,
@@ -202,16 +196,14 @@ export function modelRevisionPayload(currentModel, edits = {}) {
     keys.length !== expected.length ||
     keys.some((key, index) => key !== expected[index])
   ) {
-    throw new TypeError(
-      "Коррекция модели должна содержать ровно поля MODEL_REVISION",
-    );
+    throw new TypeError("Неверный набор параметров для изменения калибровки");
   }
   if (
     !safeRevision(revision.expected_revision) ||
     revision.expected_revision >= 0xffffffff ||
     revision.expected_revision !== currentModel.provenance.revision
   ) {
-    throw new RangeError("Ожидаемая ревизия модели не соответствует снимку");
+    throw new RangeError("Калибровка уже изменена. Загрузите текущие значения");
   }
   if (
     !safeSpeedCode(revision.minimum_speed_code) ||
@@ -219,14 +211,14 @@ export function modelRevisionPayload(currentModel, edits = {}) {
     revision.minimum_speed_code >= revision.maximum_speed_code
   ) {
     throw new RangeError(
-      "Границы модели: целые PWM 0…65535, минимум строго меньше максимума",
+      "Границы ШИМ: целые числа 0…65535; минимум должен быть меньше максимума",
     );
   }
   if (
     !finiteSlew(revision.slew_up_per_s) ||
     !finiteSlew(revision.slew_down_per_s)
   ) {
-    throw new RangeError("Скорости модели: конечные значения 0,0001…0,005 /с");
+    throw new RangeError("Темп изменения ШИМ: 0,0001…0,005 /с");
   }
   if (
     revision.minimum_speed_code < currentModel.minimum_speed_code ||
@@ -235,7 +227,7 @@ export function modelRevisionPayload(currentModel, edits = {}) {
     revision.slew_down_per_s > currentModel.slew_down_per_s
   ) {
     throw new RangeError(
-      "Разрешено только сузить сохранённый диапазон и замедлить нарастание/снижение",
+      "Можно только сузить диапазон ШИМ и уменьшить темп его изменения",
     );
   }
   return revision;
@@ -360,15 +352,6 @@ export function commandMatchesSnapshot(pending, snapshot) {
     return false;
   const { action, payload, baseline } = pending;
   switch (action) {
-    case "DEBUG_ENTER":
-      return snapshot.state?.code === "DEBUG";
-    case "DEBUG_SET":
-      return (
-        snapshot.state?.code === "DEBUG" &&
-        ["speed_code", "glow", "fuel"].every(
-          (key) => snapshot.outputs?.[key] === payload[key],
-        )
-      );
     case "SETTINGS":
       return settingsChangesMatch(baseline, payload.settings, snapshot);
     case "START":
@@ -385,16 +368,12 @@ export function commandMatchesSnapshot(pending, snapshot) {
       return modelRevisionMatches(payload.revision, snapshot?.learned_model);
     case "PROFILE":
       return (
-        snapshot.envelope?.parameters &&
         snapshot.storage_ok === true &&
-        deepEqual(payload.envelope, snapshot.envelope.parameters) &&
+        deepEqual(payload.envelope, snapshot.envelope?.parameters) &&
         snapshot.learned_model?.valid === false
       );
     case "RESET_FAULT":
-      return (
-        ["IDLE", "UNCONFIGURED"].includes(snapshot.state?.code) &&
-        !hasFault(snapshot)
-      );
+      return snapshot.state?.code === "IDLE" && !hasFault(snapshot);
 
     case "STOP":
       return (

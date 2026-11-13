@@ -8,6 +8,7 @@
     commandReason,
     connectionReady,
     blockedActionLink,
+    calibrationStatus,
     stateText,
     timerLabel,
   } from "../lib/presentation.js";
@@ -25,31 +26,23 @@
   const process = $derived(
     snapshot.purge?.active ||
       snapshot.commissioning.active ||
-      [
-        "DEBUG",
-        "PREPURGE",
-        "PREHEAT",
-        "IGNITION",
-        "VERIFY",
-        "FAULT",
-        "MAINTENANCE",
-      ].includes(snapshot.state.code),
+      ["PREHEAT", "IGNITION", "FAULT", "MAINTENANCE"].includes(
+        snapshot.state.code,
+      ),
   );
   const processText = $derived(
-    snapshot.commissioning.active
-      ? snapshot.commissioning.phase.ru
-      : snapshot.purge?.active
-        ? snapshot.purge.minimum_remaining_ms > 0
-          ? `Ещё не менее ${formatDuration(snapshot.purge.minimum_remaining_ms)}`
-          : snapshot.purge.sensors_fresh
-            ? "Ожидаем охлаждения"
-            : "Нет свежих показаний термопар"
+    snapshot.purge?.active
+      ? snapshot.purge.minimum_remaining_ms > 0
+        ? `Охлаждение ещё не менее ${formatDuration(snapshot.purge.minimum_remaining_ms)}`
+        : snapshot.purge.sensors_fresh
+          ? `Ждём выхлоп ниже ${snapshot.envelope.parameters.cooling_exhaust_milli_c / 1000} °C`
+          : "Нет свежих показаний термопар"
+      : snapshot.commissioning.active && snapshot.state.code === "RUN"
+        ? calibrationStatus(snapshot).title
         : {
-            DEBUG: "Выходами управляет режим отладки",
-            PREHEAT: "Разогрев свечи",
-            IGNITION: "Подача топлива и розжиг",
-            VERIFY: "Проверка горения",
-            FAULT: "Нагрев остановлен",
+            PREHEAT: "Двигатель и муфта выключены",
+            IGNITION: "Двигатель, муфта и свеча включены",
+            FAULT: "Свеча и муфта выключены",
             MAINTENANCE: "Установка новой версии",
           }[snapshot.state.code] || "",
   );
@@ -116,7 +109,7 @@
       )}
   />
   {#if handoff}<p class="caption centered">
-      Ручной режим начнётся с текущих оборотов
+      Ручной режим начнётся с текущего ШИМ двигателя
     </p>{/if}
   {#if snapshot.room_excess}<p class="caption centered">
       Температура достигнута
@@ -124,6 +117,9 @@
 {/snippet}
 <div class="page-heading">
   <h1>Отопление</h1>
+  {#if manual}<p class="caption">
+      % от максимального ШИМ сохранённой калибровки
+    </p>{/if}
   {#if !process}<span class="state-label" class:heating={active}
       ><i></i>{stateText(snapshot)}</span
     >{/if}
@@ -135,7 +131,13 @@
         <div class="process-icon" class:cooling={snapshot.purge?.active}>
           <Icon name={snapshot.purge?.active ? "fan" : "heat"} size={36} />
         </div>
-        <h2>{stateText(snapshot)}</h2>
+        <h2>
+          {snapshot.commissioning.active && snapshot.state.code === "RUN"
+            ? "Калибровка"
+            : snapshot.commissioning.active && snapshot.state.code === "IDLE"
+              ? calibrationStatus(snapshot).title
+              : stateText(snapshot)}
+        </h2>
         <p class="caption">{processText}</p>
       </div>
       <details class="stage-settings">

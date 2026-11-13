@@ -11,7 +11,7 @@
   let chartWidth = $state(320);
   const plot = $derived(historyPlot(points, channel, chartWidth));
   const label = $derived(
-    { exhaust: "Выхлоп", air: "Выход воздуха", room: "Помещение" }[channel],
+    { exhaust: "Выхлоп", air: "Нагретый воздух", room: "Помещение" }[channel],
   );
   const minutes = $derived(
     plot ? Math.max(1, Math.round((plot.last - plot.first) / 60000)) : 0,
@@ -59,11 +59,11 @@
   aria-label="История температур"
 >
   <div class="history-heading">
-    <h2>История</h2>
+    <h2>История температур</h2>
     {#if plot}<span>{minutes} мин · °C</span>{/if}
   </div>
   <div class="segmented" role="group" aria-label="Датчик на графике">
-    {#each [["exhaust", "Выхлоп"], ["air", "Воздух"], ["room", "Помещение"]] as [id, title]}
+    {#each [["exhaust", "Выхлоп"], ["air", "Нагретый воздух"], ["room", "Помещение"]] as [id, title]}
       <button aria-pressed={channel === id} onclick={() => (channel = id)}
         >{title}</button
       >
@@ -106,15 +106,18 @@
         <text x="40" y="198">−{minutes} мин</text><text
           x={chartWidth - 16}
           y="198"
-          text-anchor="end"
-          >{online && !error ? "Последнее" : "Сохранённое"}</text
+          text-anchor="end">Последний замер</text
         >
       </svg>
     {:else}<p class="empty">
-        {error ? "История временно недоступна" : "Ожидаем измерения"}
+        {error
+          ? "Не удалось загрузить историю температур"
+          : "Ожидаем измерения"}
       </p>{/if}
   </div>
-  {#if error && plot}<p class="caption">История пока не обновляется</p>{/if}
+  {#if error && plot}<p class="caption">
+      Не получены новые данные для графика
+    </p>{/if}
 </section>
 
 <style>

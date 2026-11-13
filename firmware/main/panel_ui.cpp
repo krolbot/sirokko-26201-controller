@@ -102,9 +102,8 @@ bool Model::settings_changes_match(const sirokko::Settings &baseline, const siro
 }
 
 bool Model::is_active_session(sirokko::State state) {
-    return state == sirokko::State::PREPURGE || state == sirokko::State::PREHEAT ||
-           state == sirokko::State::IGNITION || state == sirokko::State::VERIFY ||
-           state == sirokko::State::RUN || state == sirokko::State::DEBUG;
+    return state == sirokko::State::PREHEAT || state == sirokko::State::IGNITION ||
+           state == sirokko::State::RUN;
 }
 
 bool Model::is_fault_or_stop(sirokko::State state) {

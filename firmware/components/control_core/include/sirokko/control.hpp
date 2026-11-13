@@ -14,6 +14,8 @@ constexpr uint16_t kPwmMaximum = 4014;
 constexpr uint64_t kPreheatMinimumMs = 30000;
 constexpr uint64_t kPreheatMaximumMs = 60000;
 constexpr uint64_t kFiringStartupMaximumMs = 90000;
+// Software debounce across distinct fresh thermocouple samples, not a flame-detector rating.
+constexpr uint64_t kTemperatureConfirmationMs = 1000;
 constexpr uint64_t kPostpurgeMinimumMs = 150000;
 // MAX31856 datasheet, Table 1: K-type measurement range starts at -200 C.
 // Sensor plausibility bound, not a qualified heater operating temperature.
@@ -38,16 +40,13 @@ enum class State : uint8_t {
     UNCONFIGURED,
     RECOVERY_PURGE,
     IDLE,
-    PREPURGE,
     PREHEAT,
     IGNITION,
-    VERIFY,
     RUN,
     STOP_PURGE,
     FAULT_PURGE,
     FAULT,
     MAINTENANCE,
-    DEBUG,
 };
 
 enum class Block : uint8_t {
@@ -66,6 +65,7 @@ enum class Block : uint8_t {
     LOCAL_CONTROLS_UNAVAILABLE,
     INITIALIZING,
     STORAGE_UNAVAILABLE,
+    CALIBRATION_TOO_SLOW,
 };
 
 enum Fault : uint32_t {
@@ -96,18 +96,18 @@ struct Sensors {
     SensorSample room;
 };
 
+bool thermocouple_valid(const SensorSample &sample);
+bool room_temperature_valid(const SensorSample &sample);
+bool thermocouple_fresh(const SensorSample &sample, uint64_t now_ms);
+bool room_temperature_fresh(const SensorSample &sample, uint64_t now_ms);
+
 struct SafetyEnvelope {
     bool provisioned{};
-    uint64_t recovery_purge_ms{};
-    uint64_t prepurge_ms{};
     uint64_t preheat_ms{kPreheatMinimumMs};
-    uint64_t ignition_ms{};
-    uint64_t verify_ms{};
+    uint64_t ignition_timeout_ms{kFiringStartupMaximumMs};
     uint64_t postpurge_ms{kPostpurgeMinimumMs};
     int32_t cooling_exhaust_milli_c{40000};
     int32_t maximum_exhaust_milli_c{};
-    int32_t maximum_air_milli_c{};
-    int32_t minimum_ignition_rise_milli_c{};
     int32_t minimum_run_exhaust_milli_c{};
     // Initial command for the installed two-wire drive on a regulated 24 V supply.
     // This is the controller ceiling, not measured RPM or a qualified lower limit.
@@ -115,7 +115,6 @@ struct SafetyEnvelope {
     uint16_t reference_speed_code{kPwmMaximum};
     // Explicit trial envelope; zero forbids automatic exploration, not an invented motor minimum.
     uint16_t exploration_floor_code{};
-    int32_t minimum_ignition_air_rise_milli_c{};
 };
 
 struct Settings {
@@ -268,9 +267,7 @@ struct Outputs {
 };
 
 bool valid_profile_draft(const SafetyEnvelope &profile);
-bool debug_heat_configured(const SafetyEnvelope &profile);
 bool cooling_complete(const SafetyEnvelope &profile, const Sensors &sensors, uint64_t now_ms);
-bool valid_debug_outputs(const Outputs &outputs);
 
 struct TickInput {
     uint64_t now_ms{};
@@ -283,9 +280,6 @@ struct TickInput {
     bool exit_maintenance{};
     bool start_commissioning{};
     bool cycle_record_ready{};
-    bool enter_debug{};
-    bool set_debug_outputs{};
-    Outputs debug_outputs{};
     bool set_shutdown_timer{};
     uint64_t shutdown_after_ms{}; // 0 cancels an active timer.
     bool operator_combustion_problem{};
@@ -311,8 +305,6 @@ struct Snapshot {
     double working_span_fraction{};
     bool room_excess{};
     bool envelope_provisioned{};
-    uint64_t debug_remaining_ms{};
-    Block debug_heat_block{Block::ENVELOPE_MISSING};
     LearnedOperatingModel learned_model{};
     CommissioningSnapshot commissioning{};
     combustion::Snapshot combustion{};
@@ -327,8 +319,6 @@ enum class Action : uint8_t {
     TIMER,
     MODEL_REVISION,
     PROFILE,
-    DEBUG_ENTER,
-    DEBUG_SET
 };
 
 struct Grant {
@@ -377,7 +367,6 @@ class Controller {
     size_t event_count() const { return event_count_; }
 
   private:
-    bool sensors_fresh(const Sensors &sensors, uint64_t now_ms) const;
     bool thermal_sensors_fresh(const Sensors &sensors, uint64_t now_ms) const;
     void record(const char *kind, uint64_t now_ms);
     void regulate(uint64_t now_ms, const Sensors &sensors);
@@ -390,19 +379,12 @@ class Controller {
     void transition(State state, uint64_t now_ms);
     void begin_purge(State state, uint64_t now_ms);
     bool purge_ready(const Sensors &sensors, uint64_t now_ms) const;
-    void begin_start(uint64_t now_ms, const Sensors &sensors);
+    void begin_start(uint64_t now_ms);
+    bool temperature_confirmed(bool condition, uint64_t sample_ms);
     void begin_stop(uint64_t now_ms, bool preserve_calibration_candidate = false);
     void latch_fault(uint32_t faults, uint64_t now_ms);
     Outputs outputs() const;
-    Block debug_heat_guard(const Sensors &sensors, uint64_t now_ms) const;
-    void debug_tick(const TickInput &input);
 
-    Outputs debug_outputs_{};
-    uint64_t debug_deadline_ms_{};
-    uint64_t debug_glow_started_ms_{};
-    uint64_t debug_fuel_started_ms_{};
-    bool debug_heated_{};
-    bool debug_flame_seen_{};
     SafetyEnvelope envelope_;
     Settings settings_;
     Sensors last_sensors_;
@@ -415,9 +397,9 @@ class Controller {
     uint64_t run_id_{};
     uint64_t purge_id_{};
     uint64_t purge_started_ms_{};
-    uint64_t purge_minimum_ms_{};
     uint64_t duration_deadline_ms_{};
-    int32_t ignition_baseline_milli_c_{};
+    uint64_t condition_started_ms_{}, condition_sample_ms_{};
+    bool condition_active_{};
     bool duration_active_{};
     uint32_t previous_external_faults_{};
     LearnedOperatingModel model_;
@@ -433,10 +415,9 @@ class Controller {
     // A sealed write failure is indeterminate until a later boot/load verifies NVS.
     bool model_storage_unconfirmed_{};
     uint64_t commissioning_started_ms_{};
-    uint64_t commissioning_control_ms_{};
+    uint64_t commissioning_finished_ms_{};
     calibration::Phase commissioning_logged_phase_{calibration::Phase::IDLE};
     double run_speed_code_{};
-    int32_t ignition_air_baseline_milli_c_{};
     uint64_t last_tick_ms_{};
     bool have_tick_{};
     std::array<ControlEvent, 16> events_{};

@@ -204,7 +204,6 @@ inline bool ota_control_safe(const Snapshot &state, const Sensors &sensors, cons
                              uint64_t now_ms) {
     return state.state == sirokko::State::MAINTENANCE && !state.faults && !state.outputs.fuel &&
            !state.outputs.glow && !state.outputs.fan_request &&
-           ((!envelope.provisioned && !sirokko::debug_heat_configured(envelope)) ||
-            sirokko::cooling_complete(envelope, sensors, now_ms));
+           (!envelope.provisioned || sirokko::cooling_complete(envelope, sensors, now_ms));
 }
 } // namespace sirokko

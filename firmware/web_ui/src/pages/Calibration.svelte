@@ -7,11 +7,15 @@
     commandReason,
     connectionReady,
     blockedActionLink,
+    calibrationStatus,
   } from "../lib/presentation.js";
+  import { missingHeaterFields } from "../lib/heater.js";
   import { modelRevisionPayload, formatDuration } from "../lib/protocol.js";
   let { ui, session, draft, notify } = $props();
   const snapshot = $derived(ui.snapshot);
   const calibration = $derived(snapshot.commissioning);
+  const status = $derived(calibrationStatus(snapshot));
+  const missing = $derived(missingHeaterFields(snapshot.envelope));
   const model = $derived(snapshot.learned_model);
   const ready = $derived(connectionReady(ui));
   const help = $derived(blockedActionLink(snapshot, "CALIBRATE"));
@@ -37,31 +41,26 @@
 <div class="page-heading"><h1>Калибровка</h1></div>
 <section class="process-card surface">
   <div class="process-icon">
-    <Icon
-      name={model.valid && !calibration.active ? "check" : "heat"}
-      size={32}
-    />
+    <Icon name={status.icon} size={32} />
   </div>
   <h2>
-    {calibration.active
-      ? calibration.phase.ru
-      : model.valid
-        ? "Калибровка выполнена"
-        : "Автоматическая калибровка"}
+    {status.title}
   </h2>
   {#if calibration.active}
     <dl class="reading-list">
       <div>
-        <dt>Измерено точек</dt>
+        <dt>Проверено значений ШИМ</dt>
         <dd>{calibration.accepted_point_count}</dd>
       </div>
       <div>
-        <dt>Прошло</dt>
+        <dt>Время калибровки</dt>
         <dd>{formatDuration(calibration.elapsed_ms)}</dd>
       </div>
     </dl>
   {:else if commandAllowed(snapshot, "CALIBRATE")}
-    <p class="caption">Во время калибровки отопитель будет работать</p>
+    <p class="caption">
+      Калибровка запустит отопитель и будет менять ШИМ двигателя
+    </p>
     <button
       class="primary full-width"
       disabled={!ready}
@@ -69,6 +68,11 @@
       >{model.valid ? "Повторить калибровку" : "Начать калибровку"}</button
     >
   {:else}<p class="caption">{commandReason(snapshot, "CALIBRATE")}</p>
+    {#if snapshot.commands?.CALIBRATE?.code === "ENVELOPE_MISSING" && missing.length}
+      <ul class="missing-parameters">
+        {#each missing as [, label]}<li>{label}</li>{/each}
+      </ul>
+    {/if}
     {#if help}<a class="secondary" href={help.href}>{help.label}</a>{/if}{/if}
   {#if calibration.reason?.code && !["NONE", "COMPLETE"].includes(calibration.reason.code)}<p
       class="caption"
@@ -78,9 +82,11 @@
 </section>
 <History {snapshot} api={session.api} online={ui.link === "online"} />
 {#if model.valid && draft.value}<details class="surface advanced section">
-    <summary>Рабочий диапазон<Icon name="chevron" size={16} /></summary>
+    <summary>Диапазон ШИМ двигателя<Icon name="chevron" size={16} /></summary>
     <div class="disclosure-body">
-      <p class="caption">Диапазон можно сузить после калибровки</p>
+      <p class="caption">
+        Границы ШИМ для нагрева. После калибровки диапазон можно сузить.
+      </p>
       {#each [["minimum_speed_code", "Минимум ШИМ"], ["maximum_speed_code", "Максимум ШИМ"]] as [field, label]}
         <label
           >{label}<input
@@ -106,3 +112,16 @@
       />
     </div>
   </details>{/if}
+
+<style>
+  .missing-parameters {
+    padding-left: 20px;
+    margin: 16px 0;
+    text-align: left;
+    color: var(--secondary);
+    font-size: 14px;
+  }
+  .missing-parameters li + li {
+    margin-top: 8px;
+  }
+</style>

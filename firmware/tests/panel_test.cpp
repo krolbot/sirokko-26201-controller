@@ -96,8 +96,8 @@ void synchronization() {
     assert(panel.screen().notice == Notice::NONE);
 
     auto running = ignition();
-    running.tick(input(kIgnitionAt + 100, 50000, 30000));
-    auto in = input(kIgnitionAt + 200, 50000, 30000);
+    confirm_ignition(running);
+    auto in = input(kRunAt + 20, 50000, 30000);
     in.set_shutdown_timer = true;
     in.shutdown_after_ms = 600000;
     view.control = running.tick(in);
@@ -129,11 +129,6 @@ void synchronization() {
 } // namespace
 
 int main() {
-    panel_ui::View debug_view{};
-    debug_view.control.state = sirokko::State::DEBUG;
-    debug_view.control.start_block = sirokko::Block::BUSY;
-    debug_view.control.outputs = {true, 1000, true, false};
-    assert(panel_render::select_scene({}, debug_view, 0) == panel_render::Scene::Debug);
     synchronization();
     using namespace panel_ui;
     using namespace sirokko;

@@ -19,7 +19,6 @@ suites = {
     "combustion": core_sources,
     "control": core_sources,
     "thermostat": core_sources,
-    "debug": core_sources + [str(root / "main/web_protocol.cpp")],
     "recovery": core_sources,
     "calibration": [str(core / "calibration.cpp"), str(core / "regulator.cpp")],
     "runtime": core_sources + [str(root / "main" / name) for name in (
