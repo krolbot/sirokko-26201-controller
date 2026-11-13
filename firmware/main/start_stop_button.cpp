@@ -8,8 +8,6 @@ bool elapsed(uint64_t now_ms, uint64_t since_ms, uint32_t duration_ms) {
 }
 
 bool is_stop_target(const Snapshot &snapshot) {
-    if (snapshot.calibration_active)
-        return true;
     switch (snapshot.state) {
     case sirokko::State::PREHEAT:
     case sirokko::State::IGNITION:
@@ -21,8 +19,7 @@ bool is_stop_target(const Snapshot &snapshot) {
 }
 
 bool is_start_target(const Snapshot &snapshot) {
-    return snapshot.state == sirokko::State::IDLE && !snapshot.calibration_active &&
-           snapshot.start_block == sirokko::Block::NONE;
+    return snapshot.state == sirokko::State::IDLE && snapshot.start_block == sirokko::Block::NONE;
 }
 
 } // namespace
@@ -41,7 +38,6 @@ void Button::rebaseline(bool pressed, uint64_t now_ms) {
     release_resume_ = Phase::REQUIRE_RELEASE;
     intent_ = Intent::NONE;
     source_state_version_ = 0;
-    combustion_problem_ = false;
     // A low level at reset/gap is indistinguishable from a held boot button: require a release.
     phase_ = pressed ? Phase::REQUIRE_RELEASE : Phase::RELEASE_DEBOUNCE;
 }
@@ -61,7 +57,6 @@ void Button::latch_press_intent() {
 
     // The action is chosen at the first observed low level, never at dispatch time.
     source_state_version_ = snapshot.state_version;
-    combustion_problem_ = snapshot.calibration_active;
     if (is_stop_target(snapshot)) {
         intent_ = Intent::STOP;
     } else if (is_start_target(snapshot)) {
@@ -79,9 +74,8 @@ void Button::dispatch_latched_intent() {
                              : Dispatch::FAILED;
         break;
     case Intent::STOP:
-        last_dispatch_ = executor_.stop && executor_.stop(executor_.context, combustion_problem_)
-                             ? Dispatch::STOP
-                             : Dispatch::FAILED;
+        last_dispatch_ =
+            executor_.stop && executor_.stop(executor_.context) ? Dispatch::STOP : Dispatch::FAILED;
         break;
     case Intent::REJECTED:
         last_dispatch_ = Dispatch::REJECTED;

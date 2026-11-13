@@ -58,20 +58,17 @@ int main() {
         assert(s.state == State::IDLE && !s.outputs.fan_request);
         assert(cold.tick(input(100)).state == State::IDLE);
     }
-    // No ignition or calibration can begin until storage has acknowledged the marker.
-    for (const bool calibration : {false, true}) {
+    // Ignition cannot begin until storage has acknowledged the marker.
+    {
         Controller cold(envelope(), {}, 1, Startup::CLEAN);
-        assert(cold.install_learned_model(model()));
         auto i = input(1);
-        i.start = !calibration;
-        i.start_commissioning = calibration;
+        i.start = true;
         i.cycle_record_ready = false;
         auto s = cold.tick(i);
         assert(s.state == State::IDLE);
         assert(!s.outputs.fan_request && !s.outputs.glow && !s.outputs.fuel);
         i = input(2);
-        i.start = !calibration;
-        i.start_commissioning = calibration;
+        i.start = true;
         i.cycle_record_ready = true;
         s = cold.tick(i);
         assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fan_request && !s.outputs.fuel);
@@ -98,7 +95,7 @@ int main() {
         assert(s.purge_minimum_remaining_ms == cooling_ms);
         assert(!s.outputs.fuel && !s.outputs.glow && !s.duration_active && !s.run_id);
         i = input(50);
-        i.start = i.start_commissioning = i.stop = true;
+        i.start = i.stop = true;
         assert(interrupted.tick(i).state == State::RECOVERY_PURGE);
         s = interrupted.tick(input(cooling_ms - 1, 39999));
         assert(s.state == State::RECOVERY_PURGE && s.purge_minimum_remaining_ms == 1);

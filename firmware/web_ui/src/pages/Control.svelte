@@ -8,7 +8,6 @@
     commandReason,
     connectionReady,
     blockedActionLink,
-    calibrationStatus,
     stateText,
     timerLabel,
   } from "../lib/presentation.js";
@@ -25,7 +24,6 @@
   const active = $derived(isActiveSession(snapshot));
   const process = $derived(
     snapshot.purge?.active ||
-      snapshot.commissioning.active ||
       ["PREHEAT", "IGNITION", "FAULT", "MAINTENANCE"].includes(
         snapshot.state.code,
       ),
@@ -37,20 +35,18 @@
         : snapshot.purge.sensors_fresh
           ? `Ждём выхлоп ниже ${snapshot.envelope.parameters.cooling_exhaust_milli_c / 1000} °C`
           : "Нет свежих показаний термопар"
-      : snapshot.commissioning.active && snapshot.state.code === "RUN"
-        ? calibrationStatus(snapshot).title
-        : {
-            PREHEAT: "Двигатель и муфта выключены",
-            IGNITION: "Двигатель, муфта и свеча включены",
-            FAULT: "Свеча и муфта выключены",
-            MAINTENANCE: "Установка новой версии",
-          }[snapshot.state.code] || "",
+      : {
+          PREHEAT: "Двигатель и муфта выключены",
+          IGNITION: "Двигатель, муфта и свеча включены",
+          FAULT: "Свеча и муфта выключены",
+          MAINTENANCE: "Установка новой версии",
+        }[snapshot.state.code] || "",
   );
   const edit = $derived(
     ready && commandAllowed(snapshot, "SETTINGS") && !settings.conflict,
   );
   const manual = $derived(settings.value?.mode === "MANUAL");
-  const lowerPower = $derived(manualMinimum(snapshot.learned_model));
+  const lowerPower = $derived(manualMinimum(snapshot.envelope?.parameters));
   const handoff = $derived(
     manual && active && snapshot.settings.mode === "TEMPERATURE",
   );
@@ -117,9 +113,7 @@
 {/snippet}
 <div class="page-heading">
   <h1>Отопление</h1>
-  {#if manual}<p class="caption">
-      % от максимального ШИМ сохранённой калибровки
-    </p>{/if}
+  {#if manual}<p class="caption">% от максимального ШИМ двигателя</p>{/if}
   {#if !process}<span class="state-label" class:heating={active}
       ><i></i>{stateText(snapshot)}</span
     >{/if}
@@ -132,11 +126,7 @@
           <Icon name={snapshot.purge?.active ? "fan" : "heat"} size={36} />
         </div>
         <h2>
-          {snapshot.commissioning.active && snapshot.state.code === "RUN"
-            ? "Калибровка"
-            : snapshot.commissioning.active && snapshot.state.code === "IDLE"
-              ? calibrationStatus(snapshot).title
-              : stateText(snapshot)}
+          {stateText(snapshot)}
         </h2>
         <p class="caption">{processText}</p>
       </div>

@@ -131,125 +131,6 @@ export function fullSettingsPayload(currentSettings, edits = {}) {
   return payload;
 }
 
-export const MODEL_REVISION_FIELDS = Object.freeze([
-  "expected_revision",
-  "minimum_speed_code",
-  "maximum_speed_code",
-  "slew_up_per_s",
-  "slew_down_per_s",
-]);
-
-function safeRevision(value) {
-  return Number.isSafeInteger(value) && value >= 0 && value <= 0xffff_ffff;
-}
-
-function safeSpeedCode(value) {
-  return Number.isSafeInteger(value) && value >= 0 && value <= 0xffff;
-}
-
-function finiteSlew(value) {
-  return (
-    Number.isFinite(value) &&
-    value >= MINIMUM_SLEW_PER_S &&
-    value <= MAXIMUM_SLEW_PER_S
-  );
-}
-
-/**
- * Build the only public model-correction DTO from the currently observed model.
- * A correction may only narrow the learned operating interval and slow either
- * slew; it cannot manufacture an initial profile or relax a learned limit.
- */
-export function modelRevisionPayload(currentModel, edits = {}) {
-  if (
-    !isRecord(currentModel) ||
-    currentModel.valid !== true ||
-    !isRecord(currentModel.provenance)
-  ) {
-    throw new TypeError(
-      "Нет сохранённой калибровки для изменения диапазона ШИМ",
-    );
-  }
-  if (
-    !safeRevision(currentModel.provenance.revision) ||
-    !safeSpeedCode(currentModel.minimum_speed_code) ||
-    !safeSpeedCode(currentModel.maximum_speed_code) ||
-    currentModel.minimum_speed_code >= currentModel.maximum_speed_code ||
-    !finiteSlew(currentModel.slew_up_per_s) ||
-    !finiteSlew(currentModel.slew_down_per_s)
-  ) {
-    throw new TypeError("Контроллер передал некорректные данные калибровки");
-  }
-  if (!isRecord(edits))
-    throw new TypeError("Неверный формат изменений калибровки");
-  const revision = {
-    expected_revision: currentModel.provenance.revision,
-    minimum_speed_code: currentModel.minimum_speed_code,
-    maximum_speed_code: currentModel.maximum_speed_code,
-    slew_up_per_s: currentModel.slew_up_per_s,
-    slew_down_per_s: currentModel.slew_down_per_s,
-    ...edits,
-  };
-  const keys = Object.keys(revision).sort();
-  const expected = [...MODEL_REVISION_FIELDS].sort();
-  if (
-    keys.length !== expected.length ||
-    keys.some((key, index) => key !== expected[index])
-  ) {
-    throw new TypeError("Неверный набор параметров для изменения калибровки");
-  }
-  if (
-    !safeRevision(revision.expected_revision) ||
-    revision.expected_revision >= 0xffffffff ||
-    revision.expected_revision !== currentModel.provenance.revision
-  ) {
-    throw new RangeError("Калибровка уже изменена. Загрузите текущие значения");
-  }
-  if (
-    !safeSpeedCode(revision.minimum_speed_code) ||
-    !safeSpeedCode(revision.maximum_speed_code) ||
-    revision.minimum_speed_code >= revision.maximum_speed_code
-  ) {
-    throw new RangeError(
-      "Границы ШИМ: целые числа 0…65535; минимум должен быть меньше максимума",
-    );
-  }
-  if (
-    !finiteSlew(revision.slew_up_per_s) ||
-    !finiteSlew(revision.slew_down_per_s)
-  ) {
-    throw new RangeError("Темп изменения ШИМ: 0,0001…0,005 /с");
-  }
-  if (
-    revision.minimum_speed_code < currentModel.minimum_speed_code ||
-    revision.maximum_speed_code > currentModel.maximum_speed_code ||
-    revision.slew_up_per_s > currentModel.slew_up_per_s ||
-    revision.slew_down_per_s > currentModel.slew_down_per_s
-  ) {
-    throw new RangeError(
-      "Можно только сузить диапазон ШИМ и уменьшить темп его изменения",
-    );
-  }
-  return revision;
-}
-
-export function modelRevisionMatches(requested, observedModel) {
-  if (
-    !isRecord(requested) ||
-    !isRecord(observedModel) ||
-    observedModel.valid !== true ||
-    !isRecord(observedModel.provenance)
-  )
-    return false;
-  return (
-    observedModel.provenance.revision === requested.expected_revision + 1 &&
-    observedModel.minimum_speed_code === requested.minimum_speed_code &&
-    observedModel.maximum_speed_code === requested.maximum_speed_code &&
-    observedModel.slew_up_per_s === requested.slew_up_per_s &&
-    observedModel.slew_down_per_s === requested.slew_down_per_s
-  );
-}
-
 export function deepEqual(left, right) {
   if (left === right) return true;
   if (typeof left !== typeof right || left === null || right === null)
@@ -314,9 +195,11 @@ export function settingsMatch(left, right) {
   ); // %.8g double serialization, not a control-value tolerance.
 }
 
-export function manualMinimum(model) {
-  return model?.valid && model.maximum_speed_code > 0
-    ? Math.ceil((20 * model.minimum_speed_code) / model.maximum_speed_code) * 5
+export function manualMinimum(profile) {
+  return profile?.maximum_speed_code > 0 && profile?.minimum_speed_code > 0
+    ? Math.ceil(
+        (20 * profile.minimum_speed_code) / profile.maximum_speed_code,
+      ) * 5
     : 5;
 }
 
@@ -340,7 +223,7 @@ export function settingsChangesMatch(baseline, requested, snapshot) {
       continue;
     expected[key] =
       key === "manual_percent"
-        ? Math.max(requested[key], manualMinimum(snapshot.learned_model))
+        ? Math.max(requested[key], manualMinimum(snapshot.envelope?.parameters))
         : requested[key];
     observed[key] = actual[key];
   }
@@ -362,15 +245,10 @@ export function commandMatchesSnapshot(pending, snapshot) {
         snapshot.run_id === baseline.run_id &&
         timerDeadlineMatches(baseline, snapshot, payload.delay_ms)
       );
-    case "CALIBRATE":
-      return snapshot?.commissioning?.active === true;
-    case "MODEL_REVISION":
-      return modelRevisionMatches(payload.revision, snapshot?.learned_model);
     case "PROFILE":
       return (
         snapshot.storage_ok === true &&
-        deepEqual(payload.envelope, snapshot.envelope?.parameters) &&
-        snapshot.learned_model?.valid === false
+        deepEqual(payload.envelope, snapshot.envelope?.parameters)
       );
     case "RESET_FAULT":
       return snapshot.state?.code === "IDLE" && !hasFault(snapshot);

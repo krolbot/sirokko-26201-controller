@@ -39,9 +39,6 @@
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
   </p>{/if}
-{#if snapshot.learned_model?.valid}<p class="caption">
-    После изменения параметров понадобится новая калибровка
-  </p>{/if}
 {#if draft.value && limits}
   <div class="form-column heater-profile">
     {#each heaterGroups as group}
@@ -106,8 +103,9 @@
                   >Двигатель выключится после минимального времени охлаждения,
                   если выхлоп ниже этого порога.</small
                 >
-              {:else if key === "reference_speed_code"}<small class="caption"
-                  >Также верхняя граница ШИМ при калибровке.</small
+              {:else if key === "maximum_speed_code"}<small class="caption"
+                  >Верхняя граница рабочего диапазона и команда двигателя при
+                  розжиге.</small
                 >{/if}
             </div>
           {/each}
@@ -129,7 +127,7 @@
       {#if !draft.dirty && snapshot.envelope.provisioned}<p class="caption">
           Параметры сохранены
         </p>
-        <a class="secondary" href="#/calibration">Перейти к калибровке</a>{/if}
+        <a class="secondary" href="#/control">Перейти к отоплению</a>{/if}
     </div>
     <details class="surface advanced">
       <summary>Паспортные значения</summary>

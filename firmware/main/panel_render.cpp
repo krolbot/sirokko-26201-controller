@@ -125,8 +125,7 @@ void message(Canvas &c, const Frame &f, const char *kicker, const char *title, c
 bool heat_pulse_eligible(const Frame &f) {
     return (f.scene == Scene::Heat || f.scene == Scene::TimerRunning) &&
            f.view.control.state == sirokko::State::RUN && f.view.control.outputs.fuel &&
-           !f.view.control.faults && !f.view.control.commissioning.active &&
-           f.view.settings.mode == sirokko::Mode::TEMPERATURE &&
+           !f.view.control.faults && f.view.settings.mode == sirokko::Mode::TEMPERATURE &&
            sirokko::room_temperature_fresh(f.view.sensors.room, f.at_ms) &&
            f.view.sensors.room.milli_c < f.view.settings.room_setpoint_milli_c && std::isfinite(f.current) &&
            std::isfinite(f.target) && angle(f.target) - angle(f.current) > 10.0f;
@@ -282,7 +281,7 @@ void draw_manual(Canvas &c, const Frame &f) {
     const float x = (kWidth - nw - 2 * kScale - uw) / 2;
     c.text(x, kCy + 20 * kScale, value, 57 * kScale, edit ? 0xbc713e : kInk);
     c.text(x + nw + 2 * kScale, kCy - 10 * kScale, "%", 19 * kScale, edit ? 0xbc713e : kInk);
-    c.text(160, kCy + 60 * kScale, "ШИМ от максимума калибровки", 18 * kScale, kSecond, Align::Center);
+    c.text(160, kCy + 60 * kScale, "ШИМ от максимума двигателя", 18 * kScale, kSecond, Align::Center);
     if (edit)
         c.text(160, 230, "Нажать — применить", 13, kSecond, Align::Center);
     else if (f.view.control.duration_active) {
@@ -427,65 +426,9 @@ const char *fault_title(uint32_t faults) {
         return "Выхлоп ниже порога";
     if (faults & sirokko::FAULT_COMBUSTION_DROP)
         return "Выхлоп остывает";
-    if (faults & sirokko::FAULT_COMMISSIONING)
-        return "Ошибка калибровки";
     return "Неисправность";
 }
-const char *commissioning_reason_detail(sirokko::CommissioningReason reason) {
-    switch (reason) {
-    case sirokko::CommissioningReason::INVALID_CONFIG:
-        return "Проверьте параметры отопителя";
-    case sirokko::CommissioningReason::BACKDATED_TIME:
-        return "Время измерений идёт назад";
-    case sirokko::CommissioningReason::OVERALL_TIMEOUT:
-        return "Истекло время калибровки";
-    case sirokko::CommissioningReason::RUN_CONTEXT_LOST:
-        return "Режим нагрева прерван";
-    case sirokko::CommissioningReason::COMMAND_OUT_OF_RANGE:
-        return "ШИМ вне границ калибровки";
-    case sirokko::CommissioningReason::COMMAND_SLEW_VIOLATION:
-        return "ШИМ меняется слишком быстро";
-    case sirokko::CommissioningReason::COMMAND_NOT_REACHED:
-        return "Не достигнут заданный ШИМ";
-    case sirokko::CommissioningReason::SENSOR_INVALID:
-        return "Ошибка датчиков";
-    case sirokko::CommissioningReason::STALE_SAMPLE:
-        return "Данные устарели";
-    case sirokko::CommissioningReason::SAMPLE_TIMESTAMP_REGRESSION:
-        return "Время измерений идёт назад";
-    case sirokko::CommissioningReason::SAMPLE_SKEW:
-        return "Термопары измерены не вовремя";
-    case sirokko::CommissioningReason::REPEATED_SAMPLE:
-        return "Нет новых данных";
-    case sirokko::CommissioningReason::SAMPLE_GAP:
-        return "Пропущены измерения термопар";
-    case sirokko::CommissioningReason::REFERENCE_TIMEOUT:
-        return "Температуры не стабилизировались";
-    case sirokko::CommissioningReason::POINT_TIMEOUT:
-        return "Температуры не стабилизировались";
-    case sirokko::CommissioningReason::REFERENCE_NOT_REPRODUCIBLE:
-        return "Не повторились температуры";
-    case sirokko::CommissioningReason::NO_COMMAND_RESPONSE:
-        return "Слабый отклик температур на ШИМ";
-    case sirokko::CommissioningReason::POINT_NOT_REPRODUCIBLE:
-        return "Не повторились температуры";
-    case sirokko::CommissioningReason::DYNAMIC_NOT_REPRODUCIBLE:
-        return "Прогрев и охлаждение не повторились";
-    case sirokko::CommissioningReason::INSUFFICIENT_MARGIN:
-        return "Не определён диапазон ШИМ";
-    case sirokko::CommissioningReason::OPERATOR_NEGATIVE:
-        return "Остановлено кнопкой на плате";
-    case sirokko::CommissioningReason::EXTERNAL_CANCEL:
-        return "Калибровка отменена";
-    case sirokko::CommissioningReason::STORAGE_UNCONFIRMED:
-        return "Калибровка не сохранена";
-    case sirokko::CommissioningReason::COMPLETE:
-        return "Проверка завершена";
-    case sirokko::CommissioningReason::NONE:
-        return "Причина не указана";
-    }
-    return "Неизвестная причина";
-}
+
 const char *fault_reset_footer(const Frame &f) {
     if (f.screen.command_in_flight)
         return "Сброс аварии: ждём ответ";
@@ -494,48 +437,6 @@ const char *fault_reset_footer(const Frame &f) {
     if (f.screen.notice == panel_ui::Notice::COMMAND_REJECTED)
         return "Сброс аварии отклонён";
     return "Нажать — сбросить аварию";
-}
-struct CalibrationBlockText {
-    const char *title;
-    const char *detail;
-    const char *foot;
-};
-CalibrationBlockText calibration_block_text(sirokko::Block block) {
-    switch (block) {
-    case sirokko::Block::ENVELOPE_MISSING:
-        return {"Нужна настройка", "Не все параметры заполнены", "Параметры — в браузере"};
-    case sirokko::Block::ENVELOPE_INVALID:
-        return {"Ошибка параметров", "Параметры — в браузере", "Настройте в браузере"};
-    case sirokko::Block::CALIBRATION_TOO_SLOW:
-        return {"Малый темп ШИМ", "Настройки: темп изменения ШИМ", "Настройте в браузере"};
-    case sirokko::Block::MODEL_UNAVAILABLE:
-        return {"Нужна калибровка", "Нет сохранённой калибровки", "Запустите калибровку"};
-    case sirokko::Block::SENSOR_STALE:
-        return {"Данные устарели", "Проверьте датчики", "Пуск заблокирован"};
-    case sirokko::Block::SENSOR_INVALID:
-        return {"Нет показаний", "Проверьте датчики", "Проверьте датчики"};
-    case sirokko::Block::INITIAL_THERMAL_STATE:
-        return {"Выхлоп не остыл", "Дождитесь охлаждения", "Дождитесь охлаждения"};
-    case sirokko::Block::RECOVERY_PURGE:
-        return {"Нужно охлаждение", "Дождитесь окончания", "Дождитесь охлаждения"};
-    case sirokko::Block::FAULT_LATCHED:
-        return {"Сбросьте аварию", "Сначала сбросьте аварию", "Нажать — сбросить аварию"};
-    case sirokko::Block::BUSY:
-        return {"Отопитель занят", "Дождитесь завершения", "Дождитесь завершения"};
-    case sirokko::Block::MAINTENANCE:
-        return {"Обновление прошивки", "Завершите через браузер", "Управление через браузер"};
-    case sirokko::Block::INITIALIZING:
-        return {"Запуск контроллера", "Запуск программы контроллера", "Дождитесь завершения"};
-    case sirokko::Block::STORAGE_UNAVAILABLE:
-        return {"Память настроек", "Настройки недоступны", "Запуск недоступен"};
-    case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
-        return {"Ошибка управления", "Ошибка драйвера экрана/кнопки", "Пуск заблокирован"};
-    case sirokko::Block::STALE_COMMAND:
-        return {"Состояние изменилось", "Повторите калибровку", "Повторите действие"};
-    case sirokko::Block::NONE:
-        return {"Калибровка недоступна", "Состояние изменилось", "Обновите состояние"};
-    }
-    return {"Калибровка недоступна", "Состояние изменилось", "Обновите состояние"};
 }
 void draw_block(Canvas &c, const Frame &f) {
     const char *title = "Пуск заблокирован";
@@ -588,14 +489,6 @@ void draw_block(Canvas &c, const Frame &f) {
         title = "Ошибка параметров";
         detail = "Проверьте настройки";
         break;
-    case sirokko::Block::CALIBRATION_TOO_SLOW:
-        title = "Малый темп ШИМ";
-        detail = "Настройки: темп изменения ШИМ";
-        break;
-    case sirokko::Block::MODEL_UNAVAILABLE:
-        title = "Нужна калибровка";
-        detail = "Нет сохранённой калибровки";
-        break;
     case sirokko::Block::SENSOR_STALE:
         title = "Данные устарели";
         detail = "Проверьте датчики";
@@ -639,11 +532,6 @@ void draw(Canvas &c, const Frame &f) {
     case Scene::Diagnostics:
         draw_diagnostics(c, f);
         break;
-    case Scene::CalConfirm:
-        message(c, f, "Калибровка", f.view.control.learned_model.valid ? "Повторить?" : "Начать калибровку?",
-                "Отопитель будет работать", Icon::Heat, kOrange, kWarm, "Нажать — начать",
-                "2 нажатия — отмена");
-        break;
     case Scene::CombustionCheck:
         message(c, f, "Горение", "Проверка", "Падает температура выхлопа", Icon::Thermometer, kOrange, kWarm,
                 "Пуск/Стоп — остановить");
@@ -672,53 +560,17 @@ void draw(Canvas &c, const Frame &f) {
                 "Не отключайте питание");
         break;
     case Scene::FaultCooling:
-        if (f.view.control.faults & sirokko::FAULT_COMMISSIONING)
-            message(c, f, "Авария", fault_title(f.view.control.faults),
-                    commissioning_reason_detail(f.view.control.commissioning.reason), Icon::Warning, kRed,
-                    kRedBg, "Не отключайте питание", "Охлаждение продолжается");
-        else
-            message(c, f, "Авария", fault_title(f.view.control.faults), "Охлаждение продолжается",
-                    Icon::Warning, kRed, kRedBg, "Не отключайте питание");
+        message(c, f, "Авария", fault_title(f.view.control.faults), "Охлаждение продолжается", Icon::Warning,
+                kRed, kRedBg, "Не отключайте питание");
         break;
     case Scene::FaultLatched:
-        if (f.view.control.faults & sirokko::FAULT_COMMISSIONING)
-            message(c, f, "Авария", fault_title(f.view.control.faults),
-                    commissioning_reason_detail(f.view.control.commissioning.reason), Icon::Warning, kRed,
-                    kRedBg, fault_reset_footer(f), "Охлаждение завершено");
-        else
-            message(c, f, "Авария", fault_title(f.view.control.faults), "Охлаждение завершено", Icon::Warning,
-                    kRed, kRedBg, fault_reset_footer(f));
+        message(c, f, "Авария", fault_title(f.view.control.faults), "Охлаждение завершено", Icon::Warning,
+                kRed, kRedBg, fault_reset_footer(f));
         break;
     case Scene::SensorMissing:
         message(c, f,
                 f.view.control.state == sirokko::State::IDLE ? "Запуск недоступен" : "Данные недоступны",
                 "Нет показаний", "Комнатный датчик", Icon::Thermometer, kRed, kRedBg);
-        break;
-    case Scene::Calibrate:
-        message(c, f, "Калибровка", "Снижение ШИМ", "Проверка температур", Icon::Settings, kOrange, kWarm,
-                "Пуск/Стоп — прервать");
-        break;
-    case Scene::CalReference:
-        message(c, f, "Калибровка", "ШИМ розжига", "Ожидание стабильных температур", Icon::Settings, kOrange,
-                kWarm, "Пуск/Стоп — прервать");
-        break;
-    case Scene::CalRepeat:
-        message(c, f, "Калибровка", "Повтор ШИМ", "Сравнение температур", Icon::Settings, kOrange, kWarm,
-                "Пуск/Стоп — прервать");
-        break;
-    case Scene::CalCooling:
-        message(c, f, "Калибровка", "Охлаждение", "Перед сохранением калибровки", Icon::Fan, kBlue, kBlueBg,
-                "Не отключайте питание");
-        break;
-    case Scene::CalStore:
-        message(c, f, "Калибровка", "Запись калибровки", "", Icon::Settings, kOrange, kWarm);
-        break;
-    case Scene::CalSaved:
-        message(c, f, "Калибровка", "Калибровка сохранена", "", Icon::Check, kGreen, 0xeff5ef);
-        break;
-    case Scene::CalCancelled:
-        message(c, f, "Калибровка прервана", "Охлаждение", "Результат не сохранён", Icon::Fan, kBlue, kBlueBg,
-                "Не отключайте питание");
         break;
     case Scene::Maintenance:
         message(c, f, "Обновление прошивки", "Запуск недоступен", "Управление через браузер", Icon::Settings);
@@ -738,12 +590,7 @@ void draw(Canvas &c, const Frame &f) {
                 kRedBg);
         break;
     case Scene::CommandRejected:
-        if (f.screen.notice == panel_ui::Notice::CALIBRATION_BLOCKED ||
-            (f.screen.page == panel_ui::Page::CALIBRATION &&
-             f.view.control.commissioning.block != sirokko::Block::NONE)) {
-            const auto block = calibration_block_text(f.view.control.commissioning.block);
-            message(c, f, "Калибровка", block.title, block.detail, Icon::Warning, kRed, kRedBg, block.foot);
-        } else if (f.screen.notice == panel_ui::Notice::CONFIRMATION_TIMEOUT)
+        if (f.screen.notice == panel_ui::Notice::CONFIRMATION_TIMEOUT)
             message(c, f, "Настройки", "Нет подтверждения", "Проверьте настройки", Icon::Warning, kRed,
                     kRedBg);
         else
@@ -784,7 +631,7 @@ void format_duration(char *out, size_t cap, uint64_t ms) {
         std::snprintf(out, cap, "%llu ч %llu мин", static_cast<unsigned long long>(minutes / 60),
                       static_cast<unsigned long long>(minutes % 60));
 }
-Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t now, bool show_saved) {
+Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t now) {
     using State = sirokko::State;
     using Page = panel_ui::Page;
     using Notice = panel_ui::Notice;
@@ -794,14 +641,8 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::FaultCooling;
     if (v.control.state == State::FAULT || v.control.faults)
         return Scene::FaultLatched;
-    if (v.control.state == State::STOP_PURGE) {
-        if (v.control.commissioning.phase == sirokko::CommissioningPhase::CANCELLED)
-            return Scene::CalCancelled;
-        if (v.control.commissioning.active ||
-            v.control.commissioning.phase == sirokko::CommissioningPhase::COMPLETE_PENDING_STOP)
-            return Scene::CalCooling;
+    if (v.control.state == State::STOP_PURGE)
         return Scene::Cooldown;
-    }
     switch (v.control.state) {
     case State::RECOVERY_PURGE:
         return Scene::Recovery;
@@ -814,29 +655,13 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
     default:
         break;
     }
-    if (v.control.commissioning.active) {
-        if (v.control.state == State::IDLE)
-            return Scene::CalStore;
-        const auto phase = v.control.commissioning.phase;
-        if (phase == sirokko::CommissioningPhase::SETTLE_REPEAT_POINT ||
-            phase == sirokko::CommissioningPhase::WAIT_REPEAT_COMMAND)
-            return Scene::CalRepeat;
-        if (phase == sirokko::CommissioningPhase::SETTLE_POINT ||
-            phase == sirokko::CommissioningPhase::WAIT_DESCENT_COMMAND)
-            return Scene::Calibrate;
-        return Scene::CalReference;
-    }
-    if (show_saved && v.control.commissioning.phase == sirokko::CommissioningPhase::SAVED &&
-        s.page == Page::HOME)
-        return Scene::CalSaved;
     if (v.control.combustion.phase == sirokko::combustion::Phase::SUSPECT)
         return Scene::CombustionCheck;
     if (s.notice == Notice::QUEUED)
         return Scene::Queued;
     if (s.notice == Notice::EXTERNAL_CHANGE)
         return Scene::Rejected;
-    if (s.notice == Notice::CALIBRATION_BLOCKED || s.notice == Notice::COMMAND_REJECTED ||
-        s.notice == Notice::CONFIRMATION_TIMEOUT)
+    if (s.notice == Notice::COMMAND_REJECTED || s.notice == Notice::CONFIRMATION_TIMEOUT)
         return Scene::CommandRejected;
     // A stale room measurement must not linger on a live gauge, even during a page transition.
     if (v.control.state == State::RUN && v.settings.mode == sirokko::Mode::TEMPERATURE &&
@@ -861,9 +686,6 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         break;
     case Page::DIAGNOSTICS:
         return Scene::Diagnostics;
-    case Page::CALIBRATION:
-        return v.control.commissioning.block == sirokko::Block::NONE ? Scene::CalConfirm
-                                                                     : Scene::CommandRejected;
     case Page::WIFI:
         return Scene::Wifi;
     case Page::OTA:
@@ -889,8 +711,7 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
 }
 bool urgent(Scene s) {
     return s == Scene::FaultCooling || s == Scene::FaultLatched || s == Scene::Cooldown ||
-           s == Scene::CalCooling || s == Scene::CalCancelled || s == Scene::NoData ||
-           s == Scene::SensorMissing || s == Scene::Recovery;
+           s == Scene::NoData || s == Scene::SensorMissing || s == Scene::Recovery;
 }
 void Renderer::reset() {
     *this = Renderer{};
@@ -899,17 +720,12 @@ void Renderer::update(const panel_ui::Screen &s, const panel_ui::View &v,
                       const panel_ui::LocalCredentials &credentials, uint64_t now) {
     if (initialized_ && now < frame_.at_ms)
         reset();
-    const bool saved = v.control.commissioning.phase == sirokko::CommissioningPhase::SAVED;
-    if (saved && !saved_seen_)
-        saved_started_ = now;
-    saved_seen_ = saved;
-    const bool show_saved = saved && now >= saved_started_ && now - saved_started_ < 1600;
     Frame next{};
     next.screen = s;
     next.view = v;
     next.credentials = credentials;
     next.at_ms = now;
-    next.scene = select_scene(s, v, now, show_saved);
+    next.scene = select_scene(s, v, now);
     const float target = target_value(s, v, next.scene), current = v.sensors.room.milli_c / 1000.0f,
                 row = selected_row(s);
     const bool immediate =

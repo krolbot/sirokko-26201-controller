@@ -248,16 +248,10 @@ bool semantic_valid(const web_protocol::Command &command) {
         return sirokko::valid_settings(command.settings);
     case sirokko::Action::PROFILE:
         return sirokko::valid_profile_draft(command.envelope);
-    case sirokko::Action::MODEL_REVISION:
-        return command.revision.minimum_speed_code <= command.revision.maximum_speed_code &&
-               std::isfinite(command.revision.slew_up_per_s) &&
-               std::isfinite(command.revision.slew_down_per_s) && command.revision.slew_up_per_s >= 0.0 &&
-               command.revision.slew_down_per_s >= 0.0;
     case sirokko::Action::OTA:
         return command.upload_size >= ota_verify::kManifestSize + ota_verify::kSignatureSize;
     case sirokko::Action::START:
     case sirokko::Action::RESET_FAULT:
-    case sirokko::Action::CALIBRATE:
         return true;
     }
     return false;
@@ -265,12 +259,6 @@ bool semantic_valid(const web_protocol::Command &command) {
 
 uint64_t runtime_hash(const web_protocol::Command &command) {
     return web_protocol::runtime_parameters_hash(command);
-}
-
-bool configuration_is_safe(const web_protocol::Command &command, const RuntimeView &view) {
-    if (command.action != sirokko::Action::MODEL_REVISION)
-        return true;
-    return sirokko::valid_model_revision(view.control.learned_model, command.revision);
 }
 
 sirokko::Grant to_runtime_grant(const web_protocol::Command &command) {
@@ -621,8 +609,6 @@ esp_err_t challenge_handler(httpd_req_t *request) {
     const auto blocked = command_policy::block(view, command.action);
     if (blocked != sirokko::Block::NONE)
         return reject(request, sirokko::block_name(blocked), "409 Conflict");
-    if (!configuration_is_safe(command, view))
-        return reject(request, "MODEL_REVISION", "409 Conflict");
     sirokko::Grant issued{};
     const uint64_t parameters = runtime_hash(command);
     if (!runtime_issue(command.action, parameters, &issued))
@@ -663,7 +649,7 @@ esp_err_t command_handler(httpd_req_t *request) {
             return reject(request, "REPLAY", "409 Conflict");
         if (replay == web_protocol::ReplayResult::MATCH)
             return send_json(request, "{\"status\":\"STOP_REQUESTED\",\"replay\":true}");
-        runtime_stop(false);
+        runtime_stop();
         session->replays.remember(stop.command_id, stop.payload_digest, true);
         return send_json(request, "{\"status\":\"STOP_REQUESTED\"}");
     }
@@ -683,12 +669,7 @@ esp_err_t command_handler(httpd_req_t *request) {
     // only /api/ota owns a signed upload and maintenance lifecycle.
     if (command.action == sirokko::Action::OTA)
         return reject(request, "OTA_UPLOAD_ONLY", "405 Method Not Allowed");
-    if (command.action == sirokko::Action::CALIBRATE &&
-        view.control.commissioning.block != sirokko::Block::NONE) {
-        return reject(request, "COMMISSIONING_BLOCK", "409 Conflict");
-    }
-    if (!configuration_is_safe(command, view))
-        return reject(request, "MODEL_REVISION", "409 Conflict");
+
     bool previous = false;
     const web_protocol::ReplayResult replay =
         session->replays.lookup(command.command_id, command.payload_digest, &previous);
@@ -706,9 +687,8 @@ esp_err_t command_handler(httpd_req_t *request) {
         return reject(request, "CHALLENGE", "409 Conflict");
     const sirokko::Grant grant = to_runtime_grant(command);
     const bool accepted =
-        command.action == sirokko::Action::PROFILE ? runtime_save_profile(grant, command.envelope)
-        : command.action == sirokko::Action::MODEL_REVISION
-            ? runtime_revise_model(grant, command.revision)
+        command.action == sirokko::Action::PROFILE
+            ? runtime_save_profile(grant, command.envelope)
             : runtime_submit(grant, command.action, command.delay_ms,
                              command.action == sirokko::Action::SETTINGS ? &command.settings : nullptr);
     session->replays.remember(command.command_id, command.payload_digest, accepted);

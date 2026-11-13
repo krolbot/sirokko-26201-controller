@@ -14,8 +14,8 @@ inline SafetyEnvelope envelope() {
     e.cooling_exhaust_milli_c = 30000;
     e.minimum_run_exhaust_milli_c = 40000;
     e.purge_speed_code = 1500;
-    e.reference_speed_code = 2000;
-    e.exploration_floor_code = 1000;
+    e.maximum_speed_code = 2000;
+    e.minimum_speed_code = 1200;
     assert(valid_safety_envelope(e));
     return e;
 }
@@ -28,25 +28,11 @@ inline TickInput input(uint64_t t, int32_t exhaust = 20000, int32_t air = 20000)
     i.sensors.room = {20000, t, 0, true};
     return i;
 }
-inline LearnedOperatingModel model() {
-    LearnedOperatingModel m{};
-    m.valid = true;
-    m.minimum_speed_code = 1200;
-    m.maximum_speed_code = 2000;
-    m.provenance = {envelope_fingerprint(envelope()), 1, 101, 1};
-    m.measurements.elapsed_ms = 100;
-    m.measurements.tested_point_count = 2;
-    m.fingerprint = learned_model_fingerprint(m);
-    return m;
-}
-inline Controller ignition(bool calibration = false) {
+inline Controller ignition() {
     Controller c(envelope(), Settings{}, 1, Startup::CLEAN);
-    if (!calibration)
-        assert(c.install_learned_model(model()));
     assert(c.tick(input(100)).state == State::IDLE);
     auto i = input(120);
-    i.start = !calibration;
-    i.start_commissioning = calibration;
+    i.start = true;
     assert(c.tick(i).state == State::PREHEAT);
     assert(c.tick(input(220)).state == State::PREHEAT);
     auto s = c.tick(input(kIgnitionAt - 1));

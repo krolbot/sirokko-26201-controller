@@ -25,12 +25,12 @@ void timer_editor(Model &panel, View &view) {
 void synchronization() {
     using namespace control_fixture;
     Controller controller(envelope(), Settings{}, 1, Startup::CLEAN);
-    assert(controller.install_learned_model(model()));
     View view{};
     view.now_ms = 100;
     auto refresh = [&] {
         view.control = controller.snapshot(view.now_ms);
         view.settings = controller.settings();
+        view.envelope = controller.safety_envelope();
         view.sensors = input(view.now_ms).sensors;
     };
     refresh();
@@ -80,13 +80,13 @@ void synchronization() {
     assert(panel.take_command(&command));
     assert(command.settings.duration_ms == 180000 && command.settings.room_setpoint_milli_c == 25000);
 
-    // The encoder and the controller use the same learned minimum.
+    // The encoder and the controller use the same configured minimum.
     web.mode = Mode::MANUAL;
     assert(controller.update_settings(web));
     refresh();
     panel.reset(view);
     panel.rotate(-100);
-    assert(panel.screen().edit_value == minimum_manual_percent(model()));
+    assert(panel.screen().edit_value == minimum_manual_percent(envelope()));
     press(panel, view);
     assert(panel.take_command(&command));
     panel.command_result(true);
@@ -188,49 +188,15 @@ int main() {
     assert(!ui.take_command(&command));
 
     EncoderInput encoder;
-    // Opening calibration is a preview; only the subsequent explicit click starts it.
+    // The first service item opens diagnostics without issuing a heating command.
     view.control.state = State::IDLE;
-    view.control.commissioning.block = Block::NONE;
     view.control.faults = 0;
     Model first_run;
     first_run.reset(view);
     press(first_run, view);
     first_run.rotate(3);
     press(first_run, view);
-    assert(first_run.screen().page == Page::CALIBRATION && !first_run.take_command(&command));
-    assert(panel_render::select_scene(first_run.screen(), view, view.now_ms) ==
-           panel_render::Scene::CalConfirm);
-    Model changed_readiness = first_run;
-    changed_readiness.click(view.now_ms + 10);
-    auto unavailable = view;
-    unavailable.control.commissioning.block = Block::SENSOR_INVALID;
-    unavailable.now_ms += 20;
-    changed_readiness.update(unavailable);
-    assert(panel_render::select_scene(changed_readiness.screen(), unavailable, unavailable.now_ms) ==
-           panel_render::Scene::CommandRejected);
-    unavailable.control.commissioning.block = Block::NONE;
-    unavailable.now_ms += 100;
-    changed_readiness.update(unavailable);
-    unavailable.now_ms += kDoubleClickWindowMs + 1;
-    changed_readiness.tick(unavailable.now_ms);
-    assert(!changed_readiness.take_command(&command));
-    assert(panel_render::select_scene(changed_readiness.screen(), unavailable, unavailable.now_ms) ==
-           panel_render::Scene::CalConfirm);
-    Model blocked_back = changed_readiness;
-    auto blocked = unavailable;
-    blocked.control.commissioning.block = Block::SENSOR_INVALID;
-    blocked_back.update(blocked);
-    blocked_back.click(blocked.now_ms + 10);
-    blocked_back.click(blocked.now_ms + 80);
-    assert(blocked_back.screen().page == Page::MENU && !blocked_back.take_command(&command));
-    press(changed_readiness, unavailable);
-    assert(changed_readiness.take_command(&command) && command.kind == CommandKind::CALIBRATE);
-    first_run.click(view.now_ms + 10);
-    first_run.click(view.now_ms + 80);
-    assert(first_run.screen().page == Page::MENU && !first_run.take_command(&command));
-    press(first_run, view);
-    press(first_run, view);
-    assert(first_run.take_command(&command) && command.kind == CommandKind::CALIBRATE);
+    assert(first_run.screen().page == Page::DIAGNOSTICS && !first_run.take_command(&command));
     view.control.combustion.phase = combustion::Phase::SUSPECT;
     assert(panel_render::select_scene({}, view, view.now_ms) == panel_render::Scene::CombustionCheck);
     view.control.combustion = {};

@@ -14,7 +14,6 @@ constexpr uint32_t kAction = 1U << 0;
 constexpr uint32_t kCommandId = 1U << 1;
 constexpr uint32_t kDelay = 1U << 2;
 constexpr uint32_t kSettings = 1U << 3;
-constexpr uint32_t kRevision = 1U << 4;
 constexpr uint32_t kUploadSize = 1U << 5;
 constexpr uint32_t kUploadSha256 = 1U << 6;
 constexpr uint32_t kGrant = 1U << 7;
@@ -273,10 +272,6 @@ bool parse_action_text(const char *text, sirokko::Action *action) {
         *action = sirokko::Action::SETTINGS;
     else if (equals(text, "OTA"))
         *action = sirokko::Action::OTA;
-    else if (equals(text, "CALIBRATE"))
-        *action = sirokko::Action::CALIBRATE;
-    else if (equals(text, "MODEL_REVISION"))
-        *action = sirokko::Action::MODEL_REVISION;
     else if (equals(text, "TIMER"))
         *action = sirokko::Action::TIMER;
     else if (equals(text, "PROFILE"))
@@ -420,71 +415,6 @@ ParseError parse_envelope(Cursor *cursor, sirokko::SafetyEnvelope *profile) {
         return ParseError::MISSING_FIELD;
     profile->provisioned = sirokko::valid_safety_envelope(*profile);
     return ParseError::OK;
-}
-
-ParseError parse_revision(Cursor *cursor, sirokko::LearnedModelRevision *revision) {
-    if (!cursor || !revision || !cursor->take('{'))
-        return ParseError::FIELD_TYPE;
-    enum Bits : uint32_t {
-        EXPECTED = 1U << 0,
-        MINIMUM = 1U << 1,
-        MAXIMUM = 1U << 2,
-        UP = 1U << 3,
-        DOWN = 1U << 4
-    };
-    constexpr uint32_t kRequired = EXPECTED | MINIMUM | MAXIMUM | UP | DOWN;
-    uint32_t seen = 0;
-    bool have_member = false;
-    while (true) {
-        cursor->skip_space();
-        if (have_member) {
-            if (cursor->take('}'))
-                break;
-            if (!cursor->take(','))
-                return ParseError::INVALID_JSON;
-            cursor->skip_space();
-            if (cursor->current() >= cursor->end() || *cursor->current() == '}')
-                return ParseError::INVALID_JSON;
-        } else if (cursor->take('}')) {
-            return ParseError::MISSING_FIELD;
-        }
-        char key[32]{};
-        ParseError result = parse_string(cursor, key, sizeof(key));
-        if (result != ParseError::OK)
-            return result;
-        if (!cursor->take(':'))
-            return ParseError::INVALID_JSON;
-        uint32_t bit = 0;
-        if (equals(key, "expected_revision")) {
-            bit = EXPECTED;
-            uint64_t value{};
-            result = parse_u64(cursor, &value);
-            if (result == ParseError::OK && value <= UINT32_MAX)
-                revision->expected_revision = static_cast<uint32_t>(value);
-            else if (result == ParseError::OK)
-                result = ParseError::FIELD_VALUE;
-        } else if (equals(key, "minimum_speed_code")) {
-            bit = MINIMUM;
-            result = parse_u16(cursor, &revision->minimum_speed_code);
-        } else if (equals(key, "maximum_speed_code")) {
-            bit = MAXIMUM;
-            result = parse_u16(cursor, &revision->maximum_speed_code);
-        } else if (equals(key, "slew_up_per_s")) {
-            bit = UP;
-            result = parse_double(cursor, &revision->slew_up_per_s);
-        } else if (equals(key, "slew_down_per_s")) {
-            bit = DOWN;
-            result = parse_double(cursor, &revision->slew_down_per_s);
-        } else
-            return ParseError::UNKNOWN_FIELD;
-        if ((seen & bit) != 0U)
-            return ParseError::DUPLICATE_FIELD;
-        if (result != ParseError::OK)
-            return result;
-        seen |= bit;
-        have_member = true;
-    }
-    return seen == kRequired ? ParseError::OK : ParseError::MISSING_FIELD;
 }
 
 ParseError parse_grant(Cursor *cursor, GrantFields *grant) {
@@ -694,13 +624,6 @@ Digest digest_command(const Command &command) {
         hash_double(&hash, command.settings.slew_up_per_s);
         hash_double(&hash, command.settings.slew_down_per_s);
         break;
-    case sirokko::Action::MODEL_REVISION:
-        hash_u32(&hash, command.revision.expected_revision);
-        hash_u32(&hash, command.revision.minimum_speed_code);
-        hash_u32(&hash, command.revision.maximum_speed_code);
-        hash_double(&hash, command.revision.slew_up_per_s);
-        hash_double(&hash, command.revision.slew_down_per_s);
-        break;
     case sirokko::Action::PROFILE:
         envelope_fields(command.envelope,
                         [&](const char *, auto value) { hash_u64(&hash, static_cast<uint64_t>(value)); });
@@ -712,7 +635,6 @@ Digest digest_command(const Command &command) {
         break;
     case sirokko::Action::START:
     case sirokko::Action::RESET_FAULT:
-    case sirokko::Action::CALIBRATE:
         break;
     }
     return hash.finish();
@@ -760,9 +682,6 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         } else if (equals(key, "settings")) {
             bit = kSettings;
             result = parse_settings(&cursor, &command.settings);
-        } else if (equals(key, "revision")) {
-            bit = kRevision;
-            result = parse_revision(&cursor, &command.revision);
         } else if (equals(key, "envelope")) {
             bit = kEnvelope;
             result = parse_envelope(&cursor, &command.envelope);
@@ -799,9 +718,6 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
     case sirokko::Action::SETTINGS:
         required |= kSettings;
         break;
-    case sirokko::Action::MODEL_REVISION:
-        required |= kRevision;
-        break;
     case sirokko::Action::PROFILE:
         required |= kEnvelope;
         break;
@@ -811,7 +727,6 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         break;
     case sirokko::Action::START:
     case sirokko::Action::RESET_FAULT:
-    case sirokko::Action::CALIBRATE:
         break;
     }
     if (command_submission)

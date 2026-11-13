@@ -6,10 +6,7 @@ import {
   missingHeaterFields,
   heaterSetupText,
 } from "../src/lib/heater.js";
-import {
-  blockedActionLink,
-  calibrationStatus,
-} from "../src/lib/presentation.js";
+import { blockedActionLink } from "../src/lib/presentation.js";
 import { commandMatchesSnapshot } from "../src/lib/protocol.js";
 
 const limits = {
@@ -31,8 +28,8 @@ const parameters = {
   maximum_exhaust_milli_c: 300000,
   minimum_run_exhaust_milli_c: 40000,
   purge_speed_code: 1500,
-  reference_speed_code: 2000,
-  exploration_floor_code: 1000,
+  maximum_speed_code: 2000,
+  minimum_speed_code: 1000,
 };
 test("partial parameters can be saved without enabling automatic heating", () => {
   const draft = heaterDraft({
@@ -73,9 +70,9 @@ test("coupled limits, precision and nonfinite numbers block saving", () => {
     ["minimum_run_exhaust_milli_c", 300],
     ["minimum_run_exhaust_milli_c", 30],
     ["ignition_timeout_ms", 1],
-    ["reference_speed_code", 4015],
-    ["reference_speed_code", 2000.5],
-    ["exploration_floor_code", 1999],
+    ["maximum_speed_code", 4015],
+    ["maximum_speed_code", 2000.5],
+    ["minimum_speed_code", 2001],
   ]) {
     const result = heaterValidation({ ...base, [field]: value }, limits);
     assert.equal(result.valid, false, `${field}: ${value}`);
@@ -93,42 +90,25 @@ test("coupled limits, precision and nonfinite numbers block saving", () => {
 test("blocked action leads to the actual remedy rather than a generic readiness page", () => {
   for (const [code, href] of [
     ["ENVELOPE_MISSING", "#/heater"],
-    ["CALIBRATION_TOO_SLOW", "#/regulation"],
-    ["MODEL_UNAVAILABLE", "#/calibration"],
     ["SENSOR_INVALID", "#/diagnostics"],
     ["SENSOR_STALE", "#/diagnostics"],
     ["LOCAL_CONTROLS_UNAVAILABLE", "#/diagnostics"],
   ]) {
     assert.equal(
-      blockedActionLink({ commands: { CALIBRATE: { code } } }, "CALIBRATE")
-        .href,
+      blockedActionLink({ commands: { START: { code } } }, "START").href,
       href,
     );
   }
   assert.equal(
-    blockedActionLink(
-      { commands: { CALIBRATE: { code: "BUSY" } } },
-      "CALIBRATE",
-    ),
+    blockedActionLink({ commands: { START: { code: "BUSY" } } }, "START"),
     null,
-  );
-  assert.equal(
-    calibrationStatus({ learned_model: { valid: false } }).summary,
-    "Не выполнена",
-  );
-  assert.equal(
-    calibrationStatus({
-      learned_model: { valid: true },
-      commissioning: { active: true },
-    }).summary,
-    "Выполняется",
   );
 });
 test("incomplete profile reports the actual missing fields", () => {
-  const partial = { parameters: { ...parameters, exploration_floor_code: 0 } };
+  const partial = { parameters: { ...parameters, minimum_speed_code: 0 } };
   assert.deepEqual(
     missingHeaterFields(partial).map(([key]) => key),
-    ["exploration_floor_code"],
+    ["minimum_speed_code"],
   );
   assert.equal(heaterSetupText(partial), "Не заданы: 1");
   assert.equal(heaterValidation(heaterDraft(partial), limits).complete, false);
@@ -138,70 +118,7 @@ test("incomplete profile reports the actual missing fields", () => {
     "Проверьте параметры",
   );
 });
-test("calibration shows ignition and cooldown before analysis and saving", () => {
-  const snapshot = {
-    state: { code: "PREHEAT", ru: "Накал свечи" },
-    commissioning: {
-      active: true,
-      phase: { code: "STARTING", ru: "Запуск отопителя для калибровки" },
-    },
-  };
-  assert.equal(calibrationStatus(snapshot).title, "Накал свечи");
-  snapshot.state = { code: "IGNITION", ru: "Розжиг" };
-  assert.equal(calibrationStatus(snapshot).title, "Розжиг");
-  snapshot.state = { code: "RUN", ru: "Нагрев" };
-  snapshot.commissioning.phase = {
-    code: "SETTLE_POINT",
-    ru: "Ожидание стабильных температур при сниженном ШИМ",
-  };
-  assert.equal(
-    calibrationStatus(snapshot).title,
-    snapshot.commissioning.phase.ru,
-  );
-  snapshot.state = { code: "STOP_PURGE", ru: "Охлаждение" };
-  snapshot.purge = { active: true };
-  assert.equal(
-    calibrationStatus(snapshot).title,
-    "Охлаждение после калибровки",
-  );
-  snapshot.state = { code: "IDLE", ru: "Остановлен" };
-  snapshot.purge.active = false;
-  snapshot.commissioning.phase = {
-    code: "COMPLETE_PENDING_STOP",
-    ru: "Ожидание остановки",
-  };
-  assert.equal(
-    calibrationStatus(snapshot).title,
-    "Ожидание сохранения калибровки",
-  );
-  snapshot.commissioning.phase = {
-    code: "PERSIST_COMMITTING",
-    ru: "Сохранение калибровки",
-  };
-  assert.equal(calibrationStatus(snapshot).title, "Сохранение калибровки");
-});
-test("an older model does not turn a failed repeat into a successful calibration", () => {
-  for (const [code, summary] of [
-    ["FAILED", "Не завершена"],
-    ["CANCELLED", "Отменена"],
-    ["PERSIST_FAILED", "Не сохранена"],
-  ]) {
-    const snapshot = {
-      learned_model: { valid: true },
-      commissioning: { active: false, phase: { code } },
-    };
-    assert.equal(calibrationStatus(snapshot).summary, summary);
-    assert.notEqual(calibrationStatus(snapshot).icon, "check");
-  }
-  assert.equal(
-    calibrationStatus({
-      learned_model: { valid: true },
-      commissioning: { phase: { code: "SAVED" } },
-    }).icon,
-    "check",
-  );
-});
-test("queued configuration is confirmed only by the saved profile and invalidated old model", () => {
+test("queued configuration is confirmed only by the saved profile", () => {
   const baseline = {
     boot_id: "1",
     state_version: "1",
@@ -219,7 +136,6 @@ test("queued configuration is confirmed only by the saved profile and invalidate
     uptime_ms: 120,
     storage_ok: true,
     envelope: { provisioned: true, parameters },
-    learned_model: { valid: false },
   };
   assert.equal(commandMatchesSnapshot(pending, saved), true);
   const partial = { ...parameters, maximum_exhaust_milli_c: 0 };
@@ -233,7 +149,6 @@ test("queued configuration is confirmed only by the saved profile and invalidate
   for (const changes of [
     { boot_id: "2" },
     { storage_ok: false },
-    { learned_model: { valid: true } },
     {
       envelope: {
         provisioned: true,
@@ -245,4 +160,15 @@ test("queued configuration is confirmed only by the saved profile and invalidate
       commandMatchesSnapshot(pending, { ...saved, ...changes }),
       false,
     );
+});
+
+test("fixed command and one-code interval are accepted consistently with the controller", () => {
+  for (const minimum_speed_code of [1999, 2000]) {
+    const result = heaterValidation(
+      heaterDraft({ parameters: { ...parameters, minimum_speed_code } }),
+      limits,
+    );
+    assert.equal(result.valid, true);
+    assert.equal(result.complete, true);
+  }
 });

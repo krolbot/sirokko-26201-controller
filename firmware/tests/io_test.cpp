@@ -31,7 +31,7 @@ bool pwm(void *ctx, uint16_t speed) {
     return true;
 }
 struct Local {
-    start_stop_button::Snapshot view{State::IDLE, Block::NONE, 1, false};
+    start_stop_button::Snapshot view{State::IDLE, Block::NONE, 1};
     unsigned starts{}, stops{};
 };
 bool read(void *ctx, start_stop_button::Snapshot *s) {
@@ -44,7 +44,7 @@ bool start(void *ctx, uint64_t version) {
     ++l.starts;
     return true;
 }
-bool stop(void *ctx, bool) {
+bool stop(void *ctx) {
     ++static_cast<Local *>(ctx)->stops;
     return true;
 }

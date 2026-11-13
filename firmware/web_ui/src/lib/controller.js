@@ -5,7 +5,6 @@ import {
   isHexString,
   isActiveSession,
   makeCommandId,
-  modelRevisionPayload,
 } from "./protocol.js";
 
 const CONFIRMATION_TIMEOUT_MS = 5_000;
@@ -13,9 +12,7 @@ const ACTIONS = new Set([
   "START",
   "RESET_FAULT",
   "SETTINGS",
-  "CALIBRATE",
   "TIMER",
-  "MODEL_REVISION",
   "PROFILE",
 ]);
 
@@ -299,11 +296,9 @@ export class ControllerSession {
         {
           START: "Запуск отопителя начат",
           STOP: "Остановка отопителя подтверждена",
-          CALIBRATE: "Калибровка начата",
           RESET_FAULT: "Авария сброшена",
           SETTINGS: "Настройки применены",
           PROFILE: "Параметры отопителя сохранены",
-          MODEL_REVISION: "Диапазон ШИМ сохранён",
           TIMER: "Таймер остановки изменён",
         }[pending.action] || "Команда выполнена",
       );
@@ -411,12 +406,7 @@ export class ControllerSession {
       });
       return { status: "BLOCKED" };
     }
-    let commandFields = fields;
-    if (action === "MODEL_REVISION") {
-      commandFields = {
-        revision: modelRevisionPayload(baseline.learned_model, fields.revision),
-      };
-    }
+    const commandFields = fields;
     const authEpoch = this._authEpoch;
     const commandEpoch = ++this._commandEpoch;
     const payload = { action, command_id: this.commandId(), ...commandFields };

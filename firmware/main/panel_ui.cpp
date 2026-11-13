@@ -148,7 +148,6 @@ bool Model::presentation_blocked() const {
     const auto state = view_.control.state;
     if ((state != sirokko::State::IDLE && state != sirokko::State::UNCONFIGURED &&
          state != sirokko::State::RUN && state != sirokko::State::FAULT) ||
-        view_.control.commissioning.active ||
         view_.control.combustion.phase == sirokko::combustion::Phase::SUSPECT)
         return true;
     if (state == sirokko::State::RUN && view_.settings.mode == sirokko::Mode::TEMPERATURE) {
@@ -177,14 +176,12 @@ MenuItem Model::menu_item_at(uint8_t index) const {
     case 2:
         return MenuItem::SHUTDOWN_TIMER;
     case 3:
-        return MenuItem::CALIBRATION;
-    case 4:
         return MenuItem::DIAGNOSTICS;
-    case 5:
+    case 4:
         return MenuItem::WIFI;
-    case 6:
+    case 5:
         return MenuItem::OTA;
-    case 7:
+    case 6:
         return MenuItem::BACK;
     default:
         return MenuItem::BACK;
@@ -309,11 +306,6 @@ void Model::update(const View &view) {
 
     if (recovered && notice_ == Notice::VIEW_UNAVAILABLE)
         set_notice(Notice::NONE);
-    if (notice_ == Notice::CALIBRATION_BLOCKED && view_.control.commissioning.block == sirokko::Block::NONE)
-        set_notice(Notice::NONE);
-    if (page_ == Page::CALIBRATION && view_.control.commissioning.block != sirokko::Block::NONE)
-        pending_click_.calibration_ready = false;
-
     if (boot_changed || entered_stop_or_fault) {
         abort_stale_interaction(true);
         return;
@@ -424,8 +416,8 @@ bool Model::edit_conflicts(const View &previous) const {
     case EditField::TEMPERATURE:
         return before.mode != after.mode || before.manual_percent != after.manual_percent ||
                before.room_setpoint_milli_c != after.room_setpoint_milli_c ||
-               sirokko::minimum_manual_percent(previous.control.learned_model) !=
-                   sirokko::minimum_manual_percent(view_.control.learned_model);
+               sirokko::minimum_manual_percent(previous.envelope) !=
+                   sirokko::minimum_manual_percent(view_.envelope);
     case EditField::SHUTDOWN_TIMER:
         if (timer_target_ == TimerTarget::NEXT_START)
             return before.duration_ms != after.duration_ms;
@@ -542,15 +534,6 @@ void Model::open_menu_item(MenuItem item) {
     case MenuItem::SHUTDOWN_TIMER:
         begin_edit(EditField::SHUTDOWN_TIMER, Page::MENU);
         break;
-    case MenuItem::CALIBRATION: {
-        if (view_.control.commissioning.block != sirokko::Block::NONE) {
-            set_notice(Notice::CALIBRATION_BLOCKED);
-            break;
-        }
-        bump_interaction_epoch();
-        page_ = Page::CALIBRATION;
-        break;
-    }
     case MenuItem::DIAGNOSTICS:
         bump_interaction_epoch();
         page_ = Page::DIAGNOSTICS;
@@ -604,9 +587,8 @@ void Model::rotate(int turns) {
         edit_value_ = clamp_step(edit_value_, turns, 0, 1, 1);
         break;
     case EditField::MANUAL_POWER:
-        edit_value_ =
-            clamp_step(edit_value_, turns, sirokko::minimum_manual_percent(view_.control.learned_model),
-                       kManualMaximumPercent, sirokko::kManualStepPercent);
+        edit_value_ = clamp_step(edit_value_, turns, sirokko::minimum_manual_percent(view_.envelope),
+                                 kManualMaximumPercent, sirokko::kManualStepPercent);
         break;
     case EditField::TEMPERATURE:
         edit_value_ = clamp_step(edit_value_, turns, sirokko::kRoomSetpointMinimumMilliC,
@@ -651,18 +633,6 @@ void Model::execute_pending_single() {
     case Page::EDIT:
         commit_edit();
         break;
-    case Page::CALIBRATION: {
-        if (view_.control.commissioning.block != sirokko::Block::NONE) {
-            set_notice(Notice::CALIBRATION_BLOCKED);
-            break;
-        }
-        if (!pending.calibration_ready)
-            break;
-        Command command{};
-        command.kind = CommandKind::CALIBRATE;
-        queue_command(command);
-        break;
-    }
     case Page::DIAGNOSTICS:
     case Page::WIFI:
     case Page::OTA:
@@ -688,7 +658,6 @@ void Model::execute_pending_double() {
         break;
     case Page::DIAGNOSTICS:
     case Page::OTA:
-    case Page::CALIBRATION:
         page_ = Page::MENU;
         synchronize_menu();
         bump_interaction_epoch();
@@ -721,7 +690,6 @@ void Model::click(uint64_t now_ms) {
     }
 
     pending_click_.active = true;
-    pending_click_.calibration_ready = view_.control.commissioning.block == sirokko::Block::NONE;
     pending_click_.page = page_;
     pending_click_.menu_index = menu_index_;
     pending_click_.menu_item = menu_item_at(menu_index_);
@@ -754,9 +722,6 @@ bool Model::snapshot_confirms(const Confirmation &confirmation, const View &view
         return saturating_add(view.control.duration_remaining_ms, kTimerConfirmationSlackMs) >=
                expected_remaining;
     }
-    case CommandKind::CALIBRATE:
-        return view.control.commissioning.active && is_active_session(view.control.state) &&
-               view.control.run_id != 0;
     case CommandKind::RESET_FAULT:
         return view.control.state == sirokko::State::IDLE && view.control.faults == 0;
     case CommandKind::REQUEST_NETWORK_CREDENTIALS:
@@ -838,9 +803,7 @@ void Model::command_result(bool accepted) {
     in_flight_command_ = {};
     in_flight_context_ = {};
     if (!accepted) {
-        if (command.kind == CommandKind::CALIBRATE) {
-            set_notice(Notice::CALIBRATION_BLOCKED);
-        } else if (command.kind == CommandKind::REQUEST_NETWORK_CREDENTIALS) {
+        if (command.kind == CommandKind::REQUEST_NETWORK_CREDENTIALS) {
             clear_credentials();
             set_notice(Notice::CREDENTIALS_UNAVAILABLE);
         } else {
@@ -907,8 +870,6 @@ const char *menu_label(MenuItem item) {
         return "Температура";
     case MenuItem::SHUTDOWN_TIMER:
         return "Таймер";
-    case MenuItem::CALIBRATION:
-        return "Калибровка";
     case MenuItem::DIAGNOSTICS:
         return "Диагностика";
     case MenuItem::WIFI:

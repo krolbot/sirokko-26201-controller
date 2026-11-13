@@ -13,14 +13,13 @@ flags = [
     "-I" + str(core / "include"), "-I" + str(root / "main"),
 ]
 core_sources = [str(core / name) for name in (
-    "control.cpp", "profile.cpp", "regulator.cpp", "calibration.cpp", "calibration_runtime.cpp", "combustion.cpp",
+    "control.cpp", "profile.cpp", "regulator.cpp", "combustion.cpp",
 )]
 suites = {
     "combustion": core_sources,
     "control": core_sources,
     "thermostat": core_sources,
     "recovery": core_sources,
-    "calibration": [str(core / "calibration.cpp"), str(core / "regulator.cpp")],
     "runtime": core_sources + [str(root / "main" / name) for name in (
         "web_protocol.cpp", "web_state.cpp",
     )],

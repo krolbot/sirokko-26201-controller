@@ -5,15 +5,9 @@ using namespace sirokko;
 using namespace control_fixture;
 
 int main() {
-    // A model must provide a real interval, not a single accepted command.
-    auto one_point = model();
-    one_point.minimum_speed_code = one_point.maximum_speed_code;
-    one_point.fingerprint = learned_model_fingerprint(one_point);
-    Controller rejected(envelope(), Settings{}, 10, Startup::CLEAN);
-    assert(!rejected.install_learned_model(one_point));
     auto no_range = envelope();
-    no_range.exploration_floor_code = 0;
-    assert(commissioning_configuration_block(no_range, Settings{}) != Block::NONE);
+    no_range.minimum_speed_code = 0;
+    assert(!valid_safety_envelope(no_range));
 
     auto controller = ignition();
     Settings settings = controller.settings();
@@ -30,17 +24,15 @@ int main() {
         tick(20000);
     auto state = tick(20000);
     assert(state.state == State::RUN);
-    const auto fingerprint = state.learned_model.fingerprint;
     const auto run = state.run_id;
     auto hold_room = [&](int32_t room) {
         for (unsigned sample = 0; sample < 9000; ++sample) {
             state = tick(room);
             assert(state.state == State::RUN && !state.faults);
             assert(state.outputs.fuel && state.outputs.fan_request && !state.outputs.glow);
-            assert(state.outputs.speed_code >= model().minimum_speed_code);
-            assert(state.outputs.speed_code <= model().maximum_speed_code);
-            assert(!state.commissioning.active && state.run_id == run);
-            assert(state.learned_model.fingerprint == fingerprint);
+            assert(state.outputs.speed_code >= envelope().minimum_speed_code);
+            assert(state.outputs.speed_code <= envelope().maximum_speed_code);
+            assert(state.run_id == run);
         }
         return state.outputs.speed_code;
     };
@@ -50,44 +42,47 @@ int main() {
     const auto warm_command = hold_room(30000);
     assert(warm_command + 200 < cold_command);
 
-    // The saved model retains temperature regulation after a controller restart.
+    // Profile and settings suffice after restart; no learned state is required.
     Controller restored(envelope(), settings, 11, Startup::CLEAN);
-    assert(restored.install_learned_model(state.learned_model));
     assert(restored.snapshot(0).state == State::IDLE);
     assert(!restored.snapshot(0).outputs.fuel);
     auto start = input(100);
     start.start = true;
     assert(restored.tick(start).state == State::PREHEAT);
-    assert(!restored.snapshot(100).commissioning.active);
 
-    // A narrowed model uses its own maximum for display and auto/manual transfer.
-    auto narrowed = model();
+    // The configured upper bound is shared by ignition, display and auto/manual transfer.
+    auto narrowed = envelope();
     narrowed.maximum_speed_code = 1500;
-    narrowed.fingerprint = learned_model_fingerprint(narrowed);
-    for (bool recalibrate : {false, true}) {
-        Settings stored{};
-        stored.manual_percent = 60;
-        Controller narrowed_control(envelope(), stored, 12, Startup::CLEAN);
-        assert(narrowed_control.install_learned_model(narrowed));
-        assert(narrowed_control.settings().manual_percent == 80);
-        auto begin = input(120);
-        begin.start = !recalibrate;
-        begin.start_commissioning = recalibrate;
-        assert(narrowed_control.tick(begin).state == State::PREHEAT);
-        narrowed_control.tick(input(kIgnitionAt));
-        auto active = confirm_ignition(narrowed_control);
-        assert(active.outputs.speed_code == (recalibrate ? envelope().reference_speed_code : 1500));
-        assert(active.command_percent == 100.0);
-        if (!recalibrate) {
-            auto manual = narrowed_control.settings();
-            manual.mode = Mode::MANUAL;
-            assert(narrowed_control.update_settings(manual));
-            assert(narrowed_control.settings().manual_percent == 100);
-            assert(narrowed_control.tick(input(kRunAt + 100, 50000)).outputs.speed_code == 1500);
-        } else {
-            active = narrowed_control.tick(input(kRunAt + 100, 50000));
-            assert(active.commissioning.active && !active.faults);
-        }
+    Settings stored{};
+    stored.manual_percent = 60;
+    Controller narrowed_control(narrowed, stored, 12, Startup::CLEAN);
+    assert(narrowed_control.settings().manual_percent == 80);
+    auto begin = input(120);
+    begin.start = true;
+    assert(narrowed_control.tick(begin).state == State::PREHEAT);
+    narrowed_control.tick(input(kIgnitionAt));
+    auto active = confirm_ignition(narrowed_control);
+    assert(active.outputs.speed_code == 1500 && active.command_percent == 100.0);
+    auto manual = narrowed_control.settings();
+    manual.mode = Mode::MANUAL;
+    assert(narrowed_control.update_settings(manual));
+    assert(narrowed_control.settings().manual_percent == 100);
+    assert(narrowed_control.tick(input(kRunAt + 100, 50000)).outputs.speed_code == 1500);
+
+    // A fixed command interval is valid and never divides by zero or fabricates modulation.
+    auto fixed = envelope();
+    fixed.minimum_speed_code = fixed.maximum_speed_code;
+    Controller fixed_control(fixed, {}, 13, Startup::CLEAN);
+    assert(fixed_control.settings().manual_percent == 100);
+    assert(fixed_control.tick(begin).state == State::PREHEAT);
+    fixed_control.tick(input(kIgnitionAt));
+    confirm_ignition(fixed_control);
+    for (uint64_t t = kRunAt + 100; t <= kRunAt + 60000; t += 100) {
+        auto sample = input(t, 50000);
+        sample.sensors.room.milli_c = 30000;
+        const auto observed = fixed_control.tick(sample);
+        assert(observed.state == State::RUN && !observed.faults);
+        assert(observed.outputs.speed_code == fixed.maximum_speed_code && observed.room_excess);
     }
 
     // Explicit STOP and a thermocouple fault still override comfort control.
@@ -103,5 +98,5 @@ int main() {
     assert(state.state == State::STOP_PURGE && state.outputs.fan_request);
     off(state);
     std::cout << "PASS thermostat: colder increases command, warmer reduces it without extinguishing, "
-                 "range bounds, saved model, no recalibration, STOP and sensor fault\n";
+                 "range bounds, profile-only restart, fixed command, STOP and sensor fault\n";
 }

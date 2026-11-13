@@ -31,44 +31,6 @@ uint64_t remaining(uint64_t now, uint64_t deadline) {
     return now >= deadline ? 0 : deadline - now;
 }
 
-CommissioningPhase commissioning_phase(calibration::Phase phase) {
-    switch (phase) {
-    case calibration::Phase::IDLE:
-        return CommissioningPhase::IDLE;
-    case calibration::Phase::WAIT_REFERENCE_COMMAND:
-        return CommissioningPhase::WAIT_REFERENCE_COMMAND;
-    case calibration::Phase::SETTLE_REFERENCE:
-        return CommissioningPhase::SETTLE_REFERENCE;
-    case calibration::Phase::WAIT_DESCENT_COMMAND:
-        return CommissioningPhase::WAIT_DESCENT_COMMAND;
-    case calibration::Phase::SETTLE_POINT:
-        return CommissioningPhase::SETTLE_POINT;
-    case calibration::Phase::WAIT_RETURN_COMMAND:
-        return CommissioningPhase::WAIT_RETURN_COMMAND;
-    case calibration::Phase::SETTLE_RETURN_REFERENCE:
-        return CommissioningPhase::SETTLE_RETURN_REFERENCE;
-    case calibration::Phase::WAIT_REPEAT_COMMAND:
-        return CommissioningPhase::WAIT_REPEAT_COMMAND;
-    case calibration::Phase::SETTLE_REPEAT_POINT:
-        return CommissioningPhase::SETTLE_REPEAT_POINT;
-    case calibration::Phase::WAIT_POST_REPEAT_REFERENCE_COMMAND:
-        return CommissioningPhase::WAIT_POST_REPEAT_REFERENCE_COMMAND;
-    case calibration::Phase::SETTLE_POST_REPEAT_REFERENCE:
-        return CommissioningPhase::SETTLE_POST_REPEAT_REFERENCE;
-    case calibration::Phase::COMPLETE_PENDING_STOP:
-        return CommissioningPhase::COMPLETE_PENDING_STOP;
-    case calibration::Phase::FAILED:
-        return CommissioningPhase::FAILED;
-    case calibration::Phase::CANCELLED:
-        return CommissioningPhase::CANCELLED;
-    }
-    return CommissioningPhase::FAILED;
-}
-
-CommissioningReason commissioning_reason(calibration::Reason reason) {
-    return static_cast<CommissioningReason>(reason);
-}
-
 } // namespace
 
 Grant CommandGate::issue(Action action, uint64_t params_hash, uint64_t now_ms, uint64_t state_version,
@@ -119,7 +81,8 @@ Controller::Controller(SafetyEnvelope profile, Settings settings, uint64_t boot_
         settings_ = {};
     if (!envelope_.provisioned && startup == Startup::RECOVER)
         envelope_.postpurge_ms = std::max(envelope_.postpurge_ms, kPostpurgeMinimumMs);
-    run_speed_code_ = envelope_.reference_speed_code;
+    settings_.manual_percent = std::max(settings_.manual_percent, minimum_manual_percent(envelope_));
+    run_speed_code_ = envelope_.maximum_speed_code;
     state_ = startup == Startup::RECOVER ? State::RECOVERY_PURGE
              : envelope_.provisioned     ? State::IDLE
                                          : State::UNCONFIGURED;
@@ -152,8 +115,6 @@ Block Controller::start_guard(const Sensors &sensors, uint64_t now_ms) const {
         return Block::ENVELOPE_MISSING;
     if (faults_)
         return Block::FAULT_LATCHED;
-    if (model_candidate_.valid)
-        return Block::BUSY;
     if (state_ != State::IDLE)
         return state_ == State::MAINTENANCE ? Block::MAINTENANCE : Block::BUSY;
     const auto data_block = sensor_block(sensors, now_ms, settings_.mode == Mode::TEMPERATURE);
@@ -208,27 +169,22 @@ bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
 }
 
 void Controller::begin_start(uint64_t now_ms) {
-    combustion_monitor_.reset(envelope_.minimum_run_exhaust_milli_c, envelope_.reference_speed_code);
+    combustion_monitor_.reset(envelope_.minimum_run_exhaust_milli_c, envelope_.maximum_speed_code);
     run_id_ = next_id_++;
     if (next_id_ == 0)
         next_id_ = 1;
     condition_active_ = false;
-    run_speed_code_ = envelope_.reference_speed_code;
-    duration_active_ = !commissioning_requested_ && settings_.duration_ms != 0;
+    run_speed_code_ = envelope_.maximum_speed_code;
+    duration_active_ = settings_.duration_ms != 0;
     duration_deadline_ms_ = duration_active_ ? now_ms + settings_.duration_ms : 0;
     transition(State::PREHEAT, now_ms);
     record("START", now_ms);
 }
 
-void Controller::begin_stop(uint64_t now_ms, bool preserve_calibration_candidate) {
+void Controller::begin_stop(uint64_t now_ms) {
     if (combustion_monitor_.snapshot().phase != combustion::Phase::LOST)
         combustion_monitor_ = {};
-    const bool cancel_presealed_calibration =
-        commissioning_requested_ ||
-        (model_candidate_.valid && !model_storage_sealed_ && !preserve_calibration_candidate);
-    if (cancel_presealed_calibration)
-        cancel_commissioning(calibration::Reason::EXTERNAL_CANCEL, now_ms);
-    if (active(state_) || (model_candidate_.valid && model_storage_sealed_))
+    if (active(state_))
         record("STOP", now_ms);
     duration_active_ = false;
     duration_deadline_ms_ = 0;
@@ -240,8 +196,6 @@ void Controller::begin_stop(uint64_t now_ms, bool preserve_calibration_candidate
 void Controller::latch_fault(uint32_t faults, uint64_t now_ms) {
     if (combustion_monitor_.snapshot().phase != combustion::Phase::LOST)
         combustion_monitor_ = {};
-    if (commissioning_requested_ || (model_candidate_.valid && !model_storage_sealed_))
-        cancel_commissioning(calibration::Reason::RUN_CONTEXT_LOST, now_ms);
     faults_ |= faults;
     record("FAULT", now_ms);
     duration_active_ = false;
@@ -270,7 +224,7 @@ Outputs Controller::outputs() const {
         result = {false, 0, true, false};
         break;
     case State::IGNITION:
-        result = {true, envelope_.reference_speed_code, true, true};
+        result = {true, envelope_.maximum_speed_code, true, true};
         break;
     case State::RUN:
         result = {true, static_cast<uint16_t>(std::lround(run_speed_code_)), false, true};
@@ -324,26 +278,11 @@ Snapshot Controller::tick(const TickInput &input) {
     uint32_t new_faults = new_external_faults;
     if (active(state_) || state_ == State::MAINTENANCE)
         new_faults |= current_sensor_faults;
-    if (model_candidate_.valid && purging(state_))
-        new_faults |= current_sensor_faults & ~static_cast<uint32_t>(FAULT_ROOM);
-
-    // Preserve the operator report with the pre-fault state/output context. A
-    // simultaneous sensor or external fault still owns the state transition below.
-    if (input.operator_combustion_problem && (commissioning_requested_ || model_candidate_.valid)) {
-        record("OPERATOR_COMBUSTION_PROBLEM", now);
-        cancel_commissioning(calibration::Reason::OPERATOR_NEGATIVE, now);
-    }
     if (new_faults)
         latch_fault(new_faults, now);
 
-    // A pending/staged range is no longer trustworthy once either thermal
-    // channel becomes invalid, even while IDLE has not escalated it to a fault.
-    if (model_candidate_.valid && !model_storage_sealed_ && state_ == State::IDLE &&
-        !thermal_sensors_fresh(input.sensors, now))
-        cancel_commissioning(calibration::Reason::SENSOR_INVALID, now);
-
     // STOP is an independent priority barrier. It cancels queued starts and never writes GPIO directly.
-    const bool stop_barrier = input.stop || input.operator_combustion_problem;
+    const bool stop_barrier = input.stop;
     if (stop_barrier) {
         // Revoke queued commands even when STOP leaves an idle controller in IDLE.
         if (++state_version_ == 0)
@@ -354,8 +293,7 @@ Snapshot Controller::tick(const TickInput &input) {
     }
 
     if (input.enter_maintenance && !stop_barrier && state_ == State::IDLE && faults_ == 0 &&
-        !model_candidate_.valid && thermal_sensors_fresh(input.sensors, now) &&
-        cooling_complete(envelope_, input.sensors, now)) {
+        thermal_sensors_fresh(input.sensors, now) && cooling_complete(envelope_, input.sensors, now)) {
         transition(State::MAINTENANCE, now);
     } else if (input.exit_maintenance && state_ == State::MAINTENANCE) {
         transition(faults_ ? State::FAULT : State::IDLE, now);
@@ -385,24 +323,9 @@ Snapshot Controller::tick(const TickInput &input) {
     }
 
     const Block requested_start_block = start_guard(input.sensors, now);
-    const Block requested_commissioning_block =
-        input.start_commissioning ? commissioning_configuration_block(envelope_, settings_) : Block::NONE;
-    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready &&
-        (input.start || input.start_commissioning) && requested_start_block == Block::NONE &&
-        requested_commissioning_block == Block::NONE && (input.start_commissioning || model_.valid)) {
-        model_saved_ = false;
-        model_storage_id_ = 0;
-        model_storage_sealed_ = false;
-        if (input.start_commissioning)
-            model_storage_unconfirmed_ = false;
-        calibrator_ = {};
-        commissioning_requested_ = input.start_commissioning;
-        commissioning_started_ms_ = now;
-        commissioning_finished_ms_ = 0;
+    if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready && input.start &&
+        requested_start_block == Block::NONE)
         begin_start(now);
-        if (commissioning_requested_)
-            record("CALIBRATION_START", now);
-    }
 
     const uint64_t elapsed = now >= state_started_ms_ ? now - state_started_ms_ : 0;
     switch (state_) {
@@ -427,11 +350,8 @@ Snapshot Controller::tick(const TickInput &input) {
                                          input.sensors.exhaust.sample_ms)) {
             transition(State::RUN, now);
             condition_active_ = false;
-            run_speed_code_ = model_.valid && !commissioning_requested_ ? model_.maximum_speed_code
-                                                                        : envelope_.reference_speed_code;
+            run_speed_code_ = envelope_.maximum_speed_code;
             regulator_.reset(now, input.sensors.room.milli_c / 1000.0, 1.0);
-            if (commissioning_requested_)
-                start_commissioning_run(now);
         }
         break;
     case State::RUN: {
@@ -446,11 +366,7 @@ Snapshot Controller::tick(const TickInput &input) {
             if (observed.phase == combustion::Phase::LOST)
                 latch_fault(FAULT_COMBUSTION_DROP, now);
             else if (!condition_active_ && observed.phase != combustion::Phase::SUSPECT) {
-                // Do not change the command or learn a new calibration point while a drop is being checked.
-                if (commissioning_requested_)
-                    run_commissioning(now, input.sensors);
-                else
-                    regulate(now, input.sensors);
+                regulate(now, input.sensors);
             }
         }
         break;
@@ -507,72 +423,30 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
         result.start_block = Block::BUSY;
     else
         result.start_block = start_guard(last_sensors_, now_ms);
-    const Block common_start_block = result.start_block;
-    if (result.start_block == Block::NONE && !model_.valid)
-        result.start_block = Block::MODEL_UNAVAILABLE;
     result.combustion = combustion_monitor_.snapshot();
     if (state_ != State::RUN && result.combustion.phase != combustion::Phase::LOST)
         result.combustion = {};
-    result.learned_model = model_;
-    const auto command_maximum = model_.valid && !commissioning_requested_ ? model_.maximum_speed_code
-                                                                           : envelope_.reference_speed_code;
+    const auto command_maximum = envelope_.maximum_speed_code;
     result.command_percent = command_maximum ? 100.0 * result.outputs.speed_code / command_maximum : 0;
     result.working_span_fraction = regulator_.value().fraction;
-    const auto cal = calibrator_.snapshot(now_ms);
-    auto &commissioning = result.commissioning;
-    commissioning.active = commissioning_requested_ || model_candidate_.valid;
-    commissioning.phase =
-        model_storage_unconfirmed_
-            ? CommissioningPhase::PERSIST_FAILED
-            : (model_saved_ ? CommissioningPhase::SAVED
-                            : (model_candidate_.valid && model_storage_sealed_
-                                   ? CommissioningPhase::PERSIST_COMMITTING
-                                   : (model_candidate_.valid && model_storage_id_ != 0
-                                          ? CommissioningPhase::PERSIST_STAGING
-                                          : (commissioning_requested_ && state_ != State::RUN
-                                                 ? CommissioningPhase::STARTING
-                                                 : commissioning_phase(cal.phase)))));
-    commissioning.reason = model_storage_unconfirmed_ ? CommissioningReason::STORAGE_UNCONFIRMED
-                                                      : commissioning_reason(cal.reason);
-    commissioning.target_speed_code = cal.target_code;
-    commissioning.accepted_point_count = cal.accepted_point_count;
-    const uint64_t calibration_end = commissioning.active ? now_ms : commissioning_finished_ms_;
-    commissioning.elapsed_ms =
-        calibration_end >= commissioning_started_ms_ ? calibration_end - commissioning_started_ms_ : 0;
-    commissioning.source_envelope_fingerprint = envelope_fingerprint(envelope_);
-    commissioning.installed_model_fingerprint = model_.valid ? model_.fingerprint : 0;
-    commissioning.installed_model_revision = model_.valid ? model_.provenance.revision : 0;
-    commissioning.block = common_start_block == Block::NONE
-                              ? commissioning_configuration_block(envelope_, settings_)
-                              : common_start_block;
-    result.room_excess = !commissioning.active && state_ == State::RUN &&
-                         settings_.mode == Mode::TEMPERATURE &&
+    result.room_excess = state_ == State::RUN && settings_.mode == Mode::TEMPERATURE &&
                          room_temperature_fresh(last_sensors_.room, now_ms) &&
                          last_sensors_.room.milli_c > settings_.room_setpoint_milli_c &&
-                         (!model_.valid || result.working_span_fraction <= 0.001);
+                         result.outputs.speed_code <= envelope_.minimum_speed_code;
     return result;
 }
 
 bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool recover, uint64_t now_ms) {
     if (!valid_profile_draft(profile) ||
-        (state_ != State::UNCONFIGURED && state_ != State::IDLE && state_ != State::FAULT) ||
-        commissioning_requested_ || model_candidate_.valid)
+        (state_ != State::UNCONFIGURED && state_ != State::IDLE && state_ != State::FAULT))
         return false;
     const bool was_unconfigured = !envelope_.provisioned;
     envelope_ = profile;
     envelope_.provisioned = valid_safety_envelope(envelope_);
-    model_ = {};
-    model_saved_ = false;
-    model_storage_id_ = 0;
-    model_storage_sealed_ = model_storage_unconfirmed_ = false;
-    calibrator_ = {};
-    commissioning_config_ = {};
-    commissioning_started_ms_ = 0;
-    commissioning_finished_ms_ = 0;
-    commissioning_logged_phase_ = calibration::Phase::IDLE;
     combustion_monitor_ = {};
     regulator_ = Regulator{};
-    run_speed_code_ = profile.reference_speed_code;
+    settings_.manual_percent = std::max(settings_.manual_percent, minimum_manual_percent(envelope_));
+    run_speed_code_ = profile.maximum_speed_code;
     if (++state_version_ == 0)
         state_version_ = 1;
     if (was_unconfigured || !envelope_.provisioned) {
@@ -587,75 +461,37 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
 }
 
 bool Controller::update_settings(const Settings &settings) {
-    if (!valid_settings(settings) || state_ == State::MAINTENANCE || commissioning_requested_ ||
-        combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT || model_candidate_.valid)
+    if (!valid_settings(settings) || state_ == State::MAINTENANCE ||
+        combustion_monitor_.snapshot().phase == combustion::Phase::SUSPECT)
         return false;
     Settings accepted = settings;
     if (active(state_) && settings_.mode == Mode::TEMPERATURE && settings.mode == Mode::MANUAL &&
-        model_.valid && model_.maximum_speed_code) {
-        const long step = std::lround(20.0 * run_speed_code_ / model_.maximum_speed_code);
+        envelope_.maximum_speed_code) {
+        const long step = std::lround(20.0 * run_speed_code_ / envelope_.maximum_speed_code);
         accepted.manual_percent = static_cast<uint8_t>(std::clamp(step * 5, 5L, 100L));
     }
-    accepted.manual_percent = std::max(accepted.manual_percent, minimum_manual_percent(model_));
+    accepted.manual_percent = std::max(accepted.manual_percent, minimum_manual_percent(envelope_));
     settings_ = accepted;
     ++state_version_;
     return true;
 }
 
-bool Controller::install_learned_model(const LearnedOperatingModel &model) {
-    if (active(state_) || state_ == State::MAINTENANCE || !envelope_.provisioned || !model.valid ||
-        model.provenance.revision == 0 ||
-        model.provenance.safety_envelope_fingerprint != envelope_fingerprint(envelope_) ||
-        model.fingerprint != learned_model_fingerprint(model) || !envelope_.exploration_floor_code ||
-        model.minimum_speed_code < envelope_.exploration_floor_code ||
-        model.minimum_speed_code >= model.maximum_speed_code ||
-        model.maximum_speed_code > envelope_.reference_speed_code || !std::isfinite(model.slew_up_per_s) ||
-        !std::isfinite(model.slew_down_per_s) || model.slew_up_per_s < kMinimumSlewPerS ||
-        model.slew_up_per_s > kMaximumSlewPerS || model.slew_down_per_s < kMinimumSlewPerS ||
-        model.slew_down_per_s > kMaximumSlewPerS || model.measurements.tested_point_count == 0 ||
-        model.measurements.elapsed_ms == 0 ||
-        model.provenance.commissioning_completed_ms < model.provenance.commissioning_started_ms ||
-        model.measurements.elapsed_ms !=
-            model.provenance.commissioning_completed_ms - model.provenance.commissioning_started_ms)
-        return false;
-    model_ = model;
-    settings_.manual_percent = std::max(settings_.manual_percent, minimum_manual_percent(model_));
-    run_speed_code_ = envelope_.reference_speed_code;
-    ++state_version_;
-    return true;
-}
-
-bool Controller::prepare_model_revision(const LearnedModelRevision &revision,
-                                        LearnedOperatingModel *candidate) const {
-    if (!candidate || state_ != State::IDLE || commissioning_requested_ || model_candidate_.valid ||
-        !valid_model_revision(model_, revision))
-        return false;
-    *candidate = model_;
-    candidate->minimum_speed_code = revision.minimum_speed_code;
-    candidate->maximum_speed_code = revision.maximum_speed_code;
-    candidate->slew_up_per_s = revision.slew_up_per_s;
-    candidate->slew_down_per_s = revision.slew_down_per_s;
-    ++candidate->provenance.revision;
-    candidate->fingerprint = learned_model_fingerprint(*candidate);
-    return true;
-}
-
 void Controller::regulate(uint64_t now_ms, const Sensors &sensors) {
-    if (!model_.valid) {
-        run_speed_code_ = envelope_.reference_speed_code;
+    const double span = envelope_.maximum_speed_code - envelope_.minimum_speed_code;
+    if (span <= 0) {
+        run_speed_code_ = envelope_.maximum_speed_code;
         return;
     }
-    const double span = model_.maximum_speed_code - model_.minimum_speed_code;
     const double manual = std::clamp(
-        (settings_.manual_percent * model_.maximum_speed_code / 100.0 - model_.minimum_speed_code) / span,
+        (settings_.manual_percent * envelope_.maximum_speed_code / 100.0 - envelope_.minimum_speed_code) /
+            span,
         0.0, 1.0);
     const double room =
         sensors.room.valid ? sensors.room.milli_c / 1000.0 : settings_.room_setpoint_milli_c / 1000.0;
     const auto regulated = regulator_.tick(now_ms, room, settings_.room_setpoint_milli_c / 1000.0,
                                            settings_.mode == Mode::TEMPERATURE, manual,
-                                           std::min(settings_.slew_up_per_s, model_.slew_up_per_s),
-                                           std::min(settings_.slew_down_per_s, model_.slew_down_per_s));
-    run_speed_code_ = model_.minimum_speed_code + regulated.fraction * span;
+                                           settings_.slew_up_per_s, settings_.slew_down_per_s);
+    run_speed_code_ = envelope_.minimum_speed_code + regulated.fraction * span;
 }
 
 void Controller::record(const char *kind, uint64_t now_ms) {
@@ -833,10 +669,6 @@ const char *block_name(Block block) {
         return "ENVELOPE_INVALID";
     case Block::SENSOR_STALE:
         return "SENSOR_STALE";
-    case Block::MODEL_UNAVAILABLE:
-        return "MODEL_UNAVAILABLE";
-    case Block::CALIBRATION_TOO_SLOW:
-        return "CALIBRATION_TOO_SLOW";
     }
     return "UNKNOWN";
 }

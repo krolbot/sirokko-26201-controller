@@ -44,8 +44,6 @@ const char *russian_block(sirokko::Block block) {
         return "Не все параметры отопителя заполнены";
     case sirokko::Block::ENVELOPE_INVALID:
         return "Параметры отопителя не позволяют выполнить эту команду";
-    case sirokko::Block::CALIBRATION_TOO_SLOW:
-        return "Темп изменения ШИМ слишком мал для калибровки";
     case sirokko::Block::RECOVERY_PURGE:
         return "Дождитесь охлаждения отопителя";
     case sirokko::Block::SENSOR_INVALID:
@@ -60,8 +58,6 @@ const char *russian_block(sirokko::Block block) {
         return "Команда недоступна на текущем этапе работы";
     case sirokko::Block::MAINTENANCE:
         return "Обновление прошивки";
-    case sirokko::Block::MODEL_UNAVAILABLE:
-        return "Нужна калибровка";
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
         return "Не удалось запустить драйвер экрана или кнопки";
     case sirokko::Block::STALE_COMMAND:
@@ -84,53 +80,6 @@ void append_sensor(JsonBuilder *json, const sirokko::SensorSample &sample, bool 
     json->character('}');
 }
 
-struct CommissioningText {
-    const char *code;
-    const char *ru;
-};
-CommissioningText commissioning_phase_text(sirokko::CommissioningPhase value) {
-    switch (value) {
-    case sirokko::CommissioningPhase::IDLE:
-        return {"IDLE", "Не запущена"};
-    case sirokko::CommissioningPhase::STARTING:
-        return {"STARTING", "Запуск отопителя для калибровки"};
-    case sirokko::CommissioningPhase::WAIT_REFERENCE_COMMAND:
-        return {"WAIT_REFERENCE_COMMAND", "Увеличение ШИМ до значения розжига"};
-    case sirokko::CommissioningPhase::SETTLE_REFERENCE:
-        return {"SETTLE_REFERENCE", "Ожидание стабильных температур при ШИМ розжига"};
-    case sirokko::CommissioningPhase::WAIT_DESCENT_COMMAND:
-        return {"WAIT_DESCENT_COMMAND", "Снижение ШИМ двигателя"};
-    case sirokko::CommissioningPhase::SETTLE_POINT:
-        return {"SETTLE_POINT", "Ожидание стабильных температур при сниженном ШИМ"};
-    case sirokko::CommissioningPhase::WAIT_RETURN_COMMAND:
-        return {"WAIT_RETURN_COMMAND", "Возврат к ШИМ розжига"};
-    case sirokko::CommissioningPhase::SETTLE_RETURN_REFERENCE:
-        return {"SETTLE_RETURN_REFERENCE", "Сравнение температур при возврате к ШИМ розжига"};
-    case sirokko::CommissioningPhase::WAIT_REPEAT_COMMAND:
-        return {"WAIT_REPEAT_COMMAND", "Повторная установка сниженного ШИМ"};
-    case sirokko::CommissioningPhase::SETTLE_REPEAT_POINT:
-        return {"SETTLE_REPEAT_POINT", "Сравнение температур при повторе сниженного ШИМ"};
-    case sirokko::CommissioningPhase::WAIT_POST_REPEAT_REFERENCE_COMMAND:
-        return {"WAIT_POST_REPEAT_REFERENCE_COMMAND", "Повторный возврат к ШИМ розжига"};
-    case sirokko::CommissioningPhase::SETTLE_POST_REPEAT_REFERENCE:
-        return {"SETTLE_POST_REPEAT_REFERENCE", "Повторное сравнение температур при ШИМ розжига"};
-    case sirokko::CommissioningPhase::COMPLETE_PENDING_STOP:
-        return {"COMPLETE_PENDING_STOP", "Измерения завершены, останов и охлаждение"};
-    case sirokko::CommissioningPhase::FAILED:
-        return {"FAILED", "Калибровка прервана из-за ошибки"};
-    case sirokko::CommissioningPhase::CANCELLED:
-        return {"CANCELLED", "Отменена"};
-    case sirokko::CommissioningPhase::PERSIST_STAGING:
-        return {"PERSIST_STAGING", "Подготовка к сохранению калибровки"};
-    case sirokko::CommissioningPhase::PERSIST_COMMITTING:
-        return {"PERSIST_COMMITTING", "Запись и проверка результата калибровки"};
-    case sirokko::CommissioningPhase::SAVED:
-        return {"SAVED", "Результат калибровки сохранён"};
-    case sirokko::CommissioningPhase::PERSIST_FAILED:
-        return {"PERSIST_FAILED", "Не удалось сохранить калибровку"};
-    }
-    return {"UNKNOWN", "Неизвестное состояние"};
-}
 const char *russian_event(const char *kind) {
     if (!kind)
         return "Неизвестное событие";
@@ -150,119 +99,7 @@ const char *russian_event(const char *kind) {
         return "Таймер останова установлен";
     if (std::strcmp(kind, "TIMER_CANCELLED") == 0)
         return "Таймер останова отменён";
-    if (std::strstr(kind, "KEY0") || std::strstr(kind, "OPERATOR"))
-        return "Калибровка остановлена кнопкой на плате";
-    const struct {
-        const char *code;
-        const char *text;
-    } events[] = {
-        {"CALIBRATION_START", "Калибровка начата"},
-        {"CALIBRATION_CANCELLED", "Калибровка отменена"},
-        {"CALIBRATION_PENDING_COOLDOWN", "Измерения завершены, охлаждение"},
-        {"CALIBRATION_REJECTED", "Результат калибровки отклонён"},
-        {"CALIBRATION_SAVED", "Результат калибровки сохранён"},
-        {"CALIBRATION_STORAGE_UNCONFIRMED", "Сохранение калибровки не подтверждено"},
-        {"CALIBRATION_STORAGE_FAILED", "Не удалось сохранить калибровку"},
-    };
-    for (const auto &event : events)
-        if (std::strcmp(kind, event.code) == 0)
-            return event.text;
-    for (int value = 0; value <= static_cast<int>(sirokko::CommissioningPhase::PERSIST_FAILED); ++value) {
-        const auto phase = commissioning_phase_text(static_cast<sirokko::CommissioningPhase>(value));
-        if (std::strcmp(kind, phase.code) == 0)
-            return phase.ru;
-    }
     return "Неизвестное событие";
-}
-
-CommissioningText commissioning_reason_text(sirokko::CommissioningReason value) {
-    switch (value) {
-    case sirokko::CommissioningReason::NONE:
-        return {"NONE", "Нет"};
-    case sirokko::CommissioningReason::COMPLETE:
-        return {"COMPLETE", "Измерения завершены"};
-    case sirokko::CommissioningReason::INVALID_CONFIG:
-        return {"INVALID_CONFIG", "Параметры не позволяют выполнить калибровку"};
-    case sirokko::CommissioningReason::BACKDATED_TIME:
-        return {"BACKDATED_TIME", "Время контроллера изменилось в обратную сторону"};
-    case sirokko::CommissioningReason::OVERALL_TIMEOUT:
-        return {"OVERALL_TIMEOUT", "Истекло время калибровки"};
-    case sirokko::CommissioningReason::RUN_CONTEXT_LOST:
-        return {"RUN_CONTEXT_LOST", "Отопитель вышел из режима нагрева во время калибровки"};
-    case sirokko::CommissioningReason::COMMAND_OUT_OF_RANGE:
-        return {"COMMAND_OUT_OF_RANGE", "ШИМ двигателя вышел за границы калибровки"};
-    case sirokko::CommissioningReason::COMMAND_SLEW_VIOLATION:
-        return {"COMMAND_SLEW_VIOLATION", "ШИМ двигателя меняется быстрее установленного ограничения"};
-    case sirokko::CommissioningReason::COMMAND_NOT_REACHED:
-        return {"COMMAND_NOT_REACHED", "ШИМ двигателя не достиг заданного значения за отведённое время"};
-    case sirokko::CommissioningReason::SENSOR_INVALID:
-        return {"SENSOR_INVALID", "Недостоверные показания датчика"};
-    case sirokko::CommissioningReason::STALE_SAMPLE:
-        return {"STALE_SAMPLE", "Устаревшие показания"};
-    case sirokko::CommissioningReason::SAMPLE_TIMESTAMP_REGRESSION:
-        return {"SAMPLE_TIMESTAMP_REGRESSION", "Время нового измерения раньше предыдущего"};
-    case sirokko::CommissioningReason::SAMPLE_SKEW:
-        return {"SAMPLE_SKEW", "Термопары измерены с недопустимым интервалом между ними"};
-    case sirokko::CommissioningReason::REPEATED_SAMPLE:
-        return {"REPEATED_SAMPLE", "Повторно получено прежнее измерение термопары"};
-    case sirokko::CommissioningReason::SAMPLE_GAP:
-        return {"SAMPLE_GAP", "Превышен интервал между измерениями термопар"};
-    case sirokko::CommissioningReason::REFERENCE_TIMEOUT:
-        return {"REFERENCE_TIMEOUT", "Температуры не стабилизировались при ШИМ розжига"};
-    case sirokko::CommissioningReason::POINT_TIMEOUT:
-        return {"POINT_TIMEOUT", "Температуры не стабилизировались при сниженном ШИМ"};
-    case sirokko::CommissioningReason::REFERENCE_NOT_REPRODUCIBLE:
-        return {"REFERENCE_NOT_REPRODUCIBLE", "Температуры не повторились после возврата к ШИМ розжига"};
-    case sirokko::CommissioningReason::NO_COMMAND_RESPONSE:
-        return {"NO_COMMAND_RESPONSE", "Температуры не изменились достаточно после изменения ШИМ"};
-    case sirokko::CommissioningReason::POINT_NOT_REPRODUCIBLE:
-        return {"POINT_NOT_REPRODUCIBLE", "Температуры не повторились при том же сниженном ШИМ"};
-    case sirokko::CommissioningReason::DYNAMIC_NOT_REPRODUCIBLE:
-        return {"DYNAMIC_NOT_REPRODUCIBLE",
-                "Изменение температур во времени не повторилось при том же изменении ШИМ"};
-    case sirokko::CommissioningReason::INSUFFICIENT_MARGIN:
-        return {"INSUFFICIENT_MARGIN", "Не удалось определить рабочий диапазон ШИМ"};
-    case sirokko::CommissioningReason::OPERATOR_NEGATIVE:
-        return {"OPERATOR_NEGATIVE", "Калибровка прервана кнопкой на плате"};
-    case sirokko::CommissioningReason::EXTERNAL_CANCEL:
-        return {"EXTERNAL_CANCEL", "Калибровка отменена командой остановки"};
-    case sirokko::CommissioningReason::STORAGE_UNCONFIRMED:
-        return {"STORAGE_UNCONFIRMED", "Контроллер не подтвердил сохранение калибровки"};
-    }
-    return {"UNKNOWN", "Неизвестное состояние"};
-}
-void append_model(JsonBuilder *json, const sirokko::LearnedOperatingModel &model) {
-    json->raw("{\"valid\":");
-    json->boolean(model.valid);
-    json->raw(",\"minimum_speed_code\":");
-    json->unsigned_integer(static_cast<uint32_t>(model.minimum_speed_code));
-    json->raw(",\"maximum_speed_code\":");
-    json->unsigned_integer(static_cast<uint32_t>(model.maximum_speed_code));
-    json->raw(",\"slew_up_per_s\":");
-    json->real(model.slew_up_per_s);
-    json->raw(",\"slew_down_per_s\":");
-    json->real(model.slew_down_per_s);
-    json->raw(",\"fingerprint\":\"");
-    json->hexadecimal(model.fingerprint);
-    json->raw("\"");
-    json->raw(",\"provenance\":{\"safety_envelope_fingerprint\":\"");
-    json->hexadecimal(model.provenance.safety_envelope_fingerprint);
-    json->raw("\",\"commissioning_started_ms\":");
-    json->unsigned_integer(model.provenance.commissioning_started_ms);
-    json->raw(",\"commissioning_completed_ms\":");
-    json->unsigned_integer(model.provenance.commissioning_completed_ms);
-    json->raw(",\"revision\":");
-    json->unsigned_integer(model.provenance.revision);
-    json->raw("}");
-    json->raw(",\"measurement\":{\"elapsed_ms\":");
-    json->unsigned_integer(model.measurements.elapsed_ms);
-    json->raw(",\"tested_point_count\":");
-    json->unsigned_integer(model.measurements.tested_point_count);
-    json->raw(",\"observed_slew_up_codes_per_s\":");
-    json->real(model.measurements.observed_slew_up_codes_per_s);
-    json->raw(",\"observed_slew_down_codes_per_s\":");
-    json->real(model.measurements.observed_slew_down_codes_per_s);
-    json->raw("}}");
 }
 
 } // namespace
@@ -306,8 +143,7 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
         {sirokko::FAULT_FLAME_LOST, "Выхлоп остыл ниже порога отключения топлива"},
         {sirokko::FAULT_COMBUSTION_DROP, "Температура выхлопа устойчиво падает при неизменном ШИМ двигателя"},
         {sirokko::FAULT_CONTROL_WATCHDOG, "Контроллер не выполнил цикл управления вовремя"},
-        {sirokko::FAULT_COMMISSIONING, "Ошибка калибровки"},
-        {sirokko::FAULT_STORAGE, "Ошибка чтения или записи настроек или калибровки"},
+        {sirokko::FAULT_STORAGE, "Ошибка чтения или записи настроек"},
         {sirokko::FAULT_LOCAL_CONTROLS, "Не запущен драйвер экрана или кнопки"},
     };
     bool first_fault = true;
@@ -440,38 +276,6 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->raw(",\"temperature_ready\":");
     json->boolean(control.purge_temperature_ready);
     json->raw("}");
-    json->raw(",\"commissioning\":{\"phase\":{\"code\":");
-    json->quoted(commissioning_phase_text(control.commissioning.phase).code);
-    json->raw(",\"ru\":");
-    json->quoted(commissioning_phase_text(control.commissioning.phase).ru);
-    json->raw("}");
-    json->raw(",\"reason\":{\"code\":");
-    json->quoted(commissioning_reason_text(control.commissioning.reason).code);
-    json->raw(",\"ru\":");
-    json->quoted(commissioning_reason_text(control.commissioning.reason).ru);
-    json->raw("}");
-    json->raw(",\"block\":{\"code\":");
-    json->quoted(sirokko::block_name(control.commissioning.block));
-    json->raw(",\"ru\":");
-    json->quoted(russian_block(control.commissioning.block));
-    json->raw("}");
-    json->raw(",\"active\":");
-    json->boolean(control.commissioning.active);
-    json->raw(",\"target_speed_code\":");
-    json->unsigned_integer(control.commissioning.target_speed_code);
-    json->raw(",\"accepted_point_count\":");
-    json->unsigned_integer(control.commissioning.accepted_point_count);
-    json->raw(",\"elapsed_ms\":");
-    json->unsigned_integer(control.commissioning.elapsed_ms);
-    json->raw(",\"source_envelope_fingerprint\":\"");
-    json->hexadecimal(control.commissioning.source_envelope_fingerprint);
-    json->raw("\",\"installed_model_fingerprint\":\"");
-    json->hexadecimal(control.commissioning.installed_model_fingerprint);
-    json->raw("\",\"installed_model_revision\":");
-    json->unsigned_integer(control.commissioning.installed_model_revision);
-    json->raw("}");
-    json->raw(",\"learned_model\":");
-    append_model(json, control.learned_model);
     json->raw(",\"envelope\":{\"provisioned\":");
     json->boolean(control.envelope_provisioned);
     json->raw(",\"fingerprint\":\"");

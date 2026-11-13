@@ -54,21 +54,14 @@ test("offline, pending and reboot block normal commands", () => {
     { ota: { phase: "activation_queued" } },
   ])
     assert.equal(connectionReady({ ...ready, ...change }), false);
-  assert.equal(routeFromHash("#/calibration"), "calibration");
+  assert.equal(routeFromHash("#/calibration"), "control");
   assert.equal(routeFromHash("#/unknown"), "control");
 });
-test("calibration can be cancelled until commit, and active heat always exposes STOP", () => {
+test("active fuel or glow always exposes STOP, completed cooling does not", () => {
   const snapshot = {
-    state: { code: "STOP_PURGE" },
-    outputs: { fan_request: true, fuel: false, glow: false },
-    commissioning: { active: true, phase: { code: "COMPLETE_PENDING_STOP" } },
+    state: { code: "IDLE" },
+    outputs: { fuel: false, glow: false },
   };
-  assert.equal(needsStop(snapshot), true);
-  snapshot.state.code = "IDLE";
-  snapshot.outputs.fan_request = false;
-  snapshot.commissioning.phase.code = "PERSIST_STAGING";
-  assert.equal(needsStop(snapshot), true);
-  snapshot.commissioning.phase.code = "PERSIST_COMMITTING";
   assert.equal(needsStop(snapshot), false);
   snapshot.outputs.fuel = true;
   assert.equal(needsStop(snapshot), true);
@@ -133,7 +126,7 @@ test("technical responses never leak into user messages", async () => {
 });
 
 test("timer countdown rounds the last second upward and keeps durations beyond a day", async () => {
-  const { countdownText, automaticSlew } =
+  const { countdownText, defaultSlew } =
     await import("../src/lib/presentation.js");
   assert.equal(countdownText(1), "00:00:01");
   assert.equal(countdownText(0), "00:00:00");
@@ -141,11 +134,11 @@ test("timer countdown rounds the last second upward and keeps durations beyond a
   assert.equal(countdownText(7 * 86400000), "168:00:00");
   assert.equal(countdownText(NaN), "—");
   assert.equal(
-    automaticSlew({ slew_up_per_s: 0.005, slew_down_per_s: 0.005 }),
+    defaultSlew({ slew_up_per_s: 0.005, slew_down_per_s: 0.005 }),
     true,
   );
   assert.equal(
-    automaticSlew({ slew_up_per_s: 0.004, slew_down_per_s: 0.005 }),
+    defaultSlew({ slew_up_per_s: 0.004, slew_down_per_s: 0.005 }),
     false,
   );
 });

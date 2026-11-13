@@ -9,11 +9,11 @@ int main() {
     auto detached = disconnected.snapshot(0);
     assert(detached.state == State::UNCONFIGURED && !detached.purge_active && !detached.outputs.fan_request);
     auto request = input(100);
-    request.start = request.start_commissioning = request.set_shutdown_timer = true;
+    request.start = request.set_shutdown_timer = true;
     request.shutdown_after_ms = 10000;
     detached = disconnected.tick(request);
     assert(detached.state == State::UNCONFIGURED && !detached.faults && !detached.duration_active);
-    assert(!detached.outputs.fuel && !detached.outputs.glow && !detached.commissioning.active);
+    assert(!detached.outputs.fuel && !detached.outputs.glow);
     Settings preview{};
     preview.room_setpoint_milli_c = 23000;
     assert(disconnected.update_settings(preview));
@@ -23,28 +23,6 @@ int main() {
     assert(disconnected.tick(request).state == State::MAINTENANCE);
     request.stop = true;
     assert(disconnected.tick(request).state == State::UNCONFIGURED);
-
-    // Preparing a revision must not alter the active model before verified storage.
-    Controller revised(envelope(), Settings{}, 1, Startup::CLEAN);
-    assert(revised.install_learned_model(model()));
-    assert(revised.tick(input(100)).state == State::IDLE);
-    const auto before_revision = revised.snapshot(100);
-    LearnedModelRevision revision{1, 1300, 1900, .004, .004};
-    LearnedOperatingModel candidate{};
-    assert(revised.prepare_model_revision(revision, &candidate));
-    assert(candidate.minimum_speed_code == 1300 && candidate.maximum_speed_code == 1900);
-    assert(candidate.provenance.revision == 2 &&
-           candidate.fingerprint == learned_model_fingerprint(candidate));
-    assert(revised.learned_model().fingerprint == model().fingerprint);
-    assert(revised.snapshot(100).state_version == before_revision.state_version);
-    revision.minimum_speed_code = 1100;
-    assert(!revised.prepare_model_revision(revision, &candidate));
-    revision.minimum_speed_code = 1300;
-    revision.expected_revision = 0;
-    assert(!revised.prepare_model_revision(revision, &candidate));
-    auto revision_running = ignition();
-    revision.expected_revision = 1;
-    assert(!revision_running.prepare_model_revision(revision, &candidate));
 
     assert(SafetyEnvelope{}.preheat_ms == 30000 && SafetyEnvelope{}.postpurge_ms == 150000);
     auto limits = envelope();
@@ -70,14 +48,12 @@ int main() {
     assert(s.start_block == Block::ENVELOPE_MISSING && !s.outputs.fan_request && !s.purge_active);
     Controller missing(envelope(), Settings{}, 1, Startup::CLEAN);
     s = missing.tick(input(100));
-    assert(s.start_block == Block::MODEL_UNAVAILABLE && s.commissioning.block == Block::NONE);
+    assert(s.start_block == Block::NONE);
     auto i = input(120);
     i.start = true;
     s = missing.tick(i);
-    off(s);
-    assert(s.state == State::IDLE && !s.commissioning.active);
+    assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fuel);
     Controller cold(envelope(), Settings{}, 1, Startup::CLEAN);
-    assert(cold.install_learned_model(model()));
     s = cold.tick(input(100, -20000, -20000));
     assert(s.state == State::IDLE && s.start_block == Block::NONE);
     i = input(120, -20000, -20000);
@@ -101,15 +77,6 @@ int main() {
     const auto current = queued.issue(Action::START, 0, 140, s.state_version, 100);
     queued.issue(Action::SETTINGS, 0, 140, version, 101);
     assert(queued.consume(current, 150, s.state_version));
-    auto bad = model();
-    bad.provenance.safety_envelope_fingerprint++;
-    assert(!missing.install_learned_model(bad));
-    auto calibration = ignition(true);
-    i = input(kIgnitionAt + 20);
-    i.stop = true;
-    s = calibration.tick(i);
-    off(s);
-    assert(!s.commissioning.active);
     const auto c = ignition();
     for (unsigned scenario = 0; scenario < 8; ++scenario) {
         auto copy = c;
@@ -261,5 +228,5 @@ int main() {
     assert(!gate.issue(Action::START, 0, 0, 1, 17).valid);
     assert(gate.issue(Action::START, 0, 5000, 1, 17).valid);
     assert(!gate.issue(Action::START, 0, std::numeric_limits<uint64_t>::max(), 1, 18).valid);
-    std::cout << "PASS control: start/calibration, STOP, sensors, faults, purge, timer, grants\n";
+    std::cout << "PASS control: first start from profile, STOP, sensors, faults, purge, timer, grants\n";
 }

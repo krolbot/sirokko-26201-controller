@@ -1,7 +1,5 @@
 #include "sirokko/control.hpp"
 #include <cmath>
-#include <cstring>
-#include <limits>
 
 namespace sirokko {
 namespace {
@@ -23,23 +21,12 @@ bool room_temperature_fresh(const SensorSample &s, uint64_t now) {
     return room_temperature_valid(s) && sample_fresh(s, now, kRoomSensorStaleMs);
 }
 
-uint8_t minimum_manual_percent(const LearnedOperatingModel &model) {
-    if (!model.valid || !model.maximum_speed_code)
+uint8_t minimum_manual_percent(const SafetyEnvelope &profile) {
+    if (!profile.maximum_speed_code || !profile.minimum_speed_code)
         return kManualStepPercent;
     const unsigned first_step =
-        (20U * model.minimum_speed_code + model.maximum_speed_code - 1) / model.maximum_speed_code;
+        (20U * profile.minimum_speed_code + profile.maximum_speed_code - 1) / profile.maximum_speed_code;
     return static_cast<uint8_t>(first_step * kManualStepPercent);
-}
-
-bool valid_model_revision(const LearnedOperatingModel &model, const LearnedModelRevision &revision) {
-    return model.valid && revision.expected_revision == model.provenance.revision &&
-           model.provenance.revision < std::numeric_limits<uint32_t>::max() &&
-           revision.minimum_speed_code >= model.minimum_speed_code &&
-           revision.maximum_speed_code <= model.maximum_speed_code &&
-           revision.minimum_speed_code < revision.maximum_speed_code &&
-           std::isfinite(revision.slew_up_per_s) && std::isfinite(revision.slew_down_per_s) &&
-           revision.slew_up_per_s >= kMinimumSlewPerS && revision.slew_down_per_s >= kMinimumSlewPerS &&
-           revision.slew_up_per_s <= model.slew_up_per_s && revision.slew_down_per_s <= model.slew_down_per_s;
 }
 
 bool valid_settings(const Settings &s) {
@@ -72,15 +59,14 @@ bool valid_profile_draft(const SafetyEnvelope &p) {
         return false;
     if (p.minimum_run_exhaust_milli_c && p.minimum_run_exhaust_milli_c <= p.cooling_exhaust_milli_c)
         return false;
-    return p.purge_speed_code <= kPwmMaximum && p.reference_speed_code <= kPwmMaximum &&
-           p.exploration_floor_code <= kPwmMaximum &&
-           (!p.exploration_floor_code || !p.reference_speed_code ||
-            static_cast<int>(p.reference_speed_code) - p.exploration_floor_code >= 2);
+    return p.purge_speed_code <= kPwmMaximum && p.maximum_speed_code <= kPwmMaximum &&
+           p.minimum_speed_code <= kPwmMaximum &&
+           (!p.minimum_speed_code || !p.maximum_speed_code || p.minimum_speed_code <= p.maximum_speed_code);
 }
 bool valid_safety_envelope(const SafetyEnvelope &p) {
     return valid_profile_draft(p) && p.maximum_exhaust_milli_c && p.postpurge_ms && p.purge_speed_code &&
-           p.preheat_ms && p.ignition_timeout_ms && p.minimum_run_exhaust_milli_c && p.reference_speed_code &&
-           p.exploration_floor_code;
+           p.preheat_ms && p.ignition_timeout_ms && p.minimum_run_exhaust_milli_c && p.maximum_speed_code &&
+           p.minimum_speed_code;
 }
 bool cooling_complete(const SafetyEnvelope &p, const Sensors &s, uint64_t now) {
     return p.cooling_exhaust_milli_c > 0 && p.cooling_exhaust_milli_c < kProcessMeasurementCeilingMilliC &&
@@ -97,8 +83,8 @@ uint64_t envelope_fingerprint(const SafetyEnvelope &p) {
                                static_cast<uint32_t>(p.maximum_exhaust_milli_c),
                                static_cast<uint32_t>(p.minimum_run_exhaust_milli_c),
                                p.purge_speed_code,
-                               p.reference_speed_code,
-                               p.exploration_floor_code};
+                               p.maximum_speed_code,
+                               p.minimum_speed_code};
     uint64_t hash = 1469598103934665603ULL;
     for (uint64_t v : fields)
         for (unsigned b = 0; b < 8; ++b)
@@ -106,44 +92,4 @@ uint64_t envelope_fingerprint(const SafetyEnvelope &p) {
     return hash;
 }
 
-uint64_t learned_model_fingerprint(const LearnedOperatingModel &model) {
-    const auto bits = [](double value) {
-        uint64_t result{};
-        static_assert(sizeof(result) == sizeof(value));
-        std::memcpy(&result, &value, sizeof(result));
-        return result;
-    };
-    const auto &p = model.provenance;
-    const auto &m = model.measurements;
-    const uint64_t fields[] = {
-        model.valid,
-        model.minimum_speed_code,
-        model.maximum_speed_code,
-        bits(model.slew_up_per_s),
-        bits(model.slew_down_per_s),
-        p.safety_envelope_fingerprint,
-        p.commissioning_started_ms,
-        p.commissioning_completed_ms,
-        p.revision,
-        m.elapsed_ms,
-        m.reference_settled_after_ms,
-        m.lowest_tested_settled_after_ms,
-        static_cast<uint32_t>(m.reference_exhaust_mean_milli_c),
-        static_cast<uint32_t>(m.reference_air_mean_milli_c),
-        static_cast<uint32_t>(m.lowest_tested_exhaust_mean_milli_c),
-        static_cast<uint32_t>(m.lowest_tested_air_mean_milli_c),
-        m.reference_exhaust_noise_milli_c,
-        m.reference_air_noise_milli_c,
-        m.reference_exhaust_drift_milli_c,
-        m.reference_air_drift_milli_c,
-        bits(m.observed_slew_up_codes_per_s),
-        bits(m.observed_slew_down_codes_per_s),
-        m.tested_point_count,
-    };
-    uint64_t hash = 1469598103934665603ULL;
-    for (uint64_t value : fields)
-        for (unsigned byte = 0; byte < 8; ++byte)
-            hash = (hash ^ static_cast<uint8_t>(value >> (byte * 8))) * 1099511628211ULL;
-    return hash;
-}
 } // namespace sirokko

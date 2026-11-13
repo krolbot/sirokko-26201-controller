@@ -31,15 +31,7 @@ enum class Scene : uint8_t {
     FaultCooling,
     FaultLatched,
     SensorMissing,
-    Calibrate,
-    CalConfirm,
     CombustionCheck,
-    CalCooling,
-    CalSaved,
-    CalReference,
-    CalRepeat,
-    CalStore,
-    CalCancelled,
     Menu,
     Mode,
     TimerEdit,
@@ -56,8 +48,7 @@ enum class Scene : uint8_t {
     CommandRejected,
 };
 
-Scene select_scene(const panel_ui::Screen &screen, const panel_ui::View &view, uint64_t now_ms,
-                   bool show_saved = true);
+Scene select_scene(const panel_ui::Screen &screen, const panel_ui::View &view, uint64_t now_ms);
 bool urgent(Scene scene);
 void format_temperature(char *out, size_t capacity, int32_t milli_c, bool units = true);
 void format_duration(char *out, size_t capacity, uint64_t milliseconds);
@@ -90,8 +81,6 @@ class Renderer {
     uint64_t target_started_{};
     uint64_t current_started_{};
     uint64_t menu_started_{};
-    uint64_t saved_started_{};
-    bool saved_seen_{};
     float target_from_{}, target_to_{};
     float current_from_{}, current_to_{};
     float menu_from_{}, menu_to_{};

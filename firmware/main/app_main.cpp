@@ -6,6 +6,7 @@
 #include "start_stop_button.hpp"
 #include "ota_activation.hpp"
 #include "persistence.hpp"
+#include "record_codec.hpp"
 #include "panel.hpp"
 #include <atomic>
 #include <cstdio>
@@ -33,38 +34,23 @@ static_assert(CONFIG_ESP_MAIN_TASK_STACK_SIZE >= 8192,
 namespace {
 constexpr char kTag[] = "sirokko";
 constexpr uint32_t kSettingsMagic = 0x53495233;
-constexpr uint32_t kEnvelopeMagic = 0x454E5635;
-constexpr uint32_t kModelMagic = 0x4D4F4434;
-constexpr uint32_t kStageMagic = 0x53544734;
+constexpr uint32_t kEnvelopeMagic = 0x454E5636;
 constexpr uint32_t kCycleMagic = 0x43594331;
 constexpr char kSettingsKey[] = "settings_v3";
-constexpr char kEnvelopeKey[] = "envelope_v5";
-constexpr char kModelKey[] = "model_active8";
-constexpr char kStageKey[] = "model_stage8";
+constexpr char kEnvelopeKey[] = "envelope_v6";
 constexpr char kCycleKey[] = "cycle_v1";
-enum class StoreKind : uint8_t {
-    SETTINGS,
-    PROFILE,
-    MODEL_STAGE,
-    MODEL_ACTIVE,
-    MODEL_REVISION_STAGE,
-    MODEL_REVISION_ACTIVE,
-    CYCLE_ACTIVE,
-    CYCLE_CLEAN
-};
+enum class StoreKind : uint8_t { SETTINGS, PROFILE, CYCLE_ACTIVE, CYCLE_CLEAN };
 struct RuntimeCommand {
     sirokko::Grant grant{};
     sirokko::Action action{};
     uint64_t delay_ms{};
     sirokko::Settings settings{};
-    sirokko::LearnedModelRevision revision{};
     sirokko::SafetyEnvelope envelope{};
 };
 struct StoreRequest {
-    uint64_t id{}, boot_id{};
+    uint64_t id{};
     StoreKind kind{};
     sirokko::Settings settings{};
-    sirokko::LearnedOperatingModel candidate{};
     sirokko::SafetyEnvelope envelope{};
 };
 struct StoreResult {
@@ -80,18 +66,14 @@ enum StorageFault : uint32_t {
     STORAGE_INIT = 1,
     STORAGE_SETTINGS = 2,
     STORAGE_ENVELOPE = 4,
-    STORAGE_MODEL = 8,
-    STORAGE_STAGE = 16,
     STORAGE_INTERNAL = 32,
     STORAGE_CYCLE = 64,
 };
 std::atomic<uint32_t> g_storage_faults{};
-std::atomic<bool> g_storage_busy{}, g_model_pending{}, g_stop{}, g_operator_problem{}, g_exit_maintenance{},
-    g_output_driver_fault{}, g_boot_ready{};
+std::atomic<bool> g_storage_busy{}, g_stop{}, g_exit_maintenance{}, g_output_driver_fault{}, g_boot_ready{};
 std::atomic<uint32_t> g_maintenance_epoch{};
 std::atomic<bool> g_button_ready{}, g_startup_complete{}, g_cancel_commands{};
 std::atomic<sirokko::Block> g_wifi_password_block{sirokko::Block::INITIALIZING};
-sirokko::ModelCommitGate g_model_commit;
 sirokko::OtaActivationGate g_ota_activation;
 sirokko::CommandGate g_gate;
 sirokko::FailClosedOutputDriver g_output_driver;
@@ -115,10 +97,6 @@ uint32_t fault_for(const char *key) {
         return STORAGE_SETTINGS;
     if (!std::strcmp(key, kEnvelopeKey))
         return STORAGE_ENVELOPE;
-    if (!std::strcmp(key, kModelKey))
-        return STORAGE_MODEL;
-    if (!std::strcmp(key, kStageKey))
-        return STORAGE_STAGE;
     if (!std::strcmp(key, kCycleKey))
         return STORAGE_CYCLE;
     return STORAGE_INTERNAL;
@@ -214,63 +192,7 @@ sirokko::SafetyEnvelope load_factory_envelope() {
     }
     return envelope;
 }
-void load_model() {
-    sirokko::ModelRecord active{};
-    record_codec::Record<sirokko::ModelStage> stage{};
-    const auto active_state = read_record(kModelKey, kModelMagic, &active),
-               stage_state = read_record(kStageKey, kStageMagic, &stage);
-    if (active_state == RecordRead::INVALID || stage_state == RecordRead::INVALID)
-        return;
-    if (stage_state == RecordRead::VALID &&
-        (!sirokko::valid_model_stage(stage.value, kModelMagic) ||
-         !sirokko::model_boot_consistent(stage.value, active_state == RecordRead::VALID, active))) {
-        storage_status(STORAGE_STAGE, false);
-        return;
-    }
-    if (active_state == RecordRead::VALID && active.value.valid &&
-        !g_controller->install_learned_model(active.value))
-        storage_status(STORAGE_MODEL, false);
-}
-bool save_profile(const sirokko::SafetyEnvelope &profile) {
-    // Erase the old model durably before changing its limits. An interrupted save can
-    // require calibration again, but cannot revive a model under different limits.
-    nvs_handle_t nvs{};
-    bool ok = nvs_open("sirokko", NVS_READWRITE, &nvs) == ESP_OK;
-    if (ok) {
-        for (const auto key : {kStageKey, kModelKey}) {
-            const auto result = nvs_erase_key(nvs, key);
-            ok = ok && (result == ESP_OK || result == ESP_ERR_NVS_NOT_FOUND);
-        }
-        ok = ok && nvs_commit(nvs) == ESP_OK;
-        for (const auto key : {kStageKey, kModelKey}) {
-            size_t size{};
-            ok = ok && nvs_get_blob(nvs, key, nullptr, &size) == ESP_ERR_NVS_NOT_FOUND;
-        }
-        nvs_close(nvs);
-    }
-    storage_status(STORAGE_MODEL | STORAGE_STAGE, ok);
-    if (!ok)
-        return false;
-    return save_record(kEnvelopeKey, kEnvelopeMagic, profile);
-}
-bool write_model_stage(const StoreRequest &request) {
-    sirokko::ModelStage stage{};
-    stage.boot_id = request.boot_id;
-    stage.transaction_id = request.id;
-    const auto old = read_record(kModelKey, kModelMagic, &stage.previous);
-    if (old == RecordRead::INVALID)
-        return false;
-    stage.previous_present = old == RecordRead::VALID;
-    stage.candidate = record_codec::encode(kModelMagic, request.candidate);
-    return save_record(kStageKey, kStageMagic, stage);
-}
-bool activate_model_stage(const StoreRequest &request) {
-    record_codec::Record<sirokko::ModelStage> stage{};
-    return read_record(kStageKey, kStageMagic, &stage) == RecordRead::VALID &&
-           sirokko::valid_model_stage(stage.value, kModelMagic) && stage.value.boot_id == request.boot_id &&
-           stage.value.transaction_id == request.id && g_model_commit.claimed() &&
-           save_encoded_record(kModelKey, kModelMagic, stage.value.candidate);
-}
+
 bool output_begin() {
     bool disabled = true;
     for (const auto pin : {board::kGlow, board::kFuel, board::kFanRequest})
@@ -314,7 +236,7 @@ bool button_snapshot(void *, start_stop_button::Snapshot *out) {
     RuntimeView v{};
     if (!out || !runtime_view(&v))
         return false;
-    *out = {v.control.state, v.control.start_block, v.control.state_version, v.control.commissioning.active};
+    *out = {v.control.state, v.control.start_block, v.control.state_version};
     return true;
 }
 bool button_start(void *, uint64_t version) {
@@ -322,8 +244,8 @@ bool button_start(void *, uint64_t version) {
     return runtime_issue(sirokko::Action::START, 0x4b45593053544152ULL, &g) && g.state_version == version &&
            runtime_submit(g, sirokko::Action::START, 0, nullptr);
 }
-bool button_stop(void *, bool problem) {
-    runtime_stop(problem);
+bool button_stop(void *) {
+    runtime_stop();
     return true;
 }
 void button_task(void *) {
@@ -356,12 +278,9 @@ struct ControlWork {
     bool cycle_dirty{g_startup == sirokko::Startup::RECOVER};
     uint64_t edited_ms{}, next_id{};
     StoreRequest inflight{};
-    StoreResult result{};
-    bool result_ready{};
 };
 bool enqueue(ControlWork &w, const StoreRequest &r) {
     w.inflight = r;
-    w.result_ready = false;
     g_storage_busy = true;
     if (xQueueSend(g_storage_jobs, &r, 0) == pdTRUE)
         return true;
@@ -376,14 +295,10 @@ void storage_task(void *) {
         if (request.kind == StoreKind::SETTINGS)
             result.ok = save_record(kSettingsKey, kSettingsMagic, request.settings);
         else if (request.kind == StoreKind::PROFILE)
-            result.ok = save_profile(request.envelope);
+            result.ok = save_record(kEnvelopeKey, kEnvelopeMagic, request.envelope);
         else if (request.kind == StoreKind::CYCLE_ACTIVE || request.kind == StoreKind::CYCLE_CLEAN)
             result.ok = save_record(kCycleKey, kCycleMagic,
                                     uint32_t{request.kind == StoreKind::CYCLE_ACTIVE ? 1U : 0U});
-        else if (request.kind == StoreKind::MODEL_STAGE || request.kind == StoreKind::MODEL_REVISION_STAGE)
-            result.ok = write_model_stage(request);
-        else
-            result.ok = activate_model_stage(request);
         // Only one storage request is in flight. A full result queue is a fault,
         // not a reason to leave the worker waiting forever.
         if (xQueueSend(g_store_results, &result, 0) != pdTRUE)
@@ -393,106 +308,39 @@ void storage_task(void *) {
 void finish_storage(ControlWork &w, const sirokko::TickInput &input) {
     if (!g_storage_busy)
         return;
-    if (!w.result_ready) {
-        if (xQueueReceive(g_store_results, &w.result, 0) != pdTRUE)
-            return;
-        if (w.result.id != w.inflight.id || w.result.kind != w.inflight.kind) {
-            storage_status(STORAGE_INTERNAL, false);
-            return;
-        }
-        w.result_ready = true;
+    StoreResult result{};
+    if (xQueueReceive(g_store_results, &result, 0) != pdTRUE)
+        return;
+    if (result.id != w.inflight.id || result.kind != w.inflight.kind) {
+        storage_status(STORAGE_INTERNAL, false);
+        return;
     }
     if (w.inflight.kind == StoreKind::PROFILE) {
-        if (w.result.ok &&
+        if (result.ok &&
             !g_controller->install_safety_envelope(w.inflight.envelope, w.cycle_dirty, input.now_ms))
             storage_status(STORAGE_INTERNAL, false);
     } else if (w.inflight.kind == StoreKind::CYCLE_ACTIVE || w.inflight.kind == StoreKind::CYCLE_CLEAN) {
-        if (w.result.ok)
+        if (result.ok)
             w.cycle_dirty = w.inflight.kind == StoreKind::CYCLE_ACTIVE;
-    } else if (w.inflight.kind == StoreKind::MODEL_STAGE) {
-        const auto snap = g_controller->snapshot(input.now_ms);
-        const bool safe = w.result.ok && !input.stop && !input.operator_combustion_problem && !snap.faults &&
-                          snap.commissioning.active &&
-                          snap.commissioning.phase == sirokko::CommissioningPhase::PERSIST_STAGING &&
-                          g_model_commit.claim();
-        if (safe && g_controller->seal_model_storage(w.inflight.id)) {
-            auto active = w.inflight;
-            active.kind = StoreKind::MODEL_ACTIVE;
-            if (enqueue(w, active))
-                return;
-        }
-        g_model_commit.revoke_precommit();
-        g_controller->complete_model_storage(w.inflight.id, false);
-        g_model_pending = false;
-        g_model_commit.reset();
-    } else if (w.inflight.kind == StoreKind::MODEL_REVISION_STAGE) {
-        const bool safe = w.result.ok && !input.stop && !input.operator_combustion_problem &&
-                          !g_controller->snapshot(input.now_ms).faults && g_model_commit.claim();
-        if (safe) {
-            auto active = w.inflight;
-            active.kind = StoreKind::MODEL_REVISION_ACTIVE;
-            if (enqueue(w, active))
-                return;
-        }
-        g_model_commit.revoke_precommit();
-        g_model_pending = false;
-        g_model_commit.reset();
-    } else if (w.inflight.kind == StoreKind::MODEL_ACTIVE) {
-        // A sealed record is durable evidence, not permission to change RAM while
-        // the controller is still executing a STOP/fault purge. Retain the ACK and
-        // finish after the safety owner reaches its terminal state.
-        const auto snap = g_controller->snapshot(input.now_ms);
-        if (w.result.ok &&
-            (snap.state == sirokko::State::STOP_PURGE || snap.state == sirokko::State::FAULT_PURGE))
-            return;
-        if (!g_controller->complete_model_storage(w.inflight.id, w.result.ok) && w.result.ok)
-            storage_status(STORAGE_INTERNAL, false);
-        g_model_pending = false;
-        g_model_commit.reset();
-    } else if (w.inflight.kind == StoreKind::MODEL_REVISION_ACTIVE) {
-        const auto snap = g_controller->snapshot(input.now_ms);
-        if (w.result.ok &&
-            (snap.state == sirokko::State::STOP_PURGE || snap.state == sirokko::State::FAULT_PURGE))
-            return;
-        if (w.result.ok && !g_controller->install_learned_model(w.inflight.candidate))
-            storage_status(STORAGE_INTERNAL, false);
-        g_model_pending = false;
-        g_model_commit.reset();
     }
-    w.result_ready = false;
     g_storage_busy = false;
 }
 void grant_storage(ControlWork &w, const sirokko::Snapshot &snap, const sirokko::TickInput &input) {
     if (g_storage_busy)
         return;
     StoreRequest r{};
-    r.boot_id = snap.boot_id;
     r.id = ++w.next_id;
     if (!r.id) {
         storage_status(STORAGE_INTERNAL, false);
         return;
     }
-    if (w.cycle_dirty && storage_healthy() && !g_model_pending &&
+    if (w.cycle_dirty && storage_healthy() &&
         (snap.state == sirokko::State::IDLE || snap.state == sirokko::State::UNCONFIGURED ||
          snap.state == sirokko::State::FAULT || snap.state == sirokko::State::MAINTENANCE) &&
-        !snap.outputs.fan_request && !snap.outputs.fuel && !snap.outputs.glow && !snap.commissioning.active &&
+        !snap.outputs.fan_request && !snap.outputs.fuel && !snap.outputs.glow &&
         uxQueueMessagesWaiting(g_command_queue) == 0) {
         r.kind = StoreKind::CYCLE_CLEAN;
         enqueue(w, r);
-        return;
-    }
-    if (!snap.commissioning.active)
-        g_model_commit.reset();
-    if (!g_model_pending && !input.stop && !input.operator_combustion_problem &&
-        g_controller->pending_learned_model(&r.candidate) && g_model_commit.open() &&
-        g_controller->begin_model_storage(r.id)) {
-        r.kind = StoreKind::MODEL_STAGE;
-        g_model_pending = true;
-        if (!enqueue(w, r)) {
-            g_controller->abort_model_storage();
-            g_model_pending = false;
-            g_model_commit.reset();
-        }
         return;
     }
     if (w.settings_pending && input.now_ms - w.edited_ms >= 1500) {
@@ -516,24 +364,20 @@ void control_pass(ControlWork &w) {
         (!g_button_ready || !panel_ready()))
         input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
     input.stop = g_stop.exchange(false);
-    input.operator_combustion_problem = g_operator_problem.exchange(false);
     input.exit_maintenance = g_exit_maintenance.exchange(false);
     RuntimeCommand c{};
     bool have = xQueuePeek(g_command_queue, &c, 0) == pdTRUE;
     bool locked = false;
-    const bool starting =
-        have && (c.action == sirokko::Action::START || c.action == sirokko::Action::CALIBRATE);
-    const bool exclusive = starting || (have && (c.action == sirokko::Action::OTA ||
-                                                 c.action == sirokko::Action::MODEL_REVISION ||
-                                                 c.action == sirokko::Action::PROFILE));
-    if (have && exclusive && (g_storage_busy || g_model_pending))
+    const bool starting = have && c.action == sirokko::Action::START;
+    const bool exclusive =
+        starting || (have && (c.action == sirokko::Action::OTA || c.action == sirokko::Action::PROFILE));
+    if (have && exclusive && g_storage_busy)
         have = false;
     if (have && g_storage_busy && w.inflight.kind == StoreKind::PROFILE)
         have = false;
     if (have && starting && !w.cycle_dirty && storage_healthy() && !input.stop && !g_cancel_commands) {
         StoreRequest request{};
         request.id = ++w.next_id;
-        request.boot_id = before.boot_id;
         request.kind = StoreKind::CYCLE_ACTIVE;
         if (!request.id)
             storage_status(STORAGE_INTERNAL, false);
@@ -550,10 +394,9 @@ void control_pass(ControlWork &w) {
     } else if (have)
         have = false;
     if (have &&
-        (c.action == sirokko::Action::START || c.action == sirokko::Action::CALIBRATE ||
-         c.action == sirokko::Action::OTA || c.action == sirokko::Action::MODEL_REVISION ||
+        (c.action == sirokko::Action::START || c.action == sirokko::Action::OTA ||
          c.action == sirokko::Action::PROFILE) &&
-        (g_storage_busy || g_model_pending || !storage_healthy()))
+        (g_storage_busy || !storage_healthy()))
         have = false;
     if (have && c.action == sirokko::Action::SETTINGS && g_controller->update_settings(c.settings)) {
         w.settings_pending = true;
@@ -561,7 +404,6 @@ void control_pass(ControlWork &w) {
     }
     if (have) {
         input.start = c.action == sirokko::Action::START;
-        input.start_commissioning = c.action == sirokko::Action::CALIBRATE;
         input.set_shutdown_timer = c.action == sirokko::Action::TIMER;
         input.shutdown_after_ms = c.delay_ms;
         input.reset_fault = c.action == sirokko::Action::RESET_FAULT;
@@ -569,10 +411,9 @@ void control_pass(ControlWork &w) {
         if (c.action == sirokko::Action::PROFILE && !input.stop && !g_stop && !before.faults &&
             !input.external_faults &&
             (before.state == sirokko::State::IDLE || before.state == sirokko::State::UNCONFIGURED) &&
-            !before.commissioning.active && sirokko::valid_profile_draft(c.envelope)) {
+            sirokko::valid_profile_draft(c.envelope)) {
             StoreRequest r{};
             r.id = ++w.next_id;
-            r.boot_id = before.boot_id;
             r.kind = StoreKind::PROFILE;
             r.envelope = c.envelope;
             if (r.id)
@@ -580,30 +421,11 @@ void control_pass(ControlWork &w) {
             else
                 storage_status(STORAGE_INTERNAL, false);
         }
-        if (c.action == sirokko::Action::MODEL_REVISION) {
-            StoreRequest r{};
-            if (g_controller->prepare_model_revision(c.revision, &r.candidate)) {
-                r.id = ++w.next_id;
-                r.boot_id = before.boot_id;
-                r.kind = StoreKind::MODEL_REVISION_STAGE;
-                if (!g_storage_busy && !g_model_pending && g_model_commit.open()) {
-                    g_model_pending = true;
-                    if (!enqueue(w, r)) {
-                        g_model_pending = false;
-                        g_model_commit.reset();
-                    }
-                }
-            }
-        }
     }
     // Capture a STOP/fault arriving after command admission but before the only
     // state-owner tick. It must outrank the newly consumed command and storage ACK.
     input.stop = input.stop || g_stop.exchange(false);
-    input.operator_combustion_problem =
-        input.operator_combustion_problem || g_operator_problem.exchange(false);
     auto snap = g_controller->tick(input);
-    if (input.stop || input.operator_combustion_problem || snap.faults)
-        g_model_commit.revoke_precommit();
     finish_storage(w, input);
     snap = g_controller->snapshot(input.now_ms);
     if (!output_apply(snap.outputs)) {
@@ -619,8 +441,8 @@ void control_pass(ControlWork &w) {
     }
     const bool ota_safe =
         sirokko::ota_control_safe(snap, w.sensors, g_controller->safety_envelope(), input.now_ms) &&
-        storage_healthy() && !g_storage_busy && !g_model_pending && !g_output_driver_fault && !input.stop &&
-        !g_stop && !g_exit_maintenance;
+        storage_healthy() && !g_storage_busy && !g_output_driver_fault && !input.stop && !g_stop &&
+        !g_exit_maintenance;
     g_ota_activation.observe(ota_safe);
     if (!ota_safe && !g_stop && !g_exit_maintenance)
         g_ota_activation.acknowledge_revoke();
@@ -644,7 +466,7 @@ void control_pass(ControlWork &w) {
         g_view.control = snap;
         g_view.local_controls_initialized = g_button_ready && panel_ready();
         g_view.startup_ready = g_boot_ready;
-        g_view.storage_busy = g_storage_busy || g_model_pending;
+        g_view.storage_busy = g_storage_busy;
         g_view.sensors = w.sensors;
         g_view.settings = g_controller->settings();
         g_view.envelope = g_controller->safety_envelope();
@@ -653,7 +475,6 @@ void control_pass(ControlWork &w) {
         g_view.events = g_controller->events();
         g_view.event_count = g_controller->event_count();
         g_view.control.start_block = command_policy::block(g_view, sirokko::Action::START);
-        g_view.control.commissioning.block = command_policy::block(g_view, sirokko::Action::CALIBRATE);
         g_wifi_password_block = command_policy::wifi_password_block(g_view);
         xSemaphoreGive(g_view_mutex);
     } else {
@@ -734,18 +555,7 @@ bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_
     c.settings = settings ? *settings : view.settings;
     return xQueueSend(g_command_queue, &c, 0) == pdTRUE;
 }
-bool runtime_revise_model(const sirokko::Grant &grant, const sirokko::LearnedModelRevision &revision) {
-    RuntimeView view{};
-    if (!grant.valid || grant.action != sirokko::Action::MODEL_REVISION || !runtime_view(&view) ||
-        command_policy::block(view, sirokko::Action::MODEL_REVISION) != sirokko::Block::NONE ||
-        !sirokko::valid_model_revision(view.control.learned_model, revision))
-        return false;
-    RuntimeCommand c{};
-    c.grant = grant;
-    c.action = sirokko::Action::MODEL_REVISION;
-    c.revision = revision;
-    return xQueueSend(g_command_queue, &c, 0) == pdTRUE;
-}
+
 bool runtime_save_profile(const sirokko::Grant &grant, const sirokko::SafetyEnvelope &profile) {
     RuntimeView view{};
     if (!grant.valid || grant.action != sirokko::Action::PROFILE || !runtime_view(&view) ||
@@ -758,18 +568,15 @@ bool runtime_save_profile(const sirokko::Grant &grant, const sirokko::SafetyEnve
     c.envelope = profile;
     return xQueueSend(g_command_queue, &c, 0) == pdTRUE;
 }
-void runtime_stop(bool problem) {
-    if (problem)
-        g_operator_problem = true;
+void runtime_stop() {
     g_cancel_commands = true;
     g_stop = true;
-    g_model_commit.revoke_precommit();
     g_ota_activation.revoke_precommit();
     g_maintenance_epoch = 0;
 }
 uint32_t runtime_maintenance_lease() {
     if (g_stop || g_exit_maintenance || g_output_driver_fault || !storage_healthy() || g_storage_busy ||
-        g_model_pending || g_ota_activation.commit_started())
+        g_ota_activation.commit_started())
         return 0;
     return g_maintenance_epoch;
 }
@@ -858,7 +665,6 @@ extern "C" void app_main() {
         ESP_LOGE(kTag, "Controller allocation failed; startup stopped");
         return;
     }
-    load_model();
     const bool sensors_ready = g_sensor_suite.begin();
     if (!sensors_ready)
         ESP_LOGE(kTag, "Sensor initialization failed; heating blocked");

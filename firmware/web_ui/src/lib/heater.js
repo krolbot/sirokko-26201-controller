@@ -33,9 +33,9 @@ export const heaterGroups = [
   {
     title: "Двигатель",
     fields: [
-      ["reference_speed_code", "ШИМ двигателя при розжиге", "ШИМ", 1],
+      ["maximum_speed_code", "Максимальный ШИМ двигателя", "ШИМ", 1],
       ["purge_speed_code", "ШИМ двигателя при охлаждении", "ШИМ", 1],
-      ["exploration_floor_code", "Нижняя граница ШИМ при калибровке", "ШИМ", 1],
+      ["minimum_speed_code", "Минимальный рабочий ШИМ", "ШИМ", 1],
     ],
   },
 ];
@@ -129,11 +129,11 @@ export function heaterValidation(value, limits) {
       errors[low] =
         "Значение должно быть ниже температуры отключения топлива при нагреве выхлопа";
   if (
-    p.exploration_floor_code &&
-    p.reference_speed_code &&
-    p.reference_speed_code - p.exploration_floor_code < 2
+    p.minimum_speed_code &&
+    p.maximum_speed_code &&
+    p.minimum_speed_code > p.maximum_speed_code
   )
-    errors.exploration_floor_code = "Минимум на 2 единицы ниже ШИМ при розжиге";
+    errors.minimum_speed_code = "Не выше максимального ШИМ двигателя";
   return {
     parameters,
     errors,

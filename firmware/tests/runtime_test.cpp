@@ -2,6 +2,7 @@
 #include "command_policy.hpp"
 #include "ota_activation.hpp"
 #include "persistence.hpp"
+#include "record_codec.hpp"
 #include "web_sessions.hpp"
 #include "web_state.hpp"
 #include <cassert>
@@ -49,13 +50,6 @@ int main() {
     ota.finish_commit(true);
     assert(ota.state() == OtaCommitState::COMMITTED);
     assert(!ota.epoch());
-    ModelCommitGate commit;
-    assert(commit.open());
-    assert(commit.revoke_precommit());
-    assert(!commit.claim());
-    commit.reset();
-    assert(commit.open() && commit.claim());
-    assert(!commit.revoke_precommit());
     Settings settings{};
     settings.room_setpoint_milli_c = 23000;
     settings.duration_ms = 60000;
@@ -67,18 +61,6 @@ int main() {
     assert(!record_codec::valid(decoded, 123, sizeof(decoded) - 1));
     decoded.value.manual_percent = 80;
     assert(!record_codec::valid(decoded, 123, sizeof(decoded)));
-    ModelStage stage{};
-    stage.boot_id = 1;
-    stage.transaction_id = 2;
-    LearnedOperatingModel m{};
-    m.valid = true;
-    stage.candidate = record_codec::encode(42, m);
-    assert(valid_model_stage(stage, 42));
-    assert(model_boot_consistent(stage, true, stage.candidate));
-    assert(model_boot_consistent(stage, false, {}));
-    auto corrupt = stage.candidate;
-    corrupt.checksum++;
-    assert(!model_boot_consistent(stage, true, corrupt));
     web_protocol::Sessions sessions;
     auto *a = sessions.create("00000000000000000000000000000001", 0);
     auto *b = sessions.create("00000000000000000000000000000002", 0);
@@ -109,9 +91,8 @@ int main() {
     RuntimeView eligibility{};
     eligibility.startup_ready = true;
     eligibility.control.state = State::UNCONFIGURED;
-    eligibility.control.start_block = eligibility.control.commissioning.block = Block::ENVELOPE_MISSING;
+    eligibility.control.start_block = Block::ENVELOPE_MISSING;
     assert(command_policy::block(eligibility, Action::START) == Block::ENVELOPE_MISSING);
-    assert(command_policy::block(eligibility, Action::CALIBRATE) == Block::ENVELOPE_MISSING);
     assert(command_policy::block(eligibility, Action::SETTINGS) == Block::NONE);
     assert(command_policy::block(eligibility, Action::OTA) == Block::NONE);
     Snapshot maintenance{};
@@ -140,9 +121,6 @@ int main() {
         assert(command_policy::wifi_password_block(wifi) != Block::NONE);
     }
     wifi.control.state = State::IDLE;
-    wifi.control.commissioning.active = true;
-    assert(command_policy::wifi_password_block(wifi) == Block::BUSY);
-    wifi.control.commissioning.active = false;
     for (auto output :
          {&wifi.control.outputs.fan_request, &wifi.control.outputs.fuel, &wifi.control.outputs.glow}) {
         *output = true;
@@ -173,7 +151,7 @@ int main() {
     view.control.faults = (1U << 10) - 1;
     view.event_count = view.events.size();
     for (auto &event : view.events) {
-        event.kind = "OPERATOR_COMBUSTION_PROBLEM";
+        event.kind = "START";
         event.state = State::RECOVERY_PURGE;
         event.at_ms = UINT64_MAX;
         event.speed_code = UINT16_MAX;
@@ -183,21 +161,16 @@ int main() {
     JsonBuilder full(output, sizeof(output));
     assert(build_state_json(view, {"1.1.1-dev", true, true, true}, &full));
     assert(std::strstr(output, "Достигнут предел температуры выхлопа; топливо отключено"));
-    view.events[0].kind = "CALIBRATION_SAVED";
-    view.events[1].kind = "SETTLE_POINT";
+    view.events[0].kind = "PROFILE_SAVED";
+    view.events[1].kind = "COMBUSTION_SUSPECT";
     view.events[2].kind = "FUTURE_INTERNAL_EVENT";
     JsonBuilder translated(output, sizeof(output));
     assert(build_state_json(view, {}, &translated));
-    assert(std::strstr(output, "\"kind_ru\":\"Результат калибровки сохранён\""));
-    assert(std::strstr(output, "\"kind_ru\":\"Ожидание стабильных температур при сниженном ШИМ\""));
+    assert(std::strstr(output, "\"kind_ru\":\"Параметры отопителя сохранены\""));
+    assert(std::strstr(output, "\"kind_ru\":\"Проверка падения температуры выхлопа\""));
     assert(std::strstr(output, "\"kind_ru\":\"Неизвестное событие\""));
-    // Long translated phase/reason strings must still fit with a full event ring.
-    view.control.commissioning.phase = CommissioningPhase::SETTLE_POST_REPEAT_REFERENCE;
-    view.control.commissioning.reason = CommissioningReason::DYNAMIC_NOT_REPRODUCIBLE;
-    for (auto &event : view.events)
-        event.kind = "SETTLE_POST_REPEAT_REFERENCE";
-    JsonBuilder longest(output, sizeof(output));
-    assert(build_state_json(view, {}, &longest));
+    assert(!std::strstr(output, "commissioning") && !std::strstr(output, "learned_model"));
+    assert(!std::strstr(output, "CALIBRATE") && !std::strstr(output, "MODEL_REVISION"));
     // API validity agrees with the controller, including plausible range failures.
     view.now_ms = 1000;
     view.sensors.exhaust = {kProcessMeasurementCeilingMilliC, 1000, 0, true};

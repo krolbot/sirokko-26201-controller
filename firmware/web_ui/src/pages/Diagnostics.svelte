@@ -1,9 +1,5 @@
 <script>
-  import {
-    stateText,
-    compactTemperature,
-    calibrationStatus,
-  } from "../lib/presentation.js";
+  import { stateText, compactTemperature } from "../lib/presentation.js";
   import { heaterSetupText } from "../lib/heater.js";
   import { formatDuration } from "../lib/protocol.js";
   import { combustionText } from "../lib/history.js";
@@ -58,13 +54,6 @@
     <a class="list-row" href="#/heater"
       ><span class="row-title">Параметры отопителя</span>
       <span class="row-value">{heaterSetupText(snapshot.envelope)}</span><Icon
-        name="chevron"
-        size={16}
-      /></a
-    >
-    <a class="list-row" href="#/calibration"
-      ><span class="row-title">Калибровка</span>
-      <span class="row-value">{calibrationStatus(snapshot).summary}</span><Icon
         name="chevron"
         size={16}
       /></a

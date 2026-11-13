@@ -28,16 +28,17 @@ ParseError parse(const std::string &text, Command *command) {
 }
 
 int main() {
+    assert(minimum_manual_percent(SafetyEnvelope{}) == kManualStepPercent);
     const auto profile = envelope(); // Synthetic fixture, never a heater preset.
     Command command{};
     // Removed actuator-control commands must fail at the API boundary, including from an old client.
-    for (const char *action : {"DEBUG_ENTER", "DEBUG_SET"}) {
+    for (const char *action : {"DEBUG_ENTER", "DEBUG_SET", "CALIBRATE", "MODEL_REVISION"}) {
         const auto removed = std::string(R"({"action":")") + action + R"(","command_id":"1"})";
         assert(parse(removed, &command) == ParseError::ACTION);
     }
-    for (const char *field :
-         {"verify_ms", "ignition_ms", "minimum_ignition_rise_milli_c", "prepurge_ms", "maximum_air_milli_c",
-          "minimum_ignition_air_rise_milli_c", "recovery_purge_ms"}) {
+    for (const char *field : {"verify_ms", "ignition_ms", "minimum_ignition_rise_milli_c", "prepurge_ms",
+                              "maximum_air_milli_c", "minimum_ignition_air_rise_milli_c", "recovery_purge_ms",
+                              "exploration_floor_code", "reference_speed_code"}) {
         const auto extra = std::string(",\"") + field + "\":1";
         assert(parse(request(profile, "", extra.c_str()), &command) == ParseError::UNKNOWN_FIELD);
     }
@@ -67,8 +68,8 @@ int main() {
     });
     assert(parse(request(profile, "", ",\"provisioned\":true"), &command) == ParseError::UNKNOWN_FIELD);
     for (const char *value : {"-1", "1.5", "65536", "null", "true", "\"2000\""}) {
-        const std::string invalid = ",\"reference_speed_code\":" + std::string(value);
-        assert(parse(request(profile, "reference_speed_code", invalid.c_str()), &command) != ParseError::OK);
+        const std::string invalid = ",\"maximum_speed_code\":" + std::string(value);
+        assert(parse(request(profile, "maximum_speed_code", invalid.c_str()), &command) != ParseError::OK);
     }
     assert(parse(request(profile, "ignition_timeout_ms", ",\"ignition_timeout_ms\":18446744073709551616"),
                  &command) != ParseError::OK);
@@ -85,18 +86,16 @@ int main() {
     auto s = clean.tick(input(120));
     assert(s.state == State::IDLE && s.state_version > version);
     assert(!s.outputs.fan_request && !s.outputs.glow && !s.outputs.fuel);
-    assert(s.start_block == Block::MODEL_UNAVAILABLE && s.commissioning.block == Block::NONE);
+    assert(s.start_block == Block::NONE);
     assert(clean.settings().room_setpoint_milli_c == 26000);
-    assert(clean.install_learned_model(model()));
     auto changed = profile;
     changed.maximum_exhaust_milli_c += 1000;
     assert(clean.install_safety_envelope(changed, false, 140));
     s = clean.tick(input(140));
-    assert(!s.learned_model.valid && s.start_block == Block::MODEL_UNAVAILABLE);
-    assert(!s.commissioning.active && s.commissioning.phase == CommissioningPhase::IDLE);
+    assert(s.start_block == Block::NONE);
     assert(std::strcmp(clean.events()[clean.event_count() - 1].kind, "PROFILE_SAVED") == 0);
     Controller reboot(changed, settings, 8, Startup::CLEAN);
-    assert(!reboot.install_learned_model(model())); // An old model cannot match new limits on reboot.
+    assert(reboot.tick(input(100)).start_block == Block::NONE);
 
     Controller interrupted({}, settings, 8, Startup::RECOVER);
     assert(!interrupted.install_safety_envelope(profile, true, 100));
@@ -109,8 +108,6 @@ int main() {
     assert(interrupted.snapshot(kPostpurgeMinimumMs + 20).state == State::IDLE);
     auto burning = ignition();
     assert(!burning.install_safety_envelope(changed, false, kIgnitionAt));
-    auto learning = ignition(true);
-    assert(!learning.install_safety_envelope(changed, false, kIgnitionAt));
     auto invalid = profile;
     invalid.maximum_exhaust_milli_c = kProcessMeasurementCeilingMilliC;
     assert(!valid_profile_draft(invalid));
@@ -118,20 +115,17 @@ int main() {
     invalid.preheat_ms = kPreheatMinimumMs - 1;
     assert(!clean.install_safety_envelope(invalid, false, 160));
     invalid = profile;
-    invalid.exploration_floor_code = 0;
+    invalid.minimum_speed_code = 0;
     assert(valid_profile_draft(invalid) && !valid_safety_envelope(invalid));
     assert(clean.install_safety_envelope(invalid, false, 160));
     assert(!clean.snapshot(160).envelope_provisioned);
     assert(clean.snapshot(160).state == State::UNCONFIGURED);
-    assert(clean.snapshot(160).commissioning.block == Block::ENVELOPE_MISSING);
+    assert(clean.snapshot(160).start_block == Block::ENVELOPE_MISSING);
 
     Settings slow{};
     slow.slew_up_per_s = slow.slew_down_per_s = kMinimumSlewPerS;
-    assert(commissioning_configuration_block(profile, slow) == Block::CALIBRATION_TOO_SLOW);
-    assert(commissioning_configuration_block(profile, Settings{}) == Block::NONE);
-    auto long_cooldown = profile;
-    long_cooldown.postpurge_ms = 6ULL * 3600000;
-    assert(commissioning_configuration_block(long_cooldown, Settings{}) == Block::ENVELOPE_INVALID);
+    Controller slow_control(profile, slow, 10, Startup::CLEAN);
+    assert(slow_control.tick(input(100)).start_block == Block::NONE);
     invalid = profile;
     invalid.maximum_exhaust_milli_c = invalid.minimum_run_exhaust_milli_c;
     assert(!clean.install_safety_envelope(invalid, false, 160));
@@ -165,9 +159,8 @@ int main() {
         assert(command_policy::block(view, Action::PROFILE) != Block::NONE);
     }
     view.control.state = State::IDLE;
-    for (bool *flag :
-         {&view.storage_busy, &view.control.commissioning.active, &view.control.outputs.fan_request,
-          &view.control.outputs.fuel, &view.control.outputs.glow}) {
+    for (bool *flag : {&view.storage_busy, &view.control.outputs.fan_request, &view.control.outputs.fuel,
+                       &view.control.outputs.glow}) {
         *flag = true;
         assert(command_policy::block(view, Action::PROFILE) == Block::BUSY);
         *flag = false;
@@ -189,6 +182,6 @@ int main() {
     assert(std::strstr(output, "\"maximum_exhaust_milli_c\":0"));
     assert(std::strstr(output, "\"preheat_min_ms\":30000"));
     assert(std::strstr(output, "\"PROFILE\":{\"allowed\":true"));
-    std::cout << "PASS profile: strict payload, grants, save admission, model invalidation, restart, fault "
+    std::cout << "PASS profile: strict payload, grants, save admission, configured limits, restart, fault "
                  "race, initial defaults\n";
 }

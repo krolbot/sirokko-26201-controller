@@ -23,15 +23,13 @@ struct Snapshot {
     sirokko::State state{sirokko::State::RECOVERY_PURGE};
     sirokko::Block start_block{sirokko::Block::ENVELOPE_MISSING};
     uint64_t state_version{};
-    bool calibration_active{};
 };
 
 struct Executor {
     void *context{};
     bool (*snapshot)(void *context, Snapshot *snapshot){};
     bool (*start)(void *context, uint64_t source_state_version){};
-    // `operator_combustion_problem` is true only for a STOP latched while calibration is active.
-    bool (*stop)(void *context, bool operator_combustion_problem){};
+    bool (*stop)(void *context){};
 };
 
 enum class Dispatch : uint8_t { NONE, START, STOP, REJECTED, FAILED };
@@ -68,7 +66,6 @@ class Button {
     Phase release_resume_{Phase::REQUIRE_RELEASE};
     Intent intent_{Intent::NONE};
     uint64_t source_state_version_{};
-    bool combustion_problem_{};
     uint64_t phase_started_ms_{};
     uint64_t last_poll_ms_{};
     bool have_last_poll_{};

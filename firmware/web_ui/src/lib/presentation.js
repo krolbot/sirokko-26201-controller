@@ -21,45 +21,11 @@ export function needsStop(snapshot) {
   return (
     snapshot?.outputs?.fuel === true ||
     snapshot?.outputs?.glow === true ||
-    (snapshot?.commissioning?.active === true &&
-      snapshot.commissioning.phase?.code !== "PERSIST_COMMITTING") ||
     ["PREHEAT", "IGNITION", "RUN"].includes(snapshot?.state?.code)
   );
 }
 export function stateText(snapshot) {
   return snapshot?.state?.ru || "Нет состояния отопителя";
-}
-export function calibrationStatus(snapshot) {
-  const calibration = snapshot?.commissioning;
-  if (calibration?.active) {
-    const title = snapshot.purge?.active
-      ? "Охлаждение после калибровки"
-      : ["PREHEAT", "IGNITION"].includes(snapshot.state?.code)
-        ? stateText(snapshot)
-        : snapshot.state?.code === "IDLE" &&
-            calibration.phase?.code === "COMPLETE_PENDING_STOP"
-          ? "Ожидание сохранения калибровки"
-          : calibration.phase?.ru || "Калибровка диапазона ШИМ";
-    return {
-      title,
-      summary: "Выполняется",
-      icon: snapshot.purge?.active ? "fan" : "heat",
-    };
-  }
-  const interrupted = {
-    FAILED: ["Калибровка не завершена", "Не завершена"],
-    CANCELLED: ["Калибровка отменена", "Отменена"],
-    PERSIST_FAILED: ["Калибровка не сохранена", "Не сохранена"],
-  }[calibration?.phase?.code];
-  if (interrupted)
-    return { title: interrupted[0], summary: interrupted[1], icon: "heat" };
-  return snapshot?.learned_model?.valid
-    ? { title: "Калибровка выполнена", summary: "Выполнена", icon: "check" }
-    : {
-        title: "Калибровка диапазона ШИМ",
-        summary: "Не выполнена",
-        icon: "heat",
-      };
 }
 export function temperature(sensor) {
   if (!sensor?.valid || sensor.status) return "Нет показаний";
@@ -73,7 +39,6 @@ export const routes = {
   settings: { title: "Настройки", section: "settings" },
   wifi: { title: "Wi-Fi", section: "settings" },
   regulation: { title: "Темп изменения ШИМ", section: "settings" },
-  calibration: { title: "Калибровка", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
   update: { title: "Обновление", section: "settings" },
 };
@@ -87,10 +52,6 @@ export function blockedActionLink(snapshot, action) {
     case "ENVELOPE_MISSING":
     case "ENVELOPE_INVALID":
       return { href: "#/heater", label: "Настроить отопитель" };
-    case "CALIBRATION_TOO_SLOW":
-      return { href: "#/regulation", label: "Настроить темп ШИМ" };
-    case "MODEL_UNAVAILABLE":
-      return { href: "#/calibration", label: "Перейти к калибровке" };
     case "SENSOR_INVALID":
     case "SENSOR_STALE":
     case "INITIAL_THERMAL_STATE":
@@ -129,7 +90,6 @@ export function errorText(error, fallback, snapshot) {
     case "GRANT":
     case "REPLAY":
     case "NOT_ACCEPTED":
-    case "MODEL_REVISION":
       return "Состояние изменилось. Повторите действие";
     case "PASSWORD_LENGTH_OR_CHARACTERS":
       return "Пароль должен содержать 8–63 латинских букв, цифр или символов без пробелов";
@@ -174,7 +134,7 @@ export function timerLabel(milliseconds) {
     .join(" ");
 }
 
-export function automaticSlew(settings) {
+export function defaultSlew(settings) {
   return (
     settings?.slew_up_per_s === MAXIMUM_SLEW_PER_S &&
     settings?.slew_down_per_s === MAXIMUM_SLEW_PER_S

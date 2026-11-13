@@ -94,111 +94,7 @@ void monitoring() {
     assert(control.state == State::FAULT_PURGE && control.outputs.fan_request);
     off(control);
 }
-void confirmed_calibration() {
-    Settings settings{};
-    settings.duration_ms = 60000;
-    Controller c({}, settings, 1, Startup::CLEAN);
-    auto first = input(10);
-    first.start = first.start_commissioning = true;
-    auto unconfigured = c.tick(first);
-    assert(unconfigured.state == State::UNCONFIGURED && !unconfigured.commissioning.active);
-    off(unconfigured);
-    auto partial = envelope();
-    partial.exploration_floor_code = 0;
-    assert(c.install_safety_envelope(partial, false, 20));
-    first.now_ms = 30;
-    unconfigured = c.tick(first);
-    assert(unconfigured.state == State::UNCONFIGURED && !unconfigured.envelope_provisioned);
-    assert(unconfigured.commissioning.block == Block::ENVELOPE_MISSING);
-    off(unconfigured);
-    assert(c.install_safety_envelope(envelope(), false, 40));
-    auto i = input(100);
-    i.start = true;
-    auto s = c.tick(i);
-    assert(s.state == State::IDLE && !s.commissioning.active);
-    assert(s.start_block == Block::MODEL_UNAVAILABLE);
-    i = input(101);
-    i.start_commissioning = true;
-    s = c.tick(i);
-    assert(s.commissioning.active && !s.duration_active);
-    auto cancelled_start = c;
-    auto cancel = input(201);
-    cancel.stop = true;
-    const auto cancelled_state = cancelled_start.tick(cancel);
-    assert(cancelled_state.commissioning.phase == CommissioningPhase::CANCELLED);
-    assert(cancelled_state.commissioning.elapsed_ms == 100);
-    assert(cancelled_start.snapshot(10000).commissioning.elapsed_ms == 100);
-    bool saved = false;
-    for (uint64_t t = 350; t < 6ULL * 3600000; t += 250) {
-        i = input(t);
-        if (s.outputs.fuel) {
-            i.sensors.exhaust.milli_c = s.outputs.speed_code * 100;
-            i.sensors.air.milli_c = s.outputs.speed_code * 40;
-        }
-        s = c.tick(i);
-        assert(s.faults == 0);
-        LearnedOperatingModel candidate{};
-        if (c.pending_learned_model(&candidate)) {
-            assert(s.commissioning.active && !s.outputs.fuel);
-            auto aborted = c;
-            assert(aborted.abort_model_storage() == ModelStorageAbort::ABORTED);
-            assert(aborted.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
-            assert(aborted.snapshot(t).commissioning.phase == CommissioningPhase::PERSIST_FAILED);
-            assert(c.begin_model_storage(1) && c.seal_model_storage(1));
-            auto cancelled = c;
-            auto stop = i;
-            stop.now_ms++;
-            stop.stop = true;
-            cancelled.tick(stop);
-            assert(cancelled.complete_model_storage(1, true));
-            stop = input(t + 2);
-            auto stopped = cancelled.tick(stop);
-            assert(stopped.state == State::IDLE && !stopped.commissioning.active);
-            assert(!stopped.outputs.fuel && !stopped.outputs.fan_request);
 
-            auto failed = c;
-            assert(!failed.complete_model_storage(1, false));
-            assert(!failed.tick(input(t + 2)).learned_model.valid);
-            assert(failed.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
-            assert(failed.snapshot(t + 60000).commissioning.phase == CommissioningPhase::PERSIST_FAILED);
-            assert(c.complete_model_storage(1, true));
-            assert(c.snapshot(t).learned_model.valid);
-            assert(c.snapshot(t + 60000).commissioning.elapsed_ms == t - 101);
-            i = input(t + 1);
-            i.cycle_record_ready = false;
-            assert(c.tick(i).state == State::IDLE);
-            i = input(t + 2);
-            s = c.tick(i);
-            assert(s.state == State::IDLE && !s.commissioning.active && !s.outputs.fuel);
-            i = input(t + 3);
-            i.start = true;
-            s = c.tick(i);
-            assert(s.state == State::PREHEAT && !s.commissioning.active);
-            assert(s.duration_active && s.duration_remaining_ms == 60000);
-            saved = true;
-            break;
-        }
-    }
-    assert(saved);
-    // A subsequent boot with the verified model never starts or recalibrates by itself.
-    Controller rebooted(envelope(), settings, 2, Startup::CLEAN);
-    assert(rebooted.install_learned_model(c.learned_model()));
-    auto ready = rebooted.tick(input(100));
-    assert(ready.state == State::IDLE && !ready.commissioning.active);
-    auto repeat = rebooted;
-    auto repeat_start = input(110);
-    repeat_start.start_commissioning = true;
-    assert(repeat.tick(repeat_start).commissioning.active);
-    auto repeat_stop = input(120);
-    repeat_stop.stop = true;
-    auto repeated = repeat.tick(repeat_stop);
-    assert(repeated.learned_model.valid && repeated.commissioning.phase == CommissioningPhase::CANCELLED);
-    assert(repeat.snapshot(60000).commissioning.elapsed_ms == 10);
-    auto start = input(120);
-    start.start = true;
-    ready = rebooted.tick(start);
-    assert(ready.state == State::PREHEAT && !ready.commissioning.active);
-}
 void history() {
     ThermalHistory history;
     Snapshot s{};
@@ -230,9 +126,8 @@ void history() {
 }
 int main() {
     monitoring();
-    confirmed_calibration();
     history();
     std::cout << "PASS combustion/history: noisy reference, spike, sustained/slow drop, transitions, "
-                 "stale/repeated data, real cutoff, confirmed calibration/storage/STOP, no automatic "
+                 "stale/repeated data, real cutoff, no automatic "
                  "restart, ring wrap/reboot\n";
 }

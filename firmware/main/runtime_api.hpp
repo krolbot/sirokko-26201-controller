@@ -24,8 +24,7 @@ bool runtime_history(HistorySnapshot *history);
 bool runtime_issue(sirokko::Action action, uint64_t params_hash, sirokko::Grant *grant);
 bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_t delay_ms,
                     const sirokko::Settings *settings);
-void runtime_stop(bool operator_combustion_problem = false);
-bool runtime_revise_model(const sirokko::Grant &grant, const sirokko::LearnedModelRevision &revision);
+void runtime_stop();
 bool runtime_save_profile(const sirokko::Grant &grant, const sirokko::SafetyEnvelope &profile);
 bool runtime_network_credentials(char *ssid, size_t ssid_capacity, char *password, size_t password_capacity);
 bool runtime_maintenance_safe();

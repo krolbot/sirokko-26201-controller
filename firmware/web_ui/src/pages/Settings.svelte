@@ -1,5 +1,5 @@
 <script>
-  import { automaticSlew, calibrationStatus } from "../lib/presentation.js";
+  import { defaultSlew } from "../lib/presentation.js";
   import { heaterSetupText } from "../lib/heater.js";
   import Icon from "../Icon.svelte";
   let { snapshot, theme, selectTheme } = $props();
@@ -47,14 +47,6 @@
         >{heaterSetupText(snapshot.envelope)}</span
       ><Icon name="chevron" size={16} /></a
     >
-    <a class="list-row" href="#/calibration"
-      ><span class="row-icon"><Icon name="heat" /></span><span class="row-title"
-        >Калибровка</span
-      ><span class="row-value">{calibrationStatus(snapshot).summary}</span><Icon
-        name="chevron"
-        size={16}
-      /></a
-    >
   </div>
 </section>
 <details class="settings-advanced surface">
@@ -63,10 +55,8 @@
     <span class="row-icon"><Icon name="tune" /></span>
     <span class="row-title">Темп изменения ШИМ</span>
     <span class="row-value"
-      >{automaticSlew(snapshot.settings)
-        ? snapshot.learned_model?.valid
-          ? "По калибровке"
-          : "Исходный темп"
+      >{defaultSlew(snapshot.settings)
+        ? "Исходный темп"
         : "Замедлено вручную"}</span
     >
     <Icon name="chevron" size={16} />

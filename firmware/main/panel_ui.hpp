@@ -13,13 +13,12 @@ constexpr uint32_t kCommandConfirmationTimeoutMs = 5000;
 constexpr int32_t kManualMaximumPercent = 100;
 constexpr int32_t kMinutesMaximum = sirokko::kMaximumTimerMs / 60000;
 
-enum class Page : uint8_t { HOME, MENU, EDIT, DIAGNOSTICS, WIFI, OTA, CALIBRATION };
+enum class Page : uint8_t { HOME, MENU, EDIT, DIAGNOSTICS, WIFI, OTA };
 enum class MenuItem : uint8_t {
     MODE,
     MANUAL_POWER,
     TEMPERATURE,
     SHUTDOWN_TIMER,
-    CALIBRATION,
     DIAGNOSTICS,
     WIFI,
     OTA,
@@ -31,7 +30,6 @@ enum class CommandKind : uint8_t {
     NONE,
     SETTINGS,
     TIMER,
-    CALIBRATE,
     RESET_FAULT,
     REQUEST_NETWORK_CREDENTIALS,
 };
@@ -39,7 +37,6 @@ enum class Notice : uint8_t {
     NONE,
     QUEUED,
     COMMAND_REJECTED,
-    CALIBRATION_BLOCKED,
     CONFIRMATION_TIMEOUT,
     CREDENTIALS_UNAVAILABLE,
     VIEW_UNAVAILABLE,
@@ -127,13 +124,12 @@ class Model {
 
   private:
     static constexpr uint8_t kVisibleMenuRows = 4;
-    static constexpr uint8_t kMenuCount = 8;
+    static constexpr uint8_t kMenuCount = 7;
 
     enum class TimerTarget : uint8_t { NONE, ACTIVE_SESSION, NEXT_START };
 
     struct PendingClick {
         bool active{};
-        bool calibration_ready{};
         Page page{Page::HOME};
         uint8_t menu_index{};
         MenuItem menu_item{MenuItem::MODE};

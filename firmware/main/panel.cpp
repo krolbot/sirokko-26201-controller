@@ -213,7 +213,6 @@ panel_ui::View panel_view(const RuntimeView &runtime) {
     panel_ui::View view{};
     view.control = runtime.control;
     view.control.start_block = command_policy::block(runtime, sirokko::Action::START);
-    view.control.commissioning.block = command_policy::block(runtime, sirokko::Action::CALIBRATE);
     view.settings = runtime.settings;
     view.now_ms = runtime.now_ms;
     view.storage_ok = runtime.storage_ok;
@@ -249,8 +248,6 @@ bool execute_command(const panel_ui::Command &command) {
     case panel_ui::CommandKind::TIMER:
         return submit_action(sirokko::Action::TIMER, command_hash(command.kind, command.delay_ms),
                              command.delay_ms, nullptr);
-    case panel_ui::CommandKind::CALIBRATE:
-        return submit_action(sirokko::Action::CALIBRATE, command_hash(command.kind, 0), 0, nullptr);
     case panel_ui::CommandKind::RESET_FAULT:
         return submit_action(sirokko::Action::RESET_FAULT, command_hash(command.kind, 0), 0, nullptr);
     case panel_ui::CommandKind::REQUEST_NETWORK_CREDENTIALS: {

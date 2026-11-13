@@ -73,19 +73,23 @@ test("manual handoff confirms the controller's actual level, then requires expli
   observed.boot_id = "2";
   assert.equal(commandMatchesSnapshot(pending, observed), false);
 });
-test("manual control respects the same learned minimum and rounding as the encoder", () => {
-  const learned_model = {
+test("manual control respects the same configured minimum and rounding as the encoder", () => {
+  const parameters = {
     valid: true,
     minimum_speed_code: 1201,
     maximum_speed_code: 2000,
   };
-  assert.equal(manualMinimum(learned_model), 65);
+  assert.equal(manualMinimum(parameters), 65);
+  assert.equal(
+    manualMinimum({ maximum_speed_code: 4014, minimum_speed_code: 0 }),
+    5,
+  );
   const baseline = { ...state(), settings: { ...settings(), mode: "MANUAL" } };
   const requested = { ...baseline.settings, manual_percent: 5 };
   const observed = {
     ...baseline,
     state_version: "3",
-    learned_model,
+    envelope: { parameters },
     settings: { ...requested, manual_percent: 65 },
   };
   assert.equal(

@@ -20,7 +20,6 @@
   import Wifi from "./pages/Wifi.svelte";
   import Update from "./pages/Update.svelte";
   import Regulation from "./pages/Regulation.svelte";
-  import Calibration from "./pages/Calibration.svelte";
   import Heater from "./pages/Heater.svelte";
   import { heaterDraft } from "./lib/heater.js";
   import { Measurements } from "./lib/measurements.js";
@@ -50,7 +49,6 @@
   ]);
   const regulation = new Draft(["slew_up_per_s", "slew_down_per_s"]);
   const timer = new Draft();
-  const model = new Draft();
   const heater = new Draft();
   let timerRun = null;
   let session = $state.raw(null);
@@ -87,14 +85,12 @@
   }
 
   const stopVisible = $derived(
-    needsStop(snapshot) || ["START", "CALIBRATE"].includes(ui.pending?.action),
+    needsStop(snapshot) || ui.pending?.action === "START",
   );
   const stopLabel = $derived(
-    snapshot?.commissioning?.active || ui.pending?.action === "CALIBRATE"
-      ? "Отменить калибровку"
-      : ui.pending?.action === "START" && !needsStop(snapshot)
-        ? "Отменить запуск"
-        : "Остановить нагрев",
+    ui.pending?.action === "START" && !needsStop(snapshot)
+      ? "Отменить запуск"
+      : "Остановить нагрев",
   );
   const authenticated = $derived(ui.auth === "authenticated");
   function notify(kind, text) {
@@ -113,7 +109,6 @@
       settings.clear();
       regulation.clear();
       timer.clear();
-      model.clear();
     }
     if (current) {
       settings.sync(current, current.settings);
@@ -155,15 +150,6 @@
       else timer.sync(current, timerValue);
       timerRun = run;
       heater.sync(current, heaterDraft(current.envelope));
-      if (current.learned_model?.valid) {
-        const saved = current.learned_model;
-        model.sync(current, {
-          minimum_speed_code: saved.minimum_speed_code,
-          maximum_speed_code: saved.maximum_speed_code,
-          slew_up_per_s: saved.slew_up_per_s,
-          slew_down_per_s: saved.slew_down_per_s,
-        });
-      } else model.clear();
     }
     if (next.message !== lastMessage) {
       lastMessage = next.message;
@@ -361,12 +347,7 @@
           draft={regulation}
           {notify}
         />
-      {:else if route === "calibration"}<Calibration
-          {ui}
-          {session}
-          draft={model}
-          {notify}
-        />{/if}
+      {/if}
     {/if}
   </main>
   {#if snapshot && authenticated}<footer class="bottom-dock">
