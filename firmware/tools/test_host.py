@@ -8,7 +8,7 @@ import tempfile
 root = Path(__file__).resolve().parents[1]
 core = root / "components/control_core"
 flags = [
-    "-std=c++17", "-Wall", "-Wextra", "-Werror", "-g",
+    "-std=c++17", "-Os", "-Wall", "-Wextra", "-Werror", "-g",
     "-fno-omit-frame-pointer", "-fsanitize=address,undefined", "-fno-pie", "-no-pie",
     "-I" + str(core / "include"), "-I" + str(root / "main"),
 ]
@@ -36,7 +36,6 @@ suites = {
         "ota_verify.cpp", "web_protocol.cpp",
     )] + ["-lcrypto"],
     "wifi_password": [],
-    "captive_dns": [],
 }
 with tempfile.TemporaryDirectory(prefix="sirokko-tests-") as temporary:
     for name, sources in suites.items():

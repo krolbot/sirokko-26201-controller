@@ -2,7 +2,6 @@
 #include "network_config.hpp"
 #include "runtime_api.hpp"
 #include "wifi_password.hpp"
-#include "captive_dns.hpp"
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_wifi.h"
@@ -46,14 +45,7 @@ bool start_access_point() {
     ip.netmask.addr = inet_addr("255.255.255.0");
     if (esp_netif_set_ip_info(ap, &ip) != ESP_OK)
         return false;
-    esp_netif_dns_info_t dns{};
-    dns.ip.type = ESP_IPADDR_TYPE_V4;
-    dns.ip.u_addr.ip4.addr = ip.ip.addr;
-    uint8_t offer_dns = 2; // DHCP OFFER_DNS
-    if (esp_netif_set_dns_info(ap, ESP_NETIF_DNS_MAIN, &dns) != ESP_OK ||
-        esp_netif_dhcps_option(ap, ESP_NETIF_OP_SET, ESP_NETIF_DOMAIN_NAME_SERVER, &offer_dns,
-                               sizeof(offer_dns)) != ESP_OK ||
-        esp_netif_dhcps_start(ap) != ESP_OK)
+    if (esp_netif_dhcps_start(ap) != ESP_OK)
         return false;
     wifi_init_config_t init = WIFI_INIT_CONFIG_DEFAULT();
     if (esp_wifi_init(&init) != ESP_OK)
@@ -76,8 +68,6 @@ bool start_access_point() {
         return false;
     ESP_LOGI(kTag, "Wi-Fi AP %s (%s), %s", g_ap_ssid, g_ap_password[0] ? "password protected" : "open",
              network_config::url);
-    if (!captive_dns_start())
-        return false;
     g_credentials_ready = true;
     return true;
 }

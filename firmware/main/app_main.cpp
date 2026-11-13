@@ -272,9 +272,11 @@ bool activate_model_stage(const StoreRequest &request) {
            save_encoded_record(kModelKey, kModelMagic, stage.value.candidate);
 }
 bool output_begin() {
-    gpio_set_level(board::kGlow, 0);
-    gpio_set_level(board::kFuel, 0);
-    gpio_set_level(board::kFanRequest, 0);
+    bool disabled = true;
+    for (const auto pin : {board::kGlow, board::kFuel, board::kFanRequest})
+        disabled = gpio_set_level(pin, 0) == ESP_OK && disabled;
+    if (!disabled)
+        return false;
     gpio_config_t cfg{};
     cfg.pin_bit_mask = (1ULL << board::kGlow) | (1ULL << board::kFuel) | (1ULL << board::kFanRequest);
     cfg.mode = GPIO_MODE_OUTPUT;
@@ -382,7 +384,10 @@ void storage_task(void *) {
             result.ok = write_model_stage(request);
         else
             result.ok = activate_model_stage(request);
-        xQueueSend(g_store_results, &result, portMAX_DELAY);
+        // Only one storage request is in flight. A full result queue is a fault,
+        // not a reason to leave the worker waiting forever.
+        if (xQueueSend(g_store_results, &result, 0) != pdTRUE)
+            storage_status(STORAGE_INTERNAL, false);
     }
 }
 void finish_storage(ControlWork &w, const sirokko::TickInput &input) {
@@ -660,7 +665,11 @@ void control_pass(ControlWork &w) {
     // Publish the new admission state before a password write can acquire the gate.
     if (locked)
         xSemaphoreGive(g_gate_mutex);
-    esp_task_wdt_reset();
+    if (esp_task_wdt_reset() != ESP_OK) {
+        gpio_set_level(board::kFuel, 0);
+        gpio_set_level(board::kGlow, 0);
+        g_output_driver_fault = true;
+    }
 }
 void control_task(void *) {
     ControlWork w{};
@@ -814,8 +823,8 @@ void verify_startup(bool network_ready, bool sensors_ready) {
                 return;
             }
             g_boot_ready = true;
-            ESP_LOGI(kTag, "Startup checks passed; state=%s, main_stack_free=%u",
-                     sirokko::state_name(view.control.state),
+            ESP_LOGI(kTag, "Startup checks passed; version=%s, state=%s, main_stack_free=%u",
+                     esp_app_get_description()->version, sirokko::state_name(view.control.state),
                      static_cast<unsigned>(uxTaskGetStackHighWaterMark(nullptr)));
             return;
         }
@@ -825,8 +834,10 @@ void verify_startup(bool network_ready, bool sensors_ready) {
 }
 } // namespace
 extern "C" void app_main() {
-    if (!output_begin())
+    if (!output_begin()) {
+        ESP_LOGE(kTag, "Output initialization failed; startup stopped");
         return;
+    }
     if (nvs_flash_init() != ESP_OK)
         storage_status(STORAGE_INIT, false);
     g_view_mutex = xSemaphoreCreateMutex();
@@ -838,22 +849,29 @@ extern "C" void app_main() {
     g_store_results = xQueueCreate(1, sizeof(StoreResult));
     g_ota_activation_queue = xQueueCreate(1, sizeof(OtaActivation));
     if (!g_view_mutex || !g_gate_mutex || !g_history_mutex || !g_sensor_queue || !g_command_queue ||
-        !g_storage_jobs || !g_store_results || !g_ota_activation_queue)
+        !g_storage_jobs || !g_store_results || !g_ota_activation_queue) {
+        ESP_LOGE(kTag, "Control queue/mutex allocation failed; startup stopped");
         return;
+    }
     const uint64_t boot = (static_cast<uint64_t>(esp_random()) << 32) | esp_random();
     const auto envelope = load_factory_envelope();
     g_startup = load_startup(envelope.provisioned);
     g_controller = new (std::nothrow) sirokko::Controller(envelope, load_settings(), boot, g_startup);
-    if (!g_controller)
+    if (!g_controller) {
+        ESP_LOGE(kTag, "Controller allocation failed; startup stopped");
         return;
+    }
     load_model();
     const bool sensors_ready = g_sensor_suite.begin();
     if (!sensors_ready)
         ESP_LOGE(kTag, "Sensor initialization failed; heating blocked");
     if (xTaskCreatePinnedToCore(sensor_task, "sensors", 6144, nullptr, 8, nullptr, 0) != pdPASS ||
         xTaskCreatePinnedToCore(control_task, "control", 24576, nullptr, 20, nullptr, 1) != pdPASS ||
-        xTaskCreate(storage_task, "storage", 4096, nullptr, 2, nullptr) != pdPASS)
+        xTaskCreate(storage_task, "storage", 4096, nullptr, 2, nullptr) != pdPASS) {
+        storage_status(STORAGE_INTERNAL, false);
+        ESP_LOGE(kTag, "Control task allocation failed; heating blocked");
         return;
+    }
     g_button_ready = start_stop_button_begin();
     if (!g_button_ready)
         ESP_LOGE(kTag, "START/STOP unavailable; heating blocked");

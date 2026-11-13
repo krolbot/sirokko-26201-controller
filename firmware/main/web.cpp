@@ -1,4 +1,3 @@
-#include "network_config.hpp"
 #include "runtime_api.hpp"
 #include "command_policy.hpp"
 #include "wifi_password.hpp"
@@ -129,7 +128,13 @@ esp_err_t reject(httpd_req_t *request, const char *code, const char *status = "4
         std::snprintf(body, sizeof(body), "{\"status\":\"REJECTED\",\"code\":\"%s\"}", code ? code : "ERROR");
     if (length <= 0 || static_cast<size_t>(length) >= sizeof(body))
         return ESP_FAIL;
-    return send_json(request, body, status);
+    // IDF otherwise drains unread request bytes without an overall deadline.
+    // A rejected upload must not hold the server while the client keeps sending.
+    const bool close = request->content_len != 0;
+    if (close)
+        httpd_resp_set_hdr(request, "Connection", "close");
+    const esp_err_t result = send_json(request, body, status);
+    return close ? ESP_FAIL : result;
 }
 
 struct BodySink {
@@ -472,25 +477,13 @@ ota_verify::Result finish_ota_sink(OtaSink *sink) {
     return ota_verify::Result::OK;
 }
 
-esp_err_t portal_redirect(httpd_req_t *request) {
-    no_store(request);
-    httpd_resp_set_status(request, "302 Found");
-    httpd_resp_set_hdr(request, "Location", network_config::url);
-    return httpd_resp_sendstr(request, network_config::url);
-}
-
 esp_err_t missing_page(httpd_req_t *request, httpd_err_code_t) {
-    // Unknown API routes keep their normal error semantics.
-    if (request->method == HTTP_GET && std::strncmp(request->uri, "/api/", 5) != 0)
-        return portal_redirect(request);
     return reject(request, "NOT_FOUND", "404 Not Found");
 }
 
 esp_err_t page_handler(httpd_req_t *request) {
-    char host[128]{};
-    if (read_header(request, "Host", host, sizeof(host)) && std::strcmp(host, network_config::address) != 0 &&
-        std::strcmp(host, network_config::address_with_port) != 0)
-        return portal_redirect(request);
+    if (request->content_len != 0)
+        return reject(request, "BODY");
     no_store(request);
     httpd_resp_set_type(request, "text/html; charset=utf-8");
     httpd_resp_set_hdr(request, "Content-Encoding", "gzip");
@@ -498,6 +491,8 @@ esp_err_t page_handler(httpd_req_t *request) {
 }
 
 esp_err_t login_handler(httpd_req_t *request) {
+    if (request->content_len != 0)
+        return reject(request, "BODY");
     const uint64_t current = now_ms();
     if ((g_failed_logins >= 5 && current - g_last_login_ms < 30000) || current - g_last_login_ms < 500) {
         return reject(request, "RATE_LIMIT", "429 Too Many Requests");
@@ -551,6 +546,8 @@ esp_err_t wifi_handler(httpd_req_t *request) {
 }
 
 esp_err_t state_handler(httpd_req_t *request) {
+    if (request->content_len != 0)
+        return reject(request, "BODY");
     if (!authorized(request)) {
         if (g_password[0])
             return reject(request, "AUTH", "401 Unauthorized");
@@ -570,6 +567,8 @@ esp_err_t state_handler(httpd_req_t *request) {
 }
 
 esp_err_t history_handler(httpd_req_t *request) {
+    if (request->content_len != 0)
+        return reject(request, "BODY");
     if (!authorized(request))
         return reject(request, "AUTH", "401 Unauthorized");
     // HTTP handlers run serially; the control task has a separate ring and only a bounded copy lock.
@@ -845,9 +844,19 @@ bool web_start(const char *ap_password) {
         return false;
     std::snprintf(g_password, sizeof(g_password), "%s", ap_password);
     g_next_password_required = g_password[0] != 0;
+    const httpd_uri_t handlers[] = {
+        {"/", HTTP_GET, page_handler, nullptr},
+        {"/api/login", HTTP_POST, login_handler, nullptr},
+        {"/api/wifi", HTTP_POST, wifi_handler, nullptr},
+        {"/api/state", HTTP_GET, state_handler, nullptr},
+        {"/api/history", HTTP_GET, history_handler, nullptr},
+        {"/api/challenge", HTTP_POST, challenge_handler, nullptr},
+        {"/api/command", HTTP_POST, command_handler, nullptr},
+        {"/api/ota", HTTP_POST, ota_handler, nullptr},
+    };
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.stack_size = 12288;
-    config.max_uri_handlers = 8;
+    config.max_uri_handlers = sizeof(handlers) / sizeof(handlers[0]);
     config.max_open_sockets = 5;
     config.lru_purge_enable = true;
     config.recv_wait_timeout = 1;
@@ -862,21 +871,16 @@ bool web_start(const char *ap_password) {
         return false;
     }
     ESP_LOGI("web", "HTTP request header limit: %d bytes", CONFIG_HTTPD_MAX_REQ_HDR_LEN);
-    if (httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, missing_page) != ESP_OK)
-        return false;
-    const httpd_uri_t handlers[] = {
-        {"/", HTTP_GET, page_handler, nullptr},
-        {"/api/login", HTTP_POST, login_handler, nullptr},
-        {"/api/wifi", HTTP_POST, wifi_handler, nullptr},
-        {"/api/state", HTTP_GET, state_handler, nullptr},
-        {"/api/history", HTTP_GET, history_handler, nullptr},
-        {"/api/challenge", HTTP_POST, challenge_handler, nullptr},
-        {"/api/command", HTTP_POST, command_handler, nullptr},
-        {"/api/ota", HTTP_POST, ota_handler, nullptr},
-    };
+    esp_err_t result = httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, missing_page);
     for (const httpd_uri_t &handler : handlers) {
-        if (httpd_register_uri_handler(server, &handler) != ESP_OK)
-            return false;
+        if (result != ESP_OK)
+            break;
+        result = httpd_register_uri_handler(server, &handler);
+    }
+    if (result != ESP_OK) {
+        ESP_LOGE("web", "HTTP handler registration failed: %s", esp_err_to_name(result));
+        ESP_ERROR_CHECK_WITHOUT_ABORT(httpd_stop(server));
+        return false;
     }
     return true;
 }
