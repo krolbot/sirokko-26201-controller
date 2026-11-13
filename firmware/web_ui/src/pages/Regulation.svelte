@@ -38,15 +38,15 @@
   }
 </script>
 
-<div class="page-heading"><h1>Темп изменения ШИМ</h1></div>
+<div class="page-heading"><h1>Скорость изменения ШИМ</h1></div>
 <section class="surface smoothing-panel">
   <div class="smoothing-status">
     <Icon name="tune" size={24} />
     <h2>
-      {defaultRate ? "Исходный темп" : "Замедлено вручную"}
+      {defaultRate ? "По умолчанию" : "Замедлено вручную"}
     </h2>
   </div>
-  <p class="caption">Скорость изменения ШИМ в пределах рабочего диапазона.</p>
+  <p class="caption">Как быстро меняется ШИМ двигателя при отоплении.</p>
   {#each fields as [field, label]}
     {@const limit = MAXIMUM_SLEW_PER_S}
     {@const lower = Math.ceil((MINIMUM_SLEW_PER_S / limit) * 100)}
@@ -58,14 +58,14 @@
       <span class="slew-heading"
         ><span>{label}</span><output
           >{percent === 100
-            ? "Исходный темп"
-            : `${percent}% от исходного темпа`}</output
+            ? "По умолчанию"
+            : `${percent}% от скорости по умолчанию`}</output
         ></span
       >
       <input
         type="range"
         aria-label={label}
-        aria-valuetext={`${percent}% от исходного темпа`}
+        aria-valuetext={`${percent}% от скорости по умолчанию`}
         min={lower}
         max="100"
         step="1"

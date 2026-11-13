@@ -2,8 +2,8 @@ export const heaterGroups = [
   {
     title: "Время этапов",
     fields: [
-      ["preheat_ms", "Накал свечи до подачи топлива", "с", 1000],
-      ["ignition_timeout_ms", "Предельное время розжига", "с", 1000],
+      ["preheat_ms", "Накал свечи перед подачей топлива", "с", 1000],
+      ["ignition_timeout_ms", "Время на розжиг", "с", 1000],
       ["postpurge_ms", "Минимальное время охлаждения", "с", 1000],
     ],
   },
@@ -12,14 +12,19 @@ export const heaterGroups = [
     fields: [
       [
         "minimum_run_exhaust_milli_c",
-        "Минимальная температура выхлопа при работе",
+        "Отключать топливо при выхлопе ниже",
         "°C",
         1000,
       ],
-      ["maximum_exhaust_milli_c", "Дополнительный предел выхлопа", "°C", 1000],
+      [
+        "maximum_exhaust_milli_c",
+        "Отключать топливо при выхлопе от",
+        "°C",
+        1000,
+      ],
       [
         "cooling_exhaust_milli_c",
-        "Выключить двигатель при выхлопе <",
+        "Выключать двигатель при выхлопе ниже",
         "°C",
         1000,
       ],
@@ -28,9 +33,9 @@ export const heaterGroups = [
   {
     title: "Двигатель",
     fields: [
-      ["maximum_speed_code", "Максимальный ШИМ двигателя", "ШИМ", 1],
-      ["purge_speed_code", "ШИМ двигателя при охлаждении", "ШИМ", 1],
-      ["minimum_speed_code", "Минимальный рабочий ШИМ", "ШИМ", 1],
+      ["maximum_speed_code", "ШИМ при розжиге", "ШИМ", 1],
+      ["purge_speed_code", "ШИМ при охлаждении", "ШИМ", 1],
+      ["minimum_speed_code", "Не снижать ШИМ ниже", "ШИМ", 1],
     ],
   },
 ];
@@ -119,19 +124,19 @@ export function heaterValidation(value, limits) {
     p.minimum_run_exhaust_milli_c <= p.cooling_exhaust_milli_c
   )
     errors.minimum_run_exhaust_milli_c =
-      "Выше температуры отключения двигателя";
+      "Выше значения «Выключать двигатель при выхлопе ниже»";
   for (const [low, high] of [
     ["cooling_exhaust_milli_c", "maximum_exhaust_milli_c"],
     ["minimum_run_exhaust_milli_c", "maximum_exhaust_milli_c"],
   ])
     if (p[low] && p[high] && p[low] >= p[high])
-      errors[low] = "Ниже верхнего предела температуры выхлопа";
+      errors[low] = "Ниже значения «Отключать топливо при выхлопе от»";
   if (
     p.minimum_speed_code &&
     p.maximum_speed_code &&
     p.minimum_speed_code > p.maximum_speed_code
   )
-    errors.minimum_speed_code = "Не выше максимального ШИМ двигателя";
+    errors.minimum_speed_code = "Не выше значения «ШИМ при розжиге»";
   return {
     parameters,
     errors,

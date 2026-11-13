@@ -23,7 +23,8 @@
           stopped: "Запись завершена",
           trial_finished: "Запуск и запись завершены",
           trial_not_started: "Запуск не начался; запись сохранена",
-        }[recording.reason] || "Температуры и команды выходов в одном файле",
+        }[recording.reason] ||
+          "Температуры и управление отопителем в одном файле",
   );
   function submit(event) {
     event.preventDefault();

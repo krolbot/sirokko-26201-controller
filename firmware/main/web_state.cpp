@@ -49,7 +49,7 @@ const char *russian_block(sirokko::Block block) {
     case sirokko::Block::RECOVERY_PURGE:
         return "Дождитесь охлаждения отопителя";
     case sirokko::Block::SENSOR_INVALID:
-        return "Нет достоверных показаний нужных для запуска датчиков температуры";
+        return "Нет корректных показаний датчиков температуры";
     case sirokko::Block::SENSOR_STALE:
         return "Данные датчиков устарели";
     case sirokko::Block::INITIAL_THERMAL_STATE:
@@ -61,7 +61,7 @@ const char *russian_block(sirokko::Block block) {
     case sirokko::Block::MAINTENANCE:
         return "Обновление прошивки";
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
-        return "Не удалось запустить драйвер экрана или кнопки";
+        return "Ошибка запуска управления экраном или кнопкой";
     case sirokko::Block::BUTTON_HELD:
         return "Отпустите KEY0 перед подготовкой первого запуска";
     case sirokko::Block::STALE_COMMAND:
@@ -102,7 +102,7 @@ const char *russian_event(const char *kind) {
     if (std::strcmp(kind, "TRIAL_UNCONFIRMED") == 0)
         return "Первый запуск остановлен: горение не подтверждено";
     if (std::strcmp(kind, "TRIAL_FINISHED") == 0)
-        return "Первый запуск завершён по времени";
+        return "Первый запуск завершён: время измерений истекло";
     if (std::strcmp(kind, "START") == 0)
         return "Запуск отопителя";
     if (std::strcmp(kind, "STOP") == 0)

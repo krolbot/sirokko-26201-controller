@@ -41,7 +41,7 @@ export const routes = {
   diagnostics: { title: "Состояние", section: "diagnostics" },
   settings: { title: "Настройки", section: "settings" },
   wifi: { title: "Wi-Fi", section: "settings" },
-  regulation: { title: "Темп изменения ШИМ", section: "settings" },
+  regulation: { title: "Скорость изменения ШИМ", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
   trial: { title: "Первый запуск", section: "settings" },
   update: { title: "Обновление", section: "settings" },

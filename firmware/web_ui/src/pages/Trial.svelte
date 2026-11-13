@@ -74,7 +74,7 @@
   );
   const timerLabel = $derived(
     cooling
-      ? "Минимальное охлаждение"
+      ? "Охлаждение ещё не менее"
       : phase === "TRIAL_READY"
         ? "На начало запуска"
         : phase === "PREHEAT"
@@ -87,7 +87,7 @@
 
 <div class="page-heading"><h1>Первый запуск</h1></div>
 <p class="intro">
-  Запуск и запись температур без заполненного профиля отопителя.
+  Запуск для настройки отопителя. Температуры и ШИМ записываются в CSV.
 </p>
 {#if active}
   <section class="surface info-panel section trial-process" aria-live="polite">
@@ -120,9 +120,9 @@
           </p>{/if}
       {:else if measuring}
         <p class="caption">
-          Сначала прогрейте отопитель на полном ШИМ около 10 минут. Затем
-          меняйте ШИМ поэтапно и дождитесь установления температуры на каждой
-          ступени.
+          Сначала прогрейте отопитель при ШИМ 100% около 10 минут. Затем меняйте
+          ШИМ постепенно. После каждого изменения дождитесь, пока температура
+          перестанет заметно меняться.
         </p>
         <p class="caption">
           После подтверждения: {countdownText(snapshot.trial.elapsed_ms)}
@@ -139,7 +139,7 @@
   </section>
 {:else}
   <section class="surface info-panel section">
-    <h2>Запуск с записью температур</h2>
+    <h2>Порядок запуска</h2>
     <p class="caption">
       После 30 с накала включатся двигатель и подача топлива. Ещё через 10 с
       свеча выключится. Подтвердите устойчивое горение, чтобы перейти к
@@ -191,7 +191,7 @@
       oninput={changePwm}
     />
     <p class="caption">
-      Применено: {snapshot.outputs.speed_code} / {pwmMaximum}. Изменения и
+      Текущий ШИМ: {snapshot.outputs.speed_code} / {pwmMaximum}. Изменения и
       температуры попадают в CSV.
     </p>
     {#if externalPwmChange}<p class="caption" role="status">

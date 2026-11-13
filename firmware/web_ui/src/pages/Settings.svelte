@@ -58,7 +58,7 @@
   <summary>Дополнительно<Icon name="chevron" size={16} /></summary>
   <a class="list-row" href="#/regulation">
     <span class="row-icon"><Icon name="tune" /></span>
-    <span class="row-title">Темп изменения ШИМ</span>
+    <span class="row-title">Скорость изменения ШИМ</span>
     <span class="row-value"
       >{defaultSlew(snapshot.settings)
         ? "Исходный темп"

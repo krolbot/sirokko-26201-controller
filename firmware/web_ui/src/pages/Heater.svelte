@@ -45,12 +45,10 @@
     {#each heaterGroups as group}
       <section class="surface form-panel">
         <h2>{group.title}</h2>
-        {#if group.title === "Время этапов"}<p class="caption">
-            Ожидание розжига — не более {limits.firing_max_ms / 1000} с
-          </p>
-        {:else if group.title === "Двигатель"}<p class="caption">
-            ШИМ от 1 до {limits.pwm_max}. Двигатель приводит вентилятор и
-            топливный насос.
+        {#if group.title === "Двигатель"}<p class="caption">
+            ШИМ задаёт управление двигателем, который приводит вентилятор и
+            топливный насос. Значения от 1 до {limits.pwm_max}; это не обороты в
+            минуту.
           </p>{/if}
         <div class="parameter-fields">
           {#each group.fields as [key, label, unit, scale]}
@@ -65,8 +63,8 @@
                 value={draft.value[key]}
                 disabled={!editing}
                 placeholder={key === "maximum_exhaust_milli_c"
-                  ? "Не задан"
-                  : "Не задано"}
+                  ? "Необязательно"
+                  : "Укажите значение"}
                 aria-invalid={Boolean(touched[key] && validation.errors[key])}
                 aria-describedby={touched[key] && validation.errors[key]
                   ? `${key}-error`
@@ -85,38 +83,47 @@
                   id={`${key}-error`}>{validation.errors[key]}</small
                 >
               {:else if key === "preheat_ms"}<small class="caption"
-                  >Из инструкции: {limits.preheat_min_ms /
-                    1000}–{limits.preheat_max_ms / 1000} с. После подачи топлива свеча
-                  работает ещё {limits.ignition_glow_ms / 1000} с.</small
+                  >Двигатель и подача топлива включатся после накала. Свеча
+                  продолжит работать ещё {limits.ignition_glow_ms / 1000} с.</small
                 >
               {:else if key === "postpurge_ms"}<small class="caption"
-                  >Не менее {limits.postpurge_min_ms / 1000} с. Применяется и после
-                  отключения питания во время работы или охлаждения.</small
+                  >После отключения топлива двигатель работает не меньше этого
+                  времени. Если выхлоп ещё горячий, охлаждение продолжается.</small
                 >
               {:else if key === "ignition_timeout_ms"}<small class="caption"
-                  >Если за это время выхлоп не прогреется до минимальной рабочей
-                  температуры, подача топлива прекратится.</small
+                  >От подачи топлива до подтверждения розжига по температуре
+                  выхлопа. Если время истечёт, топливо отключится и начнётся
+                  охлаждение.</small
                 >
               {:else if key === "minimum_run_exhaust_milli_c"}<small
                   class="caption"
-                  >После выключения свечи выхлоп должен держаться не ниже этой
-                  температуры {limits.temperature_confirmation_ms / 1000} с для завершения
-                  розжига. Падение ниже неё во время работы на
-                  {limits.temperature_confirmation_ms / 1000} с отключает топливо.</small
+                  >При розжиге, после выключения свечи, выхлоп должен достичь
+                  этого значения и держаться не ниже него {limits.temperature_confirmation_ms /
+                    1000} с. При отоплении падение ниже значения на {limits.temperature_confirmation_ms /
+                    1000} с отключает топливо и запускает охлаждение.</small
                 >
               {:else if key === "maximum_exhaust_milli_c"}<small class="caption"
-                  >Необязательно. При достижении значения контроллер отключит
-                  топливо. Штатное отключение муфты при перегреве должно быть
-                  подключено независимо от этой настройки.</small
+                  >При достижении этой температуры топливо отключится и начнётся
+                  охлаждение. Можно оставить пустым. Штатная защита муфты от
+                  перегрева должна оставаться подключённой.</small
                 >
               {:else if key === "cooling_exhaust_milli_c"}<small class="caption"
-                  >Двигатель выключится после минимального времени охлаждения,
-                  когда выхлоп остынет ниже указанной температуры.</small
+                  >Двигатель выключится, когда истечёт минимальное время
+                  охлаждения и выхлоп остынет ниже этого значения.</small
                 >
               {:else if key === "maximum_speed_code"}<small class="caption"
-                  >Верхняя граница рабочего диапазона и команда двигателя при
-                  розжиге.</small
-                >{/if}
+                  >Используется при розжиге. При отоплении ШИМ также не
+                  поднимается выше этого значения.</small
+                >
+              {:else if key === "minimum_speed_code"}<small class="caption"
+                  >При отоплении ШИМ не опускается ниже этого значения. Укажите
+                  код ШИМ, проверенный при устойчивом горении в первом запуске.</small
+                >
+              {:else if key === "purge_speed_code"}<small class="caption"
+                  >ШИМ двигателя после отключения топлива, пока отопитель
+                  остывает.</small
+                >
+              {/if}
             </div>
           {/each}
         </div>

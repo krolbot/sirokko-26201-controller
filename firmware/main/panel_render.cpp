@@ -281,7 +281,7 @@ void draw_manual(Canvas &c, const Frame &f) {
     const float x = (kWidth - nw - 2 * kScale - uw) / 2;
     c.text(x, kCy + 20 * kScale, value, 57 * kScale, edit ? 0xbc713e : kInk);
     c.text(x + nw + 2 * kScale, kCy - 10 * kScale, "%", 19 * kScale, edit ? 0xbc713e : kInk);
-    c.text(160, kCy + 60 * kScale, "ШИМ от максимума двигателя", 18 * kScale, kSecond, Align::Center);
+    c.text(160, kCy + 60 * kScale, "ШИМ, % от заданного максимума", 18 * kScale, kSecond, Align::Center);
     if (edit)
         c.text(160, 230, "Нажать — применить", 13, kSecond, Align::Center);
     else if (f.view.control.duration_active) {
@@ -468,7 +468,7 @@ void draw_block(Canvas &c, const Frame &f) {
         break;
     case sirokko::Block::INITIALIZING:
         title = "Запуск контроллера";
-        detail = "Запуск программы контроллера";
+        detail = "Подождите несколько секунд";
         break;
     case sirokko::Block::STORAGE_UNAVAILABLE:
         title = "Память настроек";
@@ -476,7 +476,7 @@ void draw_block(Canvas &c, const Frame &f) {
         break;
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
         title = "Пуск заблокирован";
-        detail = "Ошибка драйвера экрана/кнопки";
+        detail = "Ошибка управления экраном/кнопкой";
         break;
     case sirokko::Block::BUTTON_HELD:
         title = "Отпустите KEY0";
