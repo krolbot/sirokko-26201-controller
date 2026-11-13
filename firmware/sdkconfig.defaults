@@ -29,3 +29,6 @@ CONFIG_FREERTOS_HZ=1000
 
 # Mobile browsers and captive-network assistants exceed the IDF 512-byte default.
 CONFIG_HTTPD_MAX_REQ_HDR_LEN=8192
+
+# Initialization includes the local panel and its state snapshots.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192

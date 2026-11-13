@@ -4,11 +4,12 @@
 #include "sirokko/control.hpp"
 
 class SensorSuite {
-public:
+  public:
     bool begin();
     void poll(uint64_t now_ms);
     sirokko::Sensors readings() const;
-private:
+
+  private:
     struct Impl;
-    Impl* impl_{};
+    Impl *impl_{};
 };

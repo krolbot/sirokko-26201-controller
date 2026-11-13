@@ -23,22 +23,21 @@ struct Snapshot {
     sirokko::State state{sirokko::State::RECOVERY_PURGE};
     sirokko::Block start_block{sirokko::Block::ENVELOPE_MISSING};
     uint64_t state_version{};
-    bool delayed_armed{};
     bool calibration_active{};
 };
 
 struct Executor {
-    void* context{};
-    bool (*snapshot)(void* context, Snapshot* snapshot){};
-    bool (*start)(void* context, uint64_t source_state_version){};
+    void *context{};
+    bool (*snapshot)(void *context, Snapshot *snapshot){};
+    bool (*start)(void *context, uint64_t source_state_version){};
     // `operator_combustion_problem` is true only for a STOP latched while calibration is active.
-    bool (*stop)(void* context, bool operator_combustion_problem){};
+    bool (*stop)(void *context, bool operator_combustion_problem){};
 };
 
 enum class Dispatch : uint8_t { NONE, START, STOP, REJECTED, FAILED };
 
 class Button {
-public:
+  public:
     explicit Button(Executor executor, Timing timing = kTiming);
 
     // `pressed` is the already-normalized active-low GPIO input.
@@ -47,7 +46,7 @@ public:
     void poll(bool pressed, uint64_t now_ms);
     Dispatch last_dispatch() const { return last_dispatch_; }
 
-private:
+  private:
     enum class Phase : uint8_t {
         REQUIRE_RELEASE,
         RELEASE_DEBOUNCE,
@@ -76,4 +75,4 @@ private:
     Dispatch last_dispatch_{Dispatch::NONE};
 };
 
-}  // namespace start_stop_button
+} // namespace start_stop_button

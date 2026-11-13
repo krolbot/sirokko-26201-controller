@@ -8,22 +8,15 @@ bool budget_open(uint64_t started_ms, uint64_t budget_ms, uint64_t now_ms) {
     return now_ms >= started_ms && now_ms - started_ms < budget_ms;
 }
 
-}  // namespace
+} // namespace
 
-BoundedReceiveResult receive_exact_bounded(
-    size_t total_size,
-    uint64_t budget_ms,
-    int timeout_result,
-    char* chunk_buffer,
-    size_t chunk_capacity,
-    void* receive_context,
-    ReceiveChunk receive_chunk,
-    void* consume_context,
-    ConsumeChunk consume_chunk,
-    void* clock_context,
-    MonotonicMilliseconds monotonic_ms) {
-    if (total_size == 0 || budget_ms == 0 || !chunk_buffer || chunk_capacity == 0 ||
-        !receive_chunk || !consume_chunk || !monotonic_ms || timeout_result >= 0) {
+BoundedReceiveResult receive_exact_bounded(size_t total_size, uint64_t budget_ms, int timeout_result,
+                                           char *chunk_buffer, size_t chunk_capacity, void *receive_context,
+                                           ReceiveChunk receive_chunk, void *consume_context,
+                                           ConsumeChunk consume_chunk, void *clock_context,
+                                           MonotonicMilliseconds monotonic_ms) {
+    if (total_size == 0 || budget_ms == 0 || !chunk_buffer || chunk_capacity == 0 || !receive_chunk ||
+        !consume_chunk || !monotonic_ms || timeout_result >= 0) {
         return BoundedReceiveResult::INVALID_ARGUMENT;
     }
 

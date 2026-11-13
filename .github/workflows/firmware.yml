@@ -6,6 +6,10 @@ on:
     paths:
       - "firmware/**"
       - ".github/workflows/firmware.yml"
+  pull_request:
+    paths:
+      - "firmware/**"
+      - ".github/workflows/firmware.yml"
   workflow_dispatch:
 
 permissions:
@@ -22,13 +26,10 @@ jobs:
           node-version: '26.7.0'
           cache: npm
           cache-dependency-path: firmware/web_ui/package-lock.json
-      - name: Check optional Wi-Fi password behavior
+      - name: Portable regression tests (ASan + UBSan)
         run: |
-          g++ -std=c++17 -Wall -Wextra -Werror firmware/tests/wifi_password_test.cpp -o /tmp/sirokko-wifi-test
-          /tmp/sirokko-wifi-test
-          g++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined firmware/tests/captive_dns_test.cpp -o /tmp/sirokko-dns-test
-          /tmp/sirokko-dns-test
-          node --test firmware/web_ui/tests/wifi.test.mjs
+          python3 firmware/tools/test_host.py
+          node --test firmware/web_ui/tests/*.test.mjs
       - name: Build production web page and verify embedded bytes
         run: |
           npm ci --prefix firmware/web_ui

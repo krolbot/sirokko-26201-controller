@@ -15,7 +15,7 @@ constexpr uint16_t kMaximumHistorySamples =
 struct TemperatureSample {
     int32_t milli_c{};
     uint64_t sample_ms{};
-    uint8_t status{};  // Zero means the acquisition layer reported no fault.
+    uint8_t status{}; // Zero means the acquisition layer reported no fault.
     bool valid{};
 };
 
@@ -54,7 +54,6 @@ enum class Reason : uint8_t {
     NONE,
     COMPLETE,
     INVALID_CONFIG,
-    ALREADY_ACTIVE,
     BACKDATED_TIME,
     OVERALL_TIMEOUT,
     RUN_CONTEXT_LOST,
@@ -138,8 +137,8 @@ struct TestedPoint {
 
 struct Profile {
     bool valid{};
-    uint16_t min_code{};  // One successfully repeated lower point remains below this margin-bearing limit.
-    uint16_t max_code{};  // The tested reference code, never an untested Config ceiling extension.
+    uint16_t min_code{}; // One successfully repeated lower point remains below this margin-bearing limit.
+    uint16_t max_code{}; // The tested reference code, never an untested Config ceiling extension.
     double tested_slew_up_codes_per_s{};
     double tested_slew_down_codes_per_s{};
     PointSummary reference;
@@ -173,39 +172,39 @@ struct Snapshot {
 };
 
 class Calibrator {
-public:
+  public:
     // Call only after the parent FSM has completed normal ignition and entered RUN.
     // Invalid configuration is rejected fail-closed and requests STOP.
-    bool start(const Config& config, uint64_t now_ms);
-    Snapshot tick(const Observation& observation);
+    bool start(const Config &config, uint64_t now_ms);
+    Snapshot tick(const Observation &observation);
     void cancel(Reason reason = Reason::EXTERNAL_CANCEL);
     Snapshot snapshot(uint64_t now_ms) const;
     bool active() const;
 
-private:
+  private:
     struct RecordedSample {
         uint64_t sample_ms{};
         int32_t exhaust_milli_c{};
         int32_t hot_air_milli_c{};
     };
 
-    bool valid_config(const Config& config) const;
-    bool validate_context(const Observation& observation);
-    bool validate_samples(const Observation& observation);
-    bool observe_command_slew(const Observation& observation);
-    bool record_sample_if_due(const Observation& observation);
-    bool analyze_history(PointSummary* summary) const;
-    bool establish_reference(const PointSummary& summary);
-    bool stable_against_reference(const PointSummary& summary) const;
-    bool reference_matches(const PointSummary& expected, const PointSummary& observed) const;
-    bool point_matches(const PointSummary& first, const PointSummary& repeat) const;
-    bool has_command_response(const PointSummary& from, const PointSummary& to) const;
-    bool transition_is_repeatable(const PointSummary& before_first, const PointSummary& first,
-                                  const PointSummary& returned, const PointSummary& repeat) const;
+    bool valid_config(const Config &config) const;
+    bool validate_context(const Observation &observation);
+    bool validate_samples(const Observation &observation);
+    bool observe_command_slew(const Observation &observation);
+    bool record_sample_if_due(const Observation &observation);
+    bool analyze_history(PointSummary *summary) const;
+    bool establish_reference(const PointSummary &summary);
+    bool stable_against_reference(const PointSummary &summary) const;
+    bool reference_matches(const PointSummary &expected, const PointSummary &observed) const;
+    bool point_matches(const PointSummary &first, const PointSummary &repeat) const;
+    bool has_command_response(const PointSummary &from, const PointSummary &to) const;
+    bool transition_is_repeatable(const PointSummary &before_first, const PointSummary &first,
+                                  const PointSummary &returned, const PointSummary &repeat) const;
     void begin_wait(Phase phase, uint16_t target_code, uint64_t now_ms);
     void begin_settle(Phase phase, uint64_t now_ms);
     void clear_history();
-    void add_sample(const RecordedSample& sample);
+    void add_sample(const RecordedSample &sample);
     void fail(Phase terminal_phase, Reason reason);
     void complete();
     uint64_t phase_elapsed(uint64_t now_ms) const;
@@ -245,7 +244,7 @@ private:
     std::array<TestedPoint, kMaximumTestedPoints> accepted_points_{};
 };
 
-const char* phase_name(Phase phase);
-const char* reason_name(Reason reason);
+const char *phase_name(Phase phase);
+const char *reason_name(Reason reason);
 
-}  // namespace sirokko::calibration
+} // namespace sirokko::calibration

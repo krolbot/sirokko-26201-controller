@@ -28,4 +28,4 @@ constexpr gpio_num_t kEncoderB = GPIO_NUM_38;
 constexpr gpio_num_t kEncoderPush = GPIO_NUM_47;
 constexpr int kSpiClockHz = 1000000;
 constexpr int kPwmFrequencyHz = 15000;
-}  // namespace board
+} // namespace board

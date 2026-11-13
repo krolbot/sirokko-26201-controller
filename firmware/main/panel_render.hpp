@@ -17,21 +17,53 @@ constexpr uint32_t kHeatPulseCycleMs = 2400;
 constexpr uint32_t kHeatPulseTravelMs = 1900;
 
 enum class Scene : uint8_t {
-    Heat, Idle, Manual, EditTemperature, EditManual, TimerRunning, Above,
-    Prepurge, Preheat, Ignition, Verify, Cooldown, Recovery,
-    FaultCooling, FaultLatched, SensorMissing, Calibrate, CalCooling, CalSaved,
-    CalReference, CalRepeat, CalStore, CalCancelled,
-    Menu, Mode, TimerEdit, Diagnostics, Wifi, Ota, MenuService, TimerOff,
-    Maintenance, NoData, Blocked, Queued, Rejected, CommandRejected,
+    Heat,
+    Idle,
+    Manual,
+    EditTemperature,
+    EditManual,
+    TimerRunning,
+    Above,
+    Prepurge,
+    Preheat,
+    Ignition,
+    Verify,
+    Cooldown,
+    Recovery,
+    FaultCooling,
+    FaultLatched,
+    SensorMissing,
+    Calibrate,
+    CalConfirm,
+    CombustionCheck,
+    CalCooling,
+    CalSaved,
+    CalReference,
+    CalRepeat,
+    CalStore,
+    CalCancelled,
+    Menu,
+    Mode,
+    TimerEdit,
+    Diagnostics,
+    Wifi,
+    Ota,
+    MenuService,
+    TimerOff,
+    Maintenance,
+    NoData,
+    Blocked,
+    Queued,
+    Rejected,
+    CommandRejected,
 };
 
-bool sample_fresh(const sirokko::SensorSample& sample, uint64_t now_ms, uint64_t maximum_age_ms);
-Scene select_scene(const panel_ui::Screen& screen, const panel_ui::View& view,
-                   uint64_t now_ms, bool show_saved = true);
-const char* scene_id(Scene scene);
+bool sample_fresh(const sirokko::SensorSample &sample, uint64_t now_ms, uint64_t maximum_age_ms);
+Scene select_scene(const panel_ui::Screen &screen, const panel_ui::View &view, uint64_t now_ms,
+                   bool show_saved = true);
 bool urgent(Scene scene);
-void format_temperature(char* out, size_t capacity, int32_t milli_c, bool units = true);
-void format_duration(char* out, size_t capacity, uint64_t milliseconds);
+void format_temperature(char *out, size_t capacity, int32_t milli_c, bool units = true);
+void format_duration(char *out, size_t capacity, uint64_t milliseconds);
 
 struct Frame {
     panel_ui::Screen screen{};
@@ -39,23 +71,21 @@ struct Frame {
     panel_ui::LocalCredentials credentials{};
     Scene scene{Scene::NoData};
     uint64_t at_ms{};
-    float target{};  // graphical value only; the numeric setpoint is never interpolated
+    float target{}; // graphical value only; the numeric setpoint is never interpolated
     float current{};
     float menu_row{};
 };
 
 class Renderer {
-public:
+  public:
     void reset();
-    void update(const panel_ui::Screen& screen, const panel_ui::View& view,
-                const panel_ui::LocalCredentials& credentials, uint64_t now_ms);
+    void update(const panel_ui::Screen &screen, const panel_ui::View &view,
+                const panel_ui::LocalCredentials &credentials, uint64_t now_ms);
     // Freeze one update for the entire stripe sequence. Buffers each hold width*rows RGB565 pixels.
-    bool draw_band(int y, int rows, uint16_t* pixels, uint16_t* scratch) const;
-    const Frame& frame() const { return frame_; }
-    bool transitioning() const { return transition_ < 1.0f; }
-    bool animated() const;
-    float transition_fraction() const { return transition_; }
-private:
+    bool draw_band(int y, int rows, uint16_t *pixels, uint16_t *scratch) const;
+    const Frame &frame() const { return frame_; }
+
+  private:
     bool initialized_{};
     Frame frame_{};
     Frame previous_{};
@@ -70,4 +100,4 @@ private:
     float menu_from_{}, menu_to_{};
     float transition_{1.0f};
 };
-}  // namespace panel_render
+} // namespace panel_render

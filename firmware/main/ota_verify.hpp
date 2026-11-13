@@ -9,7 +9,7 @@
 namespace sirokko::ota_verify {
 
 constexpr size_t kManifestSize = 100;
-constexpr size_t kSignatureSize = 384;  // RSA-3072
+constexpr size_t kSignatureSize = 384; // RSA-3072
 constexpr uint32_t kFormatVersion = 1;
 
 using Digest = sirokko::web_protocol::Digest;
@@ -42,15 +42,15 @@ struct Manifest {
     std::array<uint8_t, kManifestSize> signed_header{};
 };
 
-Result parse_manifest(const uint8_t* bytes, size_t size, Manifest* manifest);
-Result validate_manifest(const Manifest& manifest, size_t package_size, const char* expected_project,
-                         const char* expected_target, size_t maximum_image_size);
-Result verify_image_digest(const Manifest& manifest, const uint8_t* image, size_t image_size);
-Result verify_signature(const Manifest& manifest, const uint8_t* signature, size_t signature_size,
-                        const uint8_t* public_key_pem, size_t public_key_pem_size);
-Result verify_package(const uint8_t* package, size_t package_size, const char* expected_project,
-                      const char* expected_target, size_t maximum_image_size,
-                      const uint8_t* public_key_pem, size_t public_key_pem_size, Manifest* manifest);
-const char* result_name(Result result);
+Result parse_manifest(const uint8_t *bytes, size_t size, Manifest *manifest);
+Result validate_manifest(const Manifest &manifest, size_t package_size, const char *expected_project,
+                         const char *expected_target, size_t maximum_image_size);
+Result verify_image_digest(const Manifest &manifest, const uint8_t *image, size_t image_size);
+Result verify_signature(const Manifest &manifest, const uint8_t *signature, size_t signature_size,
+                        const uint8_t *public_key_pem, size_t public_key_pem_size);
+Result verify_package(const uint8_t *package, size_t package_size, const char *expected_project,
+                      const char *expected_target, size_t maximum_image_size, const uint8_t *public_key_pem,
+                      size_t public_key_pem_size, Manifest *manifest);
+const char *result_name(Result result);
 
-}  // namespace sirokko::ota_verify
+} // namespace sirokko::ota_verify

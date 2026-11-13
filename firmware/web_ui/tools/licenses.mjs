@@ -1,6 +1,6 @@
 import {readFile,writeFile} from 'node:fs/promises';
 import {existsSync} from 'node:fs';
-const dependencies=['svelte','clsx','esm-env','tailwindcss','daisyui','@fontsource/ibm-plex-sans'];
+const dependencies=['svelte','clsx','esm-env'];
 const notices=[]; const versions={};
 for(const name of dependencies){
  const base=`node_modules/${name}/`;

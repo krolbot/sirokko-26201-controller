@@ -1,0 +1,101 @@
+#pragma once
+#include "runtime_api.hpp"
+
+namespace command_policy {
+struct Entry {
+    sirokko::Action action;
+    const char *name;
+};
+inline constexpr Entry commands[] = {
+    {sirokko::Action::START, "START"},
+    {sirokko::Action::SETTINGS, "SETTINGS"},
+    {sirokko::Action::TIMER, "TIMER"},
+    {sirokko::Action::CALIBRATE, "CALIBRATE"},
+    {sirokko::Action::MODEL_REVISION, "MODEL_REVISION"},
+    {sirokko::Action::PROFILE, "PROFILE"},
+    {sirokko::Action::RESET_FAULT, "RESET_FAULT"},
+    {sirokko::Action::OTA, "OTA"},
+};
+inline sirokko::Block wifi_password_block(const RuntimeView &view) {
+    using namespace sirokko;
+    if (!view.startup_ready)
+        return Block::INITIALIZING;
+    if (!view.storage_ok)
+        return Block::STORAGE_UNAVAILABLE;
+    const auto &control = view.control;
+    if (view.storage_busy || control.commissioning.active || control.outputs.fan_request ||
+        control.outputs.fuel || control.outputs.glow)
+        return Block::BUSY;
+    if (control.state == State::MAINTENANCE)
+        return Block::MAINTENANCE;
+    return control.state == State::IDLE || control.state == State::UNCONFIGURED ||
+                   control.state == State::FAULT
+               ? Block::NONE
+               : Block::BUSY;
+}
+inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
+    using namespace sirokko;
+    const auto &control = view.control;
+    if (!view.startup_ready)
+        return Block::INITIALIZING;
+    if (!view.storage_ok)
+        return Block::STORAGE_UNAVAILABLE;
+    if (view.storage_busy)
+        return Block::BUSY;
+    if ((action == Action::START || action == Action::CALIBRATE) && view.envelope.provisioned &&
+        !view.local_controls_initialized)
+        return Block::LOCAL_CONTROLS_UNAVAILABLE;
+    switch (action) {
+    case Action::START:
+        return control.start_block;
+    case Action::CALIBRATE:
+        return control.commissioning.block;
+    case Action::SETTINGS:
+        return control.state == State::MAINTENANCE || control.commissioning.active ||
+                       control.combustion.phase == combustion::Phase::SUSPECT
+                   ? Block::BUSY
+                   : Block::NONE;
+    case Action::TIMER:
+        return control.run_id && !control.commissioning.active &&
+                       (control.state == State::PREPURGE || control.state == State::PREHEAT ||
+                        control.state == State::IGNITION || control.state == State::VERIFY ||
+                        control.state == State::RUN)
+                   ? Block::NONE
+                   : Block::BUSY;
+    case Action::MODEL_REVISION:
+        if (control.state != State::IDLE || control.commissioning.active)
+            return Block::BUSY;
+        return control.learned_model.valid ? Block::NONE : Block::MODEL_UNAVAILABLE;
+    case Action::PROFILE:
+        if (control.faults)
+            return Block::FAULT_LATCHED;
+        if (control.commissioning.active || control.outputs.fan_request || control.outputs.fuel ||
+            control.outputs.glow)
+            return Block::BUSY;
+        return control.state == State::IDLE || control.state == State::UNCONFIGURED ? Block::NONE
+                                                                                    : Block::BUSY;
+    case Action::RESET_FAULT:
+        return control.reset_fault_block;
+    case Action::OTA:
+        if (control.faults)
+            return Block::FAULT_LATCHED;
+        if (!view.envelope.provisioned)
+            return control.state == State::UNCONFIGURED ? Block::NONE : Block::BUSY;
+        if (control.state != State::IDLE || control.commissioning.active)
+            return Block::BUSY;
+        for (const auto *sample : {&view.sensors.air, &view.sensors.exhaust}) {
+            if (!sample->valid || sample->status || sample->sample_ms > view.now_ms ||
+                sample->milli_c < kThermocoupleMinimumMilliC ||
+                sample->milli_c >= kProcessMeasurementCeilingMilliC)
+                return Block::SENSOR_INVALID;
+            if (view.now_ms - sample->sample_ms > kSensorStaleMs)
+                return Block::SENSOR_STALE;
+        }
+        return view.sensors.air.milli_c <= view.envelope.maximum_purge_exit_air_milli_c &&
+                       view.sensors.exhaust.milli_c <= view.envelope.maximum_purge_exit_exhaust_milli_c
+                   ? Block::NONE
+                   : Block::INITIAL_THERMAL_STATE;
+    }
+    return Block::BUSY;
+}
+} // namespace command_policy

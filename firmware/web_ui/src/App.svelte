@@ -1,611 +1,328 @@
 <script>
-  import { onMount } from 'svelte';
-  import Icon from './Icon.svelte';
-  import { ApiClient } from './lib/api.js';
-  import { ControllerSession } from './lib/controller.js';
+  import { onMount } from "svelte";
+  import Icon from "./Icon.svelte";
+  import { ApiClient } from "./lib/api.js";
+  import { ControllerSession } from "./lib/controller.js";
+  import { Draft } from "./lib/draft.svelte.js";
   import {
-    commissioningAllowed,
-    commissioningBlock,
-    cloneJson,
-    deepEqual,
-    formatDuration,
-    fullSettingsPayload,
-    hasFault,
-    isActiveSession,
-    isRecord,
-    modelRevisionPayload,
-    millisecondsFromMinutes,
-    minutesFromMilliseconds,
-    sensorText,
-  } from './lib/protocol.js';
+    routes,
+    routeFromHash,
+    needsStop,
+    connectionReady,
+    commandAllowed,
+    stateText,
+  } from "./lib/presentation.js";
+  import { isActiveSession } from "./lib/protocol.js";
+  import Timer from "./pages/Timer.svelte";
+  import Control from "./pages/Control.svelte";
+  import Diagnostics from "./pages/Diagnostics.svelte";
+  import Settings from "./pages/Settings.svelte";
+  import Wifi from "./pages/Wifi.svelte";
+  import Update from "./pages/Update.svelte";
+  import Regulation from "./pages/Regulation.svelte";
+  import Calibration from "./pages/Calibration.svelte";
+  import Heater from "./pages/Heater.svelte";
+  import { heaterDraft } from "./lib/heater.js";
 
-  let tab = $state('home');
-  let detail = $state('');
-  let dark = $state(false);
-  let ui = $state({ auth: 'anonymous', link: 'offline', snapshot: null, pending: null, requestInFlight: null, message: null, ota: { phase: 'idle' } });
-  let password = $state('');
-  let wifiPassword = $state('');
-  let wifiConfirmation = $state('');
-  let wifiSaving = $state(false);
-  let settingsDraft = $state(null);
-  let settingsDirty = $state([]);
-  let settingsBaseVersion = $state(null);
-  let settingsConflict = $state(false);
-  let timerMinutes = $state(0);
-  let timerDirty = $state(false);
-  let timerBaseVersion = $state(null);
-  let timerConflict = $state(false);
-  let modelDraft = $state(null);
-  let modelDirty = $state(false);
-  let modelBaseVersion = $state(null);
-  let modelConflict = $state(false);
-
-  let otaFile = $state(null);
-  let localMessage = $state(null);
-  let bottomNav = $state();
-  let stopPanel = $state();
-  let feedbackPanel = $state();
-  let session;
-
+  let route = $state(routeFromHash(window.location.hash));
+  const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+  let systemDark = $state(colorScheme.matches);
+  let theme = $state(savedTheme());
+  const dark = $derived(theme === "system" ? systemDark : theme === "dark");
+  let password = $state("");
+  let ui = $state({
+    auth: "checking",
+    link: "connecting",
+    snapshot: null,
+    pending: null,
+    requestInFlight: null,
+    message: null,
+    ota: { phase: "idle" },
+  });
+  let feedback = $state(null);
+  let feedbackTimer;
+  let lastMessage;
+  const settings = new Draft([
+    "room_setpoint_milli_c",
+    "mode",
+    "manual_percent",
+  ]);
+  const regulation = new Draft(["slew_up_per_s", "slew_down_per_s"]);
+  const timer = new Draft();
+  const model = new Draft();
+  const heater = new Draft();
+  let timerRun = null;
+  let session = $state.raw(null);
   const snapshot = $derived(ui.snapshot);
-  const authenticated = $derived(ui.auth === 'authenticated');
-  const online = $derived(ui.link === 'online');
-  const active = $derived(isActiveSession(snapshot));
-  const automaticReady = $derived(authenticated && online && !ui.pending && !ui.requestInFlight && ui.ota.phase !== 'activation_queued');
-  const feedback = $derived(localMessage ?? ui.message);
-  const timerMode = $derived(timerContext(snapshot));
 
-  $effect(() => {
-    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-  });
-
-  $effect(() => {
-    if (!bottomNav) return;
-    const update = () => {
-      document.documentElement.style.setProperty('--nav-height', `${bottomNav.getBoundingClientRect().height}px`);
-      document.documentElement.style.setProperty('--action-height', `${stopPanel?.getBoundingClientRect().height || 0}px`);
-      document.documentElement.style.setProperty('--feedback-height', `${feedbackPanel?.getBoundingClientRect().height || 0}px`);
-    };
-    const observer = new ResizeObserver(update);
-    observer.observe(bottomNav);
-    if (stopPanel) observer.observe(stopPanel);
-    if (feedbackPanel) observer.observe(feedbackPanel);
-    update();
-    return () => observer.disconnect();
-  });
-
-  function message(kind, text) {
-    localMessage = { kind, text };
+  const stopVisible = $derived(
+    needsStop(snapshot) || ["START", "CALIBRATE"].includes(ui.pending?.action),
+  );
+  const authenticated = $derived(ui.auth === "authenticated");
+  function notify(kind, text) {
+    clearTimeout(feedbackTimer);
+    feedback = kind === "pending" ? null : { kind, text };
+    if (kind === "ok")
+      feedbackTimer = setTimeout(() => {
+        feedback = null;
+      }, 3000);
   }
-
-  async function saveWifi(remove = false) {
-    if (!automaticReady || wifiSaving) return;
-    const next = remove ? '' : wifiPassword;
-    if (!remove && (!/^[\x21-\x7e]{8,63}$/.test(next) || next !== wifiConfirmation)) {
-      message('error', 'Введите одинаковый пароль в оба поля: 8–63 латинских букв, цифр или символов без пробелов.');
-      return;
+  function receive(next) {
+    const current = next.snapshot;
+    if (next.auth === "anonymous") {
+      settings.clear();
+      regulation.clear();
+      timer.clear();
+      model.clear();
     }
-    wifiSaving = true;
-    try {
-      await session.api.saveWifi(next);
-      wifiPassword = ''; wifiConfirmation = '';
-      message('success', 'Сохранено. Настройка Wi-Fi и входа в браузере применится после следующего включения питания.');
-      await session.poll();
-    } catch (error) {
-      message('error', `Не удалось сохранить пароль: ${error.code || error.message}`);
-    } finally {
-      wifiSaving = false;
-    }
-  }
-
-  function navigate(to) {
-    tab = to;
-    detail = '';
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-
-  function openDetail(to) {
-    tab = 'settings';
-    detail = to;
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-
-  function timerContext(state) {
-    if (!state) return 'unavailable';
-    if (isActiveSession(state)) return 'active';
-    return state?.state?.code === 'IDLE' ? 'next' : 'unavailable';
-  }
-
-  function stateLabel(state) {
-    if (!state?.state) return 'Нет снимка';
-    return `${state.state.ru || state.state.code || 'Неизвестно'}${state.state.code ? ` (${state.state.code})` : ''}`;
-  }
-
-  function blockLabel(state) {
-    if (!state?.start_block) return '—';
-    return `${state.start_block.ru || state.start_block.code || '—'}${state.start_block.code ? ` (${state.start_block.code})` : ''}`;
-  }
-
-  function settingsValue(field, fallback = '') {
-    return settingsDraft?.[field] ?? fallback;
-  }
-
-  function draftValue(field, value) {
-    if (!settingsDraft) return;
-    settingsDraft = { ...settingsDraft, [field]: value };
-    if (!settingsDirty.includes(field)) settingsDirty = [...settingsDirty, field];
-    settingsConflict = settingsBaseVersion !== snapshot?.state_version;
-  }
-
-  function chooseMode(mode) {
-    if (!automaticReady || settingsConflict) return;
-    draftValue('mode', mode);
-  }
-
-  function restoreSettings() {
-    if (!snapshot?.settings) return;
-    settingsDraft = cloneJson(snapshot.settings);
-    settingsDirty = [];
-    settingsBaseVersion = snapshot.state_version;
-    settingsConflict = false;
-  }
-
-  function reconcileSettings(state, confirmedAction) {
-    if (!isRecord(state?.settings)) return;
-    const incoming = cloneJson(state.settings);
-    if (!settingsDraft || confirmedAction === 'SETTINGS') {
-      settingsDraft = incoming;
-      settingsDirty = [];
-      settingsBaseVersion = state.state_version;
-      settingsConflict = false;
-      return;
-    }
-    if (settingsDirty.length === 0) {
-      settingsDraft = incoming;
-      settingsBaseVersion = state.state_version;
-      settingsConflict = false;
-      return;
-    }
-    if (deepEqual(settingsDraft, incoming)) {
-      settingsDraft = incoming;
-      settingsDirty = [];
-      settingsBaseVersion = state.state_version;
-      settingsConflict = false;
-      return;
-    }
-    const merged = { ...settingsDraft };
-    for (const [key, value] of Object.entries(incoming)) {
-      if (!settingsDirty.includes(key)) merged[key] = value;
-    }
-    settingsDraft = merged;
-    if (settingsBaseVersion !== state.state_version) settingsConflict = true;
-  }
-
-  function reconcileTimer(state, confirmedAction) {
-    if (!state) return;
-    if (confirmedAction === 'TIMER' || confirmedAction === 'SETTINGS' || !timerDirty) {
-      timerMinutes = timerContext(state) === 'active'
-        ? minutesFromMilliseconds(state?.timer?.remaining_ms)
-        : minutesFromMilliseconds(state?.settings?.duration_ms);
-      timerDirty = false;
-      timerConflict = false;
-      timerBaseVersion = state.state_version;
-      return;
-    }
-    if (timerBaseVersion !== state.state_version) timerConflict = true;
-  }
-
-  function restoreModel() {
-    if (!snapshot?.learned_model?.valid || !isRecord(snapshot.learned_model.provenance)) return;
-    modelDraft = {
-      minimum_speed_code: snapshot.learned_model.minimum_speed_code,
-      maximum_speed_code: snapshot.learned_model.maximum_speed_code,
-      slew_up_per_s: snapshot.learned_model.slew_up_per_s,
-      slew_down_per_s: snapshot.learned_model.slew_down_per_s,
-    };
-    modelDirty = false;
-    modelConflict = false;
-    modelBaseVersion = snapshot.state_version;
-  }
-
-  function reconcileModel(state, confirmedAction) {
-    const model = state?.learned_model;
-    if (!model?.valid || !isRecord(model.provenance)) {
-      modelDraft = null;
-      modelDirty = false;
-      modelConflict = false;
-      modelBaseVersion = state?.state_version ?? null;
-      return;
-    }
-    if (!modelDraft || confirmedAction === 'MODEL_REVISION' || !modelDirty) {
-      modelDraft = {
-        minimum_speed_code: model.minimum_speed_code,
-        maximum_speed_code: model.maximum_speed_code,
-        slew_up_per_s: model.slew_up_per_s,
-        slew_down_per_s: model.slew_down_per_s,
+    if (current) {
+      settings.sync(current, current.settings);
+      regulation.sync(current, current.settings);
+      const active = isActiveSession(current);
+      const run = `${current.boot_id}:${active ? current.run_id : "next"}`;
+      const timerValue = {
+        deadline_ms: active ? current.timer.deadline_ms : 0,
+        minutes: Math.ceil(
+          (active ? current.timer.remaining_ms : current.settings.duration_ms) /
+            60000,
+        ),
       };
-      modelDirty = false;
-      modelConflict = false;
-      modelBaseVersion = state.state_version;
-      return;
+      const confirmed =
+        ui.pending && !next.pending && next.message?.kind === "ok"
+          ? ui.pending.action
+          : null;
+      if (
+        confirmed === "SETTINGS" &&
+        settings.fields.some(
+          (key) =>
+            ui.pending.payload.settings[key] !==
+            ui.pending.baseline.settings[key],
+        )
+      )
+        settings.reset(current, current.settings);
+      if (
+        timerRun !== run ||
+        confirmed === "TIMER" ||
+        (!active &&
+          confirmed === "SETTINGS" &&
+          ui.pending?.payload.settings?.duration_ms ===
+            timer.value?.minutes * 60000)
+      )
+        timer.reset(current, timerValue);
+      else if (active && timer.dirty)
+        timer.conflict =
+          current.timer.deadline_ms !== timer.baseline.deadline_ms;
+      else timer.sync(current, timerValue);
+      timerRun = run;
+      heater.sync(current, heaterDraft(current.envelope));
+      if (current.learned_model?.valid) {
+        const saved = current.learned_model;
+        model.sync(current, {
+          minimum_speed_code: saved.minimum_speed_code,
+          maximum_speed_code: saved.maximum_speed_code,
+          slew_up_per_s: saved.slew_up_per_s,
+          slew_down_per_s: saved.slew_down_per_s,
+        });
+      } else model.clear();
     }
-    if (modelBaseVersion !== state.state_version) modelConflict = true;
-  }
-
-  function editModel(field, value) {
-    if (!modelDraft) return;
-    modelDraft = { ...modelDraft, [field]: value };
-    modelDirty = true;
-    modelConflict = modelBaseVersion !== snapshot?.state_version;
-  }
-
-  async function saveModel() {
-    if (!snapshot?.learned_model || !modelDraft) return;
-    if (modelConflict || modelBaseVersion !== snapshot.state_version) {
-      modelConflict = true;
-      message('warning', 'Сохранённая модель изменилась на другой панели. Черновик не отправлен; перечитайте снимок.');
-      return;
-    }
-    try {
-      const revision = modelRevisionPayload(snapshot.learned_model, modelDraft);
-      await session.submit('MODEL_REVISION', { revision });
-    } catch (error) {
-      message('error', error.message || String(error));
-    }
-  }
-
-  function receiveSession(next) {
-    const previous = ui;
-    if (next.auth !== 'authenticated' || (next.snapshot && previous.snapshot && next.snapshot.boot_id !== previous.snapshot.boot_id)) {
-      settingsDraft = null; settingsDirty = []; settingsBaseVersion = null; settingsConflict = false;
-      timerDirty = false; timerBaseVersion = null; timerConflict = false;
-      modelDraft = null; modelDirty = false; modelBaseVersion = null; modelConflict = false;
-
-    }
-    const confirmedAction = previous?.pending?.action && !next.pending && next.message?.kind === 'ok'
-      ? previous.pending.action
-      : null;
-    if (next.snapshot && next.snapshot !== previous?.snapshot) {
-      reconcileSettings(next.snapshot, confirmedAction);
-      reconcileTimer(next.snapshot, confirmedAction);
-      reconcileModel(next.snapshot, confirmedAction);
-
+    if (next.message !== lastMessage) {
+      lastMessage = next.message;
+      if (next.message) notify(next.message.kind, next.message.text);
+      else {
+        clearTimeout(feedbackTimer);
+        feedback = null;
+      }
     }
     ui = next;
-    if (next.message) localMessage = null;
   }
-
-  async function signIn() {
-    if (!session || !password) {
-      message('error', 'Введите пароль точки доступа.');
-      return;
-    }
-    const input = password;
-    password = '';
-    await session.login(input);
-  }
-
-  async function saveSettings() {
-    if (!snapshot?.settings || !settingsDraft) return;
-    if (settingsConflict || settingsBaseVersion !== snapshot.state_version) {
-      settingsConflict = true;
-      message('warning', 'Настройки изменены на другой панели. Черновик не отправлен — перечитайте состояние.');
-      return;
-    }
+  function savedTheme() {
     try {
-      const settings = fullSettingsPayload(snapshot.settings, settingsDraft);
-      await session.submit('SETTINGS', { settings });
-    } catch (error) {
-      message('error', error.message || String(error));
-    }
+      const saved = localStorage.getItem("sirokko-ui-theme");
+      if (["light", "dark"].includes(saved)) return saved;
+    } catch {}
+    return "system";
   }
-
-  async function start() {
-    if (!snapshot || snapshot.state?.code !== 'IDLE') return;
-    if (settingsDirty.length || settingsConflict) {
-      message('warning', 'Сначала подтвердите или отмените изменённые настройки.');
-      return;
-    }
-    await session.submit('START');
-  }
-
-  async function resetFault() {
-    await session.submit('RESET_FAULT');
-  }
-
-  async function stop() {
-    // STOP is intentionally not gated by link state or another pending command.
-    await session.stop();
-  }
-
-  function updateTimer(value) {
-    timerMinutes = value;
-    timerDirty = true;
-    timerConflict = timerBaseVersion !== snapshot?.state_version;
-  }
-
-  async function saveTimer() {
-    if (!snapshot || timerMode === 'unavailable') return;
-    if (timerConflict || (timerDirty && timerBaseVersion !== snapshot.state_version)) {
-      timerConflict = true;
-      message('warning', 'Таймер изменён на другой панели. Перечитайте состояние перед отправкой.');
-      return;
-    }
+  function selectTheme(value) {
+    theme = value;
     try {
-      const delay = millisecondsFromMinutes(timerMinutes);
-      if (timerMode === 'active') {
-        await session.submit('TIMER', { delay_ms: delay });
-      } else {
-        const settings = fullSettingsPayload(snapshot.settings, { duration_ms: delay });
-        await session.submit('SETTINGS', { settings });
-      }
-    } catch (error) {
-      message('error', error.message || String(error));
-    }
+      localStorage.setItem("sirokko-ui-theme", value);
+    } catch {}
   }
-
-  async function startCalibration() {
-    if (!commissioningAllowed(snapshot)) {
-      message('warning', `Ввод в эксплуатацию недоступен: ${commissioningBlockLabel(snapshot)}.`);
-      return;
-    }
-    await session.submit('CALIBRATE');
+  $effect(() => {
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    document.documentElement.style.colorScheme = dark ? "dark" : "light";
+  });
+  async function signIn(event) {
+    event.preventDefault();
+    const entered = password;
+    password = "";
+    await session.login(entered);
   }
-
-
-  function chooseOta(event) {
-    const file = event.currentTarget.files?.[0] || null;
-    if (file && !file.name.toLowerCase().endsWith('.sota')) {
-      otaFile = null;
-      event.currentTarget.value = '';
-      message('error', 'Нужен подписанный пакет .sota, а не исходный .bin.');
-      return;
-    }
-    otaFile = file;
-  }
-
-  async function uploadOta() {
-    if (!otaFile) {
-      message('error', 'Выберите подписанный пакет .sota.');
-      return;
-    }
-    await session.uploadOta(otaFile);
-  }
-
-  function commissioningLabel(state) {
-    const commissioning = state?.commissioning;
-    if (!commissioning) return 'Нет данных';
-    const phase = commissioning.phase?.ru || commissioning.phase?.code || '—';
-    const reason = commissioning.reason?.ru || commissioning.reason?.code || '—';
-    return `${commissioning.active ? 'активна' : 'не активна'}; ${phase}; ${reason}`;
-  }
-
-  function commissioningBlockLabel(state) {
-    const block = commissioningBlock(state);
-    return `${block.ru}${block.code ? ` (${block.code})` : ''}`;
-  }
-
-  function otaLabel(ota) {
-    if (ota?.phase === 'activation_queued') return 'Подпись проверена; активация поставлена в очередь. Ожидается новый boot_id/версия.';
-    if (ota?.phase === 'running_expected_version') return `Новая загрузка: ${ota.observedVersion}. Версия совпала; самопроверка и откат проверяются отдельно.`;
-    if (ota?.phase === 'different_version') return `После перезапуска версия ${ota.observedVersion}, ожидалась ${ota.expectedVersion || 'неизвестная'}. Обновление не подтверждено.`;
-    if (ota?.phase === 'confirmation_timeout') return 'Нет подтверждения новой загрузки. Результат OTA неизвестен.';
-    return 'Пакет ещё не загружался в этом сеансе.';
-  }
-
-  function toggleTheme() {
-    dark = !dark;
-    try { localStorage.setItem('sirokko-ui-theme', dark ? 'dark' : 'light'); } catch (_) {}
-  }
-
   onMount(() => {
-    try { dark = localStorage.getItem('sirokko-ui-theme') === 'dark'; } catch (_) {}
-    session = new ControllerSession({ api: new ApiClient(), onChange: receiveSession });
-    void session.restore();
-    const ticker = setInterval(() => {
-      session.tick();
-      if (session.view.auth === 'authenticated') void session.poll();
-    }, 1_000);
-    const keepInputVisible = () => {
-      const input = document.activeElement;
-      if (input?.matches('input[type="number"], textarea')) input.scrollIntoView({ block: 'center', behavior: 'instant' });
+    const systemThemeChanged = (event) => {
+      systemDark = event.matches;
     };
-    document.addEventListener('focusin', keepInputVisible);
-    window.visualViewport?.addEventListener('resize', keepInputVisible);
+    colorScheme.addEventListener("change", systemThemeChanged);
+    session = new ControllerSession({
+      api: new ApiClient(),
+      onChange: receive,
+    });
+    void session.restore();
+    const poll = setInterval(() => {
+      session.tick();
+      if (session.view.auth === "authenticated") void session.poll();
+    }, 1000);
+    const locationChanged = () => {
+      route = routeFromHash(location.hash);
+      feedback = null;
+      window.scrollTo({ top: 0, behavior: "instant" });
+    };
+    window.addEventListener("hashchange", locationChanged);
     return () => {
-      clearInterval(ticker);
-      document.removeEventListener('focusin', keepInputVisible);
-      window.visualViewport?.removeEventListener('resize', keepInputVisible);
+      colorScheme.removeEventListener("change", systemThemeChanged);
+      clearInterval(poll);
+      clearTimeout(feedbackTimer);
+      window.removeEventListener("hashchange", locationChanged);
     };
   });
 </script>
 
-<svelte:head><meta name="theme-color" content={dark ? '#181b20' : '#ffffff'} /></svelte:head>
-
-<div class="app-shell">
+<svelte:head
+  ><title>{routes[route].title} · Sirokko</title><meta
+    name="theme-color"
+    content={dark ? "#171719" : "#f5f5f7"}
+  /></svelte:head
+>
+<div class="app-shell" class:has-stop={stopVisible}>
   <header class="app-header">
-    <a href="#main" class="brand" aria-label="Sirokko, перейти к содержимому">Sirokko<span>262.01</span></a>
-    <span class:danger={authenticated && !online} class="header-status" data-testid="connection-status">
-      {authenticated ? (ui.requestInFlight === 'OTA' ? 'Загрузка OTA' : online ? 'Связь подтверждена' : 'Нет связи') : 'Вход'}
-    </span>
+    <a class="brand" href="#/control">Sirokko <span>262.01</span></a><span
+      class="connection"
+      class:offline={authenticated && ui.link === "offline"}
+      aria-live="polite"
+      >{ui.auth === "anonymous"
+        ? "Вход"
+        : ui.link === "online"
+          ? "На связи"
+          : ui.link === "connecting"
+            ? "Подключение…"
+            : "Нет связи"}</span
+    >
   </header>
-
-  <main id="main" tabindex="-1">
-    {#if authenticated && snapshot && hasFault(snapshot)}
-      <div class="fault-message" role="alert"><strong>Автомат сообщает аварию</strong><p>{online ? 'Текущий снимок' : 'Последний полученный снимок'} · Faults: {String(snapshot.faults)}. Запрет пуска: {blockLabel(snapshot)}</p><button class="btn text-button" disabled={!automaticReady} onclick={resetFault}>Сбросить аварию</button></div>
-    {/if}
-    {#if !authenticated}
-      <section class="login-panel" aria-labelledby="login-title">
-        <h1 id="login-title">Вход в точку доступа</h1>
-        <p class="page-intro">Введите пароль AP. После входа интерфейс только читает фактический снимок автомата.</p>
-        <label class="full-label">Пароль AP
-          <input class="input" type="password" autocomplete="current-password" value={password} oninput={(event) => password = event.currentTarget.value} onkeydown={(event) => event.key === 'Enter' && signIn()} />
-        </label>
-        <button class="btn primary-button" disabled={ui.requestInFlight === 'LOGIN'} onclick={signIn}>{ui.requestInFlight === 'LOGIN' ? 'Проверяем…' : 'Войти'}</button>
-      </section>
+  <main id="main">
+    {#if feedback}<div
+        class="feedback toast"
+        class:error={feedback.kind === "error"}
+        role="status"
+      >
+        <span>{feedback.text}</span><button
+          class="dismiss"
+          aria-label="Закрыть сообщение"
+          onclick={() => {
+            feedback = null;
+            session.dismissMessage();
+          }}>×</button
+        >
+      </div>{/if}
+    {#if ui.auth === "anonymous"}
+      <form class="login form-column" onsubmit={signIn}>
+        <h1>Вход в пульт</h1>
+        <label
+          >Пароль Wi-Fi<input
+            type="password"
+            autocomplete="current-password"
+            bind:value={password}
+            required
+          /></label
+        ><button
+          class="primary"
+          type="submit"
+          disabled={ui.requestInFlight === "LOGIN"}
+          >{ui.requestInFlight === "LOGIN" ? "Проверка…" : "Войти"}</button
+        >
+      </form>
     {:else if !snapshot}
-      <section class="connection-panel" aria-live="polite">
-        <h1>Ожидание снимка состояния</h1>
-        <p class="page-intro">Автоматические действия заблокированы до подтверждённого чтения. СТОП можно попытаться передать отдельной командой.</p>
-        <button class="btn stop-button" disabled={ui.requestInFlight === 'STOP'} onclick={stop}><Icon name="stop" size={19} />Передать СТОП</button>
-      </section>
-    {:else if tab === 'home'}
-      <div class="home-layout">
-        <section class="thermostat" aria-label="Управление отоплением">
-          <div class="section-heading"><h1>Отопление</h1><span class:danger={hasFault(snapshot)} class="device-status"><span class:running={active && online} class="status-mark"></span>{stateLabel(snapshot)}</span></div>
-          {#if !online}<div class="inline-alert" role="status"><Icon name="offline" size={20} /><span>Связь потеряна; значения ниже — последний полученный снимок. Автоматические действия заблокированы.</span></div>{/if}
-          <div class="mode-switch" role="group" aria-label="Режим управления">
-            <button class:chosen={settingsValue('mode') === 'TEMPERATURE'} aria-pressed={settingsValue('mode') === 'TEMPERATURE'} disabled={!automaticReady || settingsConflict} onclick={() => chooseMode('TEMPERATURE')}>По температуре</button>
-            <button class:chosen={settingsValue('mode') === 'MANUAL'} aria-pressed={settingsValue('mode') === 'MANUAL'} disabled={!automaticReady || settingsConflict} onclick={() => chooseMode('MANUAL')}>Ручной</button>
-          </div>
-          <div class="setpoint-block">
-            <p class="value-label">{settingsValue('mode') === 'MANUAL' ? 'Заданный уровень' : 'Задано'}</p>
-            <div class="setpoint-control">
-              <button class="btn step-button" aria-label={settingsValue('mode') === 'MANUAL' ? 'Уменьшить уровень' : 'Уменьшить температуру'} disabled={!automaticReady || settingsConflict || (settingsValue('mode') === 'MANUAL' ? settingsValue('manual_percent') <= 5 : settingsValue('room_setpoint_milli_c') <= 15000)} onclick={() => settingsValue('mode') === 'MANUAL' ? draftValue('manual_percent', Number(settingsValue('manual_percent')) - 5) : draftValue('room_setpoint_milli_c', Number(settingsValue('room_setpoint_milli_c')) - 1000)}><Icon name="minus" /></button>
-              <div class="setpoint-number" data-testid="setpoint"><span>{settingsValue('mode') === 'MANUAL' ? settingsValue('manual_percent') : Number(settingsValue('room_setpoint_milli_c')) / 1000}</span><span class="unit">{settingsValue('mode') === 'MANUAL' ? '%' : '°C'}</span></div>
-              <button class="btn step-button" aria-label={settingsValue('mode') === 'MANUAL' ? 'Увеличить уровень' : 'Увеличить температуру'} disabled={!automaticReady || settingsConflict || (settingsValue('mode') === 'MANUAL' ? settingsValue('manual_percent') >= 100 : settingsValue('room_setpoint_milli_c') >= 30000)} onclick={() => settingsValue('mode') === 'MANUAL' ? draftValue('manual_percent', Number(settingsValue('manual_percent')) + 5) : draftValue('room_setpoint_milli_c', Number(settingsValue('room_setpoint_milli_c')) + 1000)}><Icon name="plus" /></button>
-            </div>
-            <div class="current-reading"><span>Сейчас в помещении</span><strong>{sensorText(snapshot.sensors?.room)}</strong></div>
-          </div>
-          {#if snapshot.room_excess}<p class="field-description" role="status">Температура выше уставки; автомат не гасит горение по комнате.</p>{/if}
-          <div class="apply-area" aria-live="polite">
-            {#if settingsConflict}
-              <div class="draft-line"><span>Настройки изменены внешне</span><button class="btn text-button" onclick={restoreSettings}>Перечитать</button></div>
-            {:else if settingsDirty.length}
-              <div class="draft-line"><span>Не применено</span><button class="btn text-button" onclick={restoreSettings}>Отменить</button></div>
-              <button class="btn primary-button" disabled={!automaticReady} onclick={saveSettings}>{ui.requestInFlight === 'SETTINGS' ? 'Отправляем…' : 'Применить'}</button>
-            {:else}
-              <p class="mode-explanation">{settingsValue('mode') === 'MANUAL' ? 'Постоянный уровень нагрева' : 'Поддержание заданной температуры'}</p>
-            {/if}
-          </div>
-        </section>
-        <aside class="session-panel" aria-label="Текущий сеанс">
-          <button class="timer-summary" onclick={() => navigate('timers')}>
-            <Icon name="clock" size={22} /><span><span class="summary-label">{'Таймер отключения'}</span><strong>{active ? (snapshot.timer?.active ? formatDuration(snapshot.timer.remaining_ms) : 'Не задан') : (snapshot.settings?.duration_ms ? formatDuration(snapshot.settings.duration_ms) : 'Не задан')}</strong></span><Icon name="right" size={18} />
-          </button>
-          <div class="run-action">
-            {#if active || snapshot.state?.code === 'STOP_PURGE' || snapshot.state?.code === 'FAULT_PURGE'}
-              <button class="btn stop-button" disabled={ui.requestInFlight === 'STOP'} onclick={stop}><Icon name="stop" size={19} />Остановить нагрев</button><p>СТОП передаётся автомату; дальнейшая продувка показывается только по снимку.</p>
-            {:else if snapshot.state?.code === 'IDLE'}
-              <button class="btn primary-button" disabled={!automaticReady || settingsDirty.length || settingsConflict} onclick={start}><Icon name="power" size={20} />{ui.requestInFlight === 'START' ? 'Отправляем…' : 'Запустить отопление'}</button><p>{settingsConflict ? 'Сначала перечитайте настройки' : settingsDirty.length ? 'Сначала примените настройки' : 'Готовность подтверждает автомат'}</p>
-              <button class="btn stop-button stop-secondary" disabled={ui.requestInFlight === 'STOP'} onclick={stop}><Icon name="stop" size={17} />Передать СТОП</button>
-            {:else}
-              <p class="mode-explanation">Пуск и настройка недоступны в текущей фактической фазе.</p>
-            {/if}
-          </div>
-          <button class="btn diagnostics-link" onclick={() => openDetail('diagnostics')}>Показания и состояние<Icon name="right" size={17} /></button>
-        </aside>
-      </div>
-    {:else if tab === 'timers'}
-      <div class="section-heading"><h1>Таймер</h1></div>
-      {#if timerMode === 'active'}
-        <p class="page-intro">Таймер останова устанавливается от текущего момента. Ноль отменяет действующий таймер.</p>
-      {:else if timerMode === 'next'}
-        <p class="page-intro">Таймер начнёт отсчёт после ручного пуска. Ноль отключает таймер.</p>
-      {:else}
-        <p class="page-intro">Таймер доступен только в IDLE или на штатном запуске/работе.</p>
-      {/if}
-      <section class="timer-section" aria-labelledby="timer-title">
-        <h2 id="timer-title">Отключить через</h2>
-        {#if timerMode === 'active' && snapshot.timer?.active}<p class="timer-active">Осталось <strong>{formatDuration(snapshot.timer.remaining_ms)}</strong></p>{/if}
-        <div class="duration-inputs">
-          <label>Минуты<input class="input duration-input" type="number" inputmode="numeric" min="0" max="10080" step="1" value={timerMinutes} disabled={!automaticReady || timerMode === 'unavailable'} oninput={(event) => updateTimer(event.currentTarget.value)} aria-label="Минуты таймера" /></label>
-        </div>
-        {#if timerConflict}<p class="field-description after-button">Таймер изменён внешне. Перечитайте снимок перед отправкой.</p><button class="btn text-button" onclick={() => reconcileTimer(snapshot, 'TIMER')}>Перечитать таймер</button>{/if}
-        <button class="btn primary-button" disabled={!automaticReady || timerMode === 'unavailable' || timerConflict} onclick={saveTimer}>{timerMode === 'active' ? (Number(timerMinutes) === 0 ? 'Отменить таймер' : 'Установить таймер') : 'Сохранить таймер'}</button>
+      <section class="connection-panel">
+        <h1>
+          {ui.link === "offline"
+            ? "Нет связи с контроллером"
+            : "Подключение к контроллеру"}
+        </h1>
+        <p class="intro">
+          {ui.link === "offline"
+            ? "Проверьте подключение к сети Sirokko"
+            : "Получаем состояние устройства"}
+        </p>
+        {#if ui.link === "offline"}<button
+            class="secondary"
+            onclick={() => session.restore()}>Повторить</button
+          >{/if}
       </section>
     {:else}
-      {#if detail}<button class="btn back-button" onclick={() => detail = ''}><Icon name="back" size={20} />Настройки</button>{/if}
-      {#if !detail}
-        <div class="section-heading"><h1>Настройки</h1></div>
-        <div class="settings-list">
-          {#each [['wifi','Wi-Fi и пароль','Открытая сеть или защита паролем'],['diagnostics','Показания и журнал','Температуры, состояние, события'],['calibration','Ввод в эксплуатацию','Фактическая фаза и запуск автокалибровки'],['advanced','Плавность регулирования','Нарастание и снижение команды'],['update','Обновление','Подписанный пакет .sota']] as [id, title, subtitle]}
-            <button class="settings-row" onclick={() => openDetail(id)}><span><strong>{title}</strong><span>{subtitle}</span></span><Icon name="right" size={18} /></button>
-          {/each}
-          <button class="settings-row theme-row" onclick={toggleTheme}><span><strong>Оформление</strong><span>{dark ? 'Тёмное' : 'Светлое'}</span></span><Icon name="sun" size={22} /></button>
-          <button class="settings-row" onclick={() => openDetail('about')}><span><strong>О контроллере</strong><span>Версия, идентификаторы и соединение</span></span><Icon name="right" size={18} /></button>
-        </div>
-      {:else if detail === 'wifi'}
-        <h1>Wi-Fi и пароль</h1>
-        <p class="page-intro">{snapshot.wifi?.password_required ? 'Сеть и веб-интерфейс защищены паролем.' : 'Сеть открыта, вход в веб-интерфейс без пароля. Любой рядом может подключиться.'}</p>
-        {#if snapshot.wifi?.restart_required}<p class="field-description">После следующего включения: {snapshot.wifi.next_boot_password_required ? 'защита новым паролем' : 'без пароля'}.</p>{/if}
-        <label class="full-label">Новый пароль<input class="input" type="password" autocomplete="new-password" minlength="8" maxlength="63" bind:value={wifiPassword} disabled={wifiSaving} /></label>
-        <label class="full-label">Повторите пароль<input class="input" type="password" autocomplete="new-password" minlength="8" maxlength="63" bind:value={wifiConfirmation} disabled={wifiSaving} /></label>
-        <p class="field-description">8–63 латинских букв, цифр или символов без пробелов. Этот пароль используется для Wi-Fi и входа в браузере.</p>
-        <button class="btn primary-button" disabled={!automaticReady || wifiSaving || !wifiPassword} onclick={() => saveWifi(false)}>{wifiSaving ? 'Сохраняем…' : 'Задать пароль'}</button>
-        <button class="btn text-button" disabled={!automaticReady || wifiSaving || !snapshot.wifi?.next_boot_password_required} onclick={() => saveWifi(true)}>Убрать пароль</button>
-        <p class="field-description">Изменение вступит в силу после следующего включения питания. Если отопитель работает, сначала остановите его и дождитесь окончания продувки.</p>
-      {:else if detail === 'diagnostics'}
-        <h1>Показания и журнал</h1>
-        <dl class="readings">
-          <div><dt>Запрет пуска</dt><dd>{blockLabel(snapshot)}</dd></div>
-          <div><dt>Хранилище</dt><dd>{snapshot.storage_ok ? 'Доступно' : 'Ошибка хранения'}</dd></div>
-          <div><dt>Выходные команды</dt><dd>FAN {String(snapshot.outputs?.fan_request)} · GLOW {String(snapshot.outputs?.glow)} · FUEL {String(snapshot.outputs?.fuel)}</dd></div>
-          <div><dt>Состояние</dt><dd>{stateLabel(snapshot)}</dd></div>
-          <div><dt>Помещение</dt><dd>{sensorText(snapshot.sensors?.room)}</dd></div>
-          <div><dt>Воздух на выходе</dt><dd>{sensorText(snapshot.sensors?.air)}</dd></div>
-          <div><dt>Выхлоп</dt><dd>{sensorText(snapshot.sensors?.exhaust)}</dd></div>
-          <div><dt>Команда вентилятора</dt><dd>{Number(snapshot.outputs?.command_percent ?? 0).toFixed(1)} % · PWM {snapshot.outputs?.speed_code ?? '—'}</dd></div>
-          <div><dt>Режим</dt><dd>{snapshot.settings?.mode === 'MANUAL' ? 'Ручной' : 'По температуре'}</dd></div>
-          <div><dt>Сохранённая модель</dt><dd>{snapshot.learned_model?.valid ? `PWM ${snapshot.learned_model.minimum_speed_code}…${snapshot.learned_model.maximum_speed_code}; rev. ${snapshot.learned_model.provenance?.revision ?? '—'}` : 'нет подтверждённой модели'}</dd></div>
-          <div><dt>Продувка</dt><dd>{snapshot.purge?.active ? `активна; минимум ${formatDuration(snapshot.purge.minimum_remaining_ms)}` : 'не активна'}</dd></div>
-        </dl>
-        <h2 class="subheading">Последние события автомата</h2>
-        <ol class="event-list">{#each snapshot.events || [] as event}<li><time>{event.at_ms} ms</time><span>{event.kind_ru || event.kind || '—'} · {event.state_ru || event.state || '—'} · PWM {event.speed_code} · EXH {Number(event.exhaust_milli_c / 1000).toFixed(1)} °C / AIR {Number(event.air_milli_c / 1000).toFixed(1)} °C</span></li>{/each}</ol>
-      {:else if detail === 'calibration'}
-        <h1>Ввод в эксплуатацию</h1><p class="page-intro">Интерфейс показывает только фактическую фазу автомата; процент или завершение не моделируются.</p>
-        <div class="process-state"><strong>{commissioningLabel(snapshot)}</strong><span>Точек: {snapshot.commissioning?.accepted_point_count ?? '—'}</span></div>
-        <dl class="readings"><div><dt>Фаза</dt><dd>{snapshot.commissioning?.phase?.ru || snapshot.commissioning?.phase?.code || '—'}</dd></div><div><dt>Причина/отмена</dt><dd>{snapshot.commissioning?.reason?.ru || snapshot.commissioning?.reason?.code || '—'}</dd></div><div><dt>Время</dt><dd>{formatDuration(snapshot.commissioning?.elapsed_ms)}</dd></div></dl>
-        <button class="btn primary-button" disabled={!automaticReady || snapshot.commissioning?.active || !commissioningAllowed(snapshot)} onclick={startCalibration}>{snapshot.commissioning?.active ? 'Ввод в эксплуатацию активен' : commissioningAllowed(snapshot) ? 'Начать ввод в эксплуатацию' : 'Ввод в эксплуатацию недоступен'}</button>
-        <p class="field-description after-button" data-testid="commissioning-availability">{snapshot.commissioning?.active || commissioningAllowed(snapshot) ? 'Для отмены используется СТОП; итог и причина появятся только в следующем снимке автомата.' : `Ввод в эксплуатацию недоступен: ${commissioningBlockLabel(snapshot)}.`}</p>
-        <section class="timer-section" aria-labelledby="model-revision-title">
-          <h2 id="model-revision-title">Ручная коррекция сохранённой модели</h2>
-          {#if snapshot.learned_model?.valid && modelDraft}
-            <p class="field-description">Ревизия {snapshot.learned_model.provenance?.revision ?? '—'}. Можно только сузить диапазон PWM и замедлить скорости; исходную модель эта форма не создаёт.</p>
-            <div class="duration-inputs">
-              <label>Минимум PWM<input class="input" type="number" min={snapshot.learned_model.minimum_speed_code} max={snapshot.learned_model.maximum_speed_code} step="1" inputmode="numeric" value={modelDraft.minimum_speed_code} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('minimum_speed_code', Number(event.currentTarget.value))} /></label>
-              <label>Максимум PWM<input class="input" type="number" min={snapshot.learned_model.minimum_speed_code} max={snapshot.learned_model.maximum_speed_code} step="1" inputmode="numeric" value={modelDraft.maximum_speed_code} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('maximum_speed_code', Number(event.currentTarget.value))} /></label>
-              <label>Нарастание, код/с<input class="input" type="number" min="0" max={snapshot.learned_model.slew_up_per_s} step="any" inputmode="decimal" value={modelDraft.slew_up_per_s} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('slew_up_per_s', Number(event.currentTarget.value))} /></label>
-              <label>Снижение, код/с<input class="input" type="number" min="0" max={snapshot.learned_model.slew_down_per_s} step="any" inputmode="decimal" value={modelDraft.slew_down_per_s} disabled={!automaticReady || modelConflict} oninput={(event) => editModel('slew_down_per_s', Number(event.currentTarget.value))} /></label>
-            </div>
-            {#if modelConflict}<p class="field-description" data-testid="model-conflict">Сохранённая модель изменена внешне. Перечитайте снимок.</p>{/if}
-            <button class="btn primary-button" disabled={!automaticReady || modelConflict || !modelDirty} onclick={saveModel}>Сохранить коррекцию модели</button>
-            <button class="btn text-button full-width" onclick={restoreModel}>Вернуть снимок модели</button>
-          {:else}
-            <p class="field-description" data-testid="model-unavailable">Ручная коррекция недоступна: сохранённая LearnedOperatingModel ещё не подтверждена.</p>
-          {/if}
-        </section>
-      {:else if detail === 'advanced'}
-        <h1>Плавность регулирования</h1><p class="page-intro">Изменение команды за секунду, в процентах рабочего диапазона.</p>
-        <label class="full-label">Нарастание, %/с<input class="input" type="number" min="0.01" max="0.5" step="0.01" inputmode="decimal" value={Number(settingsValue('slew_up_per_s')) * 100} disabled={!automaticReady || settingsConflict} oninput={(event) => draftValue('slew_up_per_s', Number(event.currentTarget.value) / 100)} /></label>
-        <label class="full-label">Снижение, %/с<input class="input" type="number" min="0.01" max="0.5" step="0.01" inputmode="decimal" value={Number(settingsValue('slew_down_per_s')) * 100} disabled={!automaticReady || settingsConflict} oninput={(event) => draftValue('slew_down_per_s', Number(event.currentTarget.value) / 100)} /></label>
-        {#if settingsConflict}<p class="field-description">Настройки изменены внешне. Перечитайте снимок.</p>{/if}
-        <button class="btn primary-button" disabled={!automaticReady || settingsConflict || !settingsDirty.length} onclick={saveSettings}>Сохранить плавность</button>
-        <button class="btn text-button full-width" onclick={restoreSettings}>Вернуть снимок автомата</button>
-
-      {:else if detail === 'update'}
-        <h1>Обновление</h1><p class="page-intro">Принимается один подписанный .sota. Файл полностью хешируется в браузере, затем проверяется автоматом перед постановкой активации в очередь.</p>
-        <label class="file-label">Пакет прошивки<input class="file-input" type="file" accept=".sota,application/octet-stream" onchange={chooseOta} disabled={!automaticReady || ui.requestInFlight === 'OTA'} /></label>
-        {#if otaFile}<p class="field-description">Выбран: {otaFile.name} · {otaFile.size} байт</p>{/if}
-        <button class="btn primary-button" disabled={!automaticReady || !otaFile || ui.requestInFlight === 'OTA'} onclick={uploadOta}>{ui.requestInFlight === 'OTA' ? 'Проверяем и загружаем…' : 'Проверить и загрузить OTA'}</button>
-        <p class="field-description after-button" data-testid="ota-status">{otaLabel(ui.ota)}</p>
-      {:else if detail === 'about'}
-        <h1>О контроллере</h1>
-        <dl class="readings"><div><dt>Версия</dt><dd>{snapshot.version || '—'}</dd></div><div><dt>boot_id</dt><dd>{snapshot.boot_id || '—'}</dd></div><div><dt>run_id</dt><dd>{snapshot.run_id || '—'}</dd></div><div><dt>Состояние связи</dt><dd>{online ? 'снимок подтверждён' : 'нет свежего снимка'}</dd></div></dl>
-      {/if}
+      {#if ui.link === "offline"}<div class="notice" role="status">
+          Нет связи. Показаны последние полученные данные
+        </div>{/if}
+      {#if snapshot.faults}<div class="fault-notice" role="alert">
+          <strong>{snapshot.fault_messages?.[0] || "Ошибка отопителя"}</strong
+          ><a href="#/diagnostics">Подробнее</a
+          >{#if commandAllowed(snapshot, "RESET_FAULT")}<button
+              class="secondary"
+              disabled={!connectionReady(ui)}
+              onclick={() => session.submit("RESET_FAULT")}
+              >Сбросить ошибку</button
+            >{/if}
+        </div>{/if}
+      {#if routes[route].section === "settings" && route !== "settings"}<a
+          class="back-link"
+          href="#/settings">← Настройки</a
+        >{/if}
+      {#if route === "control"}<Control {ui} {session} {settings} {notify} />
+      {:else if route === "timer"}<Timer {ui} {session} {timer} {notify} />
+      {:else if route === "diagnostics"}<Diagnostics
+          {snapshot}
+          api={session.api}
+          online={ui.link === "online"}
+        />
+      {:else if route === "settings"}<Settings
+          {snapshot}
+          {theme}
+          {selectTheme}
+        />
+      {:else if route === "wifi"}<Wifi {ui} {session} {notify} />
+      {:else if route === "heater"}<Heater
+          {ui}
+          {session}
+          draft={heater}
+          {notify}
+        />
+      {:else if route === "update"}<Update {ui} {session} {notify} />
+      {:else if route === "regulation"}<Regulation
+          {ui}
+          {session}
+          draft={regulation}
+          {notify}
+        />
+      {:else if route === "calibration"}<Calibration
+          {ui}
+          {session}
+          draft={model}
+          {notify}
+        />{/if}
     {/if}
   </main>
-
-  {#if authenticated && snapshot && (tab !== 'home' || !['IDLE', 'PREPURGE', 'PREHEAT', 'IGNITION', 'VERIFY', 'RUN', 'STOP_PURGE', 'FAULT_PURGE'].includes(snapshot.state?.code))}
-    <div class="persistent-stop" bind:this={stopPanel}><span>{stateLabel(snapshot)}</span><button class="btn stop-button" disabled={ui.requestInFlight === 'STOP'} onclick={stop}><Icon name="stop" size={17} />Остановить</button></div>
-  {/if}
-
-  {#if feedback}<div bind:this={feedbackPanel} class="feedback visible" role="status" aria-live="polite" class:error={feedback.kind === 'error'} class:warning={feedback.kind === 'warning'}><Icon name={feedback.kind === 'error' || feedback.kind === 'warning' ? 'warning' : feedback.kind === 'pending' ? 'clock' : 'check'} size={19} /><span>{feedback.text}</span></div>{/if}
-
-  <nav class="bottom-nav" bind:this={bottomNav} aria-label="Основная навигация">
-    {#each [['home','Главная','home'],['timers','Таймер','clock'],['settings','Настройки','settings']] as [id, label, icon]}
-      <button class:current={tab === id} aria-current={tab === id ? 'page' : undefined} disabled={!authenticated} onclick={() => navigate(id)}><Icon name={icon} size={23} /><span>{label}</span></button>
-    {/each}
-  </nav>
+  {#if snapshot && authenticated}<footer class="bottom-dock">
+      {#if stopVisible}<div class="stop-strip">
+          <span>{stateText(snapshot)}</span><button
+            class="stop-button"
+            disabled={ui.requestInFlight === "STOP"}
+            onclick={() => session.stop()}>Остановить нагрев</button
+          >
+        </div>{/if}
+      <nav aria-label="Основная навигация">
+        {#each [["control", "Отопление", "heat"], ["timer", "Таймер", "clock"], ["diagnostics", "Состояние", "thermometer"], ["settings", "Настройки", "settings"]] as [id, label, icon]}<a
+            href={"#/" + id}
+            aria-current={routes[route].section === id ? "page" : undefined}
+            ><Icon name={icon} size={20} /><span>{label}</span></a
+          >{/each}
+      </nav>
+    </footer>{/if}
 </div>

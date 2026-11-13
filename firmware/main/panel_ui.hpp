@@ -10,15 +10,10 @@ namespace panel_ui {
 constexpr uint32_t kEncoderDebounceMs = 30;
 constexpr uint32_t kDoubleClickWindowMs = 280;
 constexpr uint32_t kCommandConfirmationTimeoutMs = 5000;
-constexpr int32_t kSetpointMinimumMilliC = 15000;
-constexpr int32_t kSetpointMaximumMilliC = 30000;
-constexpr int32_t kSetpointStepMilliC = 1000;
-constexpr int32_t kManualMinimumPercent = 5;
 constexpr int32_t kManualMaximumPercent = 100;
-constexpr int32_t kManualStepPercent = 5;
-constexpr int32_t kMinutesMaximum = 10080;
+constexpr int32_t kMinutesMaximum = sirokko::kMaximumTimerMs / 60000;
 
-enum class Page : uint8_t { HOME, MENU, EDIT, DIAGNOSTICS, WIFI, OTA };
+enum class Page : uint8_t { HOME, MENU, EDIT, DIAGNOSTICS, WIFI, OTA, CALIBRATION };
 enum class MenuItem : uint8_t {
     MODE,
     MANUAL_POWER,
@@ -96,11 +91,11 @@ struct InputEvent {
 // Portable EC11 decoder: A/B transitions are accumulated to a detent; PUSH emits a click on
 // stable release. A button held during reset is consumed until it has been released once.
 class EncoderInput {
-public:
+  public:
     void reset(bool a, bool b, bool push_pressed, uint64_t now_ms);
     InputEvent poll(bool a, bool b, bool push_pressed, uint64_t now_ms);
 
-private:
+  private:
     uint8_t ab_state_{};
     int quarter_turns_{};
     bool initialized_{};
@@ -112,25 +107,25 @@ private:
 };
 
 class Model {
-public:
-    void reset(const View& view);
-    void update(const View& view);
+  public:
+    void reset(const View &view);
+    void update(const View &view);
     void set_view_unavailable();
 
     void rotate(int turns);
     void click(uint64_t now_ms);
     void tick(uint64_t now_ms);
 
-    bool take_command(Command* command);
+    bool take_command(Command *command);
     void command_result(bool accepted);
-    void set_credentials(const char* ssid, const char* password);
+    void set_credentials(const char *ssid, const char *password);
     void credentials_unavailable();
 
     Screen screen() const;
-    const View& view() const { return view_; }
-    const LocalCredentials& credentials() const { return credentials_; }
+    const View &view() const { return view_; }
+    const LocalCredentials &credentials() const { return credentials_; }
 
-private:
+  private:
     static constexpr uint8_t kVisibleMenuRows = 4;
     static constexpr uint8_t kMenuCount = 8;
 
@@ -138,6 +133,7 @@ private:
 
     struct PendingClick {
         bool active{};
+        bool calibration_ready{};
         Page page{Page::HOME};
         uint8_t menu_index{};
         MenuItem menu_item{MenuItem::MODE};
@@ -161,9 +157,9 @@ private:
         uint64_t deadline_ms{};
     };
 
-    static bool same_settings(const sirokko::Settings& left, const sirokko::Settings& right);
-    static bool settings_changes_match(const sirokko::Settings& baseline, const sirokko::Settings& expected,
-                                       const sirokko::Settings& actual);
+    static bool same_settings(const sirokko::Settings &left, const sirokko::Settings &right);
+    static bool settings_changes_match(const sirokko::Settings &baseline, const sirokko::Settings &expected,
+                                       const sirokko::Settings &actual);
     static bool is_active_session(sirokko::State state);
     static bool is_fault_or_stop(sirokko::State state);
     static int32_t clamp_step(int32_t value, int turns, int32_t low, int32_t high, int32_t step);
@@ -181,6 +177,7 @@ private:
     void move_menu(int turns);
 
     void begin_edit(EditField field, Page return_page);
+    bool edit_conflicts(const View &previous) const;
     void cancel_edit();
     void finish_edit();
     void commit_edit();
@@ -189,17 +186,15 @@ private:
     void execute_pending_double();
 
     CommandContext command_context() const;
-    void queue_command(const Command& command);
+    void queue_command(const Command &command);
     void clear_command_state();
     void abort_stale_interaction(bool show_external_change);
-    void begin_confirmation(const Command& command, const CommandContext& context);
-    bool snapshot_confirms(const Confirmation& confirmation, const View& view) const;
+    void begin_confirmation(const Command &command, const CommandContext &context);
+    bool snapshot_confirms(const Confirmation &confirmation, const View &view) const;
     void expire_confirmation(uint64_t now_ms);
     void set_notice(Notice notice);
 
     void clear_credentials();
-    void copy_credentials(std::array<char, 33>* target, const char* source);
-    void copy_credentials(std::array<char, 65>* target, const char* source);
 
     View view_{};
     bool initialized_{};
@@ -228,8 +223,6 @@ private:
     LocalCredentials credentials_{};
 };
 
-const char* menu_label(MenuItem item);
-const char* edit_label(EditField field);
-const char* notice_label(Notice notice);
+const char *menu_label(MenuItem item);
 
-}  // namespace panel_ui
+} // namespace panel_ui

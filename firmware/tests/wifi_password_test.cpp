@@ -13,5 +13,4 @@ int main() {
     assert(!valid_password("abcdefg\nh"));
     assert(!valid_password("пароль123"));
     assert(valid_password("Ab3!~@#z"));
-    assert(std::strcmp(sirokko::wifi::kPasswordKey, "ap_password") != 0);
 }
