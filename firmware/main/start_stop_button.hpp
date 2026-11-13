@@ -12,7 +12,7 @@ struct Timing {
     uint32_t maximum_poll_gap_ms;
 };
 
-// Normal operation uses a debounced short press; trials also consume the live held sample.
+// One debounced press starts or stops; release is required before the next press.
 constexpr Timing kTiming{
     .debounce_ms = 30,
     .polling_ms = 10,
@@ -61,7 +61,7 @@ class Button {
         LOCKED,
     };
 
-    enum class Intent : uint8_t { NONE, START, STOP, HOLD, REJECTED, FAILED };
+    enum class Intent : uint8_t { NONE, START, STOP, TRIAL_START, REJECTED, FAILED };
 
     void rebaseline(bool pressed, uint64_t now_ms);
     void begin_release_debounce(Phase resume, uint64_t now_ms);

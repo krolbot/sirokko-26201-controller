@@ -39,7 +39,7 @@
           ? `Ждём выхлоп ниже ${snapshot.envelope.parameters.cooling_exhaust_milli_c / 1000} °C`
           : "Нет свежих показаний термопар"
       : trial && snapshot.state.code === "TRIAL_READY"
-        ? "Запуск подготовлен. Удерживайте KEY0 на панели"
+        ? "Запуск подготовлен. Нажмите KEY0 на панели"
         : {
             PREHEAT: "Двигатель и муфта выключены",
             IGNITION: snapshot.outputs.glow

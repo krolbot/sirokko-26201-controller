@@ -28,9 +28,9 @@ Controller trial_ignition(SafetyEnvelope profile = {}) {
     s = c.tick(trial_input(120, true));
     assert(s.state == State::PREHEAT && s.run_id && s.outputs.glow);
     assert(!s.outputs.fuel && !s.outputs.fan_request && !s.duration_active);
-    s = c.tick(trial_input(kIgnitionAt - 1, true));
+    s = c.tick(trial_input(kIgnitionAt - 1, false));
     assert(s.state == State::PREHEAT && s.outputs.glow && !s.outputs.fuel);
-    s = c.tick(trial_input(kIgnitionAt, true));
+    s = c.tick(trial_input(kIgnitionAt, false));
     assert(s.state == State::IGNITION && s.outputs.glow && s.outputs.fan_request);
     assert(s.outputs.speed_code == kPwmMaximum && s.outputs.fuel);
     return c;
@@ -117,7 +117,11 @@ void test_trials() {
     s = pending.tick(trial_input(140, true));
     assert(s.state == State::PREHEAT && s.outputs.glow);
     i = trial_input(160, false);
-    i.local_button_valid = false; // Release debounce must stop without a spurious fault.
+    i.local_button_valid = false; // Releasing the start button must keep preheat running.
+    s = pending.tick(i);
+    assert(s.state == State::PREHEAT && s.outputs.glow && !s.faults);
+    i = trial_input(180, false);
+    i.stop = true;
     s = pending.tick(i);
     assert(s.state == State::STOP_PURGE && !s.faults);
     off(s);
@@ -132,7 +136,7 @@ void test_trials() {
             i.local_button_sample_ms = i.now_ms + 1;
             break;
         case 2:
-            i.local_button_valid = false;
+            i.sensors.air.valid = false;
             break;
         case 3:
             i.sensors.exhaust.valid = false;
@@ -156,6 +160,10 @@ void test_trials() {
     i.local_button_sample_ms = kIgnitionAt;
     assert(c.tick(i).outputs.fuel); // Exactly 100 ms is still fresh.
     s = c.tick(trial_input(kIgnitionAt + 120, false));
+    assert(s.state == State::IGNITION && s.outputs.fuel && s.outputs.glow && !s.faults);
+    i = trial_input(kIgnitionAt + 140, false);
+    i.stop = true;
+    s = c.tick(i);
     assert(s.state == State::STOP_PURGE && !s.faults);
     off(s);
     auto partial = SafetyEnvelope{};
@@ -198,7 +206,7 @@ void test_trial_measurements() {
     assert(s.trial_elapsed_ms == 0 && s.trial_remaining_ms == kTrialMeasurementMs);
     const uint64_t confirmed_at = i.now_ms;
     const auto run = c;
-    i = trial_input(confirmed_at + 20, true, 100000);
+    i = trial_input(confirmed_at + 20, false, 100000);
     i.set_trial_pwm = true;
     i.trial_pwm_code = 2007;
     s = c.tick(i);
@@ -258,6 +266,7 @@ void test_trial_measurements() {
             break;
         case 1:
             i.local_button_held = false;
+            i.stop = true;
             break;
         case 2:
             i.sensors.exhaust.valid = false;

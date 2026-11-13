@@ -58,8 +58,8 @@ void Button::latch_press_intent() {
 
     // The action is chosen at the first observed low level, never at dispatch time.
     source_state_version_ = snapshot.state_version;
-    if (snapshot.trial_active) {
-        intent_ = Intent::HOLD;
+    if (snapshot.trial_active && snapshot.state == sirokko::State::TRIAL_READY) {
+        intent_ = Intent::TRIAL_START;
     } else if (is_stop_target(snapshot)) {
         intent_ = Intent::STOP;
     } else if (is_start_target(snapshot)) {
@@ -80,7 +80,8 @@ void Button::dispatch_latched_intent() {
         last_dispatch_ =
             executor_.stop && executor_.stop(executor_.context) ? Dispatch::STOP : Dispatch::FAILED;
         break;
-    case Intent::HOLD:
+    case Intent::TRIAL_START:
+        // The controller consumes this debounced press only while TRIAL_READY.
         last_dispatch_ = Dispatch::NONE;
         break;
     case Intent::REJECTED:
@@ -141,7 +142,7 @@ void Button::poll(bool pressed, uint64_t now_ms) {
             begin_release_debounce(Phase::LOCKED, now_ms);
         break;
     }
-    // Release invalidates the hold immediately; a new held level requires debounce.
+    // Stable levels admit a prepared first start; the timestamp also monitors button-task health.
     held_sample_ = {now_ms, phase_ == Phase::LOCKED && pressed,
                     phase_ == Phase::READY || phase_ == Phase::LOCKED};
 }

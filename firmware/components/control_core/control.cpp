@@ -258,19 +258,17 @@ Outputs Controller::outputs() const {
     if (trial_active_) {
         if (purging(state_))
             return {true, kPwmMaximum, false, false};
-        const bool held = local_button_held_ && local_button_fresh(last_tick_ms_);
         if (state_ == State::PREHEAT)
-            return {false, 0, held, false};
+            return {false, 0, true, false};
         if (state_ == State::IGNITION) {
             const uint64_t elapsed =
                 last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
-            return {true, kPwmMaximum, held && elapsed < kIgnitionGlowMs,
-                    held && elapsed < kFiringStartupMaximumMs};
+            return {true, kPwmMaximum, elapsed < kIgnitionGlowMs, elapsed < kFiringStartupMaximumMs};
         }
         if (state_ == State::RUN) {
             const uint64_t elapsed =
                 last_tick_ms_ >= state_started_ms_ ? last_tick_ms_ - state_started_ms_ : 0;
-            return {true, trial_speed_code_, false, held && elapsed < kTrialMeasurementMs};
+            return {true, trial_speed_code_, false, elapsed < kTrialMeasurementMs};
         }
         return result;
     }
@@ -353,16 +351,13 @@ Snapshot Controller::tick(const TickInput &input) {
         new_faults |= current_sensor_faults;
     const bool button_sample_fresh =
         local_button_sample_ms_ <= now && now - local_button_sample_ms_ <= kLocalButtonFreshMs;
-    if (trial_active_ &&
-        ((active(state_) && (!button_sample_fresh || (!local_button_valid_ && local_button_held_))) ||
-         (state_ == State::TRIAL_READY && !button_sample_fresh)))
+    if (trial_active_ && (active(state_) || state_ == State::TRIAL_READY) && !button_sample_fresh)
         new_faults |= FAULT_LOCAL_CONTROLS;
     if (new_faults)
         latch_fault(new_faults, now);
 
     // STOP is an independent priority barrier. It cancels queued starts and never writes GPIO directly.
-    const bool stop_barrier =
-        input.stop || (trial_active_ && active(state_) && (!local_button_held_ || !local_button_valid_));
+    const bool stop_barrier = input.stop;
     if (stop_barrier) {
         // Revoke queued commands even when STOP leaves an idle controller in IDLE.
         if (++state_version_ == 0)

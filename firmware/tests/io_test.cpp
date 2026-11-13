@@ -102,7 +102,7 @@ int main() {
     for (unsigned t = 310; t <= 400; t += 10)
         button.poll(true, t);
     assert(local.stops == 1);
-    // A trial consumes a live hold, never the normal one-shot START/STOP command.
+    // A prepared first start consumes one press; the next press dispatches STOP.
     Local trial;
     trial.view.state = State::TRIAL_READY;
     trial.view.trial_active = true;
@@ -124,8 +124,10 @@ int main() {
     assert(!held.held_sample().held && !held.held_sample().valid);
     for (unsigned t = 220; t <= 250; t += 10)
         held.poll(false, t);
+    trial.view.state = State::RUN;
     for (unsigned t = 260; t <= 300; t += 10)
         held.poll(true, t);
+    assert(trial.stops == 1 && !trial.starts);
     assert(held.held_sample().valid && held.held_sample().held);
     held.poll(true, 410); // A stalled poll task cannot retain a usable hold.
     assert(!held.held_sample().valid);
@@ -139,10 +141,12 @@ int main() {
     auto physical_tick = [&](uint64_t at, bool pressed, bool request = false) {
         const auto previous = probe.snapshot(at);
         rig.view = {previous.state, previous.start_block, previous.state_version, previous.trial_active};
+        const auto stops_before = rig.stops;
         physical.poll(pressed, at);
         const auto key = physical.held_sample();
         auto input = control_fixture::input(at);
         input.trial_request = request;
+        input.stop = rig.stops != stops_before;
         input.local_button_held = key.held;
         input.local_button_valid = key.valid;
         input.local_button_sample_ms = key.sample_ms;
@@ -163,9 +167,20 @@ int main() {
     assert(started.state == State::PREHEAT && started.outputs.glow && !started.outputs.fuel);
     auto held_probe = probe;
     auto released = physical_tick(210, false);
+    assert(released.state == State::PREHEAT && released.outputs.glow && !released.faults);
+    assert(!rig.starts && !rig.stops);
+    for (unsigned t = 220; t <= 250; t += 10)
+        physical_tick(t, false);
+    // Bouncing the second press does not stop; a debounced press stops exactly once.
+    assert(physical_tick(260, true).state == State::PREHEAT);
+    assert(physical_tick(270, false).state == State::PREHEAT);
+    for (unsigned t = 280; t <= 310; t += 10)
+        released = physical_tick(t, true);
     assert(released.state == State::STOP_PURGE && !released.faults);
     assert(!released.outputs.glow && !released.outputs.fuel && released.outputs.fan_request);
-    assert(!rig.starts && !rig.stops);
+    for (unsigned t = 320; t <= 400; t += 10)
+        physical_tick(t, true);
+    assert(rig.stops == 1 && !rig.starts);
     auto missed = control_fixture::input(200 + kLocalButtonFreshMs + 1);
     missed.local_button_valid = missed.local_button_held = true;
     missed.local_button_sample_ms = 200;

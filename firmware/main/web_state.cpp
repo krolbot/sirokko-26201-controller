@@ -29,7 +29,7 @@ const char *russian_state(sirokko::State state) {
     case sirokko::State::MAINTENANCE:
         return "Обновление прошивки";
     case sirokko::State::TRIAL_READY:
-        return "Первый запуск: удерживайте KEY0";
+        return "Первый запуск: нажмите KEY0";
     }
     return "Неизвестное состояние";
 }
@@ -92,7 +92,7 @@ const char *russian_event(const char *kind) {
     if (std::strcmp(kind, "TRIAL_ARMED") == 0)
         return "Первый запуск подготовлен";
     if (std::strcmp(kind, "TRIAL_START") == 0)
-        return "Первый запуск начат удержанием KEY0";
+        return "Первый запуск начат кнопкой KEY0";
     if (std::strcmp(kind, "TRIAL_CONFIRMED") == 0)
         return "Горение подтверждено пользователем";
     if (std::strcmp(kind, "TRIAL_PWM_CHANGED") == 0)

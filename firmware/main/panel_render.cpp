@@ -514,7 +514,7 @@ void draw_trial(Canvas &c, const Frame &f) {
         control.state == sirokko::State::IGNITION && control.outputs.fuel && !control.outputs.glow;
     const bool editing = f.screen.editing && f.screen.edit_field == panel_ui::EditField::TRIAL_PWM;
     c.text(160, 25, "Первый запуск", 21, kInk, Align::Center, 500);
-    const char *stage = armed                                      ? "Удерживайте KEY0"
+    const char *stage = armed                                      ? "Нажмите KEY0"
                         : control.state == sirokko::State::PREHEAT ? "Накал свечи"
                         : running                                  ? "Настройка ШИМ"
                         : confirm                                  ? "Горение устойчивое?"
@@ -570,7 +570,7 @@ void draw_trial(Canvas &c, const Frame &f) {
                   static_cast<unsigned long long>(seconds / 60),
                   static_cast<unsigned long long>(seconds % 60));
     c.text(160, 202, duration, 18, kInk, Align::Center);
-    footer(c, armed ? "Отмена — в веб-пульте" : "Отпустите KEY0 — остановка");
+    footer(c, armed ? "Отмена — в веб-пульте" : "KEY0 — остановка");
 }
 void draw(Canvas &c, const Frame &f) {
     c.clear(0xffffff);
