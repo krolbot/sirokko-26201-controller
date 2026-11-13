@@ -9,8 +9,7 @@ template <class Envelope, class Visitor> void envelope_fields(Envelope &p, Visit
     visit("ignition_ms", p.ignition_ms);
     visit("verify_ms", p.verify_ms);
     visit("postpurge_ms", p.postpurge_ms);
-    visit("maximum_purge_exit_exhaust_milli_c", p.maximum_purge_exit_exhaust_milli_c);
-    visit("maximum_purge_exit_air_milli_c", p.maximum_purge_exit_air_milli_c);
+    visit("cooling_exhaust_milli_c", p.cooling_exhaust_milli_c);
     visit("maximum_exhaust_milli_c", p.maximum_exhaust_milli_c);
     visit("maximum_air_milli_c", p.maximum_air_milli_c);
     visit("minimum_ignition_rise_milli_c", p.minimum_ignition_rise_milli_c);

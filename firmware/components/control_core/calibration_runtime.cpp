@@ -281,8 +281,7 @@ bool Controller::begin_model_storage(uint64_t tx_id) {
 
 bool Controller::seal_model_storage(uint64_t tx_id) {
     const bool cold = thermal_sensors_fresh(last_sensors_, last_tick_ms_) &&
-                      last_sensors_.exhaust.milli_c <= envelope_.maximum_purge_exit_exhaust_milli_c &&
-                      last_sensors_.air.milli_c <= envelope_.maximum_purge_exit_air_milli_c;
+                      cooling_complete(envelope_, last_sensors_, last_tick_ms_);
     if (tx_id == 0 || tx_id != model_storage_id_ || model_storage_sealed_ || !model_candidate_.valid ||
         state_ != State::IDLE || faults_ != 0 || !cold)
         return false;

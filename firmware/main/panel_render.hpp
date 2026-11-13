@@ -17,6 +17,7 @@ constexpr uint32_t kHeatPulseCycleMs = 2400;
 constexpr uint32_t kHeatPulseTravelMs = 1900;
 
 enum class Scene : uint8_t {
+    Debug,
     Heat,
     Idle,
     Manual,

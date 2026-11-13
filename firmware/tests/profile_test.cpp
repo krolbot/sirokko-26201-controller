@@ -102,9 +102,10 @@ int main() {
     assert(!clean.install_safety_envelope(invalid, false, 160));
     invalid = profile;
     invalid.exploration_floor_code = 0;
-    assert(!clean.install_safety_envelope(invalid, false, 160));
+    assert(clean.install_safety_envelope(invalid, false, 160));
+    assert(clean.snapshot(160).commissioning.block != Block::NONE);
     invalid = profile;
-    invalid.maximum_air_milli_c = invalid.maximum_purge_exit_air_milli_c;
+    invalid.maximum_air_milli_c = invalid.minimum_ignition_air_rise_milli_c;
     assert(!clean.install_safety_envelope(invalid, false, 160));
 
     // A fault racing a durable save is preserved when the stored profile is installed.

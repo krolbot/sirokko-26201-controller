@@ -22,7 +22,9 @@
   import Regulation from "./pages/Regulation.svelte";
   import Calibration from "./pages/Calibration.svelte";
   import Heater from "./pages/Heater.svelte";
+  import Debug from "./pages/Debug.svelte";
   import { heaterDraft } from "./lib/heater.js";
+  import { Measurements } from "./lib/measurements.js";
 
   let route = $state(routeFromHash(window.location.hash));
   const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -54,9 +56,40 @@
   let timerRun = null;
   let session = $state.raw(null);
   const snapshot = $derived(ui.snapshot);
+  const measurements = new Measurements();
+  let recording = $state(measurements.status());
+
+  function startRecording() {
+    measurements.start(snapshot, ui.link === "online");
+    recording = measurements.status();
+  }
+  function stopRecording() {
+    measurements.stop();
+    recording = measurements.status();
+  }
+  function addMeasurementNote(text) {
+    const added = measurements.note(text);
+    recording = measurements.status();
+    return added;
+  }
+  function downloadMeasurements() {
+    const url = URL.createObjectURL(
+      new Blob([measurements.csv()], { type: "text/csv;charset=utf-8" }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `sirokko-${new Date().toISOString().replaceAll(":", "-")}.csv`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    measurements.markExported();
+    recording = measurements.status();
+  }
 
   const stopVisible = $derived(
-    needsStop(snapshot) || ["START", "CALIBRATE"].includes(ui.pending?.action),
+    needsStop(snapshot) ||
+      ["START", "CALIBRATE", "DEBUG_ENTER"].includes(ui.pending?.action),
   );
   const authenticated = $derived(ui.auth === "authenticated");
   function notify(kind, text) {
@@ -69,6 +102,8 @@
   }
   function receive(next) {
     const current = next.snapshot;
+    measurements.observe(current, next.link === "online");
+    recording = measurements.status();
     if (next.auth === "anonymous") {
       settings.clear();
       regulation.clear();
@@ -178,11 +213,19 @@
       window.scrollTo({ top: 0, behavior: "instant" });
     };
     window.addEventListener("hashchange", locationChanged);
+    const beforeUnload = (event) => {
+      if (measurements.active || measurements.unsaved) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", beforeUnload);
     return () => {
       colorScheme.removeEventListener("change", systemThemeChanged);
       clearInterval(poll);
       clearTimeout(feedbackTimer);
       window.removeEventListener("hashchange", locationChanged);
+      window.removeEventListener("beforeunload", beforeUnload);
     };
   });
 </script>
@@ -275,12 +318,24 @@
           class="back-link"
           href="#/settings">← Настройки</a
         >{/if}
+      {#if recording.active && route !== "diagnostics"}<p class="caption">
+          <a href="#/diagnostics"
+            >Запись измерений · {recording.online
+              ? "Идёт запись"
+              : "Ожидаем связь"}</a
+          >
+        </p>{/if}
       {#if route === "control"}<Control {ui} {session} {settings} {notify} />
       {:else if route === "timer"}<Timer {ui} {session} {timer} {notify} />
       {:else if route === "diagnostics"}<Diagnostics
           {snapshot}
           api={session.api}
           online={ui.link === "online"}
+          {recording}
+          {startRecording}
+          {stopRecording}
+          {downloadMeasurements}
+          {addMeasurementNote}
         />
       {:else if route === "settings"}<Settings
           {snapshot}
@@ -288,6 +343,17 @@
           {selectTheme}
         />
       {:else if route === "wifi"}<Wifi {ui} {session} {notify} />
+      {:else if route === "debug"}<Debug
+          {ui}
+          {session}
+          {notify}
+          {heater}
+          {recording}
+          {startRecording}
+          {stopRecording}
+          {downloadMeasurements}
+          {addMeasurementNote}
+        />
       {:else if route === "heater"}<Heater
           {ui}
           {session}
@@ -314,7 +380,11 @@
           <span>{stateText(snapshot)}</span><button
             class="stop-button"
             disabled={ui.requestInFlight === "STOP"}
-            onclick={() => session.stop()}>Остановить нагрев</button
+            onclick={() => session.stop()}
+            >{snapshot.state.code === "DEBUG" ||
+            ui.pending?.action === "DEBUG_ENTER"
+              ? "Завершить отладку"
+              : "Остановить нагрев"}</button
           >
         </div>{/if}
       <nav aria-label="Основная навигация">

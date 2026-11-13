@@ -606,6 +606,20 @@ void draw_block(Canvas &c, const Frame &f) {
 void draw(Canvas &c, const Frame &f) {
     c.clear(0xffffff);
     switch (f.scene) {
+    case Scene::Debug: {
+        c.text(20, 31, "Ручная отладка", 22, kInk, Align::Left, 500);
+        const char *labels[] = {"Двигатель", "Свеча", "Муфта"};
+        const auto &o = f.view.control.outputs;
+        char speed[32]{};
+        std::snprintf(speed, sizeof(speed), "%.1f %%", 100.0 * o.speed_code / 4096.0);
+        const char *values[] = {speed, o.glow ? "Включена" : "Выключена", o.fuel ? "Включена" : "Выключена"};
+        for (int i = 0; i < 3; ++i) {
+            c.text(20, 80 + i * 44, labels[i], 17, kSecond);
+            c.text(300, 80 + i * 44, values[i], 20, kInk, Align::Right);
+        }
+        footer(c, "STOP — завершить отладку");
+        break;
+    }
     case Scene::Heat:
     case Scene::TimerRunning:
     case Scene::Above:
@@ -804,6 +818,8 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::Cooldown;
     }
     switch (v.control.state) {
+    case State::DEBUG:
+        return Scene::Debug;
     case State::RECOVERY_PURGE:
         return Scene::Recovery;
     case State::PREPURGE:

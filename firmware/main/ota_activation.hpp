@@ -202,14 +202,9 @@ class OtaActivationGate {
 
 inline bool ota_control_safe(const Snapshot &state, const Sensors &sensors, const SafetyEnvelope &envelope,
                              uint64_t now_ms) {
-    const auto cold = [now_ms](const SensorSample &sample, int32_t limit) {
-        return sample.valid && sample.status == 0 && sample.sample_ms <= now_ms &&
-               now_ms - sample.sample_ms <= kSensorStaleMs && sample.milli_c >= kThermocoupleMinimumMilliC &&
-               sample.milli_c <= limit;
-    };
-    return state.state == State::MAINTENANCE && !state.faults && !state.outputs.fuel && !state.outputs.glow &&
-           !state.outputs.fan_request &&
-           (!envelope.provisioned || (cold(sensors.exhaust, envelope.maximum_purge_exit_exhaust_milli_c) &&
-                                      cold(sensors.air, envelope.maximum_purge_exit_air_milli_c)));
+    return state.state == sirokko::State::MAINTENANCE && !state.faults && !state.outputs.fuel &&
+           !state.outputs.glow && !state.outputs.fan_request &&
+           ((!envelope.provisioned && !sirokko::debug_heat_configured(envelope)) ||
+            sirokko::cooling_complete(envelope, sensors, now_ms));
 }
 } // namespace sirokko

@@ -37,6 +37,7 @@ struct Command {
     uint64_t command_id{};
     uint64_t delay_ms{};
     sirokko::Settings settings{};
+    sirokko::Outputs debug_outputs{};
     sirokko::LearnedModelRevision revision{};
     sirokko::SafetyEnvelope envelope{};
     uint64_t upload_size{};

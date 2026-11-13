@@ -8,6 +8,8 @@
 namespace {
 const char *russian_state(sirokko::State state) {
     switch (state) {
+    case sirokko::State::DEBUG:
+        return "Ручная отладка";
     case sirokko::State::UNCONFIGURED:
         return "Требуется настройка";
     case sirokko::State::RECOVERY_PURGE:
@@ -136,6 +138,16 @@ CommissioningText commissioning_phase_text(sirokko::CommissioningPhase value) {
     return {"UNKNOWN", "Неизвестное состояние"};
 }
 const char *russian_event(const char *kind) {
+    if (std::strcmp(kind, "DEBUG_ENTER") == 0)
+        return "Ручная отладка включена";
+    if (std::strcmp(kind, "DEBUG_OUTPUTS") == 0)
+        return "Изменены ручные команды выходов";
+    if (std::strcmp(kind, "DEBUG_STOP") == 0)
+        return "Ручная отладка завершена";
+    if (std::strcmp(kind, "DEBUG_LINK_LOST") == 0)
+        return "Отладка остановлена: нет связи с пультом";
+    if (std::strcmp(kind, "DEBUG_GLOW_LIMIT") == 0)
+        return "Свеча отключена: истекло время накала";
     if (std::strcmp(kind, "PROFILE_SAVED") == 0)
         return "Параметры отопителя сохранены";
     if (!kind)
@@ -344,6 +356,15 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->unsigned_integer(monitor.suspect_ms);
     json->character('}');
 
+    json->raw(",\"debug\":{\"remaining_ms\":");
+    json->unsigned_integer(control.debug_remaining_ms);
+    json->raw(",\"heat_allowed\":");
+    json->boolean(control.debug_heat_block == sirokko::Block::NONE);
+    json->raw(",\"heat_reason\":");
+    json->quoted(control.debug_heat_block == sirokko::Block::ENVELOPE_MISSING
+                     ? "Задайте пределы перегрева и охлаждения в параметрах отопителя"
+                     : russian_block(control.debug_heat_block));
+    json->character('}');
     json->raw(",\"room_excess\":");
     json->boolean(control.room_excess);
     json->raw(",\"storage_ok\":");
@@ -367,7 +388,8 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->real(control.command_percent);
     json->raw("}");
     json->raw(",\"hardware\":{\"outputs_enabled\":");
-    json->boolean(view.envelope.provisioned);
+    json->boolean(view.envelope.provisioned || control.state == sirokko::State::DEBUG ||
+                  control.purge_active);
     json->raw(",\"local_controls_initialized\":");
     json->boolean(view.local_controls_initialized);
     json->raw(",\"startup_ready\":");

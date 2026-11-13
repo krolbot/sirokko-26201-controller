@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare an offline envelope_v1 blob using the target ABI. Never writes hardware.
+"""Prepare an offline envelope_v2 blob using the target ABI. Never writes hardware.
 
 Input numbers must come from qualification of the actual assembly, not nominal
 catalog values. This tool validates data/encoding, not physical qualification.
@@ -16,7 +16,7 @@ import tempfile
 
 FIRMWARE = pathlib.Path(__file__).resolve().parents[1]
 TIMES = ('recovery_purge_ms', 'prepurge_ms', 'preheat_ms', 'ignition_ms', 'verify_ms', 'postpurge_ms')
-TEMPERATURES = ('maximum_purge_exit_exhaust_milli_c', 'maximum_purge_exit_air_milli_c',
+TEMPERATURES = ('cooling_exhaust_milli_c',
                 'maximum_exhaust_milli_c', 'maximum_air_milli_c', 'minimum_ignition_rise_milli_c',
                 'minimum_run_exhaust_milli_c', 'minimum_ignition_air_rise_milli_c')
 CODES = ('purge_speed_code', 'reference_speed_code', 'exploration_floor_code')
@@ -72,7 +72,7 @@ def make_blob(spec, directory, target_cxx, objcopy, host_cxx):
 using EnvelopeRecord = record_codec::Record<sirokko::SafetyEnvelope>;
 constexpr EnvelopeRecord make_record() {
     EnvelopeRecord r{};
-    r.magic = 0x454E5631;
+    r.magic = 0x454E5632;
     r.version = 2;
     r.payload_size = sizeof(sirokko::SafetyEnvelope);
     r.value = make_envelope();
@@ -95,7 +95,7 @@ __attribute__((used,section(".factory_layout"))) const uint32_t factory_layout[]
     data = bytearray(raw.read_bytes())
     if len(data) != size or checksum_offset + 8 > size:
         raise ValueError('unexpected target record layout')
-    if struct.unpack_from('<IHH', data) != (0x454E5631, 2, payload_size):
+    if struct.unpack_from('<IHH', data) != (0x454E5632, 2, payload_size):
         raise ValueError('target record header does not match runtime codec')
     checksum = 1469598103934665603
     for byte in data[:checksum_offset]:
@@ -122,13 +122,13 @@ def main():
     with tempfile.TemporaryDirectory(prefix='sirokko-factory-') as temporary:
         data, layout = make_blob(spec, pathlib.Path(temporary), args.target_cxx, args.objcopy, args.host_cxx)
     args.output_dir.mkdir(parents=True)
-    blob = args.output_dir/'envelope_v1.bin'
+    blob = args.output_dir/'envelope_v2.bin'
     blob.write_bytes(data)
     # Input for the official ESP-IDF NVS partition generator, NOT a flash command.
     (args.output_dir/'envelope.csv').write_text(
-        'key,type,encoding,value\nsirokko,namespace,,\nenvelope_v1,file,binary,envelope_v1.bin\n')
+        'key,type,encoding,value\nsirokko,namespace,,\nenvelope_v2,file,binary,envelope_v2.bin\n')
     manifest = {'qualification_reference': spec['qualification_reference'], 'input': spec['envelope'],
-                'nvs_namespace': 'sirokko', 'nvs_key': 'envelope_v1', 'magic': '0x454E5631',
+                'nvs_namespace': 'sirokko', 'nvs_key': 'envelope_v2', 'magic': '0x454E5632',
                 'record_version': 2, 'record_bytes': layout[0], 'checksum_offset': layout[1],
                 'payload_bytes': layout[2], 'sha256': hashlib.sha256(data).hexdigest(),
                 'physical_qualification_verified_by_tool': False,

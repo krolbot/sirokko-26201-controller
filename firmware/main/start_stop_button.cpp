@@ -15,6 +15,7 @@ bool is_stop_target(const Snapshot &snapshot) {
     case sirokko::State::PREHEAT:
     case sirokko::State::IGNITION:
     case sirokko::State::VERIFY:
+    case sirokko::State::DEBUG:
     case sirokko::State::RUN:
         return true;
     default:

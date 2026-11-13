@@ -19,7 +19,7 @@ export function needsStop(snapshot) {
     snapshot?.outputs?.fuel === true ||
     snapshot?.outputs?.glow === true ||
     snapshot?.commissioning?.active === true ||
-    ["PREPURGE", "PREHEAT", "IGNITION", "VERIFY", "RUN"].includes(
+    ["PREPURGE", "PREHEAT", "IGNITION", "VERIFY", "RUN", "DEBUG"].includes(
       snapshot?.state?.code,
     )
   );
@@ -44,6 +44,7 @@ export const routes = {
   wifi: { title: "Wi-Fi", section: "settings" },
   regulation: { title: "Плавность", section: "settings" },
   calibration: { title: "Калибровка", section: "settings" },
+  debug: { title: "Режим отладки", section: "settings" },
   heater: { title: "Параметры отопителя", section: "settings" },
   update: { title: "Обновление", section: "settings" },
 };
@@ -84,8 +85,11 @@ export function errorText(error, fallback, snapshot) {
   );
   if (blocked) return blocked.reason;
   switch (code) {
-    case "PROFILE_TIMING":
-      return "Этот диапазон и темп регулирования не позволяют завершить калибровку за отведённое время";
+    case "DEBUG_HEAT":
+      return (
+        snapshot?.debug?.heat_reason ||
+        "Проверьте тепловые ограничения и показания термопар"
+      );
     case "WIFI_BUSY":
       return "Смена пароля доступна после остановки и охлаждения отопителя";
     case "STORAGE":

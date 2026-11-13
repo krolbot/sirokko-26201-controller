@@ -47,6 +47,7 @@ enum class State : uint8_t {
     FAULT_PURGE,
     FAULT,
     MAINTENANCE,
+    DEBUG,
 };
 
 enum class Block : uint8_t {
@@ -103,14 +104,15 @@ struct SafetyEnvelope {
     uint64_t ignition_ms{};
     uint64_t verify_ms{};
     uint64_t postpurge_ms{kPostpurgeMinimumMs};
-    int32_t maximum_purge_exit_exhaust_milli_c{};
-    int32_t maximum_purge_exit_air_milli_c{};
+    int32_t cooling_exhaust_milli_c{40000};
     int32_t maximum_exhaust_milli_c{};
     int32_t maximum_air_milli_c{};
     int32_t minimum_ignition_rise_milli_c{};
     int32_t minimum_run_exhaust_milli_c{};
-    uint16_t purge_speed_code{};
-    uint16_t reference_speed_code{};
+    // Initial command for the installed two-wire drive on a regulated 24 V supply.
+    // This is the controller ceiling, not measured RPM or a qualified lower limit.
+    uint16_t purge_speed_code{kPwmMaximum};
+    uint16_t reference_speed_code{kPwmMaximum};
     // Explicit trial envelope; zero forbids automatic exploration, not an invented motor minimum.
     uint16_t exploration_floor_code{};
     int32_t minimum_ignition_air_rise_milli_c{};
@@ -265,6 +267,11 @@ struct Outputs {
     bool fuel{};
 };
 
+bool valid_profile_draft(const SafetyEnvelope &profile);
+bool debug_heat_configured(const SafetyEnvelope &profile);
+bool cooling_complete(const SafetyEnvelope &profile, const Sensors &sensors, uint64_t now_ms);
+bool valid_debug_outputs(const Outputs &outputs);
+
 struct TickInput {
     uint64_t now_ms{};
     Sensors sensors;
@@ -276,6 +283,9 @@ struct TickInput {
     bool exit_maintenance{};
     bool start_commissioning{};
     bool cycle_record_ready{};
+    bool enter_debug{};
+    bool set_debug_outputs{};
+    Outputs debug_outputs{};
     bool set_shutdown_timer{};
     uint64_t shutdown_after_ms{}; // 0 cancels an active timer.
     bool operator_combustion_problem{};
@@ -301,12 +311,25 @@ struct Snapshot {
     double working_span_fraction{};
     bool room_excess{};
     bool envelope_provisioned{};
+    uint64_t debug_remaining_ms{};
+    Block debug_heat_block{Block::ENVELOPE_MISSING};
     LearnedOperatingModel learned_model{};
     CommissioningSnapshot commissioning{};
     combustion::Snapshot combustion{};
 };
 
-enum class Action : uint8_t { START, RESET_FAULT, SETTINGS, OTA, CALIBRATE, TIMER, MODEL_REVISION, PROFILE };
+enum class Action : uint8_t {
+    START,
+    RESET_FAULT,
+    SETTINGS,
+    OTA,
+    CALIBRATE,
+    TIMER,
+    MODEL_REVISION,
+    PROFILE,
+    DEBUG_ENTER,
+    DEBUG_SET
+};
 
 struct Grant {
     uint64_t token{};
@@ -371,7 +394,15 @@ class Controller {
     void begin_stop(uint64_t now_ms, bool preserve_calibration_candidate = false);
     void latch_fault(uint32_t faults, uint64_t now_ms);
     Outputs outputs() const;
+    Block debug_heat_guard(const Sensors &sensors, uint64_t now_ms) const;
+    void debug_tick(const TickInput &input);
 
+    Outputs debug_outputs_{};
+    uint64_t debug_deadline_ms_{};
+    uint64_t debug_glow_started_ms_{};
+    uint64_t debug_fuel_started_ms_{};
+    bool debug_heated_{};
+    bool debug_flame_seen_{};
     SafetyEnvelope envelope_;
     Settings settings_;
     Sensors last_sensors_;

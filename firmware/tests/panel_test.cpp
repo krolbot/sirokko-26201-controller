@@ -129,6 +129,11 @@ void synchronization() {
 } // namespace
 
 int main() {
+    panel_ui::View debug_view{};
+    debug_view.control.state = sirokko::State::DEBUG;
+    debug_view.control.start_block = sirokko::Block::BUSY;
+    debug_view.control.outputs = {true, 1000, true, false};
+    assert(panel_render::select_scene({}, debug_view, 0) == panel_render::Scene::Debug);
     synchronization();
     using namespace panel_ui;
     using namespace sirokko;

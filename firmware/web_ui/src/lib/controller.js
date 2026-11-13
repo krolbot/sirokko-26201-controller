@@ -17,6 +17,8 @@ const ACTIONS = new Set([
   "TIMER",
   "MODEL_REVISION",
   "PROFILE",
+  "DEBUG_ENTER",
+  "DEBUG_SET",
 ]);
 
 function initialView() {
@@ -281,7 +283,7 @@ export class ControllerSession {
       requestInFlight = null;
     } else if (
       isActiveSession(previous) &&
-      ["STOP_PURGE", "IDLE"].includes(snapshot.state.code) &&
+      ["STOP_PURGE", "IDLE", "UNCONFIGURED"].includes(snapshot.state.code) &&
       (pending || requestInFlight) &&
       pending?.action !== "STOP" &&
       requestInFlight !== "STOP"
@@ -294,8 +296,9 @@ export class ControllerSession {
         "Действие прервано остановкой отопителя",
       );
     } else if (pending && commandMatchesSnapshot(pending, snapshot)) {
+      message =
+        pending.action === "DEBUG_SET" ? null : statusMessage("ok", "Готово.");
       pending = null;
-      message = statusMessage("ok", "Готово.");
     }
 
     if (

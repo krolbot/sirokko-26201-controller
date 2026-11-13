@@ -8,6 +8,7 @@ export const ACTIVE_SESSION_STATES = new Set([
   "IGNITION",
   "VERIFY",
   "RUN",
+  "DEBUG",
 ]);
 export const TIMER_CONFIRMATION_EARLY_MS = 1_000;
 export const TIMER_CONFIRMATION_LATE_MS = 5_000;
@@ -359,6 +360,15 @@ export function commandMatchesSnapshot(pending, snapshot) {
     return false;
   const { action, payload, baseline } = pending;
   switch (action) {
+    case "DEBUG_ENTER":
+      return snapshot.state?.code === "DEBUG";
+    case "DEBUG_SET":
+      return (
+        snapshot.state?.code === "DEBUG" &&
+        ["speed_code", "glow", "fuel"].every(
+          (key) => snapshot.outputs?.[key] === payload[key],
+        )
+      );
     case "SETTINGS":
       return settingsChangesMatch(baseline, payload.settings, snapshot);
     case "START":
@@ -375,13 +385,16 @@ export function commandMatchesSnapshot(pending, snapshot) {
       return modelRevisionMatches(payload.revision, snapshot?.learned_model);
     case "PROFILE":
       return (
-        snapshot.envelope?.provisioned === true &&
+        snapshot.envelope?.parameters &&
         snapshot.storage_ok === true &&
         deepEqual(payload.envelope, snapshot.envelope.parameters) &&
         snapshot.learned_model?.valid === false
       );
     case "RESET_FAULT":
-      return snapshot.state?.code === "IDLE" && !hasFault(snapshot);
+      return (
+        ["IDLE", "UNCONFIGURED"].includes(snapshot.state?.code) &&
+        !hasFault(snapshot)
+      );
 
     case "STOP":
       return (

@@ -11,7 +11,7 @@ inline SafetyEnvelope envelope() {
     e.recovery_purge_ms = e.prepurge_ms = e.ignition_ms = e.verify_ms = 100;
     e.maximum_exhaust_milli_c = 300000;
     e.maximum_air_milli_c = 150000;
-    e.maximum_purge_exit_exhaust_milli_c = e.maximum_purge_exit_air_milli_c = 50000;
+    e.cooling_exhaust_milli_c = 50000;
     e.minimum_ignition_rise_milli_c = e.minimum_ignition_air_rise_milli_c = 1000;
     e.minimum_run_exhaust_milli_c = 40000;
     e.purge_speed_code = 1500;

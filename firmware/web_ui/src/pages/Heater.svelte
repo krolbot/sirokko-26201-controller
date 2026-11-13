@@ -36,6 +36,11 @@
 
 <div class="page-heading"><h1>Параметры отопителя</h1></div>
 <p class="intro">Sirokko 262.01 · Параметры установки</p>
+<p class="caption">
+  Можно сохранять по мере заполнения. Для проверки двигателя используйте <a
+    href="#/debug">режим отладки</a
+  >.
+</p>
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
   </p>{/if}
@@ -100,7 +105,7 @@
     {/each}
     <div>
       {#if draft.dirty && !validation.valid}<p class="caption">
-          Заполните оставшиеся поля и проверьте значения
+          Проверьте отмеченные значения
         </p>{/if}
       <DraftActions
         {draft}

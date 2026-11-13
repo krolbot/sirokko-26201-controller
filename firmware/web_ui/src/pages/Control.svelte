@@ -26,6 +26,7 @@
     snapshot.purge?.active ||
       snapshot.commissioning.active ||
       [
+        "DEBUG",
         "PREPURGE",
         "PREHEAT",
         "IGNITION",
@@ -44,6 +45,7 @@
             ? "Ожидаем охлаждения"
             : "Нет свежих показаний термопар"
         : {
+            DEBUG: "Выходами управляет режим отладки",
             PREHEAT: "Разогрев свечи",
             IGNITION: "Подача топлива и розжиг",
             VERIFY: "Проверка горения",

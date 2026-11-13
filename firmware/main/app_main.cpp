@@ -33,14 +33,14 @@ static_assert(CONFIG_ESP_MAIN_TASK_STACK_SIZE >= 8192,
 namespace {
 constexpr char kTag[] = "sirokko";
 constexpr uint32_t kSettingsMagic = 0x53495233;
-constexpr uint32_t kEnvelopeMagic = 0x454E5631;
+constexpr uint32_t kEnvelopeMagic = 0x454E5632;
 constexpr uint32_t kModelMagic = 0x4D4F4434;
 constexpr uint32_t kStageMagic = 0x53544734;
 constexpr uint32_t kCycleMagic = 0x43594331;
 constexpr char kSettingsKey[] = "settings_v3";
-constexpr char kEnvelopeKey[] = "envelope_v1";
-constexpr char kModelKey[] = "model_active4";
-constexpr char kStageKey[] = "model_stage4";
+constexpr char kEnvelopeKey[] = "envelope_v2";
+constexpr char kModelKey[] = "model_active5";
+constexpr char kStageKey[] = "model_stage5";
 constexpr char kCycleKey[] = "cycle_v1";
 enum class StoreKind : uint8_t {
     SETTINGS,
@@ -57,6 +57,7 @@ struct RuntimeCommand {
     sirokko::Action action{};
     uint64_t delay_ms{};
     sirokko::Settings settings{};
+    sirokko::Outputs debug_outputs{};
     sirokko::LearnedModelRevision revision{};
     sirokko::SafetyEnvelope envelope{};
 };
@@ -208,7 +209,7 @@ sirokko::SafetyEnvelope load_factory_envelope() {
     const sirokko::SafetyEnvelope &envelope = envelope_record.value;
     if (state == RecordRead::MISSING)
         return {};
-    if (state != RecordRead::VALID || !envelope.provisioned || !sirokko::valid_safety_envelope(envelope)) {
+    if (state != RecordRead::VALID || !sirokko::valid_profile_draft(envelope)) {
         storage_status(STORAGE_ENVELOPE, false);
         return {};
     }
@@ -472,10 +473,9 @@ void grant_storage(ControlWork &w, const sirokko::Snapshot &snap, const sirokko:
         storage_status(STORAGE_INTERNAL, false);
         return;
     }
-    if (w.cycle_dirty && g_controller->safety_envelope().provisioned && storage_healthy() &&
-        !g_model_pending &&
-        (snap.state == sirokko::State::IDLE || snap.state == sirokko::State::FAULT ||
-         snap.state == sirokko::State::MAINTENANCE) &&
+    if (w.cycle_dirty && storage_healthy() && !g_model_pending &&
+        (snap.state == sirokko::State::UNCONFIGURED || snap.state == sirokko::State::IDLE ||
+         snap.state == sirokko::State::FAULT || snap.state == sirokko::State::MAINTENANCE) &&
         !snap.outputs.fan_request && !snap.outputs.fuel && !snap.outputs.glow && !snap.commissioning.active &&
         uxQueueMessagesWaiting(g_command_queue) == 0) {
         r.kind = StoreKind::CYCLE_CLEAN;
@@ -508,12 +508,13 @@ void control_pass(ControlWork &w) {
     sirokko::TickInput input{};
     input.now_ms = now_ms();
     input.sensors = w.sensors;
+    const auto before = g_controller->snapshot(input.now_ms);
     input.cycle_record_ready = w.cycle_dirty;
     input.external_faults =
         (g_output_driver_fault ? static_cast<uint32_t>(sirokko::FAULT_CONTROL_WATCHDOG) : 0) |
         (storage_healthy() ? 0 : static_cast<uint32_t>(sirokko::FAULT_STORAGE));
-    if (g_controller->safety_envelope().provisioned && g_startup_complete &&
-        (!g_button_ready || !panel_ready()))
+    if ((g_controller->safety_envelope().provisioned || before.state == sirokko::State::DEBUG) &&
+        g_startup_complete && (!g_button_ready || !panel_ready()))
         input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
     input.stop = g_stop.exchange(false);
     input.operator_combustion_problem = g_operator_problem.exchange(false);
@@ -521,9 +522,9 @@ void control_pass(ControlWork &w) {
     RuntimeCommand c{};
     bool have = xQueuePeek(g_command_queue, &c, 0) == pdTRUE;
     bool locked = false;
-    const auto before = g_controller->snapshot(input.now_ms);
     const bool starting =
-        have && (c.action == sirokko::Action::START || c.action == sirokko::Action::CALIBRATE);
+        have && (c.action == sirokko::Action::START || c.action == sirokko::Action::CALIBRATE ||
+                 (c.action == sirokko::Action::DEBUG_SET && (c.debug_outputs.fuel || c.debug_outputs.glow)));
     const bool exclusive = starting || (have && (c.action == sirokko::Action::OTA ||
                                                  c.action == sirokko::Action::MODEL_REVISION ||
                                                  c.action == sirokko::Action::PROFILE));
@@ -561,6 +562,9 @@ void control_pass(ControlWork &w) {
         w.edited_ms = input.now_ms;
     }
     if (have) {
+        input.enter_debug = c.action == sirokko::Action::DEBUG_ENTER;
+        input.set_debug_outputs = c.action == sirokko::Action::DEBUG_SET;
+        input.debug_outputs = c.debug_outputs;
         input.start = c.action == sirokko::Action::START;
         input.start_commissioning = c.action == sirokko::Action::CALIBRATE;
         input.set_shutdown_timer = c.action == sirokko::Action::TIMER;
@@ -570,9 +574,7 @@ void control_pass(ControlWork &w) {
         if (c.action == sirokko::Action::PROFILE && !input.stop && !g_stop && !before.faults &&
             !input.external_faults &&
             (before.state == sirokko::State::IDLE || before.state == sirokko::State::UNCONFIGURED) &&
-            !before.commissioning.active &&
-            sirokko::commissioning_configuration_block(c.envelope, g_controller->settings()) ==
-                sirokko::Block::NONE) {
+            !before.commissioning.active && sirokko::valid_profile_draft(c.envelope)) {
             StoreRequest r{};
             r.id = ++w.next_id;
             r.boot_id = before.boot_id;
@@ -720,7 +722,7 @@ bool runtime_issue(sirokko::Action action, uint64_t hash, sirokko::Grant *out) {
     return out->valid;
 }
 bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_t delay,
-                    const sirokko::Settings *settings) {
+                    const sirokko::Settings *settings, const sirokko::Outputs *debug_outputs) {
     RuntimeView view{};
     if (!grant.valid || grant.action != action || !runtime_view(&view))
         return false;
@@ -730,7 +732,13 @@ bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_
         return false;
     if (action == sirokko::Action::TIMER && delay > sirokko::kMaximumTimerMs)
         return false;
+    if (action == sirokko::Action::DEBUG_SET &&
+        (!debug_outputs || !sirokko::valid_debug_outputs(*debug_outputs) ||
+         ((debug_outputs->fuel || debug_outputs->glow) &&
+          view.control.debug_heat_block != sirokko::Block::NONE)))
+        return false;
     RuntimeCommand c{};
+    c.debug_outputs = debug_outputs ? *debug_outputs : sirokko::Outputs{};
     c.grant = grant;
     c.action = action;
     c.delay_ms = delay;
@@ -753,7 +761,7 @@ bool runtime_save_profile(const sirokko::Grant &grant, const sirokko::SafetyEnve
     RuntimeView view{};
     if (!grant.valid || grant.action != sirokko::Action::PROFILE || !runtime_view(&view) ||
         command_policy::block(view, sirokko::Action::PROFILE) != sirokko::Block::NONE ||
-        sirokko::commissioning_configuration_block(profile, view.settings) != sirokko::Block::NONE)
+        !sirokko::valid_profile_draft(profile))
         return false;
     RuntimeCommand c{};
     c.grant = grant;
@@ -855,7 +863,7 @@ extern "C" void app_main() {
     }
     const uint64_t boot = (static_cast<uint64_t>(esp_random()) << 32) | esp_random();
     const auto envelope = load_factory_envelope();
-    g_startup = load_startup(envelope.provisioned);
+    g_startup = load_startup(sirokko::debug_heat_configured(envelope));
     g_controller = new (std::nothrow) sirokko::Controller(envelope, load_settings(), boot, g_startup);
     if (!g_controller) {
         ESP_LOGE(kTag, "Controller allocation failed; startup stopped");

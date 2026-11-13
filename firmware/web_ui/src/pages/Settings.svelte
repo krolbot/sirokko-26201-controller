@@ -46,6 +46,13 @@
         >{snapshot.envelope?.provisioned ? "Заданы" : "Не настроены"}</span
       ><Icon name="chevron" size={16} /></a
     >
+    <a class="list-row" href="#/debug"
+      ><span class="row-icon"><Icon name="tune" /></span><span class="row-title"
+        >Режим отладки</span
+      ><span class="row-value"
+        >{snapshot.state.code === "DEBUG" ? "Включён" : ""}</span
+      ><Icon name="chevron" size={16} /></a
+    >
     <a class="list-row" href="#/calibration"
       ><span class="row-icon"><Icon name="heat" /></span><span class="row-title"
         >Калибровка</span

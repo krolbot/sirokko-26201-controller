@@ -7,8 +7,18 @@
   import { formatDuration } from "../lib/protocol.js";
   import { combustionText } from "../lib/history.js";
   import History from "../components/History.svelte";
+  import Measurements from "../components/Measurements.svelte";
   import Icon from "../Icon.svelte";
-  let { snapshot, api, online } = $props();
+  let {
+    snapshot,
+    api,
+    online,
+    recording,
+    startRecording,
+    stopRecording,
+    downloadMeasurements,
+    addMeasurementNote,
+  } = $props();
   const localInitialized = $derived(
     snapshot.hardware?.local_controls_initialized,
   );
@@ -102,6 +112,14 @@
     </dl>
   </div>
 </details>
+<Measurements
+  {recording}
+  {online}
+  start={startRecording}
+  stop={stopRecording}
+  download={downloadMeasurements}
+  addNote={addMeasurementNote}
+/>
 <History {snapshot} {api} {online} />
 <section class="section surface info-panel">
   <h2>Журнал</h2>

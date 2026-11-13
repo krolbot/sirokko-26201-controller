@@ -34,27 +34,57 @@ bool valid_settings(const Settings &s) {
            s.slew_up_per_s <= kMaximumSlewPerS && s.slew_down_per_s >= kMinimumSlewPerS &&
            s.slew_down_per_s <= kMaximumSlewPerS;
 }
+bool valid_profile_draft(const SafetyEnvelope &p) {
+    for (auto t :
+         {p.recovery_purge_ms, p.prepurge_ms, p.preheat_ms, p.ignition_ms, p.verify_ms, p.postpurge_ms})
+        if (t > kMaximumTimerMs)
+            return false;
+    if ((p.preheat_ms && (p.preheat_ms < kPreheatMinimumMs || p.preheat_ms > kPreheatMaximumMs)) ||
+        (p.postpurge_ms && p.postpurge_ms < kPostpurgeMinimumMs) ||
+        p.ignition_ms + p.verify_ms > kFiringStartupMaximumMs)
+        return false;
+    for (auto t : {p.maximum_exhaust_milli_c, p.maximum_air_milli_c, p.minimum_ignition_rise_milli_c,
+                   p.minimum_ignition_air_rise_milli_c, p.minimum_run_exhaust_milli_c})
+        if (t < 0 || t > kProcessMeasurementCeilingMilliC)
+            return false;
+    if (p.cooling_exhaust_milli_c <= 0 || p.cooling_exhaust_milli_c >= kProcessMeasurementCeilingMilliC)
+        return false;
+    if ((p.maximum_exhaust_milli_c && (p.cooling_exhaust_milli_c >= p.maximum_exhaust_milli_c ||
+                                       p.minimum_ignition_rise_milli_c >= p.maximum_exhaust_milli_c ||
+                                       p.minimum_run_exhaust_milli_c >= p.maximum_exhaust_milli_c)) ||
+        (p.maximum_air_milli_c && p.minimum_ignition_air_rise_milli_c >= p.maximum_air_milli_c))
+        return false;
+    return p.purge_speed_code <= kPwmMaximum && p.reference_speed_code <= kPwmMaximum &&
+           p.exploration_floor_code <= kPwmMaximum &&
+           (!p.exploration_floor_code || !p.reference_speed_code ||
+            static_cast<int>(p.reference_speed_code) - p.exploration_floor_code >= 2);
+}
+bool debug_heat_configured(const SafetyEnvelope &p) {
+    return valid_profile_draft(p) && p.maximum_exhaust_milli_c && p.maximum_air_milli_c &&
+           p.postpurge_ms >= kPostpurgeMinimumMs && p.purge_speed_code;
+}
 bool valid_safety_envelope(const SafetyEnvelope &p) {
-    const auto timer = [](uint64_t v) { return v > 0 && v <= kMaximumTimerMs; };
-    return timer(p.recovery_purge_ms) && timer(p.prepurge_ms) && timer(p.preheat_ms) &&
-           timer(p.ignition_ms) && timer(p.verify_ms) && timer(p.postpurge_ms) &&
-           p.preheat_ms >= kPreheatMinimumMs && p.preheat_ms <= kPreheatMaximumMs &&
-           p.postpurge_ms >= kPostpurgeMinimumMs && p.ignition_ms + p.verify_ms <= kFiringStartupMaximumMs &&
-           p.maximum_exhaust_milli_c > 0 && p.maximum_exhaust_milli_c <= kProcessMeasurementCeilingMilliC &&
-           p.maximum_air_milli_c > 0 && p.maximum_air_milli_c <= kProcessMeasurementCeilingMilliC &&
-           p.maximum_purge_exit_exhaust_milli_c > 0 &&
-           p.maximum_purge_exit_exhaust_milli_c < p.maximum_exhaust_milli_c &&
-           p.maximum_purge_exit_air_milli_c > 0 && p.maximum_purge_exit_air_milli_c < p.maximum_air_milli_c &&
-           p.minimum_ignition_rise_milli_c > 0 &&
-           p.minimum_ignition_rise_milli_c < p.maximum_exhaust_milli_c &&
-           p.minimum_ignition_air_rise_milli_c > 0 &&
-           p.minimum_ignition_air_rise_milli_c < p.maximum_air_milli_c && p.minimum_run_exhaust_milli_c > 0 &&
-           p.minimum_run_exhaust_milli_c < p.maximum_exhaust_milli_c && p.purge_speed_code > 0 &&
-           p.purge_speed_code <= kPwmMaximum && p.reference_speed_code > 0 &&
-           p.reference_speed_code <= kPwmMaximum &&
-           (p.exploration_floor_code == 0 ||
-            (p.exploration_floor_code < p.reference_speed_code &&
-             static_cast<uint32_t>(p.reference_speed_code) - p.exploration_floor_code >= 2U));
+    return debug_heat_configured(p) && p.recovery_purge_ms && p.prepurge_ms && p.preheat_ms &&
+           p.ignition_ms && p.verify_ms && p.minimum_ignition_rise_milli_c &&
+           p.minimum_ignition_air_rise_milli_c && p.minimum_run_exhaust_milli_c && p.reference_speed_code;
+}
+bool cooling_complete(const SafetyEnvelope &p, const Sensors &s, uint64_t now) {
+    const auto fresh = [now](const SensorSample &v, uint64_t age) {
+        return v.valid && !v.status && v.sample_ms <= now && now - v.sample_ms <= age;
+    };
+    if (p.cooling_exhaust_milli_c <= 0 || p.cooling_exhaust_milli_c >= kProcessMeasurementCeilingMilliC)
+        return false;
+    for (const auto *v : {&s.air, &s.exhaust})
+        if (!fresh(*v, kSensorStaleMs) || v->milli_c < kThermocoupleMinimumMilliC ||
+            v->milli_c >= kProcessMeasurementCeilingMilliC)
+            return false;
+    if (s.exhaust.milli_c >= p.cooling_exhaust_milli_c ||
+        (p.maximum_air_milli_c && s.air.milli_c >= p.maximum_air_milli_c))
+        return false;
+    return true;
+}
+bool valid_debug_outputs(const Outputs &o) {
+    return o.speed_code <= kPwmMaximum && o.fan_request == (o.speed_code > 0) && (!o.fuel || o.fan_request);
 }
 uint64_t envelope_fingerprint(const SafetyEnvelope &p) {
     // Explicit field order, independent of padding, ABI, and bool representation.
@@ -64,8 +94,7 @@ uint64_t envelope_fingerprint(const SafetyEnvelope &p) {
                                p.ignition_ms,
                                p.verify_ms,
                                p.postpurge_ms,
-                               static_cast<uint32_t>(p.maximum_purge_exit_exhaust_milli_c),
-                               static_cast<uint32_t>(p.maximum_purge_exit_air_milli_c),
+                               static_cast<uint32_t>(p.cooling_exhaust_milli_c),
                                static_cast<uint32_t>(p.maximum_exhaust_milli_c),
                                static_cast<uint32_t>(p.maximum_air_milli_c),
                                static_cast<uint32_t>(p.minimum_ignition_rise_milli_c),

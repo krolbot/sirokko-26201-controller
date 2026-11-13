@@ -13,17 +13,21 @@ export const heaterGroups = [
   {
     title: "Температурные пределы",
     fields: [
-      ["maximum_exhaust_milli_c", "Отключение по выхлопу", "°C", 1000],
-      ["maximum_air_milli_c", "Отключение по нагретому воздуху", "°C", 1000],
       [
-        "maximum_purge_exit_exhaust_milli_c",
-        "Выхлоп для завершения охлаждения",
+        "maximum_exhaust_milli_c",
+        "Отключение топлива: перегрев выхлопа",
         "°C",
         1000,
       ],
       [
-        "maximum_purge_exit_air_milli_c",
-        "Воздух для завершения охлаждения",
+        "maximum_air_milli_c",
+        "Отключение топлива: перегрев воздуха",
+        "°C",
+        1000,
+      ],
+      [
+        "cooling_exhaust_milli_c",
+        "Отключить вентилятор при выхлопе ниже",
         "°C",
         1000,
       ],
@@ -52,7 +56,7 @@ export const heaterGroups = [
     fields: [
       ["purge_speed_code", "Команда при продувке", "ШИМ", 1],
       ["reference_speed_code", "Опорная команда калибровки", "ШИМ", 1],
-      ["exploration_floor_code", "Нижняя граница исследования", "ШИМ", 1],
+      ["exploration_floor_code", "Минимальный ШИМ для калибровки", "ШИМ", 1],
     ],
   },
 ];
@@ -73,7 +77,7 @@ export function heaterValidation(value, limits) {
   for (const [key, , unit, scale] of heaterFields) {
     const number = value?.[key];
     if (number === "" || number == null) {
-      errors[key] = "Укажите значение";
+      parameters[key] = 0;
       continue;
     }
     const raw = number * scale;
@@ -97,6 +101,11 @@ export function heaterValidation(value, limits) {
     parameters[key] = Math.round(raw);
   }
   const p = parameters;
+  if (p.cooling_exhaust_milli_c >= limits?.temperature_max_milli_c)
+    errors.cooling_exhaust_milli_c = "Ниже верхней границы измерений";
+  if (!p.cooling_exhaust_milli_c)
+    errors.cooling_exhaust_milli_c =
+      "Укажите температуру завершения охлаждения";
   if (
     p.preheat_ms &&
     (p.preheat_ms < limits.preheat_min_ms ||
@@ -112,8 +121,7 @@ export function heaterValidation(value, limits) {
   )
     errors.verify_ms = `Розжиг и проверка вместе — не более ${limits.firing_max_ms / 1000} с`;
   for (const [low, high] of [
-    ["maximum_purge_exit_exhaust_milli_c", "maximum_exhaust_milli_c"],
-    ["maximum_purge_exit_air_milli_c", "maximum_air_milli_c"],
+    ["cooling_exhaust_milli_c", "maximum_exhaust_milli_c"],
     ["minimum_ignition_rise_milli_c", "maximum_exhaust_milli_c"],
     ["minimum_ignition_air_rise_milli_c", "maximum_air_milli_c"],
     ["minimum_run_exhaust_milli_c", "maximum_exhaust_milli_c"],
@@ -126,5 +134,10 @@ export function heaterValidation(value, limits) {
     p.reference_speed_code - p.exploration_floor_code < 2
   )
     errors.exploration_floor_code = "Минимум на 2 единицы ниже опорной команды";
-  return { parameters, errors, valid: Object.keys(errors).length === 0 };
+  return {
+    parameters,
+    errors,
+    valid: Object.keys(errors).length === 0,
+    complete: heaterFields.every(([key]) => parameters[key] > 0),
+  };
 }

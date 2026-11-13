@@ -101,6 +101,12 @@ int main() {
     for (unsigned t = 310; t <= 400; t += 10)
         button.poll(true, t);
     assert(local.stops == 1);
+    for (unsigned t = 410; t <= 450; t += 10)
+        button.poll(false, t);
+    local.view.state = State::DEBUG;
+    for (unsigned t = 460; t <= 550; t += 10)
+        button.poll(true, t);
+    assert(local.stops == 2 && local.starts == 1);
     web_protocol::Command command;
     const char *request = R"({"action":"START","command_id":"1"})";
     assert(web_protocol::parse_challenge_request(request, std::strlen(request), &command) ==

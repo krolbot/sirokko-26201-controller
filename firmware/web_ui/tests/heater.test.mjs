@@ -21,8 +21,7 @@ const parameters = {
   ignition_ms: 100,
   verify_ms: 100,
   postpurge_ms: 150000,
-  maximum_purge_exit_exhaust_milli_c: 50000,
-  maximum_purge_exit_air_milli_c: 50000,
+  cooling_exhaust_milli_c: 50000,
   maximum_exhaust_milli_c: 300000,
   maximum_air_milli_c: 150000,
   minimum_ignition_rise_milli_c: 1000,
@@ -32,16 +31,17 @@ const parameters = {
   reference_speed_code: 2000,
   exploration_floor_code: 1000,
 };
-test("only supplied defaults appear; missing fields cannot produce an accepted profile", () => {
+test("partial parameters can be saved without enabling automatic heating", () => {
   const draft = heaterDraft({
-    parameters: { preheat_ms: 30000, postpurge_ms: 150000 },
+    parameters: { preheat_ms: 30000, postpurge_ms: 150000, cooling_exhaust_milli_c: 40000 },
   });
   assert.equal(draft.preheat_ms, 30);
   assert.equal(draft.postpurge_ms, 150);
   assert.equal(draft.maximum_exhaust_milli_c, "");
   const result = heaterValidation(draft, limits);
-  assert.equal(result.valid, false);
-  assert.equal(Object.keys(result.errors).length, 14);
+  assert.equal(result.valid, true);
+  assert.equal(result.complete, false);
+  assert.equal(result.parameters.minimum_run_exhaust_milli_c, 0);
   assert.equal(heaterValidation(draft, undefined).valid, false);
 });
 test("form units round trip without changing any accepted field", () => {
@@ -49,20 +49,19 @@ test("form units round trip without changing any accepted field", () => {
   assert.equal(result.valid, true);
   assert.deepEqual(result.parameters, parameters);
 });
-test("coupled limits, precision, missing values and nonfinite numbers block saving", () => {
+test("coupled limits, precision and nonfinite numbers block saving", () => {
   const base = heaterDraft({ parameters });
   for (const [field, value] of [
     ["preheat_ms", 29.999],
     ["preheat_ms", 60.001],
     ["postpurge_ms", 149],
-    ["prepurge_ms", ""],
     ["prepurge_ms", NaN],
     ["prepurge_ms", Infinity],
     ["prepurge_ms", -1],
     ["prepurge_ms", 0.0001],
     ["prepurge_ms", 604801],
     ["maximum_air_milli_c", 601],
-    ["maximum_purge_exit_air_milli_c", 150],
+    ["cooling_exhaust_milli_c", 300],
     ["minimum_run_exhaust_milli_c", 300],
     ["minimum_ignition_rise_milli_c", 300],
     ["minimum_ignition_air_rise_milli_c", 150],
@@ -141,7 +140,6 @@ test("queued configuration is confirmed only by the saved profile and invalidate
     { boot_id: "2" },
     { storage_ok: false },
     { learned_model: { valid: true } },
-    { envelope: { provisioned: false, parameters } },
     {
       envelope: {
         provisioned: true,
