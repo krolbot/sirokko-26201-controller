@@ -16,6 +16,7 @@ inline constexpr Entry commands[] = {
     {sirokko::Action::OTA, "OTA"},
     {sirokko::Action::TRIAL_CONFIRM, "TRIAL_CONFIRM"},
     {sirokko::Action::TRIAL_PWM, "TRIAL_PWM"},
+    {sirokko::Action::TRIAL_SELECT, "TRIAL_SELECT"},
 };
 inline bool starts_cycle(sirokko::Action action) {
     return action == sirokko::Action::START || action == sirokko::Action::TRIAL_START;
@@ -48,7 +49,7 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
     if (view.storage_busy)
         return Block::BUSY;
     if (control.trial_active && action != Action::RESET_FAULT && action != Action::TRIAL_CONFIRM &&
-        action != Action::TRIAL_PWM)
+        action != Action::TRIAL_PWM && action != Action::TRIAL_SELECT)
         return Block::BUSY;
     if ((action == Action::TRIAL_START || (action == Action::START && view.envelope.provisioned)) &&
         !view.local_controls_initialized)
@@ -59,6 +60,7 @@ inline sirokko::Block block(const RuntimeView &view, sirokko::Action action) {
                        !control.outputs.glow && !control.faults
                    ? Block::NONE
                    : Block::BUSY;
+    case Action::TRIAL_SELECT:
     case Action::TRIAL_PWM:
         return control.trial_active && control.state == State::RUN && control.outputs.fuel && !control.faults
                    ? Block::NONE

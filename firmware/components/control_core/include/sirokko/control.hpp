@@ -5,6 +5,7 @@
 #include <array>
 #include "sirokko/regulator.hpp"
 #include "sirokko/combustion.hpp"
+#include "sirokko/trial_record.hpp"
 
 namespace sirokko {
 
@@ -167,6 +168,7 @@ struct TickInput {
     bool trial_request{};
     bool trial_confirm{};
     bool set_trial_pwm{};
+    bool select_trial_pwm{};
     uint16_t trial_pwm_code{};
     bool local_button_held{};
     bool local_button_valid{};
@@ -180,6 +182,7 @@ struct Snapshot {
     Block start_block{Block::RECOVERY_PURGE};
     Block reset_fault_block{Block::BUSY};
     bool trial_active{};
+    TrialResult trial_result;
     uint64_t trial_elapsed_ms{};
     uint64_t trial_remaining_ms{};
     Block trial_start_block{Block::BUSY};
@@ -212,6 +215,7 @@ enum class Action : uint8_t {
     TRIAL_START,
     TRIAL_CONFIRM,
     TRIAL_PWM,
+    TRIAL_SELECT,
 };
 
 struct Grant {
@@ -269,6 +273,7 @@ class Controller {
     void latch_fault(uint32_t faults, uint64_t now_ms);
     Outputs outputs() const;
 
+    TrialRecord trial_record_;
     SafetyEnvelope envelope_;
     Settings settings_;
     Sensors last_sensors_;

@@ -6,6 +6,31 @@
 #include <limits>
 #include <type_traits>
 namespace {
+const char *trial_record_reason(sirokko::TrialRecordReason reason) {
+    using R = sirokko::TrialRecordReason;
+    switch (reason) {
+    case R::EMPTY:
+        return "Запись начнётся при подготовке первого запуска";
+    case R::SELECT_PWM:
+        return "Выберите нижний ШИМ после проверки горения";
+    case R::SETTLING:
+        return "Нужны 2 минуты на выбранном ШИМ с колебаниями выхлопа не более 5 °C";
+    case R::INVALID:
+        return "Запись прервана ошибкой или недостоверными показаниями. Нужен новый первый запуск";
+    case R::FULL:
+        return "Память записи заполнена. Нужен новый первый запуск";
+    case R::RANGE:
+        return "Измерения не позволяют предложить температуру для выбранного диапазона ШИМ";
+    case R::IGNITION:
+        return "Выхлоп не успел подтвердить предложенную температуру за время на розжиг";
+    case R::PROFILE_CHANGED:
+        return "Параметры отопителя изменились. Нужен новый первый запуск";
+    case R::READY:
+        return "Предложение по измерениям готово";
+    }
+    return "Нет измерений";
+}
+
 const char *russian_state(sirokko::State state) {
     switch (state) {
     case sirokko::State::UNCONFIGURED:
@@ -95,6 +120,8 @@ const char *russian_event(const char *kind) {
         return "Первый запуск начат кнопкой KEY0";
     if (std::strcmp(kind, "TRIAL_CONFIRMED") == 0)
         return "Горение подтверждено пользователем";
+    if (std::strcmp(kind, "TRIAL_PWM_SELECTED") == 0)
+        return "Нижний ШИМ выбран";
     if (std::strcmp(kind, "TRIAL_PWM_CHANGED") == 0)
         return "ШИМ двигателя изменён при первом запуске";
     if (std::strcmp(kind, "TRIAL_EXPIRED") == 0)
@@ -180,7 +207,26 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
     json->unsigned_integer(control.trial_remaining_ms);
     json->raw(",\"elapsed_ms\":");
     json->unsigned_integer(control.trial_elapsed_ms);
-    json->character('}');
+    const auto &trial = control.trial_result;
+    json->raw(",\"result\":{\"samples\":");
+    json->unsigned_integer(trial.samples);
+    json->raw(",\"pwm\":");
+    json->unsigned_integer(trial.selected_pwm);
+    json->raw(",\"ready\":");
+    json->boolean(trial.reason == sirokko::TrialRecordReason::READY);
+    json->raw(",\"complete\":");
+    json->boolean(trial.complete);
+    json->raw(",\"saved\":");
+    json->boolean(trial.saved);
+    json->raw(",\"temperature_milli_c\":");
+    json->integer(trial.temperature_milli_c);
+    json->raw(",\"minimum_milli_c\":");
+    json->integer(trial.minimum_milli_c);
+    json->raw(",\"reference_milli_c\":");
+    json->integer(trial.reference_milli_c);
+    json->raw(",\"reason\":");
+    json->quoted(trial_record_reason(trial.reason));
+    json->raw("}}");
     const auto &monitor = control.combustion;
     const char *phases[] = {"OFF", "LEARNING", "WATCHING", "SUSPECT", "LOST"};
     json->raw(",\"combustion\":{\"phase\":");

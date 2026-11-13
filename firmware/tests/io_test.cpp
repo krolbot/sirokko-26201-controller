@@ -205,6 +205,10 @@ int main() {
     assert(web_protocol::parse_challenge_request(confirm_trial, std::strlen(confirm_trial), &trial_command) ==
            web_protocol::ParseError::OK);
     assert(trial_command.action == Action::TRIAL_CONFIRM);
+    const char *select_trial = R"({"action":"TRIAL_SELECT","command_id":"5","speed_code":2007})";
+    assert(web_protocol::parse_challenge_request(select_trial, std::strlen(select_trial), &trial_command) ==
+           web_protocol::ParseError::OK);
+    assert(trial_command.action == Action::TRIAL_SELECT && trial_command.speed_code == 2007);
     const char *pwm_trial = R"({"action":"TRIAL_PWM","command_id":"4","speed_code":2007})";
     assert(web_protocol::parse_challenge_request(pwm_trial, std::strlen(pwm_trial), &trial_command) ==
            web_protocol::ParseError::OK);

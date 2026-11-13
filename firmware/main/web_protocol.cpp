@@ -281,6 +281,8 @@ bool parse_action_text(const char *text, sirokko::Action *action) {
         *action = sirokko::Action::TRIAL_START;
     else if (equals(text, "TRIAL_CONFIRM"))
         *action = sirokko::Action::TRIAL_CONFIRM;
+    else if (equals(text, "TRIAL_SELECT"))
+        *action = sirokko::Action::TRIAL_SELECT;
     else if (equals(text, "TRIAL_PWM"))
         *action = sirokko::Action::TRIAL_PWM;
 
@@ -620,6 +622,7 @@ Digest digest_command(const Command &command) {
     hash_u8(&hash, static_cast<uint8_t>(command.action));
     hash_u64(&hash, command.command_id);
     switch (command.action) {
+    case sirokko::Action::TRIAL_SELECT:
     case sirokko::Action::TRIAL_PWM:
         hash_u64(&hash, command.speed_code);
         break;
@@ -733,6 +736,7 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
 
     uint32_t required = kAction | kCommandId;
     switch (command.action) {
+    case sirokko::Action::TRIAL_SELECT:
     case sirokko::Action::TRIAL_PWM:
         required |= kSpeedCode;
         break;

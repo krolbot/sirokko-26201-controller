@@ -1,6 +1,5 @@
 <script>
   import History from "../components/History.svelte";
-  import Measurements from "../components/Measurements.svelte";
   import {
     commandAllowed,
     commandReason,
@@ -16,16 +15,10 @@
     api,
     session,
     notify,
-    recording,
     startTrial,
-    downloadMeasurements,
-    addMeasurementNote,
-    stopRecording,
     suggestion,
-    trialSaved,
     selectTrialPwm,
     saveTrialProfile,
-    discardTrialRecording,
   } = $props();
   const snapshot = $derived(ui.snapshot);
   const active = $derived(trialActive(snapshot));
@@ -34,7 +27,6 @@
       ui.requestInFlight === "TRIAL_START",
   );
   const ready = $derived(connectionReady(ui));
-  const captureAvailable = $derived(!recording.active && !recording.unsaved);
   const phase = $derived(snapshot.state.code);
   const measuring = $derived(active && phase === "RUN");
   const pwm = new Draft(["speed_code"]);
@@ -143,7 +135,7 @@
           .cooling_exhaust_milli_c / 1000} °C.
       </p>{/if}
   </section>
-{:else if !recording.selectedPwm}
+{:else if !suggestion?.samples}
   <section class="surface info-panel section">
     <h2>Порядок запуска</h2>
     <p class="caption">
@@ -158,22 +150,13 @@
     <div class="trial-actions">
       <button
         class="primary"
-        disabled={!ready ||
-          !captureAvailable ||
-          !commandAllowed(snapshot, "TRIAL_START")}
+        disabled={!ready || !commandAllowed(snapshot, "TRIAL_START")}
         onclick={startTrial}>Подготовить запуск</button
       >
       {#if !commandAllowed(snapshot, "TRIAL_START")}<p class="caption">
           {commandReason(snapshot, "TRIAL_START")}
         </p>{/if}
     </div>
-    {#if recording.active}<p class="caption">
-        Перед новым запуском завершите текущую запись.
-      </p>
-    {:else if recording.unsaved}<p class="caption">
-        Сначала сохраните настройки или удалите предыдущую запись. Скачивать CSV
-        необязательно.
-      </p>{/if}
     {#if pending}<p class="caption" role="status">
         Ждём подтверждения контроллера…
       </p>{/if}
@@ -217,9 +200,8 @@
       class="secondary select-pwm"
       disabled={!ready ||
         Boolean(ui.pending || ui.requestInFlight) ||
-        pwm.dirty ||
-        !recording.active ||
-        !recording.online}
+        !commandAllowed(snapshot, "TRIAL_SELECT") ||
+        pwm.dirty}
       onclick={selectTrialPwm}>Выбрать этот ШИМ как нижний</button
     >
     <p class="caption">
@@ -228,11 +210,13 @@
     </p>
   </section>
 {/if}
-{#if recording.selectedPwm}
+{#if suggestion?.pwm}
   <section class="surface info-panel section" aria-live="polite">
-    <h2>{trialSaved ? "Настройки сохранены" : "Настройки по измерениям"}</h2>
-    <p>Не снижать ШИМ ниже: <strong>{recording.selectedPwm}</strong></p>
-    {#if trialSaved}
+    <h2>
+      {suggestion.saved ? "Настройки сохранены" : "Настройки по измерениям"}
+    </h2>
+    <p>Не снижать ШИМ ниже: <strong>{suggestion.pwm}</strong></p>
+    {#if suggestion.saved}
       <p>
         Отключать топливо при выхлопе ниже: <strong
           >{snapshot.envelope.parameters.minimum_run_exhaust_milli_c / 1000} °C</strong
@@ -242,13 +226,16 @@
     {:else if suggestion.ready}
       <p>
         Отключать топливо при выхлопе ниже: <strong
-          >{suggestion.temperatureC} °C</strong
+          >{suggestion.temperature_milli_c / 1000} °C</strong
         >
       </p>
       <p class="caption">
-        Начальное предложение — между {suggestion.referenceC.toFixed(1)} °C (до розжига
-        или завершение охлаждения) и {suggestion.minimumC.toFixed(1)} °C (минимум
-        при подтверждённом горении в выбранном диапазоне ШИМ).
+        Начальное предложение — между {(
+          suggestion.reference_milli_c / 1000
+        ).toFixed(1)} °C (до розжига или завершение охлаждения) и {(
+          suggestion.minimum_milli_c / 1000
+        ).toFixed(1)} °C (минимум при подтверждённом горении в выбранном диапазоне
+        ШИМ).
       </p>
       <p class="caption">
         Проверьте при следующем холодном запуске. Температура выхлопа реагирует
@@ -297,30 +284,25 @@
   </dl>
 </section>
 <History {snapshot} {api} online={ui.link === "online"} />
-{#if recording.samples}
-  <Measurements
-    {recording}
-    online={ui.link === "online"}
-    stop={stopRecording}
-    download={downloadMeasurements}
-    addNote={addMeasurementNote}
-    allowStart={false}
-    stopDisabled={active || pending}
-  />
-{:else}<p class="caption">
-    Запись начнётся при подготовке запуска и завершится после охлаждения.
-    Держите страницу открытой до сохранения настроек. Скачивать CSV
-    необязательно.
-  </p>{/if}
-{#if recording.samples && !recording.active && !active && !pending}
-  <button class="secondary" onclick={discardTrialRecording}
-    >Удалить запись</button
-  >
+<section class="surface info-panel section">
+  <h2>Измерения первого запуска</h2>
+  <p>{suggestion?.samples ?? 0} измерений · запись и расчёт на ESP</p>
   <p class="caption">
-    Освободит страницу для нового запуска. Сохранённые настройки останутся в
-    контроллере.
+    Страницу можно закрыть. Измерения и выбранный ШИМ останутся до перезапуска
+    ESP или нового первого запуска. Сохранённые настройки сохраняются и после
+    отключения питания.
   </p>
-{/if}
+  {#if !active && suggestion?.samples}
+    <button
+      class="secondary"
+      disabled={!ready || pending || !commandAllowed(snapshot, "TRIAL_START")}
+      onclick={startTrial}>Новый первый запуск</button
+    >
+    <p class="caption">
+      Заменит текущую запись. Сохранённые настройки не изменятся.
+    </p>
+  {/if}
+</section>
 <a class="secondary" href="#/heater">Параметры отопителя</a>
 
 <style>

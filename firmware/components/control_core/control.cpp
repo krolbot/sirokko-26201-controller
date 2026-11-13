@@ -333,11 +333,13 @@ Snapshot Controller::tick(const TickInput &input) {
                    (!envelope_.provisioned || cooling_complete(envelope_, input.sensors, now))) {
             transition(State::MAINTENANCE, now);
         }
+        trial_record_.observe(now, state_, outputs(), input.sensors, faults_, trial_active_);
         return snapshot(now);
     }
     if (have_tick_ && now < last_tick_ms_) {
         latch_fault(FAULT_CONTROL_WATCHDOG, now);
         last_tick_ms_ = now;
+        trial_record_.observe(now, state_, outputs(), input.sensors, faults_, trial_active_);
         return snapshot(now);
     }
     have_tick_ = true;
@@ -405,6 +407,7 @@ Snapshot Controller::tick(const TickInput &input) {
 
     if (!stop_barrier && !reset_barrier && !expired && input.cycle_record_ready && input.trial_request &&
         trial_start_guard(input.sensors, now) == Block::NONE) {
+        trial_record_.begin(now, envelope_);
         trial_active_ = true;
         trial_fault_ = false;
         trial_speed_code_ = kPwmMaximum;
@@ -482,6 +485,12 @@ Snapshot Controller::tick(const TickInput &input) {
                 if (changed)
                     record("TRIAL_PWM_CHANGED", now);
             }
+            if (state_ == State::RUN && !faults_ && input.select_trial_pwm &&
+                input.trial_pwm_code == trial_speed_code_ && trial_record_.select(trial_speed_code_)) {
+                if (++state_version_ == 0)
+                    state_version_ = 1;
+                record("TRIAL_PWM_SELECTED", now);
+            }
             break;
         }
         if (temperature_confirmed(input.sensors.exhaust.milli_c < envelope_.minimum_run_exhaust_milli_c,
@@ -515,6 +524,7 @@ Snapshot Controller::tick(const TickInput &input) {
     default:
         break;
     }
+    trial_record_.observe(now, state_, outputs(), input.sensors, faults_, trial_active_);
     return snapshot(now);
 }
 
@@ -528,6 +538,7 @@ Snapshot Controller::snapshot(uint64_t now_ms) const {
     result.run_id = run_id_;
     result.reset_fault_block = reset_fault_guard(last_sensors_, now_ms, previous_external_faults_);
     result.trial_active = trial_active_;
+    result.trial_result = trial_record_.result();
     result.trial_start_block = trial_start_guard(last_sensors_, now_ms);
     if (trial_active_) {
         const uint64_t elapsed = now_ms >= state_started_ms_ ? now_ms - state_started_ms_ : 0;
@@ -581,6 +592,7 @@ bool Controller::install_safety_envelope(const SafetyEnvelope &profile, bool rec
         (state_ != State::UNCONFIGURED && state_ != State::IDLE && state_ != State::FAULT))
         return false;
     const bool was_unconfigured = !envelope_.provisioned;
+    trial_record_.profile_changed(profile);
     envelope_ = profile;
     envelope_.provisioned = valid_safety_envelope(envelope_);
     combustion_monitor_ = {};

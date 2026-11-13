@@ -120,6 +120,7 @@ int main() {
     eligibility.control.state = State::RUN;
     assert(command_policy::block(eligibility, Action::TRIAL_CONFIRM) == Block::BUSY);
     assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::NONE);
+    assert(command_policy::block(eligibility, Action::TRIAL_SELECT) == Block::NONE);
     eligibility.control.trial_active = false;
     assert(command_policy::block(eligibility, Action::TRIAL_PWM) == Block::BUSY);
     eligibility.control.outputs.fuel = false;

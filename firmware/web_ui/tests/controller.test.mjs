@@ -412,3 +412,13 @@ test("trial PWM request preserves its value and local STOP cancels its pending a
   assert.equal(session.view.pending, null);
   assert.equal(session.view.message.kind, "warning");
 });
+
+test('selected trial PWM is acknowledged by ESP state, never by queue acceptance or another boot', () => {
+  const baseline = {...state(), run_id:'2', state:{code:'RUN'}, trial:{active:true,result:{pwm:0}}};
+  const pending = {action:'TRIAL_SELECT', payload:{speed_code:2007}, baseline};
+  const current = {...baseline, state_version:'3', trial:{active:true,result:{pwm:2007}}};
+  assert(commandMatchesSnapshot(pending,current));
+  assert.equal(commandMatchesSnapshot(pending,baseline),false);
+  assert.equal(commandMatchesSnapshot(pending,{...current,boot_id:'2'}),false);
+  assert.equal(commandMatchesSnapshot(pending,{...current,trial:{active:true,result:{pwm:4014}}}),false);
+});

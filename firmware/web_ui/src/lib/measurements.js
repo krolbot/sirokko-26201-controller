@@ -1,5 +1,5 @@
 const channels = ["exhaust", "air", "room"];
-export const columns = [
+const columns = [
   "time_utc",
   "event",
   "note",
@@ -39,11 +39,8 @@ export class Measurements {
     this.exportedRows = 0;
     this.samples = 0;
     this.reason = "";
-    this.trialRequested = false;
-    this.trialSeen = false;
     this.lastEventMs = -1;
     this.lastEventMask = 0;
-    this.selectedPwm = null;
   }
 
   get unsaved() {
@@ -58,7 +55,6 @@ export class Measurements {
       online: this.online,
       reason: this.reason,
       elapsedMs: this.samples ? this.lastUptime - this.firstUptime : 0,
-      selectedPwm: this.selectedPwm,
     };
   }
 
@@ -66,12 +62,9 @@ export class Measurements {
     if (this.active || this.unsaved || !online || !this.valid(snapshot))
       return false;
     this.rows = [];
-    this.selectedPwm = null;
     this.exportedRows = this.samples = 0;
     this.reason = "";
     this.active = this.online = true;
-    this.trialRequested = false;
-    this.trialSeen = false;
     this.bootId = snapshot.boot_id;
     this.firstUptime = snapshot.uptime_ms;
     this.lastEventMs = snapshot.uptime_ms - 1;
@@ -79,19 +72,6 @@ export class Measurements {
     this.lastUptime = null;
     this.observe(snapshot, true, now);
     return true;
-  }
-
-  startTrial(snapshot, online, now = Date.now()) {
-    if (!this.start(snapshot, online, now) || !this.active) return false;
-    this.trialRequested = true;
-    this.trialSeen = false;
-    this.event("trial_requested", "", now);
-    return true;
-  }
-
-  cancelTrialRequest(now = Date.now()) {
-    if (this.trialRequested && !this.trialSeen)
-      this.stop("trial_not_started", now);
   }
 
   valid(snapshot) {
@@ -231,11 +211,6 @@ export class Measurements {
     ]);
     this.lastUptime = snapshot.uptime_ms;
     this.samples++;
-    if (this.trialRequested) {
-      if (snapshot.trial?.active === true) this.trialSeen = true;
-      else if (this.trialSeen && snapshot.trial?.active === false)
-        this.stop("trial_finished", now);
-    }
   }
 
   note(text, now = Date.now()) {
@@ -249,8 +224,6 @@ export class Measurements {
     if (!this.active) return;
     this.event(reason, "", now);
     this.active = false;
-    this.trialRequested = false;
-    this.trialSeen = false;
     if (this.reason !== "limit") this.reason = reason;
   }
 
@@ -266,31 +239,5 @@ export class Measurements {
 
   markExported() {
     this.exportedRows = this.rows.length;
-  }
-
-  discard() {
-    if (this.active) return false;
-    this.rows = [];
-    this.samples = this.exportedRows = 0;
-    this.selectedPwm = null;
-    this.reason = "";
-    return true;
-  }
-
-  selectPwm(snapshot) {
-    if (
-      !this.active ||
-      !this.online ||
-      !snapshot?.trial?.active ||
-      snapshot.state?.code !== "RUN" ||
-      snapshot.boot_id !== this.bootId ||
-      snapshot.faults ||
-      !snapshot.outputs?.fuel ||
-      snapshot.outputs.glow
-    )
-      return false;
-    this.selectedPwm = snapshot.outputs.speed_code;
-    this.note(`Выбран нижний ШИМ: ${this.selectedPwm}`);
-    return true;
   }
 }

@@ -416,6 +416,7 @@ void control_pass(ControlWork &w) {
         input.trial_request = c.action == sirokko::Action::TRIAL_START;
         input.trial_confirm = c.action == sirokko::Action::TRIAL_CONFIRM;
         input.set_trial_pwm = c.action == sirokko::Action::TRIAL_PWM;
+        input.select_trial_pwm = c.action == sirokko::Action::TRIAL_SELECT;
         input.trial_pwm_code = c.speed_code;
         if (input.trial_request && (!g_button_ready || !panel_ready()))
             input.external_faults |= sirokko::FAULT_LOCAL_CONTROLS;
@@ -563,7 +564,8 @@ bool runtime_submit(const sirokko::Grant &grant, sirokko::Action action, uint64_
         return false;
     if (action == sirokko::Action::TIMER && delay > sirokko::kMaximumTimerMs)
         return false;
-    if (action == sirokko::Action::TRIAL_PWM && (!speed_code || speed_code > sirokko::kPwmMaximum))
+    if ((action == sirokko::Action::TRIAL_PWM || action == sirokko::Action::TRIAL_SELECT) &&
+        (!speed_code || speed_code > sirokko::kPwmMaximum))
         return false;
     RuntimeCommand c{};
     c.grant = grant;

@@ -13,11 +13,12 @@ flags = [
     "-I" + str(core / "include"), "-I" + str(root / "main"),
 ]
 core_sources = [str(core / name) for name in (
-    "control.cpp", "profile.cpp", "regulator.cpp", "combustion.cpp",
+    "control.cpp", "profile.cpp", "regulator.cpp", "combustion.cpp", "trial_record.cpp",
 )]
 suites = {
     "combustion": core_sources,
     "control": core_sources,
+    "trial_record": core_sources,
     "thermostat": core_sources,
     "recovery": core_sources,
     "runtime": core_sources + [str(root / "main" / name) for name in (

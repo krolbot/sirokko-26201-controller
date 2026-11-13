@@ -259,6 +259,13 @@ export function commandMatchesSnapshot(pending, snapshot) {
         snapshot.run_id !== "0" &&
         snapshot.run_id === baseline.run_id
       );
+    case "TRIAL_SELECT":
+      return (
+        trialActive(snapshot) &&
+        snapshot.state?.code === "RUN" &&
+        snapshot.run_id === baseline.run_id &&
+        snapshot.trial?.result?.pwm === payload.speed_code
+      );
     case "TRIAL_PWM":
       return (
         trialActive(snapshot) &&

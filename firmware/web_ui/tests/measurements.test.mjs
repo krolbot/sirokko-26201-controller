@@ -173,88 +173,9 @@ test("CSV escapes notes, neutralizes formulas and keeps operator events separate
   assert.equal(r.samples, 1);
 });
 
-test("trial captures arm, actuation and cooldown, stopping only after the cycle completes", () => {
-  const r = new Measurements();
-  const initial = {
-    ...snapshot(),
-    trial: { active: false },
-    state: { code: "UNCONFIGURED" },
-  };
-  assert(r.startTrial(initial, true, time));
-  const armed = {
-    ...snapshot(1100),
-    trial: { active: true },
-    state: { code: "TRIAL_READY" },
-  };
-  r.observe(armed, true, time + 100);
-  r.cancelTrialRequest(time + 101); // A late browser timeout must not discard an observed trial.
-  assert(r.active);
-  r.observe(
-    { ...snapshot(1200), trial: { active: true }, state: { code: "IGNITION" } },
-    true,
-    time + 200,
-  );
-  r.observe(
-    {
-      ...snapshot(1300),
-      trial: { active: true },
-      state: { code: "STOP_PURGE" },
-    },
-    true,
-    time + 300,
-  );
-  assert(r.active);
-  r.observe(
-    {
-      ...snapshot(1400),
-      trial: { active: false },
-      state: { code: "UNCONFIGURED" },
-    },
-    true,
-    time + 400,
-  );
-  assert.equal(r.active, false);
-  assert.equal(r.reason, "trial_finished");
-  assert.equal(
-    csvRows(r).find((row) => row.state === "IGNITION").trial_active,
-    "true",
-  );
-  const before = r.csv();
-  assert.equal(r.startTrial(initial, true, time + 500), false);
-  assert.equal(r.csv(), before);
-  r.markExported();
-  assert(r.startTrial(initial, true, time + 600));
-});
-
-test("trial cannot overwrite an active recording and rejection or reboot retains its collected data", () => {
-  const r = new Measurements();
-  const initial = { ...snapshot(), trial: { active: false } };
-  assert(r.start(initial, true, time));
-  const before = r.csv();
-  assert.equal(r.startTrial(initial, true, time + 100), false);
-  assert.equal(r.csv(), before);
-  r.stop();
-  r.markExported();
-  assert(r.startTrial(initial, true, time + 200));
-  r.cancelTrialRequest(time + 300);
-  assert.equal(r.active, false);
-  assert.equal(r.reason, "trial_not_started");
-  assert(r.unsaved);
-  r.markExported();
-  assert(r.startTrial(initial, true, time + 400));
-  r.observe(
-    { ...snapshot(20), boot_id: "new", trial: { active: false } },
-    true,
-    time + 500,
-  );
-  assert.equal(r.active, false);
-  assert.equal(r.reason, "restart");
-  assert(r.unsaved);
-});
-
 test("CSV keeps accepted PWM steps between polls with their original controller times and temperatures", () => {
   const r = new Measurements();
-  r.startTrial(snapshot(1000), true, time);
+  r.start(snapshot(1000), true, time);
   const event = (kind, at_ms, speed_code, exhaust_milli_c) => ({
     kind,
     at_ms,
