@@ -3,6 +3,7 @@
 #include "driver/gpio.h"
 
 namespace board {
+constexpr gpio_num_t kStatusLed = GPIO_NUM_48;
 constexpr gpio_num_t kRoomDq = GPIO_NUM_4;
 constexpr gpio_num_t kExhaustDrdy = GPIO_NUM_1;
 constexpr gpio_num_t kAirDrdy = GPIO_NUM_2;

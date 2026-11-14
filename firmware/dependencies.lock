@@ -1,4 +1,14 @@
 dependencies:
+  espressif/led_strip:
+    component_hash: 28c6509a727ef74925b372ed404772aeedf11cce10b78c3f69b3c66799095e2d
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.5.5
   espressif/onewire_bus:
     component_hash: dcce4fb1c2fc43c3d02de1cc9abdf062127468a785578723696de3817c526f99
     dependencies:
@@ -14,7 +24,8 @@ dependencies:
       type: idf
     version: 5.2.3
 direct_dependencies:
+- espressif/led_strip
 - espressif/onewire_bus
-manifest_hash: e0a38016e17585a28a827aa9157f7ce77931e78c7b9c5e28a2f7c7b0773ccde9
+manifest_hash: 65a8c5412f75cba75fb8918bfb4c99ceed0a60bcbcc8220a09c7e0008e823495
 target: esp32s3
 version: 2.0.0

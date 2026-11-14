@@ -1,4 +1,5 @@
 #include "runtime_api.hpp"
+#include "status_led.hpp"
 #include "thermal_history.hpp"
 #include "command_policy.hpp"
 #include "network.hpp"
@@ -700,6 +701,7 @@ extern "C" void app_main() {
         ESP_LOGE(kTag, "Control queue/mutex allocation failed; startup stopped");
         return;
     }
+    status_led_begin();
     const uint64_t boot = (static_cast<uint64_t>(esp_random()) << 32) | esp_random();
     const auto envelope = load_factory_envelope();
     g_startup = load_startup(envelope.provisioned);
