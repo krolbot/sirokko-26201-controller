@@ -41,6 +41,7 @@ bool valid_settings(const Settings &s) {
            s.slew_down_per_s <= kMaximumSlewPerS;
 }
 bool valid_profile_draft(const SafetyEnvelope &p) {
+    if (p.exhaust_low_delay_ms < 1000 || p.exhaust_low_delay_ms > 30000) return false;
     for (auto t : {p.preheat_ms, p.ignition_timeout_ms, p.postpurge_ms})
         if (t > kMaximumTimerMs)
             return false;
@@ -84,7 +85,7 @@ uint64_t envelope_fingerprint(const SafetyEnvelope &p) {
                                static_cast<uint32_t>(p.minimum_run_exhaust_milli_c),
                                p.purge_speed_code,
                                p.maximum_speed_code,
-                               p.minimum_speed_code};
+                               p.minimum_speed_code, p.exhaust_low_delay_ms};
     uint64_t hash = 1469598103934665603ULL;
     for (uint64_t v : fields)
         for (unsigned b = 0; b < 8; ++b)

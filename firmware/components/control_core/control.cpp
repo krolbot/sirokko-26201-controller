@@ -196,7 +196,7 @@ bool Controller::purge_ready(const Sensors &sensors, uint64_t now_ms) const {
            cooling_ready(sensors, now_ms);
 }
 
-bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
+bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms, uint64_t delay_ms) {
     if (!condition) {
         condition_active_ = false;
         return false;
@@ -207,7 +207,7 @@ bool Controller::temperature_confirmed(bool condition, uint64_t sample_ms) {
         condition_started_ms_ = sample_ms;
     }
     condition_sample_ms_ = sample_ms;
-    return sample_ms - condition_started_ms_ >= kTemperatureConfirmationMs;
+    return sample_ms - condition_started_ms_ >= delay_ms;
 }
 
 void Controller::begin_start(uint64_t now_ms) {
@@ -494,7 +494,7 @@ Snapshot Controller::tick(const TickInput &input) {
             break;
         }
         if (temperature_confirmed(input.sensors.exhaust.milli_c < envelope_.minimum_run_exhaust_milli_c,
-                                  input.sensors.exhaust.sample_ms))
+                                  input.sensors.exhaust.sample_ms, envelope_.exhaust_low_delay_ms))
             latch_fault(FAULT_FLAME_LOST, now);
         else {
             const auto previous = combustion_monitor_.snapshot().phase;

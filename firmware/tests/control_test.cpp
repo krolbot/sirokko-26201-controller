@@ -313,9 +313,30 @@ void test_optional_exhaust_cutoff() {
     assert(s.state == State::FAULT_PURGE && (s.faults & FAULT_EXHAUST));
     off(s); // The probe range still applies when no additional exhaust cutoff is configured.
 }
+void test_exhaust_delay() {
+    auto p = envelope();
+    p.exhaust_low_delay_ms = 5000;
+    Controller c(p, Settings{}, 1, Startup::CLEAN);
+    auto i = input(120); i.start = true; c.tick(i);
+    c.tick(input(kIgnitionAt));
+    auto s = confirm_ignition(c, 50000);
+    assert(s.state == State::RUN); // Ignition still uses its original confirmation.
+    for (uint64_t t = kRunAt + 100; t <= kRunAt + 3000; t += 100) {
+        s = c.tick(input(t, 39000)); assert(s.outputs.fuel);
+    }
+    s = c.tick(input(kRunAt + 3100, 40000)); assert(s.outputs.fuel);
+    for (uint64_t t = kRunAt + 3200; t < kRunAt + 8200; t += 100) {
+        s = c.tick(input(t, 39000)); assert(s.outputs.fuel);
+    }
+    s = c.tick(input(kRunAt + 8200, 39000));
+    assert(!s.outputs.fuel && (s.faults & FAULT_FLAME_LOST));
+    for (auto delay : {0ULL, 999ULL, 30001ULL}) { p.exhaust_low_delay_ms = delay; assert(!valid_profile_draft(p)); }
+}
+
 } // namespace
 
 int main() {
+    test_exhaust_delay();
     test_trials();
     test_trial_measurements();
     test_optional_exhaust_cutoff();

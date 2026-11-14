@@ -120,6 +120,7 @@ struct SafetyEnvelope {
     uint16_t maximum_speed_code{kPwmMaximum};
     // Configured lower command for continuous operation; zero means unset.
     uint16_t minimum_speed_code{};
+    uint64_t exhaust_low_delay_ms{kTemperatureConfirmationMs};
 };
 
 struct Settings {
@@ -268,7 +269,7 @@ class Controller {
     void begin_purge(State state, uint64_t now_ms);
     bool purge_ready(const Sensors &sensors, uint64_t now_ms) const;
     void begin_start(uint64_t now_ms);
-    bool temperature_confirmed(bool condition, uint64_t sample_ms);
+    bool temperature_confirmed(bool condition, uint64_t sample_ms, uint64_t delay_ms = kTemperatureConfirmationMs);
     void begin_stop(uint64_t now_ms);
     void latch_fault(uint32_t faults, uint64_t now_ms);
     Outputs outputs() const;

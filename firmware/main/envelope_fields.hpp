@@ -12,4 +12,5 @@ template <class Envelope, class Visitor> void envelope_fields(Envelope &p, Visit
     visit("purge_speed_code", p.purge_speed_code);
     visit("maximum_speed_code", p.maximum_speed_code);
     visit("minimum_speed_code", p.minimum_speed_code);
+    visit("exhaust_low_delay_ms", p.exhaust_low_delay_ms);
 }

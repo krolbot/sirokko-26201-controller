@@ -21,6 +21,7 @@ const limits = {
 };
 // Synthetic protocol values, not physical heater settings.
 const parameters = {
+  exhaust_low_delay_ms: 1000,
   preheat_ms: 30000,
   ignition_timeout_ms: 20000,
   postpurge_ms: 150000,
@@ -34,6 +35,7 @@ const parameters = {
 test("partial parameters can be saved without enabling automatic heating", () => {
   const draft = heaterDraft({
     parameters: {
+      exhaust_low_delay_ms: 1000,
       preheat_ms: 30000,
       postpurge_ms: 150000,
       cooling_exhaust_milli_c: 40000,

@@ -11,6 +11,12 @@ export const heaterGroups = [
     title: "Температура выхлопа",
     fields: [
       [
+        "exhaust_low_delay_ms",
+        "Задержка отключения при остывании выхлопа",
+        "с",
+        1000,
+      ],
+      [
         "minimum_run_exhaust_milli_c",
         "Отключать топливо при выхлопе ниже",
         "°C",
@@ -93,6 +99,8 @@ export function heaterValidation(value, limits) {
     parameters[key] = Math.round(raw);
   }
   const p = parameters;
+  if (p.exhaust_low_delay_ms < 1000 || p.exhaust_low_delay_ms > 30000)
+    errors.exhaust_low_delay_ms = "От 1 до 30 с";
   for (const key of [
     "cooling_exhaust_milli_c",
     "maximum_exhaust_milli_c",

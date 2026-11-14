@@ -37,7 +37,7 @@ constexpr uint32_t kSettingsMagic = 0x53495233;
 constexpr uint32_t kEnvelopeMagic = 0x454E5636;
 constexpr uint32_t kCycleMagic = 0x43594331;
 constexpr char kSettingsKey[] = "settings_v3";
-constexpr char kEnvelopeKey[] = "envelope_v6";
+constexpr char kEnvelopeKey[] = "envelope_v7";
 constexpr char kCycleKey[] = "cycle_v1";
 enum class StoreKind : uint8_t { SETTINGS, PROFILE, CYCLE_ACTIVE, CYCLE_CLEAN };
 struct RuntimeCommand {
@@ -185,8 +185,30 @@ sirokko::SafetyEnvelope load_factory_envelope() {
     record_codec::Record<sirokko::SafetyEnvelope> envelope_record{};
     const RecordRead state = read_record(kEnvelopeKey, kEnvelopeMagic, &envelope_record);
     const sirokko::SafetyEnvelope &envelope = envelope_record.value;
-    if (state == RecordRead::MISSING)
-        return {};
+    if (state == RecordRead::MISSING) {
+        // Read the previous on-device layout without discarding existing settings.
+        struct PreviousProfile {
+            bool provisioned{};
+            uint64_t preheat_ms{}, ignition_timeout_ms{}, postpurge_ms{};
+            int32_t cooling_exhaust_milli_c{}, maximum_exhaust_milli_c{}, minimum_run_exhaust_milli_c{};
+            uint16_t purge_speed_code{}, maximum_speed_code{}, minimum_speed_code{};
+        };
+        record_codec::Record<PreviousProfile> previous{};
+        if (read_record("envelope_v6", kEnvelopeMagic, &previous) != RecordRead::VALID) return {};
+        sirokko::SafetyEnvelope migrated{};
+        migrated.provisioned = previous.value.provisioned;
+        migrated.preheat_ms = previous.value.preheat_ms;
+        migrated.ignition_timeout_ms = previous.value.ignition_timeout_ms;
+        migrated.postpurge_ms = previous.value.postpurge_ms;
+        migrated.cooling_exhaust_milli_c = previous.value.cooling_exhaust_milli_c;
+        migrated.maximum_exhaust_milli_c = previous.value.maximum_exhaust_milli_c;
+        migrated.minimum_run_exhaust_milli_c = previous.value.minimum_run_exhaust_milli_c;
+        migrated.purge_speed_code = previous.value.purge_speed_code;
+        migrated.maximum_speed_code = previous.value.maximum_speed_code;
+        migrated.minimum_speed_code = previous.value.minimum_speed_code;
+        if (!sirokko::valid_profile_draft(migrated)) { storage_status(STORAGE_ENVELOPE, false); return {}; }
+        return migrated;
+    }
     if (state != RecordRead::VALID || !sirokko::valid_profile_draft(envelope)) {
         storage_status(STORAGE_ENVELOPE, false);
         return {};
