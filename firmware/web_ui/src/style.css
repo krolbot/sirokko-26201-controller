@@ -145,10 +145,13 @@ summary::marker {
 .app-shell {
   max-width: 1024px;
   margin: auto;
-  min-height: 100dvh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 .app-header {
   height: 80px;
+  flex-shrink: 0;
   padding: 0 40px;
   display: flex;
   align-items: center;
@@ -186,10 +189,14 @@ summary::marker {
   background: var(--danger);
 }
 main {
-  padding: 20px 40px 160px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding: 20px 40px 24px;
 }
 .has-stop main {
-  padding-bottom: 232px;
+  padding-bottom: 24px;
 }
 .page-heading {
   display: flex;
@@ -294,6 +301,7 @@ button:active:not(:disabled) {
   display: flex;
   gap: 12px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 .form-actions button {
   flex: 1;
@@ -640,7 +648,7 @@ button:active:not(:disabled) {
 }
 .diagnostic-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 .info-panel {
@@ -661,14 +669,18 @@ button:active:not(:disabled) {
   border-bottom: 0;
 }
 .reading-list dt {
+  flex: 1;
+  min-width: 0;
   font-size: 14px;
   color: var(--secondary);
 }
 .reading-list dd {
+  flex: 0 1 auto;
+  max-width: 60%;
   font-size: 14px;
   text-align: right;
   margin: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .events {
   padding: 0;
@@ -677,7 +689,7 @@ button:active:not(:disabled) {
 }
 .events li {
   display: grid;
-  grid-template-columns: 88px 1fr;
+  grid-template-columns: 88px minmax(0, 1fr);
   gap: 16px;
   padding: 16px 0;
   border-top: 1px solid var(--line);
@@ -860,10 +872,9 @@ button:active:not(:disabled) {
   padding: 12px 0;
 }
 .bottom-dock {
-  position: fixed;
-  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  flex-shrink: 0;
+  margin: 8px auto calc(16px + env(safe-area-inset-bottom, 0px));
   width: min(calc(100% - 32px), 480px);
   z-index: 5;
 }
@@ -927,7 +938,7 @@ button:active:not(:disabled) {
     padding: 0 24px;
   }
   main {
-    padding: 16px 20px 144px;
+    padding: 16px 20px 24px;
   }
   .page-heading {
     margin-bottom: 20px;
@@ -1004,7 +1015,7 @@ button:active:not(:disabled) {
     gap: 12px;
   }
   .events li {
-    grid-template-columns: 76px 1fr;
+    grid-template-columns: 76px minmax(0, 1fr);
     gap: 12px;
   }
   .intro {
@@ -1017,7 +1028,7 @@ button:active:not(:disabled) {
     padding: 28px 20px;
   }
   .has-stop main {
-    padding-bottom: 220px;
+    padding-bottom: 24px;
   }
 }
 @media (max-width: 360px) {
@@ -1054,7 +1065,7 @@ button:active:not(:disabled) {
   }
   .reading strong {
     font-size: 18px;
-    white-space: nowrap;
+    white-space: normal;
   }
   .row-value {
     max-width: 120px;
@@ -1385,4 +1396,28 @@ button:active:not(:disabled) {
     margin: 0;
     font-size: 12px;
   }
+}
+
+/* Shared content boundaries: cards and controls must fit their own columns. */
+main > .surface + .readings,
+main > .surface + a.secondary {
+  margin-top: 24px;
+}
+.surface, .reading-list dd, .row-value { min-width: 0; }
+.primary, .secondary, .stop-button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+.reading h2 { min-height: 2.8em; }
+.info-panel > p + p, .info-panel > p + button, .info-panel > p + a {
+  margin-top: 12px;
+}
+@media (max-width: 480px) {
+  .reading-list > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(96px, auto);
+  }
+  .reading-list dd { max-width: none; }
 }
