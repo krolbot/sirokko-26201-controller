@@ -1,0 +1,10 @@
+# Preserve native CAD exports and manufacturing checksums across platforms.
+hardware/*.brd -text
+hardware/*.sch -text
+hardware/*.lbr -text
+hardware/*.csv -text
+manufacturing/**/*.csv -text
+manufacturing/**/*.cam -text
+manufacturing/**/*.gbr -text
+manufacturing/**/*.xln -text
+manufacturing/SHA256SUMS text eol=lf

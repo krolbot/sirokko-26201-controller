@@ -7,6 +7,7 @@ import hashlib
 import io
 import re
 import sys
+import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / 'web_ui/dist/index.html'
@@ -49,13 +50,20 @@ def main():
     try:
         generated = render(args.input.read_bytes())
         if args.check:
-            if args.output.read_text() != generated:
+            embedded = args.output.read_text(encoding='utf-8')
+            payload = bytes(int(value, 16) for value in re.findall(r'0x([0-9a-f]{2})', embedded))
+            expected = args.input.read_bytes()
+            html_hash = '// HTML SHA-256: ' + hashlib.sha256(expected).hexdigest()
+            gzip_hash = '// GZIP SHA-256: ' + hashlib.sha256(payload).hexdigest()
+            if (gzip.decompress(payload) != expected or
+                    html_hash not in embedded.splitlines() or
+                    gzip_hash not in embedded.splitlines()):
                 raise ValueError('embedded page differs from built frontend; regenerate before publishing')
         else:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(generated, encoding='utf-8')
         print(f'PASS: {args.output}; deterministic self-contained gzip page; check={args.check}')
-    except (OSError, UnicodeError, ValueError) as error:
+    except (OSError, UnicodeError, ValueError, EOFError, zlib.error) as error:
         print(f'embed_web_ui.py: {error}', file=sys.stderr)
         return 1
     return 0

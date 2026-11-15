@@ -10,9 +10,9 @@ for(const name of dependencies){
  versions[name]=metadata.version;
  notices.push(`${name} ${metadata.version} (${metadata.license})\n${await readFile(base+file,'utf8')}`);
 }
-const notice=notices.join('\n\n========================================\n\n')+'\n\n========================================\n\n'+`js-sha256 0.11.1 (MIT)\n${await readFile('licenses/js-sha256-MIT.txt','utf8')}`;
+const notice=(notices.join('\n\n========================================\n\n')+'\n\n========================================\n\n'+`js-sha256 0.11.1 (MIT)\n${await readFile('licenses/js-sha256-MIT.txt','utf8')}`).replace(/\r\n?/g,'\n');
 if(/<\/script/i.test(notice))throw new Error('Unsafe notice delimiter');
-const raw=await readFile('dist/index.html','utf8');
+const raw=(await readFile('dist/index.html','utf8')).replace(/\r\n?/g,'\n');
 const html=raw.replace('</body>',`<script id="third-party-notices" type="text/plain">${notice}</script></body>`);
 await writeFile('dist/index.html',html);
 await writeFile('THIRD_PARTY_NOTICES.txt',notice.trimEnd()+'\n');
