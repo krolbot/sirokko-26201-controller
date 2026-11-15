@@ -42,6 +42,10 @@ out/
 *.lck
 ~*.lck
 
+# EAGLE / Fusion Electronics local backups
+*.s#?
+*.b#?
+
 # Editors and operating systems
 .idea/
 .vscode/
