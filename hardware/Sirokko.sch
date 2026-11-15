@@ -1421,21 +1421,6 @@
 <wire x1="-3.85" y1="-1.2" x2="-3.85" y2="1.2" width="0.25" layer="21"/>
 <text x="-2" y="1.9" size="0.8" layer="25" font="vector">&gt;NAME</text>
 </package>
-<package name="ROHM_MPT3_SOT89">
-<wire x1="-2.8" y1="-2.45" x2="2.2" y2="-2.45" width="0.15" layer="21"/>
-<wire x1="2.2" y1="-2.45" x2="2.2" y2="2.45" width="0.15" layer="21"/>
-<wire x1="2.2" y1="2.45" x2="-2.8" y2="2.45" width="0.15" layer="21"/>
-<wire x1="-2.8" y1="2.45" x2="-2.8" y2="-2.45" width="0.15" layer="21"/>
-<wire x1="-3.05" y1="-2.7" x2="2.45" y2="-2.7" width="0.05" layer="39"/>
-<wire x1="2.45" y1="-2.7" x2="2.45" y2="2.7" width="0.05" layer="39"/>
-<wire x1="2.45" y1="2.7" x2="-3.05" y2="2.7" width="0.05" layer="39"/>
-<wire x1="-3.05" y1="2.7" x2="-3.05" y2="-2.7" width="0.05" layer="39"/>
-<text x="-2.8" y="2.95" size="0.85" layer="25" font="vector">&gt;NAME</text>
-<smd name="1" x="-1.95" y="1.5" dx="1.3" dy="0.9" layer="1"/>
-<smd name="3" x="-1.95" y="-1.5" dx="1.3" dy="0.9" layer="1"/>
-<smd name="2" x="-1.8625" y="0" dx="1.475" dy="0.9" layer="1"/>
-<smd name="2_TAB" x="0.4375" y="0" dx="3.125" dy="1.733" layer="1"/>
-</package>
 </packages>
 <symbols>
 <symbol name="CONN_22">
@@ -1587,17 +1572,6 @@
 <pin name="A" x="7.62" y="0" length="short" direction="pas" rot="R180"/>
 <text x="-5.08" y="5.08" size="1.27" layer="95" font="vector">&gt;NAME</text>
 <text x="-5.08" y="-5.08" size="1" layer="96" font="vector">&gt;VALUE</text>
-</symbol>
-<symbol name="NMOS_60V">
-<wire x1="-5.08" y1="2.54" x2="20.32" y2="2.54" width="0.254" layer="94"/>
-<wire x1="20.32" y1="2.54" x2="20.32" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="20.32" y1="-7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="2.54" width="0.254" layer="94"/>
-<pin name="G" x="-10.16" y="0" length="short" direction="pas"/>
-<pin name="D" x="-10.16" y="-2.54" length="short" direction="pas"/>
-<pin name="S" x="-10.16" y="-5.08" length="short" direction="pas"/>
-<text x="-5.08" y="5.08" size="1.27" layer="95" font="vector">&gt;NAME</text>
-<text x="-5.08" y="-10.16" size="1" layer="96" font="vector">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -1823,23 +1797,6 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="NMOS_60V" uservalue="yes">
-<gates>
-<gate name="G$1" symbol="NMOS_60V" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ROHM_MPT3_SOT89">
-<connects>
-<connect gate="G$1" pin="D" pad="2 2_TAB"/>
-<connect gate="G$1" pin="G" pad="1"/>
-<connect gate="G$1" pin="S" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 </devicesets>
 </library>
 <library name="Sirokko-parts">
@@ -1976,6 +1933,66 @@
 </deviceset>
 </devicesets>
 </library>
+<library name="Sirokko-parts" urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ">
+<packages>
+<package name="AO3422_SOT23" library_version="6">
+<smd name="1" x="-1.2" y="0.95" dx="0.8" dy="0.8" layer="1"/>
+<smd name="2" x="-1.2" y="-0.95" dx="0.8" dy="0.8" layer="1"/>
+<smd name="3" x="1.2" y="0" dx="0.8" dy="0.8" layer="1"/>
+<wire x1="-0.9" y1="1.65" x2="0.9" y2="1.65" width="0.12" layer="21"/>
+<wire x1="-0.9" y1="-1.65" x2="0.9" y2="-1.65" width="0.12" layer="21"/>
+<circle x="-1.7" y="1.6" radius="0.1" width="0" layer="21"/>
+<wire x1="-0.9" y1="-1.55" x2="0.9" y2="-1.55" width="0.1" layer="51"/>
+<wire x1="0.9" y1="-1.55" x2="0.9" y2="1.55" width="0.1" layer="51"/>
+<wire x1="0.9" y1="1.55" x2="-0.9" y2="1.55" width="0.1" layer="51"/>
+<wire x1="-0.9" y1="1.55" x2="-0.9" y2="-1.55" width="0.1" layer="51"/>
+<text x="2" y="2" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="2" y="0" size="0.8" layer="27" font="vector">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="AO3422" library_version="6">
+<wire x1="-5.08" y1="2.54" x2="20.32" y2="2.54" width="0.254" layer="94"/>
+<wire x1="20.32" y1="2.54" x2="20.32" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="20.32" y1="-7.62" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-7.62" x2="-5.08" y2="2.54" width="0.254" layer="94"/>
+<pin name="G" x="-10.16" y="0" length="short" direction="pas"/>
+<pin name="D" x="-10.16" y="-2.54" length="short" direction="pas"/>
+<pin name="S" x="-10.16" y="-5.08" length="short" direction="pas"/>
+<text x="-5.08" y="5.08" size="1.27" layer="95" font="vector">&gt;NAME</text>
+<text x="-5.08" y="-10.16" size="1" layer="96" font="vector">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="AO3422" prefix="Q" uservalue="yes" library_version="6">
+<gates>
+<gate name="G$1" symbol="AO3422" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AO3422_SOT23">
+<connects>
+<connect gate="G$1" pin="D" pad="3"/>
+<connect gate="G$1" pin="G" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="CATEGORY_L1" value="" constant="no"/>
+<attribute name="CATEGORY_L2" value="" constant="no"/>
+<attribute name="DATASHEET" value="" constant="no"/>
+<attribute name="MANUFACTURER" value="" constant="no"/>
+<attribute name="MPN" value="AO3422" constant="no"/>
+<attribute name="VALUE" value="" constant="no"/>
+<attribute name="VENDOR" value="" constant="no"/>
+<attribute name="VPN" value="" constant="no"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2071,10 +2088,7 @@
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
 </part>
-<part name="Q20" library="Sirokko" deviceset="NMOS_60V" device="" value="R2P020N06HZG">
-<attribute name="MPN" value="R2P020N06HZGT100"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/r2p020n06hzgt100-power-mosfet-n-channel-60-v-2-a-0.24-rohm-8046493294"/>
-</part>
+<part name="Q20" library="Sirokko-parts" library_urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ" deviceset="AO3422" device="" value="AO3422"/>
 <part name="RG20" library="Sirokko" deviceset="R0805" device="" value="220R">
 <attribute name="MPN" value="RC0805FR-07220RL"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930"/>
@@ -2091,10 +2105,7 @@
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
 </part>
-<part name="Q21" library="Sirokko" deviceset="NMOS_60V" device="" value="R2P020N06HZG">
-<attribute name="MPN" value="R2P020N06HZGT100"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/r2p020n06hzgt100-power-mosfet-n-channel-60-v-2-a-0.24-rohm-8046493294"/>
-</part>
+<part name="Q21" library="Sirokko-parts" library_urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ" deviceset="AO3422" device="" value="AO3422"/>
 <part name="RG21" library="Sirokko" deviceset="R0805" device="" value="220R">
 <attribute name="MPN" value="RC0805FR-07220RL"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930"/>
@@ -2793,16 +2804,16 @@
 <label x="242.22" y="27.46" size="1" layer="95"/>
 </segment>
 <segment>
-<pinref part="Q21" gate="G$1" pin="D"/>
 <wire x1="159.84" y1="27.46" x2="152.22" y2="27.46" width="0.1524" layer="91"/>
 <label x="152.22" y="27.46" size="1" layer="95"/>
+<pinref part="Q21" gate="G$1" pin="D"/>
 </segment>
 </net>
 <net name="FUEL_GATE" class="0">
 <segment>
-<pinref part="Q21" gate="G$1" pin="G"/>
 <wire x1="159.84" y1="30" x2="152.22" y2="30" width="0.1524" layer="91"/>
 <label x="152.22" y="30" size="1" layer="95"/>
+<pinref part="Q21" gate="G$1" pin="G"/>
 </segment>
 <segment>
 <pinref part="RG21" gate="G$1" pin="2"/>
@@ -2834,16 +2845,16 @@
 <label x="242.22" y="72.46" size="1" layer="95"/>
 </segment>
 <segment>
-<pinref part="Q20" gate="G$1" pin="D"/>
 <wire x1="159.84" y1="72.46" x2="152.22" y2="72.46" width="0.1524" layer="91"/>
 <label x="152.22" y="72.46" size="1" layer="95"/>
+<pinref part="Q20" gate="G$1" pin="D"/>
 </segment>
 </net>
 <net name="GLOW_GATE" class="0">
 <segment>
-<pinref part="Q20" gate="G$1" pin="G"/>
 <wire x1="159.84" y1="75" x2="152.22" y2="75" width="0.1524" layer="91"/>
 <label x="152.22" y="75" size="1" layer="95"/>
+<pinref part="Q20" gate="G$1" pin="G"/>
 </segment>
 <segment>
 <pinref part="RG20" gate="G$1" pin="2"/>
@@ -2878,14 +2889,14 @@
 <label x="17.22" y="147.46" size="1" layer="95"/>
 </segment>
 <segment>
-<pinref part="Q20" gate="G$1" pin="S"/>
 <wire x1="159.84" y1="69.92" x2="152.22" y2="69.92" width="0.1524" layer="91"/>
 <label x="152.22" y="69.92" size="1" layer="95"/>
+<pinref part="Q20" gate="G$1" pin="S"/>
 </segment>
 <segment>
-<pinref part="Q21" gate="G$1" pin="S"/>
 <wire x1="159.84" y1="24.92" x2="152.22" y2="24.92" width="0.1524" layer="91"/>
 <label x="152.22" y="24.92" size="1" layer="95"/>
+<pinref part="Q21" gate="G$1" pin="S"/>
 </segment>
 <segment>
 <pinref part="RP20" gate="G$1" pin="2"/>
@@ -2962,4 +2973,11 @@
 </sheets>
 </schematic>
 </drawing>
+<compatibility>
+<note version="8.2" severity="warning">
+Since Version 8.2, EAGLE supports online libraries. The ids
+of those online libraries will not be understood (or retained)
+with this version.
+</note>
+</compatibility>
 </eagle>
