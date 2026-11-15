@@ -4,23 +4,33 @@
 
 ## Закупка компонентов платы
 
-| Обозначения | Купить, шт. | Артикул производителя | ЧипДип |
-|---|---:|---|---|
-| C30, C31, C103 | 3 | CC0805KRX7R8BB104 | [Карточка товара](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
-| C101 | 1 | GRM32EC72A106KE05L | [Карточка товара](https://www.chipdip.ru/product/10mkf-x7s-100v-10-1210-grm32ec72a106ke05l-murata-9000807889) |
-| C106 | 1 | CL31A226KAHNNNE | [Карточка товара](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
-| R1 | 1 | RC0805FR-074K7L | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078) |
-| R2, R3, R7, R8, RP20, RP21 | 6 | RC0805FR-0710KL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
-| RG20, RG21 | 2 | RC0805FR-07220RL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
-| D1 | 1 | SMBJ30A | [Карточка товара](https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772) |
-| D20, D21 | 2 | S1M-13-F | [Карточка товара](https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670) |
-| Q20, Q21 | 2 | R2P020N06HZGT100 | [Карточка товара](https://www.chipdip.ru/product/r2p020n06hzgt100-power-mosfet-n-channel-60-v-2-a-0.24-rohm-8046493294) |
-| F1 | 1 | 0451002.MRL | [Карточка товара](https://www.chipdip.ru/product/0451002-mrl-2a-125v-2410-predohranitel-smd-littelfuse-9000161728) |
-| J1, J3, J30, J31 | 2 | DS1023-1x40 | [Карточка товара](https://www.chipdip.ru/product/pbs-40-ds1023-1x40-gnezdo-na-platu-2.54mm-1x40pin-pryamoe-connfly-8935) |
-| J13, J20, J21, J29 | 5 | DG127-5.08-02P-14-00A(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299) |
-| J12 | 1 | DG127-5.08-03P-14-1000Z(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-03p-14-1000z-h-klemmnik-dg127-5.08-degson-8076133255) |
-| J32 | 1 | DS1013-12SSiB1-B-0 | [Карточка товара](https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091) |
-| U101 | 1 | K7805-1000R3 | [Карточка товара](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
+Цены проверены 16.11.2026, рубли, без доставки. Количество «нужно» дано в товарных единицах; «купить» учитывает минимальную партию и кратность.
+
+| Обозначения | Нужно | Мин. / кратность | Купить | Цена/шт., ₽ | Сумма, ₽ | Артикул производителя | ЧипДип |
+|---|---:|---:|---:|---:|---:|---|---|
+| C30, C31, C103 | 3 | 5 / 5 | 5 | 5 | 25 | CC0805KRX7R8BB104 | [Карточка товара](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
+| C101 | 1 | 5 / 5 | 5 | 92 | 460 | GRM32EC72A106KE05L | [Карточка товара](https://www.chipdip.ru/product/10mkf-x7s-100v-10-1210-grm32ec72a106ke05l-murata-9000807889) |
+| C106 | 1 | 1 / 1 | 1 | 12 | 12 | CL31A226KAHNNNE | [Карточка товара](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
+| R1 | 1 | 10 / 5 | 10 | 4 | 40 | RC0805FR-074K7L | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078) |
+| R2, R3, R7, R8, RP20, RP21 | 6 | 10 / 5 | 10 | 6 | 60 | RC0805FR-0710KL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
+| RG20, RG21 | 2 | 1 / 1 | 2 | 6 | 12 | RC0805FR-07220RL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
+| D1 | 1 | 1 / 1 | 1 | 86 | 86 | SMBJ30A | [Карточка товара](https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772) |
+| D20, D21 | 2 | 1 / 1 | 2 | 5 | 10 | S1M-13-F | [Карточка товара](https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670) |
+| Q20, Q21 | 2 | 1 / 1 | 2 | 380 | 760 | R2P020N06HZGT100 | [Карточка товара](https://www.chipdip.ru/product/r2p020n06hzgt100-power-mosfet-n-channel-60-v-2-a-0.24-rohm-8046493294) |
+| F1 | 1 | 1 / 1 | 1 | 23 | 23 | 0451002.MRL | [Карточка товара](https://www.chipdip.ru/product/0451002-mrl-2a-125v-2410-predohranitel-smd-littelfuse-9000161728) |
+| J1, J3, J30, J31 | 2 | 1 / 1 | 2 | 28 | 56 | DS1023-1x40 | [Карточка товара](https://www.chipdip.ru/product/pbs-40-ds1023-1x40-gnezdo-na-platu-2.54mm-1x40pin-pryamoe-connfly-8935) |
+| J13, J20, J21, J29 | 5 | 1 / 1 | 5 | 53 | 265 | DG127-5.08-02P-14-00A(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299) |
+| J12 | 1 | 1 / 1 | 1 | 45 | 45 | DG127-5.08-03P-14-1000Z(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-03p-14-1000z-h-klemmnik-dg127-5.08-degson-8076133255) |
+| J32 | 1 | 1 / 1 | 1 | 11 | 11 | DS1013-12SSiB1-B-0 | [Карточка товара](https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091) |
+| U101 | 1 | 1 / 1 | 1 | 260 | 260 | K7805-1000R3 | [Карточка товара](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
+
+**Закупка компонентов платы: 2125 ₽.** Ответная розетка шлейфа DS1016-12MA2BB: 1 × 28 ₽. **Итого с розеткой: 2153 ₽.**
+
+Для J12 в карточке откройте «Альтернативные предложения» и выберите 45 ₽, минимум 1 шт., срок 6–9 дней (на момент проверки 4390 шт.). Основное предложение по 18 ₽ требует 500 шт. Для ответной розетки выберите альтернативное предложение 28 ₽, минимум 1 шт., срок 6–9 дней (16009 шт.); основное предложение по 62 ₽ требует 31 шт.
+
+Q20/Q21: 380 ₽ за штуку, срок 10–12 недель. Остальные основные предложения — 6–9 дней. Цены и сроки относятся к выбранным предложениям, а не ко всем поставщикам в карточке.
+
+Цена DS1023-1x40 указана за целую 40-контактную колодку; две заготовки дают четыре отрезка. Цена DG127-5.08-02P указана за один двухконтактный блок; J29 требует два блока. Поэтому сумму закупки нельзя получить простым сложением цен позиционного CSV. Имеющиеся вставные модули, внешние реле, БП, проводка, крепёж, изготовление и монтаж PCB в итог не включены.
 
 J29 собирается из двух двухконтактных DG127, состыкованных боковыми замками. Вместе с J13/J20/J21 нужны пять двухконтактных блоков. Не заменяйте шаг 5,08 мм на 5,0 мм. Ввод проводов J13/J20/J21/J29 обращён к нижнему краю платы, J12 — к верхнему; винты доступны сверху.
 
