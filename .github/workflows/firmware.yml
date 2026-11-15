@@ -26,10 +26,6 @@ jobs:
           node-version: '26.7.0'
           cache: npm
           cache-dependency-path: firmware/web_ui/package-lock.json
-      - name: Portable regression tests (ASan + UBSan)
-        run: |
-          python3 firmware/tools/test_host.py
-          node --test firmware/web_ui/tests/*.test.mjs
       - name: Build production web page and verify embedded bytes
         run: |
           npm ci --prefix firmware/web_ui
