@@ -79,7 +79,7 @@
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="yes"/>
-<layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
@@ -162,6 +162,10 @@
 <wire x1="33.225" y1="73.46" x2="33.225" y2="95.05" width="0.15" layer="51"/>
 <wire x1="33.225" y1="95.05" x2="9.095" y2="95.05" width="0.15" layer="51"/>
 <wire x1="9.095" y1="95.05" x2="9.095" y2="73.46" width="0.15" layer="51"/>
+<circle x="96" y="4" radius="3.5" width="0" layer="42"/>
+<circle x="4" y="96" radius="3.5" width="0" layer="42"/>
+<circle x="11.635" y="92.637" radius="2.7" width="0" layer="42"/>
+<circle x="30.685" y="92.637" radius="2.7" width="0" layer="42"/>
 </plain>
 <libraries>
 <library name="Sirokko_Interface">
