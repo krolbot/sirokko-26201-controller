@@ -4,7 +4,7 @@
     "name": "Autodesk Fusion Electronics"
   },
   "description": {
-    "EN": "Sirokko 100 x 85 mm, two copper layers; native Fusion manufacturing export."
+    "EN": "Sirokko 90 x 75 mm, two copper layers; native Fusion manufacturing export."
   },
   "output_type": "directory",
   "outputs": [
