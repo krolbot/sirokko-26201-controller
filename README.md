@@ -6,7 +6,7 @@
 
 [Прошивка](https://github.com/krolbot/sirokko-26201-controller/releases/latest/download/Sirokko-firmware.zip) · [Сборка и подключение](docs/assembly.md) · [Руководство пользователя](docs/user-guide.md) · [Компоненты и цены](hardware/BOM.md)
 
-## Что умеет
+## Возможности
 
 - Поддерживает температуру помещения или работает на заданном вручную уровне.
 - Управляет розжигом и охлаждением, следит за температурой выхлопа и нагретого воздуха.
@@ -25,12 +25,10 @@
 
 | Каталог | Содержимое |
 |---|---|
-| [hardware](hardware/) | Схема и плата Fusion Electronics, PDF, библиотека и ведомость компонентов |
-| [firmware](firmware/) | Прошивка ESP32-S3 и веб-интерфейс Svelte |
-| [manufacturing](manufacturing/) | Gerber, сверловка, сборочный чертёж и монтажные координаты |
+| [hardware](hardware/README.md) | Схема и плата Fusion Electronics, PDF, библиотека и ведомость компонентов |
+| [firmware](firmware/README.md) | Исходники и сборка прошивки ESP32-S3 и веб-интерфейса Svelte |
+| [manufacturing](manufacturing/README.md) | Gerber, параметры заказа платы, сборочный чертёж и монтажные координаты |
 | [docs](docs/) | Сборка, подключение и использование |
-
-Для заказа платы: [Gerber и параметры изготовления](manufacturing/README.md). Для работы с исходниками: [плата и совместимость модулей](hardware/README.md), [сборка прошивки](firmware/README.md).
 
 [Выпуски](https://github.com/krolbot/sirokko-26201-controller/releases) · [Вопросы и ошибки](https://github.com/krolbot/sirokko-26201-controller/issues)
 
