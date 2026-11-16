@@ -2030,7 +2030,7 @@
 </part>
 <part name="J29" library="Sirokko" deviceset="CONN_4" device="" value="HC160_A1_A2_PA_G_CONTROL_ONLY">
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023"/>
 </part>
 <part name="R1" library="Sirokko" deviceset="R0805" device="" value="4k7">
 <attribute name="MPN" value="RC0805FR-074K7L"/>
@@ -2054,7 +2054,7 @@
 </part>
 <part name="J13" library="Sirokko" deviceset="CONN_2" device="" value="24V_INPUT">
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023"/>
 </part>
 <part name="F1" library="Sirokko" deviceset="FUSE2410" device="" value="2A 125V FAST">
 <attribute name="MPN" value="0451002.MRL"/>
@@ -2086,7 +2086,7 @@
 </part>
 <part name="J20" library="Sirokko" deviceset="CONN_2" device="" value="GLOW_RELAY_COIL">
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023"/>
 </part>
 <part name="Q20" library="Sirokko-parts" library_urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ" deviceset="AO3422" device="" value="AO3422"/>
 <part name="RG20" library="Sirokko" deviceset="R0805" device="" value="220R">
@@ -2103,7 +2103,7 @@
 </part>
 <part name="J21" library="Sirokko" deviceset="CONN_2" device="" value="FUEL_RELAY_COIL">
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023"/>
 </part>
 <part name="Q21" library="Sirokko-parts" library_urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ" deviceset="AO3422" device="" value="AO3422"/>
 <part name="RG21" library="Sirokko" deviceset="R0805" device="" value="220R">

@@ -1,34 +1,40 @@
 # Компоненты
 
-Комплект на одну плату. [CSV для закупки и монтажа](bom.csv).
+[CSV для закупки и монтажа](bom.csv) содержит состав одной платы, цены, минимальные партии и кратность заказа. Ниже — закупка для трёх и пяти плат.
 
 ## Закупка компонентов платы
 
-Цены ЧипДип на 16.11.2026, без доставки. В колонке «Купить» учтены минимальная партия и кратность заказа.
+Цены ЧипДип на 16.11.2026, без доставки. Количество для заказа округлено до упаковки поставщика; остатки уже включены в суммы.
 
-| Обозначения | Нужно | Мин. / кратность | Купить | Цена/шт., ₽ | Сумма, ₽ | Артикул производителя | ЧипДип |
-|---|---:|---:|---:|---:|---:|---|---|
-| C30, C31, C103 | 3 | 5 / 5 | 5 | 5 | 25 | CC0805KRX7R8BB104 | [Карточка товара](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
-| C101 | 1 | 5 / 5 | 5 | 92 | 460 | GRM32EC72A106KE05L | [Карточка товара](https://www.chipdip.ru/product/10mkf-x7s-100v-10-1210-grm32ec72a106ke05l-murata-9000807889) |
-| C106 | 1 | 1 / 1 | 1 | 12 | 12 | CL31A226KAHNNNE | [Карточка товара](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
-| R1 | 1 | 10 / 5 | 10 | 4 | 40 | RC0805FR-074K7L | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078) |
-| R2, R3, R7, R8, RP20, RP21 | 6 | 10 / 5 | 10 | 6 | 60 | RC0805FR-0710KL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
-| RG20, RG21 | 2 | 1 / 1 | 2 | 6 | 12 | RC0805FR-07220RL | [Карточка товара](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
-| D1 | 1 | 1 / 1 | 1 | 86 | 86 | SMBJ30A | [Карточка товара](https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772) |
-| D20, D21 | 2 | 1 / 1 | 2 | 5 | 10 | S1M-13-F | [Карточка товара](https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670) |
-| Q20, Q21 | 2 | 1 / 1 | 2 | 17 | 34 | AO3422 | [Карточка товара](https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823) |
-| F1 | 1 | 1 / 1 | 1 | 23 | 23 | 0451002.MRL | [Карточка товара](https://www.chipdip.ru/product/0451002-mrl-2a-125v-2410-predohranitel-smd-littelfuse-9000161728) |
-| J1, J3, J30, J31 | 2 | 1 / 1 | 2 | 28 | 56 | DS1023-1x40 | [Карточка товара](https://www.chipdip.ru/product/pbs-40-ds1023-1x40-gnezdo-na-platu-2.54mm-1x40pin-pryamoe-connfly-8935) |
-| J13, J20, J21, J29 | 5 | 1 / 1 | 5 | 53 | 265 | DG127-5.08-02P-14-00A(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnyy-blok-vintovoy-degson-8015512299) |
-| J12 | 1 | 1 / 1 | 1 | 45 | 45 | DG127-5.08-03P-14-1000Z(H) | [Карточка товара](https://www.chipdip.ru/product/dg127-5.08-03p-14-1000z-h-klemmnik-dg127-5.08-degson-8076133255) |
-| J32 | 1 | 1 / 1 | 1 | 11 | 11 | DS1013-12SSiB1-B-0 | [Карточка товара](https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091) |
-| U101 | 1 | 1 / 1 | 1 | 260 | 260 | K7805-1000R3 | [Карточка товара](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
+| Обозначения | Артикул производителя | На плату | Купить на 3 | Купить на 5 | Цена/шт., ₽ | ЧипДип |
+|---|---|---:|---:|---:|---:|---|
+| C30, C31, C103 | CC0805KRX7R8BB104 | 3 | 10 | 15 | 5 | [Товар](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
+| C101 | GRM32EC72A106KE05L | 1 | 5 | 5 | 92 | [Товар](https://www.chipdip.ru/product/10mkf-x7s-100v-10-1210-grm32ec72a106ke05l-murata-9000807889) |
+| C106 | CL31A226KAHNNNE | 1 | 3 | 5 | 12 | [Товар](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
+| D1 | Littelfuse SMBJ30A | 1 | 3 | 5 | 86 / 53¹ | [Товар](https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772) |
+| D20, D21 | S1M-13-F | 2 | 6 | 10 | 5 | [Товар](https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670) |
+| F1 | 0451002.MRL | 1 | 3 | 5 | 23 | [Товар](https://www.chipdip.ru/product/0451002-mrl-2a-125v-2410-predohranitel-smd-littelfuse-9000161728) |
+| J1, J3, J30, J31 | DS1023-1x40 | 2 | 6 | 10 | 28 | [Товар](https://www.chipdip.ru/product/pbs-40-ds1023-1x40-gnezdo-na-platu-2.54mm-1x40pin-pryamoe-connfly-8935) |
+| J12 | DG127-5.08-03P-14-1000Z(H) | 1 | 3 | 5 | 45 | [Товар](https://www.chipdip.ru/product/dg127-5.08-03p-14-1000z-h-klemmnik-dg127-5.08-degson-8076133255) |
+| J13, J20, J21, J29 | DG127-5.08-02P-14-00A(H) | 5 | 20 | 32 | 28 / 19¹ | [Товар](https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023) |
+| J32 | DS1013-12SSiB1-B-0 | 1 | 3 | 5 | 11 | [Товар](https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091) |
+| Q20, Q21 | AO3422 | 2 | 6 | 10 | 17 | [Товар](https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823) |
+| R1 | RC0805FR-074K7L | 1 | 10 | 10 | 4 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078) |
+| R2, R3, R7, R8, RP20, RP21 | RC0805FR-0710KL | 6 | 20 | 30 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
+| RG20, RG21 | RC0805FR-07220RL | 2 | 6 | 10 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
+| U101 | K7805-1000R3 | 1 | 3 | 5 | 260 | [Товар](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
 
-**Закупка компонентов платы: 1399 ₽.** Ответная розетка шлейфа DS1016-12MA2BB: 1 × 28 ₽. **Итого с розеткой: 1427 ₽.**
+¹ Цена для трёх / пяти плат. Для пяти комплектов у двухконтактных Degson выбрано альтернативное предложение: 19 ₽, минимум 32 шт., кратность 1. У Littelfuse SMBJ30A — 53 ₽, минимум 5 шт., кратность 1. Оба предложения на момент проверки имели срок 9 дней. Для трёх комплектов выгоднее основные предложения: 20 колодок по 28 ₽ и 3 диода по 86 ₽.
 
-Для J12 и ответной розетки DS1016-12MA2BB в расчёте использованы «Альтернативные предложения» с продажей от одной штуки: 45 ₽ и 28 ₽ соответственно. У основных предложений другая минимальная партия.
+| Закупка | 3 комплекта | 5 комплектов |
+|---|---:|---:|
+| Компоненты платы | 2877 ₽ | 3943 ₽ |
+| Розетка шлейфа DS1016-12MA2BB, по 28 ₽ | 84 ₽ | 140 ₽ |
+| **Всего** | **2961 ₽** | **4083 ₽** |
 
-В сумму входят компоненты платы и розетка шлейфа. Модули, реле, блок питания, кабели, крепёж, изготовление и монтаж платы оплачиваются отдельно.
+Для J12 и ответной розетки DS1016-12MA2BB используются альтернативные предложения от одной штуки: 45 ₽ и 28 ₽. У основных предложений другая минимальная партия.
+
+Модули, реле, блок питания, кабели, крепёж, изготовление и монтаж платы оплачиваются отдельно. Минимальный заказ трёх печатных плат не требует сразу паять все три: первый комплект можно собрать отдельно.
 
 ### Исполнения и размеры
 

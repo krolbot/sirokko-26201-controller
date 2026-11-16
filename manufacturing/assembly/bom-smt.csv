@@ -4,7 +4,7 @@ C31,100nF 25V,CC0805KRX7R8BB104,C0805,1,SMT,top,"X7R, MAX31856 VIN decoupling",�
 C101,10uF 100V X7S,GRM32EC72A106KE05L,C1210,1,SMT,top,"10 uF, 100 V, X7S, 1210",ЧипДип,https://www.chipdip.ru/product/10mkf-x7s-100v-10-1210-grm32ec72a106ke05l-murata-9000807889,92,piece,2026-11-16,5,5,Main offer
 C103,100nF 25V,CC0805KRX7R8BB104,C0805,1,SMT,top,X7R,ЧипДип,https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545,5,piece,2026-11-16,5,5,Main offer
 C106,22uF 25V X5R,CL31A226KAHNNNE,C1206,1,SMT,top,"22 uF, 25 V, X5R, 1206",ЧипДип,https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179,12,piece,2026-11-16,1,1,Main offer
-D1,SMBJ30A,SMBJ30A,SMB,1,SMT,top,,ЧипДип,https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772,86,piece,2026-11-16,1,1,Main offer
+D1,SMBJ30A,SMBJ30A,SMB,1,SMT,top,,ЧипДип,https://www.chipdip.ru/product/smbj30a-diod-littelfuse-8017526772,86,piece,2026-11-16,1,1,"Main offer; for 5 boards: alternative 53 RUB, minimum 5, multiple 1, 9 days"
 D20,S1M,S1M-13-F,SMA,1,SMT,top,"Cathode to coil+, anode to coil-",ЧипДип,https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670,5,piece,2026-11-16,1,1,Main offer
 D21,S1M,S1M-13-F,SMA,1,SMT,top,"Cathode to coil+, anode to coil-",ЧипДип,https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670,5,piece,2026-11-16,1,1,Main offer
 F1,2A 125V FAST,0451002.MRL,FUSE2410,1,SMT,top,,ЧипДип,https://www.chipdip.ru/product/0451002-mrl-2a-125v-2410-predohranitel-smd-littelfuse-9000161728,23,piece,2026-11-16,1,1,Main offer
