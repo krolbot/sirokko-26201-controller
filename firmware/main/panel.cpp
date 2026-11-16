@@ -11,6 +11,7 @@
 #include <cstring>
 #include "board.hpp"
 #include "driver/gpio.h"
+#include "driver/ledc.h"
 #include "driver/spi_master.h"
 #include "esp_err.h"
 #include "esp_heap_caps.h"
@@ -39,6 +40,7 @@ constexpr uint32_t kPanelSpiHz = 20U * 1000U * 1000U;
 constexpr uint32_t kViewPeriodMs = 20;
 constexpr uint32_t kFramePeriodMs = 40; // scheduling target, not a measured physical FPS guarantee
 constexpr uint32_t kTransferTimeoutMs = 250;
+constexpr uint32_t kBacklightDuty = (1023U * CONFIG_SIROKKO_PANEL_BRIGHTNESS + 50U) / 100U;
 
 struct Display {
     esp_lcd_panel_io_handle_t io{};
@@ -46,7 +48,7 @@ struct Display {
     SemaphoreHandle_t color_done{};
     uint16_t *buffer{};
     uint16_t *scratch{};
-    bool spi_initialized{}, failed{}, in_flight{}, frame_active{};
+    bool spi_initialized{}, backlight_initialized{}, failed{}, in_flight{}, frame_active{};
     int next_y{};
     uint64_t transfer_started{}, frame_started{}, next_frame{};
     panel_render::DamageTracker damage{};
@@ -88,6 +90,8 @@ void display_release() {
     // Initialization-only cleanup: a live DMA transfer must never lose its buffer/semaphore.
     if (g_display.in_flight)
         return;
+    if (g_display.backlight_initialized)
+        ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_1, 0);
     if (g_display.panel)
         esp_lcd_panel_del(g_display.panel);
     if (g_display.io)
@@ -140,6 +144,23 @@ bool display_begin() {
         ESP_LOGE(kTag, "panel resolution must be 320x240");
         return false;
     }
+    // The panel has its own BLK transistor. Timer 0 / channel 0 drive the motor.
+    ledc_timer_config_t backlight_timer{};
+    backlight_timer.speed_mode = LEDC_LOW_SPEED_MODE;
+    backlight_timer.duty_resolution = LEDC_TIMER_10_BIT;
+    backlight_timer.timer_num = LEDC_TIMER_1;
+    backlight_timer.freq_hz = 5000;
+    backlight_timer.clk_cfg = LEDC_AUTO_CLK;
+    if (!ok(ledc_timer_config(&backlight_timer)))
+        return false;
+    ledc_channel_config_t backlight{};
+    backlight.gpio_num = board::kTftBacklight;
+    backlight.speed_mode = LEDC_LOW_SPEED_MODE;
+    backlight.channel = LEDC_CHANNEL_1;
+    backlight.timer_sel = LEDC_TIMER_1;
+    if (!ok(ledc_channel_config(&backlight)))
+        return false;
+    g_display.backlight_initialized = true;
     spi_bus_config_t bus{};
     bus.sclk_io_num = board::kTftSck;
     bus.mosi_io_num = board::kTftMosi;
@@ -148,8 +169,10 @@ bool display_begin() {
     bus.quadhd_io_num = GPIO_NUM_NC;
     bus.max_transfer_sz =
         panel_render::kWidth * panel_render::kStripeRows * static_cast<int>(sizeof(uint16_t)) + 8;
-    if (!ok(spi_bus_initialize(SPI3_HOST, &bus, SPI_DMA_CH_AUTO)))
+    if (!ok(spi_bus_initialize(SPI3_HOST, &bus, SPI_DMA_CH_AUTO))) {
+        display_release();
         return false;
+    }
     g_display.spi_initialized = true;
     g_display.color_done = xSemaphoreCreateBinary();
     if (!g_display.color_done) {
@@ -197,6 +220,11 @@ bool display_begin() {
     }
     g_display.damage.invalidate();
     g_renderer.reset();
+    if (!ok(ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_1, kBacklightDuty)) ||
+        !ok(ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_1))) {
+        display_release();
+        return false;
+    }
     return true;
 }
 bool inputs_begin() {

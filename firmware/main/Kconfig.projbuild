@@ -1,4 +1,8 @@
 menu "Sirokko local panel"
+    config SIROKKO_PANEL_BRIGHTNESS
+        int "Backlight brightness (%)"
+        range 1 100
+        default 100
     config SIROKKO_PANEL_WIDTH
         int "Native TFT width (pixels)"
         range 1 320
