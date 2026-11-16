@@ -42,7 +42,7 @@ InputEvent EncoderInput::poll(bool a, bool b, bool push_pressed, uint64_t now_ms
 
     const uint8_t next_ab = ab_value(a, b);
     if (next_ab != ab_state_) {
-        // Legal Gray-code transitions contribute one quarter-turn. Illegal/bounce transitions are zero.
+        // Four valid Gray-code transitions make one detent; ignore bounce.
         static constexpr int8_t kTransitions[16] = {
             0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0,
         };

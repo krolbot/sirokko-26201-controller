@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 
-// NVS record integrity, not cryptographic authenticity. Never store active RUN/timer state.
+// NVS checksum for corruption detection. Active RUN/timer state is not persisted.
 namespace record_codec {
 inline uint64_t checksum(const void *data, size_t size) {
     const auto *p = static_cast<const uint8_t *>(data);

@@ -284,7 +284,6 @@ Outputs Controller::outputs() const {
         result.speed_code = purge;
         break;
     case State::PREHEAT:
-        // The manual preheat button energizes the glow plug before motor/fuel start.
         result = {false, 0, true, false};
         break;
     case State::IGNITION:
@@ -358,10 +357,10 @@ Snapshot Controller::tick(const TickInput &input) {
     if (new_faults)
         latch_fault(new_faults, now);
 
-    // STOP is an independent priority barrier. It cancels queued starts and never writes GPIO directly.
+    // STOP cancels queued commands before this tick processes them.
     const bool stop_barrier = input.stop;
     if (stop_barrier) {
-        // Revoke queued commands even when STOP leaves an idle controller in IDLE.
+        // Also invalidate commands queued while idle.
         if (++state_version_ == 0)
             state_version_ = 1;
         begin_stop(now);
@@ -737,9 +736,7 @@ bool FailClosedOutputDriver::apply(const Outputs &requested, void *context, Digi
         ok = pwm_written;
     }
     if (!ok) {
-        // Never claim PWM=0 if its writer did not confirm it. A normal purge
-        // deliberately keeps a non-zero fan command, so its error path does not
-        // inject a conflicting PWM-off request.
+        // Keep the last confirmed PWM if the write fails. Purge retains its fan command.
         force_combustion_outputs_off();
         if (!requested.fan_request && pwm_write(context, 0))
             current_.speed_code = 0;

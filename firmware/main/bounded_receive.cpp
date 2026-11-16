@@ -38,7 +38,7 @@ BoundedReceiveResult receive_exact_bounded(size_t total_size, uint64_t budget_ms
         if (received <= 0 || static_cast<size_t>(received) > requested) {
             return BoundedReceiveResult::RECEIVE_ERROR;
         }
-        // Bytes that complete after the absolute deadline are never applied to a command or OTA image.
+        // recv() may return after the request deadline.
         if (!budget_open(started_ms, budget_ms, completed_ms)) {
             return BoundedReceiveResult::DEADLINE_EXCEEDED;
         }

@@ -39,7 +39,7 @@ void Button::rebaseline(bool pressed, uint64_t now_ms) {
     intent_ = Intent::NONE;
     source_state_version_ = 0;
     held_sample_ = {now_ms, pressed, false};
-    // A low level at reset/gap is indistinguishable from a held boot button: require a release.
+    // After reset or a sampling gap, wait for release before accepting a press.
     phase_ = pressed ? Phase::REQUIRE_RELEASE : Phase::RELEASE_DEBOUNCE;
 }
 
@@ -56,7 +56,7 @@ void Button::latch_press_intent() {
         return;
     }
 
-    // The action is chosen at the first observed low level, never at dispatch time.
+    // Choose the action at the first low sample, before debouncing.
     source_state_version_ = snapshot.state_version;
     if (snapshot.trial_active && snapshot.state == sirokko::State::TRIAL_READY) {
         intent_ = Intent::TRIAL_START;
@@ -92,7 +92,7 @@ void Button::dispatch_latched_intent() {
         last_dispatch_ = Dispatch::FAILED;
         break;
     }
-    // One physical press can dispatch once. Stable release is required before the next press.
+    // Wait for stable release before accepting another press.
     phase_ = Phase::LOCKED;
 }
 

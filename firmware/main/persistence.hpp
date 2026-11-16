@@ -9,8 +9,7 @@ template <class PersistClean>
 Startup startup_for_cycle(CycleRecordStatus cycle, bool configured, PersistClean persist_clean) {
     if (cycle == CycleRecordStatus::CLEAN)
         return Startup::CLEAN;
-    // No profile and no cycle means heating has never been permitted. Make the
-    // clean record durable before configuration can enable heating.
+    // A fresh device needs a persisted clean record before heating can be enabled.
     if (cycle == CycleRecordStatus::MISSING && !configured && persist_clean())
         return Startup::CLEAN;
     return Startup::RECOVER;

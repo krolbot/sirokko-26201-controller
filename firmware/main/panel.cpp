@@ -38,7 +38,7 @@ constexpr bool kInvertColors = false;
 constexpr char kTag[] = "panel";
 constexpr uint32_t kPanelSpiHz = 20U * 1000U * 1000U;
 constexpr uint32_t kViewPeriodMs = 20;
-constexpr uint32_t kFramePeriodMs = 40; // scheduling target, not a measured physical FPS guarantee
+constexpr uint32_t kFramePeriodMs = 40;
 constexpr uint32_t kTransferTimeoutMs = 250;
 constexpr uint32_t kBacklightDuty = (1023U * CONFIG_SIROKKO_PANEL_BRIGHTNESS + 50U) / 100U;
 
@@ -87,7 +87,7 @@ uint64_t command_hash(panel_ui::CommandKind kind, uint64_t delay_ms) {
     return mix(mix(1469598103934665603ULL, static_cast<uint64_t>(kind)), delay_ms);
 }
 void display_release() {
-    // Initialization-only cleanup: a live DMA transfer must never lose its buffer/semaphore.
+    // Initialization cleanup, before any DMA transfer uses these resources.
     if (g_display.in_flight)
         return;
     if (g_display.backlight_initialized)
@@ -344,7 +344,7 @@ void render_step(uint64_t now) {
         g_display.frame_started = now;
         g_display.frame_active = true;
     }
-    // At most one bounded stripe per scheduler iteration; never sleep through a scene transition.
+    // Transfer one stripe per iteration so scene changes can interrupt a frame.
     const int y = g_display.next_y;
     if (!g_renderer.draw_band(y, panel_render::kStripeRows, g_display.buffer, g_display.scratch)) {
         display_fail("invalid panel render band");
@@ -385,7 +385,7 @@ void panel_task(void *) {
     uint64_t last_view{};
     while (true) {
         const uint64_t now = now_ms();
-        // Refresh before processing a pending click, so a new STOP/fault invalidates the old context.
+        // Refresh first so STOP/fault invalidates clicks from the previous state.
         if (now < last_view || now - last_view >= kViewPeriodMs) {
             update_view();
             last_view = now;

@@ -23,7 +23,6 @@ constexpr uint64_t kPostpurgeMinimumMs = 150000;
 // Upper plausibility bound for the installed thermocouples.
 constexpr int32_t kThermocoupleMinimumMilliC = -200000;
 constexpr int32_t kProcessMeasurementCeilingMilliC = 600000;
-// Configuration bounds.
 constexpr int32_t kRoomSetpointMinimumMilliC = 15000;
 constexpr int32_t kRoomSetpointMaximumMilliC = 30000;
 constexpr int32_t kRoomSetpointStepMilliC = 1000;
@@ -123,7 +122,7 @@ struct SafetyEnvelope {
 };
 
 struct Settings {
-    uint64_t duration_ms{}; // 0 = no automatic shutdown; never persisted as an active deadline.
+    uint64_t duration_ms{}; // 0 disables the timer; only the duration is persisted.
     int32_t room_setpoint_milli_c{kRoomSetpointMinimumMilliC};
     Mode mode{Mode::TEMPERATURE};
     uint8_t manual_percent{100};
@@ -321,7 +320,7 @@ using PwmWriter = bool (*)(void *context, uint16_t speed_code);
 class FailClosedOutputDriver {
   public:
     bool apply(const Outputs &requested, void *context, DigitalWriter digital_write, PwmWriter pwm_write);
-    // Last values confirmed by successful writer calls; a failed PWM-off request is not represented as zero.
+    // Last outputs confirmed by the hardware writer.
     Outputs current() const { return current_; }
 
   private:

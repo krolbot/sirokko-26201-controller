@@ -125,8 +125,7 @@ bool continuation(unsigned char value) {
     return (value & 0xC0U) == 0x80U;
 }
 
-// C strings are NUL-terminated.  Each continuation byte is checked only after the
-// preceding byte is known non-NUL, so malformed tails never require an over-read.
+// Check each UTF-8 continuation byte after the previous byte's NUL check.
 const char *next_utf8(const char *text, uint32_t *codepoint) {
     if (!text || !codepoint)
         return text;
@@ -250,7 +249,7 @@ void Canvas::begin(uint16_t *pixels, int band_y, int rows, int width) {
     band_y_ = 0;
     rows_ = 0;
     width_ = 0;
-    // Reject band dimensions outside the 320x240 surface before calculating pixel counts.
+    // Validate dimensions before multiplying them.
     if (!pixels || width <= 0 || width > kMaximumWidth || rows <= 0 || rows > kMaximumRows)
         return;
     pixels_ = pixels;

@@ -761,14 +761,14 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
     }
     if (command_submission)
         required |= kGrant;
-    // STOP is intentionally not an Action enum: it is parsed by the handler before this protocol.
+    // The handler processes STOP before parsing other actions.
     if (!command_submission && (seen & kGrant) != 0U)
         return ParseError::GRANT;
     if ((seen & ~required) != 0U)
         return ParseError::UNKNOWN_FIELD;
     if ((seen & required) != required)
         return ParseError::MISSING_FIELD;
-    // OTA must pass through the signed-upload endpoint and its maintenance lifecycle.
+    // OTA goes through the signed-upload endpoint in maintenance mode.
     if (command_submission && command.action == sirokko::Action::OTA)
         return ParseError::OTA_UPLOAD_ONLY;
     command.payload_digest = digest_command(command);

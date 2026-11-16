@@ -71,8 +71,7 @@ class Max31856Channel {
                 retry_after_start_failure(now_ms);
                 return;
             }
-            // The prior SR value was published while its conversion completed. Clear it only
-            // between conversions, then require a new clean conversion before validity returns.
+            // Clear SR between conversions. Validity returns after a clean conversion.
             if (fault_status_clear_pending_) {
                 uint8_t latest{};
                 if (!read_registers(0x0F, &latest, 1)) {
@@ -87,7 +86,7 @@ class Max31856Channel {
                     return; // Publish newly latched causes for a full control interval first.
                 }
                 if (!write_register(0x00, kMax31856Cr0FaultClear)) {
-                    // Retain the observed hardware SR cause; a failed clear must not revive data.
+                    // Keep the reported SR fault if clearing it fails.
                     sample_.valid = false;
                     next_start_ms_ = now_ms + 250;
                     return;
@@ -139,8 +138,7 @@ class Max31856Channel {
             }
             waiting_ = false;
         } else if (level == 0) {
-            // A persistent interrupt-mode fault may reassert before DRDY returns high. Read and
-            // publish SR rather than reducing that physical cause to a generic DRDY timeout.
+            // A persistent fault can reassert before DRDY rises. Report SR before timing out.
             uint8_t status{};
             if (!read_registers(0x0F, &status, 1)) {
                 invalidate(0xFD);
@@ -164,7 +162,7 @@ class Max31856Channel {
 
   private:
     void retry_after_start_failure(uint64_t now_ms) {
-        // Do not overwrite a just-published physical SR reason before the control loop can observe it.
+        // Keep the SR fault visible for one control interval.
         if (fault_status_clear_pending_) {
             sample_.valid = false;
         } else {

@@ -341,7 +341,7 @@ export class ControllerSession {
               ota.phase === "running_expected_version" ? "ok" : "warning",
               ota.phase === "running_expected_version"
                 ? `Версия ${snapshot.version}.`
-                : `Новая загрузка сообщает ${snapshot.version}, ожидалась ${ota.expectedVersion || "неизвестная версия"}. Обновление не подтверждено; возможен откат.`,
+                : `Запущена версия ${snapshot.version}, ожидалась ${ota.expectedVersion || "неизвестная версия"}. Обновление не подтверждено.`,
             );
     }
 
@@ -388,7 +388,7 @@ export class ControllerSession {
   async submit(action, fields = {}) {
     this.tick();
     if (!ACTIONS.has(action))
-      throw new TypeError(`Неподдерживаемое публичное действие: ${action}`);
+      throw new TypeError(`Неизвестная команда: ${action}`);
     if (this._view.auth !== "authenticated") {
       this._set({
         message: statusMessage("error", "Войдите для отправки команды."),
@@ -427,8 +427,7 @@ export class ControllerSession {
       const grant = await this.api.challenge(payload);
       if (!this._isCurrent(authEpoch, commandEpoch))
         return { status: "CANCELLED" };
-      // Do not submit a command whose editable snapshot lost a race to the TFT
-      // or another client between state read and challenge issuance.
+      // Another panel may have changed these settings while the challenge was in flight.
       if (
         grant.state_version !== baseline.state_version ||
         grant.boot_id !== baseline.boot_id

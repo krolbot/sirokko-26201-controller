@@ -12,7 +12,7 @@ const char *trial_record_reason(sirokko::TrialRecordReason reason) {
     case R::EMPTY:
         return "Запись начнётся при подготовке первого запуска";
     case R::SELECT_PWM:
-        return "Выберите нижний ШИМ после проверки горения";
+        return "Выберите нижний ШИМ при устойчивом горении";
     case R::SETTLING:
         return "Нужны 2 минуты на выбранном ШИМ с колебаниями выхлопа не более 5 °C";
     case R::INVALID:
@@ -20,13 +20,13 @@ const char *trial_record_reason(sirokko::TrialRecordReason reason) {
     case R::FULL:
         return "Память записи заполнена. Нужен новый первый запуск";
     case R::RANGE:
-        return "Измерения не позволяют предложить температуру для выбранного диапазона ШИМ";
+        return "Для выбранного ШИМ не удалось рассчитать температурный порог";
     case R::IGNITION:
-        return "Выхлоп не успел подтвердить предложенную температуру за время на розжиг";
+        return "Розжиг не подтвердился на рассчитанном температурном пороге";
     case R::PROFILE_CHANGED:
         return "Параметры отопителя изменились. Нужен новый первый запуск";
     case R::READY:
-        return "Предложение по измерениям готово";
+        return "Температурный порог рассчитан";
     }
     return "Нет измерений";
 }
@@ -34,7 +34,7 @@ const char *trial_record_reason(sirokko::TrialRecordReason reason) {
 const char *russian_state(sirokko::State state) {
     switch (state) {
     case sirokko::State::UNCONFIGURED:
-        return "Требуется настройка";
+        return "Нужна настройка";
     case sirokko::State::RECOVERY_PURGE:
         return "Охлаждение незавершённого цикла";
     case sirokko::State::IDLE:
@@ -86,7 +86,7 @@ const char *russian_block(sirokko::Block block) {
     case sirokko::Block::MAINTENANCE:
         return "Обновление прошивки";
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
-        return "Ошибка запуска управления экраном или кнопкой";
+        return "Не удалось запустить экран или кнопку";
     case sirokko::Block::BUTTON_HELD:
         return "Отпустите KEY0 перед подготовкой первого запуска";
     case sirokko::Block::STALE_COMMAND:

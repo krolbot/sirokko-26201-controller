@@ -128,8 +128,7 @@ esp_err_t reject(httpd_req_t *request, const char *code, const char *status = "4
         std::snprintf(body, sizeof(body), "{\"status\":\"REJECTED\",\"code\":\"%s\"}", code ? code : "ERROR");
     if (length <= 0 || static_cast<size_t>(length) >= sizeof(body))
         return ESP_FAIL;
-    // IDF otherwise drains unread request bytes without an overall deadline.
-    // A rejected upload must not hold the server while the client keeps sending.
+    // Close rejected uploads; IDF's default drain has no overall deadline.
     const bool close = request->content_len != 0;
     if (close)
         httpd_resp_set_hdr(request, "Connection", "close");

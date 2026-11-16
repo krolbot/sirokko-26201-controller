@@ -10,7 +10,7 @@
 secrets/
 credentials/
 
-# Device-local provisioning and commissioning data
+# Device settings
 **/nvs*.bin
 **/commissioning*.json
 **/commissioning*.yaml
@@ -52,6 +52,3 @@ out/
 *~
 .DS_Store
 Thumbs.db
-
-# Local notes
-.planning/

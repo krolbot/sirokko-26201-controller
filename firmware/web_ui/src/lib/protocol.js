@@ -26,7 +26,7 @@ export function cloneJson(value) {
 export function makeCommandId(cryptoApi = globalThis.crypto) {
   if (!cryptoApi?.getRandomValues)
     throw new Error(
-      "Браузер не предоставляет криптографический генератор идентификатора команды",
+      "Браузер не поддерживает безопасную отправку команд",
     );
   const words = new Uint32Array(2);
   cryptoApi.getRandomValues(words);

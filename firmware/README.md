@@ -2,7 +2,7 @@
 
 [Запись готовой прошивки и настройка](../docs/user-guide.md#первоначальная-настройка).
 
-Версия 1.13.0 предназначена для платы REV G. Назначения GPIO и кабель панели отличаются от прежних плат. Яркость подсветки задаётся параметром `SIROKKO_PANEL_BRIGHTNESS` (1–100%, по умолчанию 100%).
+[Совместимость с платой и модулями](../hardware/README.md#совместимость). Яркость подсветки задаётся параметром `SIROKKO_PANEL_BRIGHTNESS` (1–100%, по умолчанию 100%).
 
 ## Инструменты
 
@@ -20,7 +20,6 @@
 npm ci --prefix firmware/web_ui
 npm run build --prefix firmware/web_ui
 python3 firmware/tools/embed_web_ui.py
-python3 firmware/tools/embed_web_ui.py --check
 idf.py -C firmware set-target esp32s3
 idf.py -C firmware build
 ```
@@ -33,7 +32,7 @@ idf.py -C firmware build
 idf.py -C firmware -p /dev/ttyACM0 flash monitor
 ```
 
-В Windows порт обычно имеет вид `COM5`. GitHub Actions собирает прошивку и формирует комплект для USB-записи.
+В Windows укажите свой COM-порт, например `COM5`. Комплект для USB-записи также доступен в результатах [сборки GitHub Actions](https://github.com/krolbot/sirokko-26201-controller/actions/workflows/firmware.yml).
 
 ## Исходники
 
@@ -51,7 +50,7 @@ idf.py -C firmware -p /dev/ttyACM0 flash monitor
 
 ### Изменение веб-интерфейса
 
-Исходники Svelte находятся в `web_ui/src/`. Сборка создаёт самодостаточный `web_ui/dist/index.html` и обновляет `web_ui/THIRD_PARTY_NOTICES.txt`. Скрипт `embed_web_ui.py` сжимает страницу в `main/web_ui_data.inc`; этот файл обновляется вместе с исходниками интерфейса.
+Исходники Svelte — в `web_ui/src/`. Первые три команды сборки обновляют страницу и её сжатую копию `main/web_ui_data.inc`, встроенную в прошивку. `embed_web_ui.py --check` проверяет, что они совпадают.
 
 `npm run preview --prefix firmware/web_ui` открывает локальный предпросмотр; управление устройством требует подключения к его API.
 

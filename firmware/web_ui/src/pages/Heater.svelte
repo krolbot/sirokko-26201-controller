@@ -35,7 +35,6 @@
 </script>
 
 <div class="page-heading"><h1>Параметры отопителя</h1></div>
-<p class="caption">Можно сохранять по мере заполнения.</p>
 <a class="secondary" href="#/trial">Первый запуск и измерения</a>
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
@@ -46,9 +45,8 @@
       <section class="surface form-panel">
         <h2>{group.title}</h2>
         {#if group.title === "Двигатель"}<p class="caption">
-            ШИМ задаёт управление двигателем, который приводит вентилятор и
-            топливный насос. Значения от 1 до {limits.pwm_max}; это не обороты в
-            минуту.
+            Двигатель приводит вентилятор и топливный насос. ШИМ — от 1 до
+            {limits.pwm_max}; обороты не измеряются.
           </p>{/if}
         <div class="parameter-fields">
           {#each group.fields as [key, label, unit, scale]}
@@ -87,8 +85,8 @@
                   продолжит работать ещё {limits.ignition_glow_ms / 1000} с.</small
                 >
               {:else if key === "postpurge_ms"}<small class="caption"
-                  >После отключения топлива двигатель работает не меньше этого
-                  времени. Если выхлоп ещё горячий, охлаждение продолжается.</small
+                  >Минимальная длительность охлаждения. При горячем выхлопе
+                  двигатель продолжает работать.</small
                 >
               {:else if key === "ignition_timeout_ms"}<small class="caption"
                   >От подачи топлива до подтверждения розжига по температуре
@@ -108,21 +106,18 @@
                   отключают топливо без этой задержки.</small
                 >
               {:else if key === "maximum_exhaust_milli_c"}<small class="caption"
-                  >При достижении этой температуры топливо отключится и начнётся
-                  охлаждение. Можно оставить пустым. Штатная защита муфты от
-                  перегрева должна оставаться подключённой.</small
+                  >Пустое поле отключает этот порог. Штатную защиту муфты от
+                  перегрева оставьте подключённой.</small
                 >
               {:else if key === "cooling_exhaust_milli_c"}<small class="caption"
                   >Двигатель выключится, когда истечёт минимальное время
                   охлаждения и выхлоп остынет ниже этого значения.</small
                 >
               {:else if key === "maximum_speed_code"}<small class="caption"
-                  >Используется при розжиге. При отоплении ШИМ также не
-                  поднимается выше этого значения.</small
+                  >Также задаёт верхний предел ШИМ при отоплении.</small
                 >
               {:else if key === "minimum_speed_code"}<small class="caption"
-                  >При отоплении ШИМ не опускается ниже этого значения. Укажите
-                  код ШИМ, проверенный при устойчивом горении в первом запуске.</small
+                  >Значение для устойчивого горения, подобранное в первом запуске.</small
                 >
               {:else if key === "purge_speed_code"}<small class="caption"
                   >ШИМ двигателя после отключения топлива, пока отопитель

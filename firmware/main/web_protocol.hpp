@@ -52,8 +52,7 @@ struct Stop {
 
 enum class BindingResult : uint8_t { ACCEPTED, MISSING, EXPIRED, STATE, ACTION, PAYLOAD, GRANT };
 
-// Web-local complement to the 64-bit core gate: this binds the exact SHA-256
-// semantic payload to the one grant returned to the browser.
+// Bind the browser grant to the command's SHA-256 payload hash.
 class ChallengeBinding {
   public:
     void bind(sirokko::Action action, const GrantFields &grant, const Digest &payload_digest);
@@ -84,8 +83,7 @@ class ReplayCache {
     size_t next_{};
 };
 
-// Strict JSON parsing. Challenge requests contain no grant. Non-STOP command
-// submissions require one grant object; STOP intentionally remains auth-only.
+// Challenges have no grant; command submissions carry one. STOP requires only authentication.
 ParseError parse_challenge_request(const char *text, size_t size, Command *command);
 ParseError parse_command_request(const char *text, size_t size, Command *command);
 ParseError parse_stop_request(const char *text, size_t size, Stop *stop);

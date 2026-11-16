@@ -46,7 +46,6 @@
       {defaultRate ? "По умолчанию" : "Замедлено вручную"}
     </h2>
   </div>
-  <p class="caption">Как быстро меняется ШИМ двигателя при отоплении.</p>
   {#each fields as [field, label]}
     {@const limit = MAXIMUM_SLEW_PER_S}
     {@const lower = Math.ceil((MINIMUM_SLEW_PER_S / limit) * 100)}
@@ -91,7 +90,7 @@
   {#if !defaultRate}<button
       class="text-button full-width"
       disabled={!enabled}
-      onclick={useDefault}>Вернуть исходный темп</button
+      onclick={useDefault}>Вернуть по умолчанию</button
     >{/if}
   <DraftActions
     busy={Boolean(ui.pending || ui.requestInFlight)}

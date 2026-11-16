@@ -8,3 +8,6 @@ manufacturing/**/*.cam -text
 manufacturing/**/*.gbr -text
 manufacturing/**/*.xln -text
 manufacturing/SHA256SUMS text eol=lf
+
+# Generated fonts, icons and compressed web page.
+firmware/main/*_data.inc linguist-generated=true

@@ -61,7 +61,7 @@
     <span class="row-title">Скорость изменения ШИМ</span>
     <span class="row-value"
       >{defaultSlew(snapshot.settings)
-        ? "Исходный темп"
+        ? "По умолчанию"
         : "Замедлено вручную"}</span
     >
     <Icon name="chevron" size={16} />

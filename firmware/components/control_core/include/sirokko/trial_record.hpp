@@ -31,8 +31,8 @@ struct TrialResult {
     bool saved{};
 };
 
-// Fixed RAM only. One point/second plus phase/PWM boundaries; cooling is not
-// part of the temperature fit. Results survive browser disconnects, not reboot.
+// RAM record: one point/second and each phase/PWM change.
+// The temperature fit excludes cooling samples.
 class TrialRecord {
   public:
     void begin(uint64_t now, const SafetyEnvelope &profile);

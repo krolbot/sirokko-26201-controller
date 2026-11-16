@@ -98,7 +98,7 @@ export function errorText(error, fallback, snapshot) {
     case "NOT_ACCEPTED":
       return "Состояние изменилось. Повторите действие";
     case "PASSWORD_LENGTH_OR_CHARACTERS":
-      return "Пароль должен содержать 8–63 латинских букв, цифр или символов без пробелов";
+      return "Пароль: 8–63 латинских буквы, цифры или символа без пробелов";
     case "VALUE":
       return "Проверьте введённые значения";
     case "NOT_SAFE":

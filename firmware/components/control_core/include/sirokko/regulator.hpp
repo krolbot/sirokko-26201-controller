@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace sirokko {
-// Comfort regulator only. Safety logic must use unfiltered process sensors.
+// Room-temperature regulation. Safety cutoffs use unfiltered sensor readings.
 struct RegulatorConfig {
     double kp{0.05}; // working span / degree C
     double integral_time_s{1800};

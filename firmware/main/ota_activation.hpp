@@ -16,17 +16,13 @@ enum class OtaCommitState : uint8_t {
     FAILED,
 };
 
-// The control task exclusively owns observe(), queue(), claim_due(),
-// finish_commit(), acknowledge_revoke(), reset() and the payload below.
-// revoke_precommit() is the only method that may run from another task.
+// Owned by the control task. Only revoke_precommit() may run from another task.
 class OtaActivationGate {
   public:
     static constexpr uint64_t kActivationDelayMs{200};
 
-    // A safe observation leases the current cold MAINTENANCE interval.  A false
-    // observation withdraws ordinary leases, marks a STOP/exit cancellation
-    // acknowledgement-ready, but never clears that cancellation or interrupts
-    // COMMITTING.
+    // Issue a lease while cold and in MAINTENANCE. On exit, withdraw leases and
+    // allow cancellation acknowledgement; an active commit continues.
     void observe(bool safe) noexcept {
         if (safe) {
             uint32_t current = state_epoch_.load(std::memory_order_acquire);
@@ -34,8 +30,7 @@ class OtaActivationGate {
                 return;
             const uint32_t next_epoch = ++counter_;
             const uint32_t desired = pack(next_epoch, OtaCommitState::LEASED);
-            // A concurrent revoke can turn UNSAFE into CANCELLED before this CAS.
-            // Consuming an unpublished counter value is safe and prevents reuse.
+            // A concurrent revoke may win this CAS; its unused epoch stays consumed.
             state_epoch_.compare_exchange_strong(current, desired, std::memory_order_release,
                                                  std::memory_order_acquire);
             return;
@@ -62,8 +57,7 @@ class OtaActivationGate {
         }
     }
 
-    // A lease is externally usable only before claim.  COMMITTING and terminal
-    // states deliberately publish no lease for another activation request.
+    // Publish leases only while activation can still be queued or claimed.
     uint32_t epoch() const noexcept {
         const uint32_t current = state_epoch_.load(std::memory_order_acquire);
         const auto current_state = unpack_state(current);
@@ -76,8 +70,7 @@ class OtaActivationGate {
         return unpack_state(state_epoch_.load(std::memory_order_acquire));
     }
 
-    // Control task only.  The payload is written before QUEUED is published;
-    // revoke_precommit() never reads or writes it.
+    // Write the payload before publishing QUEUED.
     bool queue(uint32_t epoch, const void *verified_partition, uint64_t now_ms) noexcept {
         if (!epoch || epoch > kEpochMask || !verified_partition)
             return false;
@@ -94,8 +87,8 @@ class OtaActivationGate {
         return false;
     }
 
-    // Control task only.  A successful CAS is the irrevocable boundary before
-    // esp_ota_set_boot_partition(); a revoker winning the CAS returns nullptr.
+    // Winning this CAS commits the caller to esp_ota_set_boot_partition().
+    // If cancellation wins, return nullptr.
     const void *claim_due(uint64_t now_ms) noexcept {
         uint32_t current = state_epoch_.load(std::memory_order_acquire);
         if (unpack_state(current) != OtaCommitState::QUEUED || !target_ || now_ms < queued_ms_ ||
@@ -108,10 +101,8 @@ class OtaActivationGate {
         return target_;
     }
 
-    // Lock-free arbitrary-task operation.  It never touches payload or a
-    // 64-bit timestamp.  true means this revoke owns (or has refreshed) the
-    // pre-commit cancellation latch; false means COMMITTING already won or the
-    // attempt is terminal.
+    // Lock-free cancellation from any task; touches only state_epoch_.
+    // Returns false once committing has started or finished.
     bool revoke_precommit() noexcept {
         uint32_t current = state_epoch_.load(std::memory_order_acquire);
         for (;;) {
@@ -132,9 +123,8 @@ class OtaActivationGate {
         }
     }
 
-    // Control task only, immediately after the boot-partition API returns.
-    // COMMITTING cannot be revoked; success and failure remain terminal until
-    // the control task observes unsafe before any later maintenance lease.
+    // Called after the boot-partition API returns. The result stays terminal
+    // until observe(false) permits a new maintenance interval.
     void finish_commit(bool boot_partition_set) noexcept {
         uint32_t current = state_epoch_.load(std::memory_order_acquire);
         if (unpack_state(current) != OtaCommitState::COMMITTING)
@@ -147,10 +137,8 @@ class OtaActivationGate {
 
     bool commit_started() const noexcept { return state() == OtaCommitState::COMMITTING; }
 
-    // Control task only.  observe(false) transitions CANCELLED to
-    // CANCELLED_ACKABLE; this method is the only transition that clears it. A
-    // concurrent revoke returns the phase to CANCELLED with a new stamp, so
-    // this CAS fails and the control task must process that revoke first.
+    // Clear cancellation after observe(false). A concurrent revoke changes
+    // the stamp and requires another acknowledgement.
     bool acknowledge_revoke() noexcept {
         uint32_t current = state_epoch_.load(std::memory_order_acquire);
         if (unpack_state(current) != OtaCommitState::CANCELLED_ACKABLE)
@@ -162,7 +150,7 @@ class OtaActivationGate {
         return true;
     }
 
-    // Boot/test only: no concurrent revoke or control call may exist.
+    // Initialization only, before concurrent access.
     void reset() noexcept {
         target_ = nullptr;
         queued_ms_ = 0;
@@ -192,8 +180,7 @@ class OtaActivationGate {
         queued_ms_ = 0;
     }
 
-    // These are deliberately non-atomic: only the control task may access
-    // them.  revoke_precommit() is restricted to state_epoch_ above.
+    // Control-task data; cross-task cancellation uses state_epoch_.
     const void *target_{};
     uint64_t queued_ms_{};
     uint32_t counter_{};

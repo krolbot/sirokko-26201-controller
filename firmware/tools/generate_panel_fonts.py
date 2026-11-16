@@ -17,8 +17,7 @@ SIZES = (12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24, 27, 34, 40, 44, 57)
 FULL_SIZES = frozenset((12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24, 27, 34))
 WEIGHTS = (400, 500)
 
-# ASCII covers Wi-Fi credentials verbatim.  The remaining set covers every Russian
-# upper/lowercase letter (including Ё/ё), degree, bullet, en/em dashes and arrows.
+# ASCII, Russian letters and display symbols.
 FULL_CODEPOINTS = tuple(sorted(
     set(range(0x20, 0x7F))
     | {0x00B0, 0x2013, 0x2014, 0x2022, 0x2190, 0x2191, 0x2192, 0x2193, 0x0401, 0x0451}

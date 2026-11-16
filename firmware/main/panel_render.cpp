@@ -744,7 +744,7 @@ Scene select_scene(const panel_ui::Screen &s, const panel_ui::View &v, uint64_t 
         return Scene::Rejected;
     if (s.notice == Notice::COMMAND_REJECTED || s.notice == Notice::CONFIRMATION_TIMEOUT)
         return Scene::CommandRejected;
-    // A stale room measurement must not linger on a live gauge, even during a page transition.
+    // Clear stale room readings during transitions as well.
     if (v.control.state == State::RUN && v.settings.mode == sirokko::Mode::TEMPERATURE &&
         !sirokko::room_temperature_fresh(v.sensors.room, now))
         return Scene::SensorMissing;

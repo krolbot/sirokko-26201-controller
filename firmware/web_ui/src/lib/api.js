@@ -32,11 +32,11 @@ function protocolError(message, body) {
 
 function assertChallenge(body) {
   if (!body || body.status !== "CHALLENGE")
-    throw protocolError(body?.code || "Неверный ответ challenge", body);
+    throw protocolError(body?.code || "Некорректный ответ контроллера", body);
   for (const field of ["token", "state_version", "expires_ms", "boot_id"]) {
     if (!isHexString(body[field]))
       throw protocolError(
-        `Некорректное шестнадцатеричное поле challenge: ${field}`,
+        `Некорректное поле ответа контроллера: ${field}`,
         body,
       );
   }

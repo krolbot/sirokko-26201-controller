@@ -15,7 +15,7 @@ except ImportError as exc:
 
 
 MASK_SIZE = 96
-# Enum order is part of panel_draw::Icon; do not reorder these entries.
+# Entries follow the panel_draw::Icon enum order.
 ICONS = (
     ("Clock", '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>'),
     ("Settings", '<path d="M4 7h16M4 17h16"/><rect x="7" y="4" width="4" height="6" rx="1" fill="#000" stroke="none"/><rect x="14" y="14" width="4" height="6" rx="1" fill="#000" stroke="none"/>'),

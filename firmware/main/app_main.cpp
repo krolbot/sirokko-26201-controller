@@ -187,7 +187,7 @@ sirokko::SafetyEnvelope load_factory_envelope() {
     const RecordRead state = read_record(kEnvelopeKey, kEnvelopeMagic, &envelope_record);
     const sirokko::SafetyEnvelope &envelope = envelope_record.value;
     if (state == RecordRead::MISSING) {
-        // Read the previous on-device layout without discarding existing settings.
+        // Migrate the previous NVS layout.
         struct PreviousProfile {
             bool provisioned{};
             uint64_t preheat_ms{}, ignition_timeout_ms{}, postpurge_ms{};
@@ -460,8 +460,7 @@ void control_pass(ControlWork &w) {
                 storage_status(STORAGE_INTERNAL, false);
         }
     }
-    // Capture a STOP/fault arriving after command admission but before the only
-    // state-owner tick. It must outrank the newly consumed command and storage ACK.
+    // Recheck STOP/fault after admission; both take priority over commands and storage ACKs.
     input.stop = input.stop || g_stop.exchange(false);
     auto snap = g_controller->tick(input);
     finish_storage(w, input);
@@ -549,8 +548,7 @@ sirokko::Block runtime_save_wifi_password(const char *password) {
     if (!g_gate_mutex || xSemaphoreTake(g_gate_mutex, pdMS_TO_TICKS(20)) != pdTRUE)
         return sirokko::Block::BUSY;
     auto blocked = g_wifi_password_block.load();
-    // Starts from both the panel and web wait until this write completes. STOP
-    // and the control tick remain independent of the command gate.
+    // Block starts during this write. STOP and control ticks continue normally.
     if (blocked == sirokko::Block::NONE && !network_save_wifi_password(password))
         blocked = sirokko::Block::STORAGE_UNAVAILABLE;
     xSemaphoreGive(g_gate_mutex);
