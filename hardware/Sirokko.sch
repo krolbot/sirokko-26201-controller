@@ -69,7 +69,7 @@
 <layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="98" name="Guide" color="6" fill="1" visible="no" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="100" name="LAYER_100" color="7" fill="1" visible="no" active="yes"/>
 <layer number="101" name="LAYER_101" color="7" fill="1" visible="no" active="yes"/>
 <layer number="102" name="LAYER_102" color="7" fill="1" visible="no" active="yes"/>
@@ -2257,7 +2257,7 @@
 <attribute name="MPN" value="RC0805FR-0710KL"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499"/>
 </part>
-<part name="J13" library="Sirokko" deviceset="CONN_2" device="" value="24V_INPUT">
+<part name="J13" library="Sirokko" deviceset="CONN_2" device="" value="12_24V_INPUT">
 <attribute name="MPN" value="DG127-5.08-02P-14-00A(H)"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/dg127-5.08-02p-14-00a-h-klemmnik-degson-8007163023"/>
 </part>
@@ -2357,9 +2357,9 @@
 <attribute name="MPN" value="RC0805FR-07249KL"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/rc0805fr-07249kl-rezistor-yageo-9000374189"/>
 </part>
-<part name="R102" library="Sirokko" deviceset="R0805" device="" value="10k 1%">
-<attribute name="MPN" value="RC0805FR-0710KL"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499"/>
+<part name="R102" library="Sirokko" deviceset="R0805" device="" value="11k 1%">
+<attribute name="MPN" value="CR-05FL7---11K"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-11k-viking-tech-8001784683"/>
 </part>
 <part name="U32" library="Sirokko-parts" deviceset="SRV05" device="" value="SRV05-4">
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217"/>
@@ -2404,12 +2404,16 @@
 <attribute name="MPN" value="CC0805KRX7R8BB104"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545"/>
 </part>
+<part name="R103" library="Sirokko" deviceset="R0805" device="" value="22k 1%">
+<attribute name="MPN" value="CR-05FL7---22K"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986"/>
+</part>
 </parts>
 <sheets>
 <sheet>
 <description>ESP32-S3 and sensor interfaces</description>
 <plain>
-<text x="15" y="198" size="2" layer="97" font="vector">SIROKKO 262.01 - ESP32-S3 and sensor interfaces</text>
+<text x="15" y="198" size="2" layer="97" font="vector">SIROKKO 262.01 REV H: ESP32-S3 and sensor interfaces</text>
 <wire x1="5" y1="-65" x2="400" y2="-65" width="0.254" layer="97"/>
 <wire x1="400" y1="-65" x2="400" y2="190" width="0.254" layer="97"/>
 <wire x1="400" y1="190" x2="5" y2="190" width="0.254" layer="97"/>
@@ -3224,12 +3228,12 @@
 <sheet>
 <description>Power supply and relay outputs</description>
 <plain>
-<text x="15" y="198" size="2" layer="97" font="vector">SIROKKO 262.01 - Power supply and relay outputs</text>
+<text x="15" y="198" size="2" layer="97" font="vector">SIROKKO 262.01 REV H: 12/24 V supply and relay outputs</text>
 <wire x1="5" y1="0" x2="300" y2="0" width="0.254" layer="97"/>
 <wire x1="300" y1="0" x2="300" y2="190" width="0.254" layer="97"/>
 <wire x1="300" y1="190" x2="5" y2="190" width="0.254" layer="97"/>
 <wire x1="5" y1="190" x2="5" y2="0" width="0.254" layer="97"/>
-<text x="15" y="7" size="1.2" layer="97" font="vector">External relays: coil outputs only. Contacts 30/87 connect power directly to loads.</text>
+<text x="15" y="7" size="1.2" layer="97" font="vector">Relay coils: VIN 12/24 V, 0.25 A max each. Contacts 30/87 connect loads externally.</text>
 </plain>
 <instances>
 <instance part="J13" gate="G$1" x="35" y="175" smashed="yes">
@@ -3371,7 +3375,7 @@
 <attribute name="VALUE" x="74.92" y="99.92" size="1" layer="96" font="vector"/>
 </instance>
 <instance part="R101" gate="G$1" x="120" y="140" smashed="yes">
-<attribute name="MPN" x="120" y="140" size="1.778" layer="88"/>
+<attribute name="MPN" x="120" y="140" size="1" layer="88"/>
 <attribute name="SUPPLIER_URL" x="120" y="140" size="1" layer="88" display="off"/>
 <attribute name="NAME" x="114.92" y="145.08" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="114.92" y="134.92" size="1" layer="96" font="vector"/>
@@ -3381,6 +3385,12 @@
 <attribute name="SUPPLIER_URL" x="120" y="115" size="1" layer="88" display="off"/>
 <attribute name="NAME" x="114.92" y="120.08" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="114.92" y="109.92" size="1" layer="96" font="vector"/>
+</instance>
+<instance part="R103" gate="G$1" x="120" y="90" smashed="yes">
+<attribute name="MPN" x="120" y="90" size="1" layer="88"/>
+<attribute name="SUPPLIER_URL" x="120" y="90" size="1" layer="88" display="off"/>
+<attribute name="NAME" x="114.92" y="95.08" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="114.92" y="84.92" size="1" layer="96" font="vector"/>
 </instance>
 </instances>
 <busses>
@@ -3640,11 +3650,6 @@
 </net>
 <net name="EFUSE_RTN" class="0">
 <segment>
-<pinref part="U100" gate="G$1" pin="UVLO"/>
-<wire x1="69.84" y1="147.62" x2="56.22" y2="147.62" width="0.1524" layer="91"/>
-<label x="56.22" y="147.62" size="1" layer="95"/>
-</segment>
-<segment>
 <pinref part="U100" gate="G$1" pin="RTN"/>
 <wire x1="69.84" y1="140" x2="56.22" y2="140" width="0.1524" layer="91"/>
 <label x="56.22" y="140" size="1" layer="95"/>
@@ -3661,8 +3666,9 @@
 </segment>
 <segment>
 <pinref part="R102" gate="G$1" pin="2"/>
-<wire x1="127.62" y1="115" x2="135.24" y2="115" width="0.1524" layer="91"/>
-<label x="135.24" y="115" size="1" layer="95"/>
+<wire x1="127.62" y1="115" x2="127.62" y2="117" width="0.1524" layer="91"/>
+<wire x1="127.62" y1="117" x2="128" y2="117" width="0.1524" layer="91"/>
+<label x="128" y="117" size="1" layer="95"/>
 </segment>
 </net>
 <net name="EFUSE_OVP" class="0">
@@ -3672,14 +3678,14 @@
 <label x="56.22" y="145.08" size="1" layer="95"/>
 </segment>
 <segment>
-<pinref part="R101" gate="G$1" pin="2"/>
-<wire x1="127.62" y1="140" x2="135.24" y2="140" width="0.1524" layer="91"/>
-<label x="135.24" y="140" size="1" layer="95"/>
-</segment>
-<segment>
 <pinref part="R102" gate="G$1" pin="1"/>
 <wire x1="112.38" y1="115" x2="98.76" y2="115" width="0.1524" layer="91"/>
 <label x="98.76" y="115" size="1" layer="95"/>
+</segment>
+<segment>
+<pinref part="R103" gate="G$1" pin="2"/>
+<wire x1="127.62" y1="90" x2="135.24" y2="90" width="0.1524" layer="91"/>
+<label x="135.24" y="90" size="1" layer="95"/>
 </segment>
 </net>
 <net name="EFUSE_ILIM" class="0">
@@ -3716,6 +3722,25 @@
 <pinref part="C108" gate="G$1" pin="1"/>
 <wire x1="232.38" y1="115" x2="224.76" y2="115" width="0.1524" layer="91"/>
 <label x="224.76" y="115" size="1" layer="95"/>
+</segment>
+</net>
+<net name="EFUSE_UVLO" class="0">
+<segment>
+<pinref part="U100" gate="G$1" pin="UVLO"/>
+<wire x1="69.84" y1="147.62" x2="56.22" y2="147.62" width="0.1524" layer="91"/>
+<label x="56.22" y="147.62" size="1" layer="95"/>
+</segment>
+<segment>
+<pinref part="R101" gate="G$1" pin="2"/>
+<wire x1="127.62" y1="140" x2="127.62" y2="142" width="0.1524" layer="91"/>
+<wire x1="127.62" y1="142" x2="128" y2="142" width="0.1524" layer="91"/>
+<label x="128" y="142" size="1" layer="95"/>
+</segment>
+<segment>
+<pinref part="R103" gate="G$1" pin="1"/>
+<wire x1="112.38" y1="90" x2="112.38" y2="92" width="0.1524" layer="91"/>
+<wire x1="112.38" y1="92" x2="108" y2="92" width="0.1524" layer="91"/>
+<label x="108" y="92" size="1" layer="95"/>
 </segment>
 </net>
 </nets>

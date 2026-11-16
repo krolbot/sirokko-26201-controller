@@ -113,7 +113,7 @@ struct SafetyEnvelope {
     // Optional additional exhaust cutoff; zero leaves heater overheat protection to the stock limiter.
     int32_t maximum_exhaust_milli_c{};
     int32_t minimum_run_exhaust_milli_c{};
-    // Initial PWM and upper control limit for the two-wire drive at 24 V.
+    // Initial PWM and upper control limit for the two-wire drive.
     uint16_t purge_speed_code{kPwmMaximum};
     uint16_t maximum_speed_code{kPwmMaximum};
     // Configured lower command for continuous operation; zero means unset.

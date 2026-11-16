@@ -22,11 +22,13 @@
 | J32 | DS1013-12SSiB1-B-0 | 1 | 3 | 5 | 11 | [Товар](https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091) |
 | Q20, Q21 | AO3422 | 2 | 6 | 10 | 17 | [Товар](https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823) |
 | R1 | RC0805FR-074K7L | 1 | 10 | 10 | 4 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078) |
-| R2, R3, R7, R8, R102, RP20, RP21 | RC0805FR-0710KL | 7 | 25 | 35 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
+| R2, R3, R7, R8, RP20, RP21 | RC0805FR-0710KL | 6 | 20 | 30 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
 | R12, R28, R29, RG20, RG21 | RC0805FR-07220RL | 5 | 15 | 25 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
 | R32, R33 | RC0805FR-0733RL | 2 | 6 | 10 | 4 | [Товар](https://www.chipdip.ru/product/rc0805fr-0733rl-yageo-8001790284) |
 | R100 | RC0805FR-0712KL | 1 | 3 | 5 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-12-kom-1-rc0805fr-0712kl-chip-rezistor-yageo-9001512277) |
 | R101 | RC0805FR-07249KL | 1 | 3 | 5 | 1 | [Товар](https://www.chipdip.ru/product/rc0805fr-07249kl-rezistor-yageo-9000374189) |
+| R102 | CR-05FL7---11K | 1 | 3 | 5 | 2 | [Товар](https://www.chipdip.ru/product/cr-05fl7-11k-viking-tech-8001784683) |
+| R103 | CR-05FL7---22K | 1 | 3 | 5 | 1 | [Товар](https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986) |
 | U12, U29, U32, U33, U34 | SRV05-4.TCT | 5 | 15 | 25 | 8 | [Товар](https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217) |
 | U100 | TPS26600PWP | 1 | 3 | 5 | 390 / 297¹ | [Товар](https://www.chipdip.ru/product/tps26600pwp-texas-instruments-8003870507) |
 | U101 | K7805-1000R3 | 1 | 3 | 5 | 260 | [Товар](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
@@ -36,9 +38,9 @@
 
 | Закупка | 3 комплекта | 5 комплектов |
 |---|---:|---:|
-| Компоненты платы | 4001 ₽ | 5688 ₽ |
+| Компоненты платы | 3980 ₽ | 5673 ₽ |
 | Розетка шлейфа DS1016-12MA2BB, по 28 ₽ | 84 ₽ | 140 ₽ |
-| **Всего** | **4085 ₽** | **5828 ₽** |
+| **Всего** | **4064 ₽** | **5813 ₽** |
 
 В сумму не входят модули, реле, блок питания, кабели, крепёж, изготовление и монтаж платы.
 
@@ -54,11 +56,11 @@
 
 | Кол. | Изделие | Подключение / совместимость |
 |---:|---|---|
-| 1 | YD-ESP32-S3 N16R8 V1.4 | J1/J3; два ряда по 22 контакта |
+| 1 | YD-ESP32-S3 N16R8 V1.4 с внешней антенной | J1/J3; два ряда по 22 контакта |
 | 2 | Модули MAX31856 | J30/J31; 9 контактов, геометрия и распиновка Adafruit 3263 |
 | 1 | [Панель TFT 2,4″ с EC11 и KEY0](https://aliexpress.ru/item/1005008419740415.html) | J32; SPI, питание и логика 3,3 В; шлейф IDC 2×6 → 1×12, контакты по номерам |
 | 1 | HC-160A S2 | J29 управляет A1/A2/PA/G; питание двигателя подключается отдельно |
-| 2 | Автомобильные реле с катушкой 24 В | J20 — свеча, J21 — муфта; ток каждой катушки не более 0,25 А; силовые контакты вне платы |
+| 2 | Автомобильные реле с катушкой 12 или 24 В под напряжение БП | J20 — свеча, J21 — муфта; ток каждой катушки не более 0,25 А; силовые контакты вне платы |
 | 2 | Термопара типа K | К клеммам модулей MAX31856; исполнение для температуры в месте установки |
 | 1 | Комнатный DS18B20 | J12; трёхпроводное подключение; кабель до 1 м |
 | 1 | Шлейф панели | До 100 мм, IDC 2×6 со стороны платы, по [таблице J32](../docs/assembly.md#панель-tft-24--ec11--key0) |
