@@ -27,6 +27,7 @@ build/
 build-host/
 dist/
 firmware/release-artifact/
+firmware/main/web_ui_data.inc
 out/
 .cache/
 **/.pio/

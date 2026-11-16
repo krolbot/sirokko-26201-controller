@@ -16,15 +16,15 @@ const char *trial_record_reason(sirokko::TrialRecordReason reason) {
     case R::SETTLING:
         return "Нужны 2 минуты на выбранном ШИМ с колебаниями выхлопа не более 5 °C";
     case R::INVALID:
-        return "Запись прервана ошибкой или недостоверными показаниями. Нужен новый первый запуск";
+        return "Ошибка записи или показаний датчиков. Повторите первый запуск";
     case R::FULL:
-        return "Память записи заполнена. Нужен новый первый запуск";
+        return "Память записи заполнена. Повторите первый запуск";
     case R::RANGE:
         return "Для выбранного ШИМ не удалось рассчитать температурный порог";
     case R::IGNITION:
         return "Розжиг не подтвердился на рассчитанном температурном пороге";
     case R::PROFILE_CHANGED:
-        return "Параметры отопителя изменились. Нужен новый первый запуск";
+        return "Параметры отопителя изменились. Повторите первый запуск";
     case R::READY:
         return "Температурный порог рассчитан";
     }
@@ -36,7 +36,7 @@ const char *russian_state(sirokko::State state) {
     case sirokko::State::UNCONFIGURED:
         return "Нужна настройка";
     case sirokko::State::RECOVERY_PURGE:
-        return "Охлаждение незавершённого цикла";
+        return "Охлаждение после перезапуска";
     case sirokko::State::IDLE:
         return "Отопитель выключен";
     case sirokko::State::PREHEAT:
@@ -82,7 +82,7 @@ const char *russian_block(sirokko::Block block) {
     case sirokko::Block::FAULT_LATCHED:
         return "Запуск заблокирован до сброса аварии";
     case sirokko::Block::BUSY:
-        return "Команда недоступна на текущем этапе работы";
+        return "Команда сейчас недоступна";
     case sirokko::Block::MAINTENANCE:
         return "Обновление прошивки";
     case sirokko::Block::LOCAL_CONTROLS_UNAVAILABLE:
@@ -189,7 +189,7 @@ bool build_state_json(const RuntimeView &view, const WebStateInfo &info, JsonBui
         {sirokko::FAULT_COMBUSTION_DROP, "Температура выхлопа устойчиво падает при неизменном ШИМ двигателя"},
         {sirokko::FAULT_CONTROL_WATCHDOG, "Контроллер не выполнил цикл управления вовремя"},
         {sirokko::FAULT_STORAGE, "Ошибка чтения или записи настроек"},
-        {sirokko::FAULT_LOCAL_CONTROLS, "Не запущен драйвер экрана или кнопки"},
+        {sirokko::FAULT_LOCAL_CONTROLS, "Не удалось запустить экран или кнопку"},
     };
     bool first_fault = true;
     for (const auto &description : descriptions) {

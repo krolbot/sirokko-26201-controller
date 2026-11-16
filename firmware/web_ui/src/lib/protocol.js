@@ -13,12 +13,6 @@ export function isHexString(value) {
   return typeof value === "string" && /^[0-9a-f]+$/i.test(value);
 }
 
-export function requireHexString(value, field) {
-  if (!isHexString(value))
-    throw new TypeError(`${field} must be a non-empty hexadecimal string`);
-  return value;
-}
-
 export function cloneJson(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -65,11 +59,6 @@ export function formatDuration(milliseconds) {
   ]
     .filter(Boolean)
     .join(" ");
-}
-
-export function minutesFromMilliseconds(milliseconds) {
-  if (!Number.isFinite(milliseconds) || milliseconds < 0) return 0;
-  return Math.min(MAX_TIMER_MINUTES, Math.ceil(milliseconds / 60_000));
 }
 
 export function millisecondsFromMinutes(value) {

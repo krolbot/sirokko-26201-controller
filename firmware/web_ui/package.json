@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "postbuild": "node tools/licenses.mjs && node tools/verify-dist.mjs",
+    "postbuild": "node tools/licenses.mjs && node tools/verify-dist.mjs && python ../tools/embed_web_ui.py",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {

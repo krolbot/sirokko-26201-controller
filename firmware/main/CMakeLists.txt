@@ -1,3 +1,7 @@
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/web_ui_data.inc")
+  message(FATAL_ERROR "Build the web interface first: npm ci --prefix firmware/web_ui && npm run build --prefix firmware/web_ui")
+endif()
+
 idf_component_register(
   SRCS "app_main.cpp" "status_led.cpp" "network.cpp" "start_stop_button.cpp" "sensors.cpp" "web.cpp" "web_state.cpp" "bounded_receive.cpp"
        "panel.cpp" "panel_ui.cpp" "panel_canvas.cpp" "panel_render.cpp" "web_protocol.cpp" "ota_verify.cpp"

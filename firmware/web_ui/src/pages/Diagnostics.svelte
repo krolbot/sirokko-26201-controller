@@ -83,10 +83,10 @@
   <div class="disclosure-body">
     <dl class="reading-list">
       <div>
-        <dt>Драйверы экрана и кнопки</dt>
+        <dt>Экран и кнопка</dt>
         <dd>
           {localInitialized === true
-            ? "Запущены"
+            ? "Готовы"
             : localInitialized === false
               ? "Ошибка запуска"
               : "Нет данных"}

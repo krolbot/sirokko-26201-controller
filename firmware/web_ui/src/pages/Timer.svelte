@@ -98,7 +98,6 @@
         </div>{/if}
     {:else}
       <h2>Без таймера</h2>
-      <p class="caption">Нагрев без ограничения времени</p>
     {/if}
   </section>
   {#if editor}<section

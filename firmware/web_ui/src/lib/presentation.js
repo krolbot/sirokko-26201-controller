@@ -5,7 +5,7 @@ export function commandAllowed(snapshot, action) {
 export function commandReason(snapshot, action) {
   return (
     snapshot?.commands?.[action]?.reason ||
-    "Контроллер не разрешает эту команду"
+    "Команда сейчас недоступна"
   );
 }
 export function connectionReady(ui) {
@@ -88,7 +88,7 @@ export function errorText(error, fallback, snapshot) {
     case "STORAGE":
       return "Не удалось сохранить данные в памяти контроллера";
     case "BUSY":
-      return "Команда недоступна на текущем этапе работы";
+      return "Команда сейчас недоступна";
     case "RATE_LIMIT":
     case "SESSIONS_FULL":
       return "Контроллер занят. Повторите позже";
@@ -103,7 +103,7 @@ export function errorText(error, fallback, snapshot) {
       return "Проверьте введённые значения";
     case "NOT_SAFE":
     case "MAINTENANCE_LEASE":
-      return "Обновление недоступно в текущем состоянии отопителя";
+      return "Обновление сейчас недоступно";
     case "OTA_TIMEOUT":
     case "TRUNCATED":
       return "Файл прошивки передан не полностью";

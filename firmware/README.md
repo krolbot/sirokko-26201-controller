@@ -19,7 +19,6 @@
 ```sh
 npm ci --prefix firmware/web_ui
 npm run build --prefix firmware/web_ui
-python3 firmware/tools/embed_web_ui.py
 idf.py -C firmware set-target esp32s3
 idf.py -C firmware build
 ```
@@ -46,11 +45,11 @@ idf.py -C firmware -p /dev/ttyACM0 flash monitor
 | `main/persistence.hpp`, `main/record_codec.hpp` | Хранение параметров |
 | `partitions.csv`, `sdkconfig.defaults` | Разделы flash и конфигурация сборки |
 
-Шрифты, иконки и встроенная веб-страница лежат в `main/*_data.inc`.
+Шрифты и иконки панели лежат в `main/panel_fonts_data.inc` и `main/panel_icons_data.inc`.
 
 ### Изменение веб-интерфейса
 
-После изменения `web_ui/src/` выполните сборку веб-интерфейса и `embed_web_ui.py`. Он обновляет `main/web_ui_data.inc` — сжатую страницу для прошивки. Ключ `--check` проверяет соответствие файла сборке.
+`npm run build --prefix firmware/web_ui` собирает страницу и создаёт `main/web_ui_data.inc` для прошивки. Этот файл генерируется автоматически и не хранится в Git.
 
 `npm run preview --prefix firmware/web_ui` открывает локальный предпросмотр; управление устройством требует подключения к его API.
 

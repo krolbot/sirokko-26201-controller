@@ -34,5 +34,4 @@ CONFIG_FREERTOS_WATCHPOINT_END_OF_STACK=y
 # Mobile browser headers exceed the IDF 512-byte default.
 CONFIG_HTTPD_MAX_REQ_HDR_LEN=8192
 
-# Initialization includes the local panel and its state snapshots.
 CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192

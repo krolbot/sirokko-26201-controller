@@ -108,7 +108,7 @@ export function heaterValidation(value, limits) {
   ])
     if (p[key] >= limits?.temperature_max_milli_c)
       errors[key] =
-        `Ниже ${limits.temperature_max_milli_c / 1000} °C — предела измерения термопары`;
+        `Ниже ${limits.temperature_max_milli_c / 1000} °C — предела контроля температуры`;
   if (!p.cooling_exhaust_milli_c)
     errors.cooling_exhaust_milli_c =
       "Укажите температуру выхлопа для отключения двигателя";

@@ -651,7 +651,7 @@ void draw(Canvas &c, const Frame &f) {
         message(c, f, "Обновление прошивки", "Запуск недоступен", "Управление через браузер", Icon::Settings);
         break;
     case Scene::NoData:
-        message(c, f, "Данные недоступны", "Нет данных контроллера", "Ожидание данных контроллера",
+        message(c, f, "Нет связи", "Ожидание контроллера", "",
                 Icon::Warning, kRed, kRedBg);
         break;
     case Scene::Blocked:

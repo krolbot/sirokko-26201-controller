@@ -85,8 +85,8 @@
                   продолжит работать ещё {limits.ignition_glow_ms / 1000} с.</small
                 >
               {:else if key === "postpurge_ms"}<small class="caption"
-                  >Минимальная длительность охлаждения. При горячем выхлопе
-                  двигатель продолжает работать.</small
+                  >При горячем выхлопе двигатель продолжает работать и после
+                  истечения этого времени.</small
                 >
               {:else if key === "ignition_timeout_ms"}<small class="caption"
                   >От подачи топлива до подтверждения розжига по температуре
@@ -118,10 +118,6 @@
                 >
               {:else if key === "minimum_speed_code"}<small class="caption"
                   >Значение для устойчивого горения, подобранное в первом запуске.</small
-                >
-              {:else if key === "purge_speed_code"}<small class="caption"
-                  >ШИМ двигателя после отключения топлива, пока отопитель
-                  остывает.</small
                 >
               {/if}
             </div>

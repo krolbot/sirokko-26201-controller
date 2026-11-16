@@ -22,7 +22,7 @@
           limit: "Лимит записи достигнут",
           stopped: "Запись завершена",
         }[recording.reason] ||
-          "Температуры и управление отопителем в одном файле",
+          "Запись не начата",
   );
   function submit(event) {
     event.preventDefault();
@@ -74,7 +74,7 @@
           bind:value={note}
           maxlength="160"
           oninput={() => (added = false)}
-          placeholder="Например, напряжение 24 В"
+          placeholder="Комментарий к измерениям"
         />
         <button class="secondary" disabled={!note.trim()}>Добавить</button>
       </div>
