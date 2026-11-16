@@ -1,4 +1,4 @@
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/web_ui_data.inc")
+if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/web_ui_data.inc")
   message(FATAL_ERROR "Build the web interface first: npm ci --prefix firmware/web_ui && npm run build --prefix firmware/web_ui")
 endif()
 
