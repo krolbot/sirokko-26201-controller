@@ -670,8 +670,7 @@ esp_err_t command_handler(httpd_req_t *request) {
     std::fill(body.begin(), body.end(), 0);
     if (parsed != web_protocol::ParseError::OK)
         return reject(request, web_protocol::error_name(parsed));
-    // Defense in depth for the parser-level OTA_UPLOAD_ONLY rejection above:
-    // only /api/ota owns a signed upload and maintenance lifecycle.
+    // OTA uses /api/ota, which verifies the signed upload and handles maintenance mode.
     if (command.action == sirokko::Action::OTA)
         return reject(request, "OTA_UPLOAD_ONLY", "405 Method Not Allowed");
 

@@ -77,7 +77,7 @@
 <layer number="255" name="Undefined" color="7" fill="1" visible="no" active="yes"/>
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
-<description>Sirokko 262.01 — schematic converted from repository KiCad sheets; net and package mapping verified against imported PCB.</description>
+<description>Sirokko 262.01 controller: ESP32-S3, sensor interfaces, 24 V supply and relay outputs.</description>
 <libraries>
 <library name="MountingHole">
 <description>MountingHole</description>
@@ -2125,9 +2125,9 @@
 </parts>
 <sheets>
 <sheet>
-<description>ESP32-S3 and existing peripherals / GPIO unchanged</description>
+<description>ESP32-S3 and sensor interfaces</description>
 <plain>
-<text x="15" y="180" size="2" layer="97" font="vector">SIROKKO 262.01 - ESP32-S3 and existing peripherals / GPIO unchanged</text>
+<text x="15" y="180" size="2" layer="97" font="vector">SIROKKO 262.01 - ESP32-S3 and sensor interfaces</text>
 <wire x1="5" y1="0" x2="300" y2="0" width="0.254" layer="97"/>
 <wire x1="300" y1="0" x2="300" y2="190" width="0.254" layer="97"/>
 <wire x1="300" y1="190" x2="5" y2="190" width="0.254" layer="97"/>
@@ -2664,9 +2664,9 @@
 </nets>
 </sheet>
 <sheet>
-<description>24 V to 5 V and external relay coil drivers</description>
+<description>Power supply and relay outputs</description>
 <plain>
-<text x="15" y="180" size="2" layer="97" font="vector">SIROKKO 262.01 - 24 V to 5 V and external relay coil drivers</text>
+<text x="15" y="180" size="2" layer="97" font="vector">SIROKKO 262.01 - Power supply and relay outputs</text>
 <wire x1="5" y1="0" x2="300" y2="0" width="0.254" layer="97"/>
 <wire x1="300" y1="0" x2="300" y2="190" width="0.254" layer="97"/>
 <wire x1="300" y1="190" x2="5" y2="190" width="0.254" layer="97"/>

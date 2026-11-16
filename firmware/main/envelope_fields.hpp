@@ -1,7 +1,7 @@
 #pragma once
 #include "sirokko/control.hpp"
 
-// The wire fields deliberately exclude provisioned: only a validated, durable save sets it.
+// provisioned is set after validation and storage, so it is absent from the wire format.
 template <class Envelope, class Visitor> void envelope_fields(Envelope &p, Visitor visit) {
     visit("preheat_ms", p.preheat_ms);
     visit("ignition_timeout_ms", p.ignition_timeout_ms);

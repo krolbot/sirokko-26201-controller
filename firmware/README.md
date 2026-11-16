@@ -1,6 +1,6 @@
 # Прошивка ESP32-S3
 
-Для записи готовой прошивки и первоначальной настройки используйте [руководство пользователя](../docs/user-guide.md#первоначальная-настройка).
+[Запись готовой прошивки и настройка](../docs/user-guide.md#первоначальная-настройка).
 
 ## Инструменты
 
@@ -23,9 +23,9 @@ idf.py -C firmware set-target esp32s3
 idf.py -C firmware build
 ```
 
-Параметры сборки заданы в `sdkconfig.defaults`: HTTP-заголовки до 8192 байт, стек main 8192 байта, BSS в PSRAM. Локальный `sdkconfig` имеет приоритет над этими значениями.
+Параметры сборки — в `sdkconfig.defaults`; локальный `sdkconfig` имеет приоритет.
 
-Результат — `firmware/build/`. Для USB-записи своего образа на вынутый из основной платы DevKit:
+Образы прошивки появляются в `firmware/build/`. Запись по USB на вынутый из платы DevKit:
 
 ```sh
 idf.py -C firmware -p /dev/ttyACM0 flash monitor
@@ -55,7 +55,7 @@ idf.py -C firmware -p /dev/ttyACM0 flash monitor
 
 ### Изменение шрифта и иконок
 
-Готовые шрифты и иконки включены в исходники. Для их изменения нужны Pillow/FreeType и `rsvg-convert`:
+Для генерации шрифтов и иконок нужны Pillow/FreeType и `rsvg-convert`:
 
 ```sh
 python3 firmware/tools/generate_panel_fonts.py
@@ -77,9 +77,9 @@ python3 firmware/tools/sign_ota.py \
   --key /protected/sirokko-ota-rsa3072.pem
 ```
 
-Путь к закрытому ключу задаётся параметром `--key` или переменной `SIROKKO_OTA_SIGNING_KEY`. Закрытый ключ хранится вне репозитория.
+Вместо `--key` можно задать переменную `SIROKKO_OTA_SIGNING_KEY`.
 
-Для собственной системы обновлений нужен собственный ключ и соответствующий открытый ключ в прошивке. Сначала запишите такую прошивку через USB.
+При смене ключа соответствующий открытый ключ включают в прошивку и записывают её через USB.
 
 ## Сторонние материалы
 

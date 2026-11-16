@@ -59,7 +59,7 @@ struct Bounds {
     int x0, x1, y0, y1;
 };
 Bounds clipped(double left, double top, double right, double bottom, int band, int rows, int width) {
-    // Clamp in double before conversion; even extreme caller coordinates cannot overflow an int.
+    // Clamp before conversion to avoid integer overflow.
     return {
         static_cast<int>(std::floor(std::clamp(left - 1.0, 0.0, static_cast<double>(width)))),
         static_cast<int>(std::ceil(std::clamp(right + 1.0, 0.0, static_cast<double>(width)))),
@@ -250,9 +250,7 @@ void Canvas::begin(uint16_t *pixels, int band_y, int rows, int width) {
     band_y_ = 0;
     rows_ = 0;
     width_ = 0;
-    // The local panel has a fixed 320x240 logical surface.  Rejecting impossible
-    // band dimensions prevents a malformed caller from turning stripe loops into a
-    // giant full-frame walk or an overflowing pixel count.
+    // Reject band dimensions outside the 320x240 surface before calculating pixel counts.
     if (!pixels || width <= 0 || width > kMaximumWidth || rows <= 0 || rows > kMaximumRows)
         return;
     pixels_ = pixels;

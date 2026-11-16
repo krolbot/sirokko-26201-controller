@@ -123,8 +123,8 @@ void TrialRecord::calculate() {
     if (!first_fuel || first_fuel == result_.samples || low == std::numeric_limits<int32_t>::max())
         return;
     const auto reference = std::max(cooling_, baseline);
-    // Initial proposal, not a flame detector: midpoint between the cold/cooling
-    // reference and the minimum confirmed operation, including PWM transitions.
+    // Midpoint between the cold/cooling reference and the lowest confirmed
+    // operating temperature, including PWM transitions.
     const auto proposed = static_cast<int32_t>((static_cast<int64_t>(reference) + low) / 2000) * 1000;
     if (proposed <= reference || proposed >= low || (maximum_ && proposed >= maximum_)) {
         result_.reason = TrialRecordReason::RANGE;

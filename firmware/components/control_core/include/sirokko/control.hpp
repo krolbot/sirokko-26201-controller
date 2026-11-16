@@ -16,14 +16,14 @@ constexpr uint64_t kPreheatMaximumMs = 60000;
 constexpr uint64_t kFiringStartupMaximumMs = 90000;
 // Glow plug overlap after motor and fuel start.
 constexpr uint64_t kIgnitionGlowMs = 10000;
-// Software debounce across distinct fresh thermocouple samples, not a flame-detector rating.
+// Debounce across distinct fresh thermocouple samples.
 constexpr uint64_t kTemperatureConfirmationMs = 1000;
 constexpr uint64_t kPostpurgeMinimumMs = 150000;
 // MAX31856 datasheet, Table 1: K-type measurement range starts at -200 C.
-// Sensor plausibility bound, not a qualified heater operating temperature.
+// Upper plausibility bound for the installed thermocouples.
 constexpr int32_t kThermocoupleMinimumMilliC = -200000;
 constexpr int32_t kProcessMeasurementCeilingMilliC = 600000;
-// Product settings policy; these are not heater specifications.
+// Configuration bounds.
 constexpr int32_t kRoomSetpointMinimumMilliC = 15000;
 constexpr int32_t kRoomSetpointMaximumMilliC = 30000;
 constexpr int32_t kRoomSetpointStepMilliC = 1000;
@@ -114,8 +114,7 @@ struct SafetyEnvelope {
     // Optional additional exhaust cutoff; zero leaves heater overheat protection to the stock limiter.
     int32_t maximum_exhaust_milli_c{};
     int32_t minimum_run_exhaust_milli_c{};
-    // Initial command for the installed two-wire drive on a regulated 24 V supply.
-    // This is the controller ceiling, not measured RPM or a qualified lower limit.
+    // Initial PWM and upper control limit for the two-wire drive at 24 V.
     uint16_t purge_speed_code{kPwmMaximum};
     uint16_t maximum_speed_code{kPwmMaximum};
     // Configured lower command for continuous operation; zero means unset.

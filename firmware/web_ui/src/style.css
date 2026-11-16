@@ -1119,7 +1119,6 @@ button:active:not(:disabled) {
   background: #25333d;
 }
 
-/* Timer and optional response limits share the panel's typography and controls. */
 .timer-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1398,7 +1397,6 @@ button:active:not(:disabled) {
   }
 }
 
-/* Shared content boundaries: cards and controls must fit their own columns. */
 main > .surface + .readings,
 main > .surface + a.secondary {
   margin-top: 24px;

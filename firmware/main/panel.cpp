@@ -278,7 +278,7 @@ void display_fail(const char *message) {
         ESP_LOGE(kTag, "%s", message);
     g_display.failed = true;
     g_healthy = false;
-    // Buffer intentionally retained: a missing/late DMA callback is not permission to free or reuse it.
+    // Retain the buffer until DMA completion is known.
 }
 bool complete_transfer(TickType_t wait) {
     if (g_display.in_flight && xSemaphoreTake(g_display.color_done, wait) == pdTRUE) {

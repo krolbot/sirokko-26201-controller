@@ -30,8 +30,7 @@ struct GrantFields {
     uint64_t expires_ms{};
 };
 
-// This is the complete semantic command payload. Grant fields are deliberately
-// separate: they are issued only after the payload digest has been established.
+// The grant is issued after hashing the command payload.
 struct Command {
     sirokko::Action action{sirokko::Action::START};
     uint64_t command_id{};

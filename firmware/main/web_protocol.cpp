@@ -768,9 +768,7 @@ ParseError parse_request(const char *text, size_t size, bool command_submission,
         return ParseError::UNKNOWN_FIELD;
     if ((seen & required) != required)
         return ParseError::MISSING_FIELD;
-    // The signed upload has its own counted-body endpoint.  Keeping OTA out of
-    // generic submissions prevents a grant from entering maintenance without
-    // the package verifier and its guaranteed exit path.
+    // OTA must pass through the signed-upload endpoint and its maintenance lifecycle.
     if (command_submission && command.action == sirokko::Action::OTA)
         return ParseError::OTA_UPLOAD_ONLY;
     command.payload_digest = digest_command(command);

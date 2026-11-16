@@ -6,7 +6,7 @@
 namespace sirokko {
 struct Sensors;
 namespace combustion {
-// Analysis policy, not certified flame-detector timing or physical heater limits.
+// Sampling and confirmation intervals for temperature-drop detection.
 constexpr size_t kWindowSamples = 60;
 constexpr uint64_t kSamplePeriodMs = 500;
 constexpr uint64_t kConfirmationMs = 1500;
@@ -22,8 +22,8 @@ struct Snapshot {
     uint64_t suspect_ms{};
 };
 
-// A frozen reference for comparable commands. A falling temperature never lowers it.
-// Independent absolute limits remain owned by Controller.
+// Reference temperatures stay fixed while the PWM command is stable.
+// Controller handles absolute temperature limits.
 class Monitor {
   public:
     void reset(int32_t minimum_exhaust_milli_c, uint16_t reference_speed_code);

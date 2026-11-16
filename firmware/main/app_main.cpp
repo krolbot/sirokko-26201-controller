@@ -325,8 +325,7 @@ void storage_task(void *) {
         else if (request.kind == StoreKind::CYCLE_ACTIVE || request.kind == StoreKind::CYCLE_CLEAN)
             result.ok = save_record(kCycleKey, kCycleMagic,
                                     uint32_t{request.kind == StoreKind::CYCLE_ACTIVE ? 1U : 0U});
-        // Only one storage request is in flight. A full result queue is a fault,
-        // not a reason to leave the worker waiting forever.
+        // One storage request is in flight; a full result queue indicates a fault.
         if (xQueueSend(g_store_results, &result, 0) != pdTRUE)
             storage_status(STORAGE_INTERNAL, false);
     }

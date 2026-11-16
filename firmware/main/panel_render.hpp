@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "panel_ui.hpp"
 
-// Portable presentation only. No GPIO, timers, command submission, heap or RTOS calls.
+// Allocation-free rendering, independent of hardware and RTOS.
 namespace panel_render {
 constexpr int kWidth = 320;
 constexpr int kHeight = 240;

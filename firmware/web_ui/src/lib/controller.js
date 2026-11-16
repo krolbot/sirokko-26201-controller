@@ -38,9 +38,8 @@ function statusMessage(kind, text) {
 }
 
 /**
- * State coordinator for the browser UI. It never assumes that HTTP acceptance
- * changed the heater. A command remains pending until a newer state snapshot
- * matches its requested result, or becomes explicitly unknown after five seconds.
+ * Commands remain pending until a newer state matches the requested result.
+ * After five seconds without confirmation, their outcome is unknown.
  */
 export class ControllerSession {
   constructor({
@@ -346,7 +345,7 @@ export class ControllerSession {
             );
     }
 
-    // A version observation is never proof of a healthy controller. Fault wins over OTA feedback.
+    // Controller faults take precedence over update completion.
     this._set({
       snapshot,
       link: "online",

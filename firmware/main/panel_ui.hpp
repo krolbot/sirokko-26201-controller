@@ -61,7 +61,7 @@ struct Command {
     uint16_t speed_code{};
 };
 
-// This stays in RAM in the local panel task. Nothing in panel_ui logs or serializes it.
+// Credentials stay in panel-task RAM and are excluded from logs and serialization.
 struct LocalCredentials {
     bool available{};
     std::array<char, 33> ssid{};
