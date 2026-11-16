@@ -2,7 +2,7 @@
 
 Контроллер для отопителя Sirokko 262.01: плата на ESP32-S3, прошивка и веб-пульт. Температура и режим работы задаются с панели с энкодером или с телефона по Wi-Fi.
 
-![Плата контроллера](hardware/board-top.png)
+![Печатная плата Sirokko 262.01, вид сверху](hardware/board-preview.png)
 
 [Прошивка](https://github.com/krolbot/sirokko-26201-controller/releases/latest/download/Sirokko-firmware.zip) · [Сборка и подключение](docs/assembly.md) · [Руководство пользователя](docs/user-guide.md) · [Компоненты и цены](hardware/BOM.md)
 
