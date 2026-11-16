@@ -14,7 +14,7 @@
         "decimal": 4,
         "integer": 3
       },
-      "generate_job_file": true,
+      "generate_job_file": false,
       "output_type": "gerber",
       "outputs": [
         {
