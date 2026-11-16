@@ -44,4 +44,4 @@
 
 ## Лицензии
 
-Общая лицензия проекта не назначена. Лицензии сторонних материалов: [библиотеки KiCad](hardware/KICAD_LIBRARIES_LICENSE.md), [прошивка](firmware/third_party/README.md), [веб-интерфейс](firmware/web_ui/THIRD_PARTY_NOTICES.txt).
+Общая лицензия проекта не назначена. Лицензии сторонних материалов: [библиотеки KiCad](hardware/KICAD_LIBRARIES_LICENSE.md), [прошивка](firmware/README.md#сторонние-материалы), [веб-интерфейс](firmware/web_ui/THIRD_PARTY_NOTICES.txt).

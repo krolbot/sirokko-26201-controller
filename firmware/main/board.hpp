@@ -16,8 +16,7 @@ constexpr gpio_num_t kGlow = GPIO_NUM_14;
 constexpr gpio_num_t kFuel = GPIO_NUM_15;
 constexpr gpio_num_t kFanRequest = GPIO_NUM_16;
 constexpr gpio_num_t kSpeedPwm = GPIO_NUM_17;
-// KEY0: module 12 -> J32.12 -> J3.8 -> GPIO40. Expected NO-to-GND / active-low
-// with the MCU pull-up enabled; this is a schematic expectation, not a measurement.
+// KEY0: module 12 -> J32.12 -> J3.8 -> GPIO40. Normally open to GND; MCU pull-up enabled.
 constexpr gpio_num_t kStartStopButton = GPIO_NUM_40;
 constexpr gpio_num_t kTftMosi = GPIO_NUM_7;
 constexpr gpio_num_t kTftSck = GPIO_NUM_8;

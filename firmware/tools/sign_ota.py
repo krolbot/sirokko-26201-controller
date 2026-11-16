@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Create the single-file signed Sirokko OTA container offline.
-
-The private RSA key is never copied into the repository or printed. The target
-verifies the signature with firmware/main/ota_public_key.pem before selecting
-an OTA boot partition.
-"""
+"""Package an ESP32 application as an RSA-3072-signed .sota update."""
 
 from __future__ import annotations
 
@@ -84,7 +79,7 @@ def sign_header(header: bytes, key_path: Path) -> bytes:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Create a signed Sirokko OTA package without exposing the private key.")
+    parser = argparse.ArgumentParser(description="Create a signed Sirokko OTA package.")
     env_key = os.environ.get("SIROKKO_OTA_SIGNING_KEY")
     parser.add_argument("--input", required=True, type=Path, help="ESP-IDF application .bin")
     parser.add_argument("--output", required=True, type=Path, help="output .sota package")

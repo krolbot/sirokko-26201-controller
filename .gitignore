@@ -25,9 +25,8 @@ node_modules/
 .browsers
 build/
 build-host/
-build-host-sanitized/
-firmware/build-tft/
 dist/
+firmware/release-artifact/
 out/
 .cache/
 **/.pio/
@@ -54,5 +53,5 @@ out/
 .DS_Store
 Thumbs.db
 
-# Private working notes, never part of the public project
+# Local notes
 .planning/

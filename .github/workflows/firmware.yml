@@ -1,4 +1,4 @@
-name: Firmware checks
+name: Build firmware
 
 on:
   push:
@@ -26,12 +26,12 @@ jobs:
           node-version: '26.7.0'
           cache: npm
           cache-dependency-path: firmware/web_ui/package-lock.json
-      - name: Build production web page and verify embedded bytes
+      - name: Build web interface
         run: |
           npm ci --prefix firmware/web_ui
           npm run build --prefix firmware/web_ui
           python3 firmware/tools/embed_web_ui.py --check
-      - name: ESP-IDF v5.2.3 ESP32-S3 target build
+      - name: Build ESP32-S3 firmware
         run: |
           docker run --rm \
             -e IDF_TARGET=esp32s3 \
@@ -40,7 +40,7 @@ jobs:
             -w /project/firmware \
             espressif/idf@sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380 \
             /bin/bash -lc 'git config --global --add safe.directory "*" && idf.py --version && idf.py set-target esp32s3 && idf.py build'
-      - name: Prepare complete ESP32-S3 flash artifact
+      - name: Package USB firmware
         run: |
           mkdir -p firmware/release-artifact/bootloader firmware/release-artifact/partition_table
           cp \
@@ -48,14 +48,10 @@ jobs:
             firmware/build/ota_data_initial.bin \
             firmware/build/flash_args \
             firmware/build/flasher_args.json \
-            firmware/build/project_description.json \
-            firmware/build/config/sdkconfig.json \
-            firmware/dependencies.lock \
             firmware/release-artifact/
           cp firmware/build/bootloader/bootloader.bin firmware/release-artifact/bootloader/
           cp firmware/build/partition_table/partition-table.bin firmware/release-artifact/partition_table/
           printf '%s\n' "$GITHUB_SHA" > firmware/release-artifact/GIT_COMMIT
-          printf '%s\n' 'ESP-IDF v5.2.3 / espressif/idf linux-amd64 sha256:9cd723f013e1a8b22aeed61c02e3248bb11e8f2e2ae333cee08a18b9e36c1380' > firmware/release-artifact/BUILD_ENVIRONMENT
           python3 - <<'PY'
           import json
           from pathlib import Path
@@ -69,8 +65,7 @@ jobs:
               print(f"{offset} {relative}")
           PY
           (cd firmware/release-artifact && sha256sum \
-            BUILD_ENVIRONMENT GIT_COMMIT dependencies.lock flash_args flasher_args.json \
-            ota_data_initial.bin project_description.json sdkconfig.json \
+            GIT_COMMIT flash_args flasher_args.json ota_data_initial.bin \
             bootloader/bootloader.bin partition_table/partition-table.bin \
             sirokko_26201_controller.bin > SHA256SUMS)
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

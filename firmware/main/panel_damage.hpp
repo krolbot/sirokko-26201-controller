@@ -4,8 +4,8 @@
 #include "panel_render.hpp"
 
 namespace panel_render {
-// Tile signatures avoid a full framebuffer. Force/invalidate bypasses comparisons on every safety scene.
-// Signatures are presentation optimizations only, never input to a control/safety decision.
+// Tile signatures track changed stripes without a full framebuffer.
+// Force/invalidate redraws all stripes on safety-state transitions.
 class DamageTracker {
   public:
     static constexpr int kTileWidth = 32;

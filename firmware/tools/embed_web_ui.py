@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministically embed the built offline web page; ESP-IDF needs no Node.js at build/run time."""
+"""Embed the built web page as a gzip-compressed C++ byte array."""
 from pathlib import Path
 import argparse
 import gzip
@@ -62,7 +62,7 @@ def main():
         else:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(generated, encoding='utf-8')
-        print(f'PASS: {args.output}; deterministic self-contained gzip page; check={args.check}')
+        print(f'{"Checked" if args.check else "Wrote"}: {args.output}')
     except (OSError, UnicodeError, ValueError, EOFError, zlib.error) as error:
         print(f'embed_web_ui.py: {error}', file=sys.stderr)
         return 1

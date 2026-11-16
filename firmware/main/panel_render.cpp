@@ -16,7 +16,7 @@ using panel_draw::Color;
 using panel_draw::Icon;
 constexpr Color kInk = 0x292929, kSecond = 0x646464, kOrange = 0xe58042, kWarm = 0xfff0e6;
 constexpr Color kBlue = 0x537f9d, kBlueBg = 0xeef4f8, kRed = 0xbe5149, kRedBg = 0xfcefeb, kGreen = 0x5c846a;
-// Same center-line geometry as the approved SVG, not an inside-stroked Pillow arc.
+// Gauge dimensions describe the stroke center line.
 constexpr float kScale = 112.0f / 145.0f, kCx = 160, kCy = 127, kRadius = 145 * kScale;
 constexpr float kStroke = 24 * kScale, kStart = 135, kSweep = 270;
 constexpr float kPi = 3.14159265358979323846f;
@@ -121,7 +121,7 @@ void message(Canvas &c, const Frame &f, const char *kicker, const char *title, c
     }
     footer(c, foot);
 }
-// Presentation only: one soft pass toward the setpoint, never synthetic temperature progress.
+// Single sweep toward the setpoint for the page transition.
 bool heat_pulse_eligible(const Frame &f) {
     return (f.scene == Scene::Heat || f.scene == Scene::TimerRunning) &&
            f.view.control.state == sirokko::State::RUN && f.view.control.outputs.fuel &&
@@ -360,7 +360,7 @@ void draw_diagnostics(Canvas &c, const Frame &f) {
     }
     footer(c, "2 нажатия — назад");
 }
-// Byte-bounded UTF-8 lines, never logs/serializes local credentials.
+// Wrap UTF-8 credentials into bounded display lines.
 void wrapped(Canvas &c, const char *source, float y, float normal_size, int maximum_lines) {
     if (panel_draw::text_width(source, normal_size) <= 280) {
         c.text(20, y, source, normal_size, kInk);

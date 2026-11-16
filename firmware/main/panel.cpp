@@ -137,7 +137,7 @@ bool display_begin() {
     const int width = swap_xy ? kNativeHeight : kNativeWidth;
     const int height = swap_xy ? kNativeWidth : kNativeHeight;
     if (width != panel_render::kWidth || height != panel_render::kHeight) {
-        ESP_LOGE(kTag, "approved UI requires a logical 320x240 panel");
+        ESP_LOGE(kTag, "panel resolution must be 320x240");
         return false;
     }
     spi_bus_config_t bus{};

@@ -80,3 +80,10 @@ python3 firmware/tools/sign_ota.py \
 Путь к закрытому ключу задаётся параметром `--key` или переменной `SIROKKO_OTA_SIGNING_KEY`. Закрытый ключ хранится вне репозитория.
 
 Для собственной системы обновлений нужен собственный ключ и соответствующий открытый ключ в прошивке. Сначала запишите такую прошивку через USB.
+
+## Сторонние материалы
+
+- [js-sha256 0.11.1](https://github.com/emn178/js-sha256/tree/v0.11.1), Chen, Yi-Cyuan — [MIT](web_ui/licenses/js-sha256-MIT.txt). Расчёт хеша OTA при недоступном Web Crypto.
+- Roboto — [SIL Open Font License](assets/OFL-Roboto.txt).
+- [unslop](https://github.com/heydamir/unslop), Damir Sokolovsky — CC BY 4.0, оформление интерфейса.
+- Лицензии зависимостей веб-интерфейса — [THIRD_PARTY_NOTICES.txt](web_ui/THIRD_PARTY_NOTICES.txt).

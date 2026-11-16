@@ -16,7 +16,7 @@
 namespace {
 constexpr char kTag[] = "sensors";
 constexpr spi_host_device_t kSpiHost = SPI2_HOST;
-// CR0 keeps the existing one-shot, interrupt-fault, CJ-enabled, 50 Hz contract.
+// CR0: one-shot conversion, interrupt faults, cold-junction compensation, 50 Hz filter.
 constexpr uint8_t kMax31856Cr0Configured = 0x15U;
 constexpr uint8_t kMax31856Cr0OneShot = 0x55U;
 constexpr uint8_t kMax31856Cr0FaultClear = kMax31856Cr0Configured | 0x02U;

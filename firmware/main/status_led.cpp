@@ -63,7 +63,7 @@ void led_task(void *) {
     while (true) {
         runtime_view(&view);
         const auto now = static_cast<uint64_t>(esp_timer_get_time() / 1000);
-        // Never leave a reassuring colour lit when the controller stops publishing.
+        // Indicate a fault if controller updates stop.
         const bool stale = !view.now_ms || now - view.now_ms > 1000;
         uint32_t color = kBoot;
         if (!stale)

@@ -12,8 +12,8 @@ menu "Sirokko local panel"
         range 0 270
         default 90
         help
-            Approved UI is landscape 320x240. With native 240x320, select 90 or 270.
-            Other logical sizes are rejected; safety control remains independent.
+            The panel uses a 320x240 landscape layout.
+            For a native 240x320 display, select 90 or 270 degrees.
     config SIROKKO_PANEL_X_GAP
         int "Controller X offset (pixels)"
         range 0 320

@@ -91,8 +91,7 @@ ParseError parse_challenge_request(const char *text, size_t size, Command *comma
 ParseError parse_command_request(const char *text, size_t size, Command *command);
 ParseError parse_stop_request(const char *text, size_t size, Stop *stop);
 
-// SHA-256 and semantic digest are portable so host protocol tests exercise the
-// exact parser/digest code used by the ESP target.
+// Hash the parsed command independently of JSON field order and whitespace.
 Digest sha256(const uint8_t *bytes, size_t size);
 Digest compute_payload_digest(const Command &command);
 bool digest_equal(const Digest &left, const Digest &right);

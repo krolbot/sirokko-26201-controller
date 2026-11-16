@@ -11,9 +11,7 @@ function toHex(bytes) {
 }
 
 /**
- * Hashes the complete OTA file. Web Crypto is preferred, but access-point HTTP
- * pages do not reliably expose crypto.subtle, so the bundled MIT fallback is
- * the authoritative fallback path.
+ * Hash the OTA file with Web Crypto, or js-sha256 on plain HTTP.
  */
 export async function sha256Hex(value, cryptoApi = globalThis.crypto) {
   const raw = asArrayBuffer(value);
@@ -21,8 +19,7 @@ export async function sha256Hex(value, cryptoApi = globalThis.crypto) {
     try {
       return toHex(await cryptoApi.subtle.digest('SHA-256', raw));
     } catch (_) {
-      // Fall through to the vendored, audited implementation rather than
-      // accepting an unhashed upload.
+      // Web Crypto can be unavailable on the controller's HTTP origin.
     }
   }
   // The vendored UMD file can see a bundler-provided `module`; retain an
