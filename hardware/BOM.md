@@ -4,13 +4,13 @@
 
 ## Детали платы
 
-Цены ЧипДип на 16.11.2026, без доставки. Учтены минимальные партии и кратность упаковки.
+Цены ЧипДип на 16–17.11.2026, без доставки. Учтены минимальные партии и кратность упаковки; даты проверки отдельных позиций указаны в CSV.
 
 | Обозначения | Артикул производителя | На плату | Купить на 3 | Купить на 5 | Цена/шт., ₽ | ЧипДип |
 |---|---|---:|---:|---:|---:|---|
 | C12, C29, C30, C31, C103 | CC0805KRX7R8BB104 | 5 | 15 | 25 | 5 | [Товар](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
 | C100 | CC1206KKX7R0BB105 | 1 | 5 | 5 | 9 | [Товар](https://www.chipdip.ru/product/1mkf-x7r-100v-10-1206-cc1206kkx7r0bb105-kondensator-yageo-9000337923) |
-| C101, C104, C105 | GRM32ER71H106KA12L | 3 | 10 | 15 | 28 | [Товар](https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173) |
+| C101 | GRM32ER71H106KA12L | 1 | 5 | 5 | 28 | [Товар](https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173) |
 | C102 | CL31B104KBCNNNC | 1 | 3 | 5 | 6 | [Товар](https://www.chipdip.ru/product/0.1mkf-x7r-50v-10-1206-cl31b104kbcnnnc-kondensator-samsung-9000768544) |
 | C106, C107, C108 | CL31A226KAHNNNE | 3 | 9 | 15 | 12 | [Товар](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
 | D1 | SMBJ30CA-TR | 1 | 3 | 5 | 19 | [Товар](https://www.chipdip.ru/product/smbj30ca-tr-diod-zaschitnyy-600vt-30v-st-microelectronics-9000484595) |
@@ -25,10 +25,9 @@
 | R2, R3, R7, R8, RP20, RP21 | RC0805FR-0710KL | 6 | 20 | 30 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499) |
 | R12, R28, R29, RG20, RG21 | RC0805FR-07220RL | 5 | 15 | 25 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930) |
 | R32, R33 | RC0805FR-0733RL | 2 | 6 | 10 | 4 | [Товар](https://www.chipdip.ru/product/rc0805fr-0733rl-yageo-8001790284) |
-| R100 | RC0805FR-0712KL | 1 | 3 | 5 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-12-kom-1-rc0805fr-0712kl-chip-rezistor-yageo-9001512277) |
+| R100, R102 | RC0805FR-0712KL | 2 | 6 | 10 | 6 | [Товар](https://www.chipdip.ru/product/0.125vt-0805-12-kom-1-rc0805fr-0712kl-chip-rezistor-yageo-9001512277) |
 | R101 | RC0805FR-07249KL | 1 | 3 | 5 | 1 | [Товар](https://www.chipdip.ru/product/rc0805fr-07249kl-rezistor-yageo-9000374189) |
-| R102 | CR-05FL7---11K | 1 | 3 | 5 | 2 | [Товар](https://www.chipdip.ru/product/cr-05fl7-11k-viking-tech-8001784683) |
-| R103 | CR-05FL7---22K | 1 | 3 | 5 | 1 | [Товар](https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986) |
+| R103 | RC0805FR-0721KL | 1 | 3 | 5 | 2 | [Товар](https://www.chipdip.ru/product/rc0805fr-0721kl-yageo-8001794514) |
 | U12, U29, U32, U33, U34 | SRV05-4.TCT | 5 | 15 | 25 | 8 | [Товар](https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217) |
 | U100 | TPS26600PWP | 1 | 3 | 5 | 390 / 297¹ | [Товар](https://www.chipdip.ru/product/tps26600pwp-texas-instruments-8003870507) |
 | U101 | K7805-1000R3 | 1 | 3 | 5 | 260 | [Товар](https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503) |
@@ -38,9 +37,9 @@
 
 | Закупка | 3 комплекта | 5 комплектов |
 |---|---:|---:|
-| Компоненты платы | 4120 ₽ | 5953 ₽ |
+| Компоненты платы | 3995 ₽ | 5698 ₽ |
 | Розетка шлейфа DS1016-12MA2BB, по 28 ₽ | 84 ₽ | 140 ₽ |
-| **Всего** | **4204 ₽** | **6093 ₽** |
+| **Всего** | **4079 ₽** | **5838 ₽** |
 
 В сумму не входят модули, реле, блок питания, кабели, крепёж, изготовление и монтаж платы.
 

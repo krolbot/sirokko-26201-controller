@@ -1205,9 +1205,9 @@
 <attribute name="MPN" value="RC0805FR-07249KL"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/rc0805fr-07249kl-rezistor-yageo-9000374189"/>
 </part>
-<part name="R102" library="Sirokko" deviceset="R0805" device="" value="11k 1%">
-<attribute name="MPN" value="CR-05FL7---11K"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-11k-viking-tech-8001784683"/>
+<part name="R102" library="Sirokko" deviceset="R0805" device="" value="12k 1%">
+<attribute name="MPN" value="RC0805FR-0712KL"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-12-kom-1-rc0805fr-0712kl-chip-rezistor-yageo-9001512277"/>
 </part>
 <part name="U32" library="Sirokko-parts" deviceset="SRV05" device="" value="SRV05-4">
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217"/>
@@ -1252,17 +1252,9 @@
 <attribute name="MPN" value="CC0805KRX7R8BB104"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545"/>
 </part>
-<part name="R103" library="Sirokko" deviceset="R0805" device="" value="22k 1%">
-<attribute name="MPN" value="CR-05FL7---22K"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986"/>
-</part>
-<part name="C104" library="Sirokko" deviceset="C1210" device="" value="10uF 50V X7R">
-<attribute name="MPN" value="GRM32ER71H106KA12L"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173"/>
-</part>
-<part name="C105" library="Sirokko" deviceset="C1210" device="" value="10uF 50V X7R">
-<attribute name="MPN" value="GRM32ER71H106KA12L"/>
-<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173"/>
+<part name="R103" library="Sirokko" deviceset="R0805" device="" value="21k 1%">
+<attribute name="MPN" value="RC0805FR-0721KL"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/rc0805fr-0721kl-yageo-8001794514"/>
 </part>
 </parts>
 <sheets>
@@ -2248,18 +2240,6 @@
 <attribute name="NAME" x="114.92" y="95.08" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="114.92" y="84.92" size="1" layer="96" font="vector"/>
 </instance>
-<instance part="C104" gate="G$1" x="200" y="140" smashed="yes">
-<attribute name="NAME" x="194.92" y="145.08" size="1.27" layer="95" font="vector"/>
-<attribute name="VALUE" x="194.92" y="134.92" size="1" layer="96" font="vector"/>
-<attribute name="MPN" x="200" y="140" size="1.778" layer="96" display="off"/>
-<attribute name="SUPPLIER_URL" x="200" y="140" size="1.778" layer="96" display="off"/>
-</instance>
-<instance part="C105" gate="G$1" x="200" y="115" smashed="yes">
-<attribute name="NAME" x="194.92" y="120.08" size="1.27" layer="95" font="vector"/>
-<attribute name="VALUE" x="194.92" y="109.92" size="1" layer="96" font="vector"/>
-<attribute name="MPN" x="200" y="115" size="1.778" layer="96" display="off"/>
-<attribute name="SUPPLIER_URL" x="200" y="115" size="1.778" layer="96" display="off"/>
-</instance>
 </instances>
 <busses>
 </busses>
@@ -2417,16 +2397,6 @@
 <label x="255.24" y="115" size="1" layer="95"/>
 <pinref part="C108" gate="G$1" pin="2"/>
 </segment>
-<segment>
-<pinref part="C104" gate="G$1" pin="2"/>
-<wire x1="207.62" y1="140" x2="215.24" y2="140" width="0.1524" layer="91"/>
-<label x="210" y="141" size="1" layer="95"/>
-</segment>
-<segment>
-<pinref part="C105" gate="G$1" pin="2"/>
-<wire x1="207.62" y1="115" x2="215.24" y2="115" width="0.1524" layer="91"/>
-<label x="210" y="116" size="1" layer="95"/>
-</segment>
 </net>
 <net name="P24_FUSED" class="0">
 <segment>
@@ -2463,16 +2433,6 @@
 <wire x1="69.84" y1="134.92" x2="56.22" y2="134.92" width="0.1524" layer="91"/>
 <label x="56.22" y="134.92" size="1" layer="95"/>
 <pinref part="U100" gate="G$1" pin="OUT"/>
-</segment>
-<segment>
-<pinref part="C104" gate="G$1" pin="1"/>
-<wire x1="192.38" y1="140" x2="187.38" y2="140" width="0.1524" layer="91"/>
-<label x="185" y="141" size="1" layer="95"/>
-</segment>
-<segment>
-<pinref part="C105" gate="G$1" pin="1"/>
-<wire x1="192.38" y1="115" x2="187.38" y2="115" width="0.1524" layer="91"/>
-<label x="185" y="116" size="1" layer="95"/>
 </segment>
 </net>
 <net name="VIN_24" class="0">
