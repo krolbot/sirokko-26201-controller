@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -149,10 +149,7 @@
 <wire x1="-1.4" y1="1.7" x2="1.4" y2="1.7" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_2">
-<wire x1="-2.54" y1="-4.8" x2="7.62" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="7.62" y1="-4.8" x2="7.62" y2="5" width="0.15" layer="21"/>
 <wire x1="7.62" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="7.87" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="7.87" y1="-5.05" x2="7.87" y2="5.25" width="0.05" layer="39"/>
 <wire x1="7.87" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -160,12 +157,12 @@
 <text x="-2.54" y="5.5" size="0.85" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="7.62" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="7.62" y1="-4.3" x2="7.62" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_3">
-<wire x1="-2.54" y1="-4.8" x2="12.7" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="12.7" y1="-4.8" x2="12.7" y2="5" width="0.15" layer="21"/>
 <wire x1="12.7" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="12.95" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="12.95" y1="-5.05" x2="12.95" y2="5.25" width="0.05" layer="39"/>
 <wire x1="12.95" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -174,12 +171,12 @@
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="12.7" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="12.7" y1="-4.3" x2="12.7" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_4">
-<wire x1="-2.54" y1="-4.8" x2="17.78" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="17.78" y1="-4.8" x2="17.78" y2="5" width="0.15" layer="21"/>
 <wire x1="17.78" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="18.03" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="18.03" y1="-5.05" x2="18.03" y2="5.25" width="0.05" layer="39"/>
 <wire x1="18.03" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -189,6 +186,9 @@
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
 <pad name="4" x="15.24" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="17.78" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="17.78" y1="-4.3" x2="17.78" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="R0805">
 <smd name="1" x="-1" y="0" dx="1.2" dy="1.4" layer="1"/>
@@ -1256,6 +1256,14 @@
 <attribute name="MPN" value="CR-05FL7---22K"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986"/>
 </part>
+<part name="C104" library="Sirokko" deviceset="C1210" device="" value="10uF 50V X7R">
+<attribute name="MPN" value="GRM32ER71H106KA12L"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173"/>
+</part>
+<part name="C105" library="Sirokko" deviceset="C1210" device="" value="10uF 50V X7R">
+<attribute name="MPN" value="GRM32ER71H106KA12L"/>
+<attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -2240,6 +2248,18 @@
 <attribute name="NAME" x="114.92" y="95.08" size="1.27" layer="95" font="vector"/>
 <attribute name="VALUE" x="114.92" y="84.92" size="1" layer="96" font="vector"/>
 </instance>
+<instance part="C104" gate="G$1" x="200" y="140" smashed="yes">
+<attribute name="NAME" x="194.92" y="145.08" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="194.92" y="134.92" size="1" layer="96" font="vector"/>
+<attribute name="MPN" x="200" y="140" size="1.778" layer="96" display="off"/>
+<attribute name="SUPPLIER_URL" x="200" y="140" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C105" gate="G$1" x="200" y="115" smashed="yes">
+<attribute name="NAME" x="194.92" y="120.08" size="1.27" layer="95" font="vector"/>
+<attribute name="VALUE" x="194.92" y="109.92" size="1" layer="96" font="vector"/>
+<attribute name="MPN" x="200" y="115" size="1.778" layer="96" display="off"/>
+<attribute name="SUPPLIER_URL" x="200" y="115" size="1.778" layer="96" display="off"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -2397,6 +2417,16 @@
 <label x="255.24" y="115" size="1" layer="95"/>
 <pinref part="C108" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="C104" gate="G$1" pin="2"/>
+<wire x1="207.62" y1="140" x2="215.24" y2="140" width="0.1524" layer="91"/>
+<label x="210" y="141" size="1" layer="95"/>
+</segment>
+<segment>
+<pinref part="C105" gate="G$1" pin="2"/>
+<wire x1="207.62" y1="115" x2="215.24" y2="115" width="0.1524" layer="91"/>
+<label x="210" y="116" size="1" layer="95"/>
+</segment>
 </net>
 <net name="P24_FUSED" class="0">
 <segment>
@@ -2433,6 +2463,16 @@
 <wire x1="69.84" y1="134.92" x2="56.22" y2="134.92" width="0.1524" layer="91"/>
 <label x="56.22" y="134.92" size="1" layer="95"/>
 <pinref part="U100" gate="G$1" pin="OUT"/>
+</segment>
+<segment>
+<pinref part="C104" gate="G$1" pin="1"/>
+<wire x1="192.38" y1="140" x2="187.38" y2="140" width="0.1524" layer="91"/>
+<label x="185" y="141" size="1" layer="95"/>
+</segment>
+<segment>
+<pinref part="C105" gate="G$1" pin="1"/>
+<wire x1="192.38" y1="115" x2="187.38" y2="115" width="0.1524" layer="91"/>
+<label x="185" y="116" size="1" layer="95"/>
 </segment>
 </net>
 <net name="VIN_24" class="0">

@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.005" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -142,10 +142,7 @@
 <wire x1="-1.4" y1="1.7" x2="1.4" y2="1.7" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_2">
-<wire x1="-2.54" y1="-4.8" x2="7.62" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="7.62" y1="-4.8" x2="7.62" y2="5" width="0.15" layer="21"/>
 <wire x1="7.62" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="7.87" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="7.87" y1="-5.05" x2="7.87" y2="5.25" width="0.05" layer="39"/>
 <wire x1="7.87" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -153,12 +150,12 @@
 <text x="-2.54" y="5.5" size="0.85" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="7.62" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="7.62" y1="-4.3" x2="7.62" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_3">
-<wire x1="-2.54" y1="-4.8" x2="12.7" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="12.7" y1="-4.8" x2="12.7" y2="5" width="0.15" layer="21"/>
 <wire x1="12.7" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="12.95" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="12.95" y1="-5.05" x2="12.95" y2="5.25" width="0.05" layer="39"/>
 <wire x1="12.95" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -167,12 +164,12 @@
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="12.7" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="12.7" y1="-4.3" x2="12.7" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_4">
-<wire x1="-2.54" y1="-4.8" x2="17.78" y2="-4.8" width="0.15" layer="21"/>
-<wire x1="17.78" y1="-4.8" x2="17.78" y2="5" width="0.15" layer="21"/>
 <wire x1="17.78" y1="5" x2="-2.54" y2="5" width="0.15" layer="21"/>
-<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.8" width="0.15" layer="21"/>
 <wire x1="-2.79" y1="-5.05" x2="18.03" y2="-5.05" width="0.05" layer="39"/>
 <wire x1="18.03" y1="-5.05" x2="18.03" y2="5.25" width="0.05" layer="39"/>
 <wire x1="18.03" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
@@ -182,6 +179,9 @@
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
 <pad name="4" x="15.24" y="0" drill="1.3" diameter="2.4"/>
+<wire x1="-2.54" y1="-4.3" x2="17.78" y2="-4.3" width="0.15" layer="21"/>
+<wire x1="17.78" y1="-4.3" x2="17.78" y2="5" width="0.15" layer="21"/>
+<wire x1="-2.54" y1="5" x2="-2.54" y2="-4.3" width="0.15" layer="21"/>
 </package>
 <package name="R0805">
 <smd name="1" x="-1" y="0" dx="1.2" dy="1.4" layer="1"/>

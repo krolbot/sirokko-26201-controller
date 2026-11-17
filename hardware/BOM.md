@@ -10,7 +10,7 @@
 |---|---|---:|---:|---:|---:|---|
 | C12, C29, C30, C31, C103 | CC0805KRX7R8BB104 | 5 | 15 | 25 | 5 | [Товар](https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545) |
 | C100 | CC1206KKX7R0BB105 | 1 | 5 | 5 | 9 | [Товар](https://www.chipdip.ru/product/1mkf-x7r-100v-10-1206-cc1206kkx7r0bb105-kondensator-yageo-9000337923) |
-| C101 | GRM32ER71H106KA12L | 1 | 5 | 5 | 28 | [Товар](https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173) |
+| C101, C104, C105 | GRM32ER71H106KA12L | 3 | 10 | 15 | 28 | [Товар](https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173) |
 | C102 | CL31B104KBCNNNC | 1 | 3 | 5 | 6 | [Товар](https://www.chipdip.ru/product/0.1mkf-x7r-50v-10-1206-cl31b104kbcnnnc-kondensator-samsung-9000768544) |
 | C106, C107, C108 | CL31A226KAHNNNE | 3 | 9 | 15 | 12 | [Товар](https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179) |
 | D1 | SMBJ30CA-TR | 1 | 3 | 5 | 19 | [Товар](https://www.chipdip.ru/product/smbj30ca-tr-diod-zaschitnyy-600vt-30v-st-microelectronics-9000484595) |
@@ -38,9 +38,9 @@
 
 | Закупка | 3 комплекта | 5 комплектов |
 |---|---:|---:|
-| Компоненты платы | 3980 ₽ | 5673 ₽ |
+| Компоненты платы | 4120 ₽ | 5953 ₽ |
 | Розетка шлейфа DS1016-12MA2BB, по 28 ₽ | 84 ₽ | 140 ₽ |
-| **Всего** | **4064 ₽** | **5813 ₽** |
+| **Всего** | **4204 ₽** | **6093 ₽** |
 
 В сумму не входят модули, реле, блок питания, кабели, крепёж, изготовление и монтаж платы.
 
