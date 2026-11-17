@@ -35,11 +35,12 @@ F1 на 2 А и двунаправленный TVS SMBJ30CA защищают в�
 | Файл | Назначение |
 |---|---|
 | [Sirokko.sch](Sirokko.sch), [Sirokko.brd](Sirokko.brd) | Связанные схема и плата Fusion Electronics в формате EAGLE |
-| [Sirokko-parts.lbr](Sirokko-parts.lbr) | Библиотека компонентов |
+| [Sirokko.lbr](Sirokko.lbr), [Sirokko-parts.lbr](Sirokko-parts.lbr) | Библиотеки компонентов и посадочных мест |
+| [Sirokko.edru](Sirokko.edru) | Правила проектирования и проверки платы в Fusion |
 | [schematic.pdf](schematic.pdf) | Схема в PDF |
 | [BOM.md](BOM.md), [bom.csv](bom.csv) | Ведомость компонентов с артикулами и ценами |
 
-Схему и плату открывают вместе в Fusion Electronics. Символы и посадочные места встроены в файлы.
+Схему и плату открывают вместе в Fusion Electronics. Символы и посадочные места встроены в файлы. После импорта платы загрузите `Sirokko.edru` через **Design Rules → Load**: формат EAGLE не сохраняет все правила Fusion.
 
 [Крепление и подключения](../docs/assembly.md) · [Изготовление платы](../manufacturing/README.md) · [Лицензии библиотек](KICAD_LIBRARIES_LICENSE.md)
 

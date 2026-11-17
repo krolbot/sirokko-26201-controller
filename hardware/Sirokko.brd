@@ -46,13 +46,13 @@
 <layer number="6" name="Route6" color="25" fill="1" visible="no" active="no"/>
 <layer number="7" name="Route7" color="26" fill="1" visible="no" active="no"/>
 <layer number="8" name="Route8" color="27" fill="1" visible="no" active="no"/>
-<layer number="9" name="Route9" color="28" fill="1" visible="no" active="yes"/>
-<layer number="10" name="Route10" color="29" fill="1" visible="no" active="yes"/>
-<layer number="11" name="Route11" color="30" fill="1" visible="no" active="yes"/>
-<layer number="12" name="Route12" color="20" fill="1" visible="no" active="yes"/>
-<layer number="13" name="Route13" color="21" fill="1" visible="no" active="yes"/>
-<layer number="14" name="Route14" color="22" fill="1" visible="no" active="yes"/>
-<layer number="15" name="Route15" color="23" fill="1" visible="no" active="yes"/>
+<layer number="9" name="Route9" color="28" fill="1" visible="no" active="no"/>
+<layer number="10" name="Route10" color="29" fill="1" visible="no" active="no"/>
+<layer number="11" name="Route11" color="30" fill="1" visible="no" active="no"/>
+<layer number="12" name="Route12" color="20" fill="1" visible="no" active="no"/>
+<layer number="13" name="Route13" color="21" fill="1" visible="no" active="no"/>
+<layer number="14" name="Route14" color="22" fill="1" visible="no" active="no"/>
+<layer number="15" name="Route15" color="23" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
@@ -148,45 +148,45 @@
 <wire x1="71.725" y1="48.46" x2="71.725" y2="70.05" width="0.15" layer="51"/>
 <wire x1="71.725" y1="70.05" x2="47.595" y2="70.05" width="0.15" layer="51"/>
 <wire x1="47.595" y1="70.05" x2="47.595" y2="48.46" width="0.15" layer="51"/>
-<text x="2.5" y="12.3" size="0.75" layer="21" font="vector">12/24V IN</text>
-<text x="19.8" y="9.8" size="0.75" layer="21" font="vector">GLOW</text>
-<text x="34.8" y="9.8" size="0.75" layer="21" font="vector">FUEL</text>
-<text x="9.7" y="10.6" size="0.75" layer="21" font="vector">VIN</text>
-<text x="14.8" y="10.6" size="0.75" layer="21" font="vector">GND</text>
-<text x="24.7" y="10.6" size="0.75" layer="21" font="vector">VIN</text>
-<text x="30.3" y="10.6" size="0.75" layer="21" font="vector">SW</text>
-<text x="39.7" y="10.6" size="0.75" layer="21" font="vector">VIN</text>
-<text x="45.3" y="10.6" size="0.75" layer="21" font="vector">SW</text>
-<text x="62.8" y="10.6" size="0.75" layer="21" font="vector">A1</text>
-<text x="67.3" y="10.6" size="0.75" layer="21" font="vector">GND</text>
-<text x="72.4" y="10.6" size="0.75" layer="21" font="vector">PWM</text>
-<text x="77.5" y="10.6" size="0.75" layer="21" font="vector">GND</text>
-<text x="56.5" y="8.5" size="0.75" layer="21" font="vector">HC160</text>
-<text x="10.5" y="62.6" size="0.75" layer="21" font="vector">3V3</text>
-<text x="10.7" y="57.5" size="0.75" layer="21" font="vector">DQ</text>
-<text x="10.4" y="52.4" size="0.75" layer="21" font="vector">GND</text>
-<text x="2" y="48.3" size="0.75" layer="21" font="vector">ROOM</text>
-<text x="18.5" y="72.1" size="0.75" layer="21" font="vector">MAX EXHAUST</text>
-<text x="49.5" y="72.1" size="0.75" layer="21" font="vector">MAX AIR</text>
-<text x="74" y="67.5" size="0.75" layer="21" font="vector">TFT ENCODER</text>
+<text x="2.5" y="12.3" size="0.75" layer="21" font="vector" ratio="20">12/24V IN</text>
+<text x="19.8" y="9.8" size="0.75" layer="21" font="vector" ratio="20">GLOW</text>
+<text x="34.8" y="9.8" size="0.75" layer="21" font="vector" ratio="20">FUEL</text>
+<text x="9.7" y="10.6" size="0.75" layer="21" font="vector" ratio="20">VIN</text>
+<text x="14.8" y="10.6" size="0.75" layer="21" font="vector" ratio="20">GND</text>
+<text x="24.7" y="10.6" size="0.75" layer="21" font="vector" ratio="20">VIN</text>
+<text x="30.3" y="10.6" size="0.75" layer="21" font="vector" ratio="20">SW</text>
+<text x="39.7" y="10.6" size="0.75" layer="21" font="vector" ratio="20">VIN</text>
+<text x="45.3" y="10.6" size="0.75" layer="21" font="vector" ratio="20">SW</text>
+<text x="62.8" y="10.6" size="0.75" layer="21" font="vector" ratio="20">A1</text>
+<text x="67.3" y="10.6" size="0.75" layer="21" font="vector" ratio="20">GND</text>
+<text x="72.4" y="10.6" size="0.75" layer="21" font="vector" ratio="20">PWM</text>
+<text x="77.5" y="10.6" size="0.75" layer="21" font="vector" ratio="20">GND</text>
+<text x="56.5" y="8.5" size="0.75" layer="21" font="vector" ratio="20">HC160</text>
+<text x="10.5" y="62.6" size="0.75" layer="21" font="vector" ratio="20">3V3</text>
+<text x="10.7" y="54.2" size="0.75" layer="21" font="vector" ratio="20">DQ</text>
+<text x="10.4" y="52.4" size="0.75" layer="21" font="vector" ratio="20">GND</text>
+<text x="2" y="48.3" size="0.75" layer="21" font="vector" ratio="20">ROOM</text>
+<text x="18.5" y="72.1" size="0.75" layer="21" font="vector" ratio="20">MAX EXHAUST</text>
+<text x="49.5" y="72.1" size="0.75" layer="21" font="vector" ratio="20">MAX AIR</text>
+<text x="74" y="67.5" size="0.75" layer="21" font="vector" ratio="20">TFT ENCODER</text>
 <hole x="4" y="4" drill="3.2"/>
 <circle x="4" y="4" radius="3.5" width="0" layer="41" restrictlayers="1,16"/>
 <circle x="4" y="4" radius="3.5" width="0" layer="43"/>
-<text x="45" y="31" size="0.75" layer="21" font="vector">SIROKKO 262.01 REV H</text>
-<text x="45" y="28.5" size="0.75" layer="21" font="vector">COILS = VIN 0.25A MAX</text>
+<text x="45" y="31" size="0.75" layer="21" font="vector" ratio="20">SIROKKO 262.01 REV H</text>
+<text x="45" y="28.5" size="0.75" layer="21" font="vector" ratio="20">COILS = VIN 0.25A MAX</text>
 </plain>
 <libraries>
 <library name="Sirokko">
 <packages>
 <package name="SOCKET_1X22_P2.54">
 <description>Through hole straight socket strip, 1x22, 2.54mm pitch, single row (from Kicad 4.0.7), script generated</description>
-<text x="2.6" y="-2.45" size="1" layer="25" align="center">&gt;NAME</text>
-<wire x1="-1.33" y1="-54.67" x2="1.33" y2="-54.67" width="0.12" layer="21"/>
-<wire x1="-1.33" y1="-1.27" x2="-1.33" y2="-54.67" width="0.12" layer="21"/>
-<wire x1="-1.33" y1="-1.27" x2="1.33" y2="-1.27" width="0.12" layer="21"/>
-<wire x1="1.33" y1="-1.27" x2="1.33" y2="-54.67" width="0.12" layer="21"/>
-<wire x1="0" y1="1.33" x2="1.33" y2="1.33" width="0.12" layer="21"/>
-<wire x1="1.33" y1="1.33" x2="1.33" y2="0" width="0.12" layer="21"/>
+<text x="2.6" y="-2.45" size="1" layer="25" font="vector" ratio="20" align="center">&gt;NAME</text>
+<wire x1="-1.33" y1="-54.67" x2="1.33" y2="-54.67" width="0.15" layer="21"/>
+<wire x1="-1.33" y1="-1.27" x2="-1.33" y2="-54.67" width="0.15" layer="21"/>
+<wire x1="-1.33" y1="-1.27" x2="1.33" y2="-1.27" width="0.15" layer="21"/>
+<wire x1="1.33" y1="-1.27" x2="1.33" y2="-54.67" width="0.15" layer="21"/>
+<wire x1="0" y1="1.33" x2="1.33" y2="1.33" width="0.15" layer="21"/>
+<wire x1="1.33" y1="1.33" x2="1.33" y2="0" width="0.15" layer="21"/>
 <wire x1="-1.77" y1="-55.11" x2="-1.77" y2="1.77" width="0.05" layer="39"/>
 <wire x1="1.77" y1="-55.11" x2="-1.77" y2="-55.11" width="0.05" layer="39"/>
 <wire x1="-1.77" y1="1.77" x2="1.77" y2="1.77" width="0.05" layer="39"/>
@@ -222,12 +222,10 @@
 </package>
 <package name="SOCKET_MAX31856">
 <description>Samtec SSW-109-01-T-S. Holes per official SSW-S footprint; module body envelope 2.8 mm.</description>
-<text x="0" y="2.77" size="1" layer="25" align="center">&gt;NAME</text>
-<wire x1="1.4" y1="1.7" x2="1.4" y2="-22.02" width="0.12" layer="21"/>
-<wire x1="-1.4" y1="1.7" x2="1.4" y2="1.7" width="0.12" layer="21"/>
-<wire x1="-1.4" y1="1.7" x2="0" y2="1.7" width="0.24" layer="21"/>
-<wire x1="1.4" y1="-22.02" x2="-1.4" y2="-22.02" width="0.12" layer="21"/>
-<wire x1="-1.4" y1="-22.02" x2="-1.4" y2="1.7" width="0.12" layer="21"/>
+<text x="0" y="2.77" size="1" layer="25" font="vector" ratio="20" align="center">&gt;NAME</text>
+<wire x1="1.4" y1="1.7" x2="1.4" y2="-22.02" width="0.15" layer="21"/>
+<wire x1="1.4" y1="-22.02" x2="-1.4" y2="-22.02" width="0.15" layer="21"/>
+<wire x1="-1.4" y1="-22.02" x2="-1.4" y2="1.7" width="0.15" layer="21"/>
 <wire x1="1.65" y1="1.901" x2="1.65" y2="-22.221" width="0.05" layer="39"/>
 <wire x1="-1.65" y1="1.901" x2="1.65" y2="1.901" width="0.05" layer="39"/>
 <wire x1="1.65" y1="-22.221" x2="-1.65" y2="-22.221" width="0.05" layer="39"/>
@@ -245,6 +243,7 @@
 <pad name="7" x="0" y="-15.24" drill="1.04" diameter="1.7"/>
 <pad name="8" x="0" y="-17.78" drill="1.04" diameter="1.7"/>
 <pad name="9" x="0" y="-20.32" drill="1.04" diameter="1.7"/>
+<wire x1="-1.4" y1="1.7" x2="1.4" y2="1.7" width="0.15" layer="21"/>
 </package>
 <package name="TERM_5.08_2">
 <wire x1="-2.54" y1="-4.8" x2="7.62" y2="-4.8" width="0.15" layer="21"/>
@@ -255,7 +254,7 @@
 <wire x1="7.87" y1="-5.05" x2="7.87" y2="5.25" width="0.05" layer="39"/>
 <wire x1="7.87" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
 <wire x1="-2.79" y1="5.25" x2="-2.79" y2="-5.05" width="0.05" layer="39"/>
-<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector">&gt;NAME</text>
+<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 </package>
@@ -268,7 +267,7 @@
 <wire x1="12.95" y1="-5.05" x2="12.95" y2="5.25" width="0.05" layer="39"/>
 <wire x1="12.95" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
 <wire x1="-2.79" y1="5.25" x2="-2.79" y2="-5.05" width="0.05" layer="39"/>
-<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector">&gt;NAME</text>
+<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
@@ -282,7 +281,7 @@
 <wire x1="18.03" y1="-5.05" x2="18.03" y2="5.25" width="0.05" layer="39"/>
 <wire x1="18.03" y1="5.25" x2="-2.79" y2="5.25" width="0.05" layer="39"/>
 <wire x1="-2.79" y1="5.25" x2="-2.79" y2="-5.05" width="0.05" layer="39"/>
-<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector">&gt;NAME</text>
+<text x="-2.54" y="5.5" size="0.85" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <pad name="1" x="0" y="0" drill="1.3" diameter="2.4" shape="square"/>
 <pad name="2" x="5.08" y="0" drill="1.3" diameter="2.4"/>
 <pad name="3" x="10.16" y="0" drill="1.3" diameter="2.4"/>
@@ -295,9 +294,9 @@
 <wire x1="1.8" y1="-0.95" x2="1.8" y2="0.95" width="0.05" layer="39"/>
 <wire x1="1.8" y1="0.95" x2="-1.8" y2="0.95" width="0.05" layer="39"/>
 <wire x1="-1.8" y1="0.95" x2="-1.8" y2="-0.95" width="0.05" layer="39"/>
-<wire x1="-0.7" y1="0.8" x2="0.7" y2="0.8" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-0.8" x2="0.7" y2="-0.8" width="0.15" layer="21"/>
-<text x="-2" y="1.4" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="1.4" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-0.7" y1="1.05" x2="0.7" y2="1.05" width="0.15" layer="21"/>
+<wire x1="-0.7" y1="-1.05" x2="0.7" y2="-1.05" width="0.15" layer="21"/>
 </package>
 <package name="C0805">
 <smd name="1" x="-1" y="0" dx="1.1" dy="1.4" layer="1"/>
@@ -306,9 +305,9 @@
 <wire x1="1.75" y1="-0.95" x2="1.75" y2="0.95" width="0.05" layer="39"/>
 <wire x1="1.75" y1="0.95" x2="-1.75" y2="0.95" width="0.05" layer="39"/>
 <wire x1="-1.75" y1="0.95" x2="-1.75" y2="-0.95" width="0.05" layer="39"/>
-<wire x1="-0.7" y1="0.8" x2="0.7" y2="0.8" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-0.8" x2="0.7" y2="-0.8" width="0.15" layer="21"/>
-<text x="-2" y="1.4" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="1.4" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-0.7" y1="1.05" x2="0.7" y2="1.05" width="0.15" layer="21"/>
+<wire x1="-0.7" y1="-1.05" x2="0.7" y2="-1.05" width="0.15" layer="21"/>
 </package>
 <package name="C1206">
 <smd name="1" x="-1.5" y="0" dx="1.3" dy="1.8" layer="1"/>
@@ -317,9 +316,9 @@
 <wire x1="2.35" y1="-1.15" x2="2.35" y2="1.15" width="0.05" layer="39"/>
 <wire x1="2.35" y1="1.15" x2="-2.35" y2="1.15" width="0.05" layer="39"/>
 <wire x1="-2.35" y1="1.15" x2="-2.35" y2="-1.15" width="0.05" layer="39"/>
-<wire x1="-1.2" y1="1" x2="1.2" y2="1" width="0.15" layer="21"/>
-<wire x1="-1.2" y1="-1" x2="1.2" y2="-1" width="0.15" layer="21"/>
-<text x="-2" y="1.6" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="1.6" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-1.2" y1="1.2" x2="1.2" y2="1.2" width="0.15" layer="21"/>
+<wire x1="-1.2" y1="-1.2" x2="1.2" y2="-1.2" width="0.15" layer="21"/>
 </package>
 <package name="C1210">
 <smd name="1" x="-1.5" y="0" dx="1.3" dy="2.6" layer="1"/>
@@ -328,9 +327,9 @@
 <wire x1="2.35" y1="-1.55" x2="2.35" y2="1.55" width="0.05" layer="39"/>
 <wire x1="2.35" y1="1.55" x2="-2.35" y2="1.55" width="0.05" layer="39"/>
 <wire x1="-2.35" y1="1.55" x2="-2.35" y2="-1.55" width="0.05" layer="39"/>
-<wire x1="-1.2" y1="1.4" x2="1.2" y2="1.4" width="0.15" layer="21"/>
-<wire x1="-1.2" y1="-1.4" x2="1.2" y2="-1.4" width="0.15" layer="21"/>
-<text x="-2" y="2" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="2" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-1.2" y1="1.6" x2="1.2" y2="1.6" width="0.15" layer="21"/>
+<wire x1="-1.2" y1="-1.6" x2="1.2" y2="-1.6" width="0.15" layer="21"/>
 </package>
 <package name="SMA">
 <smd name="1" x="-2.3" y="0" dx="2" dy="1.8" layer="1"/>
@@ -339,10 +338,10 @@
 <wire x1="3.5" y1="-1.15" x2="3.5" y2="1.15" width="0.05" layer="39"/>
 <wire x1="3.5" y1="1.15" x2="-3.5" y2="1.15" width="0.05" layer="39"/>
 <wire x1="-3.5" y1="1.15" x2="-3.5" y2="-1.15" width="0.05" layer="39"/>
-<wire x1="-2" y1="1" x2="2" y2="1" width="0.15" layer="21"/>
-<wire x1="-2" y1="-1" x2="2" y2="-1" width="0.15" layer="21"/>
-<wire x1="-3.55" y1="-0.9" x2="-3.55" y2="0.9" width="0.25" layer="21"/>
-<text x="-2" y="1.6" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="1.6" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-2" y1="1.2" x2="2" y2="1.2" width="0.15" layer="21"/>
+<wire x1="-2" y1="-1.2" x2="2" y2="-1.2" width="0.15" layer="21"/>
+<wire x1="-3.7" y1="-0.9" x2="-3.7" y2="0.9" width="0.2" layer="21"/>
 </package>
 <package name="SMB">
 <smd name="1" x="-2.4" y="0" dx="2.4" dy="2.4" layer="1"/>
@@ -351,10 +350,10 @@
 <wire x1="3.8" y1="-1.45" x2="3.8" y2="1.45" width="0.05" layer="39"/>
 <wire x1="3.8" y1="1.45" x2="-3.8" y2="1.45" width="0.05" layer="39"/>
 <wire x1="-3.8" y1="1.45" x2="-3.8" y2="-1.45" width="0.05" layer="39"/>
-<wire x1="-2.1" y1="1.3" x2="2.1" y2="1.3" width="0.15" layer="21"/>
-<wire x1="-2.1" y1="-1.3" x2="2.1" y2="-1.3" width="0.15" layer="21"/>
-<wire x1="-3.85" y1="-1.2" x2="-3.85" y2="1.2" width="0.25" layer="21"/>
-<text x="-2" y="1.9" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="1.9" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-2.1" y1="1.5" x2="2.1" y2="1.5" width="0.15" layer="21"/>
+<wire x1="-2.1" y1="-1.5" x2="2.1" y2="-1.5" width="0.15" layer="21"/>
+<wire x1="-4" y1="-1.2" x2="-4" y2="1.2" width="0.2" layer="21"/>
 </package>
 <package name="FUSE2410">
 <smd name="1" x="-2.455" y="0" dx="1.96" dy="3.15" layer="1"/>
@@ -363,15 +362,15 @@
 <wire x1="3.635" y1="-1.825" x2="3.635" y2="1.825" width="0.05" layer="39"/>
 <wire x1="3.635" y1="1.825" x2="-3.635" y2="1.825" width="0.05" layer="39"/>
 <wire x1="-3.635" y1="1.825" x2="-3.635" y2="-1.825" width="0.05" layer="39"/>
-<wire x1="-2.155" y1="1.675" x2="2.155" y2="1.675" width="0.15" layer="21"/>
-<wire x1="-2.155" y1="-1.675" x2="2.155" y2="-1.675" width="0.15" layer="21"/>
-<text x="-2" y="2.275" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="2.275" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
+<wire x1="-2.155" y1="1.9" x2="2.155" y2="1.9" width="0.15" layer="21"/>
+<wire x1="-2.155" y1="-1.9" x2="2.155" y2="-1.9" width="0.15" layer="21"/>
 </package>
 </packages>
 </library>
 <library name="Sirokko-parts">
 <packages>
-<package name="DS1013_12SSIB1" library_version="3">
+<package name="DS1013_12SSIB1">
 <pad name="1" x="0" y="0" drill="1.02" diameter="1.7" shape="square"/>
 <pad name="2" x="2.54" y="0" drill="1.02" diameter="1.7"/>
 <pad name="3" x="0" y="-2.54" drill="1.02" diameter="1.7"/>
@@ -384,14 +383,14 @@
 <pad name="10" x="2.54" y="-10.16" drill="1.02" diameter="1.7"/>
 <pad name="11" x="0" y="-12.7" drill="1.02" diameter="1.7"/>
 <pad name="12" x="2.54" y="-12.7" drill="1.02" diameter="1.7"/>
-<wire x1="-3.28" y1="5.07" x2="5.82" y2="5.07" width="0.12" layer="21"/>
-<wire x1="5.82" y1="5.07" x2="5.82" y2="-17.77" width="0.12" layer="21"/>
-<wire x1="5.82" y1="-17.77" x2="-3.28" y2="-17.77" width="0.12" layer="21"/>
-<wire x1="-3.28" y1="-17.77" x2="-3.28" y2="5.07" width="0.12" layer="21"/>
+<wire x1="-3.28" y1="5.07" x2="5.82" y2="5.07" width="0.15" layer="21"/>
+<wire x1="5.82" y1="5.07" x2="5.82" y2="-17.77" width="0.15" layer="21"/>
+<wire x1="5.82" y1="-17.77" x2="-3.28" y2="-17.77" width="0.15" layer="21"/>
+<wire x1="-3.28" y1="-17.77" x2="-3.28" y2="5.07" width="0.15" layer="21"/>
 <wire x1="-3.28" y1="-4.3" x2="-1.98" y2="-4.3" width="0.1" layer="51"/>
 <wire x1="-1.98" y1="-4.3" x2="-1.98" y2="-8.4" width="0.1" layer="51"/>
 <wire x1="-1.98" y1="-8.4" x2="-3.28" y2="-8.4" width="0.1" layer="51"/>
-<text x="-3.28" y="6.1" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.28" y="6.1" size="1.27" layer="25" font="vector" ratio="20">&gt;NAME</text>
 </package>
 <package name="K7805_1000R3">
 <pad name="1" x="-2.54" y="0" drill="1" diameter="1.8"/>
@@ -401,7 +400,7 @@
 <wire x1="5.75" y1="-2.15" x2="5.75" y2="6.85" width="0.15" layer="21"/>
 <wire x1="5.75" y1="6.85" x2="-5.75" y2="6.85" width="0.15" layer="21"/>
 <wire x1="-5.75" y1="6.85" x2="-5.75" y2="-2.15" width="0.15" layer="21"/>
-<text x="-5.75" y="7.8" size="0.8" layer="25">&gt;NAME</text>
+<text x="-5.75" y="7.8" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
 </package>
 <package name="TPS26600_PWP">
 <smd name="1" x="-2.9" y="2.275" dx="1.5" dy="0.45" layer="1"/>
@@ -426,15 +425,15 @@
 <rectangle x1="-1.55" y1="0.15" x2="-0.15" y2="1.55" layer="31"/>
 <rectangle x1="0.15" y1="-1.55" x2="1.55" y2="-0.15" layer="31"/>
 <rectangle x1="0.15" y1="0.15" x2="1.55" y2="1.55" layer="31"/>
-<wire x1="-2.1" y1="2.6" x2="2.1" y2="2.6" width="0.15" layer="21"/>
-<wire x1="-2.1" y1="-2.6" x2="2.1" y2="-2.6" width="0.15" layer="21"/>
-<circle x="-3.05" y="2.9" radius="0.2" width="0.15" layer="21"/>
 <wire x1="-2.25" y1="-2.5" x2="2.25" y2="-2.5" width="0.1" layer="51"/>
 <wire x1="2.25" y1="-2.5" x2="2.25" y2="2.5" width="0.1" layer="51"/>
 <wire x1="2.25" y1="2.5" x2="-2.25" y2="2.5" width="0.1" layer="51"/>
 <wire x1="-2.25" y1="2.5" x2="-2.25" y2="-2.5" width="0.1" layer="51"/>
-<text x="-2.25" y="4.4" size="0.8" layer="25">&gt;NAME</text>
+<text x="-2.25" y="4.4" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <text x="-2.25" y="-5.3" size="0.8" layer="27">&gt;VALUE</text>
+<wire x1="-1.8" y1="2.8" x2="1.8" y2="2.8" width="0.15" layer="21"/>
+<wire x1="-1.8" y1="-2.8" x2="1.8" y2="-2.8" width="0.15" layer="21"/>
+<circle x="-3.05" y="3.15" radius="0.2" width="0.15" layer="21"/>
 </package>
 <package name="TLV1117LV_DCY">
 <smd name="1" x="-2.3" y="-2.9" dx="0.95" dy="2.15" layer="1"/>
@@ -445,13 +444,13 @@
 <wire x1="-3.4" y1="1.65" x2="-1.85" y2="1.65" width="0.15" layer="21"/>
 <wire x1="3.4" y1="-1.65" x2="3.4" y2="1.65" width="0.15" layer="21"/>
 <wire x1="3.4" y1="1.65" x2="1.85" y2="1.65" width="0.15" layer="21"/>
-<circle x="-3.2" y="-2.6" radius="0.2" width="0.15" layer="21"/>
 <wire x1="-3.25" y1="-1.75" x2="3.25" y2="-1.75" width="0.1" layer="51"/>
 <wire x1="3.25" y1="-1.75" x2="3.25" y2="1.75" width="0.1" layer="51"/>
 <wire x1="3.25" y1="1.75" x2="-3.25" y2="1.75" width="0.1" layer="51"/>
 <wire x1="-3.25" y1="1.75" x2="-3.25" y2="-1.75" width="0.1" layer="51"/>
-<text x="-3.25" y="4.4" size="0.8" layer="25">&gt;NAME</text>
+<text x="-3.25" y="4.4" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <text x="-3.25" y="-5.3" size="0.8" layer="27">&gt;VALUE</text>
+<circle x="-3.4" y="-2.6" radius="0.2" width="0.15" layer="21"/>
 </package>
 <package name="SRV05_SOT23_6">
 <smd name="1" x="-0.95" y="-1.25" dx="0.6" dy="1.1" layer="1"/>
@@ -462,31 +461,31 @@
 <smd name="6" x="-0.95" y="1.25" dx="0.6" dy="1.1" layer="1"/>
 <wire x1="-1.55" y1="-0.75" x2="-1.55" y2="0.75" width="0.15" layer="21"/>
 <wire x1="1.55" y1="-0.75" x2="1.55" y2="0.75" width="0.15" layer="21"/>
-<circle x="-1.5" y="-1.4" radius="0.15" width="0.1" layer="21"/>
 <wire x1="-1.45" y1="-0.8" x2="1.45" y2="-0.8" width="0.1" layer="51"/>
 <wire x1="1.45" y1="-0.8" x2="1.45" y2="0.8" width="0.1" layer="51"/>
 <wire x1="1.45" y1="0.8" x2="-1.45" y2="0.8" width="0.1" layer="51"/>
 <wire x1="-1.45" y1="0.8" x2="-1.45" y2="-0.8" width="0.1" layer="51"/>
-<text x="-1.45" y="4.4" size="0.8" layer="25">&gt;NAME</text>
+<text x="-1.45" y="4.4" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <text x="-1.45" y="-5.3" size="0.8" layer="27">&gt;VALUE</text>
+<circle x="-1.85" y="-1.25" radius="0.15" width="0" layer="21"/>
 </package>
 </packages>
 </library>
 <library name="Sirokko-parts" urn="urn:adsk.wipprod:fs.file:vf.PvEWjsW8TjOAtD3xjZ9eqQ">
 <packages>
-<package name="AO3422_SOT23" library_version="6">
+<package name="AO3422_SOT23" library_version="12">
 <smd name="1" x="-1.2" y="0.95" dx="0.8" dy="0.8" layer="1"/>
 <smd name="2" x="-1.2" y="-0.95" dx="0.8" dy="0.8" layer="1"/>
 <smd name="3" x="1.2" y="0" dx="0.8" dy="0.8" layer="1"/>
-<wire x1="-0.9" y1="1.65" x2="0.9" y2="1.65" width="0.12" layer="21"/>
-<wire x1="-0.9" y1="-1.65" x2="0.9" y2="-1.65" width="0.12" layer="21"/>
-<circle x="-1.7" y="1.6" radius="0.1" width="0" layer="21"/>
+<wire x1="-0.9" y1="1.65" x2="0.9" y2="1.65" width="0.15" layer="21"/>
+<wire x1="-0.9" y1="-1.65" x2="0.9" y2="-1.65" width="0.15" layer="21"/>
 <wire x1="-0.9" y1="-1.55" x2="0.9" y2="-1.55" width="0.1" layer="51"/>
 <wire x1="0.9" y1="-1.55" x2="0.9" y2="1.55" width="0.1" layer="51"/>
 <wire x1="0.9" y1="1.55" x2="-0.9" y2="1.55" width="0.1" layer="51"/>
 <wire x1="-0.9" y1="1.55" x2="-0.9" y2="-1.55" width="0.1" layer="51"/>
-<text x="2" y="2" size="0.8" layer="25" font="vector">&gt;NAME</text>
+<text x="2" y="2" size="0.8" layer="25" font="vector" ratio="20">&gt;NAME</text>
 <text x="2" y="0" size="0.8" layer="27" font="vector">&gt;VALUE</text>
+<circle x="-1.7" y="1.85" radius="0.15" width="0" layer="21"/>
 </package>
 </packages>
 </library>
@@ -551,7 +550,7 @@ design rules under a new name.</description>
 <param name="rlMaxPadInner" value="20mil"/>
 <param name="rlMinPadBottom" value="0.1mm"/>
 <param name="rlMaxPadBottom" value="20mil"/>
-<param name="rlMinViaOuter" value="0.1mm"/>
+<param name="rlMinViaOuter" value="0.15mm"/>
 <param name="rlMaxViaOuter" value="20mil"/>
 <param name="rlMinViaInner" value="0.1mm"/>
 <param name="rlMaxViaInner" value="20mil"/>
@@ -566,8 +565,8 @@ design rules under a new name.</description>
 <param name="psElongationOffset" value="100"/>
 <param name="mvStopFrame" value="1"/>
 <param name="mvCreamFrame" value="0"/>
-<param name="mlMinStopFrame" value="0mil"/>
-<param name="mlMaxStopFrame" value="4mil"/>
+<param name="mlMinStopFrame" value="0.04mm"/>
+<param name="mlMaxStopFrame" value="0.04mm"/>
 <param name="mlMinCreamFrame" value="0mil"/>
 <param name="mlMaxCreamFrame" value="0mil"/>
 <param name="mlViaStopLimit" value="32mil"/>
@@ -710,10 +709,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="DS1013-12SSiB1-B-0" x="78" y="60.5" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="82.5" y="64.5" size="0.8" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="76" y="66" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/idc-12m-ds1013-12-vilka-2.54mm-na-platu-12pin-connfly-9000386091" x="78" y="60.5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 <attribute name="VENDOR" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 <attribute name="VPN" value="" x="78" y="60.5" size="1.778" layer="27" display="off"/>
 </element>
@@ -729,7 +727,7 @@ design rules under a new name.</description>
 </element>
 <element name="R1" library="Sirokko" package="R0805" value="4k7" x="16" y="62" smashed="yes">
 <attribute name="MPN" value="RC0805FR-074K7L" x="16" y="62" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="15" y="63.3" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="15" y="63.6" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-4.7-kom-1-rc0805fr-074k7l-chip-rezistor-yageo-9000350078" x="16" y="62" size="1.778" layer="27" display="off"/>
 </element>
 <element name="R2" library="Sirokko" package="R0805" value="10k" x="27.5" y="47.2" smashed="yes">
@@ -739,7 +737,7 @@ design rules under a new name.</description>
 </element>
 <element name="R3" library="Sirokko" package="R0805" value="10k" x="56.5" y="46" smashed="yes">
 <attribute name="MPN" value="RC0805FR-0710KL" x="56.5" y="46" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="55.2" y="44" size="0.8" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="55.2" y="43.7" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499" x="56.5" y="46" size="1.778" layer="27" display="off"/>
 </element>
 <element name="R7" library="Sirokko" package="R0805" value="10k" x="63.5" y="17" smashed="yes">
@@ -749,7 +747,7 @@ design rules under a new name.</description>
 </element>
 <element name="R8" library="Sirokko" package="R0805" value="10k" x="75.5" y="17" smashed="yes">
 <attribute name="MPN" value="RC0805FR-0710KL" x="75.5" y="17" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="74.2" y="18.7" size="0.8" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="75.2" y="18.7" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499" x="75.5" y="17" size="1.778" layer="27" display="off"/>
 </element>
 <element name="J13" library="Sirokko" package="TERM_5.08_2" value="12_24V_INPUT" base_value="12_24V_INPUT" x="11" y="5" smashed="yes">
@@ -769,12 +767,12 @@ design rules under a new name.</description>
 </element>
 <element name="C101" library="Sirokko" package="C1210" value="10uF 50V X7R" base_value="10uF 50V X7R" x="15" y="34" smashed="yes">
 <attribute name="MPN" value="GRM32ER71H106KA12L" x="15" y="34" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="12.4" y="35.6" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="9" y="34.5" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/10mkf-x7r-50v-10-1210-grm32er71h106k-kondensator-murata-9000141173" x="15" y="34" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C106" library="Sirokko" package="C1206" value="22uF 25V X5R" base_value="22uF 25V X5R" x="25" y="34" smashed="yes" rot="R180">
 <attribute name="MPN" value="CL31A226KAHNNNE" x="25" y="34" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="NAME" x="25" y="35.6" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="25.3" y="36" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/22mkf-x5r-25v-10-1206-cl31a226kahnnne-kondensator-samsung-9000413179" x="25" y="34" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="C103" library="Sirokko" package="C0805" value="100nF 25V" x="86.5" y="62.5" smashed="yes" rot="R90">
@@ -784,12 +782,12 @@ design rules under a new name.</description>
 </element>
 <element name="C30" library="Sirokko" package="C0805" value="100nF 25V" x="40.5" y="46" smashed="yes">
 <attribute name="MPN" value="CC0805KRX7R8BB104" x="40.5" y="46" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="39.3" y="44" size="0.8" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="39.3" y="43.7" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545" x="40.5" y="46" size="1.778" layer="27" display="off"/>
 </element>
 <element name="C31" library="Sirokko" package="C0805" value="100nF 25V" x="68.5" y="46" smashed="yes">
 <attribute name="MPN" value="CC0805KRX7R8BB104" x="68.5" y="46" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="67.3" y="44" size="0.8" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="67.3" y="43.7" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545" x="68.5" y="46" size="1.778" layer="27" display="off"/>
 </element>
 <element name="J20" library="Sirokko" package="TERM_5.08_2" value="GLOW_RELAY_COIL" x="26" y="5" smashed="yes">
@@ -805,7 +803,6 @@ design rules under a new name.</description>
 <attribute name="MPN" value="AO3422" x="28" y="19" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="30" y="19.3" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823" x="28" y="19" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="30" y="19" size="0.8" layer="27" font="vector"/>
 <attribute name="VENDOR" value="" x="28" y="19" size="1.778" layer="27" display="off"/>
 <attribute name="VPN" value="" x="28" y="19" size="1.778" layer="27" display="off"/>
 </element>
@@ -821,7 +818,7 @@ design rules under a new name.</description>
 </element>
 <element name="D20" library="Sirokko" package="SMA" value="S1M" x="28" y="13" smashed="yes">
 <attribute name="MPN" value="S1M-13-F" x="28" y="13" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="27" y="11.1" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="27" y="15" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670" x="28" y="13" size="1.778" layer="27" display="off"/>
 </element>
 <element name="J21" library="Sirokko" package="TERM_5.08_2" value="FUEL_RELAY_COIL" x="41" y="5" smashed="yes">
@@ -837,7 +834,6 @@ design rules under a new name.</description>
 <attribute name="MPN" value="AO3422" x="43" y="21" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="44.9" y="21.2" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/ao3422-tranzistor-n-mosfet-55v-2.1a-1.25vt-alpha-omega-9000604823" x="43" y="21" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="45" y="21" size="0.8" layer="27" font="vector"/>
 <attribute name="VENDOR" value="" x="43" y="21" size="1.778" layer="27" display="off"/>
 <attribute name="VPN" value="" x="43" y="21" size="1.778" layer="27" display="off"/>
 </element>
@@ -848,12 +844,12 @@ design rules under a new name.</description>
 </element>
 <element name="RP21" library="Sirokko" package="R0805" value="10k" x="40" y="21" smashed="yes" rot="R270">
 <attribute name="MPN" value="RC0805FR-0710KL" x="40" y="21" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="NAME" x="37" y="20.2" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="36.3" y="19.2" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-10-kom-1-rc0805fr-0710kl-chip-rezistor-yageo-9000272499" x="40" y="21" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="D21" library="Sirokko" package="SMA" value="S1M" x="43" y="16.5" smashed="yes">
 <attribute name="MPN" value="S1M-13-F" x="43" y="16.5" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="42" y="14.4" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="47.5" y="16" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/s1m-13-f-diod-vypryamitelnyy-1a-100v-sma-do-214ac-diodes-9000394670" x="43" y="16.5" size="1.778" layer="27" display="off"/>
 </element>
 <element name="U101" library="Sirokko-parts" package="K7805_1000R3" value="K7805-1000R3" base_value="K7805-1000R3" x="19" y="39" smashed="yes">
@@ -862,7 +858,7 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="" x="19" y="39" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER" value="" x="19" y="39" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="K7805-1000R3" x="19" y="39" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="25.5" y="39" size="0.8" layer="25"/>
+<attribute name="NAME" x="25.5" y="39" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="19" y="39" size="1.778" layer="27" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/k7805-1000r3-dc-dc-preobrazovatel-5vt-vhod-8-36v-mornsun-9000541503" x="19" y="39" size="1.778" layer="27" display="off"/>
 <attribute name="VENDOR" value="" x="19" y="39" size="1.778" layer="27" display="off"/>
@@ -874,10 +870,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://www.ti.com/lit/ds/symlink/tps2660.pdf" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 <attribute name="MANUFACTURER" value="" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 <attribute name="MPN" value="TPS26600PWP" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
-<attribute name="NAME" x="16.4" y="29.15" size="0.75" layer="25"/>
+<attribute name="NAME" x="15.4" y="29.2" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/tps26600pwp-texas-instruments-8003870507" x="19" y="25" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" x="24.3" y="22.75" size="0.8" layer="27" rot="R90"/>
 <attribute name="VENDOR" value="" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 <attribute name="VPN" value="" x="19" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 </element>
@@ -887,10 +882,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://www.ti.com/lit/ds/symlink/tlv1117lv.pdf" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="TLV1117LV33DCYR" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="31.3" y="35.2" size="0.75" layer="25"/>
+<attribute name="NAME" x="31.3" y="35.2" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/tlv1117lv33dcyr-stabilizator-texas-instruments-9001599934" x="33" y="30" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="29.75" y="24.7" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="33" y="30" size="0.75" layer="27" font="vector" display="off"/>
 </element>
@@ -901,7 +895,7 @@ design rules under a new name.</description>
 </element>
 <element name="C100" library="Sirokko" package="C1206" value="1uF 100V X7R" base_value="1uF 100V X7R" x="12" y="25" smashed="yes" rot="R90">
 <attribute name="MPN" value="CC1206KKX7R0BB105" x="12" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
-<attribute name="NAME" x="10" y="22" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="11" y="20.7" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/1mkf-x7r-100v-10-1206-cc1206kkx7r0bb105-kondensator-yageo-9000337923" x="12" y="25" size="0.75" layer="27" font="vector" rot="R90" display="off"/>
 </element>
 <element name="C102" library="Sirokko" package="C1206" value="100nF 50V" base_value="100nF 50V" x="20" y="32" smashed="yes" rot="R90">
@@ -921,12 +915,12 @@ design rules under a new name.</description>
 </element>
 <element name="R101" library="Sirokko" package="R0805" value="249k 1%" base_value="249k 1%" x="17" y="19" smashed="yes">
 <attribute name="MPN" value="RC0805FR-07249KL" x="17" y="19" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="15.5" y="17.3" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="15.5" y="16.8" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/rc0805fr-07249kl-rezistor-yageo-9000374189" x="17" y="19" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="R102" library="Sirokko" package="R0805" value="11k 1%" base_value="11k 1%" x="21" y="19" smashed="yes">
 <attribute name="MPN" value="CR-05FL7---11K" x="21" y="19" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="20" y="17.3" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="20" y="16.8" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-11k-viking-tech-8001784683" x="21" y="19" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="U32" library="Sirokko-parts" package="SRV05_SOT23_6" value="SRV05-4" base_value="SRV05-4" x="86.5" y="57.5" smashed="yes">
@@ -935,10 +929,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://static.chipdip.ru/lib/303/DOC021303379.pdf" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="SRV05-4.TCT" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="88.05" y="57.15" size="0.75" layer="25"/>
+<attribute name="NAME" x="88.65" y="57.15" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217" x="86.5" y="57.5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="85.05" y="52.2" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="86.5" y="57.5" size="0.75" layer="27" font="vector" display="off"/>
 </element>
@@ -948,10 +941,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://static.chipdip.ru/lib/303/DOC021303379.pdf" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="SRV05-4.TCT" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="88.05" y="50.65" size="0.75" layer="25"/>
+<attribute name="NAME" x="88.65" y="50.65" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217" x="86.5" y="51" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="85.05" y="45.7" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="86.5" y="51" size="0.75" layer="27" font="vector" display="off"/>
 </element>
@@ -961,10 +953,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://static.chipdip.ru/lib/303/DOC021303379.pdf" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="SRV05-4.TCT" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="88.05" y="45.15" size="0.75" layer="25"/>
+<attribute name="NAME" x="88.65" y="45.15" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217" x="86.5" y="45.5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="85.05" y="40.2" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="86.5" y="45.5" size="0.75" layer="27" font="vector" display="off"/>
 </element>
@@ -974,10 +965,9 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://static.chipdip.ru/lib/303/DOC021303379.pdf" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="SRV05-4.TCT" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="11.8" y="59.2" size="0.75" layer="25"/>
+<attribute name="NAME" x="11.8" y="59.5" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217" x="13" y="57" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="11.55" y="51.7" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="13" y="57" size="0.75" layer="27" font="vector" display="off"/>
 </element>
@@ -987,16 +977,15 @@ design rules under a new name.</description>
 <attribute name="DATASHEET" value="https://static.chipdip.ru/lib/303/DOC021303379.pdf" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MANUFACTURER" value="" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="MPN" value="SRV05-4.TCT" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="68.7" y="19.6" size="0.75" layer="25"/>
+<attribute name="NAME" x="68.7" y="19.8" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="PACKAGE" value="" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/srv05-4-tct-ustroystvo-zaschity-usb-ot-esd-sborka-umw-9001106217" x="70" y="17.5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="68.55" y="12.2" size="0.8" layer="27"/>
 <attribute name="VENDOR" value="" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
 <attribute name="VPN" value="" x="70" y="17.5" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="R12" library="Sirokko" package="R0805" value="220R" base_value="220R" x="17" y="55" smashed="yes">
 <attribute name="MPN" value="RC0805FR-07220RL" x="17" y="55" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="15.7" y="53.3" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="15.7" y="52.8" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.125vt-0805-220-om-1-rc0805fr-07220rl-chip-rezistor-yageo-9000393930" x="17" y="55" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="R28" library="Sirokko" package="R0805" value="220R" base_value="220R" x="67.5" y="21" smashed="yes" rot="R90">
@@ -1011,7 +1000,7 @@ design rules under a new name.</description>
 </element>
 <element name="R32" library="Sirokko" package="R0805" value="33R" base_value="33R" x="86.5" y="42" smashed="yes">
 <attribute name="MPN" value="RC0805FR-0733RL" x="86.5" y="42" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="84.7" y="40.35" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="84.7" y="39.9" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/rc0805fr-0733rl-yageo-8001790284" x="86.5" y="42" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="R33" library="Sirokko" package="R0805" value="33R" base_value="33R" x="71.5" y="42.5" smashed="yes" rot="R180">
@@ -1021,7 +1010,7 @@ design rules under a new name.</description>
 </element>
 <element name="C12" library="Sirokko" package="C0805" value="100nF 25V" x="17" y="59" smashed="yes">
 <attribute name="MPN" value="CC0805KRX7R8BB104" x="17" y="59" size="0.75" layer="27" font="vector" display="off"/>
-<attribute name="NAME" x="16" y="60.3" size="0.75" layer="25" font="vector" ratio="20"/>
+<attribute name="NAME" x="20" y="59" size="0.75" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/0.1mkf-x7r-25v-10-0805-cc0805krx7r8bb104-kondensator-yageo-9000066545" x="17" y="59" size="0.75" layer="27" font="vector" display="off"/>
 </element>
 <element name="C29" library="Sirokko" package="C0805" value="100nF 25V" x="70.5" y="23" smashed="yes" rot="R90">
@@ -1031,7 +1020,7 @@ design rules under a new name.</description>
 </element>
 <element name="R103" library="Sirokko" package="R0805" value="22k 1%" base_value="22k 1%" x="19" y="15.5" smashed="yes">
 <attribute name="MPN" value="CR-05FL7---22K" x="19" y="15.5" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="17.5" y="13.8" size="0.8" layer="25" font="vector"/>
+<attribute name="NAME" x="17.5" y="13.2" size="0.8" layer="25" font="vector" ratio="20"/>
 <attribute name="SUPPLIER_URL" value="https://www.chipdip.ru/product/cr-05fl7-22k-rezistor-viking-tech-9000676986" x="19" y="15.5" size="1.778" layer="27" display="off"/>
 </element>
 </elements>
@@ -1096,9 +1085,6 @@ design rules under a new name.</description>
 <wire x1="86.5" y1="61.5" x2="86.5" y2="58.75" width="0.2" layer="1"/>
 <wire x1="86.25" y1="47" x2="86.5" y2="46.75" width="0.2" layer="1"/>
 <wire x1="86.25" y1="47.75" x2="86.25" y2="47" width="0.2" layer="1"/>
-<wire x1="86" y1="48" x2="86.25" y2="47.75" width="0.2" layer="1"/>
-<wire x1="84.5" y1="48" x2="86" y2="48" width="0.2" layer="1"/>
-<wire x1="84.5" y1="50.5" x2="84.5" y2="48" width="0.2" layer="1"/>
 <wire x1="85" y1="51" x2="84.5" y2="50.5" width="0.2" layer="1"/>
 <wire x1="86.5" y1="51" x2="85" y2="51" width="0.2" layer="1"/>
 <wire x1="86.5" y1="52.25" x2="86.5" y2="51" width="0.2" layer="1"/>
@@ -1134,6 +1120,10 @@ design rules under a new name.</description>
 <wire x1="80.5" y1="60.5" x2="80.54" y2="60.5" width="0.2" layer="16"/>
 <wire x1="70" y1="51" x2="69.82" y2="51" width="0.2" layer="16"/>
 <wire x1="67" y1="32.25" x2="41.75" y2="32.25" width="0.2" layer="1"/>
+<wire x1="84.5" y1="50.5" x2="84.5" y2="48.60146875" width="0.2" layer="1"/>
+<wire x1="84.5" y1="48.60146875" x2="85.25146875" y2="47.85" width="0.2" layer="1"/>
+<wire x1="86.15" y1="47.85" x2="86.25" y2="47.75" width="0.2" layer="1"/>
+<wire x1="85.25146875" y1="47.85" x2="86.15" y2="47.85" width="0.2" layer="1"/>
 </signal>
 <signal name="+5V_DEVKIT">
 <contactref element="J1" pad="21"/>
@@ -1346,7 +1336,6 @@ design rules under a new name.</description>
 <contactref element="J3" pad="6"/>
 <contactref element="U34" pad="3"/>
 <wire x1="81" y1="47.5" x2="85" y2="47.5" width="0.2" layer="16"/>
-<wire x1="85" y1="47.5" x2="85.75" y2="47.5" width="0.2" layer="16"/>
 <wire x1="80.75" y1="47.75" x2="81" y2="47.5" width="0.2" layer="16"/>
 <wire x1="80.75" y1="47.75" x2="80.54" y2="47.8" width="0.2" layer="16"/>
 <wire x1="85" y1="22.25" x2="76" y2="13.25" width="0.2" layer="16"/>
@@ -1355,8 +1344,11 @@ design rules under a new name.</description>
 <via x="90.5" y="44.25" extent="1-16" drill="0.3" diameter="0.6">
 </via>
 <wire x1="90.5" y1="44.25" x2="87.45" y2="44.25" width="0.2" layer="1"/>
-<wire x1="85.75" y1="47.5" x2="89" y2="44.25" width="0.2" layer="16"/>
 <wire x1="89" y1="44.25" x2="90.5" y2="44.25" width="0.2" layer="16"/>
+<wire x1="85" y1="47.5" x2="85.03578125" y2="47.5" width="0.2" layer="16"/>
+<wire x1="85.03578125" y1="47.5" x2="85.08578125" y2="47.45" width="0.2" layer="16"/>
+<wire x1="85.08578125" y1="47.45" x2="85.8" y2="47.45" width="0.2" layer="16"/>
+<wire x1="85.8" y1="47.45" x2="89" y2="44.25" width="0.2" layer="16"/>
 </signal>
 <signal name="PANEL_SDA">
 <contactref element="J32" pad="4"/>
@@ -1569,9 +1561,9 @@ design rules under a new name.</description>
 <contactref element="J1" pad="5"/>
 <contactref element="J32" pad="7"/>
 <contactref element="U33" pad="1"/>
-<wire x1="85.5" y1="48.75" x2="85.5" y2="49.75" width="0.2" layer="1"/>
-<wire x1="82.75" y1="51.5" x2="85.5" y2="48.75" width="0.2" layer="16"/>
-<wire x1="79.75" y1="51.5" x2="82.75" y2="51.5" width="0.2" layer="16"/>
+<wire x1="85.5" y1="48.45" x2="85.5" y2="49.75" width="0.2" layer="1"/>
+<wire x1="82.45" y1="51.5" x2="85.5" y2="48.45" width="0.2" layer="16"/>
+<wire x1="79.75" y1="51.5" x2="82.45" y2="51.5" width="0.2" layer="16"/>
 <wire x1="78.5" y1="52.75" x2="79.75" y2="51.5" width="0.2" layer="16"/>
 <wire x1="78" y1="52.75" x2="78.5" y2="52.75" width="0.2" layer="16"/>
 <wire x1="85.5" y1="49.75" x2="85.55" y2="49.75" width="0.2" layer="1"/>
@@ -1581,14 +1573,13 @@ design rules under a new name.</description>
 <wire x1="78" y1="52.5" x2="76.5" y2="51" width="0.2" layer="1"/>
 <wire x1="78" y1="52.88" x2="78" y2="52.5" width="0.2" layer="1"/>
 <wire x1="78.5" y1="38.5" x2="78.54" y2="38.5" width="0.2" layer="1"/>
-<via x="85.5" y="48.75" extent="1-16" drill="0.3">
+<via x="85.5" y="48.45" extent="1-16" drill="0.3">
 </via>
 </signal>
 <signal name="ENC_A">
 <contactref element="J1" pad="8"/>
 <contactref element="J32" pad="9"/>
 <contactref element="U33" pad="4"/>
-<wire x1="82.5" y1="48" x2="90.5" y2="48" width="0.2" layer="16"/>
 <wire x1="81.5" y1="49" x2="82.5" y2="48" width="0.2" layer="16"/>
 <wire x1="79.75" y1="49" x2="81.5" y2="49" width="0.2" layer="16"/>
 <wire x1="78.5" y1="50.25" x2="79.75" y2="49" width="0.2" layer="16"/>
@@ -1601,9 +1592,12 @@ design rules under a new name.</description>
 <via x="90.5" y="52.25" extent="1-16" drill="0.3" diameter="0.6">
 </via>
 <wire x1="87.45" y1="52.25" x2="90.5" y2="52.25" width="0.2" layer="1"/>
-<wire x1="90.5" y1="48" x2="91.25" y2="48.75" width="0.2" layer="16"/>
 <wire x1="91.25" y1="48.75" x2="91.25" y2="51.5" width="0.2" layer="16"/>
 <wire x1="91.25" y1="51.5" x2="90.5" y2="52.25" width="0.2" layer="16"/>
+<wire x1="82.5" y1="48" x2="85.10146875" y2="48" width="0.2" layer="16"/>
+<wire x1="85.10146875" y1="48" x2="85.25146875" y2="47.85" width="0.2" layer="16"/>
+<wire x1="85.25146875" y1="47.85" x2="90.35" y2="47.85" width="0.2" layer="16"/>
+<wire x1="90.35" y1="47.85" x2="91.25" y2="48.75" width="0.2" layer="16"/>
 </signal>
 <signal name="TFT_DC">
 <contactref element="J1" pad="9"/>

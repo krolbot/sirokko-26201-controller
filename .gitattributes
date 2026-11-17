@@ -2,6 +2,7 @@
 hardware/*.brd -text
 hardware/*.sch -text
 hardware/*.lbr -text
+hardware/*.edru -text whitespace=-blank-at-eol
 hardware/*.csv -text
 manufacturing/**/*.csv -text
 manufacturing/**/*.cam -text

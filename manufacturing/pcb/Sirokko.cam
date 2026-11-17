@@ -75,18 +75,17 @@
             "rotate": false,
             "upside_down": false
           },
-          "board_outline": false,
+          "board_outline": true,
           "config": {
             "file_function": "Profile",
             "plating": "non-plated"
           },
           "filename_format": "gerbers/profile.gbr",
-          "layers": [
-            20
-          ],
+          "layers": [],
           "milling": false,
           "polarity": "positive",
-          "type": "gerber_layer"
+          "type": "gerber_layer",
+          "name": "Board outline"
         },
         {
           "advanced_options": {
@@ -243,9 +242,39 @@
             "rotate": false,
             "upside_down": false
           },
-          "filename_format": "gerbers/drill_%FROM_%TO.xln",
-          "name": "Auto Drill",
-          "type": "autodrills"
+          "drills": {
+            "NPTH": false,
+            "PTH": true,
+            "VIA": true
+          },
+          "filename_format": "gerbers/drill_PTH.xln",
+          "layers": {
+            "from": 1,
+            "to": 16
+          },
+          "name": "Plated holes and vias",
+          "type": "excellon"
+        },
+        {
+          "advanced_options": {
+            "mirror": false,
+            "offset_x": 0,
+            "offset_y": 0,
+            "rotate": false,
+            "upside_down": false
+          },
+          "drills": {
+            "NPTH": true,
+            "PTH": false,
+            "VIA": false
+          },
+          "filename_format": "gerbers/drill_NPTH.xln",
+          "layers": {
+            "from": 1,
+            "to": 16
+          },
+          "name": "Non-plated holes",
+          "type": "excellon"
         }
       ]
     }
