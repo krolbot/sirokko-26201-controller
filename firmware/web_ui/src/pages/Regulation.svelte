@@ -4,6 +4,7 @@
   import {
     defaultSlew,
     commandAllowed,
+    commandReason,
     connectionReady,
   } from "../lib/presentation.js";
   import {
@@ -39,6 +40,10 @@
 </script>
 
 <div class="page-heading"><h1>Скорость изменения ШИМ</h1></div>
+<p class="intro">Как плавно двигатель меняет режим при отоплении. Меньше значение — медленнее переход.</p>
+{#if !commandAllowed(snapshot, "SETTINGS")}
+  <p class="notice" role="status">{commandReason(snapshot, "SETTINGS")}</p>
+{/if}
 <section class="surface smoothing-panel">
   <div class="smoothing-status">
     <Icon name="tune" size={24} />
@@ -58,7 +63,7 @@
         ><span>{label}</span><output
           >{percent === 100
             ? "По умолчанию"
-            : `${percent}% от скорости по умолчанию`}</output
+            : `${percent}% от обычного темпа`}</output
         ></span
       >
       <input

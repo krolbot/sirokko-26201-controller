@@ -48,7 +48,7 @@
     >
       {commandReason(ui.snapshot, "OTA")}
     </p>{/if}
-  {#if ui.snapshot.state.code === "MAINTENANCE" || ui.requestInFlight === "OTA"}<button
+  {#if !["activation_queued", "checking_startup", "running_expected_version"].includes(phase) && (ui.snapshot.state.code === "MAINTENANCE" || ui.requestInFlight === "OTA")}<button
       class="secondary section"
       disabled={ui.requestInFlight === "STOP"}
       onclick={() => session.stop()}>Отменить обновление</button
@@ -70,6 +70,6 @@
         .expectedVersion}
     </p>
   {:else if phase === "confirmation_timeout"}<p class="activity" role="alert">
-      Нет связи после обновления
+      Не удалось подтвердить запуск новой прошивки. Подключитесь к Wi-Fi прибора и проверьте версию.
     </p>{/if}
 </section>

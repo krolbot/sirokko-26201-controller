@@ -48,8 +48,8 @@
 {#if combustionText(snapshot.combustion?.phase)}<p class="caption">
     {combustionText(snapshot.combustion.phase)}
   </p>{/if}
-<section class="settings-group">
-  <h2>Настройка отопителя</h2>
+{#if !snapshot.envelope.provisioned}<section class="settings-group">
+  <h2>Нужна настройка</h2>
   <div class="grouped-list surface">
     <a class="list-row" href="#/heater"
       ><span class="row-title">Параметры отопителя</span>
@@ -59,9 +59,9 @@
       /></a
     >
   </div>
-</section>
+</section>{/if}
 <section class="surface info-panel section">
-  <h2>Команды на выходах</h2>
+  <h2>Работа отопителя</h2>
   <dl class="reading-list">
     {#each [["fan_request", "Двигатель", "Включён", "Выключен"], ["glow", "Свеча", "Включена", "Выключена"], ["fuel", "Муфта топливного насоса", "Включена", "Выключена"]] as [id, label, on, off]}<div
       >
@@ -71,14 +71,15 @@
     <div>
       <dt>ШИМ двигателя</dt>
       <dd>
-        {Number(snapshot.outputs.speed_code).toLocaleString("ru-RU", {
-          maximumFractionDigits: 1,
-        })}
+        {snapshot.envelope.limits.pwm_max > 0
+          ? `${Math.round(100 * snapshot.outputs.speed_code / snapshot.envelope.limits.pwm_max)}%`
+          : "Нет данных"}
       </dd>
     </div>
   </dl>
+  <p class="caption">Показаны команды контроллера, без обратного измерения работы двигателя, свечи и муфты.</p>
 </section>
-<details class="surface advanced section">
+<details class="surface advanced section" open={localInitialized === false || snapshot.storage_ok === false}>
   <summary>Диагностика контроллера</summary>
   <div class="disclosure-body">
     <dl class="reading-list">
@@ -101,6 +102,10 @@
     </dl>
   </div>
 </details>
+<History {snapshot} {api} {online} />
+<details class="surface advanced section" open={recording.active || recording.unsaved}>
+  <summary>Запись в файл</summary>
+  <div class="disclosure-body">
 <Measurements
   {recording}
   {online}
@@ -109,7 +114,8 @@
   download={downloadMeasurements}
   addNote={addMeasurementNote}
 />
-<History {snapshot} {api} {online} />
+  </div>
+</details>
 <section class="section surface info-panel">
   <h2>Журнал</h2>
   <p class="caption">Время от включения контроллера</p>

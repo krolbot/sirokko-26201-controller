@@ -254,7 +254,7 @@
     const locationChanged = () => {
       route = routeFromHash(location.hash);
       feedback = null;
-      window.scrollTo({ top: 0, behavior: "instant" });
+      document.getElementById("main")?.scrollTo({ top: 0, behavior: "instant" });
     };
     window.addEventListener("hashchange", locationChanged);
     const beforeUnload = (event) => {

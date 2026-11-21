@@ -83,10 +83,12 @@
 </script>
 
 <div class="page-heading"><h1>Первый запуск</h1></div>
+{#if !active && !suggestion?.samples}
 <p class="intro">
-  Подберите минимальный ШИМ для устойчивого горения. Контроллер рассчитает
-  нижний температурный порог отключения топлива.
+  Подберите режим, при котором отопитель устойчиво горит на малой подаче,
+  и сохраните настройки для обычного отопления.
 </p>
+{/if}
 {#if active}
   <section class="surface info-panel section trial-process" aria-live="polite">
     <h2>
@@ -98,15 +100,15 @@
     </h2>
     {#if phase === "TRIAL_READY"}
       <p>
-        Нажмите KEY0 на панели для запуска. Повторное нажатие остановит нагрев.
+        Нажмите кнопку пуска на приборе. Повторное нажатие остановит нагрев.
       </p>
     {:else if cooling}
       <p>Свеча и топливо выключены. Двигатель охлаждает отопитель.</p>
     {:else}
-      <p>Остановка — KEY0 или кнопкой «Остановить запуск».</p>
+      <p>Для остановки нажмите кнопку на приборе или «Остановить запуск» внизу экрана.</p>
       {#if phase === "IGNITION"}
         <p class="caption">
-          Если розжига нет, нажмите KEY0; не ждите окончания отсчёта.
+          Если розжига нет, остановите запуск — не ждите окончания отсчёта.
         </p>
         <button
           class="primary confirm-ignition"
@@ -136,13 +138,21 @@
   </section>
 {:else if !suggestion?.samples}
   <section class="surface info-panel section">
-    <h2>Порядок запуска</h2>
-    <p class="caption">
-      После 30 с накала включатся двигатель и подача топлива. Ещё через 10 с
-      свеча выключится. Подтвердите устойчивое горение, чтобы перейти к
-      измерениям и регулировке ШИМ. Без подтверждения топливо отключится через
-      90 с после его подачи. На измерения — до 30 минут.
-    </p>
+    <h2>Перед началом</h2>
+    <ol class="trial-steps">
+      <li>Подготовьте запуск здесь, затем нажмите кнопку пуска на приборе.</li>
+      <li>После розжига и выключения свечи подтвердите устойчивое горение.</li>
+      <li>Прогрейте отопитель, постепенно уменьшите подачу и выберите нижний режим.</li>
+      <li>Остановите нагрев. После охлаждения сохраните результат.</li>
+    </ol>
+    <details class="trial-help">
+      <summary>Время этапов и автоматическая остановка</summary>
+      <p class="caption">
+        Накал — 30 с; затем включатся двигатель и топливо. Ещё через 10 с
+        свеча выключится. Без подтверждения горения топливо отключится через
+        90 с после его подачи. На измерения — до 30 минут.
+      </p>
+    </details>
     <p class="notice">
       Штатная защита муфты от перегрева должна быть подключена.
     </p>
@@ -164,9 +174,10 @@
 
 {#if measuring}
   <section class="surface info-panel section">
-    <h2>ШИМ двигателя</h2>
+    <h2>Режим двигателя</h2>
+    <p class="caption">ШИМ привода вентилятора и насоса. Обороты не измеряются.</p>
     <p class="pwm-value">
-      {pwmPercent} % <span>· {pwm.value?.speed_code} / {pwmMaximum}</span>
+      {pwmPercent} % <span>{pwm.dirty ? "выбрано" : "задано"}</span>
     </p>
     <input
       class="pwm-slider"
@@ -180,7 +191,7 @@
       oninput={changePwm}
     />
     <p class="caption">
-      Текущий ШИМ: {snapshot.outputs.speed_code} / {pwmMaximum}.
+      Сейчас задано: {Math.round(100 * snapshot.outputs.speed_code / pwmMaximum)}% ШИМ.
     </p>
     {#if externalPwmChange}<p class="caption" role="status">
         ШИМ изменён на другом пульте.
@@ -192,7 +203,7 @@
         !pwm.dirty ||
         pwm.value?.speed_code === snapshot.outputs.speed_code}
       onclick={() => submit("TRIAL_PWM", { speed_code: pwm.value.speed_code })}
-      >Применить ШИМ</button
+      >Применить</button
     >
     <button
       class="secondary select-pwm"
@@ -200,7 +211,7 @@
         Boolean(ui.pending || ui.requestInFlight) ||
         !commandAllowed(snapshot, "TRIAL_SELECT") ||
         pwm.dirty}
-      onclick={selectTrialPwm}>Выбрать этот ШИМ как нижний</button
+      onclick={selectTrialPwm}>Использовать как нижний режим</button
     >
   </section>
 {/if}
@@ -209,7 +220,7 @@
     <h2>
       {suggestion.saved ? "Настройки сохранены" : "Настройки по измерениям"}
     </h2>
-    <p>Не снижать ШИМ ниже: <strong>{suggestion.pwm}</strong></p>
+    <p>Нижний режим: <strong>{Math.round(100 * suggestion.pwm / pwmMaximum)}% ШИМ</strong></p>
     {#if suggestion.saved}
       <p>
         Отключать топливо при выхлопе ниже: <strong
@@ -233,7 +244,7 @@
           !suggestion.complete ||
           !commandAllowed(snapshot, "PROFILE") ||
           Boolean(ui.pending || ui.requestInFlight)}
-        onclick={saveTrialProfile}>Сохранить ШИМ и температуру</button
+        onclick={saveTrialProfile}>Сохранить результат</button
       >
       {#if !suggestion.complete}<p class="caption">
           Сохранение будет доступно после остановки и охлаждения.
@@ -241,6 +252,7 @@
     {:else}<p class="caption">{suggestion.reason}</p>{/if}
   </section>
 {/if}
+{#if active || suggestion?.samples}
 <div class="readings">
   {#each [["exhaust", "Выхлоп"], ["air", "Нагретый воздух"]] as [channel, label]}
     <section class="reading surface">
@@ -249,7 +261,9 @@
     </section>
   {/each}
 </div>
-<section class="surface info-panel section">
+<details class="surface advanced section">
+  <summary>Работа двигателя и подачи топлива</summary>
+  <div class="disclosure-body">
   <dl class="reading-list">
     <div>
       <dt>Свеча</dt>
@@ -263,12 +277,14 @@
       <dt>Двигатель</dt>
       <dd>
         {snapshot.outputs.fan_request
-          ? `Включён · ШИМ ${snapshot.outputs.speed_code}`
+          ? `Включён · ${Math.round(100 * snapshot.outputs.speed_code / pwmMaximum)}% ШИМ`
           : "Выключен"}
       </dd>
     </div>
   </dl>
-</section>
+  <p class="caption">Показаны команды контроллера. Обратного измерения оборотов и подачи топлива нет.</p>
+  </div>
+</details>
 <History {snapshot} {api} online={ui.link === "online"} />
 <section class="surface info-panel section">
   <h2>Измерения первого запуска</h2>
@@ -280,16 +296,21 @@
     <button
       class="secondary"
       disabled={!ready || pending || !commandAllowed(snapshot, "TRIAL_START")}
-      onclick={startTrial}>Новый первый запуск</button
+      onclick={startTrial}>Повторить настройку</button
     >
     <p class="caption">
       Сохранённые настройки останутся.
     </p>
   {/if}
 </section>
+{/if}
 <a class="secondary" href="#/heater">Параметры отопителя</a>
 
 <style>
+  .trial-steps { padding-left: 22px; line-height: 1.6; }
+  .trial-steps li + li { margin-top: 12px; }
+  .trial-help { margin: 20px 0; }
+  .trial-help summary { cursor: pointer; }
   .confirm-ignition {
     margin-top: 16px;
   }

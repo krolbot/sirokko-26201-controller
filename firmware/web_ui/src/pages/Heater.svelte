@@ -35,7 +35,7 @@
 </script>
 
 <div class="page-heading"><h1>Параметры отопителя</h1></div>
-<a class="secondary" href="#/trial">Первый запуск и измерения</a>
+<p class="intro">Настройки розжига, горения и охлаждения. Для подбора нижнего режима используйте <a href="#/trial">первый запуск</a>.</p>
 {#if !commandAllowed(snapshot, "PROFILE")}<p class="notice" role="status">
     {commandReason(snapshot, "PROFILE")}
   </p>{/if}
@@ -126,9 +126,18 @@
       </section>
     {/each}
     <div>
-      {#if draft.dirty && !validation.valid}<p class="caption">
-          Проверьте отмеченные значения
-        </p>{/if}
+      {#if draft.dirty && !validation.valid}
+        <div class="notice" role="status">
+          <p>Проверьте параметры:</p>
+          <ul>
+            {#each heaterGroups as group}
+              {#each group.fields as [key, label]}
+                {#if validation.errors[key]}<li><button class="text-button" onclick={() => { document.getElementById(key)?.focus(); touched = { ...touched, [key]: true }; }}>{label}</button>: {validation.errors[key]}</li>{/if}
+              {/each}
+            {/each}
+          </ul>
+        </div>
+      {/if}
       <DraftActions
         {draft}
         {save}
@@ -142,28 +151,7 @@
         </p>
         <a class="secondary" href="#/control">Перейти к отоплению</a>{/if}
     </div>
-    <details class="surface advanced">
-      <summary>Паспортные значения</summary>
-      <div class="disclosure-body">
-        <dl class="reading-list">
-          <div>
-            <dt>Мощность штатных ступеней</dt>
-            <dd>17,4 / 14,0 кВт</dd>
-          </div>
-          <div>
-            <dt>Выхлоп в номинальном режиме</dt>
-            <dd>Около 450 °C</dd>
-          </div>
-          <div>
-            <dt>Нагретый воздух при входных 0 °C</dt>
-            <dd>Около 120 °C</dd>
-          </div>
-        </dl>
-        <p class="caption">
-          Номинальные температуры не задают пороги аварийного отключения
-        </p>
-      </div>
-    </details>
+
   </div>
 {/if}
 

@@ -4,6 +4,7 @@
   let password = $state("");
   let confirmation = $state("");
   let saving = $state(false);
+  let removingPassword = $state(false);
   const snapshot = $derived(ui.snapshot);
   const allowed = $derived(
     connectionReady(ui) && snapshot.wifi.change_allowed === true && !saving,
@@ -27,8 +28,11 @@
     try {
       await session.api.saveWifi(next);
       password = confirmation = "";
+      removingPassword = false;
       await session.poll();
-      notify("ok", "Пароль сохранён. Изменение применится после перезапуска");
+      notify("ok", remove
+        ? "После перезапуска Wi-Fi и пульт будут доступны без пароля"
+        : "Новый пароль применится после перезапуска");
     } catch (error) {
       notify("error", errorText(error, "Не удалось сохранить пароль"));
     } finally {
@@ -79,7 +83,7 @@
     /></label
   >
   <p class="field-hint">
-    8–63 символа без пробелов. Один пароль для Wi-Fi и входа в пульт
+    8–63 латинских буквы, цифры или символа без пробелов. Один пароль для Wi-Fi и входа в пульт
   </p>
   <div class="form-actions">
     <button class="primary" type="submit" disabled={!allowed || !password}
@@ -89,7 +93,16 @@
         class="secondary"
         type="button"
         disabled={!allowed}
-        onclick={() => save(true)}>Убрать пароль</button
+        onclick={() => (removingPassword = true)}>Убрать пароль…</button
       >{/if}
   </div>
+  {#if removingPassword && snapshot.wifi.next_boot_password_required}
+    <div class="notice" role="status">
+      <p>После перезапуска любой человек рядом сможет подключиться к Wi-Fi прибора и управлять отопителем без пароля.</p>
+      <div class="form-actions">
+        <button class="secondary" type="button" disabled={!allowed} onclick={() => (removingPassword = false)}>Оставить пароль</button>
+        <button class="secondary" type="button" disabled={!allowed} onclick={() => save(true)}>Убрать пароль</button>
+      </div>
+    </div>
+  {/if}
 </form>
